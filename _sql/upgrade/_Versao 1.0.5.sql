@@ -5105,3 +5105,1588 @@ Historico:
         + Criacao dos campos IPI_PERCENTUAL e IPI_VALOR_TOTAL, uma vez que nos processos
         de Autorizacao de Compra essas informacoes sao necessarias.';
 
+
+
+
+/*------ SYSDBA 21/05/2014 08:49:01 --------*/
+
+ALTER TABLE TBCONTPAG
+    ADD EMPRESA DMN_CNPJ;
+
+COMMENT ON COLUMN TBCONTPAG.EMPRESA IS
+'Empresa';
+
+alter table TBCONTPAG
+alter ANOLANC position 1;
+
+alter table TBCONTPAG
+alter NUMLANC position 2;
+
+alter table TBCONTPAG
+alter EMPRESA position 3;
+
+alter table TBCONTPAG
+alter PARCELA position 4;
+
+alter table TBCONTPAG
+alter CODFORN position 5;
+
+alter table TBCONTPAG
+alter TIPPAG position 6;
+
+alter table TBCONTPAG
+alter HISTORIC position 7;
+
+alter table TBCONTPAG
+alter NOTFISC position 8;
+
+alter table TBCONTPAG
+alter DTEMISS position 9;
+
+alter table TBCONTPAG
+alter DTVENC position 10;
+
+alter table TBCONTPAG
+alter DTPAG position 11;
+
+alter table TBCONTPAG
+alter DOCBAIX position 12;
+
+alter table TBCONTPAG
+alter VALORPAG position 13;
+
+alter table TBCONTPAG
+alter NOMEEMP position 14;
+
+alter table TBCONTPAG
+alter TIPOCATEG position 15;
+
+alter table TBCONTPAG
+alter BANCO position 16;
+
+alter table TBCONTPAG
+alter NUMCHQ position 17;
+
+alter table TBCONTPAG
+alter ANOCOMPRA position 18;
+
+alter table TBCONTPAG
+alter NUMCOMPRA position 19;
+
+alter table TBCONTPAG
+alter FORMA_PAGTO position 20;
+
+alter table TBCONTPAG
+alter CONDICAO_PAGTO position 21;
+
+alter table TBCONTPAG
+alter QUITADO position 22;
+
+alter table TBCONTPAG
+alter CODTPDESP position 23;
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column ANOLANC position 1;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column NUMLANC position 2;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column EMPRESA position 3;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column CODFORN position 4;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column PARCELA position 5;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column TIPPAG position 6;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column HISTORIC position 7;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column NOTFISC position 8;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column DTEMISS position 9;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column DTVENC position 10;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column DTPAG position 11;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column DOCBAIX position 12;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column VALORPAG position 13;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column NOMEEMP position 14;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column TIPOCATEG position 15;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column BANCO position 16;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column NUMCHQ position 17;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column ANOCOMPRA position 18;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column NUMCOMPRA position 19;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column FORMA_PAGTO position 20;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column CONDICAO_PAGTO position 21;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column QUITADO position 22;
+
+
+/*------ SYSDBA 21/05/2014 08:49:10 --------*/
+
+alter table TBCONTPAG
+alter column CODTPDESP position 23;
+
+
+/*------ SYSDBA 21/05/2014 08:50:05 --------*/
+
+COMMENT ON COLUMN TBCONTPAG.CODFORN IS
+'Fornecedor';
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:50:14 --------*/
+
+COMMENT ON COLUMN TBCONTPAG.PARCELA IS
+'Numero Parcela';
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:50:44 --------*/
+
+ALTER TABLE TBCONTPAG
+ADD CONSTRAINT FK_TBCONTPAG_EMPRESA
+FOREIGN KEY (EMPRESA)
+REFERENCES TBEMPRESA(CNPJ);
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:53:55 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_DUPLICATA_PAGAR (
+    ANOCOMPRA smallint,
+    NUMCOMPRA integer,
+    FORNECEDOR integer,
+    NF integer,
+    FORMA_PAGTO smallint,
+    CONDICAO_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint,
+    TIPO_DESPESA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable Empresa DMN_CNPJ;
+declare variable FORMA_PAGTO_DESC varchar(30);
+begin
+  if ( Exists(
+    Select
+      p.Numlanc
+    from TBCONTPAG p
+    where p.Anocompra = :Anocompra
+      and p.Numcompra = :Numcompra
+      and p.Parcela  = :Parcela
+  ) ) then
+    Exit;
+
+  -- Buscar o CNPJ da Empresa para se usar no lancamento da duplicata (Contas A Pagar)
+  Select first 1
+    c.codemp
+  from TBCOMPRAS c
+  where c.ano = :anocompra
+    and c.codcontrol = :numcompra
+  Into
+    Empresa;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anocompra;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(Gen_contapag_num_2020, 1);
+
+  Insert Into TBCONTPAG (
+      Anolanc
+    , Numlanc
+    , Empresa
+    , Anocompra
+    , Numcompra
+    , Parcela
+    , Codforn
+    , Tippag
+    , Forma_pagto
+    , Condicao_pagto
+    , Codtpdesp
+    , Notfisc
+    , Dtemiss
+    , Dtvenc
+    , Valorpag
+    , Quitado
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Empresa
+    , :Anocompra
+    , :Numcompra
+    , :Parcela
+    , :Fornecedor
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Condicao_pagto
+    , :Tipo_Despesa
+    , :Nf
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , 0
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:56:19 --------*/
+
+COMMENT ON TABLE TBCONTPAG IS 'Tabela Autorizacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar as autorizacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    21/05/2014 - IMR :
+        + Criacao do campo EMPRESA para que, ao inserir o registro de CONTAS A PAGAR, este esteja associado a EMPRESA
+        responsavel. Isto permitira que o sistema sela MULTI-EMPRESA.';
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:57:52 --------*/
+
+ALTER TABLE TBCONTPAG
+ADD CONSTRAINT FK_TBCONTPAG_COMPRA
+FOREIGN KEY (ANOCOMPRA,NUMCOMPRA,EMPRESA)
+REFERENCES TBCOMPRAS(ANO,CODCONTROL,CODEMP);
+
+
+
+
+/*------ SYSDBA 21/05/2014 08:58:31 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_DUPLICATA_PAGAR (
+    ANOCOMPRA smallint,
+    NUMCOMPRA integer,
+    FORNECEDOR integer,
+    NF integer,
+    FORMA_PAGTO smallint,
+    CONDICAO_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint,
+    TIPO_DESPESA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable Empresa DMN_CNPJ;
+declare variable FORMA_PAGTO_DESC varchar(30);
+begin
+  if ( Exists(
+    Select
+      p.Numlanc
+    from TBCONTPAG p
+    where p.Anocompra = :Anocompra
+      and p.Numcompra = :Numcompra
+      and p.Parcela  = :Parcela
+  ) ) then
+    Exit;
+
+  -- Buscar o CNPJ da Empresa para se usar no lancamento da duplicata (Contas A Pagar)
+  Select first 1
+    c.codemp
+  from TBCOMPRAS c
+  where c.ano = :anocompra
+    and c.codcontrol = :numcompra
+  Into
+    Empresa;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anocompra;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2020, 1);
+
+  Insert Into TBCONTPAG (
+      Anolanc
+    , Numlanc
+    , Empresa
+    , Anocompra
+    , Numcompra
+    , Parcela
+    , Codforn
+    , Tippag
+    , Forma_pagto
+    , Condicao_pagto
+    , Codtpdesp
+    , Notfisc
+    , Dtemiss
+    , Dtvenc
+    , Valorpag
+    , Quitado
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Empresa
+    , :Anocompra
+    , :Numcompra
+    , :Parcela
+    , :Fornecedor
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Condicao_pagto
+    , :Tipo_Despesa
+    , :Nf
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , 0
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:14:13 --------*/
+
+ALTER TABLE TBCONTPAG
+    ADD SITUACAO DMN_SMALLINT_NN DEFAULT 1;
+
+COMMENT ON COLUMN TBCONTPAG.SITUACAO IS
+'Situacao:
+0 - Cancelado
+1 - Ativo';
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:14:34 --------*/
+
+CREATE INDEX IDX_TBCONTPAG_SITUACAO
+ON TBCONTPAG (SITUACAO);
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:15:14 --------*/
+
+COMMENT ON TABLE TBCONTPAG IS 'Tabela Autorizacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar as autorizacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    21/05/2014 - IMR :
+        + Criacao do campos EMPRESA e SITUACAO para que, ao inserir o registro de CONTAS A PAGAR, este esteja associado
+        a EMPRESA responsavel como tambem se conheca sua situacao. Isto permitira que o sistema sela MULTI-EMPRESA.';
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:15:39 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_DUPLICATA_PAGAR (
+    ANOCOMPRA smallint,
+    NUMCOMPRA integer,
+    FORNECEDOR integer,
+    NF integer,
+    FORMA_PAGTO smallint,
+    CONDICAO_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint,
+    TIPO_DESPESA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable EMPRESA DMN_CNPJ;
+declare variable FORMA_PAGTO_DESC varchar(30);
+begin
+  if ( Exists(
+    Select
+      p.Numlanc
+    from TBCONTPAG p
+    where p.Anocompra = :Anocompra
+      and p.Numcompra = :Numcompra
+      and p.Parcela  = :Parcela
+  ) ) then
+    Exit;
+
+  -- Buscar o CNPJ da Empresa para se usar no lancamento da duplicata (Contas A Pagar)
+  Select first 1
+    c.codemp
+  from TBCOMPRAS c
+  where c.ano = :anocompra
+    and c.codcontrol = :numcompra
+  Into
+    Empresa;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anocompra;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2020, 1);
+
+  Insert Into TBCONTPAG (
+      Anolanc
+    , Numlanc
+    , Empresa
+    , Anocompra
+    , Numcompra
+    , Parcela
+    , Codforn
+    , Tippag
+    , Forma_pagto
+    , Condicao_pagto
+    , Codtpdesp
+    , Notfisc
+    , Dtemiss
+    , Dtvenc
+    , Valorpag
+    , Quitado
+    , Situacao
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Empresa
+    , :Anocompra
+    , :Numcompra
+    , :Parcela
+    , :Fornecedor
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Condicao_pagto
+    , :Tipo_Despesa
+    , :Nf
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , 0
+    , 1
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:23:01 --------*/
+
+ALTER TABLE TBCONTPAG
+    ADD VALORMULTA DMN_MONEY,
+    ADD VALORPAGTOT DMN_MONEY;
+
+COMMENT ON COLUMN TBCONTPAG.VALORPAG IS
+'Valor A Pagar';
+
+COMMENT ON COLUMN TBCONTPAG.VALORMULTA IS
+'Valor Juros/Multa';
+
+COMMENT ON COLUMN TBCONTPAG.VALORPAGTOT IS
+'Total Pago';
+
+alter table TBCONTPAG
+alter ANOLANC position 1;
+
+alter table TBCONTPAG
+alter NUMLANC position 2;
+
+alter table TBCONTPAG
+alter EMPRESA position 3;
+
+alter table TBCONTPAG
+alter CODFORN position 4;
+
+alter table TBCONTPAG
+alter PARCELA position 5;
+
+alter table TBCONTPAG
+alter TIPPAG position 6;
+
+alter table TBCONTPAG
+alter HISTORIC position 7;
+
+alter table TBCONTPAG
+alter NOTFISC position 8;
+
+alter table TBCONTPAG
+alter DTEMISS position 9;
+
+alter table TBCONTPAG
+alter DTVENC position 10;
+
+alter table TBCONTPAG
+alter DTPAG position 11;
+
+alter table TBCONTPAG
+alter DOCBAIX position 12;
+
+alter table TBCONTPAG
+alter VALORPAG position 13;
+
+alter table TBCONTPAG
+alter VALORMULTA position 14;
+
+alter table TBCONTPAG
+alter VALORPAGTOT position 15;
+
+alter table TBCONTPAG
+alter NOMEEMP position 16;
+
+alter table TBCONTPAG
+alter TIPOCATEG position 17;
+
+alter table TBCONTPAG
+alter BANCO position 18;
+
+alter table TBCONTPAG
+alter NUMCHQ position 19;
+
+alter table TBCONTPAG
+alter ANOCOMPRA position 20;
+
+alter table TBCONTPAG
+alter NUMCOMPRA position 21;
+
+alter table TBCONTPAG
+alter FORMA_PAGTO position 22;
+
+alter table TBCONTPAG
+alter CONDICAO_PAGTO position 23;
+
+alter table TBCONTPAG
+alter QUITADO position 24;
+
+alter table TBCONTPAG
+alter CODTPDESP position 25;
+
+alter table TBCONTPAG
+alter SITUACAO position 26;
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:24:39 --------*/
+
+COMMENT ON TABLE TBCONTPAG IS 'Tabela Autorizacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar as autorizacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    21/05/2014 - IMR :
+        + Criacao do campos EMPRESA e SITUACAO para que, ao inserir o registro de CONTAS A PAGAR, este esteja associado
+          a EMPRESA responsavel como tambem se conheca sua situacao. Isto permitira que o sistema sela MULTI-EMPRESA.
+
+    21/05/2014 - IMR:
+        + Criacao dos campos VALORJUROS, VALORPAGTOT para que se permita saber o quanto de Juros e/ou Multas foram pagos
+          em determinadas contas e tambem o total parcialmente pago.';
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:30:44 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contpag_quitar for tbcontpag_baixa
+active after insert or update position 1
+AS
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago  DMN_MONEY;
+  declare variable valor_pagar DMN_MONEY;
+  declare variable valor_multa DMN_MONEY;
+begin
+  /* Quitar contas a pagar */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTPAG_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(p.Valorpag, 0)
+  from TBCONTPAG p
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+
+  -- Informar valores de pagamentos parciais
+  Update TBCONTPAG p Set
+      p.valorpagtot = :Total_pago
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc;
+    
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  if ( :Total_pago >= :Valor_pagar ) then
+  begin
+    valor_multa = :Total_pago - :Valor_pagar;
+
+    if ( :valor_multa < 0 ) then
+      valor_multa = 0.0;
+
+    Update TBCONTPAG p Set
+        p.Quitado  = 1
+      , p.Historic = p.Historic || ' --> HISTORICO DE PAGAMENTO : ' || new.Historico
+      , p.Dtpag    = new.Data_pagto
+      , p.Docbaix  = new.Documento_baixa
+      , p.Tippag   = :Forma_pagto
+      , p.Numchq   = new.Numero_cheque
+      , p.Banco    = new.Banco
+      , p.valormulta  = :Valor_multa
+      , p.valorpagtot = :Total_pago
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column ANOLANC position 1;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column NUMLANC position 2;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column EMPRESA position 3;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column CLIENTE position 4;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column CNPJ position 5;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column FORMA_PAGTO position 6;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column TIPPAG position 7;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column HISTORIC position 8;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column NUMREC position 9;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column DTEMISS position 10;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column DTVENC position 11;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column DTREC position 12;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column DOCBAIX position 13;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column VALORREC position 14;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column VALORMULTA position 15;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column VALORRECTOT position 16;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column VALORSALDO position 17;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column NUMCONTRATO position 18;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column PARCELA position 19;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column STATUS position 20;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column CODBANCO position 21;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column NOSSONUMERO position 22;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column REMESSA position 23;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column PERCENTJUROS position 24;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column PERCENTMULTA position 25;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column PERCENTDESCONTO position 26;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column DATAPROCESSOBOLETO position 27;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column BAIXADO position 28;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column ENVIADO position 29;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column ANOVENDA position 30;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column NUMVENDA position 31;
+
+
+/*------ SYSDBA 21/05/2014 09:31:06 --------*/
+
+alter table TBCONTREC
+alter column SITUACAO position 32;
+
+
+/*------ SYSDBA 21/05/2014 09:31:55 --------*/
+
+ALTER TABLE TBCONTPAG
+    ADD VALORSALDO DMN_MONEY;
+
+COMMENT ON COLUMN TBCONTPAG.VALORSALDO IS
+'Total Saldo';
+
+alter table TBCONTPAG
+alter ANOLANC position 1;
+
+alter table TBCONTPAG
+alter NUMLANC position 2;
+
+alter table TBCONTPAG
+alter EMPRESA position 3;
+
+alter table TBCONTPAG
+alter CODFORN position 4;
+
+alter table TBCONTPAG
+alter PARCELA position 5;
+
+alter table TBCONTPAG
+alter TIPPAG position 6;
+
+alter table TBCONTPAG
+alter HISTORIC position 7;
+
+alter table TBCONTPAG
+alter NOTFISC position 8;
+
+alter table TBCONTPAG
+alter DTEMISS position 9;
+
+alter table TBCONTPAG
+alter DTVENC position 10;
+
+alter table TBCONTPAG
+alter DTPAG position 11;
+
+alter table TBCONTPAG
+alter DOCBAIX position 12;
+
+alter table TBCONTPAG
+alter VALORPAG position 13;
+
+alter table TBCONTPAG
+alter VALORMULTA position 14;
+
+alter table TBCONTPAG
+alter VALORPAGTOT position 15;
+
+alter table TBCONTPAG
+alter VALORSALDO position 16;
+
+alter table TBCONTPAG
+alter NOMEEMP position 17;
+
+alter table TBCONTPAG
+alter TIPOCATEG position 18;
+
+alter table TBCONTPAG
+alter BANCO position 19;
+
+alter table TBCONTPAG
+alter NUMCHQ position 20;
+
+alter table TBCONTPAG
+alter ANOCOMPRA position 21;
+
+alter table TBCONTPAG
+alter NUMCOMPRA position 22;
+
+alter table TBCONTPAG
+alter FORMA_PAGTO position 23;
+
+alter table TBCONTPAG
+alter CONDICAO_PAGTO position 24;
+
+alter table TBCONTPAG
+alter QUITADO position 25;
+
+alter table TBCONTPAG
+alter CODTPDESP position 26;
+
+alter table TBCONTPAG
+alter SITUACAO position 27;
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:32:36 --------*/
+
+COMMENT ON TABLE TBCONTPAG IS 'Tabela Autorizacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar as autorizacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    21/05/2014 - IMR :
+        + Criacao do campos EMPRESA e SITUACAO para que, ao inserir o registro de CONTAS A PAGAR, este esteja associado
+          a EMPRESA responsavel como tambem se conheca sua situacao. Isto permitira que o sistema sela MULTI-EMPRESA.
+
+    21/05/2014 - IMR:
+        + Criacao dos campos VALORJUROS, VALORPAGTOT e VALORSALDO para que se permita saber o quanto de Juros e/ou Multas
+          foram pagos em determinadas contas e tambem o total parcialmente pago.';
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:35:35 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contpag_quitar for tbcontpag_baixa
+active after insert or update position 1
+AS
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago  DMN_MONEY;
+  declare variable valor_pagar DMN_MONEY;
+  declare variable valor_multa DMN_MONEY;
+  declare variable Valor_saldo DMN_MONEY;
+begin
+  /* Quitar contas a pagar */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTPAG_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(p.Valorpag, 0)
+  from TBCONTPAG p
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+
+  Valor_saldo = :Valor_pagar - :Total_pago;
+  if ( :Valor_saldo < 0 ) then
+    Valor_saldo = 0;
+
+  -- Informar valores de pagamentos parciais
+  Update TBCONTPAG p Set
+      p.valorpagtot = :Total_pago
+    , p.valorsaldo  = :Valor_saldo
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc;
+    
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  if ( :Total_pago >= :Valor_pagar ) then
+  begin
+    valor_multa = :Total_pago - :Valor_pagar;
+
+    if ( :valor_multa < 0 ) then
+      valor_multa = 0.0;
+
+    Update TBCONTPAG p Set
+        p.Quitado  = 1
+      , p.Historic = p.Historic || ' --> HISTORICO DE PAGAMENTO : ' || new.Historico
+      , p.Dtpag    = new.Data_pagto
+      , p.Docbaix  = new.Documento_baixa
+      , p.Tippag   = :Forma_pagto
+      , p.Numchq   = new.Numero_cheque
+      , p.Banco    = new.Banco
+      , p.valormulta  = :Valor_multa
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:40:46 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contpag_quitar for tbcontpag_baixa
+active after insert or update position 1
+AS
+  declare variable Quitado Smallint;
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago  DMN_MONEY;
+  declare variable valor_pagar DMN_MONEY;
+  declare variable valor_multa DMN_MONEY;
+  declare variable Valor_saldo DMN_MONEY;
+begin
+  /* Quitar contas a pagar */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTPAG_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(p.Valorpag, 0)
+  from TBCONTPAG p
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+  Valor_saldo = :Valor_pagar - :Total_pago;
+  if ( :Valor_saldo < 0 ) then
+    Valor_saldo = 0;
+
+  -- Sinalizar a Quitacao ou Nao da Despesa
+  if ( :Total_pago >= :Valor_pagar ) then
+    Quitado = 1;
+  else
+    Quitado = 0;
+
+  -- Informar valores de pagamentos parciais
+
+  if ( :Quitado = 0 ) then
+  begin
+
+    Update TBCONTPAG p Set
+        p.Historic = p.Historic || ' --> HISTORICO DE PGTO : ' || new.Historico
+      , p.valorpagtot = :Total_pago
+      , p.valorsaldo  = :Valor_saldo
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+
+  end
+    
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  else
+
+  if ( :Quitado = 1 ) then
+  begin
+    valor_multa = :Total_pago - :Valor_pagar;
+
+    if ( :valor_multa < 0 ) then
+      valor_multa = 0.0;
+
+    Update TBCONTPAG p Set
+        p.Quitado  = 1
+      , p.Historic = p.Historic || ' --> HISTORICO DE PAGAMENTO : ' || new.Historico
+      , p.Dtpag    = new.Data_pagto
+      , p.Docbaix  = new.Documento_baixa
+      , p.Tippag   = :Forma_pagto
+      , p.Numchq   = new.Numero_cheque
+      , p.Banco    = new.Banco
+      , p.valormulta  = :Valor_multa
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:42:11 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contpag_quitar for tbcontpag_baixa
+active after insert or update position 1
+AS
+  declare variable Quitado Smallint;
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago  DMN_MONEY;
+  declare variable valor_pagar DMN_MONEY;
+  declare variable valor_multa DMN_MONEY;
+  declare variable Valor_saldo DMN_MONEY;
+begin
+  /* Quitar contas a pagar */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTPAG_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(p.Valorpag, 0)
+  from TBCONTPAG p
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+  Valor_saldo = :Valor_pagar - :Total_pago;
+  if ( :Valor_saldo < 0 ) then
+    Valor_saldo = 0;
+
+  -- Sinalizar a Quitacao ou Nao da Despesa
+  if ( :Total_pago >= :Valor_pagar ) then
+    Quitado = 1;
+  else
+    Quitado = 0;
+
+  -- Informar valores de pagamentos parciais
+
+  if ( :Quitado = 0 ) then
+  begin
+
+    Update TBCONTPAG p Set
+        p.Historic = p.Historic || ' --> HISTORICO DE PGTO : ' || new.Historico
+      , p.valorpagtot = :Total_pago
+      , p.valorsaldo  = :Valor_saldo
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+
+  end
+    
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  else
+
+  if ( :Quitado = 1 ) then
+  begin
+    valor_multa = :Total_pago - :Valor_pagar;
+
+    if ( :valor_multa < 0 ) then
+      valor_multa = 0.0;
+
+    Update TBCONTPAG p Set
+        p.Quitado  = 1
+      , p.Historic = p.Historic || ' --> HISTORICO DE PAGAMENTO : ' || new.Historico
+      , p.Dtpag    = new.Data_pagto
+      , p.Docbaix  = new.Documento_baixa
+      , p.Tippag   = :Forma_pagto
+      , p.Numchq   = new.Numero_cheque
+      , p.Banco    = new.Banco
+      , p.valormulta  = :Valor_multa
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_CONTPAG_QUITAR IS 'Trigger Registrar Pagto. (Contas A Pagar)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   21/05/2014
+
+Trigger responsavel por calcular e/ou quitar os registros de despesas do CONTAS A PAGAR.';
+
+
+
+
+/*------ SYSDBA 21/05/2014 09:43:53 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contpag_quitar for tbcontpag_baixa
+active after insert or update position 1
+AS
+  declare variable Quitado Smallint;
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago  DMN_MONEY;
+  declare variable valor_pagar DMN_MONEY;
+  declare variable Valor_saldo DMN_MONEY;
+  declare variable valor_multa DMN_MONEY;
+begin
+  /* Quitar contas a pagar */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTPAG_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(p.Valorpag, 0)
+  from TBCONTPAG p
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+  Valor_saldo = :Valor_pagar - :Total_pago;
+  if ( :Valor_saldo < 0 ) then
+    Valor_saldo = 0;
+
+  -- Sinalizar a Quitacao ou Nao da Despesa
+  if ( :Total_pago >= :Valor_pagar ) then
+    Quitado = 1;
+  else
+    Quitado = 0;
+
+  -- Informar valores de pagamentos parciais
+
+  if ( :Quitado = 0 ) then
+  begin
+
+    Update TBCONTPAG p Set
+        p.Historic = p.Historic || ' --> HISTORICO DE PGTO : ' || new.Historico
+      , p.valorpagtot = :Total_pago
+      , p.valorsaldo  = :Valor_saldo
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+
+  end
+    
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  else
+
+  if ( :Quitado = 1 ) then
+  begin
+    valor_multa = :Total_pago - :Valor_pagar;
+
+    if ( :valor_multa < 0 ) then
+      valor_multa = 0.0;
+
+    Update TBCONTPAG p Set
+        p.Quitado  = 1
+      , p.Historic = p.Historic || ' --> HISTORICO DE PAGAMENTO : ' || new.Historico
+      , p.Dtpag    = new.Data_pagto
+      , p.Docbaix  = new.Documento_baixa
+      , p.Tippag   = :Forma_pagto
+      , p.Numchq   = new.Numero_cheque
+      , p.Banco    = new.Banco
+      , p.valormulta  = :Valor_multa
+      , p.valorpagtot = :Total_pago
+      , p.valorsaldo  = :Valor_saldo
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+  end
+end^
+
+SET TERM ; ^
+
