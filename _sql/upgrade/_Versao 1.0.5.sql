@@ -6690,3 +6690,284 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 22/05/2014 14:21:10 --------*/
+
+ALTER TABLE TBFORNECEDOR
+    ADD NOMEFANT DMN_VCHAR_100;
+
+COMMENT ON COLUMN TBFORNECEDOR.NOMEFORN IS
+'Razao Social';
+
+COMMENT ON COLUMN TBFORNECEDOR.NOMEFANT IS
+'Nome Fantasia';
+
+alter table TBFORNECEDOR
+alter CODFORN position 1;
+
+alter table TBFORNECEDOR
+alter TIPO position 2;
+
+alter table TBFORNECEDOR
+alter PESSOA_FISICA position 3;
+
+alter table TBFORNECEDOR
+alter NOMEFORN position 4;
+
+alter table TBFORNECEDOR
+alter NOMEFANT position 5;
+
+alter table TBFORNECEDOR
+alter CNPJ position 6;
+
+alter table TBFORNECEDOR
+alter INSCEST position 7;
+
+alter table TBFORNECEDOR
+alter INSCMUN position 8;
+
+alter table TBFORNECEDOR
+alter ENDER position 9;
+
+alter table TBFORNECEDOR
+alter COMPLEMENTO position 10;
+
+alter table TBFORNECEDOR
+alter NUMERO_END position 11;
+
+alter table TBFORNECEDOR
+alter CEP position 12;
+
+alter table TBFORNECEDOR
+alter CIDADE position 13;
+
+alter table TBFORNECEDOR
+alter UF position 14;
+
+alter table TBFORNECEDOR
+alter CONTATO position 15;
+
+alter table TBFORNECEDOR
+alter FONE position 16;
+
+alter table TBFORNECEDOR
+alter FONECEL position 17;
+
+alter table TBFORNECEDOR
+alter FONEFAX position 18;
+
+alter table TBFORNECEDOR
+alter EMAIL position 19;
+
+alter table TBFORNECEDOR
+alter SITE position 20;
+
+alter table TBFORNECEDOR
+alter TLG_TIPO position 21;
+
+alter table TBFORNECEDOR
+alter LOG_COD position 22;
+
+alter table TBFORNECEDOR
+alter BAI_COD position 23;
+
+alter table TBFORNECEDOR
+alter CID_COD position 24;
+
+alter table TBFORNECEDOR
+alter EST_COD position 25;
+
+alter table TBFORNECEDOR
+alter PAIS_ID position 26;
+
+alter table TBFORNECEDOR
+alter GRF_COD position 27;
+
+alter table TBFORNECEDOR
+alter TRANSPORTADORA position 28;
+
+alter table TBFORNECEDOR
+alter DTCAD position 29;
+
+alter table TBFORNECEDOR
+alter CLIENTE_ORIGEM position 30;
+
+alter table TBFORNECEDOR
+alter CLIENTE_ORIGEM_COD position 31;
+
+
+
+
+/*------ SYSDBA 22/05/2014 14:21:59 --------*/
+
+COMMENT ON TABLE TBFORNECEDOR IS 'Tabela Fornecedores
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar os dados dos fornecedores cadastrados no sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    21/05/2014 - IMR :
+        + Criacao do campos EMPRESA e SITUACAO para que, ao inserir o registro de CONTAS A PAGAR, este esteja associado
+          a EMPRESA responsavel como tambem se conheca sua situacao. Isto permitira que o sistema sela MULTI-EMPRESA.';
+
+
+
+
+/*------ SYSDBA 22/05/2014 14:23:02 --------*/
+
+COMMENT ON TABLE TBFORNECEDOR IS 'Tabela Fornecedores
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar os dados dos fornecedores cadastrados no sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    22/05/2014 - IMR :
+        + Criacao do campos NOMEFANT para que seja possivel pesquisar fornecedor tambem pelo NOME FANTASIA, uma vez que
+          o sistema esta permitindo apenas pela RAZAO SOCIAL.';
+
+
+
+
+/*------ SYSDBA 22/05/2014 14:23:34 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cliente_gerar_fornecedor for tbcliente
+active after insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.emitir_nfe_devolucao = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF/CNPJ */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cliente_origem_cod = new.codigo
+    Into
+      codigo_forn;
+
+    if ( :codigo_forn is null ) then
+    begin
+      /* Buscar Grupo de fornecedor */
+      Select first 1
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      Into
+        grupo_forn;
+
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , SITE
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , DTCAD
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+      ) values (
+          :codigo_forn
+        , new.pessoa_fisica
+        , new.nome
+        , new.nome
+        , new.cnpj
+        , new.inscest
+        , new.inscmun
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone
+        , new.fonecel
+        , substring(new.email from 1 for 40)
+        , substring(new.site from 1 for 35)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , current_date
+        , new.cnpj
+        , new.codigo
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = new.pessoa_fisica
+        , f.nomeforn = new.nome
+        , f.cnpj     = new.cnpj
+        , f.inscest = new.inscest
+        , f.inscmun = new.inscmun
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone    = new.fone
+        , f.fonecel = new.fonecel
+        , f.email   = substring(new.email from 1 for 40)
+        , f.site    = substring(new.site from 1 for 35)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.cliente_origem     =  new.cnpj
+        , f.cliente_origem_cod = new.codigo
+      where f.codforn = :codigo_forn;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
