@@ -6971,3 +6971,68 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 24/05/2014 22:53:58 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_LOGRADOURO (
+    NOM_LOGRADOURO varchar(250),
+    TIP_LOGRADOURO varchar(10),
+    COD_CIDADE integer)
+returns (
+    COD_LOGRADOURO integer,
+    COD_TIPO smallint)
+as
+declare variable TMP_TIPO smallint;
+declare variable TMP_DESC varchar(250);
+begin
+  /* 1. Buscar codigo do Tipo do Logradouro */
+  Select first 1
+    t.tlg_cod
+  from TBTIPO_LOGRADOURO t
+  where coalesce(t.tlg_sigla, t.tlg_descricao) like Trim(:tip_logradouro) || '%'
+  Into
+    tmp_tipo;
+
+  /* 2. Ajustar descricao do logradouro */
+  if ( coalesce(:tmp_tipo, 0) = 0 ) then
+    tmp_desc = trim(:tip_logradouro) || ' ' || trim(:nom_logradouro);
+  else
+    tmp_desc = trim(:nom_logradouro);
+
+  /* 3. Buscar codigo do Logradouro */
+  Select first 1
+    l.log_cod
+  from TBLOGRADOURO l
+  where l.cid_cod = :cod_cidade
+    and trim(l.log_nome) = Trim(:tmp_desc)
+  Into
+    cod_logradouro;
+
+  /* 4. Inserir Logradouro, caso ele nao exista */
+  if ( coalesce(:cod_logradouro, 0) = 0 ) then
+  begin
+    cod_logradouro = Gen_id(GEN_LOGRADOURO_ID, 1);
+    Insert Into TBLOGRADOURO (
+        log_cod
+      , log_nome
+      , tlg_cod
+      , cid_cod
+    ) values (
+        :cod_logradouro
+      , :tmp_desc
+      , :tmp_tipo
+      , :cod_cidade
+    );
+  end
+
+  cod_tipo = tmp_tipo;
+
+  suspend;
+end^
+
+SET TERM ; ^
+
