@@ -1108,3 +1108,660 @@ from TBBANCO b
 
 GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_BANCO_FEBRABAN TO "PUBLIC";
 
+
+
+
+/*------ SYSDBA 29/05/2014 15:36:38 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.NOME IS
+'Nome (Razao Social)';
+
+
+
+
+/*------ SYSDBA 29/05/2014 15:37:08 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_100'
+where (RDB$FIELD_NAME = 'NOMEFORN') and
+(RDB$RELATION_NAME = 'TBFORNECEDOR')
+;
+
+
+
+
+/*------ SYSDBA 29/05/2014 15:37:27 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_100'
+where (RDB$FIELD_NAME = 'NOME') and
+(RDB$RELATION_NAME = 'TBCLIENTE')
+;
+
+
+
+
+/*------ SYSDBA 29/05/2014 15:37:57 --------*/
+
+ALTER TABLE TBCLIENTE
+    ADD NOMEFANT DMN_VCHAR_100;
+
+COMMENT ON COLUMN TBCLIENTE.NOMEFANT IS
+'Nome Fantasia';
+
+alter table TBCLIENTE
+alter CODIGO position 1;
+
+alter table TBCLIENTE
+alter TIPO position 2;
+
+alter table TBCLIENTE
+alter PESSOA_FISICA position 3;
+
+alter table TBCLIENTE
+alter CNPJ position 4;
+
+alter table TBCLIENTE
+alter NOME position 5;
+
+alter table TBCLIENTE
+alter NOMEFANT position 6;
+
+alter table TBCLIENTE
+alter INSCEST position 7;
+
+alter table TBCLIENTE
+alter INSCMUN position 8;
+
+alter table TBCLIENTE
+alter ENDER position 9;
+
+alter table TBCLIENTE
+alter COMPLEMENTO position 10;
+
+alter table TBCLIENTE
+alter BAIRRO position 11;
+
+alter table TBCLIENTE
+alter CEP position 12;
+
+alter table TBCLIENTE
+alter CIDADE position 13;
+
+alter table TBCLIENTE
+alter UF position 14;
+
+alter table TBCLIENTE
+alter FONE position 15;
+
+alter table TBCLIENTE
+alter FONECEL position 16;
+
+alter table TBCLIENTE
+alter FONECOMERC position 17;
+
+alter table TBCLIENTE
+alter EMAIL position 18;
+
+alter table TBCLIENTE
+alter SITE position 19;
+
+alter table TBCLIENTE
+alter TLG_TIPO position 20;
+
+alter table TBCLIENTE
+alter LOG_COD position 21;
+
+alter table TBCLIENTE
+alter BAI_COD position 22;
+
+alter table TBCLIENTE
+alter CID_COD position 23;
+
+alter table TBCLIENTE
+alter EST_COD position 24;
+
+alter table TBCLIENTE
+alter NUMERO_END position 25;
+
+alter table TBCLIENTE
+alter PAIS_ID position 26;
+
+alter table TBCLIENTE
+alter VALOR_LIMITE_COMPRA position 27;
+
+alter table TBCLIENTE
+alter BLOQUEADO position 28;
+
+alter table TBCLIENTE
+alter BLOQUEADO_DATA position 29;
+
+alter table TBCLIENTE
+alter BLOQUEADO_MOTIVO position 30;
+
+alter table TBCLIENTE
+alter BLOQUEADO_USUARIO position 31;
+
+alter table TBCLIENTE
+alter DESBLOQUEADO_DATA position 32;
+
+alter table TBCLIENTE
+alter VENDEDOR_COD position 33;
+
+alter table TBCLIENTE
+alter USUARIO position 34;
+
+alter table TBCLIENTE
+alter EMITIR_NFE_DEVOLUCAO position 35;
+
+alter table TBCLIENTE
+alter CUSTO_OPER_PERCENTUAL position 36;
+
+alter table TBCLIENTE
+alter CUSTO_OPER_FRETE position 37;
+
+alter table TBCLIENTE
+alter CUSTO_OPER_OUTROS position 38;
+
+alter table TBCLIENTE
+alter ENTREGA_FRACIONADA_VENDA position 39;
+
+alter table TBCLIENTE
+alter BANCO position 40;
+
+alter table TBCLIENTE
+alter AGENCIA position 41;
+
+alter table TBCLIENTE
+alter CC position 42;
+
+alter table TBCLIENTE
+alter PRACA position 43;
+
+alter table TBCLIENTE
+alter OBSERVACAO position 44;
+
+alter table TBCLIENTE
+alter DTCAD position 45;
+
+
+
+
+/*------ SYSDBA 29/05/2014 15:38:42 --------*/
+
+COMMENT ON TABLE TBCLIENTE IS 'Tabela de Clientes
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2011
+
+Tabela responsavel por armazenar os dados referentes aos clientes mantidos pelos sistemas de gestao.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    28/05/2014 - IMR :
+        + Criacao dos campos BANCO, AGENCIA, CC e OBSERVACAO para atender solicitacoes do novo cliente.
+
+    29/05/2014 - IMR :
+        + Criacao do campos NOMEFANT para que seja possivel pesquisar clientes tambem pelo NOME FANTASIA, uma vez que
+          o sistema esta permitindo apenas pela RAZAO SOCIAL (NOME).';
+
+
+
+
+/*------ SYSDBA 29/05/2014 15:40:15 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cliente_gerar_fornecedor for tbcliente
+active after insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.emitir_nfe_devolucao = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF/CNPJ */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cliente_origem_cod = new.codigo
+    Into
+      codigo_forn;
+
+    if ( :codigo_forn is null ) then
+    begin
+      /* Buscar Grupo de fornecedor */
+      Select first 1
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      Into
+        grupo_forn;
+
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , SITE
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , OBSERVACAO
+        , DTCAD
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+      ) values (
+          :codigo_forn
+        , new.pessoa_fisica
+        , new.nome
+        , coalesce(new.nomefant, new.nome)
+        , new.cnpj
+        , new.inscest
+        , new.inscmun
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone
+        , new.fonecel
+        , substring(new.email from 1 for 40)
+        , substring(new.site from 1 for 35)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , new.banco
+        , new.agencia
+        , new.cc
+        , new.praca
+        , new.observacao
+        , current_date
+        , new.cnpj
+        , new.codigo
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = new.pessoa_fisica
+        , f.nomeforn = new.nome
+        , f.nomefant = coalesce(new.nomefant, new.nome)
+        , f.cnpj     = new.cnpj
+        , f.inscest = new.inscest
+        , f.inscmun = new.inscmun
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone    = new.fone
+        , f.fonecel = new.fonecel
+        , f.email   = substring(new.email from 1 for 40)
+        , f.site    = substring(new.site from 1 for 35)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.banco   = new.banco
+        , f.agencia = new.agencia
+        , f.cc      = new.cc
+        , f.praca   = new.praca
+        , f.observacao = new.observacao
+        , f.cliente_origem     =  new.cnpj
+        , f.cliente_origem_cod = new.codigo
+      where f.codforn = :codigo_forn;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 29/05/2014 17:44:55 --------*/
+
+create view VW_TIPO_DOCUMENTO_ENTRADA ( TPD_CODIGO, TPD_DESCRICAO )
+as
+Select 0 as TPD_CODIGO , 'Avulso'       as TPD_DESCRICAO from RDB$DATABASE union
+Select 1 as TPD_CODIGO , 'Nota Fiscal'  as TPD_DESCRICAO from RDB$DATABASE union
+Select 2 as TPD_CODIGO , 'Cupom Fiscal' as TPD_DESCRICAO from RDB$DATABASE union
+Select 3 as TPD_CODIGO , 'Nota Série D' as TPD_DESCRICAO from RDB$DATABASE
+;
+
+GRANT ALL ON VW_TIPO_DOCUMENTO_ENTRADA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 29/05/2014 17:50:05 --------*/
+
+create view VW_TIPO_ENTRADA ( TPE_CODIGO, TPE_DESCRICAO )
+as
+Select 0 as TPE_CODIGO , '* Indefinido'         as TPE_DESCRICAO from RDB$DATABASE union
+Select 1 as TPE_CODIGO , 'Consumo Interno'      as TPE_DESCRICAO from RDB$DATABASE union
+Select 2 as TPE_CODIGO , 'Produção/Faturamento' as TPE_DESCRICAO from RDB$DATABASE union
+Select 3 as TPE_CODIGO , 'Imobilizado'          as TPE_DESCRICAO from RDB$DATABASE;
+
+GRANT ALL ON VW_TIPO_ENTRADA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 29/05/2014 17:52:19 --------*/
+
+DROP VIEW VW_TIPO_ENTRADA;
+
+CREATE VIEW VW_TIPO_ENTRADA(
+    TPE_CODIGO,
+    TPE_DESCRICAO)
+AS
+Select 0 as TPE_CODIGO , '* Indefinido'         as TPE_DESCRICAO from RDB$DATABASE union
+Select 1 as TPE_CODIGO , 'Consumo Interno'      as TPE_DESCRICAO from RDB$DATABASE union
+Select 2 as TPE_CODIGO , 'Produção/Faturamento' as TPE_DESCRICAO from RDB$DATABASE union
+Select 3 as TPE_CODIGO , 'Imobilizado'          as TPE_DESCRICAO from RDB$DATABASE union
+Select 4 as TPE_CODIGO , 'Outras'               as TPE_DESCRICAO from RDB$DATABASE
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_TIPO_ENTRADA TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 29/05/2014 17:55:24 --------*/
+
+ALTER TABLE TBCOMPRAS
+    ADD TIPO_ENTRADA DMN_SMALLINT_NN DEFAULT 0,
+    ADD TIPO_DOCUMENTO DMN_SMALLINT_NN DEFAULT 0;
+
+COMMENT ON COLUMN TBCOMPRAS.TIPO_ENTRADA IS
+'Tipo de Entrada.
+
+View VW_TIPO_ENTRADA responsavel pelo dominio desse dados.';
+
+COMMENT ON COLUMN TBCOMPRAS.TIPO_DOCUMENTO IS
+'Tipo de Docuento de Entrada.
+
+View VW_TIPO_DOCUMENTO_ENTRADA responsavel pelo dominio desse dados.';
+
+alter table TBCOMPRAS
+alter ANO position 1;
+
+alter table TBCOMPRAS
+alter CODCONTROL position 2;
+
+alter table TBCOMPRAS
+alter CODEMP position 3;
+
+alter table TBCOMPRAS
+alter CODFORN position 4;
+
+alter table TBCOMPRAS
+alter TIPO_ENTRADA position 5;
+
+alter table TBCOMPRAS
+alter TIPO_DOCUMENTO position 6;
+
+alter table TBCOMPRAS
+alter NF position 7;
+
+alter table TBCOMPRAS
+alter NFSERIE position 8;
+
+alter table TBCOMPRAS
+alter LOTE_NFE_ANO position 9;
+
+alter table TBCOMPRAS
+alter LOTE_NFE_NUMERO position 10;
+
+alter table TBCOMPRAS
+alter LOTE_NFE_RECIBO position 11;
+
+alter table TBCOMPRAS
+alter NFE_ENVIADA position 12;
+
+alter table TBCOMPRAS
+alter VERIFICADOR_NFE position 13;
+
+alter table TBCOMPRAS
+alter XML_NFE position 14;
+
+alter table TBCOMPRAS
+alter XML_NFE_FILENAME position 15;
+
+alter table TBCOMPRAS
+alter DTLANCAMENTO position 16;
+
+alter table TBCOMPRAS
+alter DTEMISS position 17;
+
+alter table TBCOMPRAS
+alter HREMISS position 18;
+
+alter table TBCOMPRAS
+alter DTENT position 19;
+
+alter table TBCOMPRAS
+alter NFCFOP position 20;
+
+alter table TBCOMPRAS
+alter NATUREZA position 21;
+
+alter table TBCOMPRAS
+alter STATUS position 22;
+
+alter table TBCOMPRAS
+alter IPI position 23;
+
+alter table TBCOMPRAS
+alter ICMSBASE position 24;
+
+alter table TBCOMPRAS
+alter ICMSVALOR position 25;
+
+alter table TBCOMPRAS
+alter ICMSSUBSTBASE position 26;
+
+alter table TBCOMPRAS
+alter ICMSSUBSTVALOR position 27;
+
+alter table TBCOMPRAS
+alter FRETE position 28;
+
+alter table TBCOMPRAS
+alter OUTROSCUSTOS position 29;
+
+alter table TBCOMPRAS
+alter DESCONTO position 30;
+
+alter table TBCOMPRAS
+alter VALORSEGURO position 31;
+
+alter table TBCOMPRAS
+alter VALORTOTAL_II position 32;
+
+alter table TBCOMPRAS
+alter VALORTOTAL_IPI position 33;
+
+alter table TBCOMPRAS
+alter VALORPIS position 34;
+
+alter table TBCOMPRAS
+alter VALORCOFINS position 35;
+
+alter table TBCOMPRAS
+alter TOTALPROD position 36;
+
+alter table TBCOMPRAS
+alter TOTALNF position 37;
+
+alter table TBCOMPRAS
+alter OBS position 38;
+
+alter table TBCOMPRAS
+alter USUARIO position 39;
+
+alter table TBCOMPRAS
+alter FORMAPAGTO_COD position 40;
+
+alter table TBCOMPRAS
+alter CONDICAOPAGTO_COD position 41;
+
+alter table TBCOMPRAS
+alter COMPRA_PRAZO position 42;
+
+alter table TBCOMPRAS
+alter PRAZO_01 position 43;
+
+alter table TBCOMPRAS
+alter PRAZO_02 position 44;
+
+alter table TBCOMPRAS
+alter PRAZO_03 position 45;
+
+alter table TBCOMPRAS
+alter PRAZO_04 position 46;
+
+alter table TBCOMPRAS
+alter PRAZO_05 position 47;
+
+alter table TBCOMPRAS
+alter PRAZO_06 position 48;
+
+alter table TBCOMPRAS
+alter PRAZO_07 position 49;
+
+alter table TBCOMPRAS
+alter PRAZO_08 position 50;
+
+alter table TBCOMPRAS
+alter PRAZO_09 position 51;
+
+alter table TBCOMPRAS
+alter PRAZO_10 position 52;
+
+alter table TBCOMPRAS
+alter PRAZO_11 position 53;
+
+alter table TBCOMPRAS
+alter PRAZO_12 position 54;
+
+alter table TBCOMPRAS
+alter DTFINALIZACAO_COMPRA position 55;
+
+alter table TBCOMPRAS
+alter TIPO_DESPESA position 56;
+
+alter table TBCOMPRAS
+alter CANCEL_USUARIO position 57;
+
+alter table TBCOMPRAS
+alter CANCEL_DATAHORA position 58;
+
+alter table TBCOMPRAS
+alter CANCEL_MOTIVO position 59;
+
+alter table TBCOMPRAS
+alter AUTORIZACAO_ANO position 60;
+
+alter table TBCOMPRAS
+alter AUTORIZACAO_CODIGO position 61;
+
+alter table TBCOMPRAS
+alter AUTORIZACAO_EMPRESA position 62;
+
+
+
+
+/*------ SYSDBA 29/05/2014 17:55:40 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_SMALLINT_N'
+where (RDB$FIELD_NAME = 'TIPO_ENTRADA') and
+(RDB$RELATION_NAME = 'TBCOMPRAS')
+;
+
+
+
+
+/*------ SYSDBA 29/05/2014 17:55:47 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_SMALLINT_N'
+where (RDB$FIELD_NAME = 'TIPO_DOCUMENTO') and
+(RDB$RELATION_NAME = 'TBCOMPRAS')
+;
+
+
+
+
+/*------ SYSDBA 29/05/2014 17:57:56 --------*/
+
+COMMENT ON TABLE TBCOMPRAS IS 'Tabela Entrada (Compras)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de movimento de entrada no estoque.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/05/2014 - IMR :
+        + Criacao do campo TIPO_DESPESA para permitir que os registros de Contas A Pagar ja possam ser gerados com o
+          devido Tipo de Despesa informado. Este campo passa a ser obrigatorio para uma melhor classificacao das Contas
+          A Pagar.
+
+    29/05/2014 - IMR:
+        + Criacao dos campos TIPO_ENTRADA e TIPO_DOCUMENTO para que os movimentos de entrada possam ser classificados quanto
+          a sua finalidade (Consumo, Producao/Faturamento, Imobilizado, ETC.) e ao tipo de documento usado para efeturar
+          essa entrada (Cupom, NF, ETC.).';
+
+
+
+
+/*------ SYSDBA 29/05/2014 17:58:31 --------*/
+
+CREATE INDEX IDX_TBCOMPRAS_TIPOS
+ON TBCOMPRAS (TIPO_ENTRADA,TIPO_DOCUMENTO);
+
