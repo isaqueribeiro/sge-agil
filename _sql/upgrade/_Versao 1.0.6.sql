@@ -1765,3 +1765,271 @@ Historico:
 CREATE INDEX IDX_TBCOMPRAS_TIPOS
 ON TBCOMPRAS (TIPO_ENTRADA,TIPO_DOCUMENTO);
 
+
+
+
+/*------ SYSDBA 30/05/2014 08:44:46 --------*/
+
+DROP VIEW VW_TIPO_ALIQUOTA;
+
+CREATE VIEW VW_TIPO_ALIQUOTA(
+    CODIGO,
+    DESCRICAO,
+    TIPO)
+AS
+Select First 1
+    0 as Codigo
+  , 'ICMS' as Descricao
+  , 'Produto' as Tipo
+from TBORIGEMPROD
+
+union
+
+Select First 1
+    1 as Codigo
+  , 'ISS' as Descricao
+  , 'Serviço' as Tipo
+from TBORIGEMPROD
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_TIPO_ALIQUOTA TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 30/05/2014 08:46:33 --------*/
+
+ALTER TABLE TBPRODUTO
+    ADD COMPOR_FATURAMENTO DMN_LOGICO DEFAULT 1;
+
+COMMENT ON COLUMN TBPRODUTO.COMPOR_FATURAMENTO IS
+'Produto/Servico compoe faturamento:
+0 - Nao
+1 - Sim';
+
+alter table TBPRODUTO
+alter CODIGO position 1;
+
+alter table TBPRODUTO
+alter COD position 2;
+
+alter table TBPRODUTO
+alter DESCRI position 3;
+
+alter table TBPRODUTO
+alter APRESENTACAO position 4;
+
+alter table TBPRODUTO
+alter DESCRI_APRESENTACAO position 5;
+
+alter table TBPRODUTO
+alter MODELO position 6;
+
+alter table TBPRODUTO
+alter PRECO position 7;
+
+alter table TBPRODUTO
+alter PRECO_PROMOCAO position 8;
+
+alter table TBPRODUTO
+alter REFERENCIA position 9;
+
+alter table TBPRODUTO
+alter SECAO position 10;
+
+alter table TBPRODUTO
+alter QTDE position 11;
+
+alter table TBPRODUTO
+alter FRACIONADOR position 12;
+
+alter table TBPRODUTO
+alter PESO_BRUTO position 13;
+
+alter table TBPRODUTO
+alter PESO_LIQUIDO position 14;
+
+alter table TBPRODUTO
+alter CUBAGEM position 15;
+
+alter table TBPRODUTO
+alter VENDA_FRACIONADA position 16;
+
+alter table TBPRODUTO
+alter CODUNIDADE_FRACIONADA position 17;
+
+alter table TBPRODUTO
+alter UNIDADE position 18;
+
+alter table TBPRODUTO
+alter ESTOQMIN position 19;
+
+alter table TBPRODUTO
+alter CODGRUPO position 20;
+
+alter table TBPRODUTO
+alter CODFABRICANTE position 21;
+
+alter table TBPRODUTO
+alter CUSTOMEDIO position 22;
+
+alter table TBPRODUTO
+alter PERCENTUAL_MARCKUP position 23;
+
+alter table TBPRODUTO
+alter PERCENTUAL_MARGEM position 24;
+
+alter table TBPRODUTO
+alter PRECO_SUGERIDO position 25;
+
+alter table TBPRODUTO
+alter CODEMP position 26;
+
+alter table TBPRODUTO
+alter CODSECAO position 27;
+
+alter table TBPRODUTO
+alter CODORIGEM position 28;
+
+alter table TBPRODUTO
+alter CODTRIBUTACAO position 29;
+
+alter table TBPRODUTO
+alter CST position 30;
+
+alter table TBPRODUTO
+alter CSOSN position 31;
+
+alter table TBPRODUTO
+alter CST_PIS position 32;
+
+alter table TBPRODUTO
+alter CST_COFINS position 33;
+
+alter table TBPRODUTO
+alter NCM_SH position 34;
+
+alter table TBPRODUTO
+alter CODIGO_NVE position 35;
+
+alter table TBPRODUTO
+alter CODCFOP position 36;
+
+alter table TBPRODUTO
+alter CODBARRA_EAN position 37;
+
+alter table TBPRODUTO
+alter CODUNIDADE position 38;
+
+alter table TBPRODUTO
+alter ALIQUOTA_TIPO position 39;
+
+alter table TBPRODUTO
+alter ALIQUOTA position 40;
+
+alter table TBPRODUTO
+alter ALIQUOTA_CSOSN position 41;
+
+alter table TBPRODUTO
+alter ALIQUOTA_PIS position 42;
+
+alter table TBPRODUTO
+alter ALIQUOTA_COFINS position 43;
+
+alter table TBPRODUTO
+alter VALOR_IPI position 44;
+
+alter table TBPRODUTO
+alter RESERVA position 45;
+
+alter table TBPRODUTO
+alter PRODUTO_NOVO position 46;
+
+alter table TBPRODUTO
+alter COR_VEICULO position 47;
+
+alter table TBPRODUTO
+alter COMBUSTIVEL_VEICULO position 48;
+
+alter table TBPRODUTO
+alter TIPO_VEICULO position 49;
+
+alter table TBPRODUTO
+alter ANO_MODELO_VEICULO position 50;
+
+alter table TBPRODUTO
+alter ANO_FABRICACAO_VEICULO position 51;
+
+alter table TBPRODUTO
+alter RENAVAM_VEICULO position 52;
+
+alter table TBPRODUTO
+alter CHASSI_VEICULO position 53;
+
+alter table TBPRODUTO
+alter KILOMETRAGEM_VEICULO position 54;
+
+alter table TBPRODUTO
+alter SITUACAO_ATUAL_VEICULO position 55;
+
+alter table TBPRODUTO
+alter SITUACAO_HISTORICO_VEICULO position 56;
+
+alter table TBPRODUTO
+alter PERCENTUAL_REDUCAO_BC position 57;
+
+alter table TBPRODUTO
+alter USUARIO position 58;
+
+alter table TBPRODUTO
+alter MOVIMENTA_ESTOQUE position 59;
+
+alter table TBPRODUTO
+alter COMPOR_FATURAMENTO position 60;
+
+alter table TBPRODUTO
+alter CUST_DESP_OFIC position 61;
+
+alter table TBPRODUTO
+alter CUST_DESP_GERAIS position 62;
+
+alter table TBPRODUTO
+alter CUST_DESP_ADM position 63;
+
+alter table TBPRODUTO
+alter CUST_COMISSAO position 64;
+
+alter table TBPRODUTO
+alter CUST_IMPOSTO position 65;
+
+alter table TBPRODUTO
+alter FI_RET_FINANC position 66;
+
+alter table TBPRODUTO
+alter FI_RET_PLANO position 67;
+
+
+
+
+/*------ SYSDBA 30/05/2014 09:11:59 --------*/
+
+COMMENT ON TABLE TBPRODUTO IS 'Tabela Produtos/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de todos os produtos e/ou servicos necessarios as movimentacoes de
+entrada e saida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/05/2014 - IMR :
+        + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
+          o faturamento da empresa e quais sao de consumo interno.';
+
