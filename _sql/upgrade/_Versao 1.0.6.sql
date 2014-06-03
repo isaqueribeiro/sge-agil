@@ -2033,3 +2033,245 @@ Historico:
         + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
           o faturamento da empresa e quais sao de consumo interno.';
 
+
+
+
+/*------ SYSDBA 02/06/2014 13:34:04 --------*/
+
+ALTER TABLE TBCONFIGURACAO
+    ADD VENDA_CARREGA_PRODUTO_EAN DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBCONFIGURACAO.VENDA_CARREGA_PRODUTO_EAN IS
+'Venda: Carregar produto pelo EAN:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMPRESA position 1;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_CONTA position 2;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_SENHA position 3;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_POP position 4;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_SMTP position 5;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_SMTP_PORTA position 6;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_REQUER_AUTENTICACAO position 7;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_CONEXAO_SSL position 8;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_ASSUNTO_PADRAO position 9;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_MENSAGEM_PADRAO position 10;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column NFE_SOLICITA_DH_SAIDA position 11;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column NFE_IMPRIMIR_COD_CLIENTE position 12;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column CLIENTE_PERMITIR_DUPLICAR_CNPJ position 13;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column CUSTO_OPER_CALCULAR position 14;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column PERMITIR_VENDA_ESTOQUE_INS position 15;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column ESTOQUE_UNICO_EMPRESAS position 16;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column ESTOQUE_SATELITE_CLIENTE position 17;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column VENDA_CARREGA_PRODUTO_EAN position 18;
+
+
+/*------ SYSDBA 02/06/2014 13:48:00 --------*/
+
+alter table TBCONFIGURACAO
+alter column USUARIO position 19;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMPRESA position 1;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_CONTA position 2;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_SENHA position 3;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_POP position 4;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_SMTP position 5;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_SMTP_PORTA position 6;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_REQUER_AUTENTICACAO position 7;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_CONEXAO_SSL position 8;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_ASSUNTO_PADRAO position 9;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column EMAIL_MENSAGEM_PADRAO position 10;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column NFE_SOLICITA_DH_SAIDA position 11;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column NFE_IMPRIMIR_COD_CLIENTE position 12;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column CLIENTE_PERMITIR_DUPLICAR_CNPJ position 13;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column CUSTO_OPER_CALCULAR position 14;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column PERMITIR_VENDA_ESTOQUE_INS position 15;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column VENDA_CARREGA_PRODUTO_EAN position 16;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column ESTOQUE_UNICO_EMPRESAS position 17;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column ESTOQUE_SATELITE_CLIENTE position 18;
+
+
+/*------ SYSDBA 02/06/2014 13:48:18 --------*/
+
+alter table TBCONFIGURACAO
+alter column USUARIO position 19;
