@@ -2275,3 +2275,228 @@ alter column ESTOQUE_SATELITE_CLIENTE position 18;
 
 alter table TBCONFIGURACAO
 alter column USUARIO position 19;
+
+
+/*------ SYSDBA 04/06/2014 12:46:31 --------*/
+
+ALTER TABLE TBCOMPRAS
+    ADD TIPO_MOVIMENTO DMN_SMALLINT_N DEFAULT 0;
+
+COMMENT ON COLUMN TBCOMPRAS.TIPO_MOVIMENTO IS
+'Tipo Movimento:
+0 - Entrada de Produtos
+1 - Entrada de Servicos';
+
+alter table TBCOMPRAS
+alter ANO position 1;
+
+alter table TBCOMPRAS
+alter CODCONTROL position 2;
+
+alter table TBCOMPRAS
+alter CODEMP position 3;
+
+alter table TBCOMPRAS
+alter CODFORN position 4;
+
+alter table TBCOMPRAS
+alter TIPO_ENTRADA position 5;
+
+alter table TBCOMPRAS
+alter TIPO_DOCUMENTO position 6;
+
+alter table TBCOMPRAS
+alter TIPO_MOVIMENTO position 7;
+
+alter table TBCOMPRAS
+alter NF position 8;
+
+alter table TBCOMPRAS
+alter NFSERIE position 9;
+
+alter table TBCOMPRAS
+alter LOTE_NFE_ANO position 10;
+
+alter table TBCOMPRAS
+alter LOTE_NFE_NUMERO position 11;
+
+alter table TBCOMPRAS
+alter LOTE_NFE_RECIBO position 12;
+
+alter table TBCOMPRAS
+alter NFE_ENVIADA position 13;
+
+alter table TBCOMPRAS
+alter VERIFICADOR_NFE position 14;
+
+alter table TBCOMPRAS
+alter XML_NFE position 15;
+
+alter table TBCOMPRAS
+alter XML_NFE_FILENAME position 16;
+
+alter table TBCOMPRAS
+alter DTLANCAMENTO position 17;
+
+alter table TBCOMPRAS
+alter DTEMISS position 18;
+
+alter table TBCOMPRAS
+alter HREMISS position 19;
+
+alter table TBCOMPRAS
+alter DTENT position 20;
+
+alter table TBCOMPRAS
+alter NFCFOP position 21;
+
+alter table TBCOMPRAS
+alter NATUREZA position 22;
+
+alter table TBCOMPRAS
+alter STATUS position 23;
+
+alter table TBCOMPRAS
+alter IPI position 24;
+
+alter table TBCOMPRAS
+alter ICMSBASE position 25;
+
+alter table TBCOMPRAS
+alter ICMSVALOR position 26;
+
+alter table TBCOMPRAS
+alter ICMSSUBSTBASE position 27;
+
+alter table TBCOMPRAS
+alter ICMSSUBSTVALOR position 28;
+
+alter table TBCOMPRAS
+alter FRETE position 29;
+
+alter table TBCOMPRAS
+alter OUTROSCUSTOS position 30;
+
+alter table TBCOMPRAS
+alter DESCONTO position 31;
+
+alter table TBCOMPRAS
+alter VALORSEGURO position 32;
+
+alter table TBCOMPRAS
+alter VALORTOTAL_II position 33;
+
+alter table TBCOMPRAS
+alter VALORTOTAL_IPI position 34;
+
+alter table TBCOMPRAS
+alter VALORPIS position 35;
+
+alter table TBCOMPRAS
+alter VALORCOFINS position 36;
+
+alter table TBCOMPRAS
+alter TOTALPROD position 37;
+
+alter table TBCOMPRAS
+alter TOTALNF position 38;
+
+alter table TBCOMPRAS
+alter OBS position 39;
+
+alter table TBCOMPRAS
+alter USUARIO position 40;
+
+alter table TBCOMPRAS
+alter FORMAPAGTO_COD position 41;
+
+alter table TBCOMPRAS
+alter CONDICAOPAGTO_COD position 42;
+
+alter table TBCOMPRAS
+alter COMPRA_PRAZO position 43;
+
+alter table TBCOMPRAS
+alter PRAZO_01 position 44;
+
+alter table TBCOMPRAS
+alter PRAZO_02 position 45;
+
+alter table TBCOMPRAS
+alter PRAZO_03 position 46;
+
+alter table TBCOMPRAS
+alter PRAZO_04 position 47;
+
+alter table TBCOMPRAS
+alter PRAZO_05 position 48;
+
+alter table TBCOMPRAS
+alter PRAZO_06 position 49;
+
+alter table TBCOMPRAS
+alter PRAZO_07 position 50;
+
+alter table TBCOMPRAS
+alter PRAZO_08 position 51;
+
+alter table TBCOMPRAS
+alter PRAZO_09 position 52;
+
+alter table TBCOMPRAS
+alter PRAZO_10 position 53;
+
+alter table TBCOMPRAS
+alter PRAZO_11 position 54;
+
+alter table TBCOMPRAS
+alter PRAZO_12 position 55;
+
+alter table TBCOMPRAS
+alter DTFINALIZACAO_COMPRA position 56;
+
+alter table TBCOMPRAS
+alter TIPO_DESPESA position 57;
+
+alter table TBCOMPRAS
+alter CANCEL_USUARIO position 58;
+
+alter table TBCOMPRAS
+alter CANCEL_DATAHORA position 59;
+
+alter table TBCOMPRAS
+alter CANCEL_MOTIVO position 60;
+
+alter table TBCOMPRAS
+alter AUTORIZACAO_ANO position 61;
+
+alter table TBCOMPRAS
+alter AUTORIZACAO_CODIGO position 62;
+
+alter table TBCOMPRAS
+alter AUTORIZACAO_EMPRESA position 63;
+
+
+
+
+/*------ SYSDBA 04/06/2014 13:16:17 --------*/
+
+COMMENT ON COLUMN TBCOMPRAS.ICMSBASE IS
+'Valor Base ICMS/ISS.';
+
+
+
+
+/*------ SYSDBA 04/06/2014 13:16:26 --------*/
+
+COMMENT ON COLUMN TBCOMPRAS.ICMSVALOR IS
+'Valor ICMS/ISS.';
+
+
+
+
+/*------ SYSDBA 04/06/2014 13:16:45 --------*/
+
+COMMENT ON COLUMN TBCOMPRAS.TOTALPROD IS
+'Valor Total Produto/Servico.';
+
