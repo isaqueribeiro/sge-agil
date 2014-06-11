@@ -2641,3 +2641,138 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 11/06/2014 12:54:26 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_DUPLICATA_PAGAR (
+    ANOCOMPRA smallint,
+    NUMCOMPRA integer,
+    FORNECEDOR integer,
+    NF integer,
+    FORMA_PAGTO smallint,
+    CONDICAO_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint,
+    TIPO_DESPESA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable EMPRESA DMN_CNPJ;
+declare variable EMPRESA_NOME DMN_VCHAR_60;
+declare variable FORMA_PAGTO_DESC DMN_VCHAR_30;
+begin
+  if ( Exists(
+    Select
+      p.Numlanc
+    from TBCONTPAG p
+    where p.Anocompra = :Anocompra
+      and p.Numcompra = :Numcompra
+      and p.Parcela  = :Parcela
+  ) ) then
+    Exit;
+
+  -- Buscar o CNPJ da Empresa para se usar no lancamento da duplicata (Contas A Pagar)
+  Select first 1
+      c.codemp
+    , e.rzsoc
+  from TBCOMPRAS c
+    left join TBEMPRESA e on (e.cnpj = c.codemp)
+  where c.ano = :anocompra
+    and c.codcontrol = :numcompra
+  Into
+      Empresa
+    , Empresa_Nome;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anocompra;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2020, 1);
+
+  Insert Into TBCONTPAG (
+      Anolanc
+    , Numlanc
+    , Empresa
+    , NomeEmp
+    , Anocompra
+    , Numcompra
+    , Parcela
+    , Codforn
+    , Tippag
+    , Forma_pagto
+    , Condicao_pagto
+    , Codtpdesp
+    , Notfisc
+    , Dtemiss
+    , Dtvenc
+    , Valorpag
+    , ValorSaldo
+    , Quitado
+    , Situacao
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Empresa
+    , substring(:Empresa_Nome from 1 for 40)
+    , :Anocompra
+    , :Numcompra
+    , :Parcela
+    , :Fornecedor
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Condicao_pagto
+    , :Tipo_Despesa
+    , :Nf
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , :Valor_documento
+    , 0
+    , 1
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+
