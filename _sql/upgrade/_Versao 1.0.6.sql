@@ -9183,3 +9183,237 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 17/06/2014 19:18:11 --------*/
+
+CREATE TABLE SYS_SISTEMA_ROTINA (
+    SIS_COD DMN_SMALLINT_NN NOT NULL,
+    ROT_COD DMN_VCHAR_10_KEY NOT NULL,
+    ACESSO DMN_LOGICO);
+
+ALTER TABLE SYS_SISTEMA_ROTINA
+ADD CONSTRAINT PK_SYS_SISTEMA_ROTINA
+PRIMARY KEY (SIS_COD,ROT_COD);
+
+COMMENT ON COLUMN SYS_SISTEMA_ROTINA.SIS_COD IS
+'Sistema.';
+
+COMMENT ON COLUMN SYS_SISTEMA_ROTINA.ROT_COD IS
+'Rotina.';
+
+COMMENT ON COLUMN SYS_SISTEMA_ROTINA.ACESSO IS
+'Rotina Liberada para o Sistema:
+0 - Nao
+1 - Sim';
+
+GRANT ALL ON SYS_SISTEMA_ROTINA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 17/06/2014 19:19:01 --------*/
+
+ALTER TABLE SYS_SISTEMA_ROTINA
+ADD CONSTRAINT FK_SYS_SISTEMA_ROTINA_SIS
+FOREIGN KEY (SIS_COD)
+REFERENCES SYS_SISTEMA(SIS_COD)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE SYS_SISTEMA_ROTINA
+ADD CONSTRAINT FK_SYS_SISTEMA_ROTINA_ROT
+FOREIGN KEY (ROT_COD)
+REFERENCES SYS_ROTINA(ROT_COD)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 17/06/2014 19:19:12 --------*/
+
+ALTER TABLE SYS_SISTEMA_ROTINA ADD IBE$$TEMP_COLUMN
+ SMALLINT DEFAULT 1
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'SYS_SISTEMA_ROTINA') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'SYS_SISTEMA_ROTINA') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'SYS_SISTEMA_ROTINA') AND
+      (F1.RDB$FIELD_NAME = 'ACESSO');
+
+ALTER TABLE SYS_SISTEMA_ROTINA DROP IBE$$TEMP_COLUMN;
+
+
+
+
+/*------ SYSDBA 17/06/2014 19:20:20 --------*/
+
+COMMENT ON TABLE SYS_SISTEMA_ROTINA IS 'Tabela Sistema x Rotina.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   17/06/2014
+
+Tabela responsavel por associar o(s) com a(s) rotina(s) que o sistema pode acessar.';
+
+
+
+
+/*------ SYSDBA 17/06/2014 19:21:00 --------*/
+
+COMMENT ON TABLE SYS_ROTINA IS 'Tabela Sistema.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   25/04/2014
+
+Tabela responsavel por armazenar as rotinas de acesso disponiveis para o sistema e seu controle de acesso.';
+
+
+
+
+/*------ SYSDBA 17/06/2014 19:24:51 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_ROTINA (
+    SISTEMA DMN_SMALLINT_NN,
+    CODIGO DMN_VCHAR_10,
+    TIPO DMN_SMALLINT_N,
+    DESCRICAO DMN_VCHAR_250,
+    ROTINA_PAI DMN_VCHAR_10)
+as
+begin
+  /* Gravar Rotina */
+
+  if (not exists(
+    Select
+      r.rot_cod
+    from SYS_ROTINA r
+    where r.rot_cod = trim(:rotina_pai)
+  )) then
+    rotina_pai = '';
+
+  if (not exists(
+    Select
+      r.rot_cod
+    from SYS_ROTINA r
+    where r.rot_cod = trim(:codigo)
+  )) then
+    Insert Into SYS_ROTINA (
+        rot_cod
+      , rot_tipo
+      , rot_descricao
+      , rot_cod_pai
+    ) values (
+        trim(:codigo)
+      , coalesce(:tipo, 0)
+      , trim(:descricao)
+      , case when trim(:rotina_pai) <> '' then trim(:rotina_pai) else null end
+    );
+  else
+    Update SYS_ROTINA r Set
+        r.rot_tipo      = coalesce(:tipo, 0)
+      , r.rot_descricao = trim(:descricao)
+      , r.rot_cod_pai   = case when trim(:rotina_pai) <> '' then trim(:rotina_pai) else null end
+    where r.rot_cod = trim(:codigo);
+
+  /* Gravar Associacao Rotina x Sistema */
+  if ( coalesce(:sistema, 0) > 0 ) then
+    if (not exists(
+      Select
+        s.acesso
+      from SYS_SISTEMA_ROTINA s
+      where s.sis_cod = :sistema
+        and s.rot_cod = :codigo
+    )) then
+      Insert Into SYS_SISTEMA_ROTINA (
+          sis_cod
+        , rot_cod
+        , acesso
+      ) values (
+          :sistema
+        , :codigo
+        , 1
+      );
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 17/06/2014 19:32:11 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_ROTINA (
+    SISTEMA DMN_SMALLINT_NN,
+    CODIGO DMN_VCHAR_10,
+    TIPO DMN_SMALLINT_N,
+    DESCRICAO DMN_VCHAR_250,
+    ROTINA_PAI DMN_VCHAR_10)
+as
+begin
+  /* Gravar Rotina */
+
+  if (not exists(
+    Select
+      r.rot_cod
+    from SYS_ROTINA r
+    where r.rot_cod = trim(:rotina_pai)
+  )) then
+    rotina_pai = '';
+
+  if (not exists(
+    Select
+      r.rot_cod
+    from SYS_ROTINA r
+    where r.rot_cod = trim(:codigo)
+  )) then
+    Insert Into SYS_ROTINA (
+        rot_cod
+      , rot_tipo
+      , rot_descricao
+      , rot_cod_pai
+    ) values (
+        trim(:codigo)
+      , coalesce(:tipo, 0)
+      , trim(:descricao)
+      , case when trim(:rotina_pai) <> '' then trim(:rotina_pai) else null end
+    );
+  else
+    Update SYS_ROTINA r Set
+        r.rot_tipo      = coalesce(:tipo, 0)
+      , r.rot_descricao = trim(:descricao)
+      , r.rot_cod_pai   = case when trim(:rotina_pai) <> '' then trim(:rotina_pai) else null end
+    where r.rot_cod = trim(:codigo);
+
+  /* Gravar Associacao Rotina x Sistema */
+  if ( coalesce(:sistema, -1) > -1 ) then
+    if (not exists(
+      Select
+        s.acesso
+      from SYS_SISTEMA_ROTINA s
+      where s.sis_cod = :sistema
+        and s.rot_cod = :codigo
+    )) then
+      Insert Into SYS_SISTEMA_ROTINA (
+          sis_cod
+        , rot_cod
+        , acesso
+      ) values (
+          :sistema
+        , :codigo
+        , 1
+      );
+end^
+
+SET TERM ; ^
+
