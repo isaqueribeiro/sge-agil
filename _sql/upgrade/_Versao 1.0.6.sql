@@ -9417,3 +9417,487 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 18/06/2014 13:47:34 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_GERAR_DUPLICATAS (
+    ANOCOMPRA smallint,
+    NUMCOMPRA integer)
+returns (
+    FORNECEDOR integer,
+    NOTAFISCAL integer,
+    PARCELAS smallint,
+    VALOR_TOTAL numeric(15,2),
+    PARCELA smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    FORMA_PAGTO smallint,
+    CONDICAO_PAGTO smallint,
+    DATA_ENTRADA date,
+    ANO_LANC smallint,
+    NUM_LANC integer)
+as
+declare variable TIPO_DESPESA smallint;
+declare variable P01 smallint;
+declare variable P02 smallint;
+declare variable P03 smallint;
+declare variable P04 smallint;
+declare variable P05 smallint;
+declare variable P06 smallint;
+declare variable P07 smallint;
+declare variable P08 smallint;
+declare variable P09 smallint;
+declare variable P10 smallint;
+declare variable P11 smallint;
+declare variable P12 smallint;
+declare variable VALOR_TOTAL_PARCELAS numeric(15,2);
+begin
+  for
+    Select
+        c.Codforn
+      , c.Nf
+      , c.tipo_despesa
+      , coalesce(c.Prazo_01, 0)
+      , c.Prazo_02
+      , c.Prazo_03
+      , c.Prazo_04
+      , c.Prazo_05
+      , c.Prazo_06
+      , c.Prazo_07
+      , c.Prazo_08
+      , c.Prazo_09
+      , c.Prazo_10
+      , c.Prazo_11
+      , c.Prazo_12
+      , case when coalesce(c.Prazo_01, 0) is not null then 1 else 0 end +
+        case when c.Prazo_02 is not null then 1 else 0 end +
+        case when c.Prazo_03 is not null then 1 else 0 end +
+        case when c.Prazo_04 is not null then 1 else 0 end +
+        case when c.Prazo_05 is not null then 1 else 0 end +
+        case when c.Prazo_06 is not null then 1 else 0 end +
+        case when c.Prazo_07 is not null then 1 else 0 end +
+        case when c.Prazo_08 is not null then 1 else 0 end +
+        case when c.Prazo_09 is not null then 1 else 0 end +
+        case when c.Prazo_10 is not null then 1 else 0 end +
+        case when c.Prazo_11 is not null then 1 else 0 end +
+        case when c.Prazo_12 is not null then 1 else 0 end as parcelas
+      , c.Totalnf
+      , c.Formapagto_cod
+      , c.Condicaopagto_cod
+      , coalesce(c.dtemiss, c.dtent)
+    from TBCOMPRAS c
+    where c.Ano        = :Anocompra
+      and c.Codcontrol = :Numcompra
+    into
+        Fornecedor
+      , NotaFiscal
+      , Tipo_Despesa
+      , p01
+      , p02
+      , p03
+      , p04
+      , p05
+      , p06
+      , p07
+      , p08
+      , p09
+      , p10
+      , p11
+      , p12
+      , parcelas
+      , valor_total
+      , forma_pagto
+      , Condicao_pagto
+      , Data_entrada
+  do
+  begin
+
+    parcela = 0;
+    emissao = :Data_entrada;
+    valor_documento = :Valor_total / :Parcelas;
+
+    -- Parcela 1
+    if ( :P01 is not null ) then
+    begin
+      if ( :P01 = 0 ) then
+        parcela = 0;
+      else
+      if ( :P01 > 0 ) then
+        parcela = 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P01) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 2
+    if ( :P02 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P02) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 3
+    if ( :P03 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P03) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 4
+    if ( :P04 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P04) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 5
+    if ( :P05 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P05) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 6
+    if ( :P06 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P06) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 7
+    if ( :P07 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P07) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 8
+    if ( :P08 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P08) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 9
+    if ( :P09 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P09) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 10
+    if ( :P10 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P10) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 11
+    if ( :P11 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P11) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Parcela 12
+    if ( :P12 is not null ) then
+    begin
+      parcela = :Parcela + 1;
+
+      Select d.Dia_util from Get_dia_util(:Emissao, :P12) d into vencimento;
+
+      Select
+          d.Anolancamento
+        , d.Numlancamento
+      from SET_DUPLICATA_PAGAR (
+          :Anocompra
+        , :Numcompra
+        , :Fornecedor
+        , :Notafiscal
+        , :Forma_pagto
+        , :Condicao_pagto
+        , :Emissao
+        , :Vencimento
+        , :Valor_documento
+        , :Parcela
+        , :Tipo_Despesa) d
+      into
+          Ano_lanc
+        , Num_lanc;
+    end
+
+    -- Verificar ao valor total das parcelas
+    if ( :Parcelas > 1 ) then
+    begin
+      Select
+          sum( coalesce(d.Valorpag, 0) )
+      from TBCONTPAG d
+      where d.Anocompra = :Anocompra
+        and d.Numcompra = :Numcompra
+      into
+          valor_total_parcelas;
+
+      -- Atualizar o valor da ultima parcela
+      if ( :Valor_total_parcelas < :Valor_total ) then
+      begin
+        Update TBCONTPAG d Set
+            d.Valorpag = :Valor_documento + (:Valor_total - :Valor_total_parcelas)
+        where d.Anocompra = :Anocompra
+          and d.Numcompra = :Numcompra
+          and d.Parcela   = :Parcela;
+      end 
+    end 
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 18/06/2014 15:57:48 --------*/
+
+ALTER TABLE TBTPDESPESA
+    ADD TIPO_PARTICULAR DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBTPDESPESA.TIPO_PARTICULAR IS
+'Despesa Particular:
+0 - Nao
+1 - Sim';
+
+alter table TBTPDESPESA
+alter COD position 1;
+
+alter table TBTPDESPESA
+alter TIPODESP position 2;
+
+alter table TBTPDESPESA
+alter TIPO_PARTICULAR position 3;
+
+alter table TBTPDESPESA
+alter PLANO_CONTA position 4;
+
