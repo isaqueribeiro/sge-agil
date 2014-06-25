@@ -9901,3 +9901,107 @@ alter TIPO_PARTICULAR position 3;
 alter table TBTPDESPESA
 alter PLANO_CONTA position 4;
 
+
+
+
+/*------ SYSDBA 25/06/2014 01:35:51 --------*/
+
+COMMENT ON COLUMN TBCFOP.CFOP_COD IS
+'Codigo';
+
+
+
+
+/*------ SYSDBA 25/06/2014 01:35:59 --------*/
+
+COMMENT ON COLUMN TBCFOP.CFOP_DESCRICAO IS
+'Descricao';
+
+
+
+
+/*------ SYSDBA 25/06/2014 01:36:08 --------*/
+
+COMMENT ON COLUMN TBCFOP.CFOP_ESPECIFICACAO IS
+'Especificacao';
+
+
+
+
+/*------ SYSDBA 25/06/2014 01:37:14 --------*/
+
+ALTER TABLE TBCFOP
+    ADD CFOP_INFORMACAO_FISCO DMN_VCHAR_250;
+
+COMMENT ON COLUMN TBCFOP.CFOP_INFORMACAO_FISCO IS
+'Informacao ao Fisco na NF-e';
+
+alter table TBCFOP
+alter CFOP_COD position 1;
+
+alter table TBCFOP
+alter CFOP_DESCRICAO position 2;
+
+alter table TBCFOP
+alter CFOP_ESPECIFICACAO position 3;
+
+alter table TBCFOP
+alter CFOP_INFORMACAO_FISCO position 4;
+
+alter table TBCFOP
+alter CFOP_ALTERA_CUSTO_PRODUTO position 5;
+
+alter table TBCFOP
+alter CFOP_CST_PADRAO_ENTRADA position 6;
+
+alter table TBCFOP
+alter CFOP_CST_PADRAO_SAIDA position 7;
+
+
+
+
+/*------ SYSDBA 25/06/2014 01:42:33 --------*/
+
+COMMENT ON TABLE TBCFOP IS 'Tabela CFOP
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar a lista de CFOPs que se pode utilizar na emissao de NF-e.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    25/06/2014 - IMR :
+        + Criacao do campos EMPRESA e SITUACAO para que, ao inserir o registro de CONTAS A PAGAR, este esteja associado
+          a EMPRESA responsavel como tambem se conheca sua situacao. Isto permitira que o sistema sela MULTI-EMPRESA.';
+
+
+
+
+/*------ SYSDBA 25/06/2014 01:43:59 --------*/
+
+COMMENT ON TABLE TBCFOP IS 'Tabela CFOP
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar a lista de CFOPs que se pode utilizar na emissao de NF-e.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    25/06/2014 - IMR :
+        + Criacao do campo CFOP_INFORMACAO_FISCO para armazenar o texto padrao que sera informado na NF-e quando esta
+          possuir um CFOP com esta informacao.';
+
