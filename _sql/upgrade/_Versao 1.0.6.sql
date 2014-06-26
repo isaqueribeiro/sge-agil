@@ -10005,3 +10005,835 @@ Historico:
         + Criacao do campo CFOP_INFORMACAO_FISCO para armazenar o texto padrao que sera informado na NF-e quando esta
           possuir um CFOP com esta informacao.';
 
+
+
+
+/*------ SYSDBA 26/06/2014 12:01:35 --------*/
+
+ALTER TABLE TBCONFIGURACAO
+    ADD AUTORIZA_INFORMA_CLIENTE DMN_LOGICO;
+
+COMMENT ON COLUMN TBCONFIGURACAO.AUTORIZA_INFORMA_CLIENTE IS
+'Autorizacao de Compra/Servico: Disponibilizar Controle p/ Informar o Cliente:
+0 - Nao
+1 - Sim';
+
+alter table TBCONFIGURACAO
+alter EMPRESA position 1;
+
+alter table TBCONFIGURACAO
+alter EMAIL_CONTA position 2;
+
+alter table TBCONFIGURACAO
+alter EMAIL_SENHA position 3;
+
+alter table TBCONFIGURACAO
+alter EMAIL_POP position 4;
+
+alter table TBCONFIGURACAO
+alter EMAIL_SMTP position 5;
+
+alter table TBCONFIGURACAO
+alter EMAIL_SMTP_PORTA position 6;
+
+alter table TBCONFIGURACAO
+alter EMAIL_REQUER_AUTENTICACAO position 7;
+
+alter table TBCONFIGURACAO
+alter EMAIL_CONEXAO_SSL position 8;
+
+alter table TBCONFIGURACAO
+alter EMAIL_ASSUNTO_PADRAO position 9;
+
+alter table TBCONFIGURACAO
+alter EMAIL_MENSAGEM_PADRAO position 10;
+
+alter table TBCONFIGURACAO
+alter NFE_SOLICITA_DH_SAIDA position 11;
+
+alter table TBCONFIGURACAO
+alter NFE_IMPRIMIR_COD_CLIENTE position 12;
+
+alter table TBCONFIGURACAO
+alter CLIENTE_PERMITIR_DUPLICAR_CNPJ position 13;
+
+alter table TBCONFIGURACAO
+alter CUSTO_OPER_CALCULAR position 14;
+
+alter table TBCONFIGURACAO
+alter PERMITIR_VENDA_ESTOQUE_INS position 15;
+
+alter table TBCONFIGURACAO
+alter VENDA_CARREGA_PRODUTO_EAN position 16;
+
+alter table TBCONFIGURACAO
+alter ESTOQUE_UNICO_EMPRESAS position 17;
+
+alter table TBCONFIGURACAO
+alter ESTOQUE_SATELITE_CLIENTE position 18;
+
+alter table TBCONFIGURACAO
+alter AUTORIZA_INFORMA_CLIENTE position 19;
+
+alter table TBCONFIGURACAO
+alter USUARIO position 20;
+
+
+
+
+/*------ SYSDBA 26/06/2014 12:02:13 --------*/
+
+ALTER TABLE TBAUTORIZA_COMPRA
+    ADD CLIENTE DMN_INTEGER_N;
+
+COMMENT ON COLUMN TBAUTORIZA_COMPRA.CLIENTE IS
+'Cliente';
+
+alter table TBAUTORIZA_COMPRA
+alter ANO position 1;
+
+alter table TBAUTORIZA_COMPRA
+alter CODIGO position 2;
+
+alter table TBAUTORIZA_COMPRA
+alter EMPRESA position 3;
+
+alter table TBAUTORIZA_COMPRA
+alter NUMERO position 4;
+
+alter table TBAUTORIZA_COMPRA
+alter FORNECEDOR position 5;
+
+alter table TBAUTORIZA_COMPRA
+alter NOME_CONTATO position 6;
+
+alter table TBAUTORIZA_COMPRA
+alter TIPO position 7;
+
+alter table TBAUTORIZA_COMPRA
+alter INSERCAO_DATA position 8;
+
+alter table TBAUTORIZA_COMPRA
+alter EMISSAO_DATA position 9;
+
+alter table TBAUTORIZA_COMPRA
+alter EMISSAO_USUARIO position 10;
+
+alter table TBAUTORIZA_COMPRA
+alter VALIDADE position 11;
+
+alter table TBAUTORIZA_COMPRA
+alter COMPETENCIA position 12;
+
+alter table TBAUTORIZA_COMPRA
+alter DATA_FATURA position 13;
+
+alter table TBAUTORIZA_COMPRA
+alter MOVITO position 14;
+
+alter table TBAUTORIZA_COMPRA
+alter OBSERVACAO position 15;
+
+alter table TBAUTORIZA_COMPRA
+alter CLIENTE position 16;
+
+alter table TBAUTORIZA_COMPRA
+alter ENDERECO_ENTREGA position 17;
+
+alter table TBAUTORIZA_COMPRA
+alter STATUS position 18;
+
+alter table TBAUTORIZA_COMPRA
+alter AUTORIZADO_DATA position 19;
+
+alter table TBAUTORIZA_COMPRA
+alter AUTORIZADO_USUARIO position 20;
+
+alter table TBAUTORIZA_COMPRA
+alter CANCELADO_DATA position 21;
+
+alter table TBAUTORIZA_COMPRA
+alter CANCELADO_USUARIO position 22;
+
+alter table TBAUTORIZA_COMPRA
+alter CANCELADO_MOTIVO position 23;
+
+alter table TBAUTORIZA_COMPRA
+alter RECEBEDOR_NOME position 24;
+
+alter table TBAUTORIZA_COMPRA
+alter RECEBEDOR_CPF position 25;
+
+alter table TBAUTORIZA_COMPRA
+alter RECEBEDOR_FUNCAO position 26;
+
+alter table TBAUTORIZA_COMPRA
+alter FORMA_PAGTO position 27;
+
+alter table TBAUTORIZA_COMPRA
+alter CONDICAO_PAGTO position 28;
+
+alter table TBAUTORIZA_COMPRA
+alter TRANSPORTADOR position 29;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_BRUTO position 30;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_DESCONTO position 31;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_TOTAL_FRETE position 32;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_TOTAL_IPI position 33;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_TOTAL position 34;
+
+
+
+
+/*------ SYSDBA 26/06/2014 12:02:32 --------*/
+
+ALTER TABLE TBAUTORIZA_COMPRA
+ADD CONSTRAINT FK_TBAUTORIZA_COMPRA_CLIENTE
+FOREIGN KEY (CLIENTE)
+REFERENCES TBCLIENTE(CODIGO);
+
+
+
+
+/*------ SYSDBA 26/06/2014 12:07:56 --------*/
+
+ALTER TABLE TBCONFIGURACAO ADD IBE$$TEMP_COLUMN
+ SMALLINT DEFAULT 0
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'TBCONFIGURACAO') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'TBCONFIGURACAO') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'TBCONFIGURACAO') AND
+      (F1.RDB$FIELD_NAME = 'AUTORIZA_INFORMA_CLIENTE');
+
+ALTER TABLE TBCONFIGURACAO DROP IBE$$TEMP_COLUMN;
+
+
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2014;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2015;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2016;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2017;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2018;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2019;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE GENERATOR GEN_COTACAO_COMPRA_2020;
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+CREATE TABLE TBCOTACAO_COMPRA (
+    ANO                 DMN_SMALLINT_NN NOT NULL /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    CODIGO              DMN_BIGINT_NN NOT NULL /* DMN_BIGINT_NN = INTEGER NOT NULL */,
+    EMPRESA             DMN_CNPJ_NN NOT NULL /* DMN_CNPJ_NN = VARCHAR(18) NOT NULL */,
+    NUMERO              DMN_VCHAR_20_NN /* DMN_VCHAR_20_NN = VARCHAR(20) NOT NULL */,
+    TIPO                DMN_SMALLINT_NN DEFAULT 0 /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    INSERCAO_DATA       DMN_DATETIME /* DMN_DATETIME = TIMESTAMP */,
+    EMISSAO_DATA        DMN_DATE_NN /* DMN_DATE_NN = DATE NOT NULL */,
+    EMISSAO_USUARIO     DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */,
+    VALIDADE            DMN_DATE /* DMN_DATE = DATE */,
+    COMPETENCIA         DMN_INTEGER_N /* DMN_INTEGER_N = INTEGER */,
+    MOVITO              DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    OBSERVACAO          DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    LOG_EVENTO          DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    STATUS              DMN_SMALLINT_NN DEFAULT 0 /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    FINALIZADA_DATA     DMN_DATE /* DMN_DATE = DATE */,
+    FINALIZADA_USUARIO  DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */,
+    CANCELADO_DATA      DMN_DATE /* DMN_DATE = DATE */,
+    CANCELADO_USUARIO   DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */,
+    CANCELADO_MOTIVO    DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    VALOR_MAX_BRUTO     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MAX_DESCONTO  DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MAX_TOTAL     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MIN_BRUTO     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MIN_DESCONTO  DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MIN_TOTAL     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MEDIA_BRUTO     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MEDIA_DESCONTO  DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_MEDIA_TOTAL     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */
+);
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ADD CONSTRAINT PK_TBCOTACAO_COMPRA PRIMARY KEY (ANO, CODIGO, EMPRESA);
+
+/*------ 26/06/2014 17:15:29 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ADD CONSTRAINT FK_TBCOTACAO_COMPRA_COMPET FOREIGN KEY (COMPETENCIA) REFERENCES TBCOMPETENCIA (CMP_NUM);
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ADD CONSTRAINT FK_TBCOTACAO_COMPRA_EMPRESA FOREIGN KEY (EMPRESA) REFERENCES TBEMPRESA (CNPJ);
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ADD CONSTRAINT FK_TBCOTACAO_COMPRA_USR_CANCEL FOREIGN KEY (CANCELADO_USUARIO) REFERENCES TBUSERS (NOME);
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ADD CONSTRAINT FK_TBCOTACAO_COMPRA_USR_EMISS FOREIGN KEY (EMISSAO_USUARIO) REFERENCES TBUSERS (NOME)
+  USING INDEX FK_TBCOTACAO_COMPRA_EMISSOR;
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+CREATE INDEX IDX_TBCOTACAO_COMPRA_NUMERO ON TBCOTACAO_COMPRA (NUMERO);
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER TRIGGER TG_COTACAO_COMPRA_CODIGO FOR TBCOTACAO_COMPRA
+ACTIVE BEFORE INSERT POSITION 0
+AS
+begin
+  if (new.codigo is null) then
+    if ( new.ano = 2014 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2014, 1);
+    else
+    if ( new.ano = 2015 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2015, 1);
+    else
+    if ( new.ano = 2016 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2016, 1);
+    else
+    if ( new.ano = 2017 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2017, 1);
+    else
+    if ( new.ano = 2018 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2018, 1);
+    else
+    if ( new.ano = 2019 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2019, 1);
+    else
+    if ( new.ano = 2020 ) then
+      new.codigo = gen_id(GEN_COTACAO_COMPRA_2020, 1);
+end^
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+CREATE OR ALTER TRIGGER TG_COTACAO_COMPRA_COMPETENCIA FOR TBCOTACAO_COMPRA
+ACTIVE BEFORE INSERT OR UPDATE POSITION 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = right('0000' || extract(year from new.emissao_data), 4) || right('00' || extract(month from new.emissao_data), 2);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+SET TERM ; ^
+
+COMMENT ON TABLE TBCOTACAO_COMPRA IS 
+'Tabela Cotacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   26/06/2014
+
+Tabela responsavel por armazenar as cotacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    DD/MM/AAAA - IMR :
+        + ...
+          ...';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON TRIGGER TG_COTACAO_COMPRA_CODIGO IS 
+'Trigger Nova Cotacao de Compra/Servico.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   26/06/2014
+
+Trigger responsavel por gerar um sequencial unico para cada novo registro de cotacao de compra/servico no ano.';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON TRIGGER TG_COTACAO_COMPRA_COMPETENCIA IS 
+'Trigger Competencia Cotacao
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   26/06/2014
+
+Trigger responsavel por identificar a competencia da cotacao quando esta nao for informada, baseando-se na data de
+emissao.';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.ANO IS 
+'Ano';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.CODIGO IS 
+'Codigo';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.EMPRESA IS 
+'Empresa';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.NUMERO IS 
+'Numero da Autorizacao (Livre)';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.TIPO IS 
+'Tipo:
+0 - A Definir
+1 - Compra
+2 - Servico
+3 - Compra/Servico';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.INSERCAO_DATA IS 
+'Data/hora de insercao';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.EMISSAO_DATA IS 
+'Data de Emissao';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.EMISSAO_USUARIO IS 
+'Usuario de Emissao';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALIDADE IS 
+'Data de Validade';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.COMPETENCIA IS 
+'Competencia';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.MOVITO IS 
+'Motivo';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.OBSERVACAO IS 
+'Observacoes';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.STATUS IS 
+'Status:
+0 - Em edicao
+1 - Aberta
+2 - Autorizada
+3 - Faturada (NF/NFS registrada no sistema referente a autorizacao)
+4 - Cancelada';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.CANCELADO_DATA IS 
+'Data de Cancelamento';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.CANCELADO_USUARIO IS 
+'Usuario de Cancelamento';
+
+/*------ 26/06/2014 17:15:30 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.CANCELADO_MOTIVO IS 
+'Motivo de Cancelamento';
+
+/*------ 26/06/2014 17:15:31 --------*/
+
+GRANT ALL ON TBCOTACAO_COMPRA TO PUBLIC;
+
+
+/*------ SYSDBA 26/06/2014 17:20:20 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.LOG_EVENTO IS
+'Log de Eventos';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:23:03 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.STATUS IS
+'Status:
+0 - Em edicao
+1 - Aberta
+2 - Autorizada
+3 - Em Cotacao (Recebendo respostas dos fornecedores)
+4 - Encerrada
+5 - Cancelada';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:23:16 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ALTER FINALIZADA_DATA TO AUTORIZADA_DATA;
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:23:23 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA ALTER FINALIZADA_USUARIO TO AUTORIZADA_USUARIO;
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:28:28 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MAX_BRUTO IS
+'Maximo: Valor Bruto';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:28:36 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MAX_DESCONTO IS
+'Maximo: Descontos';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:28:46 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MAX_TOTAL IS
+'Maximo: Valor Total Liquido';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:28:55 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MIN_TOTAL IS
+'Minimo: Valor Total Liquido';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:29:05 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MEDIA_TOTAL IS
+'Media: Valor Total Liquido';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:29:17 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MIN_BRUTO IS
+'Minimo: Valor Bruto';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:29:26 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MEDIA_BRUTO IS
+'Media: Valor Bruto';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:29:40 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MIN_DESCONTO IS
+'Minimo: Descontos';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:29:46 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_MEDIA_DESCONTO IS
+'Media: Descontos';
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:30:35 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA
+ADD CONSTRAINT FK_TBCOTACAO_COMPRA_USR_AUT
+FOREIGN KEY (AUTORIZADA_USUARIO)
+REFERENCES TBUSERS(NOME);
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:37:59 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA
+    ADD ENCERRADA_DATA DMN_DATE,
+    ADD ENCERRADA_USUARIO DMN_USUARIO;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.AUTORIZADA_DATA IS
+'Data de Autorizacao';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.AUTORIZADA_USUARIO IS
+'Usuario da Autorizacao';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.ENCERRADA_DATA IS
+'Data de Encerramento';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.ENCERRADA_USUARIO IS
+'Usuario de Encerramento';
+
+alter table TBCOTACAO_COMPRA
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRA
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRA
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRA
+alter NUMERO position 4;
+
+alter table TBCOTACAO_COMPRA
+alter TIPO position 5;
+
+alter table TBCOTACAO_COMPRA
+alter INSERCAO_DATA position 6;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_DATA position 7;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_USUARIO position 8;
+
+alter table TBCOTACAO_COMPRA
+alter VALIDADE position 9;
+
+alter table TBCOTACAO_COMPRA
+alter COMPETENCIA position 10;
+
+alter table TBCOTACAO_COMPRA
+alter MOVITO position 11;
+
+alter table TBCOTACAO_COMPRA
+alter OBSERVACAO position 12;
+
+alter table TBCOTACAO_COMPRA
+alter LOG_EVENTO position 13;
+
+alter table TBCOTACAO_COMPRA
+alter STATUS position 14;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_DATA position 15;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_USUARIO position 16;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_DATA position 17;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_USUARIO position 18;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_DATA position 19;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_USUARIO position 20;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_MOTIVO position 21;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_BRUTO position 22;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_DESCONTO position 23;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_TOTAL position 24;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_BRUTO position 25;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_DESCONTO position 26;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_TOTAL position 27;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_BRUTO position 28;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_DESCONTO position 29;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_TOTAL position 30;
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:38:33 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA
+ADD CONSTRAINT FK_TBCOTACAO_COMPRA_USR_ENCERR
+FOREIGN KEY (ENCERRADA_USUARIO)
+REFERENCES TBUSERS(NOME);
+
+
+
+
+/*------ SYSDBA 26/06/2014 17:41:42 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA
+    ADD VALOR_REF_TOTAL DMN_MONEY;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.VALOR_REF_TOTAL IS
+'Valor Total Liquido de Referencia';
+
+alter table TBCOTACAO_COMPRA
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRA
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRA
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRA
+alter NUMERO position 4;
+
+alter table TBCOTACAO_COMPRA
+alter TIPO position 5;
+
+alter table TBCOTACAO_COMPRA
+alter INSERCAO_DATA position 6;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_DATA position 7;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_USUARIO position 8;
+
+alter table TBCOTACAO_COMPRA
+alter VALIDADE position 9;
+
+alter table TBCOTACAO_COMPRA
+alter COMPETENCIA position 10;
+
+alter table TBCOTACAO_COMPRA
+alter MOVITO position 11;
+
+alter table TBCOTACAO_COMPRA
+alter OBSERVACAO position 12;
+
+alter table TBCOTACAO_COMPRA
+alter LOG_EVENTO position 13;
+
+alter table TBCOTACAO_COMPRA
+alter STATUS position 14;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_DATA position 15;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_USUARIO position 16;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_DATA position 17;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_USUARIO position 18;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_DATA position 19;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_USUARIO position 20;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_MOTIVO position 21;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_REF_TOTAL position 22;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_BRUTO position 23;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_DESCONTO position 24;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_TOTAL position 25;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_BRUTO position 26;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_DESCONTO position 27;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_TOTAL position 28;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_BRUTO position 29;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_DESCONTO position 30;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_TOTAL position 31;
+
