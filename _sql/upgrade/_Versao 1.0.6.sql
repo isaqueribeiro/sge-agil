@@ -11388,3 +11388,566 @@ alter ATIVO position 12;
 alter table TBCOTACAO_COMPRAFORN
 alter USUARIO position 13;
 
+
+
+
+/*------ SYSDBA 30/06/2014 20:36:27 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN.ATIVO IS
+'Fornecedor ativo para Cotacao:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:42:16 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN DROP CONSTRAINT FK_TBCOTACAO_COMPRAFORN_COT;
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:42:22 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN DROP CONSTRAINT PK_TBCOTACAO_COMPRAFORN;
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:42:30 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN ALTER NUMERO TO CODIGO;
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:42:40 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN
+ADD CONSTRAINT PK_TBCOTACAO_COMPRAFORN
+PRIMARY KEY (ANO,CODIGO,EMPRESA,FORNECEDOR);
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:43:04 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN
+ADD CONSTRAINT FK_TBCOTACAO_COMPRAFORN_COT
+FOREIGN KEY (ANO,CODIGO,EMPRESA)
+REFERENCES TBCOTACAO_COMPRA(ANO,CODIGO,EMPRESA)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:48:24 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_cotacao_compraforn_cotar for tbcotacao_compraforn
+active after insert or update or delete position 0
+AS
+  declare variable ano DMN_SMALLINT_N;
+  declare variable cod DMN_BIGINT_N;
+  declare variable emp DMN_CNPJ;
+  declare variable cotacoes Integer;
+begin
+  if ( inserting or updating ) then
+  begin
+    ano = new.ano;
+    cod = new.codigo;
+    emp = new.empresa;
+  end 
+  else
+  if ( deleting ) then
+  begin
+    ano = old.ano;
+    cod = old.codigo;
+    emp = old.empresa;
+  end
+
+  Select
+    count(cf.fornecedor)
+  from TBCOTACAO_COMPRAFORN cf
+  where cf.ano     = :ano
+    and cf.codigo  = :cod
+    and cf.empresa = :emp
+  Into
+    cotacoes;
+
+  Update TBCOTACAO_COMPRA c Set
+    c.status =
+      Case when coalesce(:cotacoes, 0) = 0
+        then 2 -- Autorizada
+        else 3 -- Em Cotacao (Recebendo respostas dos fornecedores)
+      End
+  where c.status in (2, 3)
+    and c.ano     = :ano
+    and c.codigo  = :cod
+    and c.empresa = :emp;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:50:38 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cotacao_compraforn_cotar for tbcotacao_compraforn
+active after insert or update or delete position 0
+AS
+  declare variable ano DMN_SMALLINT_N;
+  declare variable cod DMN_BIGINT_N;
+  declare variable emp DMN_CNPJ;
+  declare variable cotacoes Integer;
+begin
+  if ( inserting or updating ) then
+  begin
+    ano = new.ano;
+    cod = new.codigo;
+    emp = new.empresa;
+  end 
+  else
+  if ( deleting ) then
+  begin
+    ano = old.ano;
+    cod = old.codigo;
+    emp = old.empresa;
+  end
+
+  Select
+    count(cf.fornecedor)
+  from TBCOTACAO_COMPRAFORN cf
+  where cf.ano     = :ano
+    and cf.codigo  = :cod
+    and cf.empresa = :emp
+  Into
+    cotacoes;
+
+  Update TBCOTACAO_COMPRA c Set
+    c.status =
+      Case when coalesce(:cotacoes, 0) = 0
+        then 2 -- Autorizada
+        else 3 -- Em Cotacao (Recebendo respostas dos fornecedores)
+      End
+  where c.status in (2, 3)
+    and c.ano     = :ano
+    and c.codigo  = :cod
+    and c.empresa = :emp;
+
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_COTACAO_COMPRAFORN_COTAR IS 'Trigger Colocar Registro em Cotacao.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   30/06/2014
+
+Trigger responsavel por alterar o status do registro de Cotacao de Compra/Servico quando os dados referentes aos
+fornecedores pertencentes a esta sao trabalhados.';
+
+
+
+
+/*------ SYSDBA 30/06/2014 20:51:42 --------*/
+
+CREATE INDEX IDX_TBCOTACAO_COMPRA_STATUS
+ON TBCOTACAO_COMPRA (STATUS);
+
+
+
+
+/*------ SYSDBA 30/06/2014 22:05:38 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA
+    ADD DESCRICAO_RESUMO DMN_VCHAR_100;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.DESCRICAO_RESUMO IS
+'Descricao resumo';
+
+alter table TBCOTACAO_COMPRA
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRA
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRA
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRA
+alter NUMERO position 4;
+
+alter table TBCOTACAO_COMPRA
+alter TIPO position 5;
+
+alter table TBCOTACAO_COMPRA
+alter DESCRICAO_RESUMO position 6;
+
+alter table TBCOTACAO_COMPRA
+alter INSERCAO_DATA position 7;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_DATA position 8;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_USUARIO position 9;
+
+alter table TBCOTACAO_COMPRA
+alter VALIDADE position 10;
+
+alter table TBCOTACAO_COMPRA
+alter COMPETENCIA position 11;
+
+alter table TBCOTACAO_COMPRA
+alter MOVITO position 12;
+
+alter table TBCOTACAO_COMPRA
+alter OBSERVACAO position 13;
+
+alter table TBCOTACAO_COMPRA
+alter LOG_EVENTO position 14;
+
+alter table TBCOTACAO_COMPRA
+alter STATUS position 15;
+
+alter table TBCOTACAO_COMPRA
+alter NUMERO_MINIMO_FORNECEDOR position 16;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_DATA position 17;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_USUARIO position 18;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_DATA position 19;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_USUARIO position 20;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_DATA position 21;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_USUARIO position 22;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_MOTIVO position 23;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_REF_TOTAL position 24;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_BRUTO position 25;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_DESCONTO position 26;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_TOTAL position 27;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_BRUTO position 28;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_DESCONTO position 29;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_TOTAL position 30;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_BRUTO position 31;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_DESCONTO position 32;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_TOTAL position 33;
+
+
+
+
+/*------ SYSDBA 30/06/2014 22:28:36 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRA
+    ADD NOME_CONTATO_INT DMN_VCHAR_100;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.NOME_CONTATO_INT IS
+'Nome de Contato Interno';
+
+alter table TBCOTACAO_COMPRA
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRA
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRA
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRA
+alter NUMERO position 4;
+
+alter table TBCOTACAO_COMPRA
+alter TIPO position 5;
+
+alter table TBCOTACAO_COMPRA
+alter DESCRICAO_RESUMO position 6;
+
+alter table TBCOTACAO_COMPRA
+alter NOME_CONTATO_INT position 7;
+
+alter table TBCOTACAO_COMPRA
+alter INSERCAO_DATA position 8;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_DATA position 9;
+
+alter table TBCOTACAO_COMPRA
+alter EMISSAO_USUARIO position 10;
+
+alter table TBCOTACAO_COMPRA
+alter VALIDADE position 11;
+
+alter table TBCOTACAO_COMPRA
+alter COMPETENCIA position 12;
+
+alter table TBCOTACAO_COMPRA
+alter MOVITO position 13;
+
+alter table TBCOTACAO_COMPRA
+alter OBSERVACAO position 14;
+
+alter table TBCOTACAO_COMPRA
+alter LOG_EVENTO position 15;
+
+alter table TBCOTACAO_COMPRA
+alter STATUS position 16;
+
+alter table TBCOTACAO_COMPRA
+alter NUMERO_MINIMO_FORNECEDOR position 17;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_DATA position 18;
+
+alter table TBCOTACAO_COMPRA
+alter AUTORIZADA_USUARIO position 19;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_DATA position 20;
+
+alter table TBCOTACAO_COMPRA
+alter ENCERRADA_USUARIO position 21;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_DATA position 22;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_USUARIO position 23;
+
+alter table TBCOTACAO_COMPRA
+alter CANCELADO_MOTIVO position 24;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_REF_TOTAL position 25;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_BRUTO position 26;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_DESCONTO position 27;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MAX_TOTAL position 28;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_BRUTO position 29;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_DESCONTO position 30;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MIN_TOTAL position 31;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_BRUTO position 32;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_DESCONTO position 33;
+
+alter table TBCOTACAO_COMPRA
+alter VALOR_MEDIA_TOTAL position 34;
+
+
+
+/*------ 01/07/2014 00:27:05 --------*/
+
+CREATE VIEW VW_TIPO_COTACAO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 1 as Codigo , 'Cotação de Compra'         as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Cotação de Serviço'        as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Cotação de Compra/Serviço' as Descricao from RDB$DATABASE;
+
+/*------ 01/07/2014 00:27:05 --------*/
+
+GRANT ALL ON VW_TIPO_COTACAO TO PUBLIC;
+
+
+/*------ SYSDBA 01/07/2014 01:21:01 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_compras_atualizar_estoque for tbcompras
+active after update position 1
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_produto numeric(15,2);
+  declare variable custo_compra numeric(15,2);
+  declare variable custo_medio numeric(15,2);
+  declare variable custo_final numeric(15,2);
+  declare variable preco_venda dmn_money;
+  declare variable percentual_markup dmn_percentual_3;
+  declare variable alterar_custo Smallint;
+  declare variable estoque_unico Smallint;
+  declare variable movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 2)) then
+  begin
+
+    -- Marcar como FATURADA a Autorizacao de Compra associada a Entrada
+    Update TBAUTORIZA_COMPRA ac Set
+      ac.status      = 3 -- 3. Faturada (NF/NFS registrada no sistema referente a autorizacao)
+    where ac.ano     = coalesce(new.autorizacao_ano, 0)
+      and ac.codigo  = coalesce(new.autorizacao_codigo, 0)
+      and ac.empresa = coalesce(new.autorizacao_empresa, '0');
+
+    -- Buscar FLAG de alteracao de custo de produto
+    Select
+      cf.cfop_altera_custo_produto
+    from TBCFOP cf
+    where cf.cfop_cod = new.nfcfop
+    Into
+        alterar_custo;
+
+    alterar_custo = coalesce(:alterar_custo, 1);
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.codemp
+    Into
+      estoque_unico;
+
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Incrimentar Estoque do produto
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(i.Customedio, 0)
+        , coalesce(p.Customedio, 0)
+        , p.percentual_marckup
+        , p.preco
+        , coalesce(p.movimenta_estoque, 1)
+      from TBCOMPRASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          Produto
+        , Empresa
+        , Quantidade
+        , Estoque
+        , Custo_compra
+        , Custo_produto
+        , Percentual_markup
+        , Preco_venda
+        , Movimentar
+    do
+    begin
+
+      -- Confirmar recebimento dos produtos autorizados na Autorizacao de Compras
+      Update TBAUTORIZA_COMPRAITEM aci Set
+        aci.confirmado_recebimento = 1
+      where aci.ano     = coalesce(new.autorizacao_ano, 0)
+        and aci.codigo  = coalesce(new.autorizacao_codigo, 0)
+        and aci.empresa = coalesce(new.autorizacao_empresa, '0')
+        and aci.produto = :Produto;
+
+      if ( (:Custo_compra > 0) and (:Custo_produto > 0) and (:Estoque > 0) ) then
+        Custo_medio = (:Custo_compra + :Custo_produto) / 2;
+      else
+        Custo_medio = :Custo_compra;
+
+      if ( :Movimentar = 1 ) then
+        Custo_final = :Custo_medio;
+      else
+        Custo_final = :Custo_compra;
+
+      Percentual_markup = cast( ( ( (:Preco_venda - :Custo_final) / :Custo_final) * 100) as numeric(18,3) );
+
+      -- Incrementar estoque
+      Update TBPRODUTO p Set
+          p.Customedio = Case when :Alterar_custo = 1 then :Custo_final else p.Customedio end
+        , p.Qtde       = Case when :Movimentar = 1    then (:Estoque + :Quantidade) else :Estoque end
+        , p.percentual_marckup = :Percentual_markup
+        , p.preco_sugerido     = cast( (:Custo_final + (:Custo_final * :Percentual_markup / 100)) as numeric(15,2) )
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar posicao de estoque
+      Update TBCOMPRASITENS i Set
+          i.Qtdeantes = :Estoque
+        , i.Qtdefinal = :Estoque + :Quantidade
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+        and i.Codemp     = new.Codemp
+        and i.Codprod    = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('ENTRADA - COMPRA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque
+        , :Quantidade
+        , :Estoque + :Quantidade
+        , new.Usuario
+        , 'Custo Medio/Final no valor de R$ ' || :Custo_final
+      );
+    end
+     
+  end 
+end^
+
+SET TERM ; ^
+
