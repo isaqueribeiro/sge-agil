@@ -11951,3 +11951,1079 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 01/07/2014 12:56:41 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_compras_atualizar_estoque for tbcompras
+active after update position 1
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_produto numeric(15,2);
+  declare variable custo_compra numeric(15,2);
+  declare variable custo_medio numeric(15,2);
+  declare variable custo_final numeric(15,2);
+  declare variable preco_venda DMN_MONEY;
+  declare variable percentual_markup DMN_PERCENTUAL_3;
+  declare variable percentual_margem DMN_PERCENTUAL_3;
+  declare variable alterar_custo Smallint;
+  declare variable estoque_unico Smallint;
+  declare variable movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 2)) then
+  begin
+
+    -- Marcar como FATURADA a Autorizacao de Compra associada a Entrada
+    Update TBAUTORIZA_COMPRA ac Set
+      ac.status      = 3 -- 3. Faturada (NF/NFS registrada no sistema referente a autorizacao)
+    where ac.ano     = coalesce(new.autorizacao_ano, 0)
+      and ac.codigo  = coalesce(new.autorizacao_codigo, 0)
+      and ac.empresa = coalesce(new.autorizacao_empresa, '0');
+
+    -- Buscar FLAG de alteracao de custo de produto
+    Select
+      cf.cfop_altera_custo_produto
+    from TBCFOP cf
+    where cf.cfop_cod = new.nfcfop
+    Into
+        alterar_custo;
+
+    alterar_custo = coalesce(:alterar_custo, 1);
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.codemp
+    Into
+      estoque_unico;
+
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Incrimentar Estoque do produto
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(i.Customedio, 0)
+        , coalesce(p.Customedio, 0)
+        , p.percentual_marckup
+        , p.percentual_margem
+        , p.preco
+        , coalesce(p.movimenta_estoque, 1)
+      from TBCOMPRASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          Produto
+        , Empresa
+        , Quantidade
+        , Estoque
+        , Custo_compra
+        , Custo_produto
+        , Percentual_markup
+        , Percentual_margem
+        , Preco_venda
+        , Movimentar
+    do
+    begin
+
+      -- Confirmar recebimento dos produtos autorizados na Autorizacao de Compras
+      Update TBAUTORIZA_COMPRAITEM aci Set
+        aci.confirmado_recebimento = 1
+      where aci.ano     = coalesce(new.autorizacao_ano, 0)
+        and aci.codigo  = coalesce(new.autorizacao_codigo, 0)
+        and aci.empresa = coalesce(new.autorizacao_empresa, '0')
+        and aci.produto = :Produto;
+
+      if ( (:Custo_compra > 0) and (:Custo_produto > 0) and (:Estoque > 0) ) then
+        Custo_medio = (:Custo_compra + :Custo_produto) / 2;
+      else
+        Custo_medio = :Custo_compra;
+
+      if ( :Movimentar = 1 ) then
+        Custo_final = :Custo_medio;
+      else
+        Custo_final = :Custo_compra;
+
+      Percentual_markup = cast( ( ( (:Preco_venda - :Custo_final) / :Custo_final) * 100) as numeric(18,3) );
+      Percentual_margem = cast( ( ( (:Preco_venda - :Custo_final) / :Custo_final) * 100) as numeric(18,3) );
+
+      -- Incrementar estoque
+      Update TBPRODUTO p Set
+          p.Customedio = Case when :Alterar_custo = 1 then :Custo_final else p.Customedio end
+        , p.Qtde       = Case when :Movimentar = 1    then (:Estoque + :Quantidade) else :Estoque end
+        , p.percentual_marckup = :Percentual_markup
+        , p.preco_sugerido     = cast( (:Custo_final + (:Custo_final * :Percentual_markup / 100)) as numeric(15,2) )
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar posicao de estoque
+      Update TBCOMPRASITENS i Set
+          i.Qtdeantes = :Estoque
+        , i.Qtdefinal = :Estoque + :Quantidade
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+        and i.Codemp     = new.Codemp
+        and i.Codprod    = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('ENTRADA - COMPRA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque
+        , :Quantidade
+        , :Estoque + :Quantidade
+        , new.Usuario
+        , 'Custo Medio/Final no valor de R$ ' || :Custo_final
+      );
+    end
+     
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 01/07/2014 13:00:43 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_compras_atualizar_estoque for tbcompras
+active after update position 1
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_produto numeric(15,2);
+  declare variable custo_compra numeric(15,2);
+  declare variable custo_medio numeric(15,2);
+  declare variable custo_final numeric(15,2);
+  declare variable preco_venda DMN_MONEY;
+  declare variable percentual_markup DMN_PERCENTUAL_3;
+  declare variable percentual_margem DMN_PERCENTUAL_3;
+  declare variable alterar_custo Smallint;
+  declare variable estoque_unico Smallint;
+  declare variable movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 2)) then
+  begin
+
+    -- Marcar como FATURADA a Autorizacao de Compra associada a Entrada
+    Update TBAUTORIZA_COMPRA ac Set
+      ac.status      = 3 -- 3. Faturada (NF/NFS registrada no sistema referente a autorizacao)
+    where ac.ano     = coalesce(new.autorizacao_ano, 0)
+      and ac.codigo  = coalesce(new.autorizacao_codigo, 0)
+      and ac.empresa = coalesce(new.autorizacao_empresa, '0');
+
+    -- Buscar FLAG de alteracao de custo de produto
+    Select
+      cf.cfop_altera_custo_produto
+    from TBCFOP cf
+    where cf.cfop_cod = new.nfcfop
+    Into
+        alterar_custo;
+
+    alterar_custo = coalesce(:alterar_custo, 1);
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.codemp
+    Into
+      estoque_unico;
+
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Incrimentar Estoque do produto
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(i.Customedio, 0)
+        , coalesce(p.Customedio, 0)
+        , p.percentual_marckup
+        , p.percentual_margem
+        , p.preco
+        , coalesce(p.movimenta_estoque, 1)
+      from TBCOMPRASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          Produto
+        , Empresa
+        , Quantidade
+        , Estoque
+        , Custo_compra
+        , Custo_produto
+        , Percentual_markup
+        , Percentual_margem
+        , Preco_venda
+        , Movimentar
+    do
+    begin
+
+      -- Confirmar recebimento dos produtos autorizados na Autorizacao de Compras
+      Update TBAUTORIZA_COMPRAITEM aci Set
+        aci.confirmado_recebimento = 1
+      where aci.ano     = coalesce(new.autorizacao_ano, 0)
+        and aci.codigo  = coalesce(new.autorizacao_codigo, 0)
+        and aci.empresa = coalesce(new.autorizacao_empresa, '0')
+        and aci.produto = :Produto;
+
+      if ( (:Custo_compra > 0) and (:Custo_produto > 0) and (:Estoque > 0) ) then
+        Custo_medio = (:Custo_compra + :Custo_produto) / 2;
+      else
+        Custo_medio = :Custo_compra;
+
+      if ( :Movimentar = 1 ) then
+        Custo_final = :Custo_medio;
+      else
+        Custo_final = :Custo_compra;
+
+      Percentual_markup = cast( ( ( (:Preco_venda - :Custo_final) / :Custo_final) * 100) as numeric(18,3) );
+
+      if ( coalesce(:Percentual_margem, 0.0) < 0 ) then
+        Percentual_margem = :Percentual_markup;
+
+      -- Incrementar estoque
+      Update TBPRODUTO p Set
+          p.Customedio = Case when :Alterar_custo = 1 then :Custo_final else p.Customedio end
+        , p.Qtde       = Case when :Movimentar = 1    then (:Estoque + :Quantidade) else :Estoque end
+        , p.percentual_marckup = Case when :Percentual_markup > :Percentual_margem then :Percentual_markup else :Percentual_margem end
+        , p.percentual_margem  = :Percentual_margem
+        , p.preco_sugerido     = cast( (:Custo_final + (:Custo_final * :Percentual_margem / 100)) as numeric(15,2) )
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar posicao de estoque
+      Update TBCOMPRASITENS i Set
+          i.Qtdeantes = :Estoque
+        , i.Qtdefinal = :Estoque + :Quantidade
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+        and i.Codemp     = new.Codemp
+        and i.Codprod    = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('ENTRADA - COMPRA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque
+        , :Quantidade
+        , :Estoque + :Quantidade
+        , new.Usuario
+        , 'Custo Medio/Final no valor de R$ ' || :Custo_final
+      );
+    end
+     
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 01/07/2014 13:01:33 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_compras_atualizar_estoque for tbcompras
+active after update position 1
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_produto numeric(15,2);
+  declare variable custo_compra numeric(15,2);
+  declare variable custo_medio numeric(15,2);
+  declare variable custo_final numeric(15,2);
+  declare variable preco_venda DMN_MONEY;
+  declare variable percentual_markup DMN_PERCENTUAL_3;
+  declare variable percentual_margem DMN_PERCENTUAL_3;
+  declare variable alterar_custo Smallint;
+  declare variable estoque_unico Smallint;
+  declare variable movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 2)) then
+  begin
+
+    -- Marcar como FATURADA a Autorizacao de Compra associada a Entrada
+    Update TBAUTORIZA_COMPRA ac Set
+      ac.status      = 3 -- 3. Faturada (NF/NFS registrada no sistema referente a autorizacao)
+    where ac.ano     = coalesce(new.autorizacao_ano, 0)
+      and ac.codigo  = coalesce(new.autorizacao_codigo, 0)
+      and ac.empresa = coalesce(new.autorizacao_empresa, '0');
+
+    -- Buscar FLAG de alteracao de custo de produto
+    Select
+      cf.cfop_altera_custo_produto
+    from TBCFOP cf
+    where cf.cfop_cod = new.nfcfop
+    Into
+        alterar_custo;
+
+    alterar_custo = coalesce(:alterar_custo, 1);
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.codemp
+    Into
+      estoque_unico;
+
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Incrimentar Estoque do produto
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(i.Customedio, 0)
+        , coalesce(p.Customedio, 0)
+        , p.percentual_marckup
+        , p.percentual_margem
+        , p.preco
+        , coalesce(p.movimenta_estoque, 1)
+      from TBCOMPRASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          Produto
+        , Empresa
+        , Quantidade
+        , Estoque
+        , Custo_compra
+        , Custo_produto
+        , Percentual_markup
+        , Percentual_margem
+        , Preco_venda
+        , Movimentar
+    do
+    begin
+
+      -- Confirmar recebimento dos produtos autorizados na Autorizacao de Compras
+      Update TBAUTORIZA_COMPRAITEM aci Set
+        aci.confirmado_recebimento = 1
+      where aci.ano     = coalesce(new.autorizacao_ano, 0)
+        and aci.codigo  = coalesce(new.autorizacao_codigo, 0)
+        and aci.empresa = coalesce(new.autorizacao_empresa, '0')
+        and aci.produto = :Produto;
+
+      if ( (:Custo_compra > 0) and (:Custo_produto > 0) and (:Estoque > 0) ) then
+        Custo_medio = (:Custo_compra + :Custo_produto) / 2;
+      else
+        Custo_medio = :Custo_compra;
+
+      if ( :Movimentar = 1 ) then
+        Custo_final = :Custo_medio;
+      else
+        Custo_final = :Custo_compra;
+
+      Percentual_markup = cast( ( ( (:Preco_venda - :Custo_final) / :Custo_final) * 100) as numeric(18,3) );
+
+      if ( coalesce(:Percentual_margem, 0.0) < 0 ) then
+        Percentual_margem = :Percentual_markup;
+
+      -- Incrementar estoque
+      Update TBPRODUTO p Set
+          p.Customedio = Case when :Alterar_custo = 1 then :Custo_final else p.Customedio end
+        , p.Qtde       = Case when :Movimentar = 1    then (:Estoque + :Quantidade) else :Estoque end
+        , p.percentual_marckup = Case when :Percentual_markup > :Percentual_margem then :Percentual_markup else :Percentual_margem end
+        , p.percentual_margem  = :Percentual_margem
+        , p.preco_sugerido     = cast( (:Custo_final + (:Custo_final * :Percentual_margem / 100)) as numeric(15,2) )
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar posicao de estoque
+      Update TBCOMPRASITENS i Set
+          i.Qtdeantes = :Estoque
+        , i.Qtdefinal = :Estoque + :Quantidade
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+        and i.Codemp     = new.Codemp
+        and i.Codprod    = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('ENTRADA - COMPRA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque
+        , :Quantidade
+        , :Estoque + :Quantidade
+        , new.Usuario
+        , 'Custo Medio/Final no valor de R$ ' || :Custo_final
+      );
+    end
+     
+  end 
+end^
+
+SET TERM ; ^
+
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.AUTORIZADO_DATA.
+At line 65, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.AUTORIZADO_DATA.
+At line 65, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.AUTORIZADO_DATA.
+At line 65, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.AUTORIZADO_DATA.
+At line 65, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.AUTORIZADO_DATA.
+At line 65, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.TRANSPORTADOR.
+At line 65, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.RECEBEDOR_NOME.
+At line 63, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.VALOR_TOTAL_FRETE.
+At line 52, column 9.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+I.VALOR_UNITARIO.
+At line 57, column 9.
+
+*/
+
+
+
+/*------ SYSDBA 01/07/2014 22:36:26 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN
+    ADD DATA_RESPOSTA DMN_DATE;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN.DATA_RESPOSTA IS
+'Data de Resposta';
+
+alter table TBCOTACAO_COMPRAFORN
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRAFORN
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRAFORN
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRAFORN
+alter FORNECEDOR position 4;
+
+alter table TBCOTACAO_COMPRAFORN
+alter NOME_CONTATO position 5;
+
+alter table TBCOTACAO_COMPRAFORN
+alter EMAIL_ENVIO position 6;
+
+alter table TBCOTACAO_COMPRAFORN
+alter FORMA_PAGTO position 7;
+
+alter table TBCOTACAO_COMPRAFORN
+alter CONDICAO_PAGTO position 8;
+
+alter table TBCOTACAO_COMPRAFORN
+alter DATA_RESPOSTA position 9;
+
+alter table TBCOTACAO_COMPRAFORN
+alter PRAZO_ENTREGA_DATA position 10;
+
+alter table TBCOTACAO_COMPRAFORN
+alter PRAZO_ENTREDA_DIA position 11;
+
+alter table TBCOTACAO_COMPRAFORN
+alter OBSERVACAO position 12;
+
+alter table TBCOTACAO_COMPRAFORN
+alter ATIVO position 13;
+
+alter table TBCOTACAO_COMPRAFORN
+alter USUARIO position 14;
+
+
+
+
+/*------ SYSDBA 01/07/2014 22:42:52 --------*/
+
+CREATE TABLE TBCOTACAO_COMPRAFORN_ITEM (
+    ANO DMN_SMALLINT_NN NOT NULL,
+    CODIGO DMN_BIGINT_NN NOT NULL,
+    EMPRESA DMN_CNPJ_NN NOT NULL,
+    FORNECEDOR DMN_INTEGER_NN NOT NULL,
+    ITEM DMN_SMALLINT_NN NOT NULL,
+    VALOR_UNITARIO DMN_MONEY,
+    VALOR_TOTAL DMN_MONEY);
+
+ALTER TABLE TBCOTACAO_COMPRAFORN_ITEM
+ADD CONSTRAINT PK_TBCOTACAO_COMPRAFORN_ITEM
+PRIMARY KEY (ANO,CODIGO,EMPRESA,FORNECEDOR,ITEM);
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.ANO IS
+'Ano';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.CODIGO IS
+'Codigo';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.EMPRESA IS
+'Empresa';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.FORNECEDOR IS
+'Fornecedor';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.ITEM IS
+'Item';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.VALOR_UNITARIO IS
+'Valor Unitario (R$)';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN_ITEM.VALOR_TOTAL IS
+'Valor Total (R$)';
+
+
+
+
+/*------ SYSDBA 01/07/2014 22:42:53 --------*/
+
+COMMENT ON TABLE TBCOTACAO_COMPRAFORN_ITEM IS 'Tabela Cotacao de Compras/Servicos Forneredor/Item
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/07/2014
+
+Tabela responsavel por armazenar as respostas dos fornecedores referentes as cotacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    DD/MM/AAAA - IMR :
+        + ...
+          ...';
+
+GRANT ALL ON TBCOTACAO_COMPRAFORN_ITEM TO "PUBLIC";
+
+
+
+/*------ SYSDBA 01/07/2014 22:44:30 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN_ITEM
+ADD CONSTRAINT FK_TBCOTACAO_COMPRAFORN_ITM_COT
+FOREIGN KEY (ANO,CODIGO,EMPRESA)
+REFERENCES TBCOTACAO_COMPRA(ANO,CODIGO,EMPRESA)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE TBCOTACAO_COMPRAFORN_ITEM
+ADD CONSTRAINT FK_TBCOTACAO_COMPRAFORN_ITM_FOR
+FOREIGN KEY (ANO,CODIGO,EMPRESA,FORNECEDOR)
+REFERENCES TBCOTACAO_COMPRAFORN(ANO,CODIGO,EMPRESA,FORNECEDOR)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE TBCOTACAO_COMPRAFORN_ITEM
+ADD CONSTRAINT FK_TBCOTACAO_COMPRAFORN_ITM_ITM
+FOREIGN KEY (ANO,CODIGO,EMPRESA,ITEM)
+REFERENCES TBCOTACAO_COMPRAITEM(ANO,CODIGO,EMPRESA,SEQ)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 01/07/2014 22:45:10 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN_ITEM
+ADD CONSTRAINT FK_TBCOTACAO_COMPRAFORN_ITM_FRN
+FOREIGN KEY (FORNECEDOR)
+REFERENCES TBFORNECEDOR(CODFORN);
+
+
+
+
+/*------ SYSDBA 01/07/2014 22:45:32 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN_ITEM
+ADD CONSTRAINT FK_TBCOTACAO_COMPRAFORN_ITM_EMP
+FOREIGN KEY (EMPRESA)
+REFERENCES TBEMPRESA(CNPJ);
+
+
+
+
+/*------ SYSDBA 01/07/2014 22:50:15 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN
+    ADD VALOR_TOTAL_BRUTO DMN_MONEY DEFAULT 0,
+    ADD VALOR_TOTAL_DESCONTO DMN_MONEY DEFAULT 0,
+    ADD VALOR_TOTAL_LIQUIDO DMN_MONEY DEFAULT 0;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN.VALOR_TOTAL_BRUTO IS
+'Total Bruto da Proposta (R$)';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN.VALOR_TOTAL_DESCONTO IS
+'Total Descontos da Proposta (R$)';
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN.VALOR_TOTAL_LIQUIDO IS
+'Total Liquido da Proposta (R$)';
+
+alter table TBCOTACAO_COMPRAFORN
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRAFORN
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRAFORN
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRAFORN
+alter FORNECEDOR position 4;
+
+alter table TBCOTACAO_COMPRAFORN
+alter NOME_CONTATO position 5;
+
+alter table TBCOTACAO_COMPRAFORN
+alter EMAIL_ENVIO position 6;
+
+alter table TBCOTACAO_COMPRAFORN
+alter FORMA_PAGTO position 7;
+
+alter table TBCOTACAO_COMPRAFORN
+alter CONDICAO_PAGTO position 8;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VALOR_TOTAL_BRUTO position 9;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VALOR_TOTAL_DESCONTO position 10;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VALOR_TOTAL_LIQUIDO position 11;
+
+alter table TBCOTACAO_COMPRAFORN
+alter DATA_RESPOSTA position 12;
+
+alter table TBCOTACAO_COMPRAFORN
+alter PRAZO_ENTREGA_DATA position 13;
+
+alter table TBCOTACAO_COMPRAFORN
+alter PRAZO_ENTREDA_DIA position 14;
+
+alter table TBCOTACAO_COMPRAFORN
+alter OBSERVACAO position 15;
+
+alter table TBCOTACAO_COMPRAFORN
+alter ATIVO position 16;
+
+alter table TBCOTACAO_COMPRAFORN
+alter USUARIO position 17;
+
+
+
+
+/*------ SYSDBA 01/07/2014 23:01:44 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_cotacao_compraforn_item_vlr for tbcotacao_compraforn_item
+active after insert or update or delete position 0
+AS
+  declare variable Ano DMN_SMALLINT_N;
+  declare variable Cod DMN_BIGINT_N;
+  declare variable Emp DMN_CNPJ;
+  declare variable Frn DMN_INTEGER_N;
+
+  declare variable Total_Bruto    DMN_MONEY;
+  declare variable Total_Desconto DMN_MONEY;
+  declare variable Total_Liquido  DMN_MONEY;
+begin
+  if ( inserting or updating ) then
+  begin
+    Ano = new.ano;
+    Cod = new.codigo;
+    Emp = new.empresa;
+    Frn = new.fornecedor;
+  end 
+  else
+  if ( deleting ) then
+  begin
+    Ano = old.ano;
+    Cod = old.codigo;
+    Emp = old.empresa;
+    Frn = old.fornecedor;
+  end
+
+  Select
+      coalesce(f.valor_total_desconto, 0.0)
+    , sum( coalesce(c.valor_total, 0.0) )
+  from TBCOTACAO_COMPRAFORN f
+    left join TBCOTACAO_COMPRAFORN_ITEM c on (c.ano = f.ano and c.codigo = f.codigo and c.empresa = f.empresa and c.fornecedor = f.fornecedor)
+  where f.ano        = :Ano
+    and f.codigo     = :Cod
+    and f.empresa    = :Emp
+    and f.fornecedor = :Frn
+  group by
+      coalesce(f.valor_total_desconto, 0.0)
+  Into
+      Total_Desconto
+    , Total_Bruto;
+
+  Total_Liquido = :Total_Bruto - :Total_Desconto;
+
+  Update TBCOTACAO_COMPRAFORN f Set
+      f.valor_total_bruto    = coalesce(:Total_Bruto, 0.0)
+    , f.valor_total_desconto = coalesce(:Total_Desconto, 0.0)
+    , f.valor_total_liquido  = coalesce(:Total_Liquido, 0.0)
+  where f.ano        = :Ano
+    and f.codigo     = :Cod
+    and f.empresa    = :Emp
+    and f.fornecedor = :Frn;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 01/07/2014 23:03:05 --------*/
+
+COMMENT ON TABLE TBCOTACAO_COMPRAFORN IS 'Tabela de Fornecedores da Cotacao de Compra/Servico.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/07/2014
+
+Tabela responsavel por armazenar os fornecedores das cotacoes de compras/servicos.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    DD/MM/AAAA - IMR :
+        + ...
+          ...';
+
+
+
+
+/*------ SYSDBA 01/07/2014 23:04:30 --------*/
+
+ALTER TABLE TBCOTACAO_COMPRAFORN
+    ADD VENCEDOR DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBCOTACAO_COMPRAFORN.VENCEDOR IS
+'Fornecedor vencedor da Cotacao:
+0 - Nao
+1 - Sim';
+
+alter table TBCOTACAO_COMPRAFORN
+alter ANO position 1;
+
+alter table TBCOTACAO_COMPRAFORN
+alter CODIGO position 2;
+
+alter table TBCOTACAO_COMPRAFORN
+alter EMPRESA position 3;
+
+alter table TBCOTACAO_COMPRAFORN
+alter FORNECEDOR position 4;
+
+alter table TBCOTACAO_COMPRAFORN
+alter NOME_CONTATO position 5;
+
+alter table TBCOTACAO_COMPRAFORN
+alter EMAIL_ENVIO position 6;
+
+alter table TBCOTACAO_COMPRAFORN
+alter FORMA_PAGTO position 7;
+
+alter table TBCOTACAO_COMPRAFORN
+alter CONDICAO_PAGTO position 8;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VALOR_TOTAL_BRUTO position 9;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VALOR_TOTAL_DESCONTO position 10;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VALOR_TOTAL_LIQUIDO position 11;
+
+alter table TBCOTACAO_COMPRAFORN
+alter VENCEDOR position 12;
+
+alter table TBCOTACAO_COMPRAFORN
+alter DATA_RESPOSTA position 13;
+
+alter table TBCOTACAO_COMPRAFORN
+alter PRAZO_ENTREGA_DATA position 14;
+
+alter table TBCOTACAO_COMPRAFORN
+alter PRAZO_ENTREDA_DIA position 15;
+
+alter table TBCOTACAO_COMPRAFORN
+alter OBSERVACAO position 16;
+
+alter table TBCOTACAO_COMPRAFORN
+alter ATIVO position 17;
+
+alter table TBCOTACAO_COMPRAFORN
+alter USUARIO position 18;
+
+
+
+
+/*------ SYSDBA 01/07/2014 23:14:05 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cotacao_compraforn_item_vlr for tbcotacao_compraforn_item
+active after insert or update or delete position 0
+AS
+  declare variable Ano DMN_SMALLINT_N;
+  declare variable Cod DMN_BIGINT_N;
+  declare variable Emp DMN_CNPJ;
+  declare variable Frn DMN_INTEGER_N;
+
+  declare variable Total_Bruto    DMN_MONEY;
+  declare variable Total_Desconto DMN_MONEY;
+  declare variable Total_Liquido  DMN_MONEY;
+begin
+  if ( inserting or updating ) then
+  begin
+    Ano = new.ano;
+    Cod = new.codigo;
+    Emp = new.empresa;
+    Frn = new.fornecedor;
+  end 
+  else
+  if ( deleting ) then
+  begin
+    Ano = old.ano;
+    Cod = old.codigo;
+    Emp = old.empresa;
+    Frn = old.fornecedor;
+  end
+
+  Select
+      coalesce(f.valor_total_desconto, 0.0)
+    , sum( coalesce(c.valor_total, 0.0) )
+  from TBCOTACAO_COMPRAFORN f
+    left join TBCOTACAO_COMPRAFORN_ITEM c on (c.ano = f.ano and c.codigo = f.codigo and c.empresa = f.empresa and c.fornecedor = f.fornecedor)
+  where f.ano        = :Ano
+    and f.codigo     = :Cod
+    and f.empresa    = :Emp
+    and f.fornecedor = :Frn
+  group by
+      coalesce(f.valor_total_desconto, 0.0)
+  Into
+      Total_Desconto
+    , Total_Bruto;
+
+  Total_Liquido = :Total_Bruto - :Total_Desconto;
+
+  Update TBCOTACAO_COMPRAFORN f Set
+      f.valor_total_bruto    = coalesce(:Total_Bruto, 0.0)
+    , f.valor_total_desconto = coalesce(:Total_Desconto, 0.0)
+    , f.valor_total_liquido  = coalesce(:Total_Liquido, 0.0)
+  where f.ano        = :Ano
+    and f.codigo     = :Cod
+    and f.empresa    = :Emp
+    and f.fornecedor = :Frn;
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_COTACAO_COMPRAFORN_ITEM_VLR IS 'Trigger Totalizar Resposta Fornecedor/Cotacao.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/07/2014
+
+Trigger responsavel por totalizar os valores referentes a resposta dos fornecedores em relacao as cotacoes.';
+
+
+
+
+/*------ SYSDBA 02/07/2014 00:25:24 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cotacao_compraforn_cotar for tbcotacao_compraforn
+active after insert or update or delete position 0
+AS
+  declare variable ano DMN_SMALLINT_N;
+  declare variable cod DMN_BIGINT_N;
+  declare variable emp DMN_CNPJ;
+  declare variable valor DMN_MONEY;
+begin
+  if ( inserting or updating ) then
+  begin
+    ano = new.ano;
+    cod = new.codigo;
+    emp = new.empresa;
+  end 
+  else
+  if ( deleting ) then
+  begin
+    ano = old.ano;
+    cod = old.codigo;
+    emp = old.empresa;
+  end
+
+  Select
+    sum( coalesce(cf.valor_total_liquido, 0.0) )
+  from TBCOTACAO_COMPRAFORN cf
+  where cf.ano     = :ano
+    and cf.codigo  = :cod
+    and cf.empresa = :emp
+  Into
+    valor;
+
+  Update TBCOTACAO_COMPRA c Set
+    c.status =
+      Case when coalesce(:valor, 0.0) = 0.0
+        then 2 -- Autorizada
+        else 3 -- Em Cotacao (Recebendo respostas dos fornecedores)
+      End
+  where c.status in (2, 3)
+    and c.ano     = :ano
+    and c.codigo  = :cod
+    and c.empresa = :emp;
+
+end^
+
+SET TERM ; ^
+
