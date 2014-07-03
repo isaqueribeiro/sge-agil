@@ -13027,3 +13027,69 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 02/07/2014 14:15:51 --------*/
+
+COMMENT ON COLUMN TBCOTACAO_COMPRA.STATUS IS
+'Status:
+0 - Em edicao
+1 - Aberta
+2 - Em Cotacao (Recebendo respostas dos fornecedores)
+4 - Autorizada/Encerrada
+5 - Cancelada';
+
+
+
+
+/*------ SYSDBA 02/07/2014 14:17:25 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cotacao_compraforn_cotar for tbcotacao_compraforn
+active after insert or update or delete position 0
+AS
+  declare variable ano DMN_SMALLINT_N;
+  declare variable cod DMN_BIGINT_N;
+  declare variable emp DMN_CNPJ;
+  declare variable valor DMN_MONEY;
+begin
+  if ( inserting or updating ) then
+  begin
+    ano = new.ano;
+    cod = new.codigo;
+    emp = new.empresa;
+  end 
+  else
+  if ( deleting ) then
+  begin
+    ano = old.ano;
+    cod = old.codigo;
+    emp = old.empresa;
+  end
+
+  Select
+    sum( coalesce(cf.valor_total_liquido, 0.0) )
+  from TBCOTACAO_COMPRAFORN cf
+  where cf.ano     = :ano
+    and cf.codigo  = :cod
+    and cf.empresa = :emp
+  Into
+    valor;
+
+  Update TBCOTACAO_COMPRA c Set
+    c.status =
+      Case when coalesce(:valor, 0.0) = 0.0
+        then 1 -- Aberta
+        else 2 -- Em Cotacao (Recebendo respostas dos fornecedores)
+      End
+  where c.status in (2, 3)
+    and c.ano     = :ano
+    and c.codigo  = :cod
+    and c.empresa = :emp;
+
+end^
+
+SET TERM ; ^
+
