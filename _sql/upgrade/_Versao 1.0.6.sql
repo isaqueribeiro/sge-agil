@@ -13093,3 +13093,686 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 07/07/2014 10:20:56 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_COTACAO_COMPRAFORN_ITEM (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN,
+    FORNECEDOR DMN_INTEGER_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  /* 1. Inserir Itens na planilha de resposta do fornecedor quando nao existirem */
+
+  Insert Into TBCOTACAO_COMPRAFORN_ITEM (
+      ano
+    , codigo
+    , empresa
+    , fornecedor
+    , item
+    , valor_unitario
+    , valor_total
+  ) Select
+        i.ano
+      , i.codigo
+      , i.empresa
+      , :fornecedor
+      , i.seq
+      , null
+      , null
+    from TBCOTACAO_COMPRAITEM i
+      left join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa and f.fornecedor = :fornecedor)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.item is null;
+
+  /* 2. Calcular o valor total de cada item dessa planilha */
+
+  for
+    Select
+        i.seq
+      , coalesce(i.quantidade, 0) * coalesce(f.valor_unitario, 0.0)
+    from TBCOTACAO_COMPRAITEM i
+      inner join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and coalesce(f.valor_unitario, 0.0) > 0
+    Into
+        item
+      , valor_total
+  do
+  begin
+
+    Update TBCOTACAO_COMPRAFORN_ITEM f Set
+      f.valor_total = :valor_total
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and f.item       = :item;
+
+  end 
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE SET_COTACAO_COMPRAFORN_ITEM TO "PUBLIC";
+
+
+
+/*------ SYSDBA 07/07/2014 17:39:57 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_COTACAO_COMPRAFORN_ITEM (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN,
+    FORNECEDOR DMN_INTEGER_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  /* 1. Inserir Itens na planilha de resposta do fornecedor quando nao existirem */
+
+  Insert Into TBCOTACAO_COMPRAFORN_ITEM (
+      ano
+    , codigo
+    , empresa
+    , fornecedor
+    , item
+    , valor_unitario
+    , valor_total
+  ) Select
+        i.ano
+      , i.codigo
+      , i.empresa
+      , :fornecedor
+      , i.seq
+      , null
+      , null
+    from TBCOTACAO_COMPRAITEM i
+      left join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa and f.fornecedor = :fornecedor)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.item is null
+    order by i.seq;
+
+  /* 2. Calcular o valor total de cada item dessa planilha */
+
+  for
+    Select
+        i.seq
+      , coalesce(i.quantidade, 0) * coalesce(f.valor_unitario, 0.0)
+    from TBCOTACAO_COMPRAITEM i
+      inner join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and coalesce(f.valor_unitario, 0.0) > 0
+    Into
+        item
+      , valor_total
+  do
+  begin
+
+    Update TBCOTACAO_COMPRAFORN_ITEM f Set
+      f.valor_total = :valor_total
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and f.item       = :item;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 07/07/2014 17:42:24 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_COTACAO_COMPRAFORN_ITEM (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN,
+    FORNECEDOR DMN_INTEGER_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  /* 1. Inserir Itens na planilha de resposta do fornecedor quando nao existirem */
+
+  Insert Into TBCOTACAO_COMPRAFORN_ITEM (
+      ano
+    , codigo
+    , empresa
+    , fornecedor
+    , item
+    , valor_unitario
+    , valor_total
+  ) Select
+        i.ano
+      , i.codigo
+      , i.empresa
+      , :fornecedor
+      , i.seq
+      , null
+      , null
+    from TBCOTACAO_COMPRAITEM i
+      left join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa and f.fornecedor = :fornecedor)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.item is null
+    order by i.seq;
+
+  /* 2. Calcular o valor total de cada item dessa planilha */
+
+  for
+    Select
+        i.seq
+      , coalesce(i.quantidade, 0) * coalesce(f.valor_unitario, 0.0)
+    from TBCOTACAO_COMPRAITEM i
+      inner join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and coalesce(f.valor_unitario, 0.0) > 0
+    Into
+        item
+      , valor_total
+  do
+  begin
+
+    Update TBCOTACAO_COMPRAFORN_ITEM f Set
+      f.valor_total = :valor_total
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and f.item       = :item;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 07/07/2014 17:42:40 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_COTACAO_COMPRAFORN_ITEM (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN,
+    FORNECEDOR DMN_INTEGER_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  /* 1. Inserir Itens na planilha de resposta do fornecedor quando nao existirem */
+
+  Insert Into TBCOTACAO_COMPRAFORN_ITEM (
+      ano
+    , codigo
+    , empresa
+    , fornecedor
+    , item
+    , valor_unitario
+    , valor_total
+  ) Select
+        i.ano
+      , i.codigo
+      , i.empresa
+      , :fornecedor
+      , i.seq
+      , null
+      , null
+    from TBCOTACAO_COMPRAITEM i
+      left join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa and f.fornecedor = :fornecedor)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.item is null
+    order by i.seq;
+
+  /* 2. Calcular o valor total de cada item dessa planilha */
+
+  for
+    Select
+        i.seq
+      , coalesce(i.quantidade, 0) * coalesce(f.valor_unitario, 0.0)
+    from TBCOTACAO_COMPRAITEM i
+      inner join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa)
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and coalesce(f.valor_unitario, 0.0) > 0
+    Into
+        item
+      , valor_total
+  do
+  begin
+
+    Update TBCOTACAO_COMPRAFORN_ITEM f Set
+      f.valor_total = :valor_total
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and f.item       = :item;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 07/07/2014 17:43:14 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_COTACAO_COMPRAFORN_ITEM (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN,
+    FORNECEDOR DMN_INTEGER_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  /* 1. Inserir Itens na planilha de resposta do fornecedor quando nao existirem */
+
+  Insert Into TBCOTACAO_COMPRAFORN_ITEM (
+      ano
+    , codigo
+    , empresa
+    , fornecedor
+    , item
+    , valor_unitario
+    , valor_total
+  ) Select
+        i.ano
+      , i.codigo
+      , i.empresa
+      , :fornecedor
+      , i.seq
+      , null
+      , null
+    from TBCOTACAO_COMPRAITEM i
+      left join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa and f.fornecedor = :fornecedor)
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and f.item is null
+    order by i.seq;
+
+  /* 2. Calcular o valor total de cada item dessa planilha */
+
+  for
+    Select
+        i.seq
+      , coalesce(i.quantidade, 0) * coalesce(f.valor_unitario, 0.0)
+    from TBCOTACAO_COMPRAITEM i
+      inner join TBCOTACAO_COMPRAFORN_ITEM f on (f.ano = i.ano and f.codigo = i.codigo and f.empresa = i.empresa)
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and coalesce(f.valor_unitario, 0.0) > 0
+    Into
+        item
+      , valor_total
+  do
+  begin
+
+    Update TBCOTACAO_COMPRAFORN_ITEM f Set
+      f.valor_total = :valor_total
+    where f.ano     = :ano
+      and f.codigo  = :codigo
+      and f.empresa = :empresa
+      and f.fornecedor = :fornecedor
+      and f.item       = :item;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 07/07/2014 20:42:13 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_COTACAO_COMPRAFORN_PROCESSA (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_MAXIMO DMN_MONEY;
+declare variable VALOR_MINIMO DMN_MONEY;
+declare variable VALOR_MEDIO DMN_MONEY;
+declare variable TOTAL_MAXIMO DMN_MONEY;
+declare variable TOTAL_MINIMO DMN_MONEY;
+declare variable TOTAL_MEDIO DMN_MONEY;
+declare variable TOTAL_MAXIMO_DESC DMN_MONEY;
+declare variable TOTAL_MINIMO_DESC DMN_MONEY;
+begin
+  /* Caso a Cotacao nao esteja em status adequado, abandonar processo */
+  if (not exists(
+    Select
+      c.numero
+    from TBCOTACAO_COMPRA c
+    where c.ano     = :ano
+      and c.codigo  = :codigo
+      and c.empresa = :empresa
+      and c.status  = 2 -- Em Cotacao (Recebendo respostas dos fornecedores)
+  )) then
+    Exit;
+
+  /* 1. Buscar Valores Maximo, Minimo e Medio */
+
+  for
+    Select
+        fi.item
+
+      , max(fi.valor_unitario)
+      , min(fi.valor_unitario)
+      , avg(fi.valor_unitario)
+
+      , max(fi.valor_total)
+      , min(fi.valor_total)
+      , avg(fi.valor_total)
+    from TBCOTACAO_COMPRAFORN_ITEM fi
+    where fi.ano     = :ano
+      and fi.codigo  = :codigo
+      and fi.empresa = :empresa
+    group by
+        fi.item
+    Into
+        item
+      , valor_maximo
+      , valor_minimo
+      , valor_medio
+      , total_maximo
+      , total_minimo
+      , total_medio
+  do
+  begin
+
+    /* 1.1. Inserir os totalizadores no item */
+
+    Update TBCOTACAO_COMPRAITEM i Set
+        i.valor_unitario_min = :valor_minimo
+      , i.valor_total_min    = :total_minimo
+      , i.valor_unitario_max = :valor_maximo
+      , i.valor_total_max    = :total_maximo
+      , i.valor_unitario_media = :valor_medio
+      , i.valor_total_media    = :total_medio
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and i.seq     = :item;
+
+  end 
+
+  /* 2. Totalizar resultados processados */
+
+  Select
+      max(fc.valor_total_liquido)
+    , min(fc.valor_total_liquido)
+    , avg(fc.valor_total_liquido)
+  from TBCOTACAO_COMPRAFORN fc
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+  Into
+      total_maximo
+    , total_minimo
+    , total_medio;
+
+  /* 2.1. Buscar desconto do valor Maximo */
+
+  Select first 1
+    fc.valor_total_desconto
+  from TBCOTACAO_COMPRAFORN fc
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+    and fc.valor_total_liquido = :total_maximo
+  Into
+    total_maximo_desc;
+
+  /* 2.2. Buscar desconto do valor Minimo */
+
+  Select first 1
+    fc.valor_total_desconto
+  from TBCOTACAO_COMPRAFORN fc
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+    and fc.valor_total_liquido = :total_minimo
+  Into
+    total_minimo_desc;
+
+  /* 2.3. Inserir resultados totalizados na cotação */
+
+  Update TBCOTACAO_COMPRA c Set
+      c.valor_max_total    = :total_maximo
+    , c.valor_max_desconto = :total_maximo_desc
+    , c.valor_max_bruto    = :total_maximo + :total_maximo_desc
+
+    , c.valor_min_total    = :total_minimo
+    , c.valor_min_desconto = :total_minimo_desc
+    , c.valor_min_bruto    = :total_minimo + :total_minimo_desc
+
+    , c.valor_media_total    = (:total_maximo + :total_minimo) / 2
+    , c.valor_media_desconto = (:total_maximo_desc + :total_minimo_desc) / 2
+    , c.valor_media_bruto    = (:total_maximo + :total_minimo + :total_maximo_desc + :total_minimo_desc) / 2
+  where c.ano     = :ano
+    and c.codigo  = :codigo
+    and c.empresa = :empresa;
+
+  /* 3. Marcar o fornecedor com a proposta vencedora */
+
+  Update TBCOTACAO_COMPRAFORN fc Set
+    fc.vencedor = 0
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa;
+
+  Update TBCOTACAO_COMPRAFORN fc Set
+    fc.vencedor = 1
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+    and fc.valor_total_liquido = :total_minimo;
+
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE SET_COTACAO_COMPRAFORN_PROCESSA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 07/07/2014 20:42:24 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_COTACAO_COMPRAFORN_PROCESSA (
+    ANO DMN_SMALLINT_NN,
+    CODIGO DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable VALOR_MAXIMO DMN_MONEY;
+declare variable VALOR_MINIMO DMN_MONEY;
+declare variable VALOR_MEDIO DMN_MONEY;
+declare variable TOTAL_MAXIMO DMN_MONEY;
+declare variable TOTAL_MINIMO DMN_MONEY;
+declare variable TOTAL_MEDIO DMN_MONEY;
+declare variable TOTAL_MAXIMO_DESC DMN_MONEY;
+declare variable TOTAL_MINIMO_DESC DMN_MONEY;
+begin
+  /* Caso a Cotacao nao esteja em status adequado, abandonar processo */
+  if (not exists(
+    Select
+      c.numero
+    from TBCOTACAO_COMPRA c
+    where c.ano     = :ano
+      and c.codigo  = :codigo
+      and c.empresa = :empresa
+      and c.status  = 2 -- Em Cotacao (Recebendo respostas dos fornecedores)
+  )) then
+    Exit;
+
+  /* 1. Buscar Valores Maximo, Minimo e Medio */
+
+  for
+    Select
+        fi.item
+
+      , max(fi.valor_unitario)
+      , min(fi.valor_unitario)
+      , avg(fi.valor_unitario)
+
+      , max(fi.valor_total)
+      , min(fi.valor_total)
+      , avg(fi.valor_total)
+    from TBCOTACAO_COMPRAFORN_ITEM fi
+    where fi.ano     = :ano
+      and fi.codigo  = :codigo
+      and fi.empresa = :empresa
+    group by
+        fi.item
+    Into
+        item
+      , valor_maximo
+      , valor_minimo
+      , valor_medio
+      , total_maximo
+      , total_minimo
+      , total_medio
+  do
+  begin
+
+    /* 1.1. Inserir os totalizadores no item */
+
+    Update TBCOTACAO_COMPRAITEM i Set
+        i.valor_unitario_min = :valor_minimo
+      , i.valor_total_min    = :total_minimo
+      , i.valor_unitario_max = :valor_maximo
+      , i.valor_total_max    = :total_maximo
+      , i.valor_unitario_media = :valor_medio
+      , i.valor_total_media    = :total_medio
+    where i.ano     = :ano
+      and i.codigo  = :codigo
+      and i.empresa = :empresa
+      and i.seq     = :item;
+
+  end 
+
+  /* 2. Totalizar resultados processados */
+
+  Select
+      max(fc.valor_total_liquido)
+    , min(fc.valor_total_liquido)
+    , avg(fc.valor_total_liquido)
+  from TBCOTACAO_COMPRAFORN fc
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+  Into
+      total_maximo
+    , total_minimo
+    , total_medio;
+
+  /* 2.1. Buscar desconto do valor Maximo */
+
+  Select first 1
+    fc.valor_total_desconto
+  from TBCOTACAO_COMPRAFORN fc
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+    and fc.valor_total_liquido = :total_maximo
+  Into
+    total_maximo_desc;
+
+  /* 2.2. Buscar desconto do valor Minimo */
+
+  Select first 1
+    fc.valor_total_desconto
+  from TBCOTACAO_COMPRAFORN fc
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+    and fc.valor_total_liquido = :total_minimo
+  Into
+    total_minimo_desc;
+
+  /* 2.3. Inserir resultados totalizados na cotação */
+
+  Update TBCOTACAO_COMPRA c Set
+      c.valor_max_total    = :total_maximo
+    , c.valor_max_desconto = :total_maximo_desc
+    , c.valor_max_bruto    = :total_maximo + :total_maximo_desc
+
+    , c.valor_min_total    = :total_minimo
+    , c.valor_min_desconto = :total_minimo_desc
+    , c.valor_min_bruto    = :total_minimo + :total_minimo_desc
+
+    , c.valor_media_total    = (:total_maximo + :total_minimo) / 2
+    , c.valor_media_desconto = (:total_maximo_desc + :total_minimo_desc) / 2
+    , c.valor_media_bruto    = (:total_maximo + :total_minimo + :total_maximo_desc + :total_minimo_desc) / 2
+  where c.ano     = :ano
+    and c.codigo  = :codigo
+    and c.empresa = :empresa;
+
+  /* 3. Marcar o fornecedor com a proposta vencedora */
+
+  Update TBCOTACAO_COMPRAFORN fc Set
+    fc.vencedor = 0
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa;
+
+  Update TBCOTACAO_COMPRAFORN fc Set
+    fc.vencedor = 1
+  where fc.ano     = :ano
+    and fc.codigo  = :codigo
+    and fc.empresa = :empresa
+    and fc.valor_total_liquido = :total_minimo;
+
+end^
+
+SET TERM ; ^
+
