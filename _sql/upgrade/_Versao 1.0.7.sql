@@ -328,3 +328,59 @@ alter CUSTO_OPER_OUTROS position 71;
 alter table TBVENDAS
 alter GERAR_ESTOQUE_CLIENTE position 72;
 
+
+
+
+/*------ SYSDBA 11/08/2014 19:41:15 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_vendasitens_total_venda for tvendasitens
+active after insert or update or delete position 10
+AS
+  declare variable anovenda Smallint;
+  declare variable numvenda Integer;
+  declare variable total_bruto Dmn_money;
+  declare variable total_desconto dmn_money;
+  declare variable total_liquido Dmn_money;
+  declare variable total_custo Dmn_money;
+begin
+  if ( (Inserting) or (Updating) ) then
+  begin
+    anovenda = new.Ano;
+    numvenda = new.Codcontrol;
+  end
+  else
+  begin
+    anovenda = old.Ano;
+    numvenda = old.Codcontrol;
+  end
+
+  Select
+      sum( coalesce(i.total_bruto,    0) )
+    , sum( coalesce(i.total_desconto, 0) )
+    , sum( coalesce(i.qtde, 0) * coalesce(p.customedio, 0) )
+  from TVENDASITENS i
+    inner join TBPRODUTO p on (p.cod = i.codprod)
+  where i.Ano = :Anovenda
+    and i.Codcontrol = :Numvenda
+  into
+      Total_bruto
+    , Total_desconto
+    , Total_custo;
+
+  Total_bruto    = coalesce(:Total_bruto, 0);
+  Total_desconto = coalesce(:Total_desconto, 0);
+  total_liquido  = :Total_bruto - :Total_desconto;
+
+  Update TBVENDAS v Set
+      v.Totalvenda_bruta = :Total_bruto
+    , v.Desconto   = :Total_desconto
+    , v.Totalvenda = (:Total_liquido - coalesce(v.Desconto_cupom, 0.0))
+    , v.Totalcusto = :Total_custo
+  where v.Ano = :Anovenda
+    and v.Codcontrol = :Numvenda;
+end^
+
+SET TERM ; ^
+
