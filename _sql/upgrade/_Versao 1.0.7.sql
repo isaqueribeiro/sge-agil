@@ -437,3 +437,42 @@ FOREIGN KEY (VENDEDOR)
 REFERENCES TBVENDEDOR(COD)
 ON DELETE SET NULL;
 
+
+
+
+/*------ SYSDBA 12/08/2014 22:11:59 --------*/
+
+CREATE DOMAIN DMN_VCHAR_30_NN AS
+VARCHAR(30)
+NOT NULL;
+
+
+/*------ SYSDBA 12/08/2014 22:45:50 --------*/
+
+CREATE TABLE SYS_ESTACAO (
+    EST_NOME DMN_VCHAR_30_NN NOT NULL,
+    EST_IP DMN_VCHAR_30);
+
+ALTER TABLE SYS_ESTACAO
+ADD CONSTRAINT PK_SYS_ESTACAO
+PRIMARY KEY (EST_NOME);
+
+COMMENT ON COLUMN SYS_ESTACAO.EST_NOME IS
+'Nome da Estacao.';
+
+COMMENT ON COLUMN SYS_ESTACAO.EST_IP IS
+'IP da Estacao.';
+
+
+
+
+/*------ SYSDBA 12/08/2014 22:45:51 --------*/
+
+COMMENT ON TABLE SYS_ESTACAO IS 'Tabela de Estacoes de Trabalho.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   12/08/2014
+
+Tabela responsavel por armazenar a lista de estacoes que trabalho liberadas para uso do(s) sistema(s).';
+
+GRANT ALL ON SYS_ESTACAO TO "PUBLIC";
