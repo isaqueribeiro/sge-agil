@@ -476,3 +476,89 @@ COMMENT ON TABLE SYS_ESTACAO IS 'Tabela de Estacoes de Trabalho.
 Tabela responsavel por armazenar a lista de estacoes que trabalho liberadas para uso do(s) sistema(s).';
 
 GRANT ALL ON SYS_ESTACAO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 25/08/2014 22:28:42 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.FORMAPAGTO_PDV IS
+'Usar forma de pagamento no PDV:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 26/08/2014 14:23:50 --------*/
+
+ALTER TABLE SYS_ESTACAO
+    ADD EST_ULTIMO_ACESSO DMN_DATETIME;
+
+COMMENT ON COLUMN SYS_ESTACAO.EST_ULTIMO_ACESSO IS
+'Ultimo acesso.';
+
+
+
+
+/*------ SYSDBA 26/08/2014 14:24:50 --------*/
+
+ALTER TABLE SYS_ESTACAO
+    ADD EST_LOCAL DMN_VCHAR_100;
+
+COMMENT ON COLUMN SYS_ESTACAO.EST_LOCAL IS
+'Local.';
+
+alter table SYS_ESTACAO
+alter EST_NOME position 1;
+
+alter table SYS_ESTACAO
+alter EST_IP position 2;
+
+alter table SYS_ESTACAO
+alter EST_LOCAL position 3;
+
+alter table SYS_ESTACAO
+alter EST_ULTIMO_ACESSO position 4;
+
+
+
+
+/*------ SYSDBA 26/08/2014 14:26:12 --------*/
+
+ALTER TABLE SYS_ESTACAO
+    ADD EST_REGISTRO DMN_VCHAR_100;
+
+COMMENT ON COLUMN SYS_ESTACAO.EST_REGISTRO IS
+'Registro.';
+
+
+
+
+/*------ SYSDBA 26/08/2014 14:26:22 --------*/
+
+alter table SYS_ESTACAO
+alter column EST_NOME position 1;
+
+
+/*------ SYSDBA 26/08/2014 14:26:22 --------*/
+
+alter table SYS_ESTACAO
+alter column EST_IP position 2;
+
+
+/*------ SYSDBA 26/08/2014 14:26:22 --------*/
+
+alter table SYS_ESTACAO
+alter column EST_LOCAL position 3;
+
+
+/*------ SYSDBA 26/08/2014 14:26:22 --------*/
+
+alter table SYS_ESTACAO
+alter column EST_REGISTRO position 4;
+
+
+/*------ SYSDBA 26/08/2014 14:26:22 --------*/
+
+alter table SYS_ESTACAO
+alter column EST_ULTIMO_ACESSO position 5;
