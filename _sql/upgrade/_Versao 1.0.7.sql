@@ -562,3 +562,47 @@ alter column EST_REGISTRO position 4;
 
 alter table SYS_ESTACAO
 alter column EST_ULTIMO_ACESSO position 5;
+
+
+/*------ SYSDBA 27/08/2014 16:23:39 --------*/
+
+COMMENT ON TABLE TBFORMPAGTO IS 'Tabela de Formas de Pagamneto
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :
+
+Tabela responsavel por armazenar as formas de pagamentos utilizadas nas movimentacoes de COMPRA e VENDA e seus
+respectivos parametros de comportamento.';
+
+
+
+
+/*------ SYSDBA 27/08/2014 16:23:50 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.COD IS
+'Codigo';
+
+
+
+
+/*------ SYSDBA 27/08/2014 16:23:55 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.DESCRI IS
+'Descricao';
+
+
+
+
+/*------ SYSDBA 27/08/2014 16:24:08 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.ACRESCIMO IS
+'Percentual Acrescimo';
+
+
+
+
+/*------ SYSDBA 27/08/2014 16:24:21 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.CONTA_CORRENTE IS
+'Conta Corrente';
+
