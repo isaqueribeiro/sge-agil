@@ -76,9 +76,9 @@ LocaleToUnicode=1
 ImagebaseMultiple=1
 SuspiciousTypecast=1
 PrivatePropAccessor=1
-UnsafeType=1
-UnsafeCode=1
-UnsafeCast=1
+UnsafeType=0
+UnsafeCode=0
+UnsafeCast=0
 [Linker]
 MapFile=0
 OutputObjs=0
@@ -90,13 +90,13 @@ MaxStackSize=1048576
 ImageBase=4194304
 ExeDescription=
 [Directories]
-OutputDir=..\Bin\
-UnitOutputDir=..\_dcu\
+OutputDir=D:\CAM 2010\Compilado
+UnitOutputDir=
 PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
-Packages=vcl;rtl;dbrtl;adortl;vcldb;vclx;bdertl;vcldbx;ibxpress;dsnap;cds;bdecds;qrpt;teeui;teedb;tee;dss;teeqr;dsnapcrba;dsnapcon;VclSmp;vclshlctrls;vclie;xmlrtl;inet;inetdbbde;inetdbxpress;inetdb;nmfast;webdsnap;websnap;dbexpress;dbxcds;indy;dclOffice2k;BcBarMenus60;Instalar;FIBDBMidas6;LabelPack;WinSkinD6R;PackageXPMenu;RxCtl6;RxDB6;RxBDE6
-Conditionals=ACBR
+Packages=vcl;rtl;vclx;inet;xmlrtl;vclie;inetdbbde;inetdbxpress;dbrtl;dsnap;dsnapcon;vcldb;soaprtl;VclSmp;dbexpress;dbxcds;inetdb;bdertl;vcldbx;webdsnap;websnap;adortl;ibxpress;teeui;teedb;tee;dss;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP;RxCtl7;RxDB7;RxBDE7;rbTCUI107;rbTC107;rbRCL107;rbDIDE107;rbDAD107;rbUSERDesign107;rbUSER107;rbDBDE107;rbBDE107;rbDB107;rbADO107;rbDBE107;rbIBE107;rbIDE107;rbCIDE107;rbRIDE107;rbRAP107;indy;teeqr
+Conditionals=
 DebugSourceDirs=
 UsePackages=0
 [Parameters]
@@ -108,14 +108,14 @@ DebugCWD=
 [Language]
 ActiveLang=
 ProjectLang=
-RootDir=E:\Projetos\Dorivaldo\DGESTAO\Sys\
+RootDir=C:\Arquivos de programas\Borland\Delphi7\Bin\
 [Version Info]
 IncludeVerInfo=1
-AutoIncBuild=1
+AutoIncBuild=0
 MajorVer=1
 MinorVer=0
-Release=7
-Build=7
+Release=2
+Build=0
 Debug=0
 PreRelease=0
 Special=0
@@ -124,32 +124,27 @@ DLL=0
 Locale=1046
 CodePage=1252
 [Version Info Keys]
-CompanyName=Ágil Soluções em Softwares, ME
-FileDescription=Sistema Integrado de Gestão Empresarial/Comercial
-FileVersion=1.0.7.7
-InternalName=SGE
-LegalCopyright=Copyright 2013 - 2014 © Ágil Soluções em Softwares - ME
+CompanyName=
+FileDescription=
+FileVersion=1.0.2.0
+InternalName=
+LegalCopyright=
 LegalTrademarks=
-OriginalFilename=SGE.EXE
-ProductName=SGE - Sistema de Gestão Empresarial/Comercial
-ProductVersion=1.0
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
 Comments=
-Systems Analyst=Isaque Marinho Ribeiro
-ReleaseDate=03/09/2014
-Contacts=(91) 9146.0444 / 3295.3390
-Owner=Isaque Marinho Ribeiro
-SplashName=
-SplashDescription=
-Todos os direitos reservados.
-[HistoryLists\hlConditionals]
-Count=1
-Item0=ACBR
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
 [HistoryLists\hlUnitOutputDirectory]
-Count=1
-Item0=..\_dcu\
+Count=3
+Item0=D:\Projetos 2009\Backup\ProjetoAtualizado\DCUs
+Item1=D:\Projetos 2009\Backup\1.02\DCUs
+Item2=C:\Projetos 2009\Backup\DCUs
 [HistoryLists\hlOutputDirectorry]
-Count=1
-Item0=..\Bin\
+Count=4
+Item0=D:\CAM 2010\Compilado
+Item1=D:\Projetos 2009\Compilado
+Item2=C:\Projetos 2009\Compilado
+Item3=C:\Projetos 2009\Backup\Compilado
