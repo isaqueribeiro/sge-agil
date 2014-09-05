@@ -1442,3 +1442,275 @@ Update TBVENDAS set nfe_denegada = 0 where nfe_denegada is null;
 /*------ SYSDBA 04/09/2014 23:22:58 --------*/
 
 COMMIT WORK;
+
+
+
+/*------ SYSDBA 05/09/2014 15:33:01 --------*/
+
+COMMENT ON TABLE TBCONFIGURACAO IS 'Tabela Configuracoes da Empresa
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   ?
+
+Tabela responsavel por armazenar informacoes de configuracoes da empresa. Estas informacoes influenciam diretamente no
+comportamento do sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    16/05/2014 - IMR :
+        + Criacao do campo CLIENTE_PERMITIR_DUPLICAR_CNPJ para permitir ou nao duplicacao de CPF/CNPJ no cadastro dos
+        clientes.
+    04/09/2014 - IMR:
+        + Criacao do campo NFE_ACEITAR_NOTA_DENEGADA para permitir ou nao o emitende de NF-e aceitar o retorno de NF-e
+        denegadas e guarda-las na base.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:34:31 --------*/
+
+COMMENT ON TABLE TBVENDAS IS 'Tabela Vendas
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   ?
+
+Tabela responsavel por armazenar todos os registros de vendas realizados pelo sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/09/2014 - IMR:
+        + Criacao do campo NFE_ACEITAR_NOTA_DENEGADA para permitir ou nao o emitende de NF-e aceitar o retorno de NF-e
+        denegadas e guarda-las na base.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:35:44 --------*/
+
+COMMENT ON TABLE TBVENDAS IS 'Tabela Vendas
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   ?
+
+Tabela responsavel por armazenar todos os registros de vendas realizados pelo sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/09/2014 - IMR:
+        + Criacao dos campos NFE_DENEGADA e NFE_DENEGADA_MOTIVO para sinalizar as NF-e que foram denegadas na SEFA e
+        armazenar o motivo da denegacao.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:36:37 --------*/
+
+COMMENT ON TABLE TBCONFIGURACAO IS 'Tabela Configuracoes da Empresa
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   ?
+
+Tabela responsavel por armazenar informacoes de configuracoes da empresa. Estas informacoes influenciam diretamente no
+comportamento do sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    16/05/2014 - IMR :
+        + Criacao do campo CLIENTE_PERMITIR_DUPLICAR_CNPJ para permitir ou nao duplicacao de CPF/CNPJ no cadastro dos
+          clientes.
+    04/09/2014 - IMR:
+        + Criacao do campo NFE_ACEITAR_NOTA_DENEGADA para permitir ou nao o emitende de NF-e aceitar o retorno de NF-e
+          denegadas e guarda-las na base.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:36:47 --------*/
+
+COMMENT ON TABLE TBVENDAS IS 'Tabela Vendas
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   ?
+
+Tabela responsavel por armazenar todos os registros de vendas realizados pelo sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/09/2014 - IMR:
+        + Criacao dos campos NFE_DENEGADA e NFE_DENEGADA_MOTIVO para sinalizar as NF-e que foram denegadas na SEFA e
+          armazenar o motivo da denegacao.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:37:22 --------*/
+
+COMMENT ON TABLE TBCOMPRAS IS 'Tabela Entrada (Compras)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de movimento de entrada no estoque.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/05/2014 - IMR :
+        + Criacao do campo TIPO_DESPESA para permitir que os registros de Contas A Pagar ja possam ser gerados com o
+          devido Tipo de Despesa informado. Este campo passa a ser obrigatorio para uma melhor classificacao das Contas
+          A Pagar.
+
+    29/05/2014 - IMR:
+        + Criacao dos campos TIPO_ENTRADA e TIPO_DOCUMENTO para que os movimentos de entrada possam ser classificados quanto
+          a sua finalidade (Consumo, Producao/Faturamento, Imobilizado, ETC.) e ao tipo de documento usado para efeturar
+          essa entrada (Cupom, NF, ETC.).
+
+    04/09/2014 - IMR:
+        + Criacao dos campos NFE_DENEGADA e NFE_DENEGADA_MOTIVO para sinalizar as NF-e que foram denegadas na SEFA e
+          armazenar o motivo da denegacao.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:37:30 --------*/
+
+COMMENT ON TABLE TBCONFIGURACAO IS 'Tabela Configuracoes da Empresa
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   ?
+
+Tabela responsavel por armazenar informacoes de configuracoes da empresa. Estas informacoes influenciam diretamente no
+comportamento do sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    16/05/2014 - IMR :
+        + Criacao do campo CLIENTE_PERMITIR_DUPLICAR_CNPJ para permitir ou nao duplicacao de CPF/CNPJ no cadastro dos
+          clientes.
+
+    04/09/2014 - IMR:
+        + Criacao do campo NFE_ACEITAR_NOTA_DENEGADA para permitir ou nao o emitende de NF-e aceitar o retorno de NF-e
+          denegadas e guarda-las na base.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:37:49 --------*/
+
+COMMENT ON TABLE TBVENDAS IS 'Tabela Vendas
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de vendas realizados pelo sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/09/2014 - IMR:
+        + Criacao dos campos NFE_DENEGADA e NFE_DENEGADA_MOTIVO para sinalizar as NF-e que foram denegadas na SEFA e
+          armazenar o motivo da denegacao.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:38:01 --------*/
+
+COMMENT ON TABLE TBCONFIGURACAO IS 'Tabela Configuracoes da Empresa
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2014
+
+Tabela responsavel por armazenar informacoes de configuracoes da empresa. Estas informacoes influenciam diretamente no
+comportamento do sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    16/05/2014 - IMR :
+        + Criacao do campo CLIENTE_PERMITIR_DUPLICAR_CNPJ para permitir ou nao duplicacao de CPF/CNPJ no cadastro dos
+          clientes.
+
+    04/09/2014 - IMR:
+        + Criacao do campo NFE_ACEITAR_NOTA_DENEGADA para permitir ou nao o emitende de NF-e aceitar o retorno de NF-e
+          denegadas e guarda-las na base.';
+
+
+
+
+/*------ SYSDBA 05/09/2014 15:40:20 --------*/
+
+COMMENT ON TABLE TBVENDAS IS 'Tabela Vendas
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de vendas realizados pelo sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/08/2014 - IMR:
+        + Criacao do campo DESCONTO_CUPOM para armazenar o valor de desconto concedido no PDV (Novo sistema em
+          desenvolvimento).
+
+    04/09/2014 - IMR:
+        + Criacao dos campos NFE_DENEGADA e NFE_DENEGADA_MOTIVO para sinalizar as NF-e que foram denegadas na SEFA e
+          armazenar o motivo da denegacao.';
+
