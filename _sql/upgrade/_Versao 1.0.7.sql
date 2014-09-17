@@ -25833,3 +25833,77 @@ where (RDB$FIELD_NAME = 'RESP') and
 (RDB$RELATION_NAME = 'TBPRODHIST')
 ;
 
+
+
+
+/*------ SYSDBA 17/09/2014 13:58:49 --------*/
+
+ALTER TABLE TBNFE_ENVIADA
+    ADD MODELO DMN_SMALLINT_N DEFAULT 0,
+    ADD VERSAO DMN_SMALLINT_N DEFAULT 0;
+
+COMMENT ON COLUMN TBNFE_ENVIADA.MODELO IS
+'Modelo DF:
+0 - moNFe
+1 - moNFCe';
+
+COMMENT ON COLUMN TBNFE_ENVIADA.VERSAO IS
+'Versao da NF-e:
+0 - ve200
+1 - ve300
+2 - ve310';
+
+alter table TBNFE_ENVIADA
+alter EMPRESA position 1;
+
+alter table TBNFE_ENVIADA
+alter SERIE position 2;
+
+alter table TBNFE_ENVIADA
+alter NUMERO position 3;
+
+alter table TBNFE_ENVIADA
+alter MODELO position 4;
+
+alter table TBNFE_ENVIADA
+alter VERSAO position 5;
+
+alter table TBNFE_ENVIADA
+alter ANOVENDA position 6;
+
+alter table TBNFE_ENVIADA
+alter NUMVENDA position 7;
+
+alter table TBNFE_ENVIADA
+alter ANOCOMPRA position 8;
+
+alter table TBNFE_ENVIADA
+alter NUMCOMPRA position 9;
+
+alter table TBNFE_ENVIADA
+alter DATAEMISSAO position 10;
+
+alter table TBNFE_ENVIADA
+alter HORAEMISSAO position 11;
+
+alter table TBNFE_ENVIADA
+alter CHAVE position 12;
+
+alter table TBNFE_ENVIADA
+alter PROTOCOLO position 13;
+
+alter table TBNFE_ENVIADA
+alter RECIBO position 14;
+
+alter table TBNFE_ENVIADA
+alter XML_FILENAME position 15;
+
+alter table TBNFE_ENVIADA
+alter XML_FILE position 16;
+
+alter table TBNFE_ENVIADA
+alter LOTE_ANO position 17;
+
+alter table TBNFE_ENVIADA
+alter LOTE_NUM position 18;
+
