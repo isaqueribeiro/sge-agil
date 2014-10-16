@@ -26104,3 +26104,2831 @@ COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.NFE_NUMERO IS
 CREATE INDEX IDX_TBNFE_CARTA_CORRECAO
 ON TBNFE_CARTA_CORRECAO (NFE_SERIE,NFE_NUMERO);
 
+
+
+/*------ 10/10/2014 14:24:57 --------*/
+
+CREATE GENERATOR GEN_IBPT_ID;
+
+/*------ 10/10/2014 14:24:58 --------*/
+
+CREATE TABLE SYS_IBPT (
+    ID_IBPT                 INTEGER NOT NULL,
+    NCM_IBPT                VARCHAR(10),
+    EX_IBPT                 VARCHAR(3),
+    TABELA_IBPT             VARCHAR(3),
+    ALIQNACIONAL_IBPT       NUMERIC(15,2),
+    ALIQINTERNACIONAL_IBPT  NUMERIC(15,2)
+);
+
+/*------ 10/10/2014 14:24:58 --------*/
+
+ALTER TABLE SYS_IBPT ADD CONSTRAINT PK_SYS_IBPT PRIMARY KEY (ID_IBPT);
+
+/*------ 10/10/2014 14:24:58 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER TRIGGER IBPT_BI FOR SYS_IBPT
+ACTIVE BEFORE INSERT POSITION 0
+as
+begin
+  if (new.id_ibpt is null) then
+    new.id_ibpt = gen_id(gen_ibpt_id,1);
+end^
+
+/*------ 10/10/2014 14:24:58 --------*/
+
+SET TERM ; ^
+
+
+/*------ SYSDBA 10/10/2014 14:25:38 --------*/
+
+COMMENT ON COLUMN SYS_IBPT.ID_IBPT IS
+'Sequencial.';
+
+GRANT ALL ON SYS_IBPT TO "PUBLIC";
+
+
+
+/*------ SYSDBA 10/10/2014 14:29:36 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_10'
+where (RDB$FIELD_NAME = 'NCM_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:29:55 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_03'
+where (RDB$FIELD_NAME = 'EX_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:30:11 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_03'
+where (RDB$FIELD_NAME = 'TABELA_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:30:35 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_PERCENTUAL_2'
+where (RDB$FIELD_NAME = 'ALIQNACIONAL_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:30:50 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_PERCENTUAL_2'
+where (RDB$FIELD_NAME = 'ALIQINTERNACIONAL_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:31:08 --------*/
+
+COMMENT ON COLUMN SYS_IBPT.NCM_IBPT IS
+'Codigo NCM';
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:31:15 --------*/
+
+COMMENT ON COLUMN SYS_IBPT.ALIQNACIONAL_IBPT IS
+'Aliquota Nacional';
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:31:25 --------*/
+
+COMMENT ON COLUMN SYS_IBPT.ALIQINTERNACIONAL_IBPT IS
+'Aliquota de Importados.';
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:38:18 --------*/
+
+CREATE INDEX IDX_SYS_IBPT_NCM
+ON SYS_IBPT (NCM_IBPT);
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:44:31 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_20'
+where (RDB$FIELD_NAME = 'NCM_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 10/10/2014 14:44:55 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_10'
+where (RDB$FIELD_NAME = 'NCM_IBPT') and
+(RDB$RELATION_NAME = 'SYS_IBPT')
+;
+
+
+
+
+/*------ SYSDBA 14/10/2014 19:39:51 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      cc.Codemp
+    , coalesce(cc.Codforn, r.codforn)
+    , 'COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+    , r.Anocompra
+    , r.Numcompra
+  from TBCONTPAG r
+    left join TBFORNECEDOR f on (f.Codforn = r.Codforn)
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra;
+
+  Historico = coalesce(:Historico, 'PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 14/10/2014 19:43:32 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_REC (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable CLIENTE_COD integer;
+declare variable CLIENTE_CNPJ varchar(18);
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_VENDA smallint;
+declare variable NUM_VENDA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      v.Codemp
+    , coalesce(v.codcliente, r.cliente)
+    , coalesce(nullif(trim(c.cnpj), ''), nullif(trim(v.codcli), ''), r.cnpj)
+    , 'VENDA No. ' || r.Anovenda || '/' || r.Numvenda || ' - ' || c.Nome
+    , r.Anovenda
+    , r.Numvenda
+  from TBCONTREC r
+    left join TBVENDAS v on (v.Ano = r.Anovenda and v.Codcontrol = r.Numvenda)
+    left join TBCLIENTE c on (c.codigo = coalesce(v.codcliente, r.cliente))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , cliente_cod
+    , cliente_cnpj
+    , Historico
+    , Ano_venda
+    , Num_venda;
+
+  Historico = coalesce(:Historico, 'RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , CLIENTE_COD
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Areceber_ano
+    , Areceber_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'C'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , :Ano_venda
+    , :Num_venda
+    , :cliente_cod
+    , :cliente_cnpj
+    , Null
+    , Null
+    , :Empresa
+    , Null
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 14/10/2014 19:43:59 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_REC (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable CLIENTE_COD integer;
+declare variable CLIENTE_CNPJ varchar(18);
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_VENDA smallint;
+declare variable NUM_VENDA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      v.Codemp
+    , coalesce(v.codcliente, r.cliente)
+    , coalesce(nullif(trim(c.cnpj), ''), nullif(trim(v.codcli), ''), nullif(trim(r.cnpj),''))
+    , 'VENDA No. ' || r.Anovenda || '/' || r.Numvenda || ' - ' || c.Nome
+    , r.Anovenda
+    , r.Numvenda
+  from TBCONTREC r
+    left join TBVENDAS v on (v.Ano = r.Anovenda and v.Codcontrol = r.Numvenda)
+    left join TBCLIENTE c on (c.codigo = coalesce(v.codcliente, r.cliente))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , cliente_cod
+    , cliente_cnpj
+    , Historico
+    , Ano_venda
+    , Num_venda;
+
+  Historico = coalesce(:Historico, 'RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , CLIENTE_COD
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Areceber_ano
+    , Areceber_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'C'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , :Ano_venda
+    , :Num_venda
+    , :cliente_cod
+    , :cliente_cnpj
+    , Null
+    , Null
+    , :Empresa
+    , Null
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 14/10/2014 19:44:34 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      cc.Codemp
+    , coalesce(cc.Codforn, r.codforn)
+    , 'COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+    , r.Anocompra
+    , r.Numcompra
+  from TBCONTPAG r
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+    left join TBFORNECEDOR f on (f.Codforn = coalesce(cc.Codforn, r.codforn))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra;
+
+  Historico = coalesce(:Historico, 'PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 14/10/2014 20:11:49 --------*/
+
+ALTER TABLE TBCAIXA_MOVIMENTO
+    ADD TIPO_DESPESA DMN_SMALLINT_N;
+
+COMMENT ON COLUMN TBCAIXA_MOVIMENTO.TIPO_DESPESA IS
+'Tipo de Despesa.';
+
+alter table TBCAIXA_MOVIMENTO
+alter ANO position 1;
+
+alter table TBCAIXA_MOVIMENTO
+alter NUMERO position 2;
+
+alter table TBCAIXA_MOVIMENTO
+alter CAIXA_ANO position 3;
+
+alter table TBCAIXA_MOVIMENTO
+alter CAIXA_NUM position 4;
+
+alter table TBCAIXA_MOVIMENTO
+alter CONTA_CORRENTE position 5;
+
+alter table TBCAIXA_MOVIMENTO
+alter FORMA_PAGTO position 6;
+
+alter table TBCAIXA_MOVIMENTO
+alter DATAHORA position 7;
+
+alter table TBCAIXA_MOVIMENTO
+alter TIPO position 8;
+
+alter table TBCAIXA_MOVIMENTO
+alter TIPO_DESPESA position 9;
+
+alter table TBCAIXA_MOVIMENTO
+alter HISTORICO position 10;
+
+alter table TBCAIXA_MOVIMENTO
+alter VALOR position 11;
+
+alter table TBCAIXA_MOVIMENTO
+alter SITUACAO position 12;
+
+alter table TBCAIXA_MOVIMENTO
+alter VENDA_ANO position 13;
+
+alter table TBCAIXA_MOVIMENTO
+alter VENDA_NUM position 14;
+
+alter table TBCAIXA_MOVIMENTO
+alter CLIENTE_COD position 15;
+
+alter table TBCAIXA_MOVIMENTO
+alter CLIENTE position 16;
+
+alter table TBCAIXA_MOVIMENTO
+alter COMPRA_ANO position 17;
+
+alter table TBCAIXA_MOVIMENTO
+alter COMPRA_NUM position 18;
+
+alter table TBCAIXA_MOVIMENTO
+alter EMPRESA position 19;
+
+alter table TBCAIXA_MOVIMENTO
+alter FORNECEDOR position 20;
+
+alter table TBCAIXA_MOVIMENTO
+alter USUARIO position 21;
+
+alter table TBCAIXA_MOVIMENTO
+alter APAGAR_ANO position 22;
+
+alter table TBCAIXA_MOVIMENTO
+alter APAGAR_NUM position 23;
+
+alter table TBCAIXA_MOVIMENTO
+alter ARECEBER_ANO position 24;
+
+alter table TBCAIXA_MOVIMENTO
+alter ARECEBER_NUM position 25;
+
+
+
+
+/*------ SYSDBA 14/10/2014 20:12:19 --------*/
+
+ALTER TABLE TBCAIXA_MOVIMENTO
+ADD CONSTRAINT FK_TBCAIXA_MOVIMENTO_TD
+FOREIGN KEY (TIPO_DESPESA)
+REFERENCES TBTPDESPESA(COD);
+
+
+
+
+/*------ SYSDBA 14/10/2014 20:14:39 --------*/
+
+COMMENT ON TABLE TBCAIXA_MOVIMENTO IS 'Tabela Movimento Caixa (Fluxo)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de movimentacao (fluxo) de caixa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    14/10/2014 - IMR:
+        + Criacao do campo TIPO_DESPESA para armazenar o tipo de despesa do fluxo de ciaxa quando este for um movimento
+          de debito (D).';
+
+
+
+
+/*------ SYSDBA 14/10/2014 20:16:43 --------*/
+
+COMMENT ON TABLE SYS_IBPT IS 'Tabela IBPT
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/10/2014
+
+Tabela responsavel por armazenar todos os registros IBPT, ou seja, todos os registros de taxas de tributacoes de
+impostos de acordo como o NCM do produto/servico.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco';
+
+
+
+
+/*------ SYSDBA 14/10/2014 21:41:00 --------*/
+
+ALTER TABLE TBCONTA_CORRENTE
+    ADD EMPRESA DMN_CNPJ;
+
+COMMENT ON COLUMN TBCONTA_CORRENTE.EMPRESA IS
+'Empresa.
+
+Apenas para a conta corrente que for do tipo 2 (Banco)';
+
+alter table TBCONTA_CORRENTE
+alter CODIGO position 1;
+
+alter table TBCONTA_CORRENTE
+alter EMPRESA position 2;
+
+alter table TBCONTA_CORRENTE
+alter DESCRICAO position 3;
+
+alter table TBCONTA_CORRENTE
+alter TIPO position 4;
+
+alter table TBCONTA_CORRENTE
+alter CONTA_BANCO_BOLETO position 5;
+
+
+
+
+/*------ SYSDBA 14/10/2014 21:41:25 --------*/
+
+ALTER TABLE TBCONTA_CORRENTE
+ADD CONSTRAINT FK_TBCONTA_CORRENTE_EMPRESA
+FOREIGN KEY (EMPRESA)
+REFERENCES TBEMPRESA(CNPJ);
+
+
+
+
+/*------ SYSDBA 14/10/2014 21:43:15 --------*/
+
+COMMENT ON TABLE TBCONTA_CORRENTE IS 'Tabela Conta Corrente
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de contas correntes do tipo Caixa (1) e do tipo Banco (2).
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    14/10/2014 - IMR:
+        + Criacao do campo EMPRESA para definir a empresa responsavel pela conta corrente do tipo Banco (2).';
+
+
+
+
+/*------ SYSDBA 15/10/2014 13:42:38 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG_ESTORNO (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      cc.Codemp
+    , cc.Codforn
+    , substring((
+        'ESTORNO DO PAGTO. DA DUPLICATA No. ' || r.Anocompra || '/' || r.Numcompra || ' P' || :Seq ||
+        ' DA COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn) from 1 for 250)
+    , r.Anocompra
+    , r.Numcompra
+  from TBCONTPAG r
+    left join TBFORNECEDOR f on (f.Codforn = r.Codforn)
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra;
+
+  Historico = coalesce(:Historico, 'ESTORNO DO PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'C'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 13:43:00 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG_ESTORNO (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      cc.Codemp
+    , cc.Codforn
+    , substring((
+        'ESTORNO DO PAGTO. DA DUPLICATA No. ' || r.Anocompra || '/' || r.Numcompra || ' P' || :Seq ||
+        ' DA COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+      ) from 1 for 250)
+    , r.Anocompra
+    , r.Numcompra
+  from TBCONTPAG r
+    left join TBFORNECEDOR f on (f.Codforn = r.Codforn)
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra;
+
+  Historico = coalesce(:Historico, 'ESTORNO DO PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'C'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 13:44:48 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_REC_ESTORNO (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable CLIENTE_COD integer;
+declare variable CLIENTE_CNPJ varchar(18);
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_VENDA smallint;
+declare variable NUM_VENDA integer;
+begin
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Montar Historico
+  Select
+      v.Codemp
+    , r.cliente
+    , c.cnpj
+    , substring((
+        'ESTORNO DO RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq ||
+        ' VENDA No. ' || r.Anovenda || '/' || r.Numvenda || ' - ' || c.Nome
+      ) from 1 for 250)
+    , r.Anovenda
+    , r.Numvenda
+  from TBCONTREC r
+    left join TBCLIENTE c on (c.codigo = r.cliente)
+    left join TBVENDAS v on (v.Ano = r.Anovenda and v.Codcontrol = r.Numvenda)
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , cliente_cod
+    , cliente_cnpj
+    , Historico
+    , Ano_venda
+    , Num_venda;
+
+  Historico = coalesce(:Historico, 'ESTORNO DO RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente_Cod
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Areceber_ano
+    , Areceber_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , :Ano_venda
+    , :Num_venda
+    , :cliente_cod
+    , :cliente_cnpj
+    , Null
+    , Null
+    , :Empresa
+    , Null
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:35:05 --------*/
+
+CREATE TABLE TBFORMPAGTO_CONTACOR (
+    FORMA_PAGTO DMN_SMALLINT_NN NOT NULL,
+    CONTA_CORRENTE DMN_INTEGER_NN NOT NULL);
+
+ALTER TABLE TBFORMPAGTO_CONTACOR
+ADD CONSTRAINT PK_TBFORMPAGTO_CONTACOR
+PRIMARY KEY (FORMA_PAGTO,CONTA_CORRENTE);
+
+COMMENT ON COLUMN TBFORMPAGTO_CONTACOR.FORMA_PAGTO IS
+'Forma de Pagamento';
+
+COMMENT ON COLUMN TBFORMPAGTO_CONTACOR.CONTA_CORRENTE IS
+'Conta Corrente';
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:35:06 --------*/
+
+COMMENT ON TABLE TBFORMPAGTO_CONTACOR IS 'Tabela Forma de Pagamento x Conta Corrente.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   15/10/2014
+
+Tabela responsavel por armazenar a relacao "Forma de Pagamento" X "Conta Corrente". Ela permitira que varias formas de
+pagamento possam esta associadas a mais de uma conta corrente e uma conta corrente associada a varias formas de pagamento.
+
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco';
+
+GRANT ALL ON TBFORMPAGTO_CONTACOR TO "PUBLIC";
+
+
+
+/*------ SYSDBA 15/10/2014 14:35:59 --------*/
+
+ALTER TABLE TBFORMPAGTO_CONTACOR
+ADD CONSTRAINT FK_TBFORMPAGTO_CONTACOR_FPG
+FOREIGN KEY (FORMA_PAGTO)
+REFERENCES TBFORMPAGTO(COD)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE TBFORMPAGTO_CONTACOR
+ADD CONSTRAINT FK_TBFORMPAGTO_CONTACOR_CCR
+FOREIGN KEY (CONTA_CORRENTE)
+REFERENCES TBCONTA_CORRENTE(CODIGO)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:40:05 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_CAIXA_ABERTO (
+    EMPRESA DMN_CNPJ,
+    USUARIO varchar(12),
+    DATA date,
+    FORMA_PAGTO smallint)
+returns (
+    ANO_CAIXA smallint,
+    NUM_CAIXA integer,
+    CONTA_CORRENTE integer)
+as
+begin
+
+  Select First 1
+      c.Ano
+    , c.Numero
+    , c.Conta_corrente
+  from TBCAIXA c
+    Inner join TBCONTA_CORRENTE cc on (cc.Codigo = c.Conta_corrente and cc.empresa = :empresa)
+  where c.Situacao = 0
+    and c.Usuario = :Usuario
+    and ( (c.Data_abertura = :Data) or (cc.Tipo = 2) )
+    and c.Conta_corrente in (
+      Select
+        fc.conta_corrente
+      from TBFORMPAGTO_CONTACOR fc
+      where fc.forma_pagto = :Forma_pagto
+    )
+  into
+      Ano_caixa
+    , Num_caixa
+    , Conta_corrente;
+
+  Suspend;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:41:15 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_CAIXA_ABERTO_DETALHE (
+    EMPRESA_IN DMN_CNPJ,
+    USUARIO_IN varchar(12),
+    DATA date,
+    FORMA_PAGTO smallint)
+returns (
+    ANO smallint,
+    NUMERO integer,
+    USUARIO varchar(12),
+    DATA_ABERTURA date,
+    CONTA_CORRENTE integer,
+    VALOR_TOTAL_CREDITO numeric(15,2),
+    VALOR_TOTAL_DEBITO numeric(15,2))
+as
+begin
+
+  Select
+      gc.Ano_caixa
+    , gc.Num_caixa
+    , gc.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa_in, :Usuario_in, :Data, :Forma_pagto) gc
+  into
+      Ano
+    , Numero
+    , Conta_corrente;
+
+  Select
+      c.Usuario
+    , c.Data_abertura
+    , sum( Case when upper(cm.Tipo) = 'C' then cm.Valor else 0 end ) as Valor_total_credito
+    , sum( Case when upper(cm.Tipo) = 'D' then cm.Valor else 0 end ) as Valor_total_debito
+  from TBCAIXA c
+    inner join TBCAIXA_MOVIMENTO cm on (cm.Caixa_ano = c.Ano and cm.Caixa_num = c.Numero)
+  where c.Ano    = :Ano
+    and c.Numero = :Numero
+  Group by
+      c.Usuario
+    , c.Data_abertura
+  into
+      Usuario
+    , Data_abertura
+    , Valor_total_credito
+    , Valor_total_debito;
+
+  Valor_total_credito = coalesce(:Valor_total_credito, 0);
+  Valor_total_debito  = coalesce(:Valor_total_debito,  0);
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:42:33 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+begin
+  -- Montar Historico
+  Select
+      cc.Codemp
+    , coalesce(cc.Codforn, r.codforn)
+    , 'COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+    , r.Anocompra
+    , r.Numcompra
+  from TBCONTPAG r
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+    left join TBFORNECEDOR f on (f.Codforn = coalesce(cc.Codforn, r.codforn))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra;
+
+  Historico = coalesce(:Historico, 'PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa, :Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:43:26 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG_ESTORNO (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+begin
+  -- Montar Historico
+  Select
+      cc.Codemp
+    , cc.Codforn
+    , substring((
+        'ESTORNO DO PAGTO. DA DUPLICATA No. ' || r.Anocompra || '/' || r.Numcompra || ' P' || :Seq ||
+        ' DA COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+      ) from 1 for 250)
+    , r.Anocompra
+    , r.Numcompra
+  from TBCONTPAG r
+    left join TBFORNECEDOR f on (f.Codforn = r.Codforn)
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra;
+
+  Historico = coalesce(:Historico, 'ESTORNO DO PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa, :Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'C'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:44:34 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_REC (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable CLIENTE_COD integer;
+declare variable CLIENTE_CNPJ varchar(18);
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_VENDA smallint;
+declare variable NUM_VENDA integer;
+begin
+  -- Montar Historico
+  Select
+      v.Codemp
+    , coalesce(v.codcliente, r.cliente)
+    , coalesce(nullif(trim(c.cnpj), ''), nullif(trim(v.codcli), ''), nullif(trim(r.cnpj),''))
+    , 'VENDA No. ' || r.Anovenda || '/' || r.Numvenda || ' - ' || c.Nome
+    , r.Anovenda
+    , r.Numvenda
+  from TBCONTREC r
+    left join TBVENDAS v on (v.Ano = r.Anovenda and v.Codcontrol = r.Numvenda)
+    left join TBCLIENTE c on (c.codigo = coalesce(v.codcliente, r.cliente))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , cliente_cod
+    , cliente_cnpj
+    , Historico
+    , Ano_venda
+    , Num_venda;
+
+  Historico = coalesce(:Historico, 'RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa, :Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , CLIENTE_COD
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Areceber_ano
+    , Areceber_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'C'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , :Ano_venda
+    , :Num_venda
+    , :cliente_cod
+    , :cliente_cnpj
+    , Null
+    , Null
+    , :Empresa
+    , Null
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 14:44:59 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_REC_ESTORNO (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable CLIENTE_COD integer;
+declare variable CLIENTE_CNPJ varchar(18);
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_VENDA smallint;
+declare variable NUM_VENDA integer;
+begin
+  -- Montar Historico
+  Select
+      v.Codemp
+    , r.cliente
+    , c.cnpj
+    , substring((
+        'ESTORNO DO RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq ||
+        ' VENDA No. ' || r.Anovenda || '/' || r.Numvenda || ' - ' || c.Nome
+      ) from 1 for 250)
+    , r.Anovenda
+    , r.Numvenda
+  from TBCONTREC r
+    left join TBCLIENTE c on (c.codigo = r.cliente)
+    left join TBVENDAS v on (v.Ano = r.Anovenda and v.Codcontrol = r.Numvenda)
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , cliente_cod
+    , cliente_cnpj
+    , Historico
+    , Ano_venda
+    , Num_venda;
+
+  Historico = coalesce(:Historico, 'ESTORNO DO RECEBIMENTO DO TITULO No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa, :Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente_Cod
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Areceber_ano
+    , Areceber_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , :Ano_venda
+    , :Num_venda
+    , :cliente_cod
+    , :cliente_cnpj
+    , Null
+    , Null
+    , :Empresa
+    , Null
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 17:46:26 --------*/
+
+DROP VIEW VW_CONTA_CORRENTE;
+
+CREATE VIEW VW_CONTA_CORRENTE(
+    CODIGO,
+    DESCRICAO,
+    TIPO,
+    TIPO_DESC,
+    DESCRICAO_FULL,
+    EMPRESA,
+    CNPJ)
+AS
+Select
+    c.Codigo
+  , c.Descricao
+  , c.Tipo
+  , Case
+      When c.Tipo = 1 then 'Caixa'
+      When c.Tipo = 2 then 'Banco'
+      else '* Indefinido'
+    end as Tipo_Desc
+  , right('000' || c.Codigo, 3) || ' - ' || c.Descricao as Descricao_FULL
+  , e.rzsoc
+  , e.cnpj
+from TBCONTA_CORRENTE c
+  left join TBEMPRESA e on (e.cnpj = c.empresa)
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_CONTA_CORRENTE TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 15/10/2014 19:26:02 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_conta_corrente_empresa for tbconta_corrente
+active before insert or update position 10
+AS
+begin
+  if ( (new.tipo = 2) and (new.conta_banco_boleto is not null) ) then
+    Select
+      coalesce(b.empresa, new.empresa)
+    from TBBANCO_BOLETO b
+    where b.bco_cod = new.conta_banco_boleto
+    Into
+      new.empresa;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/10/2014 19:28:05 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_conta_corrente_empresa for tbconta_corrente
+active before insert or update position 10
+AS
+begin
+  if ( (new.tipo = 2) and (new.conta_banco_boleto is not null) ) then
+    Select
+      coalesce(b.empresa, new.empresa)
+    from TBBANCO_BOLETO b
+    where b.bco_cod = new.conta_banco_boleto
+    Into
+      new.empresa;
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_CONTA_CORRENTE_EMPRESA IS 'Trigger Integridade Conta Corrente X Empresa.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   15/10/2014
+
+Trigger responsavel por manter a relacao "Conta Corrente x Empresa" coerente com a relacao "Banco Boleto x Empresa".';
+
+
+
+
+/*------ SYSDBA 15/10/2014 19:28:36 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_conta_corrente_empresa for tbconta_corrente
+active before insert or update position 10
+AS
+begin
+  if ( (new.tipo = 2) and (new.conta_banco_boleto is not null) ) then
+    Select
+      coalesce(b.empresa, new.empresa)
+    from TBBANCO_BOLETO b
+    where b.bco_cod = new.conta_banco_boleto
+    Into
+      new.empresa;
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_CONTA_CORRENTE_EMPRESA IS 'Trigger Integridade Conta Corrente X Empresa.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   15/10/2014
+
+Trigger responsavel por manter a relacao "Conta Corrente x Empresa" coerente com a relacao "Banco Boleto x Empresa" para
+toda conta corrente do tipo Banco (2).';
+
+
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2014;
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2015;
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2016;
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2017;
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2018;
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2019;
+
+/*------ 16/10/2014 13:52:33 --------*/
+
+CREATE GENERATOR GEN_REQUISITA_COMPRA_2020;
+
+/*------ 16/10/2014 13:52:34 --------*/
+
+CREATE TABLE TBREQUISITA_COMPRA (
+    ANO                 DMN_SMALLINT_NN NOT NULL /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    CODIGO              DMN_BIGINT_NN NOT NULL /* DMN_BIGINT_NN = INTEGER NOT NULL */,
+    EMPRESA             DMN_CNPJ_NN NOT NULL /* DMN_CNPJ_NN = VARCHAR(18) NOT NULL */,
+    NUMERO              DMN_VCHAR_20_NN /* DMN_VCHAR_20_NN = VARCHAR(20) NOT NULL */,
+    FORNECEDOR          DMN_INTEGER_NN /* DMN_INTEGER_NN = INTEGER NOT NULL */,
+    NOME_CONTATO        DMN_VCHAR_100 /* DMN_VCHAR_100 = VARCHAR(100) */,
+    TIPO                DMN_SMALLINT_NN DEFAULT 0 /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    INSERCAO_DATA       DMN_DATETIME /* DMN_DATETIME = TIMESTAMP */,
+    EMISSAO_DATA        DMN_DATE_NN /* DMN_DATE_NN = DATE NOT NULL */,
+    EMISSAO_USUARIO     DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */,
+    VALIDADE            DMN_DATE /* DMN_DATE = DATE */,
+    COMPETENCIA         DMN_INTEGER_N /* DMN_INTEGER_N = INTEGER */,
+    DATA_FATURA         DMN_DATE /* DMN_DATE = DATE */,
+    MOVITO              DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    OBSERVACAO          DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    CLIENTE             DMN_INTEGER_N /* DMN_INTEGER_N = INTEGER */,
+    ENDERECO_ENTREGA    DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    STATUS              DMN_SMALLINT_NN DEFAULT 0 /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    REQUISITADO_DATA     DMN_DATE /* DMN_DATE = DATE */,
+    REQUISITADO_USUARIO  DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */,
+    CANCELADO_DATA      DMN_DATE /* DMN_DATE = DATE */,
+    CANCELADO_USUARIO   DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */,
+    CANCELADO_MOTIVO    DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    RECEBEDOR_NOME      DMN_VCHAR_100 /* DMN_VCHAR_100 = VARCHAR(100) */,
+    RECEBEDOR_CPF       DMN_CNPJ /* DMN_CNPJ = VARCHAR(18) */,
+    RECEBEDOR_FUNCAO    DMN_VCHAR_50 /* DMN_VCHAR_50 = VARCHAR(50) */,
+    FORMA_PAGTO         DMN_SMALLINT_N /* DMN_SMALLINT_N = SMALLINT */,
+    CONDICAO_PAGTO      DMN_SMALLINT_N /* DMN_SMALLINT_N = SMALLINT */,
+    TRANSPORTADOR       DMN_INTEGER_N /* DMN_INTEGER_N = INTEGER */,
+    VALOR_BRUTO         DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_DESCONTO      DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_TOTAL_FRETE   DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_TOTAL_IPI     DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_TOTAL         DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */
+);
+
+/*------ 16/10/2014 13:52:34 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT PK_TBREQUISITA_COMPRA PRIMARY KEY (ANO, CODIGO, EMPRESA);
+
+/*------ 16/10/2014 13:52:34 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_CLIENTE FOREIGN KEY (CLIENTE) REFERENCES TBCLIENTE (CODIGO);
+
+/*------ 16/10/2014 13:52:34 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_COMPET FOREIGN KEY (COMPETENCIA) REFERENCES TBCOMPETENCIA (CMP_NUM);
+
+/*------ 16/10/2014 13:52:34 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_CPAGTO FOREIGN KEY (CONDICAO_PAGTO) REFERENCES TBCONDICAOPAGTO (COND_COD);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_EMPRESA FOREIGN KEY (EMPRESA) REFERENCES TBEMPRESA (CNPJ);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_FPAGTO FOREIGN KEY (FORMA_PAGTO) REFERENCES TBFORMPAGTO (COD);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_FRN FOREIGN KEY (FORNECEDOR) REFERENCES TBFORNECEDOR (CODFORN);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_TRANSP FOREIGN KEY (TRANSPORTADOR) REFERENCES TBFORNECEDOR (CODFORN);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_USR_AUT FOREIGN KEY (REQUISITADO_USUARIO) REFERENCES TBUSERS (NOME);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_USR_EMISS FOREIGN KEY (EMISSAO_USUARIO) REFERENCES TBUSERS (NOME)
+  USING INDEX FK_TBREQUISITA_COMPRA_EMISSOR;
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+CREATE INDEX IDX_TBREQUISITA_COMPRA_NUMERO ON TBREQUISITA_COMPRA (NUMERO);
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER TRIGGER TG_REQUISITA_COMPRA_CODIGO FOR TBREQUISITA_COMPRA
+ACTIVE BEFORE INSERT POSITION 0
+AS
+begin
+  if (new.codigo is null) then
+    if ( new.ano = 2014 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2014, 1);
+    else
+    if ( new.ano = 2015 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2015, 1);
+    else
+    if ( new.ano = 2016 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2016, 1);
+    else
+    if ( new.ano = 2017 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2017, 1);
+    else
+    if ( new.ano = 2018 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2018, 1);
+    else
+    if ( new.ano = 2019 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2019, 1);
+    else
+    if ( new.ano = 2020 ) then
+      new.codigo = gen_id(GEN_REQUISITA_COMPRA_2020, 1);
+end^
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+CREATE OR ALTER TRIGGER TG_REQUISITA_COMPRA_COMPETENCIA FOR TBREQUISITA_COMPRA
+ACTIVE BEFORE INSERT OR UPDATE POSITION 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = right('0000' || extract(year from new.emissao_data), 4) || right('00' || extract(month from new.emissao_data), 2);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+SET TERM ; ^
+
+COMMENT ON TABLE TBREQUISITA_COMPRA IS 
+'Tabela Requisicao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Tabela responsavel por armazenar as requisicoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON TRIGGER TG_REQUISITA_COMPRA_CODIGO IS 
+'Trigger Nova Requisicao de Compra.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Trigger responsavel por gerar um sequencial unico para cada novo registro de Requisicao de compra no ano.';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON TRIGGER TG_REQUISITA_COMPRA_COMPETENCIA IS 
+'Trigger Competencia Requisicao
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Trigger responsavel por identificar a competencia da Requisicao quando esta nao for informada, baseando-se na data de
+emissao.';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.ANO IS 
+'Ano';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CODIGO IS 
+'Codigo';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.EMPRESA IS 
+'Empresa';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.NUMERO IS 
+'Numero da Requisicao (Livre)';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.FORNECEDOR IS 
+'Fornecedor';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.NOME_CONTATO IS 
+'Nome do Contato';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.TIPO IS 
+'Tipo:
+0 - A Definir
+1 - Compra
+2 - Servico
+3 - Compra/Servico';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.INSERCAO_DATA IS 
+'Data/hora de insercao';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.EMISSAO_DATA IS 
+'Data de Emissao';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.EMISSAO_USUARIO IS 
+'Usuario de Emissao';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.VALIDADE IS 
+'Data de Validade';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.COMPETENCIA IS 
+'Competencia';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.DATA_FATURA IS 
+'Data de faturamento (Entrada)';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.MOVITO IS 
+'Motivo';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.OBSERVACAO IS 
+'Observacoes';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CLIENTE IS 
+'Cliente';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.ENDERECO_ENTREGA IS 
+'Endereco de Entrega';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.STATUS IS 
+'Status:
+0 - Em edicao
+1 - Aberta
+2 - Requisitada
+3 - Faturada (NF/NFS registrada no sistema referente a Autorizacao/Requisicao)
+4 - Cancelada';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.REQUISITADO_DATA IS 
+'Data de Requisicao';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.REQUISITADO_USUARIO IS 
+'Usuario de Requisicao';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CANCELADO_DATA IS 
+'Data de Cancelamento';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CANCELADO_USUARIO IS 
+'Usuario de Cancelamento';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CANCELADO_MOTIVO IS 
+'Motivo de Cancelamento';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.RECEBEDOR_NOME IS 
+'Recebedor (Nome)';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.RECEBEDOR_CPF IS 
+'Recebedor (CPF)';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.RECEBEDOR_FUNCAO IS 
+'Recebedor (Funcao)';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.FORMA_PAGTO IS 
+'Forma de Pagamento';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CONDICAO_PAGTO IS 
+'Condicao de Pagamento';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.TRANSPORTADOR IS 
+'Transportador';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.VALOR_BRUTO IS 
+'Valor Total Bruto';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.VALOR_DESCONTO IS 
+'Valor Total de Descontos';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.VALOR_TOTAL_FRETE IS 
+'Valor Total Frete';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.VALOR_TOTAL_IPI IS 
+'Valor Total IPI';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.VALOR_TOTAL IS 
+'Valor Total = (Valor Bruto - Valor Desconto) + Valor Total IPI';
+
+/*------ 16/10/2014 13:52:35 --------*/
+
+GRANT ALL ON TBREQUISITA_COMPRA TO PUBLIC;
+
+/*------ 16/10/2014 13:53:00 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA ADD CONSTRAINT FK_TBREQUISITA_COMPRA_USR_CNL FOREIGN KEY (CANCELADO_USUARIO) REFERENCES TBUSERS (NOME);
+
+
+/*------ SYSDBA 16/10/2014 13:57:36 --------*/
+
+CREATE TABLE TBAUTORIZA_REQUISITA (
+    AUTORIZACAO_ANO DMN_SMALLINT_NN NOT NULL,
+    AUTORIZACAO_COD DMN_BIGINT_NN NOT NULL,
+    REQUISICAO_ANO DMN_SMALLINT_NN NOT NULL,
+    REQUISICAO_COD DMN_BIGINT_NN NOT NULL);
+
+ALTER TABLE TBAUTORIZA_REQUISITA
+ADD CONSTRAINT PK_TBAUTORIZA_REQUISITA
+PRIMARY KEY (AUTORIZACAO_ANO,AUTORIZACAO_COD,REQUISICAO_ANO,REQUISICAO_COD);
+
+
+
+
+/*------ SYSDBA 16/10/2014 13:57:37 --------*/
+
+COMMENT ON TABLE TBAUTORIZA_REQUISITA IS 'Tabela Autorizacao x Requisicao de Compras/Servicos.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Tabela responsavel por fazer a associacao entre as autorizacoes de compras/servicos e as requisicoes de compras/servidor
+utilizadas para gerar essas autorizacoes.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco';
+
+GRANT ALL ON TBAUTORIZA_REQUISITA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 16/10/2014 13:59:42 --------*/
+
+ALTER TABLE TBAUTORIZA_REQUISITA
+    ADD AUTORIZACAO_EMP DMN_CNPJ_NN,
+    ADD REQUISICAO_EMP DMN_CNPJ_NN;
+
+alter table TBAUTORIZA_REQUISITA
+alter AUTORIZACAO_ANO position 1;
+
+alter table TBAUTORIZA_REQUISITA
+alter AUTORIZACAO_COD position 2;
+
+alter table TBAUTORIZA_REQUISITA
+alter AUTORIZACAO_EMP position 3;
+
+alter table TBAUTORIZA_REQUISITA
+alter REQUISICAO_ANO position 4;
+
+alter table TBAUTORIZA_REQUISITA
+alter REQUISICAO_COD position 5;
+
+alter table TBAUTORIZA_REQUISITA
+alter REQUISICAO_EMP position 6;
+
+
+
+
+/*------ SYSDBA 16/10/2014 13:59:49 --------*/
+
+ALTER TABLE TBAUTORIZA_REQUISITA DROP CONSTRAINT PK_TBAUTORIZA_REQUISITA;
+
+
+
+
+/*------ SYSDBA 16/10/2014 13:59:59 --------*/
+
+ALTER TABLE TBAUTORIZA_REQUISITA
+ADD CONSTRAINT PK_TBAUTORIZA_REQUISITA
+PRIMARY KEY (AUTORIZACAO_ANO,AUTORIZACAO_COD,AUTORIZACAO_EMP,REQUISICAO_ANO,REQUISICAO_COD,REQUISICAO_EMP);
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:00:39 --------*/
+
+ALTER TABLE TBAUTORIZA_REQUISITA
+ADD CONSTRAINT FK_TBAUTORIZA_REQUISITA_AUT
+FOREIGN KEY (AUTORIZACAO_ANO,AUTORIZACAO_COD,AUTORIZACAO_EMP)
+REFERENCES TBAUTORIZA_COMPRA(ANO,CODIGO,EMPRESA)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE TBAUTORIZA_REQUISITA
+ADD CONSTRAINT FK_TBAUTORIZA_REQUISITA_REC
+FOREIGN KEY (REQUISICAO_ANO,REQUISICAO_COD,REQUISICAO_EMP)
+REFERENCES TBREQUISITA_COMPRA(ANO,CODIGO,EMPRESA)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+CREATE TABLE TBREQUISITA_COMPRAITEM (
+    ANO                     DMN_SMALLINT_NN NOT NULL /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    CODIGO                  DMN_BIGINT_NN NOT NULL /* DMN_BIGINT_NN = INTEGER NOT NULL */,
+    EMPRESA                 DMN_CNPJ_NN NOT NULL /* DMN_CNPJ_NN = VARCHAR(18) NOT NULL */,
+    SEQ                     DMN_SMALLINT_NN NOT NULL /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    FORNECEDOR              DMN_INTEGER_N /* DMN_INTEGER_N = INTEGER */,
+    PRODUTO                 DMN_VCHAR_10 /* DMN_VCHAR_10 = VARCHAR(10) */,
+    QUANTIDADE              DMN_QUANTIDADE_D3 /* DMN_QUANTIDADE_D3 = NUMERIC(18,3) DEFAULT 0 NOT NULL */,
+    UNIDADE                 DMN_SMALLINT_N /* DMN_SMALLINT_N = SMALLINT */,
+    VALOR_UNITARIO          DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    IPI_PERCENTUAL          DMN_PERCENTUAL /* DMN_PERCENTUAL = DECIMAL(10,2) DEFAULT 0 */,
+    IPI_VALOR_TOTAL         DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    VALOR_TOTAL             DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    CONFIRMADO_RECEBIMENTO  DMN_LOGICO DEFAULT 0 /* DMN_LOGICO = SMALLINT DEFAULT 0 NOT NULL CHECK (value between 0 and 1) */,
+    USUARIO                 DMN_USUARIO /* DMN_USUARIO = VARCHAR(12) */
+);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRAITEM ADD CONSTRAINT PK_TBREQUISITA_COMPRAITEM PRIMARY KEY (ANO, CODIGO, EMPRESA, SEQ);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRAITEM ADD CONSTRAINT FK_TBREQUISITA_COMPRAITEM_AUT FOREIGN KEY (ANO, CODIGO, EMPRESA) REFERENCES TBREQUISITA_COMPRA (ANO, CODIGO, EMPRESA) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRAITEM ADD CONSTRAINT FK_TBREQUISITA_COMPRAITEM_EMP FOREIGN KEY (EMPRESA) REFERENCES TBEMPRESA (CNPJ);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRAITEM ADD CONSTRAINT FK_TBREQUISITA_COMPRAITEM_FRN FOREIGN KEY (FORNECEDOR) REFERENCES TBFORNECEDOR (CODFORN);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRAITEM ADD CONSTRAINT FK_TBREQUISITA_COMPRAITEM_PRD FOREIGN KEY (PRODUTO) REFERENCES TBPRODUTO (COD);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRAITEM ADD CONSTRAINT FK_TBREQUISITA_COMPRAITEM_UND FOREIGN KEY (UNIDADE) REFERENCES TBUNIDADEPROD (UNP_COD);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+CREATE INDEX IDX_TBREQUISITA_COMPRAITEM_REC ON TBREQUISITA_COMPRAITEM (CONFIRMADO_RECEBIMENTO);
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON TABLE TBREQUISITA_COMPRAITEM IS 
+'Tabela de Produtos/Servicos da REQUISITAcao de Compra/Servico.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   13/05/2014
+
+Tabela responsavel por armazenar os itens (produtos eou servicos) das REQUISITAcoes de compras/servicos.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/05/2014 - IMR :
+        + Criacao dos campos IPI_PERCENTUAL e IPI_VALOR_TOTAL, uma vez que nos processos
+        de REQUISITAcao de Compra essas informacoes sao necessarias.';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.ANO IS 
+'Ano da Requisicao';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.CODIGO IS 
+'Codigo da Requisicao';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.EMPRESA IS 
+'Empresa da Requisicao';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.SEQ IS 
+'Sequencial';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.FORNECEDOR IS 
+'Fornecedor';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.PRODUTO IS 
+'Produto/Servico';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.QUANTIDADE IS 
+'Quantidade
+
+(Aceita valores decimais)';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.UNIDADE IS 
+'Unidade de Medida';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.VALOR_UNITARIO IS 
+'Valor Unitario';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.IPI_PERCENTUAL IS 
+'Percentual IPI';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.IPI_VALOR_TOTAL IS 
+'Valor Total do IPI';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.VALOR_TOTAL IS 
+'Valor Total = (Quantidade * Valor Unitario) + Valor Total IPI';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.CONFIRMADO_RECEBIMENTO IS 
+'Confirmado recebimento do produto/servico pela empresa:
+0 - Nao
+1 - Sim';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+COMMENT ON COLUMN TBREQUISITA_COMPRAITEM.USUARIO IS 
+'Usuario de lancamento';
+
+/*------ 16/10/2014 14:08:40 --------*/
+
+GRANT ALL ON TBREQUISITA_COMPRAITEM TO PUBLIC;
+
+
+/*------ SYSDBA 16/10/2014 14:19:05 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_autoriza_compra_recf for tbautoriza_compra
+active after update position 3
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  /* Autorizacao marcada como "Faturada (NF/NFS registrada no sistema referente a autorizacao)" (3) */
+  if ( (old.status <> new.status) and (new.status = 3) ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRA r Set
+       r.status = new.status
+      where r.ano     = :rec_ano
+        and r.codigo  = :rec_cod
+        and r.empresa = :rec_emp;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_AUTORIZA_COMPRA_RECF IS 'Trigger Marcar Faturada Autorizacao x Requisicao.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Trigger responsavel por marcar como "faturada" toda requisicao de compra/servico quando sua autorizaxao correspondem
+marcada de igual forma';
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:19:45 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_autoriza_compra_recf for tbautoriza_compra
+active after update position 3
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  /* Autorizacao marcada como "Faturada (NF/NFS registrada no sistema referente a autorizacao)" (3) */
+  if ( (old.status <> new.status) and (new.status = 3) ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      where ar.autorizacao_ano = new.ano
+        and ar.autorizacao_cod = new.codigo
+        and ar.autorizacao_emp = new.empresa
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRA r Set
+       r.status = new.status
+      where r.ano     = :rec_ano
+        and r.codigo  = :rec_cod
+        and r.empresa = :rec_emp;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:20:08 --------*/
+
+DROP TRIGGER TG_AUTORIZA_COMPRA_RECF;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_autoriza_compra_rec_fat for tbautoriza_compra
+active after update position 3
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  /* Autorizacao marcada como "Faturada (NF/NFS registrada no sistema referente a autorizacao)" (3) */
+  if ( (old.status <> new.status) and (new.status = 3) ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      where ar.autorizacao_ano = new.ano
+        and ar.autorizacao_cod = new.codigo
+        and ar.autorizacao_emp = new.empresa
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRA r Set
+       r.status = new.status
+      where r.ano     = :rec_ano
+        and r.codigo  = :rec_cod
+        and r.empresa = :rec_emp;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_AUTORIZA_COMPRA_REC_FAT IS 'Trigger Marcar Faturada Autorizacao x Requisicao.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Trigger responsavel por marcar como "faturada" toda requisicao de compra/servico quando sua autorizaxao correspondem
+marcada de igual forma';
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:26:18 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_autoriza_compra_rec_fat for tbautoriza_compra
+active after update position 3
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  /* Autorizacao marcada como "Faturada (NF/NFS registrada no sistema referente a autorizacao)" (3) */
+  if ( (old.status <> new.status) and (new.status = 3) ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      where ar.autorizacao_ano = new.ano
+        and ar.autorizacao_cod = new.codigo
+        and ar.autorizacao_emp = new.empresa
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRA r Set
+       r.status = new.status
+      where r.ano     = :rec_ano
+        and r.codigo  = :rec_cod
+        and r.empresa = :rec_emp
+        and r.status  = 2; -- Requisitada
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:27:05 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_autoriza_compra_rec_aut for tbautoriza_compra
+active after update position 4
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  /* Autorizacao marcada como "Autorizada*/
+  if ( (old.status <> new.status) and (new.status = 2) ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      where ar.autorizacao_ano = new.ano
+        and ar.autorizacao_cod = new.codigo
+        and ar.autorizacao_emp = new.empresa
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRA r Set
+       r.status = new.status
+      where r.ano     = :rec_ano
+        and r.codigo  = :rec_cod
+        and r.empresa = :rec_emp
+        and r.status  = 3; -- Faturada
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_AUTORIZA_COMPRA_REC_AUT IS 'Trigger Marcar Requisitada Autorizacao x Requisicao.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Trigger responsavel por marcar como "requisitada" toda requisicao de compra/servico quando sua autorizaxao correspondem
+marcada como autorizada.';
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:33:23 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_autoriza_compraitem_rec for tbautoriza_compraitem
+active after update position 5
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  if ( old.confirmado_recebimento <> new.confirmado_recebimento ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      where ar.autorizacao_ano = new.ano
+        and ar.autorizacao_cod = new.codigo
+        and ar.autorizacao_emp = new.empresa
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRAITEM ri Set
+        ri.confirmado_recebimento = new.confirmado_recebimento
+      where ri.ano     = :rec_ano
+        and ri.codigo  = :rec_cod
+        and ri.empresa = :rec_emp
+        and ri.produto = new.produto;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 16/10/2014 14:35:25 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_autoriza_compraitem_rec for tbautoriza_compraitem
+active after update position 5
+AS
+  declare variable rec_ano DMN_SMALLINT_NN;
+  declare variable rec_cod DMN_BIGINT_NN;
+  declare variable rec_emp DMN_CNPJ_NN;
+begin
+  if ( old.confirmado_recebimento <> new.confirmado_recebimento ) then
+  begin
+    for
+      Select
+          ar.requisicao_ano
+        , ar.requisicao_cod
+        , ar.requisicao_emp
+      from TBAUTORIZA_REQUISITA ar
+      where ar.autorizacao_ano = new.ano
+        and ar.autorizacao_cod = new.codigo
+        and ar.autorizacao_emp = new.empresa
+      Into
+          rec_ano
+        , rec_cod
+        , rec_emp
+    do
+    begin
+      Update TBREQUISITA_COMPRAITEM ri Set
+        ri.confirmado_recebimento = new.confirmado_recebimento
+      where ri.ano     = :rec_ano
+        and ri.codigo  = :rec_cod
+        and ri.empresa = :rec_emp
+        and ri.produto = new.produto;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_AUTORIZA_COMPRAITEM_REC IS 'Trigger Confirmar Recebimento Autorizacao x Requisicao.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Trigger responsavel por marca como recebido ou nao os produtos/servicos requisitados todas as vezes que este mesmo
+registro for alterado na autorizacao de compras/servicos.';
+
