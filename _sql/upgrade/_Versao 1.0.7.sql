@@ -28932,3 +28932,18 @@ COMMENT ON TRIGGER TG_AUTORIZA_COMPRAITEM_REC IS 'Trigger Confirmar Recebimento 
 Trigger responsavel por marca como recebido ou nao os produtos/servicos requisitados todas as vezes que este mesmo
 registro for alterado na autorizacao de compras/servicos.';
 
+
+
+
+/*------ SYSDBA 17/10/2014 09:55:27 --------*/
+
+CREATE VIEW VW_TIPO_REQUISICAO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 1 as Codigo , 'Requisição de Compra'         as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Requisição de Serviço'        as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Requisição de Compra/Serviço' as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_TIPO_REQUISICAO TO "PUBLIC";
