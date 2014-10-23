@@ -28947,3 +28947,540 @@ Select 3 as Codigo , 'Requisição de Compra/Serviço' as Descricao from RDB$DATABA
 ;
 
 GRANT ALL ON VW_TIPO_REQUISICAO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 22/10/2014 14:37:53 --------*/
+
+ALTER TABLE TBCONDICAOPAGTO
+    ADD COND_QTDE_PARCELAS DMN_SMALLINT_N DEFAULT 0;
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_QTDE_PARCELAS IS
+'Quantidade de parcelas na condicao a prazo.';
+
+alter table TBCONDICAOPAGTO
+alter COND_COD position 1;
+
+alter table TBCONDICAOPAGTO
+alter COND_DESCRICAO position 2;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO position 3;
+
+alter table TBCONDICAOPAGTO
+alter COND_QTDE_PARCELAS position 4;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_01 position 5;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_02 position 6;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_03 position 7;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_04 position 8;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_05 position 9;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_06 position 10;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_07 position 11;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_08 position 12;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_09 position 13;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_10 position 14;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_11 position 15;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_12 position 16;
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:11 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_01 IS
+'Prazo em dias para a parcela 1.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:24 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_02 IS
+'Prazo em dias para a parcela 2.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:30 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_03 IS
+'Prazo em dias para a parcela 3.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:36 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_04 IS
+'Prazo em dias para a parcela 4.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:43 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_05 IS
+'Prazo em dias para a parcela 5.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:50 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_06 IS
+'Prazo em dias para a parcela 6.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:38:57 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_07 IS
+'Prazo em dias para a parcela 7.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:39:04 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_08 IS
+'Prazo em dias para a parcela 8.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:39:09 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_09 IS
+'Prazo em dias para a parcela 9.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:39:14 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_10 IS
+'Prazo em dias para a parcela 10.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:39:19 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_11 IS
+'Prazo em dias para a parcela 11.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:39:24 --------*/
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PRAZO_12 IS
+'Prazo em dias para a parcela 12.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:40:53 --------*/
+
+COMMENT ON TABLE TBCONDICAOPAGTO IS 'Tabela de Condicoes de Pagamnetos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :
+
+Tabela responsavel por armazenar as condicoes de pagamentos utilizadas nas movimentacoes de COMPRA e VENDA e seus
+respectivos parametros de comportamento.
+
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:43:59 --------*/
+
+COMMENT ON TABLE TBCONDICAOPAGTO IS 'Tabela de Condicoes de Pagamnetos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :
+
+Tabela responsavel por armazenar as condicoes de pagamentos utilizadas nas movimentacoes de COMPRA e VENDA e seus
+respectivos parametros de comportamento.
+
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    22/10/2014 - IMR :
+        + Criacao do campo COND_QTDE_PARCELAS pra armazenar o numero de parcelas da condicao de pagamento quando esta
+          for a prazo. Este dado influencia no funcionamento do sistema PDV no ato de finalizar a venda.';
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:46:24 --------*/
+
+DROP VIEW VW_CONDICAOPAGTO;
+
+CREATE VIEW VW_CONDICAOPAGTO(
+    COND_COD,
+    COND_DESCRICAO,
+    COND_PRAZO,
+    COND_QTDE_PARCELAS,
+    COND_PRAZO_01,
+    COND_PRAZO_02,
+    COND_PRAZO_03,
+    COND_PRAZO_04,
+    COND_PRAZO_05,
+    COND_PRAZO_06,
+    COND_PRAZO_07,
+    COND_PRAZO_08,
+    COND_PRAZO_09,
+    COND_PRAZO_10,
+    COND_PRAZO_11,
+    COND_PRAZO_12,
+    COND_DESCRICAO_FULL,
+    Cond_descricao_PDV)
+AS
+Select
+    c.Cond_cod
+  , c.Cond_descricao
+  , c.Cond_prazo
+  , c.Cond_qtde_parcelas
+  , c.Cond_prazo_01
+  , c.Cond_prazo_02
+  , c.Cond_prazo_03
+  , c.Cond_prazo_04
+  , c.Cond_prazo_05
+  , c.Cond_prazo_06
+  , c.Cond_prazo_07
+  , c.Cond_prazo_08
+  , c.Cond_prazo_09
+  , c.Cond_prazo_10
+  , c.Cond_prazo_11
+  , c.Cond_prazo_12
+  , c.Cond_descricao || ' [' ||
+      case when c.Cond_prazo_01 is not Null then c.Cond_prazo_01 else '' end ||
+      case when c.Cond_prazo_02 is not Null then ', ' || c.Cond_prazo_02 else '' end ||
+      case when c.Cond_prazo_03 is not Null then ', ' || c.Cond_prazo_03 else '' end ||
+      case when c.Cond_prazo_04 is not Null then ', ' || c.Cond_prazo_04 else '' end ||
+      case when c.Cond_prazo_05 is not Null then ', ' || c.Cond_prazo_05 else '' end ||
+      case when c.Cond_prazo_06 is not Null then ', ' || c.Cond_prazo_06 else '' end ||
+      case when c.Cond_prazo_07 is not Null then ', ' || c.Cond_prazo_07 else '' end ||
+      case when c.Cond_prazo_08 is not Null then ', ' || c.Cond_prazo_08 else '' end ||
+      case when c.Cond_prazo_09 is not Null then ', ' || c.Cond_prazo_09 else '' end ||
+      case when c.Cond_prazo_10 is not Null then ', ' || c.Cond_prazo_10 else '' end ||
+      case when c.Cond_prazo_11 is not Null then ', ' || c.Cond_prazo_11 else '' end ||
+      case when c.Cond_prazo_12 is not Null then ', ' || c.Cond_prazo_12 else '' end || ']'
+    as Cond_descricao_full
+  , Case when c.Cond_prazo = 0
+      then 'A VISTA'
+      else c.Cond_qtde_parcelas || 'x'
+    end as Cond_descricao_PDV
+from TBCONDICAOPAGTO c
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_CONDICAOPAGTO TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:47:10 --------*/
+
+DROP VIEW VW_CONDICAOPAGTO;
+
+CREATE VIEW VW_CONDICAOPAGTO(
+    COND_COD,
+    COND_DESCRICAO,
+    COND_PRAZO,
+    COND_QTDE_PARCELAS,
+    COND_PRAZO_01,
+    COND_PRAZO_02,
+    COND_PRAZO_03,
+    COND_PRAZO_04,
+    COND_PRAZO_05,
+    COND_PRAZO_06,
+    COND_PRAZO_07,
+    COND_PRAZO_08,
+    COND_PRAZO_09,
+    COND_PRAZO_10,
+    COND_PRAZO_11,
+    COND_PRAZO_12,
+    COND_DESCRICAO_FULL,
+    Cond_descricao_PDV)
+AS
+Select
+    c.Cond_cod
+  , c.Cond_descricao
+  , c.Cond_prazo
+  , c.Cond_qtde_parcelas
+  , c.Cond_prazo_01
+  , c.Cond_prazo_02
+  , c.Cond_prazo_03
+  , c.Cond_prazo_04
+  , c.Cond_prazo_05
+  , c.Cond_prazo_06
+  , c.Cond_prazo_07
+  , c.Cond_prazo_08
+  , c.Cond_prazo_09
+  , c.Cond_prazo_10
+  , c.Cond_prazo_11
+  , c.Cond_prazo_12
+  , c.Cond_descricao || ' [' ||
+      case when c.Cond_prazo_01 is not Null then c.Cond_prazo_01 else '' end ||
+      case when c.Cond_prazo_02 is not Null then ', ' || c.Cond_prazo_02 else '' end ||
+      case when c.Cond_prazo_03 is not Null then ', ' || c.Cond_prazo_03 else '' end ||
+      case when c.Cond_prazo_04 is not Null then ', ' || c.Cond_prazo_04 else '' end ||
+      case when c.Cond_prazo_05 is not Null then ', ' || c.Cond_prazo_05 else '' end ||
+      case when c.Cond_prazo_06 is not Null then ', ' || c.Cond_prazo_06 else '' end ||
+      case when c.Cond_prazo_07 is not Null then ', ' || c.Cond_prazo_07 else '' end ||
+      case when c.Cond_prazo_08 is not Null then ', ' || c.Cond_prazo_08 else '' end ||
+      case when c.Cond_prazo_09 is not Null then ', ' || c.Cond_prazo_09 else '' end ||
+      case when c.Cond_prazo_10 is not Null then ', ' || c.Cond_prazo_10 else '' end ||
+      case when c.Cond_prazo_11 is not Null then ', ' || c.Cond_prazo_11 else '' end ||
+      case when c.Cond_prazo_12 is not Null then ', ' || c.Cond_prazo_12 else '' end || ']'
+    as Cond_descricao_full
+  , Case when c.Cond_prazo = 0
+      then 'A VISTA'
+      else coalesce(c.Cond_qtde_parcelas, 1) || 'x'
+    end as Cond_descricao_PDV
+from TBCONDICAOPAGTO c
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_CONDICAOPAGTO TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:47:29 --------*/
+
+DROP VIEW VW_CONDICAOPAGTO;
+
+CREATE VIEW VW_CONDICAOPAGTO(
+    COND_COD,
+    COND_DESCRICAO,
+    COND_PRAZO,
+    COND_QTDE_PARCELAS,
+    COND_PRAZO_01,
+    COND_PRAZO_02,
+    COND_PRAZO_03,
+    COND_PRAZO_04,
+    COND_PRAZO_05,
+    COND_PRAZO_06,
+    COND_PRAZO_07,
+    COND_PRAZO_08,
+    COND_PRAZO_09,
+    COND_PRAZO_10,
+    COND_PRAZO_11,
+    COND_PRAZO_12,
+    COND_DESCRICAO_FULL,
+    Cond_descricao_PDV)
+AS
+Select
+    c.Cond_cod
+  , c.Cond_descricao
+  , c.Cond_prazo
+  , c.Cond_qtde_parcelas
+  , c.Cond_prazo_01
+  , c.Cond_prazo_02
+  , c.Cond_prazo_03
+  , c.Cond_prazo_04
+  , c.Cond_prazo_05
+  , c.Cond_prazo_06
+  , c.Cond_prazo_07
+  , c.Cond_prazo_08
+  , c.Cond_prazo_09
+  , c.Cond_prazo_10
+  , c.Cond_prazo_11
+  , c.Cond_prazo_12
+  , c.Cond_descricao || ' [' ||
+      case when c.Cond_prazo_01 is not Null then c.Cond_prazo_01 else '' end ||
+      case when c.Cond_prazo_02 is not Null then ', ' || c.Cond_prazo_02 else '' end ||
+      case when c.Cond_prazo_03 is not Null then ', ' || c.Cond_prazo_03 else '' end ||
+      case when c.Cond_prazo_04 is not Null then ', ' || c.Cond_prazo_04 else '' end ||
+      case when c.Cond_prazo_05 is not Null then ', ' || c.Cond_prazo_05 else '' end ||
+      case when c.Cond_prazo_06 is not Null then ', ' || c.Cond_prazo_06 else '' end ||
+      case when c.Cond_prazo_07 is not Null then ', ' || c.Cond_prazo_07 else '' end ||
+      case when c.Cond_prazo_08 is not Null then ', ' || c.Cond_prazo_08 else '' end ||
+      case when c.Cond_prazo_09 is not Null then ', ' || c.Cond_prazo_09 else '' end ||
+      case when c.Cond_prazo_10 is not Null then ', ' || c.Cond_prazo_10 else '' end ||
+      case when c.Cond_prazo_11 is not Null then ', ' || c.Cond_prazo_11 else '' end ||
+      case when c.Cond_prazo_12 is not Null then ', ' || c.Cond_prazo_12 else '' end || ']'
+    as Cond_descricao_full
+  , Case when c.Cond_prazo = 0
+      then '* A VISTA'
+      else coalesce(c.Cond_qtde_parcelas, 1) || 'x'
+    end as Cond_descricao_PDV
+from TBCONDICAOPAGTO c
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_CONDICAOPAGTO TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 22/10/2014 14:50:08 --------*/
+
+ALTER TABLE TBCONDICAOPAGTO
+    ADD COND_PDV DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBCONDICAOPAGTO.COND_PDV IS
+'Usar condicao de pagamento no PDV:
+0 - Nao
+1 - Sim';
+
+alter table TBCONDICAOPAGTO
+alter COND_COD position 1;
+
+alter table TBCONDICAOPAGTO
+alter COND_DESCRICAO position 2;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO position 3;
+
+alter table TBCONDICAOPAGTO
+alter COND_PDV position 4;
+
+alter table TBCONDICAOPAGTO
+alter COND_QTDE_PARCELAS position 5;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_01 position 6;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_02 position 7;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_03 position 8;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_04 position 9;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_05 position 10;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_06 position 11;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_07 position 12;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_08 position 13;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_09 position 14;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_10 position 15;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_11 position 16;
+
+alter table TBCONDICAOPAGTO
+alter COND_PRAZO_12 position 17;
+
+
+
+
+/*------ SYSDBA 22/10/2014 15:12:49 --------*/
+
+DROP VIEW VW_CONDICAOPAGTO;
+
+CREATE VIEW VW_CONDICAOPAGTO(
+    COND_COD,
+    COND_DESCRICAO,
+    COND_PRAZO,
+    COND_QTDE_PARCELAS,
+    COND_PRAZO_01,
+    COND_PRAZO_02,
+    COND_PRAZO_03,
+    COND_PRAZO_04,
+    COND_PRAZO_05,
+    COND_PRAZO_06,
+    COND_PRAZO_07,
+    COND_PRAZO_08,
+    COND_PRAZO_09,
+    COND_PRAZO_10,
+    COND_PRAZO_11,
+    COND_PRAZO_12,
+    COND_DESCRICAO_FULL,
+    COND_DESCRICAO_PDV,
+    COND_PDV)
+AS
+Select
+    c.Cond_cod
+  , c.Cond_descricao
+  , c.Cond_prazo
+  , c.Cond_qtde_parcelas
+  , c.Cond_prazo_01
+  , c.Cond_prazo_02
+  , c.Cond_prazo_03
+  , c.Cond_prazo_04
+  , c.Cond_prazo_05
+  , c.Cond_prazo_06
+  , c.Cond_prazo_07
+  , c.Cond_prazo_08
+  , c.Cond_prazo_09
+  , c.Cond_prazo_10
+  , c.Cond_prazo_11
+  , c.Cond_prazo_12
+  , c.Cond_descricao || ' [' ||
+      case when c.Cond_prazo_01 is not Null then c.Cond_prazo_01 else '' end ||
+      case when c.Cond_prazo_02 is not Null then ', ' || c.Cond_prazo_02 else '' end ||
+      case when c.Cond_prazo_03 is not Null then ', ' || c.Cond_prazo_03 else '' end ||
+      case when c.Cond_prazo_04 is not Null then ', ' || c.Cond_prazo_04 else '' end ||
+      case when c.Cond_prazo_05 is not Null then ', ' || c.Cond_prazo_05 else '' end ||
+      case when c.Cond_prazo_06 is not Null then ', ' || c.Cond_prazo_06 else '' end ||
+      case when c.Cond_prazo_07 is not Null then ', ' || c.Cond_prazo_07 else '' end ||
+      case when c.Cond_prazo_08 is not Null then ', ' || c.Cond_prazo_08 else '' end ||
+      case when c.Cond_prazo_09 is not Null then ', ' || c.Cond_prazo_09 else '' end ||
+      case when c.Cond_prazo_10 is not Null then ', ' || c.Cond_prazo_10 else '' end ||
+      case when c.Cond_prazo_11 is not Null then ', ' || c.Cond_prazo_11 else '' end ||
+      case when c.Cond_prazo_12 is not Null then ', ' || c.Cond_prazo_12 else '' end || ']'
+    as Cond_descricao_full
+  , Case when c.Cond_prazo = 0
+      then '* A VISTA'
+      else coalesce(c.Cond_qtde_parcelas, 1) || 'x'
+    end as Cond_descricao_PDV
+  , coalesce(c.Cond_pdv, 0)
+from TBCONDICAOPAGTO c
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_CONDICAOPAGTO TO "PUBLIC";
+

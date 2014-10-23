@@ -3,6 +3,8 @@ as
   declare variable forma_pagto Smallint;
   declare variable conta_corrente Integer;
 begin
+  Update TBCONDICAOPAGTO x Set x.cond_pdv = 0 where x.cond_pdv is null;
+
   for
     Select
         f.cod
