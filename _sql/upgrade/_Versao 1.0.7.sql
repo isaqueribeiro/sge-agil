@@ -30326,3 +30326,163 @@ end^
 SET TERM ; ^
 
 GRANT EXECUTE ON PROCEDURE SET_AUTORIZACAO_ITENS_REQ TO "PUBLIC";
+
+
+
+/*------ SYSDBA 29/10/2014 11:07:19 --------*/
+
+create view VW_TABELA_IBPT ( Ncm_sh, Ncm_aliquota_nac, Ncm_aliquota_imp )
+as
+Select
+    ib.ncm_ibpt as Ncm_sh
+  , avg(ib.aliqnacional_ibpt)       as Ncm_aliquota_nac
+  , avg(ib.aliqinternacional_ibpt)  as Ncm_aliquota_imp
+from SYS_IBPT ib
+group by
+    ib.ncm_ibpt
+order by
+    ib.ncm_ibpt
+;
+
+
+
+
+/*------ SYSDBA 29/10/2014 11:07:42 --------*/
+
+DROP VIEW VW_TABELA_IBPT;
+
+create view VW_TABELA_IBPT ( Ncm_sh, Ncm_aliquota_nac, Ncm_aliquota_imp )
+as
+Select
+    ib.ncm_ibpt as Ncm_sh
+  , max(ib.aliqnacional_ibpt)       as Ncm_aliquota_nac
+  , max(ib.aliqinternacional_ibpt)  as Ncm_aliquota_imp
+from SYS_IBPT ib
+group by
+    ib.ncm_ibpt
+order by
+    ib.ncm_ibpt
+;
+
+GRANT ALL ON VW_TABELA_IBPT TO "PUBLIC";
+
+
+
+/*------ SYSDBA 29/10/2014 12:16:39 --------*/
+
+ALTER TABLE SYS_IBPT
+    ADD DESCRICAO_IBPT DMN_TEXTO;
+
+COMMENT ON COLUMN SYS_IBPT.DESCRICAO_IBPT IS
+'Descricao';
+
+COMMENT ON COLUMN SYS_IBPT.EX_IBPT IS
+'Grupo:
+0    - Pai
+1..N - Filhos';
+
+alter table SYS_IBPT
+alter ID_IBPT position 1;
+
+alter table SYS_IBPT
+alter NCM_IBPT position 2;
+
+alter table SYS_IBPT
+alter DESCRICAO_IBPT position 3;
+
+alter table SYS_IBPT
+alter EX_IBPT position 4;
+
+alter table SYS_IBPT
+alter TABELA_IBPT position 5;
+
+alter table SYS_IBPT
+alter ALIQNACIONAL_IBPT position 6;
+
+alter table SYS_IBPT
+alter ALIQINTERNACIONAL_IBPT position 7;
+
+
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column ID_IBPT position 1;
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column NCM_IBPT position 2;
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column EX_IBPT position 3;
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column TABELA_IBPT position 4;
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column DESCRICAO_IBPT position 5;
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column ALIQNACIONAL_IBPT position 6;
+
+
+/*------ SYSDBA 29/10/2014 12:16:55 --------*/
+
+alter table SYS_IBPT
+alter column ALIQINTERNACIONAL_IBPT position 7;
+
+
+/*------ SYSDBA 29/10/2014 12:24:29 --------*/
+
+COMMENT ON SEQUENCE GEN_IBPT_ID IS 'Sequenciador da Tabela IBTT';
+
+
+
+
+/*------ SYSDBA 29/10/2014 13:23:21 --------*/
+
+ALTER TABLE SYS_IBPT
+ADD CONSTRAINT UNQ_SYS_IBPT
+UNIQUE (NCM_IBPT,EX_IBPT);
+
+
+
+
+/*------ SYSDBA 29/10/2014 13:25:04 --------*/
+
+DROP VIEW VW_TABELA_IBPT;
+
+CREATE VIEW VW_TABELA_IBPT(
+    NCM_SH,
+    NCM_ALIQUOTA_NAC,
+    NCM_ALIQUOTA_IMP)
+AS
+Select
+    ib.ncm_ibpt as Ncm_sh
+  , max(ib.aliqnacional_ibpt)       as Ncm_aliquota_nac
+  , max(ib.aliqinternacional_ibpt)  as Ncm_aliquota_imp
+from SYS_IBPT ib
+where ib.ex_ibpt = '0'
+group by
+    ib.ncm_ibpt
+order by
+    ib.ncm_ibpt
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_TABELA_IBPT TO "PUBLIC";
+
