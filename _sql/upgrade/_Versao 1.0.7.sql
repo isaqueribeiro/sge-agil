@@ -30588,3 +30588,374 @@ ALTER TABLE SYS_IBPT
 ADD CONSTRAINT UNQ_SYS_NCM_IBPT
 UNIQUE (NCM_IBPT,EX_IBPT);
 
+
+
+
+/*------ SYSDBA 30/10/2014 09:18:04 --------*/
+
+COMMENT ON COLUMN SYS_IBPT.TABELA_IBPT IS
+'Tipo Tabela:
+0    - Produtos
+1..2 - Servicos';
+
+
+
+
+/*------ SYSDBA 30/10/2014 09:58:10 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO DROP CONSTRAINT PK_TBNFE_CARTA_CORRECAO;
+
+
+
+
+/*------ SYSDBA 30/10/2014 09:59:29 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+ADD CONSTRAINT PK_TBNFE_CARTA_CORRECAO
+PRIMARY KEY (CCE_NUMERO);
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:00:04 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+    ADD CCE_EMPRESA DMN_CNPJ_NN;
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.CCE_EMPRESA IS
+'Empresa.';
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_NUMERO position 1;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_EMPRESA position 2;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_DATA position 3;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_HORA position 4;
+
+alter table TBNFE_CARTA_CORRECAO
+alter NFE_SERIE position 5;
+
+alter table TBNFE_CARTA_CORRECAO
+alter NFE_NUMERO position 6;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:00:33 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+ADD CONSTRAINT FK_TBNFE_CARTA_CORRECAO_EMP
+FOREIGN KEY (CCE_EMPRESA)
+REFERENCES TBEMPRESA(CNPJ);
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:00:47 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO DROP CONSTRAINT FK_TBNFE_CARTA_CORRECAO_EMP;
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+ADD CONSTRAINT FK_TBNFE_CARTA_CORRECAO_EMP
+FOREIGN KEY (CCE_EMPRESA)
+REFERENCES TBEMPRESA(CNPJ)
+ON UPDATE CASCADE
+USING INDEX FK_TBNFE_CARTA_CORRECAO_EMP;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:01:18 --------*/
+
+ALTER TABLE TBNFE_ENVIADA DROP CONSTRAINT PK_TBNFE_ENVIADA;
+
+
+/*------ SYSDBA 30/10/2014 10:02:46 --------*/
+
+Update TBNFE_ENVIADA nfx nfx.modelo = 0 WHere nfx nfx.modelo is null;
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 1, column 26.
+nfx.
+
+*/
+
+/*------ SYSDBA 30/10/2014 10:02:57 --------*/
+
+Update TBNFE_ENVIADA nfx Set nfx.modelo = 0 WHere nfx nfx.modelo is null;
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 1, column 55.
+nfx.
+
+*/
+
+/*------ SYSDBA 30/10/2014 10:03:05 --------*/
+
+Update TBNFE_ENVIADA nfx Set nfx.modelo = 0 WHere nfx.modelo is null;
+
+/*------ SYSDBA 30/10/2014 10:03:09 --------*/
+
+COMMIT WORK;
+
+
+
+/*------ SYSDBA 30/10/2014 10:04:58 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_SMALLINT_NN'
+where (RDB$FIELD_NAME = 'MODELO') and
+(RDB$RELATION_NAME = 'TBNFE_ENVIADA')
+;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:05:53 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_CNPJ_NN'
+where (RDB$FIELD_NAME = 'EMPRESA') and
+(RDB$RELATION_NAME = 'TBNFE_ENVIADA')
+;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:06:04 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$NULL_FLAG = 1
+where (RDB$FIELD_NAME = 'MODELO') and
+(RDB$RELATION_NAME = 'TBNFE_ENVIADA')
+;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:06:40 --------*/
+
+ALTER TABLE TBNFE_ENVIADA
+ADD CONSTRAINT PK_TBNFE_ENVIADA
+PRIMARY KEY (EMPRESA,SERIE,NUMERO,MODELO);
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:08:57 --------*/
+
+DROP INDEX IDX_TBNFE_CARTA_CORRECAO;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:11:29 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO DROP NFE_SERIE;
+
+
+
+
+/*------ SYSDBA 30/10/2014 10:11:35 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO DROP NFE_NUMERO;
+
+
+
+
+/*------ SYSDBA 30/10/2014 13:28:02 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+    ADD CCE_ENVIADA DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.CCE_ENVIADA IS
+'CC-e enviada:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 30/10/2014 14:28:40 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+    ADD NFE_SERIE DMN_VCHAR_03_NN,
+    ADD NFE_NUMERO DMN_BIGINT_NN,
+    ADD NFE_MODELO DMN_SMALLINT_NN DEFAULT 0 NOT NULL;
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.NFE_SERIE IS
+'Serie da Nota Fiscal.';
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.NFE_NUMERO IS
+'Numero da Nota Fiscal.';
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.NFE_MODELO IS
+'Modelo da Nota Fiscal.';
+
+
+
+
+/*------ SYSDBA 30/10/2014 14:29:58 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+ADD CONSTRAINT FK_TBNFE_CARTA_CORRECAO_NFE
+FOREIGN KEY (CCE_EMPRESA,NFE_SERIE,NFE_NUMERO,NFE_MODELO)
+REFERENCES TBNFE_ENVIADA(EMPRESA,SERIE,NUMERO,MODELO);
+
+
+
+
+/*------ SYSDBA 30/10/2014 14:38:42 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+    ADD NUMERO DMN_BIGINT_N,
+    ADD PROTOCOLO DMN_VCHAR_250,
+    ADD XML DMN_TEXTO;
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.NUMERO IS
+'Retorno CCe: Sequencial do Evento.';
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.PROTOCOLO IS
+'Retorno CCe: Protocolo do Evento.';
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.XML IS
+'Retorno CCe: XML de Resposta.';
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:32:49 --------*/
+
+CREATE SEQUENCE GEN_CARTA_CORRECAO;
+
+COMMENT ON SEQUENCE GEN_CARTA_CORRECAO IS 'Sequencial para Carta de Correcao Eletronica de NF-e.';
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:34:01 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_carta_correcao_nova for tbnfe_carta_correcao
+active before insert position 0
+AS
+begin
+  if ( new.cce_numero is null ) then
+    new.cce_numero = GEN_ID(GEN_CARTA_CORRECAO, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:34:28 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_carta_correcao_nova for tbnfe_carta_correcao
+active before insert position 0
+AS
+begin
+  if ( coalesce(new.cce_numero, 0) = 0 ) then
+    new.cce_numero = GEN_ID(GEN_CARTA_CORRECAO, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:35:28 --------*/
+
+DROP TRIGGER IBPT_BI;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_ibpt_novo for sys_ibpt
+active before insert position 0
+as
+begin
+  if (new.id_ibpt is null) then
+    new.id_ibpt = gen_id(gen_ibpt_id, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:36:00 --------*/
+
+DROP TRIGGER TG_IBPT_NOVO;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_ibpt_cod for sys_ibpt
+active before insert position 0
+as
+begin
+  if (new.id_ibpt is null) then
+    new.id_ibpt = gen_id(gen_ibpt_id, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:36:19 --------*/
+
+DROP TRIGGER TG_CARTA_CORRECAO_NOVA;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_carta_correcao_cod for tbnfe_carta_correcao
+active before insert position 0
+AS
+begin
+  if ( coalesce(new.cce_numero, 0) = 0 ) then
+    new.cce_numero = GEN_ID(GEN_CARTA_CORRECAO, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:36:37 --------*/
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.CCE_NUMERO IS
+'Numero/Codigo.';
+
+
+
+
+/*------ SYSDBA 30/10/2014 16:37:05 --------*/
+
+DROP TRIGGER TG_DISTRITO_BI;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_distrito_cod for tbdistrito
+active before insert position 0
+As
+Begin
+  If (New.Dis_cod Is Null) Then
+    New.Dis_cod = Gen_id(Gen_distrito_id, 1);
+End^
+
+SET TERM ; ^
+
