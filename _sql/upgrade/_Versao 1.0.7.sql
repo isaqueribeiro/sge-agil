@@ -30959,3 +30959,354 @@ End^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 03/11/2014 19:04:27 --------*/
+
+CREATE DOMAIN DMN_TEXTO_BINARY AS
+BLOB SUB_TYPE 0 SEGMENT SIZE 80;
+
+
+/*------ SYSDBA 03/11/2014 19:06:16 --------*/
+
+ALTER TABLE TBPRODUTO
+    ADD METAFONEMA DMN_VCHAR_100,
+    ADD ESPECIFICACAO DMN_TEXTO_BINARY;
+
+COMMENT ON COLUMN TBPRODUTO.METAFONEMA IS
+'Metafonema de [Descricao + Apresentacao]';
+
+COMMENT ON COLUMN TBPRODUTO.ESPECIFICACAO IS
+'Especificacao';
+
+alter table TBPRODUTO
+alter CODIGO position 1;
+
+alter table TBPRODUTO
+alter COD position 2;
+
+alter table TBPRODUTO
+alter DESCRI position 3;
+
+alter table TBPRODUTO
+alter APRESENTACAO position 4;
+
+alter table TBPRODUTO
+alter DESCRI_APRESENTACAO position 5;
+
+alter table TBPRODUTO
+alter METAFONEMA position 6;
+
+alter table TBPRODUTO
+alter MODELO position 7;
+
+alter table TBPRODUTO
+alter PRECO position 8;
+
+alter table TBPRODUTO
+alter PRECO_PROMOCAO position 9;
+
+alter table TBPRODUTO
+alter REFERENCIA position 10;
+
+alter table TBPRODUTO
+alter ESPECIFICACAO position 11;
+
+alter table TBPRODUTO
+alter SECAO position 12;
+
+alter table TBPRODUTO
+alter QTDE position 13;
+
+alter table TBPRODUTO
+alter FRACIONADOR position 14;
+
+alter table TBPRODUTO
+alter PESO_BRUTO position 15;
+
+alter table TBPRODUTO
+alter PESO_LIQUIDO position 16;
+
+alter table TBPRODUTO
+alter CUBAGEM position 17;
+
+alter table TBPRODUTO
+alter VENDA_FRACIONADA position 18;
+
+alter table TBPRODUTO
+alter CODUNIDADE_FRACIONADA position 19;
+
+alter table TBPRODUTO
+alter UNIDADE position 20;
+
+alter table TBPRODUTO
+alter ESTOQMIN position 21;
+
+alter table TBPRODUTO
+alter CODGRUPO position 22;
+
+alter table TBPRODUTO
+alter CODFABRICANTE position 23;
+
+alter table TBPRODUTO
+alter CUSTOMEDIO position 24;
+
+alter table TBPRODUTO
+alter PERCENTUAL_MARCKUP position 25;
+
+alter table TBPRODUTO
+alter PERCENTUAL_MARGEM position 26;
+
+alter table TBPRODUTO
+alter PRECO_SUGERIDO position 27;
+
+alter table TBPRODUTO
+alter CODEMP position 28;
+
+alter table TBPRODUTO
+alter CODSECAO position 29;
+
+alter table TBPRODUTO
+alter CODORIGEM position 30;
+
+alter table TBPRODUTO
+alter CODTRIBUTACAO position 31;
+
+alter table TBPRODUTO
+alter CST position 32;
+
+alter table TBPRODUTO
+alter CSOSN position 33;
+
+alter table TBPRODUTO
+alter CST_PIS position 34;
+
+alter table TBPRODUTO
+alter CST_COFINS position 35;
+
+alter table TBPRODUTO
+alter NCM_SH position 36;
+
+alter table TBPRODUTO
+alter CODIGO_NVE position 37;
+
+alter table TBPRODUTO
+alter CODCFOP position 38;
+
+alter table TBPRODUTO
+alter CODBARRA_EAN position 39;
+
+alter table TBPRODUTO
+alter CODUNIDADE position 40;
+
+alter table TBPRODUTO
+alter ALIQUOTA_TIPO position 41;
+
+alter table TBPRODUTO
+alter ALIQUOTA position 42;
+
+alter table TBPRODUTO
+alter ALIQUOTA_CSOSN position 43;
+
+alter table TBPRODUTO
+alter ALIQUOTA_PIS position 44;
+
+alter table TBPRODUTO
+alter ALIQUOTA_COFINS position 45;
+
+alter table TBPRODUTO
+alter VALOR_IPI position 46;
+
+alter table TBPRODUTO
+alter RESERVA position 47;
+
+alter table TBPRODUTO
+alter PRODUTO_NOVO position 48;
+
+alter table TBPRODUTO
+alter COR_VEICULO position 49;
+
+alter table TBPRODUTO
+alter COMBUSTIVEL_VEICULO position 50;
+
+alter table TBPRODUTO
+alter TIPO_VEICULO position 51;
+
+alter table TBPRODUTO
+alter ANO_MODELO_VEICULO position 52;
+
+alter table TBPRODUTO
+alter ANO_FABRICACAO_VEICULO position 53;
+
+alter table TBPRODUTO
+alter RENAVAM_VEICULO position 54;
+
+alter table TBPRODUTO
+alter CHASSI_VEICULO position 55;
+
+alter table TBPRODUTO
+alter KILOMETRAGEM_VEICULO position 56;
+
+alter table TBPRODUTO
+alter SITUACAO_ATUAL_VEICULO position 57;
+
+alter table TBPRODUTO
+alter SITUACAO_HISTORICO_VEICULO position 58;
+
+alter table TBPRODUTO
+alter PERCENTUAL_REDUCAO_BC position 59;
+
+alter table TBPRODUTO
+alter USUARIO position 60;
+
+alter table TBPRODUTO
+alter MOVIMENTA_ESTOQUE position 61;
+
+alter table TBPRODUTO
+alter COMPOR_FATURAMENTO position 62;
+
+alter table TBPRODUTO
+alter CUST_DESP_OFIC position 63;
+
+alter table TBPRODUTO
+alter CUST_DESP_GERAIS position 64;
+
+alter table TBPRODUTO
+alter CUST_DESP_ADM position 65;
+
+alter table TBPRODUTO
+alter CUST_COMISSAO position 66;
+
+alter table TBPRODUTO
+alter CUST_IMPOSTO position 67;
+
+alter table TBPRODUTO
+alter FI_RET_FINANC position 68;
+
+alter table TBPRODUTO
+alter FI_RET_PLANO position 69;
+
+
+
+
+/*------ SYSDBA 03/11/2014 19:08:03 --------*/
+
+COMMENT ON TABLE TBPRODUTO IS 'Tabela Produtos/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de todos os produtos e/ou servicos necessarios as movimentacoes de
+entrada e saida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/05/2014 - IMR :
+        + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
+          o faturamento da empresa e quais sao de consumo interno.
+    03/11/2014 - IMR :
+        + Criacao dos campos METAFONEMA para auxiliar da pesquisa de produtos homonimos e o campo ESPECIFICACAO como
+          campo para especificar de maneira textual o produto/servico.';
+
+
+
+
+/*------ SYSDBA 03/11/2014 19:08:16 --------*/
+
+COMMENT ON TABLE TBPRODUTO IS 'Tabela Produtos/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de todos os produtos e/ou servicos necessarios as movimentacoes de
+entrada e saida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/05/2014 - IMR :
+        + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
+          o faturamento da empresa e quais sao de consumo interno.
+
+    03/11/2014 - IMR :
+        + Criacao dos campos METAFONEMA para auxiliar da pesquisa de produtos homonimos e o campo ESPECIFICACAO como
+          campo para especificar de maneira textual o produto/servico.';
+
+
+
+
+/*------ SYSDBA 03/11/2014 19:08:33 --------*/
+
+COMMENT ON TABLE TBPRODUTO IS 'Tabela Produtos/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de todos os produtos e/ou servicos necessarios as movimentacoes de
+entrada e saida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/05/2014 - IMR :
+        + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
+          o faturamento da empresa e quais sao de consumo interno.
+
+    03/11/2014 - IMR :
+        + Criacao do campo METAFONEMA para auxiliar da pesquisa de produtos homonimos e o campo ESPECIFICACAO como
+          campo para especificar de maneira textual o produto/servico.';
+
+
+
+
+/*------ SYSDBA 03/11/2014 19:09:02 --------*/
+
+COMMENT ON TABLE TBPRODUTO IS 'Tabela Produtos/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de todos os produtos e/ou servicos necessarios as movimentacoes de
+entrada e saida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/05/2014 - IMR :
+        + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
+          o faturamento da empresa e quais sao de consumo interno.
+
+    03/11/2014 - IMR :
+        + Criacao do campo METAFONEMA para auxiliar da pesquisa de produtos homonimos e o campo ESPECIFICACAO como
+          campo para especificar de maneira textual o produto/servico, muito utilizado em processos de cotacao.';
+
+
+
+
+/*------ SYSDBA 03/11/2014 19:55:35 --------*/
+
+CREATE INDEX IDX_TBPRODUTO_DESCRICAO
+ON TBPRODUTO (DESCRI,APRESENTACAO,DESCRI_APRESENTACAO,METAFONEMA);
+
