@@ -31310,3 +31310,85 @@ Historico:
 CREATE INDEX IDX_TBPRODUTO_DESCRICAO
 ON TBPRODUTO (DESCRI,APRESENTACAO,DESCRI_APRESENTACAO,METAFONEMA);
 
+
+
+
+/*------ SYSDBA 10/11/2014 16:58:24 --------*/
+
+ALTER TABLE TBNFE_CARTA_CORRECAO
+    ADD CCE_TEXTO DMN_TEXTO;
+
+COMMENT ON COLUMN TBNFE_CARTA_CORRECAO.CCE_TEXTO IS
+'Texto de correcao.';
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_NUMERO position 1;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_EMPRESA position 2;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_DATA position 3;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_HORA position 4;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_ENVIADA position 5;
+
+alter table TBNFE_CARTA_CORRECAO
+alter CCE_TEXTO position 6;
+
+alter table TBNFE_CARTA_CORRECAO
+alter NFE_SERIE position 7;
+
+alter table TBNFE_CARTA_CORRECAO
+alter NFE_NUMERO position 8;
+
+alter table TBNFE_CARTA_CORRECAO
+alter NFE_MODELO position 9;
+
+alter table TBNFE_CARTA_CORRECAO
+alter NUMERO position 10;
+
+alter table TBNFE_CARTA_CORRECAO
+alter PROTOCOLO position 11;
+
+alter table TBNFE_CARTA_CORRECAO
+alter XML position 12;
+
+
+
+
+/*------ SYSDBA 10/11/2014 17:00:05 --------*/
+
+COMMENT ON TABLE TBNFE_CARTA_CORRECAO IS 'Tabela de Cartas de Correcao (CC-e).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/11/2014
+
+Tabela responsavel por armazenar os registros de cartas de correcai eletronica das NF-e emitidas no sistema.';
+
+
+
+
+/*------ SYSDBA 10/11/2014 17:01:10 --------*/
+
+COMMENT ON TABLE TBNFE_CARTA_CORRECAO IS 'Tabela de Cartas de Correcao (CC-e).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/11/2014
+
+Tabela responsavel por armazenar os registros de cartas de correcai eletronica das NF-e emitidas no sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    10/11/2014 - IMR :
+        + Documentacao da tabela.';
+
