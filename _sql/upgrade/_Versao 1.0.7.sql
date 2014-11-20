@@ -31392,3 +31392,534 @@ Historico:
     10/11/2014 - IMR :
         + Documentacao da tabela.';
 
+
+
+
+/*------ SYSDBA 19/11/2014 18:08:26 --------*/
+
+CREATE TABLE TBCENTRO_CUSTO (
+    CODIGO DMN_BIGINT_NN NOT NULL,
+    DESCRICAO DMN_VCHAR_100,
+    ATIVO DMN_LOGICO DEFAULT 1,
+    CODCLIENTE DMN_INTEGER_N);
+
+ALTER TABLE TBCENTRO_CUSTO
+ADD CONSTRAINT PK_TBCENTRO_CUSTO
+PRIMARY KEY (CODIGO);
+
+COMMENT ON COLUMN TBCENTRO_CUSTO.CODIGO IS
+'Codigo';
+
+COMMENT ON COLUMN TBCENTRO_CUSTO.DESCRICAO IS
+'Descricao';
+
+COMMENT ON COLUMN TBCENTRO_CUSTO.ATIVO IS
+'Ativo:
+0 - Nao
+1 - Sim';
+
+COMMENT ON COLUMN TBCENTRO_CUSTO.CODCLIENTE IS
+'Cliente';
+
+GRANT ALL ON TBCENTRO_CUSTO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 19/11/2014 18:10:40 --------*/
+
+COMMENT ON TABLE TBCENTRO_CUSTO IS 'Tabele de Centros de Custo.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/11/2014
+
+Tabela responsavel por armazenar os registros de Centros de Custos da empresa e/ou pertencentes a determinados clientes.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    19/11/2014 - IMR :
+        + Documentacao da tabela.';
+
+
+
+
+/*------ SYSDBA 19/11/2014 18:12:11 --------*/
+
+CREATE SEQUENCE GEN_CENTRO_CUSTO;
+
+COMMENT ON SEQUENCE GEN_CENTRO_CUSTO IS 'Sequenciador dos registros de Centro de Custo';
+
+
+
+
+/*------ SYSDBA 19/11/2014 18:13:10 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_centro_custo_novo for tbcentro_custo
+active before insert position 0
+AS
+begin
+  if (new.codigo is null) then
+    new.codigo = gen_id(GEN_CENTRO_CUSTO, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/11/2014 18:14:19 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_centro_custo_novo for tbcentro_custo
+active before insert position 0
+AS
+begin
+  if (new.codigo is null) then
+    new.codigo = gen_id(GEN_CENTRO_CUSTO, 1);
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_CENTRO_CUSTO_NOVO IS 'Trigger Centro de Custo (Gerar Codigo).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/11/2014
+
+Trigger responsavel por gerar o codigo para o novo registro de Centro de Custo quando este nao fora informado.';
+
+
+
+
+/*------ SYSDBA 19/11/2014 18:14:52 --------*/
+
+ALTER TABLE TBCENTRO_CUSTO
+ADD CONSTRAINT FK_TBCENTRO_CUSTO_CLIENTE
+FOREIGN KEY (CODCLIENTE)
+REFERENCES TBCLIENTE(CODIGO);
+
+
+
+
+/*------ SYSDBA 19/11/2014 18:30:09 --------*/
+
+COMMENT ON TABLE TBCENTRO_CUSTO IS 'Tabele de Departamentos / Centros de Custo.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/11/2014
+
+Tabela responsavel por armazenar os registros de Centros de Custos da empresa e/ou pertencentes a determinados clientes.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    19/11/2014 - IMR :
+        + Documentacao da tabela.';
+
+
+
+
+/*------ SYSDBA 19/11/2014 19:51:39 --------*/
+
+CREATE TABLE TBCENTRO_CUSTO_EMPRESA (
+    CENTRO_CUSTO DMN_BIGINT_NN NOT NULL,
+    EMPRESA DMN_CNPJ NOT NULL);
+
+ALTER TABLE TBCENTRO_CUSTO_EMPRESA
+ADD CONSTRAINT PK_TBCENTRO_CUSTO_EMPRESA
+PRIMARY KEY (CENTRO_CUSTO,EMPRESA);
+
+COMMENT ON COLUMN TBCENTRO_CUSTO_EMPRESA.CENTRO_CUSTO IS
+'Departamento / Centro de Custo';
+
+COMMENT ON COLUMN TBCENTRO_CUSTO_EMPRESA.EMPRESA IS
+'Empresa';
+
+GRANT ALL ON TBCENTRO_CUSTO_EMPRESA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 19/11/2014 19:52:34 --------*/
+
+ALTER TABLE TBCENTRO_CUSTO_EMPRESA
+ADD CONSTRAINT FK_TBCENTRO_CUSTO_EMPRESA_CCT
+FOREIGN KEY (CENTRO_CUSTO)
+REFERENCES TBCENTRO_CUSTO(CODIGO)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+ALTER TABLE TBCENTRO_CUSTO_EMPRESA
+ADD CONSTRAINT FK_TBCENTRO_CUSTO_EMPRESA_EMP
+FOREIGN KEY (EMPRESA)
+REFERENCES TBEMPRESA(CNPJ)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 19/11/2014 19:54:43 --------*/
+
+COMMENT ON TABLE TBCENTRO_CUSTO_EMPRESA IS 'Tabele de Departamentos / Centros de Custo x Empresa.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/11/2014
+
+Tabela responsavel por armazenar os registros que relacionam o Centro de Custo e a Empresa, onde: Um mesmo centro de custo
+podera esta associado a varias empresa e uma mesma empresa associada a varios centros de custos (Relacionamento N para N).
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    19/11/2014 - IMR :
+        + Documentacao da tabela.';
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:33:33 --------*/
+
+ALTER TABLE TBAUTORIZA_COMPRA
+    ADD CENTRO_CUSTO DMN_BIGINT_N;
+
+COMMENT ON COLUMN TBAUTORIZA_COMPRA.CENTRO_CUSTO IS
+'Departamento / Centro de Custo';
+
+alter table TBAUTORIZA_COMPRA
+alter ANO position 1;
+
+alter table TBAUTORIZA_COMPRA
+alter CODIGO position 2;
+
+alter table TBAUTORIZA_COMPRA
+alter EMPRESA position 3;
+
+alter table TBAUTORIZA_COMPRA
+alter NUMERO position 4;
+
+alter table TBAUTORIZA_COMPRA
+alter FORNECEDOR position 5;
+
+alter table TBAUTORIZA_COMPRA
+alter NOME_CONTATO position 6;
+
+alter table TBAUTORIZA_COMPRA
+alter TIPO position 7;
+
+alter table TBAUTORIZA_COMPRA
+alter INSERCAO_DATA position 8;
+
+alter table TBAUTORIZA_COMPRA
+alter EMISSAO_DATA position 9;
+
+alter table TBAUTORIZA_COMPRA
+alter EMISSAO_USUARIO position 10;
+
+alter table TBAUTORIZA_COMPRA
+alter VALIDADE position 11;
+
+alter table TBAUTORIZA_COMPRA
+alter COMPETENCIA position 12;
+
+alter table TBAUTORIZA_COMPRA
+alter DATA_FATURA position 13;
+
+alter table TBAUTORIZA_COMPRA
+alter MOVITO position 14;
+
+alter table TBAUTORIZA_COMPRA
+alter OBSERVACAO position 15;
+
+alter table TBAUTORIZA_COMPRA
+alter CLIENTE position 16;
+
+alter table TBAUTORIZA_COMPRA
+alter CENTRO_CUSTO position 17;
+
+alter table TBAUTORIZA_COMPRA
+alter ENDERECO_ENTREGA position 18;
+
+alter table TBAUTORIZA_COMPRA
+alter STATUS position 19;
+
+alter table TBAUTORIZA_COMPRA
+alter AUTORIZADO_DATA position 20;
+
+alter table TBAUTORIZA_COMPRA
+alter AUTORIZADO_USUARIO position 21;
+
+alter table TBAUTORIZA_COMPRA
+alter CANCELADO_DATA position 22;
+
+alter table TBAUTORIZA_COMPRA
+alter CANCELADO_USUARIO position 23;
+
+alter table TBAUTORIZA_COMPRA
+alter CANCELADO_MOTIVO position 24;
+
+alter table TBAUTORIZA_COMPRA
+alter RECEBEDOR_NOME position 25;
+
+alter table TBAUTORIZA_COMPRA
+alter RECEBEDOR_CPF position 26;
+
+alter table TBAUTORIZA_COMPRA
+alter RECEBEDOR_FUNCAO position 27;
+
+alter table TBAUTORIZA_COMPRA
+alter FORMA_PAGTO position 28;
+
+alter table TBAUTORIZA_COMPRA
+alter CONDICAO_PAGTO position 29;
+
+alter table TBAUTORIZA_COMPRA
+alter TRANSPORTADOR position 30;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_BRUTO position 31;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_DESCONTO position 32;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_TOTAL_FRETE position 33;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_TOTAL_IPI position 34;
+
+alter table TBAUTORIZA_COMPRA
+alter VALOR_TOTAL position 35;
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:33:59 --------*/
+
+ALTER TABLE TBAUTORIZA_COMPRA
+ADD CONSTRAINT FK_TBAUTORIZA_COMPRA_CNT_CUSTO
+FOREIGN KEY (CENTRO_CUSTO)
+REFERENCES TBCENTRO_CUSTO(CODIGO);
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:35:17 --------*/
+
+COMMENT ON TABLE TBAUTORIZA_COMPRA IS 'Tabela Autorizacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   13/05/2014
+
+Tabela responsavel por armazenar as autorizacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/05/2014 - IMR :
+        + Criacao dos campos NOME_CONTATO, TRANSPORTADOR, VALOR_TOTAL_FRETE e VALOR_TOTAL_IPI, uma vez que nos processos
+        de Autorizacao de Compra essas informacoes sao necessarias.
+
+    19/11/2014 - IMR:
+        + Criacao do campo CENTRO_CUSTO para que o departamento ou centro de custo seja informado em determindas
+          Autorizacoes de Compra/Servico.';
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:36:17 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA
+    ADD CENTRO_CUSTO DMN_BIGINT_N;
+
+COMMENT ON COLUMN TBREQUISITA_COMPRA.CENTRO_CUSTO IS
+'Departamento / Centro de Custo';
+
+alter table TBREQUISITA_COMPRA
+alter ANO position 1;
+
+alter table TBREQUISITA_COMPRA
+alter CODIGO position 2;
+
+alter table TBREQUISITA_COMPRA
+alter EMPRESA position 3;
+
+alter table TBREQUISITA_COMPRA
+alter NUMERO position 4;
+
+alter table TBREQUISITA_COMPRA
+alter FORNECEDOR position 5;
+
+alter table TBREQUISITA_COMPRA
+alter NOME_CONTATO position 6;
+
+alter table TBREQUISITA_COMPRA
+alter TIPO position 7;
+
+alter table TBREQUISITA_COMPRA
+alter INSERCAO_DATA position 8;
+
+alter table TBREQUISITA_COMPRA
+alter EMISSAO_DATA position 9;
+
+alter table TBREQUISITA_COMPRA
+alter EMISSAO_USUARIO position 10;
+
+alter table TBREQUISITA_COMPRA
+alter VALIDADE position 11;
+
+alter table TBREQUISITA_COMPRA
+alter COMPETENCIA position 12;
+
+alter table TBREQUISITA_COMPRA
+alter DATA_FATURA position 13;
+
+alter table TBREQUISITA_COMPRA
+alter MOVITO position 14;
+
+alter table TBREQUISITA_COMPRA
+alter OBSERVACAO position 15;
+
+alter table TBREQUISITA_COMPRA
+alter CLIENTE position 16;
+
+alter table TBREQUISITA_COMPRA
+alter CENTRO_CUSTO position 17;
+
+alter table TBREQUISITA_COMPRA
+alter ENDERECO_ENTREGA position 18;
+
+alter table TBREQUISITA_COMPRA
+alter STATUS position 19;
+
+alter table TBREQUISITA_COMPRA
+alter REQUISITADO_DATA position 20;
+
+alter table TBREQUISITA_COMPRA
+alter REQUISITADO_USUARIO position 21;
+
+alter table TBREQUISITA_COMPRA
+alter CANCELADO_DATA position 22;
+
+alter table TBREQUISITA_COMPRA
+alter CANCELADO_USUARIO position 23;
+
+alter table TBREQUISITA_COMPRA
+alter CANCELADO_MOTIVO position 24;
+
+alter table TBREQUISITA_COMPRA
+alter RECEBEDOR_NOME position 25;
+
+alter table TBREQUISITA_COMPRA
+alter RECEBEDOR_CPF position 26;
+
+alter table TBREQUISITA_COMPRA
+alter RECEBEDOR_FUNCAO position 27;
+
+alter table TBREQUISITA_COMPRA
+alter FORMA_PAGTO position 28;
+
+alter table TBREQUISITA_COMPRA
+alter CONDICAO_PAGTO position 29;
+
+alter table TBREQUISITA_COMPRA
+alter TRANSPORTADOR position 30;
+
+alter table TBREQUISITA_COMPRA
+alter VALOR_BRUTO position 31;
+
+alter table TBREQUISITA_COMPRA
+alter VALOR_DESCONTO position 32;
+
+alter table TBREQUISITA_COMPRA
+alter VALOR_TOTAL_FRETE position 33;
+
+alter table TBREQUISITA_COMPRA
+alter VALOR_TOTAL_IPI position 34;
+
+alter table TBREQUISITA_COMPRA
+alter VALOR_TOTAL position 35;
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:36:46 --------*/
+
+ALTER TABLE TBREQUISITA_COMPRA
+ADD CONSTRAINT FK_TBREQUISITA_COMPRA_CNT_CUSTO
+FOREIGN KEY (CENTRO_CUSTO)
+REFERENCES TBCENTRO_CUSTO(CODIGO);
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:37:20 --------*/
+
+COMMENT ON TABLE TBREQUISITA_COMPRA IS 'Tabela Requisicao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   16/10/2014
+
+Tabela responsavel por armazenar as requisicoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    19/11/2014 - IMR:
+        + Criacao do campo CENTRO_CUSTO para que o departamento ou centro de custo seja informado em determindas
+          Requisicoes de Compra/Servico.';
+
+
+
+
+/*------ SYSDBA 19/11/2014 20:38:16 --------*/
+
+COMMENT ON TABLE TBAUTORIZA_COMPRA IS 'Tabela Autorizacao de Compras/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   13/05/2014
+
+Tabela responsavel por armazenar as autorizacoes de compras/servicos da empresa.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/05/2014 - IMR :
+        + Criacao dos campos NOME_CONTATO, TRANSPORTADOR, VALOR_TOTAL_FRETE e VALOR_TOTAL_IPI, uma vez que nos processos
+        de Autorizacao de Compra essas informacoes sao necessarias.
+
+    19/11/2014 - IMR:
+        + Criacao do campo CENTRO_CUSTO para que o departamento ou centro de custo seja informado em determindas
+          Autorizacoes de Compra/Servico.';
+
