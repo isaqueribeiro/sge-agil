@@ -31923,3 +31923,47 @@ Historico:
         + Criacao do campo CENTRO_CUSTO para que o departamento ou centro de custo seja informado em determindas
           Autorizacoes de Compra/Servico.';
 
+
+
+
+/*------ SYSDBA 28/11/2014 12:10:38 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.FORMAPAGTO_NFCE IS
+'Forma de Pagamento para NFC-e (Campo Obrigatorio):
+01 - Dinheiro
+02 - Cheque
+03 - Cartao de Credito
+04 - Cartao de Debito
+05 - Credito Loja
+10 - Vale Alimentacao
+11 - Vale Refeicao
+12 - Vale Presente
+13 - Vale Combustivel
+99 - Outros
+
+  TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
+                        fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
+                        fpOutro);';
+
+
+
+
+/*------ SYSDBA 28/11/2014 12:12:53 --------*/
+
+COMMENT ON COLUMN TBFORMPAGTO.FORMAPAGTO_NFCE IS
+'Forma de Pagamento para NFC-e (Campo Obrigatorio):
+01 - Dinheiro
+02 - Cheque
+03 - Cartao de Credito
+04 - Cartao de Debito
+05 - Credito Loja
+10 - Vale Alimentacao
+11 - Vale Refeicao
+12 - Vale Presente
+13 - Vale Combustivel
+99 - Outros
+
+TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpCreditoLoja,
+                    fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
+                    fpOutro)';
+
