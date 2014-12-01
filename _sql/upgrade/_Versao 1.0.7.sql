@@ -31967,3 +31967,283 @@ TpcnFormaPagamento = (fpDinheiro, fpCheque, fpCartaoCredito, fpCartaoDebito, fpC
                     fpValeAlimentacao, fpValeRefeicao, fpValePresente, fpValeCombustivel,
                     fpOutro)';
 
+
+
+
+/*------ SYSDBA 01/12/2014 12:53:16 --------*/
+
+ALTER TABLE TBPLANO_CONTA
+    ADD TIPO DMN_LOGICO DEFAULT 0,
+    ADD NIVEL DMN_SMALLINT_NN DEFAULT 1,
+    ADD CODIGO_CONTABIL DMN_VCHAR_30,
+    ADD SITUACAO DMN_LOGICO DEFAULT 1;
+
+COMMENT ON COLUMN TBPLANO_CONTA.TIPO IS
+'Tipo:
+ 0 - Agrupador
+ 1 - Lancamento';
+
+COMMENT ON COLUMN TBPLANO_CONTA.NIVEL IS
+'Nivel:
+1 - ...
+2 - ...
+3 - ...
+4 - ...
+5 - ...
+6 - ...
+7 - ...
+8 - ...';
+
+COMMENT ON COLUMN TBPLANO_CONTA.CODIGO_CONTABIL IS
+'Codigo Contabil';
+
+COMMENT ON COLUMN TBPLANO_CONTA.SITUACAO IS
+'Situacao:
+0 - Inativo
+1 - Ativo';
+
+alter table TBPLANO_CONTA
+alter CODIGO position 1;
+
+alter table TBPLANO_CONTA
+alter EXERCICIO position 2;
+
+alter table TBPLANO_CONTA
+alter GRUPO position 3;
+
+alter table TBPLANO_CONTA
+alter TIPO position 4;
+
+alter table TBPLANO_CONTA
+alter DESCRICAO_COMPLETA position 5;
+
+alter table TBPLANO_CONTA
+alter DESCRICAO_RESUMIDA position 6;
+
+alter table TBPLANO_CONTA
+alter NIVEL position 7;
+
+alter table TBPLANO_CONTA
+alter CODIGO_CONTABIL position 8;
+
+alter table TBPLANO_CONTA
+alter SITUACAO position 9;
+
+
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column EXERCICIO position 2;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column GRUPO position 3;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column NIVEL position 4;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column TIPO position 5;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column CODIGO_CONTABIL position 6;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column DESCRICAO_COMPLETA position 7;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column DESCRICAO_RESUMIDA position 8;
+
+
+/*------ SYSDBA 01/12/2014 12:53:37 --------*/
+
+alter table TBPLANO_CONTA
+alter column SITUACAO position 9;
+
+
+/*------ SYSDBA 01/12/2014 12:54:20 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_BIGINT_N'
+where (RDB$FIELD_NAME = 'GRUPO') and
+(RDB$RELATION_NAME = 'TBPLANO_CONTA')
+;
+
+
+
+
+/*------ SYSDBA 01/12/2014 12:54:34 --------*/
+
+COMMENT ON COLUMN TBPLANO_CONTA.GRUPO IS
+'Grupo';
+
+
+
+
+/*------ SYSDBA 01/12/2014 12:54:57 --------*/
+
+ALTER TABLE TBPLANO_CONTA
+ADD CONSTRAINT FK_TBPLANO_CONTA_GRUPO
+FOREIGN KEY (GRUPO)
+REFERENCES TBPLANO_CONTA(CODIGO);
+
+
+
+
+/*------ SYSDBA 01/12/2014 13:16:25 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_plano_conta_novo for tbplano_conta
+active before insert position 0
+AS
+begin
+  if ( new.codigo is null ) then
+    new.codigo = GEN_ID(GEN_PLANO_CONTA, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column EXERCICIO position 2;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column GRUPO position 3;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column NIVEL position 4;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column TIPO position 5;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column CODIGO_CONTABIL position 6;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column DESCRICAO_RESUMIDA position 7;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column DESCRICAO_COMPLETA position 8;
+
+
+/*------ SYSDBA 01/12/2014 16:11:41 --------*/
+
+alter table TBPLANO_CONTA
+alter column SITUACAO position 9;
+
+
+/*------ SYSDBA 01/12/2014 16:12:13 --------*/
+
+ALTER TABLE TBPLANO_CONTA
+    ADD CODIGO_RESUMIDO DMN_VCHAR_10;
+
+COMMENT ON COLUMN TBPLANO_CONTA.CODIGO_RESUMIDO IS
+'Codigo Resumido';
+
+alter table TBPLANO_CONTA
+alter CODIGO position 1;
+
+alter table TBPLANO_CONTA
+alter EXERCICIO position 2;
+
+alter table TBPLANO_CONTA
+alter GRUPO position 3;
+
+alter table TBPLANO_CONTA
+alter NIVEL position 4;
+
+alter table TBPLANO_CONTA
+alter TIPO position 5;
+
+alter table TBPLANO_CONTA
+alter CODIGO_CONTABIL position 6;
+
+alter table TBPLANO_CONTA
+alter CODIGO_RESUMIDO position 7;
+
+alter table TBPLANO_CONTA
+alter DESCRICAO_RESUMIDA position 8;
+
+alter table TBPLANO_CONTA
+alter DESCRICAO_COMPLETA position 9;
+
+alter table TBPLANO_CONTA
+alter SITUACAO position 10;
+
+
+
+
+/*------ SYSDBA 01/12/2014 16:13:41 --------*/
+
+COMMENT ON TABLE TBPLANO_CONTA IS 'Tabela Plano de Contas (Contabilidade).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   09/05/2014
+
+Tabela responsavel por armazenar o plano de contas adotado pela empresa. Informacoes estas lancadas pela Contabilidade.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    01/12/2014 - IMR :
+        + Adequacao/atualizacao da esrutura da tabela.';
+
