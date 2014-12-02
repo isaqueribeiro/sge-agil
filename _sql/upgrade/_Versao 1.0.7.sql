@@ -32247,3 +32247,107 @@ Historico:
     01/12/2014 - IMR :
         + Adequacao/atualizacao da esrutura da tabela.';
 
+
+
+
+/*------ SYSDBA 02/12/2014 09:19:05 --------*/
+
+CREATE VIEW VW_TIPO_PLANO_CONTA (
+    CODIGO,
+    DESCRICAO)
+AS
+Select First 1
+    0 as Codigo
+  , 'Agrupador' as Descricao
+from TBEMPRESA
+
+union
+
+Select First 1
+    1 as Codigo
+  , 'Lançamento' as Descricao
+from TBEMPRESA
+;
+
+GRANT ALL ON VW_TIPO_PLANO_CONTA TO "PUBLIC";
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 4, column 6.
+VW_TIPO_PLANO_CONTA.
+
+*/
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 4, column 6.
+VW_TIPO_PLANO_CONTA.
+
+*/
+
+
+
+/*------ SYSDBA 02/12/2014 09:21:20 --------*/
+
+DROP VIEW VW_TIPO_PLANO_CONTA;
+
+CREATE VIEW VW_TIPO_PLANO_CONTA(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Agrupador'  as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Lançamento' as Descricao from RDB$DATABASE
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_TIPO_PLANO_CONTA TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 02/12/2014 09:23:37 --------*/
+
+CREATE INDEX IDX_PLANO_CONTA_TIPO
+ON TBPLANO_CONTA (TIPO);
+
+
+
+
+/*------ SYSDBA 02/12/2014 09:24:14 --------*/
+
+CREATE INDEX IDX_PLANO_CONTA_CONTABIL
+ON TBPLANO_CONTA (CODIGO_CONTABIL,CODIGO_RESUMIDO);
+
+
+
+
+/*------ SYSDBA 02/12/2014 10:18:55 --------*/
+
+CREATE VIEW VW_NIVEL_PLANO_CONTA(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 1 as Codigo , 'Nível 1'  as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Nível 2'  as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Nível 3'  as Descricao from RDB$DATABASE Union
+Select 4 as Codigo , 'Nível 4'  as Descricao from RDB$DATABASE Union
+Select 5 as Codigo , 'Nível 5'  as Descricao from RDB$DATABASE Union
+Select 6 as Codigo , 'Nível 6'  as Descricao from RDB$DATABASE Union
+Select 7 as Codigo , 'Nível 7'  as Descricao from RDB$DATABASE Union
+Select 8 as Codigo , 'Nível 8'  as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_NIVEL_PLANO_CONTA TO "PUBLIC";
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+TODOS_NIVEIS.
+At line 6, column 28.
+
+*/
