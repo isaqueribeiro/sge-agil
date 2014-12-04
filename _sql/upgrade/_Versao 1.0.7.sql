@@ -32836,3 +32836,73 @@ SET TERM ; ^
 CREATE INDEX IDX_PRODHIST_DATAHORA
 ON TBPRODHIST (DTHIST);
 
+
+
+
+/*------ SYSDBA 04/12/2014 13:16:28 --------*/
+
+ALTER TABLE TBVENDAS_FORMAPAGTO
+    ADD VALOR_RECEBIDO DMN_MONEY DEFAULT 0;
+
+COMMENT ON COLUMN TBVENDAS_FORMAPAGTO.VALOR_RECEBIDO IS
+'Valor Recebido.
+
+Apenas em PDV quando o TRONO se torna necessario.';
+
+alter table TBVENDAS_FORMAPAGTO
+alter ANO_VENDA position 1;
+
+alter table TBVENDAS_FORMAPAGTO
+alter CONTROLE_VENDA position 2;
+
+alter table TBVENDAS_FORMAPAGTO
+alter FORMAPAGTO_COD position 3;
+
+alter table TBVENDAS_FORMAPAGTO
+alter CONDICAOPAGTO_COD position 4;
+
+alter table TBVENDAS_FORMAPAGTO
+alter VENDA_PRAZO position 5;
+
+alter table TBVENDAS_FORMAPAGTO
+alter VALOR_FPAGTO position 6;
+
+alter table TBVENDAS_FORMAPAGTO
+alter VALOR_RECEBIDO position 7;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_01 position 8;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_02 position 9;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_03 position 10;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_04 position 11;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_05 position 12;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_06 position 13;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_07 position 14;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_08 position 15;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_09 position 16;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_10 position 17;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_11 position 18;
+
+alter table TBVENDAS_FORMAPAGTO
+alter PRAZO_12 position 19;
+
