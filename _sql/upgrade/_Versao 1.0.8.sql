@@ -347,3 +347,49 @@ alter column NUMERO_NFCE position 36;
 
 alter table TBEMPRESA
 alter column USUARIO position 37;
+
+
+/*------ SYSDBA 11/12/2014 20:16:32 --------*/
+
+COMMENT ON TABLE TBEMPRESA IS 'Tabela Empresa.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :
+
+Tabela responsavel por armazenar o registro da empresa e demais dados necessarios e emissao de documentos fiscais.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    11/12/2014 - IMR :
+        + Criação dos campos .';
+
+
+
+
+/*------ SYSDBA 11/12/2014 20:17:28 --------*/
+
+COMMENT ON TABLE TBEMPRESA IS 'Tabela Empresa.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :
+
+Tabela responsavel por armazenar o registro da empresa e demais dados necessarios e emissao de documentos fiscais.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    11/12/2014 - IMR :
+        + Criação dos campos SERIE_NFCE e NUMERO_NFCE para controle dos numeros sequenciais de emissao de NFC-e (Nota
+          Fiscal do Consumidor eletronica).';
+
