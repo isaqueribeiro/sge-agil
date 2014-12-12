@@ -393,3 +393,151 @@ Historico:
         + Criação dos campos SERIE_NFCE e NUMERO_NFCE para controle dos numeros sequenciais de emissao de NFC-e (Nota
           Fiscal do Consumidor eletronica).';
 
+
+
+
+/*------ SYSDBA 12/12/2014 11:27:24 --------*/
+
+COMMENT ON COLUMN TBNFE_ENVIADA.SERIE IS
+'Serie da NF-e / NFC-e.';
+
+
+
+
+/*------ SYSDBA 12/12/2014 11:27:32 --------*/
+
+COMMENT ON COLUMN TBNFE_ENVIADA.NUMERO IS
+'Numero da NF-e / NFC-e.';
+
+
+
+
+/*------ SYSDBA 12/12/2014 11:27:58 --------*/
+
+COMMENT ON COLUMN TBNFE_ENVIADA.MODELO IS
+'Modelo DF:
+0 - moNFe  (Nota Fiscal Eletronica)
+1 - moNFCe (Nota Fiscal do Consumidor Eletronica)';
+
+
+
+
+/*------ SYSDBA 12/12/2014 16:10:05 --------*/
+
+ALTER TABLE TBCONFIGURACAO
+    ADD NFCE_TOKEN_ID DMN_VCHAR_250,
+    ADD NFCE_TOKEN DMN_VCHAR_250;
+
+COMMENT ON COLUMN TBCONFIGURACAO.NFCE_TOKEN_ID IS
+'NFC-e: Id Token / Id CSC (Codigo de Seguranca do Contribuinte)';
+
+COMMENT ON COLUMN TBCONFIGURACAO.NFCE_TOKEN IS
+'NFC-e: Token / CSC (Codigo de Seguranca do Contribuinte)';
+
+alter table TBCONFIGURACAO
+alter EMPRESA position 1;
+
+alter table TBCONFIGURACAO
+alter EMAIL_CONTA position 2;
+
+alter table TBCONFIGURACAO
+alter EMAIL_SENHA position 3;
+
+alter table TBCONFIGURACAO
+alter EMAIL_POP position 4;
+
+alter table TBCONFIGURACAO
+alter EMAIL_SMTP position 5;
+
+alter table TBCONFIGURACAO
+alter EMAIL_SMTP_PORTA position 6;
+
+alter table TBCONFIGURACAO
+alter EMAIL_REQUER_AUTENTICACAO position 7;
+
+alter table TBCONFIGURACAO
+alter EMAIL_CONEXAO_SSL position 8;
+
+alter table TBCONFIGURACAO
+alter EMAIL_ASSUNTO_PADRAO position 9;
+
+alter table TBCONFIGURACAO
+alter EMAIL_MENSAGEM_PADRAO position 10;
+
+alter table TBCONFIGURACAO
+alter NFE_EMITIR position 11;
+
+alter table TBCONFIGURACAO
+alter NFE_ACEITAR_NOTA_DENEGADA position 12;
+
+alter table TBCONFIGURACAO
+alter NFE_SOLICITA_DH_SAIDA position 13;
+
+alter table TBCONFIGURACAO
+alter NFE_IMPRIMIR_COD_CLIENTE position 14;
+
+alter table TBCONFIGURACAO
+alter NFCE_TOKEN_ID position 15;
+
+alter table TBCONFIGURACAO
+alter NFCE_TOKEN position 16;
+
+alter table TBCONFIGURACAO
+alter CLIENTE_PERMITIR_DUPLICAR_CNPJ position 17;
+
+alter table TBCONFIGURACAO
+alter CUSTO_OPER_CALCULAR position 18;
+
+alter table TBCONFIGURACAO
+alter PERMITIR_VENDA_ESTOQUE_INS position 19;
+
+alter table TBCONFIGURACAO
+alter VENDA_CARREGA_PRODUTO_EAN position 20;
+
+alter table TBCONFIGURACAO
+alter ESTOQUE_UNICO_EMPRESAS position 21;
+
+alter table TBCONFIGURACAO
+alter ESTOQUE_SATELITE_CLIENTE position 22;
+
+alter table TBCONFIGURACAO
+alter AUTORIZA_INFORMA_CLIENTE position 23;
+
+alter table TBCONFIGURACAO
+alter USUARIO position 24;
+
+alter table TBCONFIGURACAO
+alter NFE_EMITIR_NFE position 25;
+
+
+
+
+/*------ SYSDBA 12/12/2014 16:29:32 --------*/
+
+COMMENT ON TABLE TBCONFIGURACAO IS 'Tabela Configuracoes da Empresa
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2014
+
+Tabela responsavel por armazenar informacoes de configuracoes da empresa. Estas informacoes influenciam diretamente no
+comportamento do sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    16/05/2014 - IMR :
+        + Criacao do campo CLIENTE_PERMITIR_DUPLICAR_CNPJ para permitir ou nao duplicacao de CPF/CNPJ no cadastro dos
+          clientes.
+
+    04/09/2014 - IMR:
+        + Criacao do campo NFE_ACEITAR_NOTA_DENEGADA para permitir ou nao o emitende de NF-e aceitar o retorno de NF-e
+          denegadas e guarda-las na base.
+
+    12/12/2014 - IMR:
+        + Criação dos campos NFCE_TOKEN_ID e NFCE_TOKEN parameter validar a geracao do QRCODE na emissao das NFC-e.';
+
