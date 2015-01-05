@@ -541,3 +541,115 @@ Historico:
     12/12/2014 - IMR:
         + Criação dos campos NFCE_TOKEN_ID e NFCE_TOKEN parameter validar a geracao do QRCODE na emissao das NFC-e.';
 
+
+
+
+/*------ SYSDBA 02/01/2015 13:27:14 --------*/
+
+COMMENT ON DOMAIN DMN_STATUS IS 'Status:
+0 - 
+1 - 
+2 - 
+3 - 
+4 - 
+5 - 
+6 - 
+7 - 
+8 - 
+9 -';
+
+
+
+
+/*------ SYSDBA 02/01/2015 15:08:03 --------*/
+
+ALTER TABLE SYS_IBPT
+    ADD ALIQESTADUAL_IBPT DMN_PERCENTUAL_2,
+    ADD ALIQMUNICIPAL_IBPT DMN_PERCENTUAL_2;
+
+COMMENT ON COLUMN SYS_IBPT.ALIQESTADUAL_IBPT IS
+'Aliquota Estadual';
+
+COMMENT ON COLUMN SYS_IBPT.ALIQMUNICIPAL_IBPT IS
+'Aliquota Municipal';
+
+
+
+
+/*------ SYSDBA 02/01/2015 15:11:43 --------*/
+
+DROP VIEW VW_TABELA_IBPT;
+
+CREATE VIEW VW_TABELA_IBPT(
+    NCM_SH,
+    Ncm_aliquota,
+    NCM_ALIQUOTA_NAC,
+    Ncm_aliquota_est,
+    Ncm_aliquota_mun,
+    NCM_ALIQUOTA_IMP)
+AS
+Select
+    ib.ncm_ibpt as Ncm_sh
+  , max( coalesce(nullif(ib.aliqmunicipal_ibpt, 0), nullif(ib.aliqestadual_ibpt, 0), nullif(ib.aliqnacional_ibpt, 0)) ) as Ncm_aliquota
+  , max(ib.aliqnacional_ibpt)       as Ncm_aliquota_nac
+  , max(ib.aliqestadual_ibpt)       as Ncm_aliquota_est
+  , max(ib.aliqmunicipal_ibpt)      as Ncm_aliquota_mun
+  , max(ib.aliqinternacional_ibpt)  as Ncm_aliquota_imp
+from SYS_IBPT ib
+where ib.ex_ibpt = '0'
+group by
+    ib.ncm_ibpt
+order by
+    ib.ncm_ibpt
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_TABELA_IBPT TO "PUBLIC";
+
+
+/*------ SYSDBA 02/01/2015 15:27:06 --------*/
+
+/*------ SYSDBA 02/01/2015 15:44:07 --------*/
+
+COMMENT ON TABLE SYS_IBPT IS 'Tabela IBPT
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/10/2014
+
+Tabela responsavel por armazenar todos os registros IBPT, ou seja, todos os registros de taxas de tributacoes de
+impostos de acordo como o NCM do produto/servico.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    28/05/2014 - IMR :
+        + Criacao dos campos BANCO, AGENCIA, CC e OBSERVACAO para atender solicitacoes do novo cliente.';
+
+
+
+
+/*------ SYSDBA 02/01/2015 15:45:00 --------*/
+
+COMMENT ON TABLE SYS_IBPT IS 'Tabela IBPT
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/10/2014
+
+Tabela responsavel por armazenar todos os registros IBPT, ou seja, todos os registros de taxas de tributacoes de
+impostos de acordo como o NCM do produto/servico.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    28/05/2014 - IMR :
+        + Criacao dos campos ALIQESTADUAL_IBPT e ALIQMUNICIPAL_IBPT para armazenar as aliquotas estaduais e municipais.';
+
