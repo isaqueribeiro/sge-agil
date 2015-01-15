@@ -371,3 +371,512 @@ GRANT ALL ON VW_TIPO_APROPRIACAO TO "PUBLIC";
 CREATE INDEX IDX_TBAPROPRIACAO_ALMOX_NUMERO
 ON TBAPROPRIACAO_ALMOX (NUMERO);
 
+
+
+
+/*------ SYSDBA 14/01/2015 20:25:54 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_vendas_estoque_atualizar for tbvendas
+active after update position 1
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable reserva    DMN_QUANTIDADE_D3;
+  declare variable valor_produto numeric(15,2);
+  declare variable estoque_unico Smallint;
+  declare variable Movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 3)) then /* 3. Finalizada */
+  begin
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.codemp
+    Into
+      estoque_unico;
+
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.Reserva, 0)
+        , coalesce(p.Preco, 0)
+        , coalesce(p.movimenta_estoque, 1)
+      from TVENDASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          produto
+        , empresa
+        , quantidade
+        , estoque
+        , reserva
+        , valor_produto
+        , Movimentar
+    do
+    begin
+      reserva = 0; -- :reserva - :Quantidade;  -- Descontinuada RESERVA
+      estoque = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde    = :Estoque
+        --, p.Reserva = :Reserva               -- Descontinuada RESERVA
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar posicao de estoque
+      Update TVENDASITENS i Set
+        i.Qtdefinal = :Estoque
+      where i.Ano        = new.Ano
+        and i.Codcontrol = new.Codcontrol
+        and i.Codemp     = new.Codemp
+        and i.Codprod    = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('SAIDA - VENDA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Venda no valor de R$ ' || :Valor_produto, '.', ',')
+      );
+    end
+     
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 14/01/2015 20:36:33 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_apropriacao_almox_estoque for tbapropriacao_almox
+active after update position 2
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_produto numeric(15,2);
+  declare variable estoque_unico Smallint;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 2) ) then /* Encerrada */
+  begin
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.empresa
+    Into
+      estoque_unico;
+
+    empresa       = new.empresa;
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.customedio, 0)
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , custo_produto
+        , Movimentar
+    do
+    begin
+      estoque = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+      /*
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde    = :Estoque
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar apropriacao de estoque para o centro de custo
+      if (not exists(
+        Select
+        from
+      )) then
+      begin
+
+      end
+      else
+      begin
+
+      end
+      */
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('SAIDA - APROPRIACAO DE ESTOQUE ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Custo médio no valor de R$ ' || :custo_produto, '.', ',')
+      );
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 14/01/2015 20:38:46 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_estoque for tbapropriacao_almox
+active after update position 2
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_produto numeric(15,2);
+  declare variable estoque_unico Smallint;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 2) ) then /* Encerrada */
+  begin
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.empresa
+    Into
+      estoque_unico;
+
+    empresa       = new.empresa;
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.customedio, 0)
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , custo_produto
+        , Movimentar
+    do
+    begin
+      estoque = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+      /*
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde    = :Estoque
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar apropriacao de estoque para o centro de custo
+      if (not exists(
+        Select
+        from
+      )) then
+      begin
+
+      end
+      else
+      begin
+
+      end
+      */
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('SAIDA - APROPRIACAO DE ESTOQUE ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Custo médio no valor de R$ ' || :custo_produto, '.', ',')
+      );
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_APROPRIACAO_ALMOX_ESTOQUE IS 'Trigger Apropriar Estoque (Encerramento).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   14/01/2015
+
+Trigger responsavel por executar o processo de baixa do estoque geral e apropriacao do estoque baixado no Centro de
+Custo informado.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    15/01/2014 - IMR :
+        * Atualizacao do trigger (Otimizacao).';
+
+
+
+/*------ 14/01/2015 20:42:33 --------*/
+
+CREATE TABLE TBESTOQUE_ALMOX(
+  EMPRESA DMN_CNPJ_NN NOT NULL,
+  CENTRO_CUSTO DMN_INTEGER_NN NOT NULL,
+  PRODUTO DMN_VCHAR_10_KEY NOT NULL,
+  LOTE DMN_BIGINT_NN DEFAULT 0 NOT NULL,
+  DATA_FABRICACAO DMN_DATE,
+  DATA_VALIDADE DMN_DATE,
+  QTDE DMN_QUANTIDADE_D3_N DEFAULT 0,
+  FRACIONADOR DMN_INTEGER_NN DEFAULT 1,
+  CUSTO_MEDIO DMN_MONEY);
+
+/*------ 14/01/2015 20:42:36 --------*/
+
+ALTER TABLE TBESTOQUE_ALMOX ADD CONSTRAINT PK_TBESTOQUE_ALMOX PRIMARY KEY (EMPRESA, CENTRO_CUSTO, PRODUTO, LOTE);
+
+/*------ 14/01/2015 20:42:36 --------*/
+
+ALTER TABLE TBESTOQUE_ALMOX ADD CONSTRAINT FK_TBESTOQUE_ALMOX_CNT FOREIGN KEY (CENTRO_CUSTO) REFERENCES
+TBCENTRO_CUSTO (CODIGO);GRANT ALL ON TBESTOQUE_ALMOX TO "PUBLIC";
+
+
+
+/*------ SYSDBA 14/01/2015 20:53:14 --------*/
+
+COMMENT ON COLUMN TBESTOQUE_ALMOX.CUSTO_MEDIO IS
+'Custo Medio apropriado de acordo com o Fracionador.';
+
+
+
+
+/*------ SYSDBA 14/01/2015 20:58:15 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_estoque for tbapropriacao_almox
+active after update position 2
+AS
+  declare variable empresa varchar(18);
+  declare variable produto varchar(10);
+  declare variable lote    Integer;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_produto numeric(15,2);
+  declare variable estoque_unico Smallint;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 2) ) then /* Encerrada */
+  begin
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.empresa
+    Into
+      estoque_unico;
+
+    empresa       = new.empresa;
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.customedio, 0)
+        , coalesce(nullif(p.fracionador, 0), 1)
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , custo_produto
+        , fracionador
+        , Movimentar
+    do
+    begin
+      lote = 0;
+
+      estoque     = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde = :Estoque
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Gravar apropriacao de estoque para o centro de custo
+      if (not exists(
+        Select
+          ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = new.centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+      )) then
+      begin
+
+        Insert Into TBESTOQUE_ALMOX (
+            empresa
+          , centro_custo
+          , produto
+          , lote
+          , data_fabricacao
+          , data_validade
+          , qtde
+          , fracionador
+          , custo_medio
+        ) values (
+            :empresa
+          , new.centro_custo
+          , :produto
+          , :lote
+          , null
+          , null
+          , :quantidade * :fracionador
+          , :fracionador
+          , :custo_produto / :fracionador
+        );
+
+      end
+      else
+      begin
+
+        Update TBESTOQUE_ALMOX ea Set
+            ea.qtde        = coalesce(ea.qtde, 0.0) + :quantidade
+          , ea.custo_medio = :custo_produto
+        where ea.empresa      = :empresa
+          and ea.centro_custo = new.centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote;
+
+      end
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('SAIDA - APROPRIACAO DE ESTOQUE ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Custo médio no valor de R$ ' || :custo_produto, '.', ',')
+      );
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
