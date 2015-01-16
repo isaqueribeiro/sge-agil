@@ -1,5 +1,5 @@
 for /F "tokens=1-3 delims=/" %%A in ('echo %date%') do (set ymd=%%A-%%B-%%C)
-for /F "tokens=1-2 delims=:" %%a in ('time /t') do (set ymd=%ymd%_%%ah_%%bmin)
+for /F "tokens=1-2 delims=:" %%a in ('time /t') do (set ymd=%ymd%_%%ah%%b)
 rem pastabackuptmpsys
 rem stringbancosys
 rem nomearquivosys
