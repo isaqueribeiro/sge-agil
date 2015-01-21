@@ -2840,3 +2840,2504 @@ COMMENT ON COLUMN TBCONFIGURACAO.ESTOQUE_UNICO_EMPRESAS IS
 0 - Nao
 1 - Sim';
 
+
+
+
+/*------ SYSDBA 16/01/2015 21:02:14 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+declare variable tipo_despesa smallint;
+begin
+  -- Montar Historico
+  Select
+      coalesce(cc.Codemp, r.empresa)
+    , coalesce(cc.Codforn, r.codforn)
+    , 'COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+    , r.Anocompra
+    , r.Numcompra
+    , r.codtpdesp
+  from TBCONTPAG r
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+    left join TBFORNECEDOR f on (f.Codforn = coalesce(cc.Codforn, r.codforn))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra
+    , tipo_despesa;
+
+  Historico = coalesce(:Historico, 'PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa, :Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Tipo_Despesa
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :tipo_despesa
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 16/01/2015 21:03:44 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_CAIXA_MOVIMENTO_PAG (
+    USUARIO varchar(12),
+    DATA_PAGTO timestamp,
+    FORMA_PAGTO smallint,
+    ANOLANC smallint,
+    NUMLANC integer,
+    SEQ smallint,
+    VALOR_BAIXA numeric(18,2))
+as
+declare variable EMPRESA varchar(18);
+declare variable FORNECEDOR integer;
+declare variable ANO_CAIXA smallint;
+declare variable NUM_CAIXA integer;
+declare variable CCR_CAIXA integer;
+declare variable HISTORICO varchar(250);
+declare variable ANO_COMPRA smallint;
+declare variable NUM_COMPRA integer;
+declare variable TIPO_DESPESA smallint;
+begin
+  -- Montar Historico
+  Select
+      coalesce(cc.Codemp, r.empresa)
+    , coalesce(cc.Codforn, r.codforn)
+    , 'COMPRA No. ' || r.Anocompra || '/' || r.Numcompra || ' - ' || f.Nomeforn
+    , r.Anocompra
+    , r.Numcompra
+    , r.codtpdesp
+  from TBCONTPAG r
+    left join TBCOMPRAS cc on (cc.Ano = r.Anocompra and cc.Codcontrol = r.Numcompra)
+    left join TBFORNECEDOR f on (f.Codforn = coalesce(cc.Codforn, r.codforn))
+  where r.Anolanc = :Anolanc
+    and r.Numlanc = :Numlanc
+  into
+      Empresa
+    , Fornecedor
+    , Historico
+    , Ano_compra
+    , Num_compra
+    , tipo_despesa;
+
+  Historico = coalesce(:Historico, 'PAGTO. DA DUPLICATA No. ' || :Anolanc || '/' || :Numlanc || ' P' || :Seq);
+
+  -- Buscar Numero do Caixa Aberto
+  Select
+      cx.Ano_caixa
+    , cx.Num_caixa
+    , cx.Conta_corrente
+  from GET_CAIXA_ABERTO(:Empresa, :Usuario, :Data_pagto, :Forma_pagto) cx
+  into
+      Ano_caixa
+    , Num_caixa
+    , Ccr_caixa;
+
+  -- Inserir Movimento Caixa
+  Insert Into TBCAIXA_MOVIMENTO (
+      Ano
+    , Numero
+    , Caixa_ano
+    , Caixa_num
+    , Conta_corrente
+    , Forma_pagto
+    , Datahora
+    , Tipo
+    , Tipo_Despesa
+    , Historico
+    , Valor
+    , Situacao
+    , Venda_ano
+    , Venda_num
+    , Cliente
+    , Compra_ano
+    , Compra_num
+    , Empresa
+    , Fornecedor
+    , Usuario
+    , Apagar_ano
+    , Apagar_num
+  ) values (
+      Extract(Year from :Data_pagto)
+    , Null
+    , :Ano_caixa
+    , :Num_caixa
+    , :Ccr_caixa
+    , :Forma_pagto
+    , :Data_pagto
+    , 'D'
+    , :tipo_despesa
+    , :Historico
+    , :Valor_baixa
+    , 1
+    , Null
+    , Null
+    , Null
+    , :Ano_compra
+    , :Num_compra
+    , :Empresa
+    , :Fornecedor
+    , :Usuario
+    , :Anolanc
+    , :Numlanc
+  );
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 10:00:42 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_QUANTIDADE_D3'
+where (RDB$FIELD_NAME = 'QTDE') and
+(RDB$RELATION_NAME = 'TBAPROPRIACAO_ALMOX_ITEM')
+;
+
+
+
+
+/*------ SYSDBA 20/01/2015 10:32:42 --------*/
+
+ALTER TABLE TBESTOQUE_ALMOX
+    ADD ID DMN_VCHAR_30_NN;
+
+COMMENT ON COLUMN TBESTOQUE_ALMOX.ID IS
+'Identificador Unico (Guid)';
+
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+GEN_UUID.
+At line 1, column 18.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+GEN_UUID.
+At line 1, column 18.
+
+*/
+
+/*!!! Error occured !!!
+Invalid data type, length, or value.
+function GEN_UUID could not be matched.
+
+*/
+
+/*!!! Error occured !!!
+Invalid data type, length, or value.
+function GEN_UUID could not be matched.
+
+*/
+
+
+
+/*------ SYSDBA 20/01/2015 10:40:09 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure GET_GUID_UUID_HEX
+returns (
+    REAL_UUID char(16) character set OCTETS,
+    HEX_UUID varchar(32))
+as
+declare variable I integer;
+declare variable C integer;
+begin
+
+  real_uuid = gen_uuid();
+  hex_uuid  = '';
+
+  i = 0;
+
+  while (:i < 16) do
+  begin
+    c = ascii_val(substring(real_uuid from i + 1 for 1));
+
+    if (:c < 0) then
+      c = 256 + :c;
+
+    hex_uuid = :hex_uuid ||
+      substring('0123456789abcdef' from bin_shr(:c, 4)  + 1 for 1) ||
+      substring('0123456789abcdef' from bin_and(:c, 15) + 1 for 1);
+
+    i = :i + 1;
+  end
+
+  suspend;
+
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE GET_GUID_UUID_HEX TO "PUBLIC";
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 1, column 10.
+GET_GUID_UUID_HEX.
+
+*/
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 3, column 1.
+Select.
+
+*/
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 3, column 1.
+Select.
+
+*/
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 3, column 1.
+Select.
+
+*/
+
+
+
+/*------ SYSDBA 20/01/2015 10:50:20 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_GUID_UUID_HEX
+returns (
+    REAL_UUID char(16) character set OCTETS,
+    HEX_UUID varchar(32),
+    HEX_UUID_FORMAT varchar(38))
+as
+declare variable I integer;
+declare variable C integer;
+begin
+
+  real_uuid = gen_uuid();
+  hex_uuid  = '';
+
+  i = 0;
+
+  while (:i < 16) do
+  begin
+    c = ascii_val(substring(real_uuid from i + 1 for 1));
+
+    if (:c < 0) then
+      c = 256 + :c;
+
+    hex_uuid = :hex_uuid ||
+      substring('0123456789abcdef' from bin_shr(:c, 4)  + 1 for 1) ||
+      substring('0123456789abcdef' from bin_and(:c, 15) + 1 for 1);
+
+    i = :i + 1;
+  end
+
+  /*                        8   -  4 -  4 - 4  -      12       */
+  /* Formato exemplo: '{5B86B088-F14F-4872-B876-977FBEF9CB91}' */
+  hex_uuid_format = '{' ||                        -- 8
+    substring(:hex_uuid from  1 for  8) || '-' || -- 4
+    substring(:hex_uuid from  9 for  4) || '-' || -- 4
+    substring(:hex_uuid from 13 for  4) || '-' || -- 4
+    substring(:hex_uuid from 17 for 12) || '}';   -- 12
+
+  hex_uuid_format = upper(:hex_uuid_format);
+
+  suspend;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 10:53:26 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_GUID_UUID_HEX
+returns (
+    REAL_UUID char(16) character set OCTETS,
+    HEX_UUID varchar(32),
+    HEX_UUID_FORMAT varchar(38))
+as
+declare variable I integer;
+declare variable C integer;
+begin
+
+  real_uuid = gen_uuid();
+  hex_uuid  = '';
+
+  i = 0;
+
+  while (:i < 16) do
+  begin
+    c = ascii_val(substring(real_uuid from i + 1 for 1));
+
+    if (:c < 0) then
+      c = 256 + :c;
+
+    hex_uuid = :hex_uuid ||
+      substring('0123456789abcdef' from bin_shr(:c, 4)  + 1 for 1) ||
+      substring('0123456789abcdef' from bin_and(:c, 15) + 1 for 1);
+
+    i = :i + 1;
+  end
+
+  /*                        8   -  4 -  4 - 4  -      12       */
+  /* Formato exemplo: '{5B86B088-F14F-4872-B876-977FBEF9CB91}' */
+  hex_uuid_format = '{' ||
+    substring(:hex_uuid from  1 for  8) || '-' || -- 8
+    substring(:hex_uuid from  9 for  4) || '-' || -- 4
+    substring(:hex_uuid from 13 for  4) || '-' || -- 4
+    substring(:hex_uuid from 17 for  4) || '-' || -- 4
+    substring(:hex_uuid from 21 for 12) || '}';   -- 12
+
+  hex_uuid_format = upper(:hex_uuid_format);
+
+  suspend;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 10:55:35 --------*/
+
+CREATE DOMAIN DMN_GUID_32 AS
+VARCHAR(32);CREATE DOMAIN DMN_GUID_32_NN AS
+VARCHAR(32)
+NOT NULL;CREATE DOMAIN DMN_GUID_38 AS
+VARCHAR(38);CREATE DOMAIN DMN_GUID_38_NN AS
+VARCHAR(38)
+NOT NULL;
+
+
+/*------ SYSDBA 20/01/2015 10:56:10 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_GUID_UUID_HEX
+returns (
+    REAL_UUID char(16) character set OCTETS,
+    HEX_UUID varchar(32),
+    HEX_UUID_FORMAT varchar(38))
+as
+declare variable I integer;
+declare variable C integer;
+begin
+
+  real_uuid = gen_uuid();
+  hex_uuid  = '';
+
+  i = 0;
+
+  while (:i < 16) do
+  begin
+    c = ascii_val(substring(real_uuid from i + 1 for 1));
+
+    if (:c < 0) then
+      c = 256 + :c;
+
+    hex_uuid = :hex_uuid ||
+      substring('0123456789abcdef' from bin_shr(:c, 4)  + 1 for 1) ||
+      substring('0123456789abcdef' from bin_and(:c, 15) + 1 for 1);
+
+    i = :i + 1;
+  end
+
+  /*                        8   -  4 -  4 - 4  -      12       */
+  /* Formato exemplo: '{5B86B088-F14F-4872-B876-977FBEF9CB91}' */
+  hex_uuid_format = '{' ||
+    substring(:hex_uuid from  1 for  8) || '-' || -- 8
+    substring(:hex_uuid from  9 for  4) || '-' || -- 4
+    substring(:hex_uuid from 13 for  4) || '-' || -- 4
+    substring(:hex_uuid from 17 for  4) || '-' || -- 4
+    substring(:hex_uuid from 21 for 12) || '}';   -- 12
+
+  hex_uuid        = upper(:hex_uuid);
+  hex_uuid_format = upper(:hex_uuid_format);
+
+  suspend;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 10:57:02 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_GUID_UUID_HEX
+returns (
+    REAL_UUID char(16) character set OCTETS,
+    HEX_UUID varchar(32),
+    HEX_UUID_FORMAT varchar(38))
+as
+declare variable I integer;
+declare variable C integer;
+begin
+
+  real_uuid = gen_uuid();
+  hex_uuid  = '';
+
+  i = 0;
+
+  while (:i < 16) do
+  begin
+    c = ascii_val(substring(real_uuid from i + 1 for 1));
+
+    if (:c < 0) then
+      c = 256 + :c;
+
+    hex_uuid = :hex_uuid ||
+      substring('0123456789abcdef' from bin_shr(:c,  4) + 1 for 1) ||
+      substring('0123456789abcdef' from bin_and(:c, 15) + 1 for 1);
+
+    i = :i + 1;
+  end
+
+  /*                        8   -  4 -  4 - 4  -      12       */
+  /* Formato exemplo: '{5B86B088-F14F-4872-B876-977FBEF9CB91}' */
+  hex_uuid_format = '{' ||
+    substring(:hex_uuid from  1 for  8) || '-' || -- 8
+    substring(:hex_uuid from  9 for  4) || '-' || -- 4
+    substring(:hex_uuid from 13 for  4) || '-' || -- 4
+    substring(:hex_uuid from 17 for  4) || '-' || -- 4
+    substring(:hex_uuid from 21 for 12) || '}';   -- 12
+
+  hex_uuid        = upper(:hex_uuid);
+  hex_uuid_format = upper(:hex_uuid_format);
+
+  suspend;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 10:59:01 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_GUID_38_NN'
+where (RDB$FIELD_NAME = 'ID') and
+(RDB$RELATION_NAME = 'TBESTOQUE_ALMOX')
+;
+
+
+
+
+/*------ SYSDBA 20/01/2015 11:00:35 --------*/
+
+COMMENT ON COLUMN TBESTOQUE_ALMOX.ID IS
+'Identificador Unico (GUID)';
+
+
+
+
+/*------ SYSDBA 20/01/2015 11:00:57 --------*/
+
+ALTER TABLE TBESTOQUE_ALMOX
+ADD CONSTRAINT UNQ_TBESTOQUE_ALMOX
+UNIQUE (ID);
+
+
+
+
+/*------ SYSDBA 20/01/2015 11:02:51 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_estoque_almox_guid for tbestoque_almox
+active before insert position 0
+AS
+begin
+  Select
+    g.hex_uuid_format
+  from GET_GUID_UUID_HEX g
+  Into
+    new.id;
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_ESTOQUE_ALMOX_GUID IS 'Trigger Identificar Estoque Apropriado.
+    
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por gerar um identificador unico no padrao GUID para cada nova apropriacao de estoque inserida na
+tabela.';
+
+
+
+
+/*------ SYSDBA 20/01/2015 11:03:40 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_estoque_almox_guid for tbestoque_almox
+active before insert position 0
+AS
+begin
+  Select
+    g.hex_uuid_format
+  from GET_GUID_UUID_HEX g
+  Into
+    new.id;
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_ESTOQUE_ALMOX_GUID IS 'Trigger Identificar Estoque Apropriado.
+    
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por gerar um identificador unico no padrao GUID para cada nova apropriacao de estoque inserida na
+tabela.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/01/2014 - IMR :
+        * COnstrucao dos objetos relacionados e documentacao.';
+
+
+
+
+/*------ SYSDBA 20/01/2015 11:11:05 --------*/
+
+CREATE SEQUENCE GEN_REQUISICAO_ALMOX_2015;
+
+CREATE SEQUENCE GEN_REQUISICAO_ALMOX_2016;
+
+CREATE SEQUENCE GEN_REQUISICAO_ALMOX_2017;
+
+CREATE SEQUENCE GEN_REQUISICAO_ALMOX_2018;
+
+CREATE SEQUENCE GEN_REQUISICAO_ALMOX_2019;
+
+CREATE SEQUENCE GEN_REQUISICAO_ALMOX_2020;
+
+
+
+
+/*------ SYSDBA 20/01/2015 11:13:48 --------*/
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_ALMOX_2015 IS 'Sequenciador de requisicoes ao almoxarifado para 2015';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_ALMOX_2016 IS 'Sequenciador de requisicoes ao almoxarifado para 2016';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_ALMOX_2017 IS 'Sequenciador de requisicoes ao almoxarifado para 2017';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_ALMOX_2018 IS 'Sequenciador de requisicoes ao almoxarifado para 2018';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_ALMOX_2019 IS 'Sequenciador de requisicoes ao almoxarifado para 2019';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_ALMOX_2020 IS 'Sequenciador de requisicoes ao almoxarifado para 2020';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_2015 IS 'Sequenciador de requisicoes de clientes para 2015';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_2016 IS 'Sequenciador de requisicoes de clientes para 2016';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_2017 IS 'Sequenciador de requisicoes de clientes para 2017';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_2018 IS 'Sequenciador de requisicoes de clientes para 2018';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_2019 IS 'Sequenciador de requisicoes de clientes para 2019';
+
+COMMENT ON SEQUENCE GEN_REQUISICAO_2020 IS 'Sequenciador de requisicoes de clientes para 2020';
+
+
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+CREATE TABLE TBREQUISICAO_ALMOX(
+  ANO INTEGER NOT NULL,
+  CONTROLE INTEGER NOT NULL,
+  NUMERO DMN_VCHAR_20_NN,
+  EMPRESA INTEGER,
+  TIPO DMN_SMALLINT_NN DEFAULT 0,
+  CCUSTO_ORIGEM DMN_INTEGER_NN,
+  CCUSTO_DESTINO DMN_INTEGER_NN,
+  INSERCAO_DATA DMN_DATETIME,
+  INSERCAO_USUARIO DMN_USUARIO,
+  DATA_EMISSAO DMN_DATE,
+  REQUISITANTE DMN_USUARIO,
+  COMPETENCIA DMN_INTEGER_N,
+  STATUS DMN_STATUS DEFAULT 0,
+  MOTIVO DMN_TEXTO,
+  OBS DMN_TEXTO,
+  VALOR_TOTAL DMN_MONEY,
+  ATENDIMENTO_USUARIO DMN_USUARIO,
+  ATENDIMENTO_DATA DMN_DATETIME,
+  CANCEL_USUARIO DMN_USUARIO,
+  CANCEL_DATA DMN_DATETIME,
+  CANCEL_MOTIVO DMN_TEXTO);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX ADD CONSTRAINT PK_TBREQUISICAO_ALMOX PRIMARY KEY (ANO, CONTROLE);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_CCO FOREIGN KEY (CCUSTO_DESTINO) REFERENCES
+TBCENTRO_CUSTO (CODIGO);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_CCD FOREIGN KEY (CCUSTO_DESTINO) REFERENCES
+TBCENTRO_CUSTO (CODIGO);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_EMP FOREIGN KEY (EMPRESA) REFERENCES
+TBEMPRESA (CNPJ);
+
+ALTER TABLE TBREQUISICAO_ALMOX ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_USI FOREIGN KEY (INSERCAO_USUARIO) REFERENCES
+TBUSERS (NOME);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_USR FOREIGN KEY (REQUISITANTE) REFERENCES
+TBUSERS (NOME);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_CMP
+ON TBREQUISICAO_ALMOX (COMPETENCIA);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_STA
+ON TBREQUISICAO_ALMOX (STATUS);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_TIP
+ON TBREQUISICAO_ALMOX (TIPO);
+
+/*------ 20/01/2015 13:26:13 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_DAT
+ON TBREQUISICAO_ALMOX (DATA_EMISSAO);
+
+
+/*------ SYSDBA 20/01/2015 13:27:54 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_CNPJ_NN'
+where (RDB$FIELD_NAME = 'EMPRESA') and
+(RDB$RELATION_NAME = 'TBREQUISICAO_ALMOX')
+;
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:28:16 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX
+ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_EMP
+FOREIGN KEY (EMPRESA)
+REFERENCES TBEMPRESA(CNPJ);
+
+
+
+/*------ 20/01/2015 13:28:59 --------*/
+
+CREATE TABLE TBREQUISICAO_ALMOX_ITEM(
+  ANO DMN_SMALLINT_NN NOT NULL,
+  CONTROLE DMN_BIGINT_NN NOT NULL,
+  ITEM DMN_SMALLINT_NN NOT NULL,
+  PRODUTO DMN_VCHAR_10_KEY,
+  QTDE DMN_QUANTIDADE_D3 DEFAULT 1,
+  UNIDADE DMN_SMALLINT_N,
+  CUSTO DMN_MONEY_4 DEFAULT 0.0,
+  FRACIONADOR DMN_PERCENTUAL_3,
+  TOTAL DMN_MONEY DEFAULT 0.0,
+  STATUS DMN_STATUS DEFAULT 0,
+  LOTE_ATENDIMENTO DMN_GUID_38);
+
+/*------ 20/01/2015 13:28:59 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM ADD CONSTRAINT PK_TBREQUISICAO_ALMOX_ITEM PRIMARY KEY (ANO, CONTROLE, ITEM);
+
+/*------ 20/01/2015 13:28:59 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_ITEM FOREIGN KEY (ANO, CONTROLE) REFERENCES
+TBREQUISICAO_ALMOX (ANO, CONTROLE) ON UPDATE CASCADE ON DELETE CASCADE;
+
+/*------ 20/01/2015 13:28:59 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_ITM_U FOREIGN KEY (UNIDADE) REFERENCES
+TBUNIDADEPROD (UNP_COD);
+
+/*------ 20/01/2015 13:28:59 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_ITM_P FOREIGN KEY (PRODUTO) REFERENCES
+TBPRODUTO (COD);GRANT ALL ON TBREQUISICAO_ALMOX_ITEM TO "PUBLIC";
+GRANT ALL ON TBREQUISICAO_ALMOX TO "PUBLIC";
+
+
+
+/*------ SYSDBA 20/01/2015 13:29:45 --------*/
+
+COMMENT ON TABLE TBREQUISICAO_ALMOX IS 'Tabela Requisicao Produtos (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   05/01/2015
+
+Tabela responsavel por armazenar todos os registros de requisicoes de materiais/equipamentos ao estoque lancadas pelo
+Sistema de Gestao Industrial.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    05/01/2014 - IMR :
+        * Concepcao do modelo.
+
+    20/01/2014 - IMR :
+        * Documentacao da tabela.';
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:29:52 --------*/
+
+COMMENT ON TABLE TBREQUISICAO_ALMOX_ITEM IS 'Tabela Itens da Requisicao ao Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Tabela responsavel por armazenar todos os registros de itens (produtos) das requisicoes ao estoque lancados no Sistema
+de Gestao Industrial.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/01/2014 - IMR :
+        * Documentacao da tabela.';
+
+
+
+/*------ 20/01/2015 13:31:26 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_ITEM_STA
+ON TBREQUISICAO_ALMOX_ITEM (STATUS);
+
+/*------ 20/01/2015 13:31:26 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_ITEM_LOT
+ON TBREQUISICAO_ALMOX_ITEM (LOTE_ATENDIMENTO);
+
+
+/*------ SYSDBA 20/01/2015 13:33:47 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_requisicao_almox_codigo for tbrequisicao_almox
+active before insert position 0
+AS
+begin
+  if (new.controle is null) then
+    if ( new.ano = 2015 ) then
+      new.controle = gen_id(GEN_REQUISICAO_ALMOX_2015, 1);
+    else
+    if ( new.ano = 2016 ) then
+      new.controle = gen_id(GEN_REQUISICAO_ALMOX_2016, 1);
+    else
+    if ( new.ano = 2017 ) then
+      new.controle = gen_id(GEN_REQUISICAO_ALMOX_2017, 1);
+    else
+    if ( new.ano = 2018 ) then
+      new.controle = gen_id(GEN_REQUISICAO_ALMOX_2018, 1);
+    else
+    if ( new.ano = 2019 ) then
+      new.controle = gen_id(GEN_REQUISICAO_ALMOX_2019, 1);
+    else
+    if ( new.ano = 2020 ) then
+      new.controle = gen_id(GEN_REQUISICAO_ALMOX_2020, 1);
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_REQUISICAO_ALMOX_CODIGO IS 'Trigger Nova Requisicao ao Estoque (Almoxarifado).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por gerar um sequencial unico para cada novo registro de requisicao ao estoque no ano.';
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:35:41 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_requisicao_almox_compet for tbrequisicao_almox
+active before insert position 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = right('0000' || extract(year from new.data_emissao), 4) || right('00' || extract(month from new.data_emissao), 2);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_REQUISICAO_ALMOX_COMPET IS 'Trigger Competencia Requisicao Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por identificar a competencia da requisicao ao estoque quando esta nao for informada, baseando-se na
+data de emissao.';
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:36:23 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_compet for tbrequisicao_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = right('0000' || extract(year from new.data_emissao), 4) || right('00' || extract(month from new.data_emissao), 2);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:37:37 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_compet for tbrequisicao_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = right('0000' || extract(year from new.atendimento_data), 4) || right('00' || extract(month from new.atendimento_data), 2);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_REQUISICAO_ALMOX_COMPET IS 'Trigger Competencia Requisicao Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por identificar a competencia da requisicao ao estoque quando esta nao for informada, baseando-se na
+data de atendimento.';
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:41:56 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_compet for tbrequisicao_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+  declare variable data DMN_DATE_NN;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    data = coalesce(cast(new.atendimento_data as Date), new.data_emissao, cast(new.insercao_data as Date), current_date);
+
+    competencia = right('0000' ||
+      extract(year  from :data), 4) || right('00' ||
+      extract(month from :data), 2);
+
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:49:21 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM DROP CONSTRAINT FK_TBREQUISICAO_ALMOX_ITEM;
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:49:28 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX DROP CONSTRAINT PK_TBREQUISICAO_ALMOX;
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:49:39 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_BIGINT_NN'
+where (RDB$FIELD_NAME = 'CONTROLE') and
+(RDB$RELATION_NAME = 'TBREQUISICAO_ALMOX')
+;
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:49:49 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_SMALLINT_NN'
+where (RDB$FIELD_NAME = 'ANO') and
+(RDB$RELATION_NAME = 'TBREQUISICAO_ALMOX')
+;
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:49:58 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX
+ADD CONSTRAINT PK_TBREQUISICAO_ALMOX
+PRIMARY KEY (ANO,CONTROLE);
+
+
+
+
+/*------ SYSDBA 20/01/2015 13:50:57 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM
+ADD CONSTRAINT FK_TBREQUISICAO_ALMOX_ITEM
+FOREIGN KEY (ANO,CONTROLE)
+REFERENCES TBREQUISICAO_ALMOX(ANO,CONTROLE)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 20/01/2015 14:02:56 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_PERCENTUAL_3'
+where (RDB$FIELD_NAME = 'FRACIONADOR') and
+(RDB$RELATION_NAME = 'TBESTOQUE_ALMOX')
+;
+
+
+
+
+/*------ SYSDBA 20/01/2015 14:48:22 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa    varchar(18);
+  declare variable cc_origem  Integer;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.produto
+        , i.qtde
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do Centro de custo de origem
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 14:51:42 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM
+    ADD QTDE_ATENDIDA DMN_QUANTIDADE_D3 DEFAULT 0;
+
+COMMENT ON COLUMN TBREQUISICAO_ALMOX_ITEM.QTDE_ATENDIDA IS
+'Quantidade fracionada atendida';
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter ANO position 1;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter CONTROLE position 2;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter ITEM position 3;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter PRODUTO position 4;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter QTDE position 5;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter QTDE_ATENDIDA position 6;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter UNIDADE position 7;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter CUSTO position 8;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter FRACIONADOR position 9;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter TOTAL position 10;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter STATUS position 11;
+
+alter table TBREQUISICAO_ALMOX_ITEM
+alter LOTE_ATENDIMENTO position 12;
+
+
+
+
+/*------ SYSDBA 20/01/2015 14:55:58 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa   varchar(18);
+  declare variable cc_origem Integer;
+  declare variable item      DMN_SMALLINT_NN;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.produto
+        , i.qtde_atendida
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status = 1 /* Aguardando */
+      into
+          item
+        , produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do Centro de custo de origem
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+      -- Marcar item/produto como atendido
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+        i.status = 2 /* Atendido */
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status   = 1; /* Aguardando */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:00:27 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa   varchar(18);
+  declare variable cc_origem Integer;
+  declare variable item      DMN_SMALLINT_NN;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.produto
+        , i.qtde_atendida
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status = 1 /* Aguardando */
+      into
+          item
+        , produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do Centro de custo de origem
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+      -- Marcar item/produto como atendido
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+        i.status = 2 /* Atendido */
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status   = 1; /* Aguardando */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_REQUISICAO_ALMOX_ESTOQUE IS 'Trigger Requisicao ao Estoque (Atendimento do Almoxarifado).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por executar o processo de baixa do estoque do centro de custo de destino (atendente) e, quando o
+tipo for transferencia de estoque, repasse para o estoque do centro de custo de origem (requisitante).
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/01/2014 - IMR :
+        * Atualizacao do trigger (Otimizacao).';
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:27:51 --------*/
+
+ALTER TABLE TBREQUISICAO_ALMOX_ITEM
+    ADD LOTE_REQUISITANTE DMN_GUID_38;
+
+COMMENT ON COLUMN TBREQUISICAO_ALMOX_ITEM.LOTE_REQUISITANTE IS
+'Identificacao do lote do requisitante';
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:31:44 --------*/
+
+DROP INDEX IDX_TBREQUISICAO_ALMOX_ITEM_LOT;
+
+
+
+/*------ 20/01/2015 15:32:01 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_ITEM_LTA
+ON TBREQUISICAO_ALMOX_ITEM (LOTE_ATENDIMENTO);
+
+/*------ 20/01/2015 15:32:01 --------*/
+
+CREATE INDEX IDX_TBREQUISICAO_ALMOX_ITEM_LTR
+ON TBREQUISICAO_ALMOX_ITEM (LOTE_REQUISITANTE);
+
+
+/*------ SYSDBA 20/01/2015 15:33:11 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa   varchar(18);
+  declare variable cc_origem Integer;
+  declare variable item      DMN_SMALLINT_NN;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.produto
+        , i.qtde_atendida
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status = 1 /* Aguardando */
+      into
+          item
+        , produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do Centro de custo de origem
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_guid;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+            , id
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+            , :lote_guid
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+      -- Marcar item/produto como atendido
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+          i.status            = 2 /* Atendido */
+        , i.lote_requisitante = :lote_guid
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status   = 1; /* Aguardando */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:35:18 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa   varchar(18);
+  declare variable cc_origem Integer;
+  declare variable item      DMN_SMALLINT_NN;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.produto
+        , i.qtde_atendida
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status = 1 /* Aguardando */
+      into
+          item
+        , produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do centro de custo atendente
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_guid;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+            , id
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+            , :lote_guid
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+      -- Marcar item/produto como atendido
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+          i.status            = 2 /* Atendido */
+        , i.lote_requisitante = :lote_guid
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status   = 1; /* Aguardando */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:43:08 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_requisicao_almox_cancelado for tbrequisicao_almox
+active after update position 3
+AS
+  declare variable item        DMN_SMALLINT_NN;
+  declare variable lote_atend  DMN_GUID_38;
+  declare variable lote_requi  DMN_GUID_38;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status = 4) and (new.status = 5) ) then /* De atendida (4) para cancelada (5) */
+  begin
+
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.qtde_atendida
+        , i.lote_atendimento
+        , i.lote_requisitante
+      from TBREQUISICAO_ALMOX_ITEM i
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status in (2, 3) /* Atendido e/ou Enregue */
+        and i.qtde_atendida > 0
+      into
+          item
+        , quantidade
+        , lote_atend
+        , lote_requi
+    do
+    begin
+
+       -- Baixar estoque do Centro de custo requisitante caso o movimento tenha sido de Transferencia de Estoque
+      if ( :tipo_requisicao = 2 ) then
+      begin
+        Update TBESTOQUE_ALMOX e Set
+          e.qtde = coalesce(e.qtde, 0.0) - :quantidade
+        where e.id = :lote_requi;
+      end
+
+       -- Devolver o estoque do Centro de custo atendente
+      Update TBESTOQUE_ALMOX e Set
+        e.qtde = coalesce(e.qtde, 0.0) + :quantidade
+      where e.id = :lote_atend;
+
+      -- Marcar item/produto como cancelado
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+        i.status = 4 /* Cancelado */
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status in (2, 3); /* Atendido e/ou Enregue */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:49:30 --------*/
+
+DROP TRIGGER TG_REQUISICAO_ALMOX_CANCELADO;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_cancelar for tbrequisicao_almox
+active after update position 3
+AS
+  declare variable item        DMN_SMALLINT_NN;
+  declare variable lote_atend  DMN_GUID_38;
+  declare variable lote_requi  DMN_GUID_38;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status = 4) and (new.status = 5) ) then /* De atendida (4) para cancelada (5) */
+  begin
+
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.qtde_atendida
+        , i.lote_atendimento
+        , i.lote_requisitante
+      from TBREQUISICAO_ALMOX_ITEM i
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status in (2, 3) /* Atendido e/ou Enregue */
+        and i.qtde_atendida > 0
+      into
+          item
+        , quantidade
+        , lote_atend
+        , lote_requi
+    do
+    begin
+
+       -- Baixar estoque do Centro de custo requisitante caso o movimento tenha sido de Transferencia de Estoque
+      if ( :tipo_requisicao = 2 ) then
+      begin
+        Update TBESTOQUE_ALMOX e Set
+          e.qtde = coalesce(e.qtde, 0.0) - :quantidade
+        where e.id = :lote_requi;
+      end
+
+       -- Devolver o estoque do Centro de custo atendente
+      Update TBESTOQUE_ALMOX e Set
+        e.qtde = coalesce(e.qtde, 0.0) + :quantidade
+      where e.id = :lote_atend;
+
+      -- Marcar item/produto como cancelado
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+        i.status = 4 /* Cancelado */
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status in (2, 3); /* Atendido e/ou Enregue */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 15:51:15 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_cancelar for tbrequisicao_almox
+active after update position 3
+AS
+  declare variable item        DMN_SMALLINT_NN;
+  declare variable lote_atend  DMN_GUID_38;
+  declare variable lote_requi  DMN_GUID_38;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status = 4) and (new.status = 5) ) then /* De atendida (4) para cancelada (5) */
+  begin
+
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.qtde_atendida
+        , i.lote_atendimento
+        , i.lote_requisitante
+      from TBREQUISICAO_ALMOX_ITEM i
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status in (2, 3) /* Atendido e/ou Enregue */
+        and i.qtde_atendida > 0
+      into
+          item
+        , quantidade
+        , lote_atend
+        , lote_requi
+    do
+    begin
+
+       -- Baixar estoque do Centro de custo requisitante caso o movimento tenha sido de Transferencia de Estoque
+      if ( :tipo_requisicao = 2 ) then
+      begin
+        Update TBESTOQUE_ALMOX e Set
+          e.qtde = coalesce(e.qtde, 0.0) - :quantidade
+        where e.id = :lote_requi;
+      end
+
+       -- Devolver o estoque do Centro de custo atendente
+      Update TBESTOQUE_ALMOX e Set
+        e.qtde = coalesce(e.qtde, 0.0) + :quantidade
+      where e.id = :lote_atend;
+
+      -- Marcar item/produto como cancelado
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+        i.status = 4 /* Cancelado */
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status in (2, 3); /* Atendido e/ou Enregue */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_REQUISICAO_ALMOX_CANCELAR IS 'Trigger Remover Estoque de Requisicao Atendida (Cancelamento).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   20/01/2015
+
+Trigger responsavel por executar o processo de baixa do estoque do centro de custo de origem (requisitante) e, quando o
+tipo for transferencia de estoque, devolucao de estoque do centro de custo de destino (atendente).
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/01/2014 - IMR :
+        * Atualizacao do trigger (Otimizacao).';
+
+
+
+
+/*------ SYSDBA 20/01/2015 16:36:43 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa   varchar(18);
+  declare variable cc_origem Integer;
+  declare variable item      DMN_SMALLINT_NN;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.produto
+        , i.qtde_atendida
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento) -- Lote identificado pela aplicacao
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status = 1 /* Aguardando */
+      into
+          item
+        , produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do centro de custo atendente
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_guid;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+            , id
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+            , :lote_guid
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+      -- Marcar item/produto como atendido
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+          i.status            = 2 /* Atendido */
+        , i.lote_requisitante = :lote_guid
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status   = 1; /* Aguardando */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 16:38:27 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_estoque for tbrequisicao_almox
+active after update position 2
+AS
+  declare variable empresa   varchar(18);
+  declare variable cc_origem Integer;
+  declare variable item      DMN_SMALLINT_NN;
+  declare variable produto varchar(10);
+  declare variable lote        DMN_INTEGER_N;
+  declare variable lote_guid   DMN_GUID_38;
+  declare variable data_fabricacao DMN_DATE;
+  declare variable data_validade   DMN_DATE;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable custo_medio     DMN_MONEY;
+  declare variable tipo_requisicao DMN_SMALLINT_NN;
+begin
+  if ( (old.status <> new.status) and (new.status = 4) ) then /* Atendida */
+  begin
+
+    empresa    = new.empresa;
+    cc_origem  = new.ccusto_origem;  /* Requisitante */
+    tipo_requisicao = new.tipo;
+
+    -- Listar Produtos requisitados ao almoxarifado
+    for
+      Select
+          i.item
+        , i.produto
+        , i.qtde_atendida
+        , e.lote
+        , e.id
+        , e.data_fabricacao
+        , e.data_validade
+        , coalesce(e.qtde, 0)
+        , coalesce(e.custo_medio, 0)
+        , coalesce(nullif(e.fracionador, 0), 1)
+      from TBREQUISICAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.cod = i.produto)
+        inner join TBESTOQUE_ALMOX e on (e.id = i.lote_atendimento) -- Lote identificado pela aplicacao
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.status = 1 /* Aguardando */
+      into
+          item
+        , produto
+        , quantidade
+        , lote
+        , lote_guid
+        , data_fabricacao
+        , data_validade
+        , estoque
+        , custo_medio
+        , fracionador
+    do
+    begin
+
+      estoque     = (:estoque - :quantidade);
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque do centro de custo atendente
+      Update TBESTOQUE_ALMOX e Set
+          e.qtde = :estoque
+      where e.id = :lote_guid;
+
+      lote_guid = null;
+
+      if ( :tipo_requisicao = 2 ) then /* Transferencia de estoque */
+      begin
+
+        -- Verificar se ja existe estoque para o Centro de Custo requisitante
+        Select
+            ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :cc_origem
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+        Into
+            lote_guid;
+
+        if ( :lote_guid is null ) then
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_guid;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , custo_medio
+            , id
+          ) values (
+              :empresa
+            , :cc_origem
+            , :produto
+            , :lote
+            , :data_fabricacao
+            , :data_validade
+            , :quantidade
+            , :fracionador
+            , :custo_medio
+            , :lote_guid
+          );
+            
+        end
+        else
+        begin
+
+          Update TBESTOQUE_ALMOX ea Set
+              ea.qtde = coalesce(ea.qtde, 0.0) + :quantidade
+          where ea.id = :lote_guid;
+
+        end 
+
+      end 
+
+      -- Marcar item/produto como atendido
+      Update TBREQUISICAO_ALMOX_ITEM i Set
+          i.status            = 2 /* Atendido */
+        , i.lote_requisitante = :lote_guid
+      where i.ano      = new.ano
+        and i.controle = new.controle
+        and i.item     = :item
+        and i.status   = 1; /* Aguardando */
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/01/2015 20:53:27 --------*/
+
+CREATE VIEW VW_TIPO_REQUISICAO_ALMOX(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Consumo Interno'     as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Consumo de Produção' as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Transferência de Estoque/Equipamentos' as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_TIPO_REQUISICAO_ALMOX TO "PUBLIC";
+
+
+
+/*------ SYSDBA 20/01/2015 20:54:11 --------*/
+
+COMMENT ON COLUMN TBREQUISICAO_ALMOX.TIPO IS
+'Tipo de requisicao:
+0 - Consumo Interno
+1 - Consumo de Producao
+2 - Transferencia de Estoque/Equipamentos';
+
+
+
+
+/*------ SYSDBA 20/01/2015 20:56:09 --------*/
+
+CREATE VIEW VW_STATUS_REQUISICAO_ALMOX (
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Em Edição' as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Aberta'    as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Enviada'   as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Recebida'  as Descricao from RDB$DATABASE Union
+Select 4 as Codigo , 'Atendida'  as Descricao from RDB$DATABASE Union
+Select 5 as Codigo , 'Cancelada' as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_STATUS_REQUISICAO_ALMOX TO "PUBLIC";
