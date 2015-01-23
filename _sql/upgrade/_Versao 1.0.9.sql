@@ -6683,3 +6683,410 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 23/01/2015 15:29:31 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ,
+    OUT_CENTRO_CUSTO DMN_INTEGER_N,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38,
+    PRODUTO DMN_VCHAR_10,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      coalesce(sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      ), 0.0)
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and (ri.status not in (2,  3, 4)) -- Atendido, Entregue e Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 23/01/2015 16:00:33 --------*/
+
+ALTER TABLE TBESTOQUE_ALMOX
+    ADD UNIDADE DMN_SMALLINT_N;
+
+COMMENT ON COLUMN TBESTOQUE_ALMOX.UNIDADE IS
+'Unidade de medida de consumo para o fracionador';
+
+alter table TBESTOQUE_ALMOX
+alter EMPRESA position 1;
+
+alter table TBESTOQUE_ALMOX
+alter CENTRO_CUSTO position 2;
+
+alter table TBESTOQUE_ALMOX
+alter PRODUTO position 3;
+
+alter table TBESTOQUE_ALMOX
+alter LOTE position 4;
+
+alter table TBESTOQUE_ALMOX
+alter DATA_FABRICACAO position 5;
+
+alter table TBESTOQUE_ALMOX
+alter DATA_VALIDADE position 6;
+
+alter table TBESTOQUE_ALMOX
+alter QTDE position 7;
+
+alter table TBESTOQUE_ALMOX
+alter FRACIONADOR position 8;
+
+alter table TBESTOQUE_ALMOX
+alter UNIDADE position 9;
+
+alter table TBESTOQUE_ALMOX
+alter CUSTO_MEDIO position 10;
+
+alter table TBESTOQUE_ALMOX
+alter ID position 11;
+
+
+
+/*------ 23/01/2015 16:01:04 --------*/
+
+ALTER TABLE TBESTOQUE_ALMOX ADD CONSTRAINT FK_TBESTOQUE_ALMOX_UND FOREIGN KEY (UNIDADE) REFERENCES
+TBUNIDADEPROD (UNP_COD);
+
+
+/*------ SYSDBA 23/01/2015 16:02:43 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_estoque for tbapropriacao_almox
+active after update position 2
+AS
+  declare variable empresa      varchar(18);
+  declare variable centro_custo Integer;
+  declare variable produto varchar(10);
+  declare variable lote    Integer;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable estoque_cc  DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable unidade_cns DMN_SMALLINT_N;
+  declare variable custo_produto DMN_MONEY;
+  declare variable custo_cc      DMN_MONEY;
+  declare variable custo_medio   DMN_MONEY;
+  declare variable estoque_unico Smallint;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 2) ) then /* Encerrada */
+  begin
+
+    -- Buscar FLAG de estoque unico
+    Select
+      cnf.estoque_unico_empresas
+    from TBCONFIGURACAO cnf
+    where cnf.empresa = new.empresa
+    Into
+      estoque_unico;
+
+    empresa       = new.empresa;
+    centro_custo  = new.centro_custo;
+    estoque_unico = coalesce(:estoque_unico, 0);
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.customedio, 0)
+        , coalesce(nullif(p.fracionador, 0), 1)
+        , p.codunidade_fracionada
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , custo_produto
+        , fracionador
+        , unidade_cns
+        , Movimentar
+    do
+    begin
+      lote = 0;
+
+      estoque     = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde = :Estoque
+      where (p.Cod     = :Produto)
+        and ((p.Codemp = :Empresa) or (:estoque_unico = 1)) ;
+
+      -- Verificar se ja existe estoque para o Centro de Custo
+      Select
+          ea.qtde
+        , ea.custo_medio
+      from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+      Into
+          estoque_cc
+        , custo_cc;
+
+      -- Gravar apropriacao de estoque para o centro de custo
+      if (not exists(
+        Select
+          ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+      )) then
+      begin
+
+        Insert Into TBESTOQUE_ALMOX (
+            empresa
+          , centro_custo
+          , produto
+          , lote
+          , data_fabricacao
+          , data_validade
+          , qtde
+          , fracionador
+          , unidade
+          , custo_medio
+        ) values (
+            :empresa
+          , :centro_custo
+          , :produto
+          , :lote
+          , null
+          , null
+          , :quantidade * :fracionador
+          , :fracionador
+          , :unidade_cns
+          , :custo_produto / :fracionador
+        );
+
+      end
+      else
+      begin
+
+        -- Calcular o Custo Medido para Apropriacao de Estoque
+        estoque_cc  = coalesce(:estoque_cc, 0.0);
+        custo_cc    = coalesce(:custo_cc, 0.0);
+        custo_medio = Case when ( (:estoque_cc <= 0) or (:custo_cc = 0.0) )
+            then :custo_produto
+            else ( ((:custo_cc * :estoque_cc) + (:custo_produto * :quantidade)) / 2 ) end;
+
+        Update TBESTOQUE_ALMOX ea Set
+            ea.qtde        = coalesce(ea.qtde, 0.0) + :quantidade
+          , ea.custo_medio = :custo_medio
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote;
+
+      end
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('SAIDA - APROPRIACAO DE ESTOQUE ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Custo médio no valor de R$ ' || :custo_produto, '.', ',')
+      );
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 23/01/2015 16:03:43 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ,
+    OUT_CENTRO_CUSTO DMN_INTEGER_N,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38,
+    PRODUTO DMN_VCHAR_10,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    UNIDADE DMN_SMALLINT_N,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , ea.unidade
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , ea.unidade
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , unidade
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      coalesce(sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      ), 0.0)
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and (ri.status not in (2,  3, 4)) -- Atendido, Entregue e Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
