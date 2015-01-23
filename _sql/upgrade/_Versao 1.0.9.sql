@@ -5341,3 +5341,1345 @@ Select 5 as Codigo , 'Cancelada' as Descricao from RDB$DATABASE
 ;
 
 GRANT ALL ON VW_STATUS_REQUISICAO_ALMOX TO "PUBLIC";
+
+
+
+/*------ SYSDBA 22/01/2015 11:47:04 --------*/
+
+COMMENT ON COLUMN TBREQUISICAO_ALMOX_ITEM.TOTAL IS
+'Custo Total
+
+* Quantidade x Custo quando o status do produto for 0 (Pendente) ou 1 (Aguardando)
+* Quantidade atendida x Custo quando o status do produto for 2 (Atendido) ou 3 (Entregue)
+* Zero quando o status do produto for 4 (Cancelado)';
+
+
+
+
+/*------ SYSDBA 22/01/2015 12:00:28 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_MONEY_4'
+where (RDB$FIELD_NAME = 'CUSTO_MEDIO') and
+(RDB$RELATION_NAME = 'TBESTOQUE_ALMOX')
+;
+
+
+
+
+/*------ SYSDBA 22/01/2015 12:17:02 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_REQUISICAO_ALMOX_CUSTO (
+    ANO DMN_SMALLINT_NN,
+    CONTROLE DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable CUSTO_MEDIO DMN_MONEY_4;
+declare variable SITUACAO DMN_STATUS;
+declare variable QTDE DMN_QUANTIDADE_D3;
+declare variable QTDE_ATEND DMN_QUANTIDADE_D3;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  -- 1. Buscar valores atualizados de custo para os produtos e atualiza-los na requisicao
+  for
+    Select
+        ri.item
+      , ri.qtde
+      , ri.qtde_atendida
+      , Cast(
+          Case when ep.custo_medio > 0
+            then ep.custo_medio
+            else p.customedio
+          end
+        as DMN_MONEY_4)
+      , ri.status
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+      inner join TBESTOQUE_ALMOX ep on (ep.id = ri.lote_atendimento)
+      inner join TBPRODUTO p on (p.cod = ri.produto)
+    where r.ano      = :ano
+      and r.controle = :controle
+      and r.empresa  = :empresa
+    Into
+        item
+      , qtde
+      , qtde_atend
+      , custo_medio
+      , situacao
+  do
+  begin
+
+    Update TBREQUISICAO_ALMOX_ITEM ri Set
+        ri.custo = :custo_medio
+      , ri.total =
+            Case :situacao
+              when 0 then :qtde * :custo_medio       -- Pendente
+              when 1 then :qtde * :custo_medio       -- Aguardando
+              when 2 then :qtde_atend * :custo_medio -- Atendido
+              when 3 then :qtde_atend * :custo_medio -- Entregue
+              else 0.0
+            end
+    where ri.ano      = :ano
+      and ri.controle = :controle
+      and ri.item     = :item;
+
+  end
+
+  -- 2. Atualizar o custo total da requisicao
+  Select
+    sum(ri.total)
+  from TBREQUISICAO_ALMOX_ITEM ri
+  where ri.ano      = :ano
+    and ri.controle = :controle
+  Into
+    valor_total;
+
+  Update TBREQUISICAO_ALMOX r Set
+    r.valor_total = :valor_total
+  where r.ano      = :ano
+    and r.controle = :controle
+    and r.empresa  = :empresa;
+
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE SET_REQUISICAO_ALMOX_CUSTO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 22/01/2015 12:19:28 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_REQUISICAO_ALMOX_CUSTO (
+    ANO DMN_SMALLINT_NN,
+    CONTROLE DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable CUSTO_MEDIO DMN_MONEY_4;
+declare variable SITUACAO DMN_STATUS;
+declare variable QTDE DMN_QUANTIDADE_D3;
+declare variable QTDE_ATEND DMN_QUANTIDADE_D3;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  -- 1. Buscar valores atualizados de custo para os produtos e atualiza-los na requisicao
+  for
+    Select
+        ri.item
+      , ri.qtde
+      , ri.qtde_atendida
+      , Cast(
+          Case when ep.custo_medio > 0
+            then ep.custo_medio
+            else p.customedio
+          end
+        as DMN_MONEY_4)
+      , ri.status
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+      inner join TBESTOQUE_ALMOX ep on (ep.id = ri.lote_atendimento)
+      inner join TBPRODUTO p on (p.cod = ri.produto)
+    where r.ano      = :ano
+      and r.controle = :controle
+      and r.empresa  = :empresa
+    Into
+        item
+      , qtde
+      , qtde_atend
+      , custo_medio
+      , situacao
+  do
+  begin
+
+    Update TBREQUISICAO_ALMOX_ITEM ri Set
+        ri.custo = :custo_medio
+      , ri.total =
+            Case :situacao
+              when 0 then :qtde * :custo_medio       -- Pendente
+              when 1 then :qtde * :custo_medio       -- Aguardando
+              when 2 then :qtde_atend * :custo_medio -- Atendido
+              when 3 then :qtde_atend * :custo_medio -- Entregue
+              else 0.0
+            end
+    where ri.ano      = :ano
+      and ri.controle = :controle
+      and ri.item     = :item;
+
+  end
+
+  -- 2. Atualizar o custo total da requisicao
+  Select
+    sum(ri.total)
+  from TBREQUISICAO_ALMOX_ITEM ri
+  where ri.ano      = :ano
+    and ri.controle = :controle
+  Into
+    valor_total;
+
+  Update TBREQUISICAO_ALMOX r Set
+    r.valor_total = :valor_total
+  where r.ano      = :ano
+    and r.controle = :controle
+    and r.empresa  = :empresa;
+
+end^
+
+SET TERM ; ^
+
+COMMENT ON PROCEDURE SET_REQUISICAO_ALMOX_CUSTO IS 'Stored Procedure Atualizar Custo Requisicao Almox.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   22/01/2015
+
+Procedimento de banco responsavel por atualizar os valores de custos das requisicoes de produtos feitas ao almoxarifado
+de acordo com sua situacao (status).
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    22/01/2014 - IMR :
+        * DOcumentacao.';
+
+
+
+
+/*------ SYSDBA 22/01/2015 12:19:57 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_REQUISICAO_ALMOX_CUSTO (
+    ANO DMN_SMALLINT_NN,
+    CONTROLE DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable CUSTO_MEDIO DMN_MONEY_4;
+declare variable SITUACAO DMN_STATUS;
+declare variable QTDE DMN_QUANTIDADE_D3;
+declare variable QTDE_ATEND DMN_QUANTIDADE_D3;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  -- 1. Buscar valores atualizados de custo para os produtos e atualiza-los na requisicao
+  for
+    Select
+        ri.item
+      , ri.qtde
+      , ri.qtde_atendida
+      , Cast(
+          Case when ep.custo_medio > 0.0
+            then ep.custo_medio
+            else p.customedio
+          end
+        as DMN_MONEY_4)
+      , ri.status
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+      inner join TBESTOQUE_ALMOX ep on (ep.id = ri.lote_atendimento)
+      inner join TBPRODUTO p on (p.cod = ri.produto)
+    where r.ano      = :ano
+      and r.controle = :controle
+      and r.empresa  = :empresa
+    Into
+        item
+      , qtde
+      , qtde_atend
+      , custo_medio
+      , situacao
+  do
+  begin
+
+    Update TBREQUISICAO_ALMOX_ITEM ri Set
+        ri.custo = :custo_medio
+      , ri.total =
+            Case :situacao
+              when 0 then :qtde * :custo_medio       -- Pendente
+              when 1 then :qtde * :custo_medio       -- Aguardando
+              when 2 then :qtde_atend * :custo_medio -- Atendido
+              when 3 then :qtde_atend * :custo_medio -- Entregue
+              else 0.0
+            end
+    where ri.ano      = :ano
+      and ri.controle = :controle
+      and ri.item     = :item;
+
+  end
+
+  -- 2. Atualizar o custo total da requisicao
+  Select
+    sum(ri.total)
+  from TBREQUISICAO_ALMOX_ITEM ri
+  where ri.ano      = :ano
+    and ri.controle = :controle
+  Into
+    valor_total;
+
+  Update TBREQUISICAO_ALMOX r Set
+    r.valor_total = :valor_total
+  where r.ano      = :ano
+    and r.controle = :controle
+    and r.empresa  = :empresa;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 12:22:45 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_REQUISICAO_ALMOX_CUSTO (
+    ANO DMN_SMALLINT_NN,
+    CONTROLE DMN_BIGINT_NN,
+    EMPRESA DMN_CNPJ_NN)
+as
+declare variable ITEM DMN_SMALLINT_NN;
+declare variable CUSTO_MEDIO DMN_MONEY_4;
+declare variable SITUACAO DMN_STATUS;
+declare variable QTDE DMN_QUANTIDADE_D3;
+declare variable QTDE_ATEND DMN_QUANTIDADE_D3;
+declare variable VALOR_TOTAL DMN_MONEY;
+begin
+  -- 1. Buscar valores atualizados de custo para os produtos e atualiza-los na requisicao
+  for
+    Select
+        ri.item
+      , ri.qtde
+      , ri.qtde_atendida
+      , Cast(
+          Case when ep.custo_medio > 0.0
+            then ep.custo_medio
+            else p.customedio
+          end
+        as DMN_MONEY_4)
+      , ri.status
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+      inner join TBESTOQUE_ALMOX ep on (ep.id = ri.lote_atendimento)
+      inner join TBPRODUTO p on (p.cod = ri.produto)
+    where r.ano      = :ano
+      and r.controle = :controle
+      and r.empresa  = :empresa
+    Into
+        item
+      , qtde
+      , qtde_atend
+      , custo_medio
+      , situacao
+  do
+  begin
+
+    Update TBREQUISICAO_ALMOX_ITEM ri Set
+        ri.custo = :custo_medio
+      , ri.total =
+            Case :situacao
+              when 0 then :qtde * :custo_medio       -- Pendente
+              when 1 then :qtde * :custo_medio       -- Aguardando
+              when 2 then :qtde_atend * :custo_medio -- Atendido
+              when 3 then :qtde_atend * :custo_medio -- Entregue
+              when 4 then 0.0                        -- Cancelado
+              else 0.0
+            end
+    where ri.ano      = :ano
+      and ri.controle = :controle
+      and ri.item     = :item;
+
+  end
+
+  -- 2. Atualizar o custo total da requisicao
+  Select
+    sum(ri.total)
+  from TBREQUISICAO_ALMOX_ITEM ri
+  where ri.ano      = :ano
+    and ri.controle = :controle
+  Into
+    valor_total;
+
+  Update TBREQUISICAO_ALMOX r Set
+    r.valor_total = :valor_total
+  where r.ano      = :ano
+    and r.controle = :controle
+    and r.empresa  = :empresa;
+
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 12:52:47 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    EMPRESA DMN_CNPJ_NN,
+    CENTRO_CUSTO DMN_INTEGER_NN,
+    PRODUTO_OUT DMN_VCHAR_10_KEY,
+    LOTE DMN_INTEGER_NN,
+    LOTE_GUID DMN_GUID_38_NN)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3)
+as
+begin
+  for
+    Select
+        ea.produto
+      , ea.id
+      , sum(ea.qtde)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :lote_guid)
+      or (( ea.empresa      = :empresa
+        and ((ea.centro_custo = :centro_custo) or (:centro_custo = 0))
+        and ((ea.produto    = :produto_out) or (trim(:produto_out) = ''))
+        and ((ea.lote       = :lote) or (:lote is null))
+      ))
+    group by
+        ea.produto
+      , ea.id
+    Into
+        lote_id
+      , produto
+      , estoque
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :empresa
+        and r.ccusto_destino = :centro_custo
+        and ri.produto       = :produto
+      ))
+      and ri.status <> 4 -- Cancelado
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE GET_ESTOQUE_ALMOX_DISPONIVEL TO "PUBLIC";
+
+
+
+/*------ SYSDBA 22/01/2015 12:56:13 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10_KEY,
+    OUT_LOTE DMN_INTEGER_NN,
+    OUT_LOTE_GUID DMN_GUID_38_NN)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , sum(ea.qtde)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa      = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (trim(:out_produto) = ''))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.produto
+      , ea.id
+    Into
+        lote_id
+      , produto
+      , estoque
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 12:58:22 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10_KEY,
+    OUT_LOTE DMN_INTEGER_NN,
+    OUT_LOTE_GUID DMN_GUID_38_NN)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , sum(ea.qtde)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa      = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (trim(:out_produto) = ''))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.produto
+      , ea.id
+    Into
+        lote_id
+      , produto
+      , estoque
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON PROCEDURE GET_ESTOQUE_ALMOX_DISPONIVEL IS 'Store Procedure Disponibilidade Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   22/01/2015
+
+Procedimento de banco responsavel por listar a disponibilidade dos produtos em estoque no almoxarifado de acordo com
+a empresa, centro de custo e produto.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    22/01/2014 - IMR :
+        * DOcumentacao.';
+
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Unexpected end of command - line 34, column 70.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+EA.QTDE.
+At line 22, column 17.
+
+*/
+
+
+
+/*------ SYSDBA 22/01/2015 13:04:39 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , sum(ea.qtde)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.produto
+      , ea.id
+    Into
+        lote_id
+      , produto
+      , estoque
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 13:06:24 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , sum(ea.qtde)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.produto
+      , ea.id
+    Into
+        lote_id
+      , produto
+      , estoque
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_ano))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 13:06:35 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , sum(ea.qtde)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.produto
+      , ea.id
+    Into
+        lote_id
+      , produto
+      , estoque
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 13:14:49 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , sum(ea.qtde)
+      , sum(ea.qtde * ea.custo_medio)
+    from TBESTOQUE_ALMOX ea
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 13:16:02 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and ri.status <> 4 -- Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 22/01/2015 13:19:30 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ_NN,
+    OUT_CENTRO_CUSTO DMN_INTEGER_NN,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and (ri.status not in (2,  3, 4)) -- Atendido, Entregue e Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+R.CANCEL_DATAHORA.
+At line 13, column 7.
+
+*/
+
+/*!!! Error occured !!!
+The insert failed because a column definition includes validation constraints.
+validation error for variable OUT_EMPRESA, value "*** null ***".
+At procedure 'GET_ESTOQUE_ALMOX_DISPONIVEL'.
+
+*/
+
+/*!!! Error occured !!!
+The insert failed because a column definition includes validation constraints.
+validation error for variable LOTE_ID, value "*** null ***".
+At procedure 'GET_ESTOQUE_ALMOX_DISPONIVEL' line: 21, col: 3.
+
+*/
+
+/*!!! Error occured !!!
+The insert failed because a column definition includes validation constraints.
+validation error for variable LOTE_ID, value "*** null ***".
+At procedure 'GET_ESTOQUE_ALMOX_DISPONIVEL' line: 21, col: 3.
+
+*/
+
+
+
+/*------ SYSDBA 22/01/2015 19:03:00 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ,
+    OUT_CENTRO_CUSTO DMN_INTEGER_N,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38_NN,
+    PRODUTO DMN_VCHAR_10_KEY,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and (ri.status not in (2,  3, 4)) -- Atendido, Entregue e Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+/*!!! Error occured !!!
+The insert failed because a column definition includes validation constraints.
+validation error for variable LOTE_ID, value "*** null ***".
+At procedure 'GET_ESTOQUE_ALMOX_DISPONIVEL' line: 21, col: 3.
+
+*/
+
+
+
+/*------ SYSDBA 22/01/2015 19:03:34 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ,
+    OUT_CENTRO_CUSTO DMN_INTEGER_N,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38,
+    PRODUTO DMN_VCHAR_10,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+          when 2 then ri.qtde_atendida -- Atendido
+          when 3 then ri.qtde_atendida -- Entregue
+        end
+      )
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and (ri.status not in (2,  3, 4)) -- Atendido, Entregue e Cancelado
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+
