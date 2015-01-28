@@ -7090,3 +7090,83 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 27/01/2015 11:49:42 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_compet for tbrequisicao_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+  declare variable data DMN_DATE;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    data = coalesce(cast(new.atendimento_data as Date), new.data_emissao, cast(new.insercao_data as Date), current_date);
+
+    competencia = right('0000' ||
+      extract(year  from :data), 4) || right('00' ||
+      extract(month from :data), 2);
+
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 27/01/2015 11:52:34 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_requisicao_almox_compet for tbrequisicao_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+  declare variable data DMN_DATE;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    data = coalesce(cast(new.atendimento_data as Date), new.data_emissao, cast(new.insercao_data as Date), current_date);
+
+    competencia = Cast((right('0000' ||
+      extract(year  from :data), 4) || right('00' ||
+      extract(month from :data), 2)) as Integer);
+
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 27/01/2015 11:57:17 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_compet for tbapropriacao_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = Cast((
+      right('0000' || extract(year from new.data_apropriacao), 4) ||
+      right('00' || extract(month from new.data_apropriacao), 2)) as Integer);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
