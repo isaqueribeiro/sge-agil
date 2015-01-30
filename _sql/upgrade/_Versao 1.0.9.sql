@@ -7445,3 +7445,130 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 29/01/2015 18:16:41 --------*/
+
+COMMENT ON COLUMN TBAPROPRIACAO_ALMOX.TIPO IS
+'Tipo:
+0 - Apropriacao Geral
+1 - Apropriacao por Entrada
+2 - Apropriacao por Autorizacao';
+
+
+
+
+/*------ SYSDBA 29/01/2015 18:17:26 --------*/
+
+DROP VIEW VW_TIPO_APROPRIACAO;
+
+CREATE VIEW VW_TIPO_APROPRIACAO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Apropriação Geral'       as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Apropriação Por Entrada' as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Apropriação Por Autorização' as Descricao from RDB$DATABASE
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_TIPO_APROPRIACAO TO "PUBLIC";
+
+
+
+
+/*------ SYSDBA 29/01/2015 18:19:37 --------*/
+
+ALTER TABLE TBAPROPRIACAO_ALMOX
+    ADD AUTORIZACAO_ANO DMN_SMALLINT_N,
+    ADD AUTORIZACAO_NUM DMN_BIGINT_N,
+    ADD AUTORIZACAO_EMP DMN_CNPJ;
+
+COMMENT ON COLUMN TBAPROPRIACAO_ALMOX.AUTORIZACAO_ANO IS
+'Autorizacao - Ano';
+
+COMMENT ON COLUMN TBAPROPRIACAO_ALMOX.AUTORIZACAO_NUM IS
+'Autorizacao - Numero (Controle)';
+
+COMMENT ON COLUMN TBAPROPRIACAO_ALMOX.AUTORIZACAO_EMP IS
+'Autorizacao - Empresa';
+
+alter table TBAPROPRIACAO_ALMOX
+alter ANO position 1;
+
+alter table TBAPROPRIACAO_ALMOX
+alter CONTROLE position 2;
+
+alter table TBAPROPRIACAO_ALMOX
+alter NUMERO position 3;
+
+alter table TBAPROPRIACAO_ALMOX
+alter EMPRESA position 4;
+
+alter table TBAPROPRIACAO_ALMOX
+alter CENTRO_CUSTO position 5;
+
+alter table TBAPROPRIACAO_ALMOX
+alter TIPO position 6;
+
+alter table TBAPROPRIACAO_ALMOX
+alter COMPRA_ANO position 7;
+
+alter table TBAPROPRIACAO_ALMOX
+alter COMPRA_NUM position 8;
+
+alter table TBAPROPRIACAO_ALMOX
+alter COMPRA_EMP position 9;
+
+alter table TBAPROPRIACAO_ALMOX
+alter AUTORIZACAO_ANO position 10;
+
+alter table TBAPROPRIACAO_ALMOX
+alter AUTORIZACAO_NUM position 11;
+
+alter table TBAPROPRIACAO_ALMOX
+alter AUTORIZACAO_EMP position 12;
+
+alter table TBAPROPRIACAO_ALMOX
+alter INSERCAO_DATA position 13;
+
+alter table TBAPROPRIACAO_ALMOX
+alter DATA_APROPRIACAO position 14;
+
+alter table TBAPROPRIACAO_ALMOX
+alter COMPETENCIA position 15;
+
+alter table TBAPROPRIACAO_ALMOX
+alter USUARIO position 16;
+
+alter table TBAPROPRIACAO_ALMOX
+alter STATUS position 17;
+
+alter table TBAPROPRIACAO_ALMOX
+alter MOTIVO position 18;
+
+alter table TBAPROPRIACAO_ALMOX
+alter OBS position 19;
+
+alter table TBAPROPRIACAO_ALMOX
+alter VALOR_TOTAL position 20;
+
+alter table TBAPROPRIACAO_ALMOX
+alter CANCEL_USUARIO position 21;
+
+alter table TBAPROPRIACAO_ALMOX
+alter CANCEL_DATAHORA position 22;
+
+alter table TBAPROPRIACAO_ALMOX
+alter CANCEL_MOTIVO position 23;
+
+
+
+
+/*------ SYSDBA 29/01/2015 18:20:39 --------*/
+
+ALTER TABLE TBAPROPRIACAO_ALMOX
+ADD CONSTRAINT FK_TBAPROPRIACAO_ALMOX_AUT
+FOREIGN KEY (AUTORIZACAO_ANO,AUTORIZACAO_NUM,AUTORIZACAO_EMP)
+REFERENCES TBAUTORIZA_COMPRA(ANO,CODIGO,EMPRESA);
+
