@@ -56,7 +56,7 @@ var
 begin
   if (edProduto.Tag = 0) then
   begin
-    ShowWarning('Pesquisa', 'Favor selecionar o produto/serviço para pesquisa de histórico no período informado.');
+    ShowWarning('Favor selecionar o produto/serviço para pesquisa de histórico no período informado.');
     Exit;
   end;
 
