@@ -62,6 +62,8 @@ type
     BtnOpcoes: TcxButton;
     N1: TMenuItem;
     nmRequisicaoCancelar: TMenuItem;
+    PnlTitulo: TPanel;
+    ImgLogo: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure BtnPesquisarClick(Sender: TObject);
@@ -374,14 +376,15 @@ begin
       Abort;
     end;
 
-    if FieldByName('status').AsInteger <> STATUS_REQUISICAO_ALMOX_REC then
-      ShowWarning('Apenas requisições de materiais marcadas como recebidas podem ser atendidas.')
+    if not (FieldByName('status').AsInteger in [STATUS_REQUISICAO_ALMOX_ENV, STATUS_REQUISICAO_ALMOX_REC]) then
+      ShowWarning('Apenas requisições de materiais marcadas como enviadas e/ou recebidas podem ser atendidas.')
     else
     if AtenderRequisicaoAlmoxMonitor(Self, FieldByName('ano').AsInteger, FieldByName('controle').AsInteger) then
     begin
       cdsRequisicaoAlmox.Refresh;
       ShowInformation(Format('Requisição de materiais "%s" atendida.', [FieldByName('numero').AsString]) + #13 +
         'Favor imprimir manifesto de saída do material.');
+      nmImprimirManifesto.Click;  
     end;
   end;
 end;
