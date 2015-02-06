@@ -259,7 +259,7 @@ var
   sNome      : String;
 begin
   if ( qryAjuste.State in [dsEdit, dsInsert] ) then
-    if SelecionarProdutoParaAjuste(Self, iCodigo, sCodigoAlfa, sNome) then
+    if SelecionarProdutoParaAjuste(Self, GetEmpresaIDDefault, iCodigo, sCodigoAlfa, sNome) then
       CarregarDadosProduto( sCodigoAlfa );
 end;
 

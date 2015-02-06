@@ -109,7 +109,6 @@ uses
   UGeCotacaoCompraCancelar in '..\System_SGE\UGeCotacaoCompraCancelar.pas' {frmGeCotacaoCompraCancelar},
   UGeCotacaoCompraFornecedor in '..\System_SGE\UGeCotacaoCompraFornecedor.pas' {frmGeCotacaoCompraFornecedor},
   UEcfWindowsPrinter in '..\Sys\lib\UEcfWindowsPrinter.pas',
-  UEcfBematechNaoFiscal in '..\Sys\lib\UEcfBematechNaoFiscal.pas',
   UGeFornecedorImpressao in '..\System_SGE\UGeFornecedorImpressao.pas' {frmGeFornecedorImpressao},
   UGrRegistroEstacao in '..\Sys\lib\UGrRegistroEstacao.pas' {FrmGrRegistroEstacao},
   UGeRequisicaoCompra in '..\System_SGE\UGeRequisicaoCompra.pas' {frmGeRequisicaoCompra},
