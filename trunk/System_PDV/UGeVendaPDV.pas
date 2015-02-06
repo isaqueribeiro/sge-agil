@@ -1292,6 +1292,31 @@ begin
     else
       iGerarEstoqueCliente := 0;
 
+    // ( I N I C I O ) FORÇAR A GRAVAÇÃO DO REGISTRO NA BASE PARA DISPARAR TRIGGERS DE UPDATE
+
+    DataSetVenda.Edit;
+
+    TIBDataSet(DataSetVenda).Post;
+    TIBDataSet(DataSetVenda).ApplyUpdates;
+
+    // Gravar Itens da Venda
+
+    if (DataSetItens.State in [dsEdit, dsInsert]) then
+      TIBDataSet(DataSetItens).Post;
+
+    TIBDataSet(DataSetItens).ApplyUpdates;
+
+    // Gravar Forma de Pagamento da Venda
+
+    if (DataSetFormaPagto.State in [dsEdit, dsInsert]) then
+      TIBDataSet(DataSetFormaPagto).Post;
+
+    TIBDataSet(DataSetFormaPagto).ApplyUpdates;
+
+    CommitTransaction;
+
+    // ( F I N A L ) FORÇAR A GRAVAÇÃO DO REGISTRO NA BASE PARA DISPARAR TRIGGERS DE UPDATE
+
     DataSetVenda.Edit;
 
     DataSetVenda.FieldByName('STATUS').Value                := STATUS_VND_FIN;

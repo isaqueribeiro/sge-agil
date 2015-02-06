@@ -8241,7 +8241,7 @@ object frmPrinc: TfrmPrinc
           3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
           3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
         Caption = 'Invent'#225'rio de Materiais'
-        Enabled = False
+        OnClick = nmInventarioMaterialClick
       end
     end
     object menuNotaFiscal: TMenuItem

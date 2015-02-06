@@ -121,7 +121,8 @@ uses
   UGeCentroCusto in '..\Sys\UGeCentroCusto.pas' {frmGeCentroCusto},
   UGePlanoContas in '..\Sys\UGePlanoContas.pas' {frmGePlanoContas},
   UGeProdutoImpressao in 'UGeProdutoImpressao.pas' {frmGeProdutoImpressao},
-  UGeProdutoKardex in '..\Sys\UGeProdutoKardex.pas' {frmGeProdutoKardex};
+  UGeProdutoKardex in '..\Sys\UGeProdutoKardex.pas' {frmGeProdutoKardex},
+  UEcfBematechNaoFiscal in '..\Sys\lib\UEcfBematechNaoFiscal.pas';
 
 {$R *.res}
 
