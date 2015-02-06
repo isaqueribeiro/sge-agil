@@ -258,6 +258,7 @@ type
     procedure nmEstoqueApropriadoClick(Sender: TObject);
     procedure nmRequisicaoAlmoxClick(Sender: TObject);
     procedure nmRequisicaoAlmoxMonitorClick(Sender: TObject);
+    procedure nmInventarioMaterialClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -783,6 +784,7 @@ begin
   // Movimento
 
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_MONITOR_REQ_ALMOX_ID, Trim(nmRequisicaoAlmoxMonitor.Caption), ROTINA_MENU_MOVIMENTO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_INVENTARIO_ESTOQU_ID, Trim(nmInventarioMaterial.Caption),     ROTINA_MENU_MOVIMENTO_ID);
 
   // Notas Fiscais
 
@@ -984,6 +986,12 @@ procedure TfrmPrinc.nmRequisicaoAlmoxMonitorClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_MOV_MONITOR_REQ_ALMOX_ID, True) then
     MonitorarRequisicaoAlmox(Self, PnlDockReqAlmox, True);
+end;
+
+procedure TfrmPrinc.nmInventarioMaterialClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_MOV_INVENTARIO_ESTOQU_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeInventario');
 end;
 
 end.

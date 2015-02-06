@@ -67,6 +67,9 @@ object DMCupom: TDMCupom
       '  , v.nfe_placa_veiculo'
       '  , v.nfe_placa_uf'
       '  , v.nfe_placa_rntc'
+      '  , v.nfe_valor_total_produto'
+      '  , v.nfe_valor_desconto'
+      '  , v.nfe_valor_total_nota'
       '  , v.gerar_estoque_cliente'
       '  , t.nomeforn as transp_nome'
       '  , t.cnpj     as transp_cnpj'
@@ -386,6 +389,27 @@ object DMCupom: TDMCupom
       Origin = '"TBVENDAS"."NFE_PLACA_RNTC"'
       Size = 10
     end
+    object cdsVendaNFE_VALOR_TOTAL_PRODUTO: TIBBCDField
+      FieldName = 'NFE_VALOR_TOTAL_PRODUTO'
+      Origin = '"TBVENDAS"."NFE_VALOR_TOTAL_PRODUTO"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object cdsVendaNFE_VALOR_DESCONTO: TIBBCDField
+      FieldName = 'NFE_VALOR_DESCONTO'
+      Origin = '"TBVENDAS"."NFE_VALOR_DESCONTO"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object cdsVendaNFE_VALOR_TOTAL_NOTA: TIBBCDField
+      FieldName = 'NFE_VALOR_TOTAL_NOTA'
+      Origin = '"TBVENDAS"."NFE_VALOR_TOTAL_NOTA"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
     object cdsVendaGERAR_ESTOQUE_CLIENTE: TSmallintField
       FieldName = 'GERAR_ESTOQUE_CLIENTE'
       Origin = '"TBVENDAS"."GERAR_ESTOQUE_CLIENTE"'
@@ -556,6 +580,9 @@ object DMCupom: TDMCupom
       '  NFE_PLACA_UF = :NFE_PLACA_UF,'
       '  NFE_PLACA_VEICULO = :NFE_PLACA_VEICULO,'
       '  NFE_TRANSPORTADORA = :NFE_TRANSPORTADORA,'
+      '  NFE_VALOR_DESCONTO = :NFE_VALOR_DESCONTO,'
+      '  NFE_VALOR_TOTAL_NOTA = :NFE_VALOR_TOTAL_NOTA,'
+      '  NFE_VALOR_TOTAL_PRODUTO = :NFE_VALOR_TOTAL_PRODUTO,'
       '  OBS = :OBS,'
       '  PRAZO_01 = :PRAZO_01,'
       '  PRAZO_02 = :PRAZO_02,'
@@ -600,15 +627,18 @@ object DMCupom: TDMCupom
         '   NFE_ENVIADA, NFE_MODALIDADE_FRETE, NFE_PLACA_RNTC, NFE_PLACA_' +
         'UF, NFE_PLACA_VEICULO, '
       
-        '   NFE_TRANSPORTADORA, OBS, PRAZO_01, PRAZO_02, PRAZO_03, PRAZO_' +
-        '04, PRAZO_05, '
+        '   NFE_TRANSPORTADORA, NFE_VALOR_DESCONTO, NFE_VALOR_TOTAL_NOTA,' +
+        ' NFE_VALOR_TOTAL_PRODUTO, '
       
-        '   PRAZO_06, PRAZO_07, PRAZO_08, PRAZO_09, PRAZO_10, PRAZO_11, P' +
-        'RAZO_12, '
+        '   OBS, PRAZO_01, PRAZO_02, PRAZO_03, PRAZO_04, PRAZO_05, PRAZO_' +
+        '06, PRAZO_07, '
       
-        '   SERIE, STATUS, TOTALVENDA, TOTALVENDA_BRUTA, USUARIO, VENDA_P' +
-        'RAZO, VENDEDOR_COD, '
-      '   VERIFICADOR_NFE, XML_NFE, XML_NFE_FILENAME)'
+        '   PRAZO_08, PRAZO_09, PRAZO_10, PRAZO_11, PRAZO_12, SERIE, STAT' +
+        'US, TOTALVENDA, '
+      
+        '   TOTALVENDA_BRUTA, USUARIO, VENDA_PRAZO, VENDEDOR_COD, VERIFIC' +
+        'ADOR_NFE, '
+      '   XML_NFE, XML_NFE_FILENAME)'
       'values'
       
         '  (:ANO, :CANCEL_DATAHORA, :CANCEL_MOTIVO, :CFOP, :CODCLI, :CODC' +
@@ -629,17 +659,18 @@ object DMCupom: TDMCupom
         '   :NFE_MODALIDADE_FRETE, :NFE_PLACA_RNTC, :NFE_PLACA_UF, :NFE_P' +
         'LACA_VEICULO, '
       
-        '   :NFE_TRANSPORTADORA, :OBS, :PRAZO_01, :PRAZO_02, :PRAZO_03, :' +
-        'PRAZO_04, '
+        '   :NFE_TRANSPORTADORA, :NFE_VALOR_DESCONTO, :NFE_VALOR_TOTAL_NO' +
+        'TA, :NFE_VALOR_TOTAL_PRODUTO, '
       
-        '   :PRAZO_05, :PRAZO_06, :PRAZO_07, :PRAZO_08, :PRAZO_09, :PRAZO' +
-        '_10, :PRAZO_11, '
+        '   :OBS, :PRAZO_01, :PRAZO_02, :PRAZO_03, :PRAZO_04, :PRAZO_05, ' +
+        ':PRAZO_06, '
       
-        '   :PRAZO_12, :SERIE, :STATUS, :TOTALVENDA, :TOTALVENDA_BRUTA, :' +
-        'USUARIO, '
+        '   :PRAZO_07, :PRAZO_08, :PRAZO_09, :PRAZO_10, :PRAZO_11, :PRAZO' +
+        '_12, :SERIE, '
       
-        '   :VENDA_PRAZO, :VENDEDOR_COD, :VERIFICADOR_NFE, :XML_NFE, :XML' +
-        '_NFE_FILENAME)')
+        '   :STATUS, :TOTALVENDA, :TOTALVENDA_BRUTA, :USUARIO, :VENDA_PRA' +
+        'ZO, :VENDEDOR_COD, '
+      '   :VERIFICADOR_NFE, :XML_NFE, :XML_NFE_FILENAME)')
     DeleteSQL.Strings = (
       'delete from TBVENDAS'
       'where'
