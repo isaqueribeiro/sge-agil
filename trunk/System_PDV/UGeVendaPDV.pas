@@ -117,6 +117,7 @@ type
     procedure actProdutoExcluirExecute(Sender: TObject);
   private
     { Private declarations }
+    bOrcamentoCarregado : Boolean;
     sNomeTabela    ,
     sCampoCodigo   ,
     sGeneratorName : String;
@@ -217,7 +218,7 @@ begin
   edNomeFormaPagto.Tag     := GetFormaPagtoIDDefault;
   edNomeFormaPagto.Caption := GetFormaPagtoNomeDefault;
 
-  CarregarVenda(GetEmpresaIDDefault, 0, 0);
+  CarregarVenda(gUsuarioLogado.Empresa, 0, 0);
 end;
 
 procedure TfrmGeVendaPDV.tmrContadorTimer(Sender: TObject);
@@ -347,6 +348,7 @@ begin
 
   lblFinalizarVenda.Visible := not GetEmitirApenasOrcamento;
   lblGravar.Visible         := GetEmitirApenasOrcamento or (GetEmitirCupom and GetCupomNaoFiscalEmitir);
+  bOrcamentoCarregado       := False;
 
   if not lblFinalizarVenda.Visible then
   begin
@@ -478,7 +480,9 @@ begin
   else
     with DataSetVenda do
     begin
-      CarregarVenda(GetEmpresaIDDefault, 0, 0);
+      bOrcamentoCarregado := False;
+
+      CarregarVenda(gUsuarioLogado.Empresa, 0, 0);
       
       pnlCaixaLivre.Visible := False;
       pnlCaixaLivre.Tag     := 0;
@@ -488,7 +492,7 @@ begin
 
       Append;
 
-      FieldByName('CODEMP').Value         := GetEmpresaIDDefault;
+      FieldByName('CODEMP').Value         := gUsuarioLogado.Empresa;
       FieldByName('ANO').AsInteger        := iAno;
       FieldByName('CODCONTROL').AsInteger := iNum;
 
@@ -641,7 +645,7 @@ begin
   with DataSetVenda do
     if ( RecordCount = 0 ) then
     begin
-      CarregarVenda(GetEmpresaIDDefault, 0, 0);
+      CarregarVenda(gUsuarioLogado.Empresa, 0, 0);
       IniciarCupomCabecalho;
       IniciarCupomProduto;
     end
@@ -655,7 +659,7 @@ begin
           CommitTransaction;
         end;
 
-      CarregarVenda(GetEmpresaIDDefault, 0, 0);
+      CarregarVenda(gUsuarioLogado.Empresa, 0, 0);
       IniciarCupomCabecalho;
       IniciarCupomProduto;
     end;
@@ -1007,7 +1011,7 @@ begin
 
   AForm := TfrmGeVendaPDVOrcamento.Create(Self);
   try
-    AForm.OrcamentoCod := DMCupom.GetUltimaVenda(GetEmpresaIDDefault
+    AForm.OrcamentoCod := DMCupom.GetUltimaVenda(gUsuarioLogado.Empresa
       , gUsuarioLogado.Login
       , AForm.OrcamentoAno
       , STATUS_VND_ABR);
@@ -1016,7 +1020,10 @@ begin
       AForm.e2NumeroOrcamento.Text := EmptyStr;
 
     if ( AForm.ShowModal = mrOk ) then
-      CarregarVenda(GetEmpresaIDDefault, AForm.OrcamentoAno, AForm.OrcamentoCod);
+    begin
+      CarregarVenda(gUsuarioLogado.Empresa, AForm.OrcamentoAno, AForm.OrcamentoCod);
+      bOrcamentoCarregado := True;  
+    end;
   finally
     AForm.Free;
   end;
@@ -1092,8 +1099,8 @@ begin
             , DataSetVenda.FieldByName('CODCONTROL').AsInteger);
 
       // Limpar Tela
-      
-      CarregarVenda(GetEmpresaIDDefault, 0, 0);
+
+      CarregarVenda(gUsuarioLogado.Empresa, 0, 0);
       IniciarCupomCabecalho;
       IniciarCupomProduto;
     end;
@@ -1188,6 +1195,31 @@ begin
   CxAno    := 0;
   CxNumero := 0;
   CxContaCorrente := 0;
+
+  // ( I N I C I O ) FORÇAR A GRAVAÇÃO DO REGISTRO NA BASE PARA DISPARAR TRIGGERS DE UPDATE
+
+  DataSetVenda.Edit;
+
+  TIBDataSet(DataSetVenda).Post;
+  TIBDataSet(DataSetVenda).ApplyUpdates;
+
+  // Gravar Itens da Venda
+
+  if (DataSetItens.State in [dsEdit, dsInsert]) then
+    TIBDataSet(DataSetItens).Post;
+
+  TIBDataSet(DataSetItens).ApplyUpdates;
+
+  // Gravar Forma de Pagamento da Venda
+
+  if (DataSetFormaPagto.State in [dsEdit, dsInsert]) then
+    TIBDataSet(DataSetFormaPagto).Post;
+
+  TIBDataSet(DataSetFormaPagto).ApplyUpdates;
+
+  CommitTransaction;
+
+  // ( F I N A L ) FORÇAR A GRAVAÇÃO DO REGISTRO NA BASE PARA DISPARAR TRIGGERS DE UPDATE
 
   with DataSetVenda do
   begin
@@ -1291,31 +1323,6 @@ begin
       iGerarEstoqueCliente := 1
     else
       iGerarEstoqueCliente := 0;
-
-    // ( I N I C I O ) FORÇAR A GRAVAÇÃO DO REGISTRO NA BASE PARA DISPARAR TRIGGERS DE UPDATE
-
-    DataSetVenda.Edit;
-
-    TIBDataSet(DataSetVenda).Post;
-    TIBDataSet(DataSetVenda).ApplyUpdates;
-
-    // Gravar Itens da Venda
-
-    if (DataSetItens.State in [dsEdit, dsInsert]) then
-      TIBDataSet(DataSetItens).Post;
-
-    TIBDataSet(DataSetItens).ApplyUpdates;
-
-    // Gravar Forma de Pagamento da Venda
-
-    if (DataSetFormaPagto.State in [dsEdit, dsInsert]) then
-      TIBDataSet(DataSetFormaPagto).Post;
-
-    TIBDataSet(DataSetFormaPagto).ApplyUpdates;
-
-    CommitTransaction;
-
-    // ( F I N A L ) FORÇAR A GRAVAÇÃO DO REGISTRO NA BASE PARA DISPARAR TRIGGERS DE UPDATE
 
     DataSetVenda.Edit;
 
@@ -1497,8 +1504,8 @@ begin
           ; // Emitir Cupom Fiscal
 
     // Limpar Tela
-    
-    CarregarVenda(GetEmpresaIDDefault, 0, 0);
+
+    CarregarVenda(gUsuarioLogado.Empresa, 0, 0);
     IniciarCupomCabecalho;
     IniciarCupomProduto;
 
@@ -1616,7 +1623,7 @@ var
 begin
   iReturn := False;
   try
-    if GetEstoqueSateliteEmpresa(GetEmpresaIDDefault) then
+    if GetEstoqueSateliteEmpresa(gUsuarioLogado.Empresa) then
       with DMBusiness, qryBusca do
       begin
         Close;

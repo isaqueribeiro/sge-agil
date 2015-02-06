@@ -429,6 +429,11 @@ const
   STATUS_ITEM_REQUISICAO_ALMOX_ENT = 3;
   STATUS_ITEM_REQUISICAO_ALMOX_CAN = 4;
 
+  STATUS_INVENTARIO_ALMOX_EML = 0;
+  STATUS_INVENTARIO_ALMOX_EMC = 1;
+  STATUS_INVENTARIO_ALMOX_ENC = 2;
+  STATUS_INVENTARIO_ALMOX_CAN = 3;
+
   // Mensagens padrões do sistema
   CLIENTE_BLOQUEADO_PORDEBITO = 'Cliente bloqueado, automaticamente, pelo sistema por se encontrar com títulos vencidos. Favor buscar mais informações junto ao FINANCEIRO.';
 

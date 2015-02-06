@@ -7572,3 +7572,489 @@ ADD CONSTRAINT FK_TBAPROPRIACAO_ALMOX_AUT
 FOREIGN KEY (AUTORIZACAO_ANO,AUTORIZACAO_NUM,AUTORIZACAO_EMP)
 REFERENCES TBAUTORIZA_COMPRA(ANO,CODIGO,EMPRESA);
 
+
+
+/*------ 06/02/2015 10:36:03 --------*/
+
+CREATE TABLE TBINVENTARIO_ALMOX(
+  ANO DMN_SMALLINT_NN NOT NULL,
+  CONTROLE DMN_BIGINT_NN,
+  TIPO DMN_SMALLINT_NN,
+  EMPRESA DMN_CNPJ NOT NULL,
+  CENTRO_CUSTO DMN_BIGINT_NN NOT NULL,
+  CONFERIR_ESTOQUE_VENDA DMN_LOGICO DEFAULT 0,
+  DATA DMN_DATE,
+  COMPETENCIA DMN_INTEGER_N,
+  STATUS DMN_STATUS,
+  OBS DMN_TEXTO,
+  INSERCAO_DATAHORA DMN_DATETIME,
+  INSERCAO_USUARIO DMN_USUARIO,
+  FECH_DATAHORA DMN_DATETIME,
+  FECH_USUARIO DMN_USUARIO,
+  CANCEL_DATAHORA DMN_DATETIME,
+  CANCEL_USUARIO DMN_USUARIO,
+  CANCEL_MOVITO DMN_TEXTO,
+  BLOQUEAR_MOVIMENTO DMN_LOGICO DEFAULT 0);
+
+/*------ 06/02/2015 10:36:03 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX ADD CONSTRAINT PK_TBINVENTARIO_ALMOX PRIMARY KEY (ANO, CONTROLE);
+
+/*------ 06/02/2015 10:36:03 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX ADD CONSTRAINT FK_TBINVENTARIO_ALMOX_EMP FOREIGN KEY (EMPRESA) REFERENCES
+TBEMPRESA (CNPJ);
+
+/*------ 06/02/2015 10:36:03 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX ADD CONSTRAINT FK_TBINVENTARIO_ALMOX_CCU FOREIGN KEY (CENTRO_CUSTO) REFERENCES
+TBCENTRO_CUSTO (CODIGO);
+
+/*------ 06/02/2015 10:36:19 --------*/
+
+CREATE TABLE TBINVENTARIO_ALMOX_ITEM(
+  ANO DMN_SMALLINT_NN NOT NULL,
+  CONTROLE DMN_BIGINT_NN,
+  ITEM DMN_INTEGER_NN,
+  PRODUTO DMN_VCHAR_10_KEY,
+  QTDE DMN_QUANTIDADE_D3 DEFAULT 0.0,
+  ESTOQUE DMN_QUANTIDADE_D3,
+  FRACIONADOR DMN_PERCENTUAL_3 DEFAULT 1,
+  UNIDADE DMN_SMALLINT_N NOT NULL,
+  CUSTO DMN_MONEY_4 DEFAULT 0.0,
+  TOTAL DMN_MONEY DEFAULT 0.0,
+  USUARIO DMN_USUARIO,
+  LOTE_CONFERIDO DMN_GUID_32,
+  LOTE_RESULTADO DMN_GUID_32);
+
+/*------ 06/02/2015 10:36:19 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM ADD CONSTRAINT PK_TBINVENTARIO_ALMOX_ITEM PRIMARY KEY (ANO, CONTROLE, ITEM);
+
+/*------ 06/02/2015 10:36:19 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM ADD CONSTRAINT FK_TBINVENTARIO_ALMOX_ITEM FOREIGN KEY (ANO, CONTROLE) REFERENCES
+TBINVENTARIO_ALMOX (ANO, CONTROLE) ON UPDATE CASCADE ON DELETE CASCADE;
+
+/*------ 06/02/2015 10:36:19 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM ADD CONSTRAINT FK_TBINVENTARIO_ALMOX_ITEM_UND FOREIGN KEY (UNIDADE) REFERENCES
+TBUNIDADEPROD (UNP_COD);
+
+/*------ 06/02/2015 10:36:19 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM ADD CONSTRAINT FK_TBINVENTARIO_ALMOX_ITEM_PRD FOREIGN KEY (PRODUTO) REFERENCES
+TBPRODUTO (COD);
+
+
+/*------ SYSDBA 06/02/2015 10:36:55 --------*/
+
+COMMENT ON COLUMN TBINVENTARIO_ALMOX_ITEM.FRACIONADOR IS
+'Indice fracionador';
+
+
+
+
+/*------ SYSDBA 06/02/2015 10:38:02 --------*/
+
+COMMENT ON COLUMN TBINVENTARIO_ALMOX_ITEM.UNIDADE IS
+'Unidade fracionada (Unidade de consumo)
+
+Obs.: Ou Unidade de compra qquando o inventario do para o estoque de venda.';
+
+
+
+
+/*------ SYSDBA 06/02/2015 10:38:29 --------*/
+
+COMMENT ON COLUMN TBINVENTARIO_ALMOX.CENTRO_CUSTO IS
+'Centro de Custo
+
+Obs.: Inventario sem centro de custo corresponde a conferencias do estoque de venda e nao do estoque apropriado pelo centro de custo';
+
+
+
+
+/*------ SYSDBA 06/02/2015 10:38:56 --------*/
+
+COMMENT ON TABLE TBINVENTARIO_ALMOX IS 'Tabela Invetario de Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   04/02/2015
+
+Tabela responsavel por armazenar todos os registros de inventarios de estoque realizados pelo sistema SGI.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/02/2014 - IMR :
+        * Documentacao da tabela.';
+
+
+
+
+/*------ SYSDBA 06/02/2015 10:39:07 --------*/
+
+COMMENT ON TABLE TBINVENTARIO_ALMOX_ITEM IS 'Tabela Itens do Invetario de Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   04/02/2015
+
+Tabela responsavel por armazenar todos os registros de itens do inventarios de estoque realizados pelo sistema SGI.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    06/02/2014 - IMR :
+        * Documentacao da tabela.';
+
+GRANT ALL ON TBINVENTARIO_ALMOX TO "PUBLIC";
+GRANT ALL ON TBINVENTARIO_ALMOX_ITEM TO "PUBLIC";
+
+
+
+/*------ SYSDBA 06/02/2015 10:44:15 --------*/
+
+CREATE VIEW VW_TIPO_INVENTARIO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Geral'       as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Parcial' as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Equipamentos/Imobilizados' as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_TIPO_INVENTARIO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 06/02/2015 10:46:08 --------*/
+
+CREATE VIEW VW_STATUS_INVENTARIO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Em lançamento'  as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Em conferência' as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Encerrado'      as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Cancelado'      as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_STATUS_INVENTARIO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 06/02/2015 10:46:48 --------*/
+
+CREATE VIEW VW_STATUS_INVENTARIO_ALMOX(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Em lançamento'  as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Em conferência' as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Encerrado'      as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Cancelado'      as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_STATUS_INVENTARIO_ALMOX TO "PUBLIC";
+
+
+
+/*------ SYSDBA 06/02/2015 10:47:06 --------*/
+
+DROP VIEW VW_STATUS_INVENTARIO;
+
+
+
+
+/*------ SYSDBA 06/02/2015 10:47:29 --------*/
+
+CREATE VIEW VW_TIPO_INVENTARIO_ALMOX(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Geral'       as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Parcial' as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Equipamentos/Imobilizados' as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_TIPO_INVENTARIO_ALMOX TO "PUBLIC";
+
+
+
+/*------ SYSDBA 06/02/2015 10:47:43 --------*/
+
+DROP VIEW VW_TIPO_INVENTARIO;
+
+
+
+
+/*------ SYSDBA 06/02/2015 11:11:18 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure GET_ESTOQUE_PRODUTO (
+    IN_EMPRESA DMN_CNPJ,
+    IN_CENTRO_CUSTO DMN_INTEGER_N,
+    IN_PRODUTO DMN_VCHAR_10)
+returns (
+    PRODUTO DMN_VCHAR_10,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    UNIDADE DMN_SMALLINT_N,
+    CUSTO_MEDIO DMN_MONEY)
+as
+declare variable ESTOQUE_UNICO DMN_SMALLINT_N;
+begin
+  Select
+    coalesce(c.estoque_unico_empresas, 0)
+  from TBCONFIGURACAO c
+  where c.empresa = :in_empresa
+  Into
+    estoque_unico;
+
+  estoque_unico = coalesce(:estoque_unico, 0);
+
+  if ( coalesce(:in_centro_custo, 0) = 0 ) then
+  begin
+
+    Select
+        p.cod
+      , p.qtde
+      , 1.0
+      , p.codunidade
+      , p.customedio
+    from TBPRODUTO p
+    where (p.cod     = :in_produto)
+      and ((p.codemp = :in_empresa) or (:estoque_unico = 1))
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio;
+
+  end
+  else
+  begin
+
+    Select
+        g.produto
+      , g.estoque
+      , g.fracionador
+      , g.unidade
+      , g.custo_total / g.estoque
+    from GET_ESTOQUE_ALMOX_DISPONIVEL (:in_empresa, :in_centro_custo, :in_produto, null, null, null, null) g
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio;
+
+  end
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE GET_ESTOQUE_PRODUTO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 06/02/2015 11:12:33 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_PRODUTO (
+    IN_EMPRESA DMN_CNPJ,
+    IN_CENTRO_CUSTO DMN_INTEGER_N,
+    IN_PRODUTO DMN_VCHAR_10)
+returns (
+    PRODUTO DMN_VCHAR_10,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    UNIDADE DMN_SMALLINT_N,
+    CUSTO_MEDIO DMN_MONEY)
+as
+declare variable ESTOQUE_UNICO DMN_SMALLINT_N;
+begin
+  Select
+    coalesce(c.estoque_unico_empresas, 0)
+  from TBCONFIGURACAO c
+  where c.empresa = :in_empresa
+  Into
+    estoque_unico;
+
+  estoque_unico = coalesce(:estoque_unico, 0);
+
+  if ( coalesce(:in_centro_custo, 0) = 0 ) then
+  begin
+
+    /* Buscar no Estoque de Venda */
+    Select
+        p.cod
+      , p.qtde
+      , 1.0
+      , p.codunidade
+      , p.customedio
+    from TBPRODUTO p
+    where (p.cod     = :in_produto)
+      and ((p.codemp = :in_empresa) or (:estoque_unico = 1))
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio;
+
+  end
+  else
+  begin
+
+    /* Buscar no Estoque Apropriado do Centro de Custo */
+    Select
+        g.produto
+      , g.estoque
+      , g.fracionador
+      , g.unidade
+      , g.custo_total / g.estoque
+    from GET_ESTOQUE_ALMOX_DISPONIVEL (:in_empresa, :in_centro_custo, :in_produto, null, null, null, null) g
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio;
+
+  end
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 06/02/2015 11:51:19 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_PRODUTO (
+    IN_EMPRESA DMN_CNPJ,
+    IN_CENTRO_CUSTO DMN_INTEGER_N,
+    IN_PRODUTO DMN_VCHAR_10)
+returns (
+    PRODUTO DMN_VCHAR_10,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    UNIDADE DMN_SMALLINT_N,
+    CUSTO_MEDIO DMN_MONEY)
+as
+declare variable ESTOQUE_UNICO DMN_SMALLINT_N;
+begin
+  Select
+    coalesce(c.estoque_unico_empresas, 0)
+  from TBCONFIGURACAO c
+  where c.empresa = :in_empresa
+  Into
+    estoque_unico;
+
+  estoque_unico = coalesce(:estoque_unico, 0);
+
+  if ( coalesce(:in_centro_custo, 0) = 0 ) then
+  begin
+
+    /* Buscar no Estoque de Venda */
+    Select
+        p.cod
+      , p.qtde
+      , 1.0
+      , p.codunidade
+      , p.customedio
+    from TBPRODUTO p
+    where (p.cod     = :in_produto)
+      and ((p.codemp = :in_empresa) or (:estoque_unico = 1))
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio;
+
+  end
+  else
+  begin
+
+    /* Buscar no Estoque Apropriado do Centro de Custo */
+    Select
+        g.produto
+      , g.estoque
+      , g.fracionador
+      , g.unidade
+      , g.custo_total / g.estoque
+    from GET_ESTOQUE_ALMOX_DISPONIVEL (:in_empresa, :in_centro_custo, :in_produto, null, null, null, null) g
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio;
+
+  end
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+COMMENT ON PROCEDURE GET_ESTOQUE_PRODUTO IS 'Stored Procedure Buscar Estoque Produto.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   06/02/2015
+
+Procedimento de banco responsavel por buscar o estoque disponível do produto a partir de dados com Empresa, Centro de
+Custo e Produto. Ao ser informado o Centro de Custo, o estoque vem de sua apropriacao e caso nao seja informado, este
+estoque vira do que esta disponivel para venda.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    06/02/2014 - IMR :
+        * DOcumentacao.';
+
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 10, column 67.
+from.
+
+*/
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 10, column 48.
+).
+
+*/

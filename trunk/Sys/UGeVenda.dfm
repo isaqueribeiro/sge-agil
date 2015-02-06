@@ -6,7 +6,6 @@ inherited frmGeVenda: TfrmGeVenda
   ActiveControl = nil
   Caption = 'Controle de Vendas'
   OldCreateOrder = True
-  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel

@@ -21255,7 +21255,7 @@ object frmPrinc: TfrmPrinc
   end
   object dxSkinController: TdxSkinController
     NativeStyle = False
-    SkinName = 'MoneyTwins'
+    SkinName = 'McSkin'
     Left = 344
     Top = 216
   end

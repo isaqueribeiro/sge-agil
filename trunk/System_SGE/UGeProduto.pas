@@ -295,7 +295,7 @@ var
 
   procedure MostrarTabelaProdutos(const AOwner : TComponent; const TipoAliquota : TAliquota);
 
-  function SelecionarProdutoParaAjuste(const AOwner : TComponent;
+  function SelecionarProdutoParaAjuste(const AOwner : TComponent; const Empresa : String;
     var Codigo : Integer;
     var CodigoAlfa, Nome : String) : Boolean;
 
@@ -374,12 +374,12 @@ begin
   try
     frm.fAliquota := TipoAliquota;
 
-    if not GetEstoqueUnificadoEmpresa(GetEmpresaIDDefault) then
-      frm.WhereAdditional := '(p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')'
+    if not GetEstoqueUnificadoEmpresa(gUsuarioLogado.Empresa) then
+      frm.WhereAdditional := '(p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')'
     else
       frm.WhereAdditional := '(1 = 1)';
 
-    if (GetPermitirVendaEstoqueInsEmpresa(GetEmpresaIDDefault) and (gSistema.Codigo = SISTEMA_PDV)) then
+    if (GetPermitirVendaEstoqueInsEmpresa(gUsuarioLogado.Empresa) and (gSistema.Codigo = SISTEMA_PDV)) then
        frm.chkProdutoComEstoque.Checked := False;
 
     // Carregar apenas produtos com estoque e serviços em geral
@@ -392,7 +392,7 @@ begin
   end;
 end;
 
-function SelecionarProdutoParaAjuste(const AOwner : TComponent;
+function SelecionarProdutoParaAjuste(const AOwner : TComponent; const Empresa : String;
   var Codigo : Integer;
   var CodigoAlfa, Nome : String) : Boolean;
 var
@@ -407,10 +407,10 @@ begin
     frm.lblAliquotaTipo.Enabled      := False;
     frm.dbAliquotaTipo.Enabled       := False;
 
-    whr := 'p.Aliquota_tipo = ' + IntToStr(Ord(frm.fAliquota));
+    whr := '(p.codemp = ' + QuotedStr(Empresa) + ') and (p.Aliquota_tipo = ' + IntToStr(Ord(frm.fAliquota)) + ')';
 
     if frm.chkProdutoComEstoque.Checked then
-      whr := whr + ' and p.Qtde > 0';
+      whr := whr + ' and (p.Qtde > 0)';
 
     Result := frm.SelecionarRegistro(Codigo, Nome, whr);
 
@@ -452,7 +452,7 @@ begin
 
     whr := 'p.Aliquota_tipo = ' + IntToStr(Ord(frm.fAliquota));
 
-    if (GetPermitirVendaEstoqueInsEmpresa(GetEmpresaIDDefault) and (gSistema.Codigo = SISTEMA_PDV)) then
+    if (GetPermitirVendaEstoqueInsEmpresa(gUsuarioLogado.Empresa) and (gSistema.Codigo = SISTEMA_PDV)) then
        frm.chkProdutoComEstoque.Checked := False;
 
     if frm.chkProdutoComEstoque.Checked then
@@ -484,7 +484,7 @@ begin
 
     whr := 'p.Aliquota_tipo = ' + IntToStr(Ord(frm.fAliquota));
 
-    if (GetPermitirVendaEstoqueInsEmpresa(GetEmpresaIDDefault) and (gSistema.Codigo = SISTEMA_PDV)) then
+    if (GetPermitirVendaEstoqueInsEmpresa(gUsuarioLogado.Empresa) and (gSistema.Codigo = SISTEMA_PDV)) then
        frm.chkProdutoComEstoque.Checked := False;
 
     if frm.chkProdutoComEstoque.Checked then
@@ -527,7 +527,7 @@ begin
 
     whr := 'p.Aliquota_tipo = ' + IntToStr(Ord(frm.fAliquota));
 
-    if (GetPermitirVendaEstoqueInsEmpresa(GetEmpresaIDDefault) and (gSistema.Codigo = SISTEMA_PDV)) then
+    if (GetPermitirVendaEstoqueInsEmpresa(gUsuarioLogado.Empresa) and (gSistema.Codigo = SISTEMA_PDV)) then
        frm.chkProdutoComEstoque.Checked := False;
 
     if frm.chkProdutoComEstoque.Checked then
@@ -896,7 +896,7 @@ begin
   qryAliquotaPIS.Open;
   qryAliquotaCOFINS.Open;
 
-  if ( GetSegmentoID(GetEmpresaIDDefault) = SEGMENTO_MERCADO_CARRO_ID ) then
+  if ( GetSegmentoID(gUsuarioLogado.Empresa) = SEGMENTO_MERCADO_CARRO_ID ) then
   begin
     tblCor.Open;
     tblCombustivel.Open;
@@ -942,10 +942,10 @@ begin
   nmProdutoEtiqueta.Caption := 'Etiqueta de ' + StrDescricaoProduto;
 
 (*
-  lblTipoTributacaoSN.Enabled := GetSimplesNacionalInsEmpresa(GetEmpresaIDDefault);
-  dbTipoTributacaoSN.Enabled  := GetSimplesNacionalInsEmpresa(GetEmpresaIDDefault);
-  lblAliquotaSN.Enabled := GetSimplesNacionalInsEmpresa(GetEmpresaIDDefault);
-  dbAliquotaSN.Enabled  := GetSimplesNacionalInsEmpresa(GetEmpresaIDDefault);
+  lblTipoTributacaoSN.Enabled := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
+  dbTipoTributacaoSN.Enabled  := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
+  lblAliquotaSN.Enabled := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
+  dbAliquotaSN.Enabled  := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
 *)  
 end;
 
@@ -1003,7 +1003,7 @@ begin
     IbDtstTabelaMOVIMENTA_ESTOQUE.Value := 1;
 
   if ( IbDtstTabelaCOMPOR_FATURAMENTO.IsNull ) then
-    IbDtstTabelaCOMPOR_FATURAMENTO.Value := StrToInt(IfThen(GetSegmentoID(GetEmpresaIDDefault) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID], '0', '1'));
+    IbDtstTabelaCOMPOR_FATURAMENTO.Value := StrToInt(IfThen(GetSegmentoID(gUsuarioLogado.Empresa) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID], '0', '1'));
 
   if ( (IbDtstTabelaPERCENTUAL_REDUCAO_BC.AsCurrency < 0) or (IbDtstTabelaPERCENTUAL_REDUCAO_BC.AsCurrency > 100) ) then
     IbDtstTabelaPERCENTUAL_REDUCAO_BC.Value := 0;
@@ -1080,7 +1080,7 @@ end;
 procedure TfrmGeProduto.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaCODEMP.Value := GetEmpresaIDDefault;
+  IbDtstTabelaCODEMP.Value := gUsuarioLogado.Empresa;
 
   if Trim(IbDtstTabelaCODEMP.AsString) = EmptyStr then
     if ( not tblEmpresa.IsEmpty ) then
@@ -1136,7 +1136,7 @@ begin
   IbDtstTabelaALIQUOTA_PIS.AsCurrency      := 0.0;
   IbDtstTabelaALIQUOTA_COFINS.AsCurrency   := 0.0;
   IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger  := 1;
-  IbDtstTabelaCOMPOR_FATURAMENTO.AsInteger := StrToInt(IfThen(GetSegmentoID(GetEmpresaIDDefault) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID], '0', '1'));
+  IbDtstTabelaCOMPOR_FATURAMENTO.AsInteger := StrToInt(IfThen(GetSegmentoID(gUsuarioLogado.Empresa) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID], '0', '1'));
 end;
 
 procedure TfrmGeProduto.FormShow(Sender: TObject);
@@ -1162,8 +1162,8 @@ begin
   inherited;
 
   // Configurar Legendas de acordo com o segmento
-  pnlVeiculo.Visible             := (GetSegmentoID(GetEmpresaIDDefault) = SEGMENTO_MERCADO_CARRO_ID);
-  tbsHistoricoVeiculo.TabVisible := (GetSegmentoID(GetEmpresaIDDefault) = SEGMENTO_MERCADO_CARRO_ID);
+  pnlVeiculo.Visible             := (GetSegmentoID(gUsuarioLogado.Empresa) = SEGMENTO_MERCADO_CARRO_ID);
+  tbsHistoricoVeiculo.TabVisible := (GetSegmentoID(gUsuarioLogado.Empresa) = SEGMENTO_MERCADO_CARRO_ID);
 
   if ( pnlVeiculo.Visible ) then
   begin
@@ -1326,8 +1326,8 @@ end;
 
 procedure TfrmGeProduto.btnFiltrarClick(Sender: TObject);
 begin
-  if not GetEstoqueUnificadoEmpresa(GetEmpresaIDDefault) then
-    WhereAdditional := '(p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')'
+  if not GetEstoqueUnificadoEmpresa(gUsuarioLogado.Empresa) then
+    WhereAdditional := '(p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')'
   else
     WhereAdditional := '(1 = 1)';
 

@@ -258,7 +258,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       Left = 16
       Top = 160
       Width = 561
-      Height = 72
+      Height = 250
       Anchors = [akLeft, akTop, akRight, akBottom]
       Color = clWhite
       Font.Charset = ANSI_CHARSET

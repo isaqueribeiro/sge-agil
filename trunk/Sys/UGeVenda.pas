@@ -622,7 +622,7 @@ begin
   WhereAdditional :=  'cast(v.dtvenda as date) between ' +
                         QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
                         QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );// + ' and ' +
-                        //'v.codemp = ' + QuotedStr(GetEmpresaIDDefault);
+                        //'v.codemp = ' + QuotedStr(gUsuarioLogado.Empresa);
   if ( RdgStatusVenda.ItemIndex > 0 ) then
     WhereAdditional := WhereAdditional + ' and (v.status = ' + IntToStr(RdgStatusVenda.ItemIndex) + ')';
 
@@ -633,7 +633,7 @@ procedure TfrmGeVenda.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
   IbDtstTabelaDTVENDA.Value := GetDateTimeDB;
-  IbDtstTabelaCODEMP.Value  := GetEmpresaIDDefault;
+  IbDtstTabelaCODEMP.Value  := gUsuarioLogado.Empresa;
   IbDtstTabelaFORMAPAG.Value          := GetFormaPagtoNomeDefault;
   IbDtstTabelaCFOP.Value              := GetCfopIDDefault;
   IbDtstTabelaVENDA_PRAZO.Value := 0;
@@ -2580,7 +2580,7 @@ var
 begin
   iReturn := False;
   try
-    if GetEstoqueSateliteEmpresa(GetEmpresaIDDefault) then
+    if GetEstoqueSateliteEmpresa(gUsuarioLogado.Empresa) then
       with DMBusiness, qryBusca do
       begin
         Close;
