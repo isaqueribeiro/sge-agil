@@ -204,13 +204,13 @@ inherited frmGeInventario: TfrmGeInventario
       FocusControl = dbTipo
       Transparent = True
     end
-    object lblDataApropriacao: TLabel
+    object lblData: TLabel
       Left = 560
       Top = 64
       Width = 27
       Height = 13
       Caption = 'Data:'
-      FocusControl = dbDataApropriacao
+      FocusControl = dbData
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -256,6 +256,8 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 21
       TabStop = False
       Color = clMoneyGreen
+      DataField = 'CONTROLE'
+      DataSource = dtsInventario
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -263,7 +265,7 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = [fsBold]
       ParentFont = False
       ReadOnly = True
-      TabOrder = 0
+      TabOrder = 3
     end
     object dbDataHora: TDBEdit
       Left = 192
@@ -272,6 +274,8 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 21
       TabStop = False
       Color = clMoneyGreen
+      DataField = 'INSERCAO_DATAHORA'
+      DataSource = dtsInventario
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -279,13 +283,16 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = [fsBold]
       ParentFont = False
       ReadOnly = True
-      TabOrder = 1
+      TabOrder = 6
     end
     object dbEmpresa: TDBLookupComboBox
       Left = 320
       Top = 40
       Width = 361
       Height = 21
+      Color = clMoneyGreen
+      DataField = 'EMPRESA'
+      DataSource = dtsInventario
       DropDownRows = 10
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -296,7 +303,8 @@ inherited frmGeInventario: TfrmGeInventario
       ListField = 'RZSOC'
       ListSource = dtsEmpresa
       ParentFont = False
-      TabOrder = 2
+      ReadOnly = True
+      TabOrder = 4
     end
     object dbCentroCusto: TRxDBComboEdit
       Left = 688
@@ -307,6 +315,8 @@ inherited frmGeInventario: TfrmGeInventario
       CharCase = ecUpperCase
       ClickKey = 16464
       Color = clMoneyGreen
+      DataField = 'CENTRO_CUSTO_DESC'
+      DataSource = dtsInventario
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -368,13 +378,16 @@ inherited frmGeInventario: TfrmGeInventario
       ParentShowHint = False
       ReadOnly = True
       ShowHint = True
-      TabOrder = 3
+      TabOrder = 5
+      OnButtonClick = dbCentroCustoButtonClick
     end
     object dbTipo: TDBLookupComboBox
       Left = 320
       Top = 80
       Width = 233
       Height = 21
+      DataField = 'TIPO'
+      DataSource = dtsInventario
       DropDownRows = 10
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -385,13 +398,15 @@ inherited frmGeInventario: TfrmGeInventario
       ListField = 'DESCRICAO'
       ListSource = dtsTipoInventario
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 7
     end
-    object dbDataApropriacao: TDBDateEdit
+    object dbData: TDBDateEdit
       Left = 560
       Top = 80
       Width = 121
       Height = 21
+      DataField = 'DATA'
+      DataSource = dtsInventario
       Color = clWhite
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -400,7 +415,7 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = []
       NumGlyphs = 2
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 8
     end
     object dbSituacao: TDBEdit
       Left = 688
@@ -409,6 +424,8 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 21
       TabStop = False
       Color = clMoneyGreen
+      DataField = 'STATUS_DESCRICAO'
+      DataSource = dtsInventario
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -416,7 +433,7 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = [fsBold]
       ParentFont = False
       ReadOnly = True
-      TabOrder = 6
+      TabOrder = 9
     end
     object dbUsuario: TDBEdit
       Left = 856
@@ -425,6 +442,8 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 21
       TabStop = False
       Color = clMoneyGreen
+      DataField = 'USUARIO_ABERTURA'
+      DataSource = dtsInventario
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -432,18 +451,21 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = [fsBold]
       ParentFont = False
       ReadOnly = True
-      TabOrder = 7
+      TabOrder = 10
     end
-    object dbProdutoNovo: TcxDBCheckBox
+    object dbBloquearMovimento: TcxDBCheckBox
       Left = 192
       Top = 104
-      Caption = 'Bloquear movimenta'#231#227'o de materiais/produtos'
+      Caption = 'Bloquear movimenta'#231#227'o de materiais, produtos e/ou equipamentos'
+      DataBinding.DataField = 'BLOQUEAR_MOVIMENTO'
+      DataBinding.DataSource = dtsInventario
+      Enabled = False
       ParentFont = False
       Properties.ValueChecked = '1'
       Properties.ValueUnchecked = '0'
-      TabOrder = 8
+      TabOrder = 11
       Transparent = True
-      Width = 249
+      Width = 361
     end
     object BtnAbrirInventario: TcxButton
       Tag = 1
@@ -454,7 +476,8 @@ inherited frmGeInventario: TfrmGeInventario
       Caption = 'Abrir Invent'#225'rio                  '
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 9
+      TabOrder = 0
+      OnClick = BtnAbrirInventarioClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000000000000000000000000000000000001DE6B51DE6B5
@@ -482,7 +505,6 @@ inherited frmGeInventario: TfrmGeInventario
         1DE6B5E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0C7B91DE6
         B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51D
         E6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5}
-      Kind = cxbkDropDown
     end
     object BtnEncerrarInventario: TcxButton
       Tag = 2
@@ -493,7 +515,7 @@ inherited frmGeInventario: TfrmGeInventario
       Caption = 'Encerrar Invent'#225'rio            '
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 10
+      TabOrder = 1
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         180000000000000300000000000000000000000000000000000000FF0000FF00
@@ -521,7 +543,6 @@ inherited frmGeInventario: TfrmGeInventario
         00FF0000FF0000FF0000FF00DCE3E180B0C080A0B07090A0D8DDD900FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      Kind = cxbkDropDown
     end
     object BtnCancelarInventario: TcxButton
       Tag = 3
@@ -532,7 +553,7 @@ inherited frmGeInventario: TfrmGeInventario
       Caption = 'Cancelar Invent'#225'rio           '
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 11
+      TabOrder = 2
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000000000000000000000000000000000001DE6B51DE6B5
@@ -560,7 +581,6 @@ inherited frmGeInventario: TfrmGeInventario
         1DE6B5E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0DDCABF1DE6
         B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51D
         E6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5}
-      Kind = cxbkDropDown
     end
   end
   object tlbBotoes: TToolBar
@@ -636,7 +656,8 @@ inherited frmGeInventario: TfrmGeInventario
       Caption = '&Cancelar'
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 1
+      TabOrder = 2
+      OnClick = BtnCancelarClick
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000120B0000120B00001000000000000000000000000000
@@ -661,7 +682,7 @@ inherited frmGeInventario: TfrmGeInventario
       Caption = '&Salvar'
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 2
+      TabOrder = 1
       Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000120B0000120B00001000000000000000000000000000
@@ -937,6 +958,48 @@ inherited frmGeInventario: TfrmGeInventario
     Left = 64
     Top = 536
     object nmImprimirConferenciaMC: TMenuItem
+      Bitmap.Data = {
+        16050000424D160500000000000036040000280000000E0000000E0000000100
+        080000000000E000000000000000000000000001000000000000000000000000
+        80000080000000808000800000008000800080800000C0C0C000C0DCC000F0CA
+        A6000020400000206000002080000020A0000020C0000020E000004000000040
+        20000040400000406000004080000040A0000040C0000040E000006000000060
+        20000060400000606000006080000060A0000060C0000060E000008000000080
+        20000080400000806000008080000080A0000080C0000080E00000A0000000A0
+        200000A0400000A0600000A0800000A0A00000A0C00000A0E00000C0000000C0
+        200000C0400000C0600000C0800000C0A00000C0C00000C0E00000E0000000E0
+        200000E0400000E0600000E0800000E0A00000E0C00000E0E000400000004000
+        20004000400040006000400080004000A0004000C0004000E000402000004020
+        20004020400040206000402080004020A0004020C0004020E000404000004040
+        20004040400040406000404080004040A0004040C0004040E000406000004060
+        20004060400040606000406080004060A0004060C0004060E000408000004080
+        20004080400040806000408080004080A0004080C0004080E00040A0000040A0
+        200040A0400040A0600040A0800040A0A00040A0C00040A0E00040C0000040C0
+        200040C0400040C0600040C0800040C0A00040C0C00040C0E00040E0000040E0
+        200040E0400040E0600040E0800040E0A00040E0C00040E0E000800000008000
+        20008000400080006000800080008000A0008000C0008000E000802000008020
+        20008020400080206000802080008020A0008020C0008020E000804000008040
+        20008040400080406000804080008040A0008040C0008040E000806000008060
+        20008060400080606000806080008060A0008060C0008060E000808000008080
+        20008080400080806000808080008080A0008080C0008080E00080A0000080A0
+        200080A0400080A0600080A0800080A0A00080A0C00080A0E00080C0000080C0
+        200080C0400080C0600080C0800080C0A00080C0C00080C0E00080E0000080E0
+        200080E0400080E0600080E0800080E0A00080E0C00080E0E000C0000000C000
+        2000C0004000C0006000C0008000C000A000C000C000C000E000C0200000C020
+        2000C0204000C0206000C0208000C020A000C020C000C020E000C0400000C040
+        2000C0404000C0406000C0408000C040A000C040C000C040E000C0600000C060
+        2000C0604000C0606000C0608000C060A000C060C000C060E000C0800000C080
+        2000C0804000C0806000C0808000C080A000C080C000C080E000C0A00000C0A0
+        2000C0A04000C0A06000C0A08000C0A0A000C0A0C000C0A0E000C0C00000C0C0
+        2000C0C04000C0C06000C0C08000C0C0A000F0FBFF00A4A0A000808080000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+        3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
       Caption = 'Lista p/ Confer'#234'ncia (Materiais Cadastrados)'
     end
     object nmImprimirConferenciaCC: TMenuItem
@@ -988,6 +1051,7 @@ inherited frmGeInventario: TfrmGeInventario
       Caption = '-'
     end
     object nmImprimirInventarioLanc: TMenuItem
+      Tag = 1
       Bitmap.Data = {
         16050000424D160500000000000036040000280000000E0000000E0000000100
         080000000000E000000000000000000000000001000000000000000000000000
@@ -1060,7 +1124,26 @@ inherited frmGeInventario: TfrmGeInventario
       '  , i.cancel_usuario'
       '  , i.cancel_movito'
       '  , i.bloquear_movimento'
+      '  , c.descricao as centro_custo_desc'
+      '  , s.descricao as status_descricao'
+      '  , ('
+      '      Select first 1'
+      '        us.nomecompleto'
+      '      from TBUSERS us'
+      '      where us.nome = i.insercao_usuario'
+      '    ) as usuario_abertura'
+      '  , ('
+      '      Select first 1'
+      '        us.nomecompleto'
+      '      from TBUSERS us'
+      '      where us.nome = i.fech_usuario'
+      '    ) as usuario_fechamento'
       'from TBINVENTARIO_ALMOX i'
+      '  left join TBCENTRO_CUSTO c on (c.codigo = i.centro_custo)'
+      
+        '  left join VW_STATUS_INVENTARIO_ALMOX s on (s.codigo = i.status' +
+        ')'
+      ''
       'where i.ano      = :ano'
       '  and i.controle = :cod'
       '  and i.empresa  = :emp')
@@ -1079,6 +1162,7 @@ inherited frmGeInventario: TfrmGeInventario
       Origin = '"TBINVENTARIO_ALMOX"."CONTROLE"'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
+      OnGetText = qryInventarioCONTROLEGetText
     end
     object qryInventarioTIPO: TSmallintField
       FieldName = 'TIPO'
@@ -1112,6 +1196,7 @@ inherited frmGeInventario: TfrmGeInventario
       ProviderFlags = [pfInUpdate]
     end
     object qryInventarioSTATUS: TSmallintField
+      Alignment = taLeftJustify
       FieldName = 'STATUS'
       Origin = '"TBINVENTARIO_ALMOX"."STATUS"'
       ProviderFlags = [pfInUpdate]
@@ -1164,9 +1249,39 @@ inherited frmGeInventario: TfrmGeInventario
       Size = 8
     end
     object qryInventarioBLOQUEAR_MOVIMENTO: TSmallintField
+      Alignment = taLeftJustify
       FieldName = 'BLOQUEAR_MOVIMENTO'
       Origin = '"TBINVENTARIO_ALMOX"."BLOQUEAR_MOVIMENTO"'
       ProviderFlags = [pfInUpdate]
+    end
+    object qryInventarioCENTRO_CUSTO_DESC: TIBStringField
+      FieldName = 'CENTRO_CUSTO_DESC'
+      Origin = '"TBCENTRO_CUSTO"."DESCRICAO"'
+      ProviderFlags = []
+      ReadOnly = True
+      OnGetText = qryInventarioCENTRO_CUSTO_DESCGetText
+      Size = 100
+    end
+    object qryInventarioSTATUS_DESCRICAO: TIBStringField
+      FieldKind = fkInternalCalc
+      FieldName = 'STATUS_DESCRICAO'
+      Origin = '"VW_STATUS_INVENTARIO_ALMOX"."DESCRICAO"'
+      ProviderFlags = []
+      ReadOnly = True
+      FixedChar = True
+      Size = 14
+    end
+    object qryInventarioUSUARIO_ABERTURA: TIBStringField
+      FieldName = 'USUARIO_ABERTURA'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 60
+    end
+    object qryInventarioUSUARIO_FECHAMENTO: TIBStringField
+      FieldName = 'USUARIO_FECHAMENTO'
+      ProviderFlags = []
+      ReadOnly = True
+      Size = 60
     end
   end
   object updInventario: TIBUpdateSQL
@@ -1250,7 +1365,9 @@ inherited frmGeInventario: TfrmGeInventario
     Top = 408
   end
   object dtsInventario: TDataSource
+    AutoEdit = False
     DataSet = qryInventario
+    OnStateChange = dtsInventarioStateChange
     Left = 80
     Top = 408
   end
@@ -1267,6 +1384,7 @@ inherited frmGeInventario: TfrmGeInventario
       '  , g.fracionador'
       '  , g.unidade'
       '  , g.custo_medio'
+      '  , g.lote_id'
       '  , u.unp_descricao as und_descricao'
       '  , u.unp_sigla     as und_sigla'
       
@@ -1620,6 +1738,7 @@ inherited frmGeInventario: TfrmGeInventario
     Top = 440
   end
   object dtsMaterial: TDataSource
+    AutoEdit = False
     DataSet = qryMaterial
     Left = 80
     Top = 440
