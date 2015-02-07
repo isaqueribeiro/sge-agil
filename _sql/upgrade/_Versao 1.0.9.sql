@@ -8058,3 +8058,160 @@ Token unknown - line 10, column 48.
 ).
 
 */
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 24, column 7.
+from.
+
+*/
+
+
+
+/*------ SYSDBA 07/02/2015 10:49:30 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_PRODUTO (
+    IN_EMPRESA DMN_CNPJ,
+    IN_CENTRO_CUSTO DMN_INTEGER_N,
+    IN_PRODUTO DMN_VCHAR_10)
+returns (
+    PRODUTO DMN_VCHAR_10,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    UNIDADE DMN_SMALLINT_N,
+    CUSTO_MEDIO DMN_MONEY,
+    LOTE_ID DMN_GUID_38)
+as
+declare variable ESTOQUE_UNICO DMN_SMALLINT_N;
+begin
+  Select
+    coalesce(c.estoque_unico_empresas, 0)
+  from TBCONFIGURACAO c
+  where c.empresa = :in_empresa
+  Into
+    estoque_unico;
+
+  estoque_unico = coalesce(:estoque_unico, 0);
+
+  if ( coalesce(:in_centro_custo, 0) = 0 ) then
+  begin
+
+    /* Buscar no Estoque de Venda */
+    Select first 1
+        p.cod
+      , p.qtde
+      , 1.0
+      , p.codunidade
+      , p.customedio
+      , null
+    from TBPRODUTO p
+    where (p.cod     = :in_produto)
+      and ((p.codemp = :in_empresa) or (:estoque_unico = 1))
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio
+      , lote_id;
+
+  end
+  else
+  begin
+
+    /* Buscar no Estoque Apropriado do Centro de Custo */
+    Select first 1
+        g.produto
+      , g.estoque
+      , g.fracionador
+      , g.unidade
+      , g.custo_total / g.estoque
+      , g.lote_id
+    from GET_ESTOQUE_ALMOX_DISPONIVEL (:in_empresa, :in_centro_custo, :in_produto, null, null, null, null) g
+    Into
+        produto
+      , estoque
+      , fracionador
+      , unidade
+      , custo_medio
+      , lote_id;
+
+  end
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 07/02/2015 11:31:53 --------*/
+
+CREATE SEQUENCE GEN_INVENTARIO_ALMOX_2015;
+
+CREATE SEQUENCE GEN_INVENTARIO_ALMOX_2016;
+
+CREATE SEQUENCE GEN_INVENTARIO_ALMOX_2017;
+
+CREATE SEQUENCE GEN_INVENTARIO_ALMOX_2018;
+
+CREATE SEQUENCE GEN_INVENTARIO_ALMOX_2019;
+
+CREATE SEQUENCE GEN_INVENTARIO_ALMOX_2020;
+
+
+
+
+/*------ SYSDBA 07/02/2015 11:33:07 --------*/
+
+COMMENT ON SEQUENCE GEN_INVENTARIO_ALMOX_2015 IS 'Sequenciador de inventarios do almoxarifado para 2015';
+
+COMMENT ON SEQUENCE GEN_INVENTARIO_ALMOX_2016 IS 'Sequenciador de inventarios do almoxarifado para 2016';
+
+COMMENT ON SEQUENCE GEN_INVENTARIO_ALMOX_2017 IS 'Sequenciador de inventarios do almoxarifado para 2017';
+
+COMMENT ON SEQUENCE GEN_INVENTARIO_ALMOX_2018 IS 'Sequenciador de inventarios do almoxarifado para 2018';
+
+COMMENT ON SEQUENCE GEN_INVENTARIO_ALMOX_2019 IS 'Sequenciador de inventarios do almoxarifado para 2019';
+
+COMMENT ON SEQUENCE GEN_INVENTARIO_ALMOX_2020 IS 'Sequenciador de inventarios do almoxarifado para 2020';
+
+
+
+
+/*------ SYSDBA 07/02/2015 12:07:40 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_SEGMENTO_EMPRESA (
+    CODIGO DMN_SMALLINT_NN,
+    DESCRICAO DMN_NOME)
+as
+begin
+  if (not exists(
+    Select
+      s.seg_id
+    from TBSEGMENTO s
+    where s.seg_id = :codigo
+  )) then
+    Insert Into TBSEGMENTO (
+        seg_id
+      , seg_descricao
+    ) values (
+        :codigo
+      , :descricao
+    );
+  else
+    Update TBSEGMENTO s Set
+      s.seg_descricao = :descricao
+    where s.seg_id = :codigo;
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE SET_SEGMENTO_EMPRESA TO "PUBLIC";

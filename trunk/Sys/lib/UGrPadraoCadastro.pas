@@ -80,10 +80,6 @@ type
   private
     { Private declarations }
     fDisplayFormat  ,
-    fNomeTabela     ,
-    fCampoCodigo    ,
-    fCampoDescricao ,
-    fCampoOrdenacao ,
     fWhereAdditional: String;
     fLiberarUso     ,
     fOcorreuErro    ,
@@ -110,10 +106,6 @@ type
     { Public declarations }
     property ver : TInfoVersao read _ver;
     property DisplayFormatCodigo : String read fDisplayFormat write fDisplayFormat;
-    property NomeTabela : String read fNomeTabela write fNomeTabela;
-    property CampoCodigo : String read fCampoCodigo write fCampoCodigo;
-    property CampoDescricao : String read fCampoDescricao write fCampoDescricao;
-    property CampoOrdenacao : String read fCampoOrdenacao write fCampoOrdenacao;
     property WhereAdditional : String read fWhereAdditional write SetWhereAdditional;
     property OcorreuErro : Boolean read fOcorreuErro;
     property AbrirTabelaAuto : Boolean read fAbrirTabelaAuto write fAbrirTabelaAuto;
@@ -127,7 +119,7 @@ type
     property RotinaImprimirID  : String read GetRotinaImprimirID;
     property RotinaPesquisarID : String read GetRotinaPesquisarID;
 
-    procedure UpdateGenerator(const sWhr : String = '');
+    procedure UpdateGenerator(const sWhr : String = ''); override;
     procedure RedimencionarBevel(const ToolBar : TToolBar; const bvl : TBevel);
     procedure RegistrarRotinaSistema; override;
     procedure pgcGuiasOnChange; virtual; 
