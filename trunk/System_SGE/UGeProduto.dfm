@@ -696,7 +696,7 @@ inherited frmGeProduto: TfrmGeProduto
         Top = 197
         Width = 953
         Height = 341
-        ActivePage = TbsEspecificacao
+        ActivePage = tbsValores
         Align = alClient
         TabOrder = 2
         object tbsValores: TTabSheet
@@ -1030,6 +1030,18 @@ inherited frmGeProduto: TfrmGeProduto
             DataField = 'COMPOR_FATURAMENTO'
             DataSource = DtSrcTabela
             TabOrder = 9
+            ValueChecked = '1'
+            ValueUnchecked = '0'
+          end
+          object DBCheckBox1: TDBCheckBox
+            Left = 16
+            Top = 200
+            Width = 153
+            Height = 17
+            Caption = 'Produto '#233' Imobilizado'
+            DataSource = DtSrcTabela
+            Enabled = False
+            TabOrder = 10
             ValueChecked = '1'
             ValueUnchecked = '0'
           end

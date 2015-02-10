@@ -8334,3 +8334,1276 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 10/02/2015 11:42:23 --------*/
+
+ALTER TABLE TBPRODUTO
+    ADD PRODUTO_IMOBILIZADO DMN_LOGICO;
+
+COMMENT ON COLUMN TBPRODUTO.PRODUTO_IMOBILIZADO IS
+'Produto imobilizado:
+0 - Nao
+1 - Sim';
+
+alter table TBPRODUTO
+alter CODIGO position 1;
+
+alter table TBPRODUTO
+alter COD position 2;
+
+alter table TBPRODUTO
+alter DESCRI position 3;
+
+alter table TBPRODUTO
+alter APRESENTACAO position 4;
+
+alter table TBPRODUTO
+alter DESCRI_APRESENTACAO position 5;
+
+alter table TBPRODUTO
+alter METAFONEMA position 6;
+
+alter table TBPRODUTO
+alter MODELO position 7;
+
+alter table TBPRODUTO
+alter PRECO position 8;
+
+alter table TBPRODUTO
+alter PRECO_PROMOCAO position 9;
+
+alter table TBPRODUTO
+alter REFERENCIA position 10;
+
+alter table TBPRODUTO
+alter ESPECIFICACAO position 11;
+
+alter table TBPRODUTO
+alter SECAO position 12;
+
+alter table TBPRODUTO
+alter QTDE position 13;
+
+alter table TBPRODUTO
+alter FRACIONADOR position 14;
+
+alter table TBPRODUTO
+alter PESO_BRUTO position 15;
+
+alter table TBPRODUTO
+alter PESO_LIQUIDO position 16;
+
+alter table TBPRODUTO
+alter CUBAGEM position 17;
+
+alter table TBPRODUTO
+alter VENDA_FRACIONADA position 18;
+
+alter table TBPRODUTO
+alter CODUNIDADE_FRACIONADA position 19;
+
+alter table TBPRODUTO
+alter UNIDADE position 20;
+
+alter table TBPRODUTO
+alter ESTOQMIN position 21;
+
+alter table TBPRODUTO
+alter CODGRUPO position 22;
+
+alter table TBPRODUTO
+alter CODFABRICANTE position 23;
+
+alter table TBPRODUTO
+alter CUSTOMEDIO position 24;
+
+alter table TBPRODUTO
+alter PERCENTUAL_MARCKUP position 25;
+
+alter table TBPRODUTO
+alter PERCENTUAL_MARGEM position 26;
+
+alter table TBPRODUTO
+alter PRECO_SUGERIDO position 27;
+
+alter table TBPRODUTO
+alter CODEMP position 28;
+
+alter table TBPRODUTO
+alter CODSECAO position 29;
+
+alter table TBPRODUTO
+alter CODORIGEM position 30;
+
+alter table TBPRODUTO
+alter CODTRIBUTACAO position 31;
+
+alter table TBPRODUTO
+alter CST position 32;
+
+alter table TBPRODUTO
+alter CSOSN position 33;
+
+alter table TBPRODUTO
+alter CST_PIS position 34;
+
+alter table TBPRODUTO
+alter CST_COFINS position 35;
+
+alter table TBPRODUTO
+alter NCM_SH position 36;
+
+alter table TBPRODUTO
+alter CODIGO_NVE position 37;
+
+alter table TBPRODUTO
+alter CODCFOP position 38;
+
+alter table TBPRODUTO
+alter CODBARRA_EAN position 39;
+
+alter table TBPRODUTO
+alter CODUNIDADE position 40;
+
+alter table TBPRODUTO
+alter ALIQUOTA_TIPO position 41;
+
+alter table TBPRODUTO
+alter ALIQUOTA position 42;
+
+alter table TBPRODUTO
+alter ALIQUOTA_CSOSN position 43;
+
+alter table TBPRODUTO
+alter ALIQUOTA_PIS position 44;
+
+alter table TBPRODUTO
+alter ALIQUOTA_COFINS position 45;
+
+alter table TBPRODUTO
+alter VALOR_IPI position 46;
+
+alter table TBPRODUTO
+alter RESERVA position 47;
+
+alter table TBPRODUTO
+alter PRODUTO_NOVO position 48;
+
+alter table TBPRODUTO
+alter COR_VEICULO position 49;
+
+alter table TBPRODUTO
+alter COMBUSTIVEL_VEICULO position 50;
+
+alter table TBPRODUTO
+alter TIPO_VEICULO position 51;
+
+alter table TBPRODUTO
+alter ANO_MODELO_VEICULO position 52;
+
+alter table TBPRODUTO
+alter ANO_FABRICACAO_VEICULO position 53;
+
+alter table TBPRODUTO
+alter RENAVAM_VEICULO position 54;
+
+alter table TBPRODUTO
+alter CHASSI_VEICULO position 55;
+
+alter table TBPRODUTO
+alter KILOMETRAGEM_VEICULO position 56;
+
+alter table TBPRODUTO
+alter SITUACAO_ATUAL_VEICULO position 57;
+
+alter table TBPRODUTO
+alter SITUACAO_HISTORICO_VEICULO position 58;
+
+alter table TBPRODUTO
+alter PERCENTUAL_REDUCAO_BC position 59;
+
+alter table TBPRODUTO
+alter USUARIO position 60;
+
+alter table TBPRODUTO
+alter MOVIMENTA_ESTOQUE position 61;
+
+alter table TBPRODUTO
+alter COMPOR_FATURAMENTO position 62;
+
+alter table TBPRODUTO
+alter PRODUTO_IMOBILIZADO position 63;
+
+alter table TBPRODUTO
+alter CUST_DESP_OFIC position 64;
+
+alter table TBPRODUTO
+alter CUST_DESP_GERAIS position 65;
+
+alter table TBPRODUTO
+alter CUST_DESP_ADM position 66;
+
+alter table TBPRODUTO
+alter CUST_COMISSAO position 67;
+
+alter table TBPRODUTO
+alter CUST_IMPOSTO position 68;
+
+alter table TBPRODUTO
+alter FI_RET_FINANC position 69;
+
+alter table TBPRODUTO
+alter FI_RET_PLANO position 70;
+
+
+
+
+/*------ SYSDBA 10/02/2015 11:46:54 --------*/
+
+ALTER TABLE TBPRODUTO ADD IBE$$TEMP_COLUMN
+ SMALLINT DEFAULT 0
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'TBPRODUTO') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'TBPRODUTO') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'TBPRODUTO') AND
+      (F1.RDB$FIELD_NAME = 'PRODUTO_IMOBILIZADO');
+
+ALTER TABLE TBPRODUTO DROP IBE$$TEMP_COLUMN;
+
+
+
+
+/*------ SYSDBA 10/02/2015 12:42:38 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_inventario_almox_codigo for tbinventario_almox
+active before insert position 0
+AS
+begin
+  if (new.controle is null) then
+    if ( new.ano = 2015 ) then
+      new.controle = gen_id(GEN_INVENTARIO_ALMOX_2015, 1);
+    else
+    if ( new.ano = 2016 ) then
+      new.controle = gen_id(GEN_INVENTARIO_ALMOX_2016, 1);
+    else
+    if ( new.ano = 2017 ) then
+      new.controle = gen_id(GEN_INVENTARIO_ALMOX_2017, 1);
+    else
+    if ( new.ano = 2018 ) then
+      new.controle = gen_id(GEN_INVENTARIO_ALMOX_2018, 1);
+    else
+    if ( new.ano = 2019 ) then
+      new.controle = gen_id(GEN_INVENTARIO_ALMOX_2019, 1);
+    else
+    if ( new.ano = 2020 ) then
+      new.controle = gen_id(GEN_INVENTARIO_ALMOX_2020, 1);
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_INVENTARIO_ALMOX_CODIGO IS 'Trigger Novo Inventario de Estoque (Estoque de Venda/Almoxarifado).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   10/02/2015
+
+Trigger responsavel por gerar um sequencial unico para cada novo registro de inventario de estoque no ano.';
+
+
+
+
+/*------ SYSDBA 10/02/2015 12:44:20 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_inventario_almox_comp for tbinventario_almox
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = Cast((
+      right('0000' || extract(year from new.data), 4) ||
+      right('00' || extract(month from new.data), 2)) as Integer);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_INVENTARIO_ALMOX_COMP IS 'Trigger Competencia Inventario Estoque (Estoque de Venda/Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   10/02/2015
+
+Trigger responsavel por identificar a competencia do inventario quando esta nao for informada, baseando-se na data de
+lancamento.';
+
+
+
+
+/*------ SYSDBA 10/02/2015 13:47:45 --------*/
+
+CREATE INDEX IDX_TBINVENTARIO_ALMOX_ITM_LR
+ON TBINVENTARIO_ALMOX_ITEM (LOTE_RESULTADO);
+
+CREATE INDEX IDX_TBINVENTARIO_ALMOX_ITM_LC
+ON TBINVENTARIO_ALMOX_ITEM (LOTE_CONFERIDO);
+
+
+
+
+/*------ SYSDBA 10/02/2015 13:57:22 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id = :lote_id_conf
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where (e.id = :lote_id_conf);
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio
+            , :lote_id_resp
+          );
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 10/02/2015 13:59:51 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id = :lote_id_conf
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where (e.id = :lote_id_conf);
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio
+            , :lote_id_resp
+          );
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TB_INVENTARIO_ALMOX_ENCERRAR IS 'Trigger Encerrar Inventario (Estoque de Venda/Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   10/02/2015
+
+Trigger responsavel por atualizar o Estoque de Venda ou o estoque do Centro de Custo (Almoxarifado) quando o inventario
+for encerrado peloa aplicacao.';
+
+
+
+
+/*------ SYSDBA 10/02/2015 14:00:17 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (old.status = 1) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id = :lote_id_conf
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where (e.id = :lote_id_conf);
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio
+            , :lote_id_resp
+          );
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 10/02/2015 14:02:31 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable lancamento   DMN_GUID_38;
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (old.status = 1) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          i.id
+        , coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          lancamento
+        , produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id = :lote_id_conf
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where (e.id = :lote_id_conf);
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade   -- Esta quantidade ja esta fracionada para consumo
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio  -- Este valor ja esta fracionado
+            , :lote_id_resp
+          );
+
+          Update TBINVENTARIO_ALMOX_ITEM ai Set
+            ai.lote_resultado = :lote_id_resp
+          where ai.id = :lancamento;
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 10/02/2015 14:04:07 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable lancamento   DMN_GUID_38;
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (old.status = 1) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          i.id
+        , coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          lancamento
+        , produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id = :lote_id_conf
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where e.id           = :lote_id_conf
+            and e.empresa      = new.empresa
+            and e.centro_custo = new.centro_custo
+            and e.produto      = :produto;
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade   -- Esta quantidade ja esta fracionada para consumo
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio  -- Este valor ja esta fracionado
+            , :lote_id_resp
+          );
+
+          Update TBINVENTARIO_ALMOX_ITEM ai Set
+            ai.lote_resultado = :lote_id_resp
+          where ai.id = :lancamento;
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 10/02/2015 14:04:37 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable lancamento   DMN_GUID_38;
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (old.status = 1) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          i.id
+        , coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          lancamento
+        , produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id           = :lote_id_conf
+            and e.empresa      = new.empresa
+            and e.centro_custo = new.centro_custo
+            and e.produto      = :produto
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where e.id           = :lote_id_conf
+            and e.empresa      = new.empresa
+            and e.centro_custo = new.centro_custo
+            and e.produto      = :produto;
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade   -- Esta quantidade ja esta fracionada para consumo
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio  -- Este valor ja esta fracionado
+            , :lote_id_resp
+          );
+
+          Update TBINVENTARIO_ALMOX_ITEM ai Set
+            ai.lote_resultado = :lote_id_resp
+          where ai.id = :lancamento;
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+

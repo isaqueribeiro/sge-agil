@@ -2,13 +2,13 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   Left = 400
   Top = 213
   Width = 1132
-  Height = 724
+  Height = 687
   Caption = 'Consultar Apropria'#231#227'o de Estoque Atual'
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
-    Top = 682
+    Top = 645
     Width = 1116
     Height = 4
     Align = alBottom
@@ -16,7 +16,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   end
   object Bevel3: TBevel
     Left = 0
-    Top = 643
+    Top = 606
     Width = 1116
     Height = 4
     Align = alBottom
@@ -202,7 +202,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   end
   object tlbBotoes: TToolBar
     Left = 0
-    Top = 647
+    Top = 610
     Width = 1116
     Height = 35
     Align = alBottom
@@ -375,7 +375,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
     Left = 0
     Top = 81
     Width = 1116
-    Height = 562
+    Height = 525
     ActivePage = TbsProduto
     Align = alClient
     Font.Charset = ANSI_CHARSET
@@ -787,7 +787,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Left = 0
         Top = 0
         Width = 1108
-        Height = 534
+        Height = 497
         Align = alClient
         TabOrder = 0
         object dbgProdutoTbl: TcxGridDBBandedTableView

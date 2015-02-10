@@ -27,6 +27,7 @@ type
   end;
 
   function SetMemoObservacao(const AOnwer : TComponent; var sObservacao : TStringList) : Boolean;
+  function SetMemoMotivo(const AOnwer : TComponent; var sMotivo : TStringList) : Boolean;
 
 implementation
 
@@ -56,10 +57,31 @@ begin
   end;
 end;
 
+function SetMemoMotivo(const AOnwer : TComponent; var sMotivo : TStringList) : Boolean;
+var
+  AForm : TfrmGrMemo;
+begin
+  AForm := TfrmGrMemo.Create(AOnwer);
+  try
+    AForm.Caption := 'Motivo:';
+    AForm.edObservacao.Clear;
+    AForm.edObservacao.Lines.AddStrings( sMotivo );
+
+    Result := (AForm.ShowModal = mrOk);
+    if Result then
+    begin
+      sMotivo.Clear;
+      sMotivo.AddStrings( AForm.edObservacao.Lines );
+    end;
+  finally
+    AForm.Free;
+  end;
+end;
+
 procedure TfrmGrMemo.BtnConfirmarClick(Sender: TObject);
 begin
-  if Trim(edObservacao.Lines.Text) = EmptyStr then
-    ShowWarning('Favor informar texto!')
+  if ( Length(Trim(edObservacao.Lines.Text)) < 15 ) then
+    ShowWarning('Favor informar texto com, no mínimo, 15 caracteres!')
   else
     ModalResult := mrOk;  
 end;
