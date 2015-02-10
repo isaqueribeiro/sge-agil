@@ -1,6 +1,6 @@
 inherited frmGrPadraoImpressao: TfrmGrPadraoImpressao
-  Left = 390
-  Top = 214
+  Left = 391
+  Top = 223
   ActiveControl = edRelatorio
   BorderStyle = bsDialog
   Caption = 'Padr'#227'o Impress'#227'o'
