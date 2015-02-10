@@ -832,13 +832,13 @@ inherited frmGeProduto: TfrmGeProduto
           end
           object dbProdutoNovo: TDBCheckBox
             Left = 16
-            Top = 128
+            Top = 152
             Width = 113
             Height = 17
             Caption = 'Produto Novo'
             DataField = 'PRODUTO_NOVO'
             DataSource = DtSrcTabela
-            TabOrder = 7
+            TabOrder = 8
             ValueChecked = '1'
             ValueUnchecked = '0'
           end
@@ -1011,37 +1011,49 @@ inherited frmGeProduto: TfrmGeProduto
           end
           object dbMovimentaEstoque: TDBCheckBox
             Left = 16
-            Top = 152
+            Top = 176
             Width = 209
             Height = 17
             Caption = 'Produto Movimenta Estoque'
             DataField = 'MOVIMENTA_ESTOQUE'
             DataSource = DtSrcTabela
-            TabOrder = 8
+            TabOrder = 9
             ValueChecked = '1'
             ValueUnchecked = '0'
           end
           object dbComporFaturamento: TDBCheckBox
             Left = 16
-            Top = 176
+            Top = 200
             Width = 257
             Height = 17
             Caption = 'Produto/Servi'#231'o Comp'#245'e o Faturamento'
             DataField = 'COMPOR_FATURAMENTO'
             DataSource = DtSrcTabela
-            TabOrder = 9
+            TabOrder = 10
             ValueChecked = '1'
             ValueUnchecked = '0'
           end
-          object DBCheckBox1: TDBCheckBox
+          object dbProdutoImobilizado: TDBCheckBox
             Left = 16
-            Top = 200
+            Top = 224
             Width = 153
             Height = 17
             Caption = 'Produto '#233' Imobilizado'
             DataSource = DtSrcTabela
             Enabled = False
-            TabOrder = 10
+            TabOrder = 11
+            ValueChecked = '1'
+            ValueUnchecked = '0'
+          end
+          object dbCadastroAtivo: TDBCheckBox
+            Left = 16
+            Top = 128
+            Width = 153
+            Height = 17
+            Caption = 'Cadastro Ativo'
+            DataSource = DtSrcTabela
+            Enabled = False
+            TabOrder = 7
             ValueChecked = '1'
             ValueUnchecked = '0'
           end
@@ -1862,7 +1874,7 @@ inherited frmGeProduto: TfrmGeProduto
             object lblEspecificacao: TLabel
               Left = 2
               Top = 2
-              Width = 941
+              Width = 105
               Height = 13
               Align = alTop
               Caption = 'Especifica'#231#227'o textual:'
@@ -3424,8 +3436,8 @@ inherited frmGeProduto: TfrmGeProduto
   end
   object ppImprimir: TPopupMenu
     Images = ImgList
-    Left = 40
-    Top = 488
+    Left = 24
+    Top = 496
     object nmProdutoLista: TMenuItem
       Bitmap.Data = {
         16050000424D160500000000000036040000280000000E0000000E0000000100
