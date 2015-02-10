@@ -144,6 +144,19 @@ type
     CdsRelacaoProduto: TClientDataSet;
     FrdsRelacaoProduto: TfrxDBDataset;
     Bevel5: TBevel;
+    frRelacaoProdutoCC: TfrxReport;
+    QryRelacaoProdutoCC: TIBQuery;
+    DspRelacaoProdutoCC: TDataSetProvider;
+    CdsRelacaoProdutoCC: TClientDataSet;
+    FrdsRelacaoProdutoCC: TfrxDBDataset;
+    dbgMatTblESTOQUE: TcxGridDBBandedColumn;
+    dbgMatTblQTDE: TcxGridDBBandedColumn;
+    dbgMatTblUNP_SIGLA: TcxGridDBBandedColumn;
+    StyleRepository: TcxStyleRepository;
+    StyleSelecao: TcxStyle;
+    StyleContent: TcxStyle;
+    StyleContentEven: TcxStyle;
+    dbgMatTblUSUARIO: TcxGridDBBandedColumn;
     procedure FormCreate(Sender: TObject);
     procedure nmCarregarIAClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -478,6 +491,8 @@ procedure TfrmGeInventario.BtnSalvarClick(Sender: TObject);
 begin
   if (qryInventario.State in [dsEdit, dsInsert]) then
   begin
+    qryInventarioCENTRO_CUSTO.Required := (gSistema.Codigo = SISTEMA_GESTAO_IND);
+
     ClearFieldEmptyStr;
     if CamposRequiridos(Self, TClientDataSet(qryInventario), Self.Caption) then
       Exit;
@@ -671,6 +686,16 @@ begin
       
       qryMaterial.Post;
       qryMaterial.ApplyUpdates;
+
+      if (qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_EML) then
+      begin
+        qryInventario.Edit;
+        qryInventarioSTATUS.AsInteger          := STATUS_INVENTARIO_ALMOX_EMC;
+        qryInventarioSTATUS_DESCRICAO.AsString := 'Em conferência';
+        qryInventario.Post;
+        qryInventario.ApplyUpdates;
+      end;
+
       CommitTransaction;
     end;
 
@@ -729,19 +754,79 @@ begin
 end;
 
 procedure TfrmGeInventario.BtnCancelarInventarioClick(Sender: TObject);
+var
+  sMotivo : TStringList;
 begin
   if not GetPermissaoRotinaInterna(Sender, True) then
     Exit;
 
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_CAN ) then
+    ShowWarning('O inventário selecionado já está cancelado!')
+  else
+  if ( qryInventarioSTATUS.AsInteger <> STATUS_INVENTARIO_ALMOX_EMC ) then
+    ShowWarning('Apenas inventários em conferência podem ser cancelados!')
+  else
+    try
+      sMotivo := TStringList.Create;
+      sMotivo.Clear;
 
+      if not SetMemoMotivo(Self, sMotivo) then
+        Exit;
+
+      if ShowConfirmation('Os lançamentos realizados não serão contabilizados ao cancelar inventário.' + #13#13 + 'Deseja cancelar o inventário?') then
+      begin
+        qryInventario.Edit;
+        qryInventarioSTATUS.AsInteger           := STATUS_INVENTARIO_ALMOX_CAN;
+        qryInventarioSTATUS_DESCRICAO.AsString  := 'Cancelado';
+        qryInventarioCANCEL_DATAHORA.AsDateTime := GetDateTimeDB;
+        qryInventarioCANCEL_USUARIO.AsString    := gUsuarioLogado.Login;
+        qryInventarioCANCEL_MOVITO.AsString     := sMotivo.Text;
+        qryInventario.Post;
+        qryInventario.ApplyUpdates;
+        CommitTransaction;
+
+        BloquearBotoes;
+
+        ShowInformation('Inventário cancelado com sucesso.');
+      end;
+    finally
+      sMotivo.Free;
+    end;
 end;
 
 procedure TfrmGeInventario.BtnEncerrarInventarioClick(Sender: TObject);
+var
+  sMensagem : String;
 begin
   if not GetPermissaoRotinaInterna(Sender, True) then
     Exit;
 
+  if (qryInventarioCENTRO_CUSTO.AsInteger = 0) then
+    sMensagem := 'Ao encerrar o balanço/inventário, o estoque de venda será atualizado para os itens lançados.'
+  else
+    sMensagem := 'Ao encerra o inventário, o estoque do Centro de Custo será atualizado para os itens lançados.';
 
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_ENC ) then
+    ShowWarning('O inventário selecionado já está encerrado!')
+  else
+  if ( qryInventarioSTATUS.AsInteger <> STATUS_INVENTARIO_ALMOX_EMC ) then
+    ShowWarning('Apenas inventários em conferência podem ser encerrados!')
+  else
+  if ShowConfirmation(sMensagem + #13#13 + 'Deseja encerrar o inventário?') then
+  begin
+    qryInventario.Edit;
+    qryInventarioSTATUS.AsInteger          := STATUS_INVENTARIO_ALMOX_ENC;
+    qryInventarioSTATUS_DESCRICAO.AsString := 'Encerrado';
+    qryInventarioFECH_DATAHORA.AsDateTime  := GetDateTimeDB;
+    qryInventarioFECH_USUARIO.AsString     := gUsuarioLogado.Login;
+    qryInventario.Post;
+    qryInventario.ApplyUpdates;
+    CommitTransaction;
+
+    BloquearBotoes;
+
+    ShowInformation('Inventário encerrado com sucesso.');
+  end;
 end;
 
 procedure TfrmGeInventario.nmImprimirConferenciaMCClick(Sender: TObject);

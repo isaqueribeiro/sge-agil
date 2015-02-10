@@ -257,6 +257,7 @@ type
     nmProdutoLista: TMenuItem;
     nmProdutoFicha: TMenuItem;
     nmProdutoEtiqueta: TMenuItem;
+    DBCheckBox1: TDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
