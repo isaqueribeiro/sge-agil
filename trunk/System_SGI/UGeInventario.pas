@@ -3,8 +3,11 @@ unit UGeInventario;
 interface
 
 uses
+  UInfoVersao,
+  UGrPadrao, 
+
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UGrPadrao, ExtCtrls, cxGraphics, cxControls, cxLookAndFeels,
+  Dialogs, ExtCtrls, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, dxSkinsCore, dxSkinMcSkin,
   dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
@@ -14,7 +17,8 @@ uses
   ComCtrls, IBUpdateSQL, cxStyles, dxSkinscxPCPainter, cxCustomData,
   cxFilter, cxData, cxDataStorage, cxDBData, cxCurrencyEdit, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridBandedTableView,
-  cxGridDBBandedTableView, cxClasses, cxGridCustomView, cxGrid;
+  cxGridDBBandedTableView, cxClasses, cxGridCustomView, cxGrid, DBClient,
+  frxClass, frxDBSet, Provider, IBQuery;
 
 type
   TfrmGeInventario = class(TfrmGrPadrao)
@@ -118,6 +122,28 @@ type
     qryInventarioSTATUS_DESCRICAO: TIBStringField;
     qryInventarioUSUARIO_ABERTURA: TIBStringField;
     qryInventarioUSUARIO_FECHAMENTO: TIBStringField;
+    N2: TMenuItem;
+    nmExcluirInventario: TMenuItem;
+    lblProdutoCodigo: TLabel;
+    dbProdutoCodigo: TDBEdit;
+    dbProdutoNome: TDBEdit;
+    lblProdutoNome: TLabel;
+    BtnLancarProduto: TcxButton;
+    qryMaterialID: TIBStringField;
+    lblProdutoQtde: TLabel;
+    dbProdutoQtde: TDBEdit;
+    dbProdutoUnidade: TDBEdit;
+    lblProdutoUnidade: TLabel;
+    lblProdutoFracionador: TLabel;
+    dbProdutoFracionador: TDBEdit;
+    BtnEditarProduto: TcxButton;
+    nmObservacoes: TMenuItem;
+    frRelacaoProduto: TfrxReport;
+    QryRelacaoProduto: TIBQuery;
+    DspRelacaoProduto: TDataSetProvider;
+    CdsRelacaoProduto: TClientDataSet;
+    FrdsRelacaoProduto: TfrxDBDataset;
+    Bevel5: TBevel;
     procedure FormCreate(Sender: TObject);
     procedure nmCarregarIAClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -132,10 +158,29 @@ type
     procedure dbCentroCustoButtonClick(Sender: TObject);
     procedure qryInventarioCENTRO_CUSTO_DESCGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
+    procedure qryInventarioSTATUSGetText(Sender: TField; var Text: String;
+      DisplayText: Boolean);
+    procedure BtnSalvarClick(Sender: TObject);
+    procedure nmExcluirInventarioClick(Sender: TObject);
+    procedure BtnLancarProdutoClick(Sender: TObject);
+    procedure ControlEditExit(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure BtnConfirmarItemClick(Sender: TObject);
+    procedure BtnEditarProdutoClick(Sender: TObject);
+    procedure nmObservacoesClick(Sender: TObject);
+    procedure BtnCancelarInventarioClick(Sender: TObject);
+    procedure BtnEncerrarInventarioClick(Sender: TObject);
+    procedure nmImprimirConferenciaMCClick(Sender: TObject);
+    procedure frRelacaoProdutoGetValue(const VarName: String;
+      var Value: Variant);
   private
     { Private declarations }
+    ver : TInfoVersao;
     procedure CarregarInventario(Empresa : String; Ano, Codigo : Integer);
+    procedure CarregarDadosProduto( Codigo : Integer );
     procedure BloquearBotoes;
+    procedure ClearFieldEmptyStr;
   public
     { Public declarations }
     procedure RegistrarRotinaSistema; override;
@@ -148,7 +193,7 @@ implementation
 
 uses
   UDMBusiness, UFuncoes, UGeProduto,  DateUtils, UDMNFe, SysConst,  UConstantesDGE,
-  UGeCentroCusto;
+  UGrCampoRequisitado, UGeCentroCusto, UGrMemo;
 
 {$R *.dfm}
 
@@ -180,6 +225,8 @@ end;
 procedure TfrmGeInventario.FormCreate(Sender: TObject);
 begin
   inherited;
+
+  ver := TInfoVersao.GetInstance();
 
   RotinaID          := ROTINA_MOV_INVENTARIO_ESTOQU_ID;
   PnlTitulo.Caption := StringofChar(' ', 8)+ AnsiUpperCase(Self.Caption);
@@ -216,6 +263,12 @@ begin
 
     if nmImprimirInventarioLanc.Visible then
       SetRotinaSistema(ROTINA_TIPO_FUNCAO, GetRotinaSubInternaID(nmImprimirInventarioLanc), nmImprimirInventarioLanc.Caption, GetRotinaInternaID(BtnImprimir));
+
+    if BtnLancarProduto.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, GetRotinaInternaID(BtnLancarProduto), BtnLancarProduto.Caption, RotinaID);
+
+    if BtnEditarProduto.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, GetRotinaInternaID(BtnEditarProduto), BtnEditarProduto.Caption, RotinaID);
   end;
 end;
 
@@ -307,8 +360,16 @@ begin
   BtnCancelar.Enabled := (not PnlMaterial.Visible) and (qryInventario.State in [dsEdit, dsInsert]);
   BtnSalvar.Enabled   := (not PnlMaterial.Visible) and (qryInventario.State in [dsEdit, dsInsert]);
   BtnImprimir.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse);
-  
+
+  nmExcluirInventario.Enabled      := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount = 0) and (qryInventarioANO.AsInteger > 0);
   nmImprimirInventarioLanc.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse);
+
+  nmObservacoes.Enabled    := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse)
+    and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
+  BtnLancarProduto.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse)
+    and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
+  BtnEditarProduto.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount > 0)
+    and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
 end;
 
 procedure TfrmGeInventario.BtnCancelarItemClick(Sender: TObject);
@@ -348,6 +409,7 @@ begin
   qryInventarioCONTROLE.AsInteger := iNum;
   qryInventarioEMPRESA.AsString   := gUsuarioLogado.Empresa;
   qryInventarioSTATUS.AsInteger   := STATUS_INVENTARIO_ALMOX_EML;
+  qryInventarioSTATUS_DESCRICAO.AsString        := 'Em lançamento';
   qryInventarioINSERCAO_DATAHORA.AsDateTime     := GetDateTimeDB;
   qryInventarioINSERCAO_USUARIO.AsString        := gUsuarioLogado.Login;
   qryInventarioUSUARIO_ABERTURA.AsString        := gUsuarioLogado.Nome;
@@ -398,6 +460,348 @@ procedure TfrmGeInventario.qryInventarioCENTRO_CUSTO_DESCGetText(
 begin
   if not Sender.IsNull then
     Text := IfThen(gSistema.Codigo = SISTEMA_GESTAO_COM, '(ESTOQUE DE VENDA)', Sender.AsString);
+end;
+
+procedure TfrmGeInventario.qryInventarioSTATUSGetText(Sender: TField;
+  var Text: String; DisplayText: Boolean);
+begin
+  if not Sender.IsNull then
+    Case Sender.AsInteger of
+      STATUS_INVENTARIO_ALMOX_EML: Text := 'Em lançamento';
+      STATUS_INVENTARIO_ALMOX_EMC: Text := 'Em conferência';
+      STATUS_INVENTARIO_ALMOX_ENC: Text := 'Encerrado';
+      STATUS_INVENTARIO_ALMOX_CAN: Text := 'Cancelado';
+    end;
+end;
+
+procedure TfrmGeInventario.BtnSalvarClick(Sender: TObject);
+begin
+  if (qryInventario.State in [dsEdit, dsInsert]) then
+  begin
+    ClearFieldEmptyStr;
+    if CamposRequiridos(Self, TClientDataSet(qryInventario), Self.Caption) then
+      Exit;
+
+    if not qryInventario.Modified then
+      qryInventario.Cancel
+    else
+    if ShowConfirmation('Deseja confirmar os dados informados para o inventário?') then
+    begin
+      qryInventario.Post;
+      qryInventario.ApplyUpdates;
+      CommitTransaction;
+    end;
+  end;
+end;
+
+procedure TfrmGeInventario.ClearFieldEmptyStr;
+var
+  I : Integer;
+begin
+
+  for I := 0 to qryInventario.Fields.Count - 1 do
+    if ( qryInventario.Fields[I].Required ) then
+      if ( Trim(qryInventario.Fields[I].AsString) = EmptyStr ) then
+        qryInventario.Fields[I].Clear;
+
+end;
+
+procedure TfrmGeInventario.nmExcluirInventarioClick(Sender: TObject);
+begin
+  if ( qryInventario.RecordCount > 0 ) then
+    if ( qryInventarioSTATUS.AsInteger <> STATUS_INVENTARIO_ALMOX_EML ) then
+      ShowInformation('Apenas inventários em lançamento podem ser excluídos!')
+    else
+    if ShowConfirmation('Deseja excluir o inventário selecionado?') then
+    begin
+      qryInventario.Delete;
+      qryInventario.ApplyUpdates;
+      CommitTransaction;
+      
+      nmCarregarIAClick(Self);
+    end;
+end;
+
+procedure TfrmGeInventario.BtnLancarProdutoClick(Sender: TObject);
+begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_ENC ) then
+    ShowInformation('Inventário encerrado não pode ser alterado!')
+  else
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_CAN ) then
+    ShowInformation('Inventário cancelado não pode ser alterado!')
+  else
+  begin
+    qryMaterial.Append;
+    qryMaterialID.AsString := GetGuidID38;
+    qryMaterialANO.Assign( qryInventarioANO );
+    qryMaterialCONTROLE.Assign( qryInventarioCONTROLE );
+    qryMaterialITEM.AsInteger         := 0;
+    qryMaterialFRACIONADOR.AsCurrency := 1.0;
+    qryMaterialUSUARIO.AsString       := gUsuarioLogado.Login;
+
+    qryMaterialLOTE_CONFERIDO.Clear;
+    qryMaterialLOTE_RESULTADO.Clear;
+
+    PnlMaterial.Visible      := True;
+    dbProdutoCodigo.ReadOnly := False;
+    dbProdutoCodigo.SetFocus;
+
+    BloquearBotoes;
+  end;
+end;
+
+procedure TfrmGeInventario.CarregarDadosProduto(Codigo: Integer);
+begin
+  if not PnlMaterial.Visible then
+    Exit;
+    
+  if ( Codigo = 0 ) then
+  begin
+    ShowWarning('Favor informar o código do material/produto');
+    Exit;
+  end;
+
+  if ( not qryMaterial.Active ) then
+    Exit
+  else
+  if ( qryMaterial.State in [dsEdit, dsInsert] ) then
+  begin
+    with qryProduto do
+    begin
+      Close;
+      ParamByName('empresa').AsString       := qryInventarioEMPRESA.AsString;
+      ParamByName('centro_custo').AsInteger := qryInventarioCENTRO_CUSTO.AsInteger;
+      ParamByName('produto').AsString       := FormatFloat('###0000000', Codigo);
+      Open;
+
+      if (Trim(FieldByName('produto').AsString) <> EmptyStr) then
+      begin
+        qryMaterialPRODUTO.AsString             := FieldByName('produto').AsString;
+        qryMaterialDESCRI_APRESENTACAO.AsString := FieldByName('descri_apresentacao').AsString;
+        qryMaterialESTOQUE.AsCurrency           := FieldByName('estoque').AsCurrency;
+        qryMaterialFRACIONADOR.AsCurrency       := FieldByName('fracionador').AsCurrency;
+        qryMaterialUNIDADE.AsInteger            := FieldByName('unidade').AsInteger;
+        qryMaterialCUSTO.AsCurrency             := FieldByName('custo_medio').AsCurrency;
+        qryMaterialUNP_DESCRICAO.AsString       := FieldByName('und_descricao').AsString;
+        qryMaterialUNP_SIGLA.AsString           := FieldByName('und_sigla').AsString;
+
+        if (Trim(FieldByName('lote_id').AsString) <> EmptyStr) then
+          qryMaterialLOTE_CONFERIDO.AsString := FieldByName('lote_id').AsString
+        else
+          qryMaterialLOTE_CONFERIDO.Clear;
+      end
+      else
+      begin
+        ShowWarning('Código de produto não cadastrado!');
+        qryMaterialPRODUTO.Clear;
+        
+        if ( dbProdutoCodigo.Visible and dbProdutoCodigo.Enabled ) then
+          dbProdutoCodigo.SetFocus;
+      end;
+    end;
+  end;
+end;
+
+procedure TfrmGeInventario.ControlEditExit(Sender: TObject);
+begin
+  inherited;
+  if ( Sender = dbProdutoCodigo ) then
+    if ( qryMaterial.State in [dsEdit, dsInsert] ) then
+      CarregarDadosProduto( StrToIntDef(qryMaterialPRODUTO.AsString, 0) );
+
+end;
+
+procedure TfrmGeInventario.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Key = VK_ESCAPE) then
+  begin
+
+    if PnlMaterial.Visible then
+    begin
+      PnlMaterial.Visible := False;
+      if ( qryMaterial.State in [dsEdit, dsInsert] ) then
+        qryMaterial.Cancel;
+      BloquearBotoes;  
+    end;
+
+  end
+  else
+  if (Key = VK_INSERT) then
+  begin
+
+    if ( BtnLancarProduto.Visible and BtnLancarProduto.Enabled ) then
+      BtnLancarProduto.Click;
+
+  end
+  else
+  if (Key = VK_F2) then
+  begin
+
+    if ( BtnEditarProduto.Visible and BtnEditarProduto.Enabled ) then
+      BtnEditarProduto.Click;
+
+  end;
+
+  inherited;
+end;
+
+procedure TfrmGeInventario.BtnConfirmarItemClick(Sender: TObject);
+begin
+  if ( Trim(dbProdutoCodigo.Field.AsString) = EmptyStr ) then
+  begin
+    ShowWarning('Favor informar o código do material/produto');
+    dbProdutoCodigo.SetFocus;
+  end
+  else
+  if ( dbProdutoQtde.Field.AsCurrency < 0.0 ) then
+  begin
+    ShowWarning('Favor informar uma quantidade válida');
+    dbProdutoQtde.SetFocus;
+  end
+  else
+  begin
+    if (qryMaterial.State in [dsEdit, dsInsert]) then
+    begin
+      qryMaterialTOTAL.AsCurrency := qryMaterialQTDE.AsCurrency * qryMaterialCUSTO.AsCurrency;
+      qryMaterialUSUARIO.AsString := gUsuarioLogado.Login;
+      
+      qryMaterial.Post;
+      qryMaterial.ApplyUpdates;
+      CommitTransaction;
+    end;
+
+    PnlMaterial.Visible := False;
+    dbgMat.SetFocus;
+
+    BloquearBotoes;
+  end;
+end;
+
+procedure TfrmGeInventario.BtnEditarProdutoClick(Sender: TObject);
+begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_ENC ) then
+    ShowInformation('Inventário encerrado não pode ser alterado!')
+  else
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_CAN ) then
+    ShowInformation('Inventário cancelado não pode ser alterado!')
+  else
+  begin
+    qryMaterial.Edit;
+
+    PnlMaterial.Visible      := True;
+    dbProdutoCodigo.ReadOnly := True;
+    dbProdutoQtde.SetFocus;
+
+    BloquearBotoes;
+  end;
+end;
+
+procedure TfrmGeInventario.nmObservacoesClick(Sender: TObject);
+var
+  sObs : TStringList;
+begin
+  if ( qryInventario.RecordCount > 0 ) then
+    if ( not (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]) ) then
+      ShowInformation('Apenas inventários em lançamento ou em conferência podem ser observações inseridas!')
+    else
+    begin
+      sObs := TStringList.Create;
+      sObs.Clear;
+
+      sObs.Text := qryInventarioOBS.AsString;
+
+      if SetMemoObservacao(Self, sObs) then
+      begin
+        qryInventario.Edit;
+        qryInventarioOBS.AsString := sObs.Text;
+        qryInventario.Post;
+        qryInventario.ApplyUpdates;
+        CommitTransaction;
+      end;
+    end;
+end;
+
+procedure TfrmGeInventario.BtnCancelarInventarioClick(Sender: TObject);
+begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
+
+end;
+
+procedure TfrmGeInventario.BtnEncerrarInventarioClick(Sender: TObject);
+begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
+
+end;
+
+procedure TfrmGeInventario.nmImprimirConferenciaMCClick(Sender: TObject);
+var
+  sEmpresa : String;
+begin
+  if (Trim(qryInventarioEMPRESA.AsString) = EmptyStr) then
+    sEmpresa := gUsuarioLogado.Empresa
+  else
+    sEmpresa := qryInventarioEMPRESA.AsString;
+    
+  try
+    DMNFe.AbrirEmitente(sEmpresa);
+    DMBusiness.ConfigurarEmail(sEmpresa, EmptyStr, nmImprimirConferenciaMC.Caption, EmptyStr);
+  except
+  end;
+
+  with CdsRelacaoProduto, Params do
+  begin
+    Close;
+    ParamByName('empresa').AsString        := sEmpresa;
+    ParamByName('estoque_unico').AsInteger := IfThen(GetEstoqueUnificadoEmpresa(sEmpresa), 1, 0);
+    Open;
+  end;
+
+  frRelacaoProduto.ShowReport;
+end;
+
+procedure TfrmGeInventario.frRelacaoProdutoGetValue(const VarName: String;
+  var Value: Variant);
+begin
+  if ( VarName = VAR_TITLE ) then
+    Value := StringReplace(AnsiUpperCase(nmImprimirConferenciaMC.Caption), '&', '', [rfReplaceAll]);
+
+  if ( VarName = VAR_SUBTITLE ) then
+    Value := 'Inventário';
+
+  if ( VarName = VAR_PERIODO ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_SYSTEM ) then
+    Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = VAR_USER ) then
+    Value := GetUserApp;
+
+  if ( VarName = VAR_EMPRESA ) then
+    Value := GetEmpresaNomeDefault;
+
+  if ( VarName = VAR_DEPARTAMENTO ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_FILTROS ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_TODOS ) then
+    Value := 0;
+
+  if ( VarName = VAR_APENASCONSOLIDADO ) then
+    Value := 0;
 end;
 
 initialization

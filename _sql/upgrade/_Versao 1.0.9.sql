@@ -8215,3 +8215,122 @@ end^
 SET TERM ; ^
 
 GRANT EXECUTE ON PROCEDURE SET_SEGMENTO_EMPRESA TO "PUBLIC";
+
+
+
+/*------ SYSDBA 09/02/2015 19:41:36 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM DROP CONSTRAINT PK_TBINVENTARIO_ALMOX_ITEM;
+
+
+
+
+/*------ SYSDBA 09/02/2015 19:42:29 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM
+    ADD ID DMN_GUID_38_NN;
+
+COMMENT ON COLUMN TBINVENTARIO_ALMOX_ITEM.ID IS
+'ID de Lancamento.';
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter ID position 1;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter ANO position 2;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter CONTROLE position 3;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter ITEM position 4;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter PRODUTO position 5;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter QTDE position 6;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter ESTOQUE position 7;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter FRACIONADOR position 8;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter UNIDADE position 9;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter CUSTO position 10;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter TOTAL position 11;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter USUARIO position 12;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter LOTE_CONFERIDO position 13;
+
+alter table TBINVENTARIO_ALMOX_ITEM
+alter LOTE_RESULTADO position 14;
+
+
+
+
+/*------ SYSDBA 09/02/2015 19:42:36 --------*/
+
+ALTER TABLE TBINVENTARIO_ALMOX_ITEM
+ADD CONSTRAINT PK_TBINVENTARIO_ALMOX_ITEM
+PRIMARY KEY (ID);
+
+
+
+
+/*------ SYSDBA 09/02/2015 19:44:57 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_inventario_almox_item_itm for tbinventario_almox_item
+active before insert position 0
+AS
+begin
+  Select
+    coalesce(max(i.item), 0) + 1
+  from TBINVENTARIO_ALMOX_ITEM i
+  where i.ano = new.ano
+    and i.controle = new.controle
+  Into
+    new.item;
+
+  new.item = coalesce(new.item, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 09/02/2015 19:45:11 --------*/
+
+DROP TRIGGER TG_INVENTARIO_ALMOX_ITEM_ITM;
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_inventario_almox_item for tbinventario_almox_item
+active before insert position 0
+AS
+begin
+  Select
+    coalesce(max(i.item), 0) + 1
+  from TBINVENTARIO_ALMOX_ITEM i
+  where i.ano = new.ano
+    and i.controle = new.controle
+  Into
+    new.item;
+
+  new.item = coalesce(new.item, 1);
+end^
+
+SET TERM ; ^
+

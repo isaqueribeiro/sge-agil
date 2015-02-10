@@ -6069,10 +6069,13 @@ begin
 
         cValorTroco := qryFormaPagtosVALOR_RECEBIDO.AsCurrency - qryFormaPagtosVALOR_FPAGTO.AsCurrency;
 
-        Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
-
         if ( cValorTroco > 0.0 ) then
+        begin
+          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_RECEBIDO.AsCurrency));
           Ecf.Incluir_Texto_Valor('* Troco', FormatFloat(',0.00',  cValorTroco));
+        end
+        else
+          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
 
         qryFormaPagtos.Next;
       end;
@@ -6223,7 +6226,11 @@ begin
         begin
           cValorTroco := qryFormaPagtosVALOR_RECEBIDO.AsCurrency - qryFormaPagtosVALOR_FPAGTO.AsCurrency;
 
-          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
+          if ( cValorTroco > 0.0  ) then
+            Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_RECEBIDO.AsCurrency))
+          else
+            Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
+
           Ecf.Texto_Livre('* ' + RemoveAcentos(
             IfThen(Trim(qryFormaPagtosCOND_DESCRICAO_PDV.AsString) = EmptyStr
               , qryFormaPagtosCOND_DESCRICAO_FULL.Text
