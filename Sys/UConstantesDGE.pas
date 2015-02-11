@@ -32,8 +32,14 @@ const
 
   SYS_KEY_A = 65;
   SYS_KEY_B = 66;
+  SYS_KEY_C = 67;
+  SYS_KEY_D = 68;
+  SYS_KEY_E = 69;
+  SYS_KEY_F = 70;
   SYS_KEY_L = 76;
   SYS_KEY_M = 77;
+  SYS_KEY_N = 78;
+  SYS_KEY_O = 79;
   SYS_KEY_R = 82;
   SYS_KEY_S = 83;
   SYS_KEY_T = 84;

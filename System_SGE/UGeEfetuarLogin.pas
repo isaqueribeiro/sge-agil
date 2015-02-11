@@ -117,16 +117,17 @@ begin
     gUsuarioLogado.Vendedor := GetUserCodigoVendedorID;
 
     frmPrinc.nmUsuarioAlterarSenha.Caption := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
+    frmPrinc.TmrMonitorar.Enabled          := True;
 
-    if (StrFormatarCnpj(GetEmpresaIDDefault) = StrFormatarCnpj(gLicencaSistema.CNPJ)) then
+    if (StrFormatarCnpj(gUsuarioLogado.Empresa) = StrFormatarCnpj(gLicencaSistema.CNPJ)) then
       frmPrinc.stbMain.Panels.Items[2].Text  := Format('Licenciado a empresa %s, %s', [gLicencaSistema.Empresa, sCNPJ])
     else
-      frmPrinc.stbMain.Panels.Items[2].Text  := Format('[%s] Licenciado a empresa %s, %s', [GetEmpresaNomeDefault, gLicencaSistema.Empresa, sCNPJ]);
+      frmPrinc.stbMain.Panels.Items[2].Text  := Format('[%s] Licenciado a empresa %s, %s', [GetEmpresaNome(gUsuarioLogado.Empresa), gLicencaSistema.Empresa, sCNPJ]);
 
     ModalResult := mrOk;
   end
   else
-    Contador := Contador + 1; //Inc(Contador);
+    Contador := Contador + 1; 
 end;
 
 initialization

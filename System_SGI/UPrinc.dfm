@@ -10802,4 +10802,11 @@ object frmPrinc: TfrmPrinc
     Left = 112
     Top = 96
   end
+  object TmrMonitorar: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = TmrMonitorarTimer
+    Left = 112
+    Top = 144
+  end
 end

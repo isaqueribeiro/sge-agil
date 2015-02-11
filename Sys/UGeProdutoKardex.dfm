@@ -1,20 +1,20 @@
 inherited frmGeProdutoKardex: TfrmGeProdutoKardex
   Left = 384
   Top = 211
-  Width = 1099
+  Width = 1177
   Height = 648
   Caption = 'Pesquisa Kardex (Hist'#243'rico de Produtos/Servi'#231'os)'
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlPesquisa: TPanel
-    Width = 1083
+    Width = 1161
     inherited GrpBxPesquisar: TGroupBox
-      Width = 855
+      Width = 933
       DesignSize = (
-        855
+        933
         73)
       inherited BrnPesquisar: TSpeedButton
-        Left = 818
+        Left = 896
       end
       inherited lblPesquisar: TLabel
         Left = 576
@@ -39,7 +39,7 @@ inherited frmGeProdutoKardex: TfrmGeProdutoKardex
       end
       inherited edPesquisar: TEdit
         Left = 576
-        Width = 235
+        Width = 313
         TabOrder = 3
       end
       object e1Data: TDateEdit
@@ -136,10 +136,10 @@ inherited frmGeProdutoKardex: TfrmGeProdutoKardex
     end
   end
   inherited PnlTabela: TPanel
-    Width = 1083
+    Width = 1161
     Height = 529
     inherited dbgDados: TDBGrid
-      Width = 1075
+      Width = 1153
       Height = 521
       Columns = <
         item
@@ -205,6 +205,13 @@ inherited frmGeProdutoKardex: TfrmGeProdutoKardex
           FieldName = 'DOC'
           Title.Caption = 'Documento'
           Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'CODEMPRESA'
+          Title.Caption = 'Empresa'
+          Width = 150
           Visible = True
         end>
     end

@@ -6,6 +6,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
   ActiveControl = e1Data
   BorderWidth = 4
   Caption = 'Monitor de Requisi'#231#245'es de Materiais'
+  OnActivate = FormActivate
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13

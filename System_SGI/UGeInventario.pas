@@ -113,8 +113,6 @@ type
     qryMaterialCUSTO: TIBBCDField;
     qryMaterialTOTAL: TIBBCDField;
     qryMaterialUSUARIO: TIBStringField;
-    qryMaterialLOTE_CONFERIDO: TIBStringField;
-    qryMaterialLOTE_RESULTADO: TIBStringField;
     qryMaterialDESCRI_APRESENTACAO: TIBStringField;
     qryMaterialUNP_DESCRICAO: TIBStringField;
     qryMaterialUNP_SIGLA: TIBStringField;
@@ -157,6 +155,16 @@ type
     StyleContent: TcxStyle;
     StyleContentEven: TcxStyle;
     dbgMatTblUSUARIO: TcxGridDBBandedColumn;
+    N3: TMenuItem;
+    nmLocalizarProduto: TMenuItem;
+    nmExcluirProduto: TMenuItem;
+    qryMaterialLOTE_CONFERIDO: TIBStringField;
+    qryMaterialLOTE_RESULTADO: TIBStringField;
+    frRelacaoInventarioCC: TfrxReport;
+    QryRelacaoInventarioCC: TIBQuery;
+    DspRelacaoInventarioCC: TDataSetProvider;
+    CdsRelacaoInventarioCC: TClientDataSet;
+    FrdsRelacaoInventarioCC: TfrxDBDataset;
     procedure FormCreate(Sender: TObject);
     procedure nmCarregarIAClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -186,6 +194,14 @@ type
     procedure BtnEncerrarInventarioClick(Sender: TObject);
     procedure nmImprimirConferenciaMCClick(Sender: TObject);
     procedure frRelacaoProdutoGetValue(const VarName: String;
+      var Value: Variant);
+    procedure frRelacaoProdutoCCGetValue(const VarName: String;
+      var Value: Variant);
+    procedure nmImprimirConferenciaCCClick(Sender: TObject);
+    procedure nmLocalizarProdutoClick(Sender: TObject);
+    procedure nmExcluirProdutoClick(Sender: TObject);
+    procedure nmImprimirInventarioLancClick(Sender: TObject);
+    procedure frRelacaoInventarioCCGetValue(const VarName: String;
       var Value: Variant);
   private
     { Private declarations }
@@ -377,11 +393,15 @@ begin
   nmExcluirInventario.Enabled      := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount = 0) and (qryInventarioANO.AsInteger > 0);
   nmImprimirInventarioLanc.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse);
 
-  nmObservacoes.Enabled    := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse)
+  nmObservacoes.Enabled      := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse)
     and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
-  BtnLancarProduto.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse)
+  nmLocalizarProduto.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount > 0)
+    and (qryInventarioANO.AsInteger > 0);
+  BtnLancarProduto.Enabled   := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse)
     and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
-  BtnEditarProduto.Enabled := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount > 0)
+  BtnEditarProduto.Enabled   := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount > 0)
+    and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
+  nmExcluirProduto.Enabled   := (not PnlMaterial.Visible) and (qryInventario.State = dsBrowse) and (qryMaterial.RecordCount > 0)
     and (qryInventarioANO.AsInteger > 0) and (qryInventarioSTATUS.AsInteger in [STATUS_INVENTARIO_ALMOX_EML, STATUS_INVENTARIO_ALMOX_EMC]);
 end;
 
@@ -391,6 +411,8 @@ begin
     qryMaterial.Cancel;
 
   PnlMaterial.Visible := False;
+  dbgMat.SetFocus;
+  
   BloquearBotoes;  
 end;
 
@@ -632,6 +654,29 @@ end;
 procedure TfrmGeInventario.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+  if (Shift = [ssCtrl]) then
+  begin
+
+    if (Key = SYS_KEY_O) then
+    begin
+      if nmObservacoes.Visible and nmObservacoes.Enabled then
+        nmObservacoes.Click;
+    end
+    else
+    if (Key = SYS_KEY_F) then
+    begin
+      if nmLocalizarProduto.Visible and nmLocalizarProduto.Enabled then
+        nmLocalizarProduto.Click;
+    end
+    else
+    if (Key = VK_DELETE) then
+    begin
+      if nmExcluirProduto.Visible and nmExcluirProduto.Enabled then
+        nmExcluirProduto.Click;
+    end;
+
+  end
+  else
   if (Key = VK_ESCAPE) then
   begin
 
@@ -860,6 +905,176 @@ procedure TfrmGeInventario.frRelacaoProdutoGetValue(const VarName: String;
 begin
   if ( VarName = VAR_TITLE ) then
     Value := StringReplace(AnsiUpperCase(nmImprimirConferenciaMC.Caption), '&', '', [rfReplaceAll]);
+
+  if ( VarName = VAR_SUBTITLE ) then
+    Value := 'Inventário';
+
+  if ( VarName = VAR_PERIODO ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_SYSTEM ) then
+    Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = VAR_USER ) then
+    Value := GetUserApp;
+
+  if ( VarName = VAR_EMPRESA ) then
+    Value := GetEmpresaNomeDefault;
+
+  if ( VarName = VAR_DEPARTAMENTO ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_FILTROS ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_TODOS ) then
+    Value := 0;
+
+  if ( VarName = VAR_APENASCONSOLIDADO ) then
+    Value := 0;
+end;
+
+procedure TfrmGeInventario.frRelacaoProdutoCCGetValue(
+  const VarName: String; var Value: Variant);
+begin
+  if ( VarName = VAR_TITLE ) then
+    Value := 'Lista p/ Conferência (' + dbCentroCusto.Text + ')';
+
+  if ( VarName = VAR_SUBTITLE ) then
+    Value := 'Inventário';
+
+  if ( VarName = VAR_PERIODO ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_SYSTEM ) then
+    Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = VAR_USER ) then
+    Value := GetUserApp;
+
+  if ( VarName = VAR_EMPRESA ) then
+    Value := GetEmpresaNomeDefault;
+
+  if ( VarName = VAR_DEPARTAMENTO ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_FILTROS ) then
+    Value := EmptyStr;
+
+  if ( VarName = VAR_TODOS ) then
+    Value := 0;
+
+  if ( VarName = VAR_APENASCONSOLIDADO ) then
+    Value := 0;
+end;
+
+procedure TfrmGeInventario.nmImprimirConferenciaCCClick(Sender: TObject);
+var
+  sEmpresa : String;
+begin
+  if (qryInventario.RecordCount = 0) then
+  begin
+    ShowWarning('Este listagem só poderá ser montada se houver um registro de inventário selecionado!');
+    Exit;
+  end;
+
+  if (Trim(qryInventarioEMPRESA.AsString) = EmptyStr) then
+    sEmpresa := gUsuarioLogado.Empresa
+  else
+    sEmpresa := qryInventarioEMPRESA.AsString;
+
+  try
+    DMNFe.AbrirEmitente(sEmpresa);
+    DMBusiness.ConfigurarEmail(sEmpresa, EmptyStr, nmImprimirConferenciaCC.Caption, EmptyStr);
+  except
+  end;
+
+  with CdsRelacaoProdutoCC, Params do
+  begin
+    Close;
+    ParamByName('empresa').AsString       := sEmpresa;
+    ParamByName('centro_custo').AsInteger := qryInventarioCENTRO_CUSTO.AsInteger;
+    Open;
+  end;
+
+  frRelacaoProdutoCC.ShowReport;
+end;
+
+procedure TfrmGeInventario.nmLocalizarProdutoClick(Sender: TObject);
+var
+  sLocalizar,
+  sCampo    : String;
+begin
+  if (qryMaterial.RecordCount > 0) then
+    if InputQuery('Localizar', 'Informe o código ou a descrição do material/produto:', sLocalizar) then
+    begin
+      if (StrToIntDef(Trim(sLocalizar), 0) > 0) then
+      begin
+        sCampo     := 'PRODUTO';
+        sLocalizar := FormatFloat('###0000000', StrToIntDef(Trim(sLocalizar), 0));
+      end
+      else
+        sCampo := 'DESCRI_APRESENTACAO';
+
+      if qryMaterial.Locate(sCampo, AnsiUpperCase(Trim(sLocalizar)), [loCaseInsensitive, loPartialKey]) then
+        dbgMat.SetFocus
+      else
+        ShowWarning('Material/Produto não localizdo!');
+    end;
+end;
+
+procedure TfrmGeInventario.nmExcluirProdutoClick(Sender: TObject);
+begin
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_ENC ) then
+    ShowInformation('Inventário encerrado não pode ser alterado!')
+  else
+  if ( qryInventarioSTATUS.AsInteger = STATUS_INVENTARIO_ALMOX_CAN ) then
+    ShowInformation('Inventário cancelado não pode ser alterado!')
+  else
+  if ShowConfirmation('Deseja excluir o lançamento do material/produto selecionado?') then
+  begin
+    qryMaterial.Delete;
+    qryMaterial.ApplyUpdates;
+    CommitTransaction;
+
+    BloquearBotoes;
+    dbgMat.SetFocus;
+  end;
+end;
+
+procedure TfrmGeInventario.nmImprimirInventarioLancClick(Sender: TObject);
+begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
+  if (qryInventario.RecordCount = 0) then
+  begin
+    ShowWarning('Favor selecionar o inventário!');
+    Exit;
+  end;
+
+  try
+    DMNFe.AbrirEmitente(qryInventarioEMPRESA.AsString);
+    DMBusiness.ConfigurarEmail(qryInventarioEMPRESA.AsString, EmptyStr, nmImprimirInventarioLanc.Caption, EmptyStr);
+  except
+  end;
+
+  with CdsRelacaoInventarioCC, Params do
+  begin
+    Close;
+    ParamByName('ano').AsInteger      := qryInventarioANO.AsInteger;
+    ParamByName('controle').AsInteger := qryInventarioCONTROLE.AsInteger;
+    Open;
+  end;
+
+  frRelacaoInventarioCC.ShowReport;
+end;
+
+procedure TfrmGeInventario.frRelacaoInventarioCCGetValue(
+  const VarName: String; var Value: Variant);
+begin
+  if ( VarName = VAR_TITLE ) then
+    Value := 'Lançamentos do Inventário';
 
   if ( VarName = VAR_SUBTITLE ) then
     Value := 'Inventário';

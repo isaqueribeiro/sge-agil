@@ -1411,6 +1411,7 @@ inherited frmGeInventario: TfrmGeInventario
         3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
         3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
       Caption = 'Lista p/ Confer'#234'ncia (Por Centro de Custo)'
+      OnClick = nmImprimirConferenciaCCClick
     end
     object N1: TMenuItem
       Caption = '-'
@@ -1460,6 +1461,7 @@ inherited frmGeInventario: TfrmGeInventario
         3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
         3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
       Caption = 'Lan'#231'amentos do Invent'#225'rio'
+      OnClick = nmImprimirInventarioLancClick
     end
   end
   object qryInventario: TIBDataSet
@@ -1994,6 +1996,73 @@ inherited frmGeInventario: TfrmGeInventario
       ShortCut = 16463
       OnClick = nmObservacoesClick
     end
+    object N3: TMenuItem
+      Caption = '-'
+    end
+    object nmLocalizarProduto: TMenuItem
+      Bitmap.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        1800000000000003000000000000000000000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FF000000000000000000000000000000FF00FFFF
+        00FFFF00FFFF00FFFF00FF000000000000000000000000000000FF00FF000000
+        80FFFF000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FF00000080FF
+        FF000000000000000000FF00FF00000080FFFF000000000000000000FF00FFFF
+        00FFFF00FFFF00FFFF00FF00000080FFFF000000000000000000FF00FF000000
+        000000000000000000000000000000000000FF00FF0000000000000000000000
+        00000000000000000000FF00FF00000000000080FFFF00000000000000000000
+        000000000000000080FFFF000000000000000000000000000000FF00FF000000
+        00000080FFFF000000000000000000FF00FF00000000000080FFFF0000000000
+        00000000000000000000FF00FF00000000000080FFFF000000000000000000FF
+        00FF00000000000080FFFF000000000000000000000000000000FF00FFFF00FF
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000000000FF00FFFF00FFFF00FFFF00FF00000080FFFF00000000000000
+        0000FF00FF00000080FFFF000000000000000000FF00FFFF00FFFF00FFFF00FF
+        FF00FF000000000000000000000000000000FF00FF0000000000000000000000
+        00000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000000000000000FF
+        00FFFF00FFFF00FF000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FF00000080FFFF000000FF00FFFF00FFFF00FF00000080FFFF0000
+        00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000000000000000FF
+        00FFFF00FFFF00FF000000000000000000FF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      Caption = 'Localizar Material/Produto'
+      ShortCut = 16454
+      OnClick = nmLocalizarProdutoClick
+    end
+    object nmExcluirProduto: TMenuItem
+      Bitmap.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        1800000000000003000000000000000000000000000000000000FF00FFFF00FF
+        FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF00000000
+        0000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FF000000000000FFFFFF808080000000000000FF00FFFF00FFFF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000FFFFFFC0C0C0FFFFFFC0
+        C0C0C0C0C0808080000000000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF000000C0C0C0FFFFFFFFFFFFC0C0C0C0C0C0C0C0C0C0C0C08080800000
+        00FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000FFFFFFC0C0C0FFFFFFC0
+        C0C0008000008000C0C0C0C0C0C0000000FF00FFFF00FFFF00FFFF00FFFF00FF
+        FF00FF000000C0C0C0FFFFFFFFFFFFC0C0C0008000C0C0C0008000C0C0C00000
+        00FF00FFFF00FFFF00FFFF00FFFF00FF000000C0C0C0FFFFFFC0C0C0FFFFFFC0
+        C0C0808080C0C0C0008000C0C0C0000000FF00FFFF00FFFF00FFFF00FFFF00FF
+        000000FFFFFFC0C0C0FFFFFFFFFFFFC0C0C0C0C0C0008000008000C0C0C08080
+        80000000FF00FFFF00FFFF00FFFF00FF000000FFFFFFFFFFFFFFFFFFFFFFFFFF
+        FFFFFFFFFFC0C0C0C0C0C0C0C0C0C0C0C0000000FF00FFFF00FFFF00FFFF00FF
+        000000C0C0C0FFFFFF808080808080808080808080FFFFFFFFFFFFC0C0C0C0C0
+        C0000000FF00FFFF00FFFF00FFFF00FF000000C0C0C0808080FFFFFFFFFFFFFF
+        FFFFFFFFFF808080808080FFFFFFC0C0C0000000FF00FFFF00FFFF00FFFF00FF
+        FF00FF000000808080FFFFFFFFFFFFFFFFFF808080FFFFFFFFFFFF808080FFFF
+        FF000000FF00FFFF00FFFF00FFFF00FFFF00FFFF00FF000000FFFFFFFFFFFF00
+        0000FFFFFFFFFFFFC0C0C0C0C0C0000000000000FF00FFFF00FFFF00FFFF00FF
+        FF00FFFF00FFFF00FF000000000000FF00FF000000000000000000000000FF00
+        FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
+        00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
+      Caption = 'Excluir Lan'#231'amento de Material/Produto'
+      ShortCut = 16430
+      OnClick = nmExcluirProdutoClick
+    end
   end
   object qryMaterial: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
@@ -2107,23 +2176,23 @@ inherited frmGeInventario: TfrmGeInventario
       Precision = 18
       Size = 2
     end
-    object qryMaterialUSUARIO: TIBStringField
-      FieldName = 'USUARIO'
-      Origin = '"TBINVENTARIO_ALMOX_ITEM"."USUARIO"'
-      ProviderFlags = [pfInUpdate]
-      Size = 12
-    end
     object qryMaterialLOTE_CONFERIDO: TIBStringField
       FieldName = 'LOTE_CONFERIDO'
       Origin = '"TBINVENTARIO_ALMOX_ITEM"."LOTE_CONFERIDO"'
       ProviderFlags = [pfInUpdate]
-      Size = 32
+      Size = 38
     end
     object qryMaterialLOTE_RESULTADO: TIBStringField
       FieldName = 'LOTE_RESULTADO'
       Origin = '"TBINVENTARIO_ALMOX_ITEM"."LOTE_RESULTADO"'
       ProviderFlags = [pfInUpdate]
-      Size = 32
+      Size = 38
+    end
+    object qryMaterialUSUARIO: TIBStringField
+      FieldName = 'USUARIO'
+      Origin = '"TBINVENTARIO_ALMOX_ITEM"."USUARIO"'
+      ProviderFlags = [pfInUpdate]
+      Size = 12
     end
     object qryMaterialDESCRI_APRESENTACAO: TIBStringField
       FieldName = 'DESCRI_APRESENTACAO'
@@ -2935,7 +3004,7 @@ inherited frmGeInventario: TfrmGeInventario
       'begin'
       ''
       'end.')
-    OnGetValue = frRelacaoProdutoGetValue
+    OnGetValue = frRelacaoProdutoCCGetValue
     Left = 272
     Top = 504
     Datasets = <
@@ -3214,7 +3283,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            ' [FrdsRelacaoProduto."COD"]')
+            ' [FrdsRelacaoProdutoCC."COD"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -3234,7 +3303,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            ' [FrdsRelacaoProduto."DESCRI_APRESENTACAO"]')
+            ' [FrdsRelacaoProdutoCC."DESCRI_APRESENTACAO"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -3254,7 +3323,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            ' [FrdsRelacaoProduto."REFERENCIA"]')
+            ' [FrdsRelacaoProdutoCC."REFERENCIA"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -3274,7 +3343,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            ' [FrdsRelacaoProduto."FABRICANTE_NOME"]')
+            ' [FrdsRelacaoProdutoCC."FABRICANTE_NOME"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -3295,7 +3364,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
           Memo.UTF8 = (
-            '[FrdsRelacaoProduto."UND_COMPRA"]')
+            '[FrdsRelacaoProdutoCC."UND_COMPRA"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -3325,7 +3394,7 @@ inherited frmGeInventario: TfrmGeInventario
         Height = 37.795300000000000000
         Top = 204.094620000000000000
         Width = 718.110700000000000000
-        Condition = 'FrdsRelacaoProduto."GRUPO_COD"'
+        Condition = 'FrdsRelacaoProdutoCC."GRUPO_COD"'
         ReprintOnNewPage = True
         StartNewPage = True
         object Memo6: TfrxMemoView
@@ -3471,7 +3540,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            ' [FrdsRelacaoProduto."GRUPO_DESC"]')
+            ' [FrdsRelacaoProdutoCC."GRUPO_DESC"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -3508,8 +3577,9 @@ inherited frmGeInventario: TfrmGeInventario
     Transaction = DMBusiness.ibtrnsctnBusiness
     SQL.Strings = (
       'Select'
-      '    p.codemp as empresa_cnpj'
-      '  , e.rzsoc  as empresa_razao'
+      '    p.codemp    as empresa_cnpj'
+      '  , e.rzsoc     as empresa_razao'
+      '  , c.descricao as centro_custo'
       '  , Case when p.aliquota_tipo = 0 then '#39'P'#39' else '#39'S'#39' end as tipo'
       
         '  , Case when p.aliquota_tipo = 0 then '#39'Produto(s)'#39' else '#39'Servi'#231 +
@@ -3528,7 +3598,7 @@ inherited frmGeInventario: TfrmGeInventario
       '  , coalesce(f.nome, '#39'* Indefinido'#39') as fabricante_nome'
       '  , p.especificacao'
       '  , p.estoqmin as estoque_minimo'
-      '  , p.qtde     as estoque'
+      '  , pe.qtde    as estoque'
       
         '  , substring(coalesce(nullif(trim(u.unp_sigla), '#39#39'), trim(u.unp' +
         '_descricao)) from 1 for 3) as und_compra'
@@ -3541,14 +3611,18 @@ inherited frmGeInventario: TfrmGeInventario
       '  , p.produto_novo'
       '  , p.movimenta_estoque'
       'from TBPRODUTO p'
-      '  left join TBEMPRESA e on (e.cnpj = p.codemp)'
+      '  inner join TBESTOQUE_ALMOX pe on (pe.produto = p.cod)'
+      '  inner join TBEMPRESA e on (e.cnpj = pe.empresa)'
+      '  inner join TBCENTRO_CUSTO c on (c.codigo = pe.centro_custo)'
+      ''
       '  left join TBGRUPOPROD g on (g.cod = p.codgrupo)'
       '  left join TBSECAOPROD s on (s.scp_cod = p.codsecao)'
       '  left join TBFABRICANTE f on (f.cod = p.codfabricante)'
-      '  left join TBUNIDADEPROD u on (u.unp_cod = p.codunidade)'
+      '  left join TBUNIDADEPROD u on (u.unp_cod = pe.unidade)'
       ''
       'where (p.aliquota_tipo = 0)'
-      '  and ((p.codemp = :empresa) or (:estoque_unico = 1))'
+      '  and (pe.empresa      = :empresa)'
+      '  and (pe.centro_custo = :centro_custo)'
       ''
       'order by'
       '    coalesce(g.descri, '#39'* Indefinido'#39')'
@@ -3563,8 +3637,8 @@ inherited frmGeInventario: TfrmGeInventario
         Value = ''
       end
       item
-        DataType = ftSmallint
-        Name = 'estoque_unico'
+        DataType = ftInteger
+        Name = 'centro_custo'
         ParamType = ptInput
         Value = 0
       end>
@@ -3584,8 +3658,8 @@ inherited frmGeInventario: TfrmGeInventario
         Value = ''
       end
       item
-        DataType = ftSmallint
-        Name = 'estoque_unico'
+        DataType = ftInteger
+        Name = 'centro_custo'
         ParamType = ptInput
         Value = 0
       end>
@@ -3599,6 +3673,7 @@ inherited frmGeInventario: TfrmGeInventario
     FieldAliases.Strings = (
       'EMPRESA_CNPJ=EMPRESA_CNPJ'
       'EMPRESA_RAZAO=EMPRESA_RAZAO'
+      'CENTRO_CUSTO=CENTRO_CUSTO'
       'TIPO=TIPO'
       'TIPO_DESC=TIPO_DESC'
       'COD=COD'
@@ -3663,5 +3738,1149 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = []
       TextColor = clBlack
     end
+  end
+  object frRelacaoInventarioCC: TfrxReport
+    Version = '4.9.72'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PreviewOptions.ZoomMode = zmPageWidth
+    PrintOptions.Printer = 'Padr'#227'o'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 41557.397184305600000000
+    ReportOptions.Name = 'Teste!'
+    ReportOptions.LastChange = 41557.397184305600000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      'begin'
+      ''
+      'end.')
+    OnGetValue = frRelacaoInventarioCCGetValue
+    Left = 272
+    Top = 552
+    Datasets = <
+      item
+        DataSet = DMNFe.frdEmpresa
+        DataSetName = 'frdEmpresa'
+      end
+      item
+        DataSet = FrdsRelacaoInventarioCC
+        DataSetName = 'FrdsRelacaoInventarioCC'
+      end>
+    Variables = <
+      item
+        Name = ' Local'
+        Value = Null
+      end
+      item
+        Name = 'Titulo'
+        Value = #39'TESTE'#39
+      end
+      item
+        Name = 'Sistema'
+        Value = #39'Sistema'#39
+      end
+      item
+        Name = 'Usuario'
+        Value = #39'Usu'#225'rio'#39
+      end
+      item
+        Name = 'DiferencaQtde'
+        Value = 
+          '(<FrdsRelacaoInventarioCC."ESTOQUE_ANTIGO">-<FrdsRelacaoInventar' +
+          'ioCC."LANCAMENTO">) * (-1)'
+      end>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object BndPageHeader: TfrxPageHeader
+        Height = 124.724490000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 94.488250000000000000
+          Width = 604.724800000000000000
+          Height = 26.456710000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            '[Titulo]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Picture1: TfrxPictureView
+          Left = 3.779530000000000000
+          Top = 7.559060000000000000
+          Width = 109.606370000000000000
+          Height = 79.370130000000000000
+          ShowHint = False
+          DataField = 'LOGO'
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          HightQuality = False
+          Transparent = False
+          TransparentColor = clWhite
+        end
+        object frdEmpresaRZSOC: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 7.559060000000000000
+          Width = 445.984540000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Memo.UTF8 = (
+            '[frdEmpresa."RZSOC"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frdEmpresaNMFANT: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 26.456710000000000000
+          Width = 445.984540000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8 = (
+            
+              'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
+              '">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdFone: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 41.574830000000000000
+          Width = 445.984540000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8 = (
+            'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 56.692950000000000000
+          Width = 445.984540000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8 = (
+            
+              '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
+              'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
+              'frdEmpresa."EST_SIGLA"] CEP.: [FormatMaskText('#39'##.###-###;0;'#39',<f' +
+              'rdEmpresa."CEP">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Line1: TfrxLineView
+          Top = 94.488250000000000000
+          Width = 718.110700000000000000
+          ShowHint = False
+          Frame.Typ = [ftTop]
+        end
+        object Memo44: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 71.811070000000000000
+          Width = 445.984540000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8 = (
+            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdVendaCODCONTROL: TfrxMemoView
+          Left = 559.370440000000000000
+          Top = 26.456710000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Memo.UTF8 = (
+            '[FrdsRelacaoInventarioCC."NUMERO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          Left = 559.370440000000000000
+          Top = 7.559060000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          CharSpacing = 2.000000000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Memo.UTF8 = (
+            'Controle Invent'#195#161'rio:')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          Left = 559.370440000000000000
+          Top = 45.354360000000000000
+          Width = 158.740260000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Memo.UTF8 = (
+            '[Trim(<FrdsRelacaoInventarioCC."STATUS_DESC">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          Left = 559.370440000000000000
+          Top = 64.252010000000000000
+          Width = 158.740260000000000000
+          Height = 22.677180000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Memo.UTF8 = (
+            '[Trim(<FrdsRelacaoInventarioCC."TIPO_DESC">)]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object BndPageFooter: TfrxPageFooter
+        Height = 30.236240000000000000
+        Top = 544.252320000000000000
+        Width = 718.110700000000000000
+        object Memo2: TfrxMemoView
+          Width = 600.945270000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' [Sistema]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaBottom
+        end
+        object Memo3: TfrxMemoView
+          Top = 15.118120000000000000
+          Width = 600.945270000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Impresso em [Date] '#195#160's [Time] por [Usuario]')
+          ParentFont = False
+          WordWrap = False
+        end
+        object Memo4: TfrxMemoView
+          Left = 600.945270000000000000
+          Width = 117.165430000000000000
+          Height = 30.236240000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            'P'#195#161'gina [Page#] / [TotalPages#]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+      object BndMasterData: TfrxMasterData
+        Height = 18.897650000000000000
+        Top = 264.567100000000000000
+        Width = 718.110700000000000000
+        DataSet = FrdsRelacaoInventarioCC
+        DataSetName = 'FrdsRelacaoInventarioCC'
+        RowCount = 0
+        object Memo9: TfrxMemoView
+          Width = 64.252010000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            ' [FrdsRelacaoInventarioCC."COD"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo13: TfrxMemoView
+          Left = 64.252010000000000000
+          Width = 309.921460000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            ' [FrdsRelacaoInventarioCC."DESCRI_APRESENTACAO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          Left = 374.173470000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            
+              '[FormatFloat('#39',0.###'#39',<FrdsRelacaoInventarioCC."ESTOQUE_ANTIGO">' +
+              ')] ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo23: TfrxMemoView
+          Left = 544.252320000000000000
+          Width = 26.456710000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            '[FrdsRelacaoInventarioCC."UNP_SIGLA"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo17: TfrxMemoView
+          Left = 430.866420000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            '[FormatFloat('#39',0.###'#39',<FrdsRelacaoInventarioCC."LANCAMENTO">)] ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          Left = 487.559370000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            '[FormatFloat('#39',0.###'#39',<DiferencaQtde>)] ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo27: TfrxMemoView
+          Left = 570.709030000000000000
+          Width = 68.031540000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            
+              '[FormatFloat('#39',0.00##'#39',<FrdsRelacaoInventarioCC."CUSTO_UNITARIO"' +
+              '>)] ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo28: TfrxMemoView
+          Left = 638.740570000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            '[FormatFloat('#39',0.00'#39',<FrdsRelacaoInventarioCC."CUSTO_TOTAL">)] ')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+      object BndGrpHeaderGrupo: TfrxGroupHeader
+        Height = 37.795300000000000000
+        Top = 204.094620000000000000
+        Width = 718.110700000000000000
+        Condition = 'FrdsRelacaoInventarioCC."GRUPO_COD"'
+        ReprintOnNewPage = True
+        object Memo8: TfrxMemoView
+          Top = 18.897650000000000000
+          Width = 64.252010000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' C'#195#179'digo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo12: TfrxMemoView
+          Left = 64.252010000000000000
+          Top = 18.897650000000000000
+          Width = 309.921460000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Descri'#195#167#195#163'o / Apresenta'#195#167#195#163'o')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo14: TfrxMemoView
+          Left = 374.173470000000000000
+          Top = 18.897650000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Estoque')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo22: TfrxMemoView
+          Left = 544.252320000000000000
+          Top = 18.897650000000000000
+          Width = 26.456710000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Memo.UTF8 = (
+            'UN')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo24: TfrxMemoView
+          Left = 64.252010000000000000
+          Width = 653.858690000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          CharSpacing = 2.000000000000000000
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' [FrdsRelacaoInventarioCC."GRUPO_DESC"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          Width = 64.252010000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Grupo')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          Left = 430.866420000000000000
+          Top = 18.897650000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Invent.')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          Left = 487.559370000000000000
+          Top = 18.897650000000000000
+          Width = 56.692950000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Diferen'#195#167'a')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo21: TfrxMemoView
+          Left = 570.709030000000000000
+          Top = 18.897650000000000000
+          Width = 68.031540000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            'Custo Un. ')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo26: TfrxMemoView
+          Left = 638.740570000000000000
+          Top = 18.897650000000000000
+          Width = 79.370130000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            'Custo Total ')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object BndGrpFooterGrupo: TfrxGroupFooter
+        Height = 26.456710000000000000
+        Top = 306.141930000000000000
+        Width = 718.110700000000000000
+        object SysMemo1: TfrxSysMemoView
+          Left = 570.709030000000000000
+          Top = 3.779530000000000000
+          Width = 147.401670000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            
+              '[FormatFloat('#39',0.00'#39',SUM(<FrdsRelacaoInventarioCC."CUSTO_TOTAL">' +
+              ',BndMasterData))] ')
+          ParentFont = False
+          VAlign = vaCenter
+          WordWrap = False
+        end
+        object Memo29: TfrxMemoView
+          Left = 374.173470000000000000
+          Top = 3.779530000000000000
+          Width = 196.535560000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = clBtnFace
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            ' [FrdsRelacaoInventarioCC."GRUPO_DESC"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+      object BndReportSummary: TfrxReportSummary
+        Height = 128.504020000000000000
+        Top = 393.071120000000000000
+        Width = 718.110700000000000000
+        object Memo20: TfrxMemoView
+          Top = 7.559060000000000000
+          Width = 374.173470000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' * Material/Produto com lan'#195#167'amento zerado')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object SysMemo2: TfrxSysMemoView
+          Left = 570.709030000000000000
+          Top = 7.559060000000000000
+          Width = 147.401670000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Color = 14211288
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            
+              '[FormatFloat('#39',0.00'#39',SUM(<FrdsRelacaoInventarioCC."CUSTO_TOTAL">' +
+              ',BndMasterData,2))] ')
+          ParentFont = False
+          VAlign = vaCenter
+          WordWrap = False
+        end
+        object Memo30: TfrxMemoView
+          Left = 374.173470000000000000
+          Top = 7.559060000000000000
+          Width = 196.535560000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          CharSpacing = 2.000000000000000000
+          Color = 14211288
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            'TOTAL GERAL (R$)')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo31: TfrxMemoView
+          Left = 374.173470000000000000
+          Top = 83.149660000000000000
+          Width = 343.937230000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            '[FrdsRelacaoInventarioCC."EMPRESA_RAZAO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo32: TfrxMemoView
+          Left = 374.173470000000000000
+          Top = 113.385900000000000000
+          Width = 343.937230000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            '[FrdsRelacaoInventarioCC."CENTRO_CUSTO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo33: TfrxMemoView
+          Left = 374.173470000000000000
+          Top = 98.267780000000000000
+          Width = 343.937230000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.Font.Charset = DEFAULT_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -9
+          Highlight.Font.Name = 'Tahoma'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
+          Memo.UTF8 = (
+            'Finalizador por: [FrdsRelacaoInventarioCC."FECH_USUARIO_NOME"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+    end
+  end
+  object QryRelacaoInventarioCC: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    SQL.Strings = (
+      'Select'
+      '    i.ano'
+      '  , i.controle'
+      '  , i.ano || '#39'/'#39' || lpad(i.controle, 7, '#39'0'#39') as numero'
+      '  , i.tipo'
+      '  , ti.descricao as tipo_desc'
+      '  , i.status'
+      '  , si.descricao as status_desc'
+      '  , i.data'
+      '  , i.fech_usuario'
+      
+        '  , (Select first 1 x.nomecompleto from TBUSERS x where x.nome =' +
+        ' i.fech_usuario) as fech_usuario_nome'
+      ''
+      '  , p.codemp    as empresa_cnpj'
+      '  , e.rzsoc     as empresa_razao'
+      '  , c.descricao as centro_custo'
+      ''
+      '  , p.cod'
+      '  , p.descri'
+      '  , p.apresentacao'
+      '  , p.descri_apresentacao'
+      '  , p.modelo'
+      '  , p.referencia'
+      '  , coalesce(p.codgrupo, 0) as grupo_cod'
+      '  , coalesce(g.descri, '#39'* Indefinido'#39')   as grupo_desc'
+      '  , coalesce(p.codsecao, 0)                     as secao_cod'
+      '  , coalesce(s.scp_descricao, '#39'* Indefinida'#39')   as secao_desc'
+      '  , coalesce(p.codfabricante, 0)     as fabricante_cod'
+      '  , coalesce(f.nome, '#39'* Indefinido'#39') as fabricante_nome'
+      '  , p.especificacao'
+      '  , ip.estoque as estoque_antigo'
+      '  , ip.qtde as lancamento'
+      '  , u.unp_descricao'
+      '  , u.unp_sigla'
+      '  , ip.custo as custo_unitario'
+      '  , ip.total as custo_total'
+      '  , p.movimenta_estoque'
+      'from TBINVENTARIO_ALMOX i'
+      '  inner join TBEMPRESA e on (e.cnpj = i.empresa)'
+      '  inner join TBCENTRO_CUSTO c on (c.codigo = i.centro_custo)'
+      
+        '  inner join TBINVENTARIO_ALMOX_ITEM ip on (ip.ano = i.ano and i' +
+        'p.controle = i.controle)'
+      '  inner join TBPRODUTO p on (p.cod = ip.produto)'
+      ''
+      '  left join VW_TIPO_INVENTARIO_ALMOX ti on (ti.codigo = i.tipo)'
+      
+        '  left join VW_STATUS_INVENTARIO_ALMOX si on (si.codigo = i.stat' +
+        'us)'
+      ''
+      '  left join TBGRUPOPROD g on (g.cod = p.codgrupo)'
+      '  left join TBSECAOPROD s on (s.scp_cod = p.codsecao)'
+      '  left join TBFABRICANTE f on (f.cod = p.codfabricante)'
+      '  left join TBUNIDADEPROD u on (u.unp_cod = ip.unidade)'
+      ''
+      'where (i.ano      = :ano)'
+      '  and (i.controle = :controle)'
+      ''
+      'order by'
+      '    coalesce(g.descri, '#39'* Indefinido'#39')'
+      '  , p.descri_apresentacao')
+    Left = 304
+    Top = 552
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'ano'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'controle'
+        ParamType = ptInput
+        Value = 0
+      end>
+  end
+  object DspRelacaoInventarioCC: TDataSetProvider
+    DataSet = QryRelacaoInventarioCC
+    Left = 336
+    Top = 552
+  end
+  object CdsRelacaoInventarioCC: TClientDataSet
+    Aggregates = <>
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ano'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'controle'
+        ParamType = ptInput
+        Value = 0
+      end>
+    ProviderName = 'DspRelacaoInventarioCC'
+    Left = 368
+    Top = 552
+  end
+  object FrdsRelacaoInventarioCC: TfrxDBDataset
+    UserName = 'FrdsRelacaoInventarioCC'
+    CloseDataSource = True
+    FieldAliases.Strings = (
+      'ANO=ANO'
+      'CONTROLE=CONTROLE'
+      'NUMERO=NUMERO'
+      'TIPO=TIPO'
+      'TIPO_DESC=TIPO_DESC'
+      'STATUS=STATUS'
+      'STATUS_DESC=STATUS_DESC'
+      'DATA=DATA'
+      'FECH_USUARIO=FECH_USUARIO'
+      'FECH_USUARIO_NOME=FECH_USUARIO_NOME'
+      'EMPRESA_CNPJ=EMPRESA_CNPJ'
+      'EMPRESA_RAZAO=EMPRESA_RAZAO'
+      'CENTRO_CUSTO=CENTRO_CUSTO'
+      'COD=COD'
+      'DESCRI=DESCRI'
+      'APRESENTACAO=APRESENTACAO'
+      'DESCRI_APRESENTACAO=DESCRI_APRESENTACAO'
+      'MODELO=MODELO'
+      'REFERENCIA=REFERENCIA'
+      'GRUPO_COD=GRUPO_COD'
+      'GRUPO_DESC=GRUPO_DESC'
+      'SECAO_COD=SECAO_COD'
+      'SECAO_DESC=SECAO_DESC'
+      'FABRICANTE_COD=FABRICANTE_COD'
+      'FABRICANTE_NOME=FABRICANTE_NOME'
+      'ESPECIFICACAO=ESPECIFICACAO'
+      'ESTOQUE_ANTIGO=ESTOQUE_ANTIGO'
+      'LANCAMENTO=LANCAMENTO'
+      'UNP_DESCRICAO=UNP_DESCRICAO'
+      'UNP_SIGLA=UNP_SIGLA'
+      'CUSTO_UNITARIO=CUSTO_UNITARIO'
+      'CUSTO_TOTAL=CUSTO_TOTAL'
+      'MOVIMENTA_ESTOQUE=MOVIMENTA_ESTOQUE')
+    DataSet = CdsRelacaoInventarioCC
+    BCDToCurrency = True
+    Left = 400
+    Top = 552
   end
 end

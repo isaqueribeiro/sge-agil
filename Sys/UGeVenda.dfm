@@ -1361,7 +1361,7 @@ inherited frmGeVenda: TfrmGeVenda
           Height = 21
           TabStop = False
           Color = clMoneyGreen
-          DataField = 'DESCRI'
+          DataField = 'DESCRI_APRESENTACAO'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -3445,7 +3445,8 @@ inherited frmGeVenda: TfrmGeVenda
           end
           item
             Expanded = False
-            FieldName = 'DESCRI'
+            FieldName = 'DESCRI_APRESENTACAO'
+            Title.Caption = 'Nome do Produto'
             Width = 250
             Visible = True
           end
@@ -4297,6 +4298,7 @@ inherited frmGeVenda: TfrmGeVenda
       '  , i.Total_desconto'
       '  , i.Total_liquido'
       '  , p.Descri'
+      '  , p.Descri_apresentacao'
       '  , p.Qtde as Estoque'
       '  , p.Reserva'
       '  , u.Unp_sigla'
@@ -4504,6 +4506,12 @@ inherited frmGeVenda: TfrmGeVenda
       FieldName = 'DESCRI'
       Origin = 'TBPRODUTO.DESCRI'
       Size = 50
+    end
+    object cdsTabelaItensDESCRI_APRESENTACAO: TIBStringField
+      FieldName = 'DESCRI_APRESENTACAO'
+      Origin = '"TBPRODUTO"."DESCRI_APRESENTACAO"'
+      ProviderFlags = []
+      Size = 100
     end
     object cdsTabelaItensUNP_SIGLA: TIBStringField
       DisplayLabel = 'Und.'
@@ -5871,6 +5879,7 @@ inherited frmGeVenda: TfrmGeVenda
       '    p.Codigo'
       '  , p.Cod'
       '  , p.Descri'
+      '  , p.Descri_apresentacao'
       '  , p.Modelo'
       '  , p.Preco'
       '  , p.Preco_Promocao'

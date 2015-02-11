@@ -178,6 +178,7 @@ type
     PnlDockReqAlmox: TPanel;
     SptDockReqAlmox: TSplitter;
     nmInventarioMaterial: TMenuItem;
+    TmrMonitorar: TTimer;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -259,6 +260,7 @@ type
     procedure nmRequisicaoAlmoxClick(Sender: TObject);
     procedure nmRequisicaoAlmoxMonitorClick(Sender: TObject);
     procedure nmInventarioMaterialClick(Sender: TObject);
+    procedure TmrMonitorarTimer(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -992,6 +994,14 @@ procedure TfrmPrinc.nmInventarioMaterialClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_MOV_INVENTARIO_ESTOQU_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeInventario');
+end;
+
+procedure TfrmPrinc.TmrMonitorarTimer(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_MOV_MONITOR_REQ_ALMOX_ID, False) then
+    MonitorarRequisicaoAlmoxAuto(Self, PnlDockReqAlmox, True);
+    
+  TmrMonitorar.Enabled := False;
 end;
 
 end.
