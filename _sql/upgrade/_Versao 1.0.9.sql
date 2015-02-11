@@ -9833,3 +9833,265 @@ alter FI_RET_FINANC position 70;
 alter table TBPRODUTO
 alter FI_RET_PLANO position 71;
 
+
+
+
+/*------ SYSDBA 10/02/2015 16:57:46 --------*/
+
+COMMENT ON TABLE TBINVENTARIO_ALMOX IS 'Tabela Inventario de Estoque (Almoxarifado)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   04/02/2015
+
+Tabela responsavel por armazenar todos os registros de inventarios de estoque realizados pelo sistema SGI.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/02/2014 - IMR :
+        * Documentacao da tabela.';
+
+
+
+/*------ 10/02/2015 16:57:58 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_ajust_estoque_historico for tbajustestoq
+active after insert position 0
+AS
+begin
+  update TBPRODUTO p set
+    p.qtde = coalesce(p.qtde, 0.0) + coalesce(new.qtdenova, 0.0)
+  where p.cod = new.codprod;
+
+  Insert Into TBPRODHIST (
+      Codempresa
+    , Codprod
+    , Doc
+    , Historico
+    , Dthist
+    , Qtdeatual
+    , Qtdenova
+    , Qtdefinal
+    , Resp
+    , Motivo
+  ) values (
+      new.codempresa
+    , new.codprod
+    , new.doc
+    , case when new.qtdenova > 0 then 'AJUSTE DE ESTOQUE - ENTRADA' else 'AJUSTE DE ESTOQUE - SAIDA' end
+    , new.dtajust
+    , new.qtdeatual
+    , new.qtdenova
+    , new.qtdefinal
+    , coalesce(new.Usuario, user)
+    , substring(trim(new.motivo) from 1 for 40)
+  );
+end^
+
+/*------ 10/02/2015 16:57:58 --------*/
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_AJUST_ESTOQUE_HISTORICO IS 'Trigger Ajuste Manual Estoque (Venda).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/02/2014
+
+Trigger responsavel por ajustar a quantidade em esoque do produto quando o regitro de ajuste for encerrado.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/05/2014 - IMR :
+        * Mudanca da trigger para que o estoque do produto seja ajustado, independente da empresa a qual pertenca.';
+
+
+/*------ SYSDBA 10/02/2015 21:21:20 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tb_inventario_almox_encerrar for tbinventario_almox
+active after update position 2
+AS
+  declare variable lancamento   DMN_GUID_38;
+  declare variable produto      DMN_VCHAR_10;
+  declare variable quantidade   DMN_QUANTIDADE_D3;
+  declare variable estoque      DMN_QUANTIDADE_D3;
+  declare variable fracionador  DMN_PERCENTUAL_3;
+  declare variable unidade_cns  DMN_SMALLINT_N;
+  declare variable custo_medio  DMN_MONEY_4;
+  declare variable lote_id_conf DMN_GUID_38;
+  declare variable lote_id_resp DMN_GUID_38;
+  declare variable usuario      DMN_USUARIO;
+begin
+  /* Inventario Encerrado */
+  if ((old.status <> new.status) and (old.status = 1) and (new.status = 2)) then
+  begin
+
+    for
+      Select
+          i.id
+        , coalesce(i.produto, 'XXX')
+        , coalesce(i.qtde, 0.0)
+        , coalesce(i.estoque, 0.0)
+        , coalesce(i.fracionador, 1.0)
+        , coalesce(i.custo, 0.0)
+        , i.unidade
+        , coalesce(nullif(Trim(i.usuario), ''), user)
+        , coalesce(i.lote_conferido, 'XXX')
+      from TBINVENTARIO_ALMOX_ITEM i
+      where i.ano = new.ano
+        and i.controle = new.controle
+      Into
+          lancamento
+        , produto
+        , quantidade
+        , estoque
+        , fracionador
+        , custo_medio
+        , unidade_cns
+        , usuario
+        , lote_id_conf
+    do
+    begin
+
+      /* INVENTARIO DE ESTOQUE DE VENDA */
+      if ( coalesce(new.centro_custo, 0) = 0 ) then
+      begin
+
+        -- Atualizar Estoque de Venda
+        Update TBPRODUTO p Set
+          p.qtde = :quantidade
+        where p.cod = :produto;
+
+        -- Gravar Kardex do Produto
+        Insert Into TBPRODHIST (
+            Codempresa
+          , Codprod
+          , Doc
+          , Historico
+          , Dthist
+          , Qtdeatual
+          , Qtdenova
+          , Qtdefinal
+          , Resp
+          , Motivo
+        ) values (
+            new.empresa
+          , :produto
+          , new.ano || '/' || new.controle
+          , 'BALANCO/INVENTARIO ' || Case new.tipo when 0 then 'GERAL' when 1 then 'PARCIAL' else 'DE EQUIPAMENTOS/IMOBILIZADOS' end
+          , new.data
+          , :estoque
+          , (:estoque - :quantidade) * (-1)
+          , :quantidade
+          , :usuario
+          , substring(trim('Responsavel pelo inventario: ' || new.fech_usuario) from 1 for 40)
+        );
+
+      end
+
+      /* INVENTARIO ALMOXARIFADO (ESTOQUE DO CENTRO DE CUSTO) */
+      else
+      begin
+
+        if (exists(
+          Select
+              e.empresa
+            , e.centro_custo
+            , e.produto
+            , e.lote
+          from TBESTOQUE_ALMOX e
+          where e.id           = :lote_id_conf
+        )) then
+        begin
+
+          Update TBESTOQUE_ALMOX e Set
+            e.qtde = :quantidade
+          where e.id           = :lote_id_conf;
+
+        end
+        else
+        begin
+
+          Select
+            g.hex_uuid_format
+          from GET_GUID_UUID_HEX g
+          Into
+            lote_id_resp;
+
+          Insert Into TBESTOQUE_ALMOX (
+              empresa
+            , centro_custo
+            , produto
+            , lote
+            , data_fabricacao
+            , data_validade
+            , qtde
+            , fracionador
+            , unidade
+            , custo_medio
+            , id
+          ) values (
+              new.empresa
+            , new.centro_custo
+            , :produto
+            , 0
+            , null
+            , null
+            , :quantidade   -- Esta quantidade ja esta fracionada para consumo
+            , :fracionador
+            , :unidade_cns
+            , :custo_medio  -- Este valor ja esta fracionado
+            , :lote_id_resp
+          );
+
+          Update TBINVENTARIO_ALMOX_ITEM ai Set
+            ai.lote_resultado = :lote_id_resp
+          where ai.id = :lancamento;
+
+        end
+         
+      end
+
+    end
+
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 10/02/2015 21:23:54 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_GUID_38'
+where (RDB$FIELD_NAME = 'LOTE_CONFERIDO') and
+(RDB$RELATION_NAME = 'TBINVENTARIO_ALMOX_ITEM')
+;
+
+
+
+
+/*------ SYSDBA 10/02/2015 21:23:59 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_GUID_38'
+where (RDB$FIELD_NAME = 'LOTE_RESULTADO') and
+(RDB$RELATION_NAME = 'TBINVENTARIO_ALMOX_ITEM')
+;
+

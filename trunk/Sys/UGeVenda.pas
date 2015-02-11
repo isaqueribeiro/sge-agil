@@ -373,6 +373,7 @@ type
     btbtnFinalizar: TcxButton;
     btbtnGerarNFe: TcxButton;
     btbtnCancelarVND: TcxButton;
+    cdsTabelaItensDESCRI_APRESENTACAO: TIBStringField;
     procedure ImprimirOpcoesClick(Sender: TObject);
     procedure ImprimirOrcamentoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -848,9 +849,10 @@ begin
       Open;
       if not IsEmpty then
       begin
-        cdsTabelaItensCODPROD.AsString     := FieldByName('Cod').AsString;
-        cdsTabelaItensDESCRI.AsString      := FieldByName('Descri').AsString;
-        cdsTabelaItensUNP_SIGLA.AsString   := FieldByName('Unp_sigla').AsString;
+        cdsTabelaItensCODPROD.AsString   := FieldByName('Cod').AsString;
+        cdsTabelaItensDESCRI.AsString    := FieldByName('Descri').AsString;
+        cdsTabelaItensDESCRI_APRESENTACAO.AsString := FieldByName('Descri_apresentacao').AsString;
+        cdsTabelaItensUNP_SIGLA.AsString := FieldByName('Unp_sigla').AsString;
 
         if ( FieldByName('Codunidade').AsInteger > 0 ) then
           cdsTabelaItensUNID_COD.AsInteger   := FieldByName('Codunidade').AsInteger;
@@ -1476,6 +1478,7 @@ begin
     begin
       cdsTabelaItensCODPROD.AsString     := sCodigoAlfa;
       cdsTabelaItensDESCRI.AsString      := sDescricao;
+      cdsTabelaItensDESCRI_APRESENTACAO.AsString := sDescricao;
       cdsTabelaItensUNP_SIGLA.AsString   := sUnidade;
       cdsTabelaItensCST.AsString         := sCST;
       cdsTabelaItensCFOP_COD.AsInteger   := iCFOP;

@@ -73,9 +73,10 @@ type
     procedure nmRequisicaoAtenderClick(Sender: TObject);
     procedure nmRequisicaoCancelarClick(Sender: TObject);
     procedure nmImprimirManifestoClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
-    fPreferenciaINI : TIniFile;
+    fPreferenciaINI : TIniFile;  
     ICentroCusto : Array of Integer;
     procedure CarregarCentroCusto;
 
@@ -97,6 +98,7 @@ type
     procedure RegistrarRotinaSistema; override;
   end;
 
+  procedure MonitorarRequisicaoAlmoxAuto(const AOwner : TComponent; const PanelDock : TPanel = nil; const AutoLoad : Boolean = FALSE);
   procedure MonitorarRequisicaoAlmox(const AOwner : TComponent; const PanelDock : TPanel = nil; const AutoLoad : Boolean = FALSE);
 
 implementation
@@ -107,6 +109,19 @@ uses
 
 {$R *.dfm}
 
+procedure MonitorarRequisicaoAlmoxAuto(const AOwner : TComponent; const PanelDock : TPanel = nil; const AutoLoad : Boolean = FALSE);
+var
+  PreferenciaINI : TIniFile;
+begin
+  PreferenciaINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Preferencia.MonitorReqAlmox.ini');
+  try
+    if PreferenciaINI.ReadBool(gUsuarioLogado.Login, 'Monitorar', False) then
+      MonitorarRequisicaoAlmox(AOwner, PanelDock, AutoLoad);
+  finally
+    PreferenciaINI.Free;
+  end;
+end;
+
 procedure MonitorarRequisicaoAlmox(const AOwner : TComponent; const PanelDock : TPanel = nil; const AutoLoad : Boolean = FALSE);
 var
   AForm : TfrmGeRequisicaoAlmoxMonitor;
@@ -114,7 +129,7 @@ begin
   if Assigned(PanelDock) then
     if PanelDock.Width > 1 then
       Exit;
-      
+
   AForm := TfrmGeRequisicaoAlmoxMonitor.Create(AOwner);
 
   with AForm do
@@ -133,7 +148,7 @@ begin
       ShowModal;
 
     if AutoLoad then
-      CarregarRequisicaoAlmox;  
+      CarregarRequisicaoAlmox;
   end;
 end;
 
@@ -153,13 +168,14 @@ procedure TfrmGeRequisicaoAlmoxMonitor.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   inherited;
-  fPreferenciaINI.WriteInteger(GetUserApp, 'CentroCusto', edCentroCusto.ItemIndex);
+  fPreferenciaINI.WriteInteger(gUsuarioLogado.Login, 'CentroCusto', edCentroCusto.ItemIndex);
+  fPreferenciaINI.WriteBool   (gUsuarioLogado.Login, 'Monitorar',   False);
   fPreferenciaINI.UpdateFile;
-  
+
   if Assigned(Parent) then
     Parent.Width := 1;
 
-  Action := caFree;  
+  Action := caFree;
 end;
 
 procedure TfrmGeRequisicaoAlmoxMonitor.CarregarCentroCusto;
@@ -184,7 +200,7 @@ begin
       edCentroCusto.Items.Add( FieldByName('descricao').AsString );
       ICentroCusto[I] := FieldByName('codigo').AsInteger;
 
-      if (ReadInteger(GetUserApp, 'CentroCusto', 0) = FieldByName('codigo').AsInteger) then
+      if (ReadInteger(gUsuarioLogado.Login, 'CentroCusto', 0) = FieldByName('codigo').AsInteger) then
         S := FieldByName('codigo').AsInteger;
 
       Inc(I);
@@ -480,6 +496,12 @@ end;
 function TfrmGeRequisicaoAlmoxMonitor.GetRotinaCancelarID: String;
 begin
   Result := GetRotinaInternaID(nmRequisicaoCancelar);
+end;
+
+procedure TfrmGeRequisicaoAlmoxMonitor.FormActivate(Sender: TObject);
+begin
+  inherited;
+  fPreferenciaINI.WriteBool(gUsuarioLogado.Login, 'Monitorar', True);
 end;
 
 initialization

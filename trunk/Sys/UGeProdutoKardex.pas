@@ -47,7 +47,7 @@ uses
 
 {$R *.dfm}
 
-{ TfrmGrPadraoPesquisa1 }
+{ TfrmGeProdutoKardex }
 
 function TfrmGeProdutoKardex.ExecutarPesquisa: Boolean;
 var
@@ -73,7 +73,6 @@ begin
       SQL.Clear;
       SQL.AddStrings( SQLSelect );
       SQL.Add('where ph.codprod = ' + QuotedStr(Trim(Copy(edProduto.Text, 1, Pos('-', edProduto.Text) - 1))));
-      SQL.Add('  and ph.codempresa = ' + QuotedStr(GetEmpresaIDDefault));
       SQL.Add('  and ph.dthist between ' + QuotedStr(sDataInicial) + ' and ' + QuotedStr(sDataFinal));
       SQL.Add('  and ph.historico like ' + QuotedStr(Trim(edPesquisar.Text) + '%'));
       SQL.Add('order by ph.dthist');
