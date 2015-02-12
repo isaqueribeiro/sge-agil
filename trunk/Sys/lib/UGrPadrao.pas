@@ -22,6 +22,7 @@ type
     fCampoCodigo    ,
     fCampoDescricao ,
     fCampoOrdenacao ,
+    fCampoCadastroAtivo,
     fGeneratorName  ,
     fRotinaID       : String;
     procedure SetRotinaID(Value : String);
@@ -38,6 +39,7 @@ type
     property CampoCodigo : String read fCampoCodigo write fCampoCodigo;
     property CampoDescricao : String read fCampoDescricao write fCampoDescricao;
     property CampoOrdenacao : String read fCampoOrdenacao write fCampoOrdenacao;
+    property CampoCadastroAtivo : String read fCampoCadastroAtivo write fCampoCadastroAtivo;
     property GeneratorName  : String read fGeneratorName write fGeneratorName;
 
     procedure RegistrarRotinaSistema; virtual; abstract;
@@ -325,9 +327,10 @@ begin
 
   SetOnEnterExit(Self);
 
-  CampoCodigo    := EmptyStr;
-  CampoDescricao := EmptyStr;
-  CampoOrdenacao := EmptyStr;
+  CampoCodigo        := EmptyStr;
+  CampoDescricao     := EmptyStr;
+  CampoOrdenacao     := EmptyStr;
+  CampoCadastroAtivo := EmptyStr;
   NomeTabela     := EmptyStr;
   GeneratorName  := EmptyStr;
 end;

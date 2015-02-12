@@ -937,6 +937,7 @@ inherited frmGeProdutoImpressao: TfrmGeProdutoImpressao
       '  , p.compor_faturamento'
       '  , p.produto_novo'
       '  , p.movimenta_estoque'
+      '  , p.cadastro_ativo'
       'from TBPRODUTO p'
       '  left join TBEMPRESA e on (e.cnpj = p.codemp)'
       '  left join TBGRUPOPROD g on (g.cod = p.codgrupo)'
@@ -988,7 +989,8 @@ inherited frmGeProdutoImpressao: TfrmGeProdutoImpressao
       'PERCENTUAL_MARGEM=PERCENTUAL_MARGEM'
       'COMPOR_FATURAMENTO=COMPOR_FATURAMENTO'
       'PRODUTO_NOVO=PRODUTO_NOVO'
-      'MOVIMENTA_ESTOQUE=MOVIMENTA_ESTOQUE')
+      'MOVIMENTA_ESTOQUE=MOVIMENTA_ESTOQUE'
+      'CADASTRO_ATIVO=CADASTRO_ATIVO')
     DataSet = CdsRelacaoProduto
     BCDToCurrency = True
     Left = 136

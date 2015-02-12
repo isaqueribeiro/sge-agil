@@ -86,7 +86,7 @@ type
     dbPrecoPromocao: TDBEdit;
     lblProdutoPromocao: TLabel;
     lblProdutoSemEstoque: TLabel;
-    lblProdutoMsgLivre: TLabel;
+    lblProdutoDesativado: TLabel;
     lblFabricante: TLabel;
     dbFabricante: TRxDBComboEdit;
     IbDtstTabelaCODFABRICANTE: TIntegerField;
@@ -259,6 +259,8 @@ type
     nmProdutoEtiqueta: TMenuItem;
     dbProdutoImobilizado: TDBCheckBox;
     dbCadastroAtivo: TDBCheckBox;
+    IbDtstTabelaCADASTRO_ATIVO: TSmallintField;
+    IbDtstTabelaPRODUTO_IMOBILIZADO: TSmallintField;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
@@ -360,7 +362,7 @@ implementation
 
 uses
   UDMBusiness, UGeSecaoProduto, UGeGrupoProduto, UGeUnidade,
-  UGeTabelaCFOP, UGeFabricante, UConstantesDGE, UFuncoes;
+  UGeTabelaCFOP, UGeFabricante, UConstantesDGE, UFuncoes, UGrPadrao;
 
 {$R *.dfm}
 
@@ -907,9 +909,10 @@ begin
 
   DisplayFormatCodigo := '###0000000';
 
-  NomeTabela     := 'TBPRODUTO';
-  CampoCodigo    := 'p.Codigo';
-  CampoDescricao := 'p.Descri';
+  NomeTabela         := 'TBPRODUTO';
+  CampoCodigo        := 'p.Codigo';
+  CampoDescricao     := 'p.Descri';
+  CampoCadastroAtivo := 'p.cadastro_ativo';
   {$IFNDEF DGE}
   CampoDescricao := 'p.Descri_apresentacao';
   {$ENDIF}
@@ -942,6 +945,10 @@ begin
   nmProdutoLista.Caption    := 'Lista de ' + StrDescricaoProduto;
   nmProdutoFicha.Caption    := 'Ficha de ' + StrDescricaoProduto;
   nmProdutoEtiqueta.Caption := 'Etiqueta de ' + StrDescricaoProduto;
+
+  lblProdutoPromocao.Caption   := Format('* %s em Promoção', [StrDescricaoProduto]);
+  lblProdutoSemEstoque.Caption := Format('* %s sem Estoque', [StrDescricaoProduto]);
+  lblProdutoDesativado.Caption := Format('* %s desativado', [StrDescricaoProduto]);
 
 (*
   lblTipoTributacaoSN.Enabled := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
@@ -1138,6 +1145,8 @@ begin
   IbDtstTabelaALIQUOTA_PIS.AsCurrency      := 0.0;
   IbDtstTabelaALIQUOTA_COFINS.AsCurrency   := 0.0;
   IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger  := 1;
+  IbDtstTabelaCADASTRO_ATIVO.Value         := 1;
+  IbDtstTabelaPRODUTO_IMOBILIZADO.Value    := 0;
   IbDtstTabelaCOMPOR_FATURAMENTO.AsInteger := StrToInt(IfThen(GetSegmentoID(gUsuarioLogado.Empresa) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID], '0', '1'));
 end;
 
@@ -1261,6 +1270,10 @@ begin
   if ( IbDtstTabelaPRECO_PROMOCAO.AsCurrency > 0 ) then
     dbgDados.Canvas.Font.Color := lblProdutoPromocao.Font.Color;
     
+  // Destacar serviços/produtos desativados
+  if ( IbDtstTabelaCADASTRO_ATIVO.AsInteger = 0 ) then
+    dbgDados.Canvas.Font.Color := lblProdutoDesativado.Font.Color;
+
   // Destacar alerta de lucros
   if ( IbDtstTabelaCOMPOR_FATURAMENTO.AsInteger = 1 ) then
     if (not IbDtstTabelaLUCRO_CALCULADO.IsNull) then

@@ -10095,3 +10095,37 @@ where (RDB$FIELD_NAME = 'LOTE_RESULTADO') and
 (RDB$RELATION_NAME = 'TBINVENTARIO_ALMOX_ITEM')
 ;
 
+
+
+
+/*------ SYSDBA 11/02/2015 15:09:45 --------*/
+
+COMMENT ON TABLE TBPRODUTO IS 'Tabela Produtos/Servicos
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de todos os produtos e/ou servicos necessarios as movimentacoes de
+entrada e saida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/05/2014 - IMR :
+        + Criacao do campo COMPOR_FATURAMENTO que ira permitir ao sistema saber quais produtos/servicos haverao de compor
+          o faturamento da empresa e quais sao de consumo interno.
+
+    03/11/2014 - IMR :
+        + Criacao do campo METAFONEMA para auxiliar da pesquisa de produtos homonimos e o campo ESPECIFICACAO como
+          campo para especificar de maneira textual o produto/servico, muito utilizado em processos de cotacao.
+
+    10/02/2014 - IMR :
+        + Criacao dos campos CADASTRO_ATIVO e PRODUTO_IMOBILIZADO para permitir que apenas os cadastro ativos sejam
+          utilizados nos processos e para designar os produtos que sao imobilizados para futuras implementacoes de
+          controles patrimoniais.';
+

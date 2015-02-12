@@ -28,6 +28,11 @@ const
   ROTINA_TIPO_FUNCAO   = 2;
   ROTINA_TIPO_PROCESSO = 3;
 
+  // Flags para Operação Lógica
+
+  FLAG_NAO = 0;
+  FLAG_SIM = 1;
+
   // Códigos de Teclas
 
   SYS_KEY_A = 65;
