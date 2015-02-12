@@ -154,6 +154,7 @@ inherited frmGeProduto: TfrmGeProduto
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
+          Transparent = True
         end
         object lblProdutoSemEstoque: TLabel [1]
           Left = 2
@@ -167,20 +168,21 @@ inherited frmGeProduto: TfrmGeProduto
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
+          Transparent = True
         end
-        object lblProdutoMsgLivre: TLabel [2]
+        object lblProdutoDesativado: TLabel [2]
           Left = 2
           Top = 44
-          Width = 16
+          Width = 169
           Height = 13
-          Caption = '* ?'
+          Caption = '* Servi'#231'o/Produto desativado'
           Font.Charset = ANSI_CHARSET
-          Font.Color = clRed
+          Font.Color = 7303023
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-          Visible = False
+          Transparent = True
         end
         object ShpLucroZerado: TShape [3]
           Left = 288
@@ -1039,6 +1041,7 @@ inherited frmGeProduto: TfrmGeProduto
             Width = 153
             Height = 17
             Caption = 'Produto '#233' Imobilizado'
+            DataField = 'PRODUTO_IMOBILIZADO'
             DataSource = DtSrcTabela
             Enabled = False
             TabOrder = 11
@@ -1051,8 +1054,8 @@ inherited frmGeProduto: TfrmGeProduto
             Width = 153
             Height = 17
             Caption = 'Cadastro Ativo'
+            DataField = 'CADASTRO_ATIVO'
             DataSource = DtSrcTabela
-            Enabled = False
             TabOrder = 7
             ValueChecked = '1'
             ValueUnchecked = '0'
@@ -2340,6 +2343,8 @@ inherited frmGeProduto: TfrmGeProduto
       '  , p.Situacao_historico_veiculo'
       '  , p.Percentual_reducao_BC'
       '  , p.Usuario'
+      '  , p.Cadastro_ativo'
+      '  , p.Produto_imobilizado'
       '  , p.Movimenta_estoque'
       '  , p.Compor_faturamento'
       '  , case when coalesce(p.Reserva, 0) > 0'
@@ -2686,6 +2691,18 @@ inherited frmGeProduto: TfrmGeProduto
       Precision = 18
       Size = 2
     end
+    object IbDtstTabelaCADASTRO_ATIVO: TSmallintField
+      Alignment = taLeftJustify
+      FieldName = 'CADASTRO_ATIVO'
+      Origin = '"TBPRODUTO"."CADASTRO_ATIVO"'
+      ProviderFlags = [pfInUpdate]
+    end
+    object IbDtstTabelaPRODUTO_IMOBILIZADO: TSmallintField
+      Alignment = taLeftJustify
+      FieldName = 'PRODUTO_IMOBILIZADO'
+      Origin = '"TBPRODUTO"."PRODUTO_IMOBILIZADO"'
+      ProviderFlags = [pfInUpdate]
+    end
     object IbDtstTabelaPRODUTO_NOVO: TSmallintField
       Alignment = taLeftJustify
       DisplayLabel = 'Produto Novo'
@@ -2989,8 +3006,10 @@ inherited frmGeProduto: TfrmGeProduto
       '  SITUACAO_HISTORICO_VEICULO,'
       '  PERCENTUAL_REDUCAO_BC,'
       '  USUARIO,'
+      '  CADASTRO_ATIVO,'
       '  MOVIMENTA_ESTOQUE,'
       '  COMPOR_FATURAMENTO,'
+      '  PRODUTO_IMOBILIZADO,'
       '  CUST_DESP_OFIC,'
       '  CUST_DESP_GERAIS,'
       '  CUST_DESP_ADM,'
@@ -3012,6 +3031,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  ANO_FABRICACAO_VEICULO = :ANO_FABRICACAO_VEICULO,'
       '  ANO_MODELO_VEICULO = :ANO_MODELO_VEICULO,'
       '  APRESENTACAO = :APRESENTACAO,'
+      '  CADASTRO_ATIVO = :CADASTRO_ATIVO,'
       '  CHASSI_VEICULO = :CHASSI_VEICULO,'
       '  COD = :COD,'
       '  CODBARRA_EAN = :CODBARRA_EAN,'
@@ -3053,6 +3073,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  PRECO = :PRECO,'
       '  PRECO_PROMOCAO = :PRECO_PROMOCAO,'
       '  PRECO_SUGERIDO = :PRECO_SUGERIDO,'
+      '  PRODUTO_IMOBILIZADO = :PRODUTO_IMOBILIZADO,'
       '  PRODUTO_NOVO = :PRODUTO_NOVO,'
       '  QTDE = :QTDE,'
       '  REFERENCIA = :REFERENCIA,'
@@ -3074,73 +3095,74 @@ inherited frmGeProduto: TfrmGeProduto
         '  (ALIQUOTA, ALIQUOTA_COFINS, ALIQUOTA_CSOSN, ALIQUOTA_PIS, ALIQ' +
         'UOTA_TIPO, '
       
-        '   ANO_FABRICACAO_VEICULO, ANO_MODELO_VEICULO, APRESENTACAO, CHA' +
-        'SSI_VEICULO, '
+        '   ANO_FABRICACAO_VEICULO, ANO_MODELO_VEICULO, APRESENTACAO, CAD' +
+        'ASTRO_ATIVO, '
       
-        '   COD, CODBARRA_EAN, CODCFOP, CODEMP, CODFABRICANTE, CODGRUPO, ' +
-        'CODIGO, '
+        '   CHASSI_VEICULO, COD, CODBARRA_EAN, CODCFOP, CODEMP, CODFABRIC' +
+        'ANTE, CODGRUPO, '
       
-        '   CODIGO_NVE, CODORIGEM, CODSECAO, CODTRIBUTACAO, CODUNIDADE, C' +
-        'ODUNIDADE_FRACIONADA, '
+        '   CODIGO, CODIGO_NVE, CODORIGEM, CODSECAO, CODTRIBUTACAO, CODUN' +
+        'IDADE, '
       
-        '   COMBUSTIVEL_VEICULO, COMPOR_FATURAMENTO, COR_VEICULO, CSOSN, ' +
-        'CST, CST_COFINS, '
+        '   CODUNIDADE_FRACIONADA, COMBUSTIVEL_VEICULO, COMPOR_FATURAMENT' +
+        'O, COR_VEICULO, '
       
-        '   CST_PIS, CUBAGEM, CUSTOMEDIO, DESCRI, DESCRI_APRESENTACAO, ES' +
-        'PECIFICACAO, '
+        '   CSOSN, CST, CST_COFINS, CST_PIS, CUBAGEM, CUSTOMEDIO, DESCRI,' +
+        ' DESCRI_APRESENTACAO, '
       
-        '   ESTOQMIN, FRACIONADOR, KILOMETRAGEM_VEICULO, METAFONEMA, MODE' +
-        'LO, MOVIMENTA_ESTOQUE, '
+        '   ESPECIFICACAO, ESTOQMIN, FRACIONADOR, KILOMETRAGEM_VEICULO, M' +
+        'ETAFONEMA, '
       
-        '   NCM_SH, PERCENTUAL_MARCKUP, PERCENTUAL_MARGEM, PERCENTUAL_RED' +
-        'UCAO_BC, '
+        '   MODELO, MOVIMENTA_ESTOQUE, NCM_SH, PERCENTUAL_MARCKUP, PERCEN' +
+        'TUAL_MARGEM, '
       
-        '   PESO_BRUTO, PESO_LIQUIDO, PRECO, PRECO_PROMOCAO, PRECO_SUGERI' +
-        'DO, PRODUTO_NOVO, '
+        '   PERCENTUAL_REDUCAO_BC, PESO_BRUTO, PESO_LIQUIDO, PRECO, PRECO' +
+        '_PROMOCAO, '
       
-        '   QTDE, REFERENCIA, RENAVAM_VEICULO, RESERVA, SECAO, SITUACAO_A' +
-        'TUAL_VEICULO, '
+        '   PRECO_SUGERIDO, PRODUTO_IMOBILIZADO, PRODUTO_NOVO, QTDE, REFE' +
+        'RENCIA, '
       
-        '   SITUACAO_HISTORICO_VEICULO, TIPO_VEICULO, UNIDADE, USUARIO, V' +
-        'ALOR_IPI, '
-      '   VENDA_FRACIONADA)'
+        '   RENAVAM_VEICULO, RESERVA, SECAO, SITUACAO_ATUAL_VEICULO, SITU' +
+        'ACAO_HISTORICO_VEICULO, '
+      '   TIPO_VEICULO, UNIDADE, USUARIO, VALOR_IPI, VENDA_FRACIONADA)'
       'values'
       
         '  (:ALIQUOTA, :ALIQUOTA_COFINS, :ALIQUOTA_CSOSN, :ALIQUOTA_PIS, ' +
         ':ALIQUOTA_TIPO, '
       
         '   :ANO_FABRICACAO_VEICULO, :ANO_MODELO_VEICULO, :APRESENTACAO, ' +
-        ':CHASSI_VEICULO, '
+        ':CADASTRO_ATIVO, '
       
-        '   :COD, :CODBARRA_EAN, :CODCFOP, :CODEMP, :CODFABRICANTE, :CODG' +
-        'RUPO, :CODIGO, '
+        '   :CHASSI_VEICULO, :COD, :CODBARRA_EAN, :CODCFOP, :CODEMP, :COD' +
+        'FABRICANTE, '
       
-        '   :CODIGO_NVE, :CODORIGEM, :CODSECAO, :CODTRIBUTACAO, :CODUNIDA' +
-        'DE, :CODUNIDADE_FRACIONADA, '
+        '   :CODGRUPO, :CODIGO, :CODIGO_NVE, :CODORIGEM, :CODSECAO, :CODT' +
+        'RIBUTACAO, '
       
-        '   :COMBUSTIVEL_VEICULO, :COMPOR_FATURAMENTO, :COR_VEICULO, :CSO' +
-        'SN, :CST, '
+        '   :CODUNIDADE, :CODUNIDADE_FRACIONADA, :COMBUSTIVEL_VEICULO, :C' +
+        'OMPOR_FATURAMENTO, '
       
-        '   :CST_COFINS, :CST_PIS, :CUBAGEM, :CUSTOMEDIO, :DESCRI, :DESCR' +
-        'I_APRESENTACAO, '
+        '   :COR_VEICULO, :CSOSN, :CST, :CST_COFINS, :CST_PIS, :CUBAGEM, ' +
+        ':CUSTOMEDIO, '
       
-        '   :ESPECIFICACAO, :ESTOQMIN, :FRACIONADOR, :KILOMETRAGEM_VEICUL' +
-        'O, :METAFONEMA, '
+        '   :DESCRI, :DESCRI_APRESENTACAO, :ESPECIFICACAO, :ESTOQMIN, :FR' +
+        'ACIONADOR, '
       
-        '   :MODELO, :MOVIMENTA_ESTOQUE, :NCM_SH, :PERCENTUAL_MARCKUP, :P' +
-        'ERCENTUAL_MARGEM, '
+        '   :KILOMETRAGEM_VEICULO, :METAFONEMA, :MODELO, :MOVIMENTA_ESTOQ' +
+        'UE, :NCM_SH, '
       
-        '   :PERCENTUAL_REDUCAO_BC, :PESO_BRUTO, :PESO_LIQUIDO, :PRECO, :' +
-        'PRECO_PROMOCAO, '
+        '   :PERCENTUAL_MARCKUP, :PERCENTUAL_MARGEM, :PERCENTUAL_REDUCAO_' +
+        'BC, :PESO_BRUTO, '
       
-        '   :PRECO_SUGERIDO, :PRODUTO_NOVO, :QTDE, :REFERENCIA, :RENAVAM_' +
-        'VEICULO, '
+        '   :PESO_LIQUIDO, :PRECO, :PRECO_PROMOCAO, :PRECO_SUGERIDO, :PRO' +
+        'DUTO_IMOBILIZADO, '
       
-        '   :RESERVA, :SECAO, :SITUACAO_ATUAL_VEICULO, :SITUACAO_HISTORIC' +
-        'O_VEICULO, '
+        '   :PRODUTO_NOVO, :QTDE, :REFERENCIA, :RENAVAM_VEICULO, :RESERVA' +
+        ', :SECAO, '
       
-        '   :TIPO_VEICULO, :UNIDADE, :USUARIO, :VALOR_IPI, :VENDA_FRACION' +
-        'ADA)')
+        '   :SITUACAO_ATUAL_VEICULO, :SITUACAO_HISTORICO_VEICULO, :TIPO_V' +
+        'EICULO, '
+      '   :UNIDADE, :USUARIO, :VALOR_IPI, :VENDA_FRACIONADA)')
     DeleteSQL.Strings = (
       'delete from TBPRODUTO'
       'where'

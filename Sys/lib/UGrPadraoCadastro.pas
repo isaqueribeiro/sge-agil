@@ -706,6 +706,8 @@ begin
 end;
 
 procedure TfrmGrPadraoCadastro.btbtnSelecionarClick(Sender: TObject);
+var
+  sCampoCadastroAtivo : String;
 begin
   if not GetPermissaoRotinaInterna(Sender, True) then
     Abort;
@@ -715,7 +717,22 @@ begin
 
   if ( not IbDtstTabela.Active ) then
     Exit;
-    
+
+  if Trim(CampoCadastroAtivo) <> EmptyStr then
+  begin
+    if ( pos('.', CampoCadastroAtivo) > 0 ) then
+      sCampoCadastroAtivo := Copy(CampoCadastroAtivo, pos('.', CampoCadastroAtivo) + 1, Length(CampoCadastroAtivo))
+    else
+      sCampoCadastroAtivo := Trim(CampoCadastroAtivo);
+
+    if Assigned(IbDtstTabela.Fields.FindField(sCampoCadastroAtivo)) then
+      if (IbDtstTabela.FieldByName(sCampoCadastroAtivo).AsInteger = FLAG_NAO) then
+      begin
+        ShowWarning('O Cadastro selecionado não está ativo!');
+        Exit;
+      end;
+  end;
+
   ModalResult := mrOk;
 end;
 

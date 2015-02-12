@@ -1,34 +1,34 @@
 [Closed Files]
-File_0=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas',0,1,85,44,120,1,0
-File_1=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeVenda.pas',0,1,2372,101,2378,1,0
-File_2=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeApropriacaoEstoque.pas',0,1,1,98,20,1,0
-File_3=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeRequisicaoAlmoxMonitor.pas',0,1,193,123,207,1,0
-File_4=SourceModule,'C:\Delphi\DevExpress VCL\ExpressSkins Library\Sources\dxSkinsForm.pas',0,1,4360,110,4367,0,0
-File_5=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProduto.pas',0,1,970,146,974,1,0
-File_6=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeProdutoKardex.pas',0,1,22,131,31,1,0
-File_7=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeApropriacaoEstoquePesquisa.pas',0,1,1,153,3,1,0
-File_8=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeRequisicaoCompraPesquisa.pas',0,1,1,154,3,1,0
-File_9=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeAutorizacaoCompra.pas',0,1,1,1,1,1,0
+File_0=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas',0,1,1,103,3,1,0
+File_1=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProdutoImpressao.pas',0,1,1,105,6,1,0
+File_2=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas',0,1,85,44,120,1,0
+File_3=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeVenda.pas',0,1,2372,101,2378,1,0
+File_4=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeApropriacaoEstoque.pas',0,1,1,98,20,1,0
+File_5=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeRequisicaoAlmoxMonitor.pas',0,1,193,123,207,1,0
+File_6=SourceModule,'C:\Delphi\DevExpress VCL\ExpressSkins Library\Sources\dxSkinsForm.pas',0,1,4360,110,4367,0,0
+File_7=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeProdutoKardex.pas',0,1,22,131,31,1,0
+File_8=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeApropriacaoEstoquePesquisa.pas',0,1,1,153,3,1,0
 
 [Modules]
-Module0=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
-Module1=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeInventario.pas
+Module0=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeInventario.pas
+Module1=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas
 Module2=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas
 Module3=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
 Module4=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas
-Module5=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas
-Module6=C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas
-Module7=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
-Module8=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr
-Count=9
+Module5=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProduto.pas
+Module6=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
+Module7=C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas
+Module8=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
+Module9=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr
+Count=10
 EditWindowCount=1
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeInventario.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=1
+FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeInventario.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
@@ -48,10 +48,15 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProduto.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
+
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
 
 [C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas]
 ModuleType=SourceModule
@@ -68,6 +73,10 @@ ModuleType=SourceModule
 FormState=0
 FormOnTop=0
 
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas]
+FormState=0
+FormOnTop=0
+
 [C:\Program Files (x86)\Borland\Delphi7\Projects\ProjectGroup1.bpg]
 FormState=0
 FormOnTop=0
@@ -76,17 +85,17 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoCadastro.pas]
 FormState=0
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\lib\UGrPadraoImpressao.pas]
 FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=9
-CurrentView=3
+ViewCount=10
+CurrentView=9
 View0=0
 View1=1
 View2=2
@@ -96,6 +105,7 @@ View5=5
 View6=6
 View7=7
 View8=8
+View9=9
 CodeExplorer=CodeExplorer@EditWindow0
 MessageView=MessageView@EditWindow0
 Create=1
@@ -126,8 +136,8 @@ LeftCol=1
 
 [View1]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
-CursorX=12
-CursorY=38
+CursorX=3
+CursorY=33
 TopLine=1
 LeftCol=1
 
@@ -168,16 +178,23 @@ LeftCol=1
 
 [View7]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas
-CursorX=119
-CursorY=994
-TopLine=970
+CursorX=1
+CursorY=1
+TopLine=1
 LeftCol=1
 
 [View8]
+Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProduto.pas
+CursorX=58
+CursorY=951
+TopLine=895
+LeftCol=1
+
+[View9]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeInventario.pas
-CursorX=30
-CursorY=404
-TopLine=342
+CursorX=33
+CursorY=24
+TopLine=1
 LeftCol=1
 
 [Watches]
@@ -258,7 +275,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=Name
+SelectedItem=Position
 ExpandedItems=
 HiddenCategories=
 

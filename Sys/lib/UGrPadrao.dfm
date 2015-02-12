@@ -12,7 +12,7 @@ object frmGrPadrao: TfrmGrPadrao
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poScreenCenter
+  Position = poMainFormCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
