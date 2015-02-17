@@ -26,7 +26,7 @@ uses
 type        
   TfrmGeApropriacaoEstoquePesquisa = class(TfrmGrPadrao)
     pnlPesquisa: TPanel;
-    GrpBxPesquisar: TGroupBox;
+    GrpBxFiltro: TGroupBox;
     BtnPesquisar: TSpeedButton;
     lblPesquisar: TLabel;
     lblTipoFiltro: TLabel;
@@ -105,6 +105,7 @@ type
     dbgProdutoTblPERCENTUAL: TcxGridDBBandedColumn;
     dbgFabTblPERCENTUAL: TcxGridDBBandedColumn;
     dbgGrupoTblPERCENTUAL: TcxGridDBBandedColumn;
+    chkProdutoComEstoque: TCheckBox;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -364,6 +365,9 @@ begin
             else
               sWhr := sWhr + ' and (upper(p.descri) like ' + QuotedStr(edPesquisar.Text + '%') + ')';
 
+          if chkProdutoComEstoque.Checked then
+            sWhr := sWhr + ' and (e.estoque > 0.0)';
+
           SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
@@ -403,6 +407,9 @@ begin
             else
               sWhr := sWhr + ' and ((upper(g.descri) like ' + QuotedStr(edPesquisar.Text + '%') + ') or (g.descri is null))';
 
+          if chkProdutoComEstoque.Checked then
+            sWhr := sWhr + ' and (e.estoque > 0.0)';
+
           SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
@@ -433,6 +440,9 @@ begin
               sWhr := sWhr + ' and (p.codfabricante like ' + QuotedStr('%' + edPesquisar.Text + '%') + ')'
             else
               sWhr := sWhr + ' and ((upper(f.nome) like ' + QuotedStr(edPesquisar.Text + '%') + ') or (f.nome is null))';
+
+          if chkProdutoComEstoque.Checked then
+            sWhr := sWhr + ' and (e.estoque > 0.0)';
 
           SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);

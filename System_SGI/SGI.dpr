@@ -127,7 +127,8 @@ uses
   UGeRequisicaoAlmoxCancelar in 'UGeRequisicaoAlmoxCancelar.pas' {frmGeRequisicaoAlmoxCancelar},
   UGeRequisicaoAlmoxMonitor in 'UGeRequisicaoAlmoxMonitor.pas' {frmGeRequisicaoAlmoxMonitor},
   UGeInventario in 'UGeInventario.pas' {frmGeInventario},
-  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo};
+  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo},
+  UGeProdutoEstoqueImpressao in '..\System_SGE\UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao};
 
 {$R *.res}
 

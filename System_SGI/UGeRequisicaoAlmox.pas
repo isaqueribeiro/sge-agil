@@ -944,12 +944,6 @@ begin
     IbDtstTabelaMOTIVO.AsString  := Trim(AnsiUpperCase(IbDtstTabelaMOTIVO.AsString));
     IbDtstTabelaOBS.AsString     := Trim(AnsiUpperCase(IbDtstTabelaOBS.AsString));
 
-    if (IbDtstTabelaCCUSTO_ORIGEM.AsInteger = IbDtstTabelaCCUSTO_DESTINO.AsInteger) then
-    begin
-      ShowWarning('O Centro de Custo de destino (atendente) não poderá ser igual ao Centro de Custo de origem (requisitante)!');
-      Abort;
-    end;
-
     if ( cdsTabelaItens.RecordCount > 0 ) then
       IbDtstTabelaITENS.AsInteger := cdsTabelaItens.RecordCount
     else

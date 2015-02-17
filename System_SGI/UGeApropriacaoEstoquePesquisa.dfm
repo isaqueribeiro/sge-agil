@@ -31,7 +31,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
     BevelOuter = bvNone
     BorderWidth = 4
     TabOrder = 0
-    object GrpBxPesquisar: TGroupBox
+    object GrpBxFiltro: TGroupBox
       Left = 4
       Top = 4
       Width = 1108
@@ -114,11 +114,11 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       object edPesquisar: TEdit
         Left = 560
         Top = 40
-        Width = 504
+        Width = 297
         Height = 21
         Anchors = [akLeft, akTop, akRight]
         CharCase = ecUpperCase
-        TabOrder = 2
+        TabOrder = 3
       end
       object edTipoFiltro: TComboBox
         Left = 16
@@ -197,6 +197,15 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Text = '(Todos)'
         OnButtonClick = edCentroCustoButtonClick
         OnKeyPress = edCentroCustoKeyPress
+      end
+      object chkProdutoComEstoque: TCheckBox
+        Left = 864
+        Top = 42
+        Width = 201
+        Height = 17
+        Anchors = [akTop, akRight]
+        Caption = 'Apenas Produtos com Estoque'
+        TabOrder = 2
       end
     end
   end

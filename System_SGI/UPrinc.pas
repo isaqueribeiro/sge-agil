@@ -261,6 +261,7 @@ type
     procedure nmRequisicaoAlmoxMonitorClick(Sender: TObject);
     procedure nmInventarioMaterialClick(Sender: TObject);
     procedure TmrMonitorarTimer(Sender: TObject);
+    procedure mnRelatorioEstoqueProdutoClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -821,14 +822,19 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_FORNECEDOR_ID,   Trim(nmRelatorioFornecedor.Caption),     ROTINA_MENU_RELATORIO_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_PRODUTO_ID,      Trim(nmRelatorioProduto.Caption),        ROTINA_MENU_RELATORIO_ID);
 
+  // Relatórios -> Entradas
+
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_ENTRADA_PROD_ID, Trim(mnRelatorioEntradaProduto.Caption), ROTINA_MENU_REL_ENTRADA_ID);
+
+  // Relatórios -> Estoque
+
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_ESTOQUE_PROD_ID, Trim(mnRelatorioEstoqueProduto.Caption),     ROTINA_MENU_REL_ESTOQUE_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_ESTOQUE_APRO_ID, Trim(mnRelatorioEstoqueApropriacao.Caption), ROTINA_MENU_REL_ESTOQUE_ID);
+
   // Relatórios -> Faturamento
 
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_FATURA_VENDA_ID, Trim(nmRelatorioFaturamentoVendas.Caption), ROTINA_MENU_REL_FATURAMENTO_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_FATURA_OS_ID,    Trim(nmRelatorioFaturamentoOS.Caption),     ROTINA_MENU_REL_FATURAMENTO_ID);
-
-  // Relatórios -> Entradas
-
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_ENTRADA_PROD_ID, Trim(mnRelatorioEntradaProduto.Caption), ROTINA_MENU_REL_ENTRADA_ID);
 
   // Relatórios -> Financeiro
 
@@ -1002,6 +1008,12 @@ begin
     MonitorarRequisicaoAlmoxAuto(Self, PnlDockReqAlmox, True);
     
   TmrMonitorar.Enabled := False;
+end;
+
+procedure TfrmPrinc.mnRelatorioEstoqueProdutoClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_PROD_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeProdutoEstoqueImpressao');
 end;
 
 end.

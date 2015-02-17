@@ -10002,7 +10002,7 @@ object frmPrinc: TfrmPrinc
             3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
             3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
           Caption = 'Produtos'
-          Enabled = False
+          OnClick = mnRelatorioEstoqueProdutoClick
         end
         object mnRelatorioEstoqueApropriacao: TMenuItem
           Bitmap.Data = {

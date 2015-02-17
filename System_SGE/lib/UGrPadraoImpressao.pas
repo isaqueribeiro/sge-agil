@@ -260,7 +260,7 @@ begin
   with frReport do
     try
       DMNFe.AbrirEmitente(GetEmpresaIDDefault);
-      DMBusiness.ConfigurarEmail(GetEmpresaIDDefault, EmptyStr, TituloRelario, EmptyStr);
+      DMBusiness.ConfigurarEmail(gUsuarioLogado.Empresa, EmptyStr, TituloRelario, EmptyStr);
     except
     end;
 end;

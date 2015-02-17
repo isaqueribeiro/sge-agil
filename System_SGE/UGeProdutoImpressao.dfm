@@ -723,7 +723,7 @@ inherited frmGeProdutoImpressao: TfrmGeProdutoImpressao
           Frame.Width = 0.100000000000000000
           HAlign = haRight
           Memo.UTF8 = (
-            'Estoque ')
+            'Quant. ')
           ParentFont = False
           VAlign = vaCenter
         end
