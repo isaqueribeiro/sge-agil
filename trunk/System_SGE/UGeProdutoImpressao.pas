@@ -328,8 +328,8 @@ procedure TfrmGeProdutoImpressao.CarregarDadosEmpresa;
 begin
   with frReport do
     try
-      DMNFe.AbrirEmitente(IfThen(edEmpresa.ItemIndex = 0, GetEmpresaIDDefault, IEmpresa[edEmpresa.ItemIndex]));
-      DMBusiness.ConfigurarEmail(IfThen(edEmpresa.ItemIndex = 0, GetEmpresaIDDefault, IEmpresa[edEmpresa.ItemIndex]), EmptyStr, TituloRelario, EmptyStr);
+      DMNFe.AbrirEmitente(IfThen(edEmpresa.ItemIndex = 0, gUsuarioLogado.Empresa, IEmpresa[edEmpresa.ItemIndex]));
+      DMBusiness.ConfigurarEmail(IfThen(edEmpresa.ItemIndex = 0, gUsuarioLogado.Empresa, IEmpresa[edEmpresa.ItemIndex]), EmptyStr, TituloRelario, EmptyStr);
     except
     end;
 end;
