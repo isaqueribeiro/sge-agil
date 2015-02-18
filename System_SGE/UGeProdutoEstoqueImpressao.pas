@@ -26,13 +26,25 @@ type
     QryEmpresas: TIBQuery;
     DspEmpresas: TDataSetProvider;
     CdsEmpresas: TClientDataSet;
-    frRelacaoProduto: TfrxReport;
-    QryRelacaoProduto: TIBQuery;
-    DspRelacaoProduto: TDataSetProvider;
-    CdsRelacaoProduto: TClientDataSet;
-    FrdsRelacaoProduto: TfrxDBDataset;
+    FrRelacaoEstoqueProduto: TfrxReport;
+    QryRelacaoEstoqueProduto: TIBQuery;
+    DspRelacaoEstoqueProduto: TDataSetProvider;
+    CdsRelacaoEstoqueProduto: TClientDataSet;
+    FrdsRelacaoEstoqueProduto: TfrxDBDataset;
+    QryDemandaEstoqueProduto: TIBQuery;
+    DspDemandaEstoqueProduto: TDataSetProvider;
+    CdsDemandaEstoqueProduto: TClientDataSet;
+    FrdsDemandaEstoqueProduto: TfrxDBDataset;
+    lblAno: TLabel;
+    edAno: TComboBox;
+    QryAno: TIBQuery;
+    DspAno: TDataSetProvider;
+    CdsAno: TClientDataSet;
+    FrDemandaEstoqueProduto: TfrxReport;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnVisualizarClick(Sender: TObject);
+    procedure edRelatorioChange(Sender: TObject);
   private
     { Private declarations }
     FSQL_RelacaoEstoqueProduto ,
@@ -44,6 +56,9 @@ type
     procedure CarregarEmpresa;
     procedure CarregarGrupo;
     procedure CarregarFabricante;
+    procedure CarregarAno;
+    procedure MontarRelacaoEstoqueProduto;
+    procedure MontarDemandaEstoqueProduto;
   public
     { Public declarations }
   end;
@@ -58,7 +73,8 @@ uses
 
 const
   REPORT_RELACAO_ESTOQUE_PRODUTO = 0;
-  
+  REPORT_DEMANDA_ESTOQUE_PRODUTO = 1;
+
 {$R *.dfm}
 
 procedure TfrmGeProdutoEstoqueImpressao.CarregarDadosEmpresa;
@@ -169,10 +185,10 @@ begin
   inherited;
 
   FSQL_RelacaoEstoqueProduto := TStringList.Create;
-  FSQL_RelacaoEstoqueProduto.AddStrings( QryRelacaoProduto.SQL );
+  FSQL_RelacaoEstoqueProduto.AddStrings( QryRelacaoEstoqueProduto.SQL );
 
   FSQL_DemandaEstoqueProduto := TStringList.Create;
-  FSQL_DemandaEstoqueProduto.AddStrings( QryDemandaProduto.SQL );
+  FSQL_DemandaEstoqueProduto.AddStrings( QryDemandaEstoqueProduto.SQL );
 end;
 
 procedure TfrmGeProdutoEstoqueImpressao.FormShow(Sender: TObject);
@@ -181,6 +197,145 @@ begin
   CarregarEmpresa;
   CarregarGrupo;
   CarregarFabricante;
+  CarregarAno;
+end;
+
+procedure TfrmGeProdutoEstoqueImpressao.MontarDemandaEstoqueProduto;
+begin
+  try
+    CdsDemandaEstoqueProduto.Close;
+
+    with QryDemandaEstoqueProduto do
+    begin
+      SQL.Clear;
+      SQL.AddStrings( FSQL_DemandaEstoqueProduto );
+      SQL.Add('where p.aliquota_tipo = 0');
+
+      if ( edGrupo.ItemIndex > 0 ) then
+        SQL.Add('  and p.codgrupo = ' + IntToStr(IGrupo[edGrupo.ItemIndex]));
+
+      if ( edFabricante.ItemIndex > 0 ) then
+        SQL.Add('  and p.codfabricante = ' + IntToStr(IFabricante[edFabricante.ItemIndex]));
+
+      if ( edEmpresa.ItemIndex > 0 ) then
+        SQL.Add('  and coalesce(xx.empresa, yy.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+
+      SQL.Add('order by');
+      SQL.Add('    e.rzsoc');
+      SQL.Add('  , coalesce(g.descri, ''* Indefinido'')');
+      SQL.Add('  , p.descri_apresentacao');
+
+      SQL.Text := StringReplace(SQL.Text, ':ano', edAno.Text, [rfReplaceAll]);
+    end;
+  except
+    On E : Exception do
+    begin
+      ShowError('Erro ao tentar montar a relação de ' + StrDescricaoProduto + '.' + #13#13 + E.Message);
+
+      Screen.Cursor         := crDefault;
+      btnVisualizar.Enabled := True;
+    end;
+  end;
+end;
+
+procedure TfrmGeProdutoEstoqueImpressao.MontarRelacaoEstoqueProduto;
+begin
+  try
+    CdsRelacaoEstoqueProduto.Close;
+
+    with QryRelacaoEstoqueProduto do
+    begin
+      SQL.Clear;
+      SQL.AddStrings( FSQL_RelacaoEstoqueProduto );
+      SQL.Add('where p.aliquota_tipo = 0');
+
+      if ( edGrupo.ItemIndex > 0 ) then
+        SQL.Add('  and p.codgrupo = ' + IntToStr(IGrupo[edGrupo.ItemIndex]));
+
+      if ( edFabricante.ItemIndex > 0 ) then
+        SQL.Add('  and p.codfabricante = ' + IntToStr(IFabricante[edFabricante.ItemIndex]));
+
+      if ( edEmpresa.ItemIndex > 0 ) then
+        SQL.Add('  and coalesce(xx.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+
+      SQL.Add('order by');
+      SQL.Add('    e.rzsoc');
+      SQL.Add('  , coalesce(g.descri, ''* Indefinido'')');
+      SQL.Add('  , p.descri_apresentacao');
+    end;
+  except
+    On E : Exception do
+    begin
+      ShowError('Erro ao tentar montar a relação de ' + StrDescricaoProduto + '.' + #13#13 + E.Message);
+
+      Screen.Cursor         := crDefault;
+      btnVisualizar.Enabled := True;
+    end;
+  end;
+end;
+
+procedure TfrmGeProdutoEstoqueImpressao.btnVisualizarClick(
+  Sender: TObject);
+begin
+  Filtros := 'FILTROS APLICADOS AO MONTAR O RELATÓRIO: '  + #13 +
+    Format('- Grupo         : %s', [edGrupo.Text])        + #13 +
+    Format('- Fabricante    : %s', [edFabricante.Text]);
+
+  Screen.Cursor         := crSQLWait;
+  btnVisualizar.Enabled := False;
+
+  Case edRelatorio.ItemIndex of
+    REPORT_RELACAO_ESTOQUE_PRODUTO:
+      begin
+        SubTituloRelario := EmptyStr;
+        MontarRelacaoEstoqueProduto;
+        frReport := FrRelacaoEstoqueProduto;
+      end;
+
+    REPORT_DEMANDA_ESTOQUE_PRODUTO:
+      begin
+        SubTituloRelario := '- ANO ' + edAno.Text;
+        PeriodoRelatorio := edAno.Text;
+        MontarDemandaEstoqueProduto;
+        frReport := FrDemandaEstoqueProduto;
+      end;
+  end;
+
+  inherited;
+
+  Screen.Cursor         := crDefault;
+  btnVisualizar.Enabled := True;
+end;
+
+procedure TfrmGeProdutoEstoqueImpressao.edRelatorioChange(Sender: TObject);
+begin
+  inherited;
+  lblAno.Enabled := (edRelatorio.ItemIndex = REPORT_DEMANDA_ESTOQUE_PRODUTO);
+  edAno.Enabled  := (edRelatorio.ItemIndex = REPORT_DEMANDA_ESTOQUE_PRODUTO);
+end;
+
+procedure TfrmGeProdutoEstoqueImpressao.CarregarAno;
+begin
+  with CdsAno do
+  begin
+    Open;
+
+    edAno.Clear;
+
+    while not Eof do
+    begin
+      if (FieldByName('ano').AsInteger > 0) then
+        edAno.Items.Add( FieldByName('ano').AsString );
+      Next;
+    end;
+
+    Close;
+  end;
+
+  if (edGrupo.Items.Count = 0) then
+    edAno.Items.Add( FormatDateTime('yyyy', GetDateDB) );
+
+  edAno.ItemIndex := 0;
 end;
 
 initialization
