@@ -1,7 +1,6 @@
 inherited frmGrPadraoLogin: TfrmGrPadraoLogin
-  Left = 397
-  Top = 226
-  ActiveControl = edNome
+  Left = 392
+  Top = 212
   BorderStyle = bsNone
   Caption = ' Efetuar Login!'
   ClientHeight = 285
@@ -35,20 +34,6 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
     Width = 73
     Height = 73
     Stretch = True
-    Transparent = True
-  end
-  object lblSystemName: TLabel
-    Left = 104
-    Top = 8
-    Width = 272
-    Height = 59
-    Caption = 'System Name'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -48
-    Font.Name = 'Calibri'
-    Font.Style = [fsBold]
-    ParentFont = False
     Transparent = True
   end
   object lblSystemDescription: TLabel
@@ -86,51 +71,6 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
     Height = 17
     Anchors = [akLeft, akTop, akRight]
     Shape = bsTopLine
-  end
-  object lblNome: TLabel
-    Left = 71
-    Top = 119
-    Width = 54
-    Height = 19
-    Alignment = taRightJustify
-    Caption = '&Usu'#225'rio:'
-    FocusControl = edNome
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
-  end
-  object lblSenha: TLabel
-    Left = 82
-    Top = 153
-    Width = 43
-    Height = 19
-    Alignment = taRightJustify
-    Caption = '&Senha:'
-    FocusControl = edSenha
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
-  end
-  object lblEmpresa: TLabel
-    Left = 65
-    Top = 183
-    Width = 60
-    Height = 19
-    Alignment = taRightJustify
-    Caption = '&Empresa:'
-    FocusControl = edEmpresa
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
   end
   object pnlMensagem: TLabel
     Left = 8
@@ -185,56 +125,6 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
       E66E72DABDBEE5FFFFFFFFFFFFFFFFFFF9F9FBECECF4EBEBF3EBEBF3EBEBF3EB
       EBF3EBEBF3EBEBF3EBEBF3EBEBF3ECECF4FBFBFBFFFFFFFFFFFF}
     OnClick = BtnFecharClick
-  end
-  object edNome: TEdit
-    Left = 136
-    Top = 115
-    Width = 257
-    Height = 27
-    CharCase = ecUpperCase
-    Color = clWhite
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 0
-    OnChange = edNomeChange
-  end
-  object edSenha: TEdit
-    Left = 136
-    Top = 149
-    Width = 257
-    Height = 27
-    CharCase = ecUpperCase
-    Color = clWhite
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -16
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ParentFont = False
-    PasswordChar = '*'
-    TabOrder = 1
-  end
-  object edEmpresa: TComboBox
-    Left = 136
-    Top = 181
-    Width = 257
-    Height = 23
-    Style = csDropDownList
-    Color = clWhite
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Calibri'
-    Font.Style = []
-    ItemHeight = 15
-    ParentFont = False
-    TabOrder = 2
-    Items.Strings = (
-      'EMPRESA TESTE')
   end
   object BtnEntrar: TcxButton
     Left = 280
@@ -310,13 +200,130 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
       FFFFFFFFAFC2D5749ABE5283B13F72A348749F819DB8FFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
   end
+  object edNome: TcxTextEdit
+    Left = 136
+    Top = 115
+    ParentFont = False
+    Properties.CharCase = ecUpperCase
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+    StyleFocused.Color = clYellow
+    StyleFocused.TextColor = clBlue
+    StyleFocused.TextStyle = [fsBold]
+    TabOrder = 0
+    Width = 257
+  end
+  object edSenha: TcxTextEdit
+    Left = 136
+    Top = 149
+    ParentFont = False
+    Properties.CharCase = ecUpperCase
+    Properties.EchoMode = eemPassword
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+    StyleFocused.Color = clYellow
+    StyleFocused.TextColor = clBlue
+    StyleFocused.TextStyle = [fsBold]
+    TabOrder = 1
+    Width = 257
+  end
+  object edEmpresa: TcxComboBox
+    Left = 136
+    Top = 181
+    ParentFont = False
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+    StyleFocused.Color = clYellow
+    StyleFocused.TextColor = clBlue
+    StyleFocused.TextStyle = [fsBold]
+    TabOrder = 2
+    Width = 257
+  end
+  object lblNome: TcxLabel
+    Left = 71
+    Top = 117
+    Caption = '&Usu'#225'rio:'
+    FocusControl = edNome
+    ParentFont = False
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+    StyleFocused.TextStyle = [fsBold]
+    Properties.Alignment.Horz = taRightJustify
+    Transparent = True
+    AnchorX = 129
+  end
+  object lblSenha: TcxLabel
+    Left = 82
+    Top = 151
+    Caption = '&Senha:'
+    FocusControl = edSenha
+    ParentFont = False
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+    StyleFocused.TextStyle = [fsBold]
+    Properties.Alignment.Horz = taRightJustify
+    Transparent = True
+    AnchorX = 129
+  end
+  object lblEmpresa: TcxLabel
+    Left = 65
+    Top = 183
+    Caption = '&Empresa:'
+    FocusControl = edEmpresa
+    ParentFont = False
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+    StyleFocused.TextStyle = [fsBold]
+    Properties.Alignment.Horz = taRightJustify
+    Transparent = True
+    AnchorX = 129
+  end
+  object lblSystemName: TcxLabel
+    Left = 104
+    Top = 8
+    Caption = 'System Name'
+    ParentFont = False
+    Style.Font.Charset = ANSI_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -48
+    Style.Font.Name = 'Calibri'
+    Style.Font.Style = [fsBold]
+    Style.Shadow = False
+    Style.TransparentBorder = False
+    Style.IsFontAssigned = True
+    Transparent = True
+  end
   object QryEmpresa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     SQL.Strings = (
       'Select CNPJ, NMFANT from TBEMPRESA')
-    Left = 16
-    Top = 128
+    Left = 136
+    Top = 216
     object QryEmpresaCNPJ: TIBStringField
       FieldName = 'CNPJ'
       Origin = 'TBEMPRESA.CNPJ'

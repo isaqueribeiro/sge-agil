@@ -6,29 +6,35 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, ExtCtrls, StdCtrls, Buttons, DB,
   IBCustomDataSet, IBQuery, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  cxLookAndFeelPainters, Menus, cxButtons, cxControls, cxContainer, cxEdit,
+  cxLabel, cxMaskEdit, cxDropDownEdit, cxTextEdit,
+
+  dxSkinsCore, dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver;
 
 type
   TfrmGrPadraoLogin = class(TfrmGrPadrao)
     ImgLogo: TImage;
-    lblSystemName: TLabel;
     lblSystemDescription: TLabel;
     lblSystemVersion: TLabel;
     BvlSystemBanner: TBevel;
     ShpLogo: TShape;
-    lblNome: TLabel;
-    edNome: TEdit;
-    lblSenha: TLabel;
-    edSenha: TEdit;
-    lblEmpresa: TLabel;
     QryEmpresa: TIBQuery;
     QryEmpresaCNPJ: TIBStringField;
     QryEmpresaNMFANT: TIBStringField;
-    edEmpresa: TComboBox;
     pnlMensagem: TLabel;
     BtnFechar: TSpeedButton;
     ImgBackgroud: TImage;
     BtnEntrar: TcxButton;
+    edNome: TcxTextEdit;
+    edSenha: TcxTextEdit;
+    edEmpresa: TcxComboBox;
+    lblNome: TcxLabel;
+    lblSenha: TcxLabel;
+    lblEmpresa: TcxLabel;
+    lblSystemName: TcxLabel;
     procedure FormCreate(Sender: TObject);
     procedure BtnFecharClick(Sender: TObject);
     procedure BtnEntrarClick(Sender: TObject);
@@ -113,7 +119,7 @@ end;
 
 procedure TfrmGrPadraoLogin.CarregarEmpresa;
 begin
-  edEmpresa.Items.Clear;
+  edEmpresa.Properties.Items.Clear;
 
   QryEmpresa.Open;
   QryEmpresa.Last;
@@ -122,8 +128,8 @@ begin
   QryEmpresa.First;
   while not QryEmpresa.Eof do
   begin
-    edEmpresa.Items.Add(QryEmpresaNMFANT.AsString);
-    fCNPJ[ edEmpresa.Items.Count - 1 ] := QryEmpresaCNPJ.AsString;
+    edEmpresa.Properties.Items.Add(QryEmpresaNMFANT.AsString);
+    fCNPJ[ edEmpresa.Properties.Items.Count - 1 ] := QryEmpresaCNPJ.AsString;
 
     QryEmpresa.Next;
   end;

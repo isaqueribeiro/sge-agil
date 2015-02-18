@@ -6,7 +6,13 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, DB, IBCustomDataSet, IBQuery, StdCtrls, Buttons,
   ExtCtrls, UGrPadraoLogin, dxGDIPlusClasses, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons, pngimage;
+  cxLookAndFeelPainters, Menus, cxButtons, pngimage, cxControls,
+  cxContainer, cxEdit, cxLabel, cxMaskEdit, cxDropDownEdit, cxTextEdit,
+  
+  dxSkinsCore, dxSkinMcSkin, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver;
 
 type
   TFrmEfetuarLogin = class(TfrmGrPadraoLogin)

@@ -1,6 +1,6 @@
 inherited FrmEfetuarLogin: TFrmEfetuarLogin
-  Left = 410
-  Top = 234
+  Left = 442
+  Top = 235
   Caption = 'Efetuar Login!'
   Color = 14548957
   PixelsPerInch = 96
@@ -2776,25 +2776,13 @@ inherited FrmEfetuarLogin: TFrmEfetuarLogin
       D9ED45A4B4D0A1888808734BD3D853118657C018D0A9644452CDFCC5FF03A83A
       74363E303D7F0000000049454E44AE426082}
   end
-  inherited lblSystemName: TLabel
-    Font.Color = clGreen
-  end
   inherited lblSystemDescription: TLabel
     Font.Color = clGreen
   end
   inherited lblSystemVersion: TLabel
     Font.Color = clGreen
   end
-  inherited lblNome: TLabel
-    Transparent = True
-  end
-  inherited lblSenha: TLabel
-    Transparent = True
-  end
-  inherited lblEmpresa: TLabel
-    Transparent = True
-  end
-  object ImgLogoIndustria: TImage [12]
+  object ImgLogoIndustria: TImage [8]
     Left = 16
     Top = 16
     Width = 73
@@ -9099,5 +9087,29 @@ inherited FrmEfetuarLogin: TFrmEfetuarLogin
     Stretch = True
     Transparent = True
     Visible = False
+  end
+  inherited edNome: TcxTextEdit
+    Style.IsFontAssigned = True
+  end
+  inherited edSenha: TcxTextEdit
+    Style.IsFontAssigned = True
+  end
+  inherited edEmpresa: TcxComboBox
+    Style.IsFontAssigned = True
+  end
+  inherited lblNome: TcxLabel
+    Style.IsFontAssigned = True
+    AnchorX = 129
+  end
+  inherited lblSenha: TcxLabel
+    Style.IsFontAssigned = True
+    AnchorX = 129
+  end
+  inherited lblEmpresa: TcxLabel
+    Style.IsFontAssigned = True
+    AnchorX = 129
+  end
+  inherited lblSystemName: TcxLabel
+    Style.IsFontAssigned = True
   end
 end
