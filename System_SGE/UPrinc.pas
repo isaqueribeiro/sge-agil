@@ -169,6 +169,7 @@ type
     N110: TMenuItem;
     nmRequisicaoCompra: TMenuItem;
     nmConverterReqAutCompra: TMenuItem;
+    TmrMonitorar: TTimer;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);

@@ -25350,4 +25350,8 @@ object frmPrinc: TfrmPrinc
     Left = 112
     Top = 96
   end
+  object TmrMonitorar: TTimer
+    Left = 552
+    Top = 280
+  end
 end

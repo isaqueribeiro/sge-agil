@@ -16,6 +16,7 @@ object frmPrinc: TfrmPrinc
   OnActivate = FormActivate
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object stbMain: TStatusBar
@@ -19999,7 +20000,7 @@ object frmPrinc: TfrmPrinc
       IsControl = True
     end
   end
-  object dxRibbon1: TdxRibbon
+  object Ribbon: TdxRibbon
     Left = 0
     Top = 0
     Width = 927
@@ -20010,7 +20011,6 @@ object frmPrinc: TfrmPrinc
     TabOrder = 7
     TabStop = False
     object RbbTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -20020,6 +20020,18 @@ object frmPrinc: TfrmPrinc
           ToolbarName = 'BrMngPrincipalCad'
         end>
       Index = 0
+    end
+    object RbbTabCadastro: TdxRibbonTab
+      Active = True
+      Caption = 'Cadastro'
+      Groups = <
+        item
+          ToolbarName = 'BrMngCadastroCnf'
+        end
+        item
+          ToolbarName = 'BrMngCadastroTab'
+        end>
+      Index = 1
     end
   end
   object BrMainMenu: TBcBarMainMenu
@@ -21289,11 +21301,22 @@ object frmPrinc: TfrmPrinc
     Font.Name = 'Segoe UI'
     Font.Style = []
     Categories.Strings = (
-      'Default')
+      'Default'
+      'Cadastros'
+      'Configura'#231#245'es')
     Categories.ItemsVisibles = (
+      2
+      2
       2)
     Categories.Visibles = (
+      True
+      True
       True)
+    ImageOptions.DisabledImages = DMRecursos.ImgPrincipalDisabled
+    ImageOptions.DisabledLargeImages = DMRecursos.ImgPrincipalDisabled
+    ImageOptions.HotImages = DMRecursos.ImgPrincipalHot
+    ImageOptions.Images = DMRecursos.ImgPrincipalEnabled
+    ImageOptions.LargeImages = DMRecursos.ImgPrincipalEnabled
     PopupMenuLinks = <>
     UseSystemFont = True
     Left = 344
@@ -21321,8 +21344,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnOrcamento'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -21345,6 +21368,67 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnCliente'
         end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngCadastroTab: TdxBar
+      Caption = 'Tabelas'
+      CaptionButtons = <>
+      DockedLeft = 228
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnTabelaAuxiliar'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnEmpresa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnCliente'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnVendedor'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngCadastroCnf: TdxBar
+      Caption = 'Configura'#231#245'es'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnConfigurarEmpresa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnConfigurarNFe'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnConfigurarAmbiente'
+        end>
       OneOnRow = True
       Row = 0
       UseOwnFont = False
@@ -21356,28 +21440,89 @@ object frmPrinc: TfrmPrinc
       Category = 0
       Hint = 'F2 | Vendas'
       Visible = ivAlways
-      ShortCut = 113
     end
     object BrBtnOrcamento: TdxBarLargeButton
       Caption = 'F3 | Or'#231'amentos'
       Category = 0
       Hint = 'F3 | Or'#231'amentos'
       Visible = ivAlways
-      ShortCut = 114
     end
     object BrBtnProduto: TdxBarLargeButton
       Caption = 'F6 | Produtos'
       Category = 0
       Hint = 'F6 | Produtos'
       Visible = ivAlways
-      ShortCut = 117
+    end
+    object BrBtnTabelaAuxiliar: TdxBarLargeButton
+      Caption = 'Tabelas Auxiliares'
+      Category = 1
+      Hint = 'Tabelas Auxiliares'
+      Visible = ivAlways
+      DropDownEnabled = False
+      LargeImageIndex = 2
+      HotImageIndex = 2
+      SyncImageIndex = False
+      ImageIndex = 2
+    end
+    object BrBtnEmpresa: TdxBarLargeButton
+      Caption = 'Empresa'
+      Category = 1
+      Hint = 'Empresa'
+      Visible = ivAlways
+      LargeImageIndex = 0
+      HotImageIndex = 0
+      SyncImageIndex = False
+      ImageIndex = 0
     end
     object BrBtnCliente: TdxBarLargeButton
       Caption = 'F7 | Clientes'
-      Category = 0
+      Category = 1
       Hint = 'F7 | Clientes'
       Visible = ivAlways
-      ShortCut = 118
+      LargeImageIndex = 3
+      HotImageIndex = 3
+      SyncImageIndex = False
+      ImageIndex = 3
     end
+    object BrBtnVendedor: TdxBarLargeButton
+      Caption = 'Vendedor'
+      Category = 1
+      Hint = 'Vendedor'
+      Visible = ivAlways
+      LargeImageIndex = 4
+      HotImageIndex = 4
+      SyncImageIndex = False
+      ImageIndex = 4
+    end
+    object BrBtnConfigurarEmpresa: TdxBarLargeButton
+      Caption = 'Configurar Empresa'
+      Category = 2
+      Hint = 'Configurar Empresa'
+      Visible = ivAlways
+    end
+    object BrBtnConfigurarNFe: TdxBarLargeButton
+      Caption = 'Configurar NF-e'
+      Category = 2
+      Hint = 'Configurar NF-e'
+      Visible = ivAlways
+      LargeImageIndex = 9
+      HotImageIndex = 9
+      SyncImageIndex = False
+      ImageIndex = 9
+    end
+    object BrBtnConfigurarAmbiente: TdxBarLargeButton
+      Caption = 'Configurar Ambiente'
+      Category = 2
+      Hint = 'Configurar Ambiente'
+      Visible = ivAlways
+      LargeImageIndex = 10
+      HotImageIndex = 10
+      SyncImageIndex = False
+      ImageIndex = 10
+    end
+  end
+  object TmrMonitorar: TTimer
+    Left = 384
+    Top = 358
   end
 end

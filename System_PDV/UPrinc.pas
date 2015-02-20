@@ -84,11 +84,21 @@ type
     BrMngPrincipalMov: TdxBar;
     BrMngPrincipalCad: TdxBar;
     RbbTabPrincipal: TdxRibbonTab;
-    dxRibbon1: TdxRibbon;
+    Ribbon: TdxRibbon;
     BrBtnVenda: TdxBarLargeButton;
     BrBtnOrcamento: TdxBarLargeButton;
     BrBtnProduto: TdxBarLargeButton;
     BrBtnCliente: TdxBarLargeButton;
+    TmrMonitorar: TTimer;
+    RbbTabCadastro: TdxRibbonTab;
+    BrMngCadastroTab: TdxBar;
+    BrBtnTabelaAuxiliar: TdxBarLargeButton;
+    BrBtnEmpresa: TdxBarLargeButton;
+    BrBtnVendedor: TdxBarLargeButton;
+    BrMngCadastroCnf: TdxBar;
+    BrBtnConfigurarEmpresa: TdxBarLargeButton;
+    BrBtnConfigurarNFe: TdxBarLargeButton;
+    BrBtnConfigurarAmbiente: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -120,6 +130,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure mnRegistroEstacaoClick(Sender: TObject);
     procedure nmEfetuarLogoffClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -137,6 +148,8 @@ uses
   // Conexão e Controles Aplicação
   UDMBusiness,
   UDMNFe,
+  UDMRecursos,
+  
   UFuncoes,
   UConstantesDGE,
   UGeSobre,
@@ -457,6 +470,11 @@ end;
 procedure TfrmPrinc.nmEfetuarLogoffClick(Sender: TObject);
 begin
   FormFunction.ShowModalForm(Self, 'FrmEfetuarLogin');
+end;
+
+procedure TfrmPrinc.FormShow(Sender: TObject);
+begin
+  Ribbon.Visible := False;
 end;
 
 end.

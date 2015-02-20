@@ -122,7 +122,8 @@ uses
   UGePlanoContas in '..\Sys\UGePlanoContas.pas' {frmGePlanoContas},
   UGeProdutoImpressao in 'UGeProdutoImpressao.pas' {frmGeProdutoImpressao},
   UGeProdutoKardex in '..\Sys\UGeProdutoKardex.pas' {frmGeProdutoKardex},
-  UEcfBematechNaoFiscal in '..\Sys\lib\UEcfBematechNaoFiscal.pas';
+  UEcfBematechNaoFiscal in '..\Sys\lib\UEcfBematechNaoFiscal.pas',
+  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule};
 
 {$R *.res}
 
@@ -131,6 +132,7 @@ begin
 
   Application.Initialize;
   Application.Title := 'SGE | Sistema Integrado de Gestão Empresarial/Comercial';
+  Application.CreateForm(TDMRecursos, DMRecursos);
   Application.CreateForm(TDMBusiness, DMBusiness);
   Application.CreateForm(TDMNFe, DMNFe);
   Application.CreateForm(TfrmPrinc, frmPrinc);

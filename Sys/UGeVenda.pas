@@ -2621,6 +2621,12 @@ begin
   with DMNFe do
   begin
 
+    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_VND_CAN ) then
+    begin
+      ShowWarning('Vanda cancelada não pode ser impressa!');
+      Exit;
+    end;
+
     AbrirEmitente( IbDtstTabelaCODEMP.AsString );
     AbrirDestinatario( IbDtstTabelaCODCLIENTE.AsInteger );
     AbrirVenda( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODCONTROL.AsInteger );

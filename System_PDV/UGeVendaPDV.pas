@@ -507,7 +507,7 @@ begin
       FieldByName('NFE_ENVIADA').Value           := 0;
       FieldByName('NFE_DENEGADA').AsInteger      := 0;
       FieldByName('NFE_MODALIDADE_FRETE').Value  := MODALIDADE_FRETE_SEMFRETE;
-      FieldByName('USUARIO').Value               := GetUserApp;
+      FieldByName('USUARIO').Value               := gUsuarioLogado.Login;
 
       FieldByName('VENDEDOR_COD').Value   := edNomeVendedor.Tag;
       FieldByName('FORMAPAG').Value       := edNomeFormaPagto.Caption;
@@ -1237,7 +1237,7 @@ begin
 
   if DataSetFormaPagto.Locate('VENDA_PRAZO', 0, []) then
     if ( not CaixaAberto(DataSetVenda.FieldByName('CODEMP').AsString
-      , GetUserApp
+      , gUsuarioLogado.Login
       , GetDateDB
       , DataSetFormaPagto.FieldByName('FORMAPAGTO_COD').AsInteger
       , CxAno
@@ -1369,6 +1369,8 @@ begin
 
     // Formas de Pagamento que nao seja a prazo
 
+    DataSetVenda.Edit;
+    
     DataSetFormaPagto.First;
     while not DataSetFormaPagto.Eof do
     begin
@@ -1389,6 +1391,11 @@ begin
       DataSetFormaPagto.Next;
     end;
 
+    TIBDataSet(DataSetVenda).Post;
+    TIBDataSet(DataSetVenda).ApplyUpdates;
+
+    CommitTransaction;
+    
     if ( CxContaCorrente > 0 ) then
       GerarSaldoContaCorrente(CxContaCorrente, GetDateDB);
 

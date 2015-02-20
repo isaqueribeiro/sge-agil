@@ -239,6 +239,7 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
     Left = 136
     Top = 181
     ParentFont = False
+    Properties.DropDownListStyle = lsFixedList
     Style.Font.Charset = ANSI_CHARSET
     Style.Font.Color = clWindowText
     Style.Font.Height = -16
