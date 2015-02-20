@@ -7,17 +7,19 @@ uses
   
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, ComCtrls, BarMenus, RxSpeedBar, RXCtrls, ExtCtrls, jpeg,
-
-  dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy,
-  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
-  dxSkinPumpkin, dxSkinSeven, dxSkinSharp, dxSkinSpringTime,
-  dxSkinSummer2008, dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel,
-  dxSkinCoffee, dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian,
-  dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
-  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinSilver,
-  dxSkinStardust, dxSkinsDefaultPainters, dxSkinValentine,
-  dxSkinXmas2008Blue, cxLookAndFeels, dxSkinsForm, dxGDIPlusClasses;
+  
+  dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinPumpkin, dxSkinSeven, dxSkinSharp,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
+  dxSkinsdxBarPainter, cxGraphics, cxControls, cxLookAndFeels,
+  cxLookAndFeelPainters, dxBar, dxRibbon, cxClasses, dxSkinsForm,
+  dxGDIPlusClasses;
 
 type
   TfrmPrinc = class(TForm)
@@ -78,6 +80,15 @@ type
     N1: TMenuItem;
     nmEfetuarLogoff: TMenuItem;
     N5: TMenuItem;
+    BrManager: TdxBarManager;
+    BrMngPrincipalMov: TdxBar;
+    BrMngPrincipalCad: TdxBar;
+    RbbTabPrincipal: TdxRibbonTab;
+    dxRibbon1: TdxRibbon;
+    BrBtnVenda: TdxBarLargeButton;
+    BrBtnOrcamento: TdxBarLargeButton;
+    BrBtnProduto: TdxBarLargeButton;
+    BrBtnCliente: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);

@@ -5,7 +5,6 @@ inherited frmGeCaixa: TfrmGeCaixa
   Height = 542
   Caption = 'Gerenciar Caixas'
   OldCreateOrder = True
-  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel

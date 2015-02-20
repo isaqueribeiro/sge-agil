@@ -7,8 +7,8 @@ uses
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, Menus, ComCtrls, BarMenus, RxSpeedBar, RXCtrls, ExtCtrls, jpeg,
-  cxGraphics, dxGDIPlusClasses, cxLookAndFeelPainters, cxButtons,
-  cxLookAndFeels, dxSkinsForm,
+  cxGraphics, dxGDIPlusClasses, cxLookAndFeelPainters, cxButtons, cxLookAndFeels,
+  dxBar, dxSkinsForm, dxSkinsdxBarPainter, cxControls, cxClasses, dxRibbon,
 
   dxSkinsCore, dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
   dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
@@ -179,6 +179,35 @@ type
     SptDockReqAlmox: TSplitter;
     nmInventarioMaterial: TMenuItem;
     TmrMonitorar: TTimer;
+    BrManager: TdxBarManager;
+    RbnTabPrincipal: TdxRibbonTab;
+    dxRibbon1: TdxRibbon;
+    BrMngPrincipalCad: TdxBar;
+    BrBtnEmpresa: TdxBarLargeButton;
+    BrBtnCliente: TdxBarLargeButton;
+    BrBtnProduto: TdxBarLargeButton;
+    BrBtnFornecedor: TdxBarLargeButton;
+    BrMngPrincipalMov: TdxBar;
+    RbnTabCadastro: TdxRibbonTab;
+    BrBtnEntrada: TdxBarLargeButton;
+    BrBtnAutorizacao: TdxBarLargeButton;
+    RbnTabMovimento: TdxRibbonTab;
+    BrBtnApropriacao: TdxBarLargeButton;
+    BrMngPrincipalFin: TdxBar;
+    BrBtnTesouraria: TdxBarLargeButton;
+    dxBarLargeButton1: TdxBarLargeButton;
+    dxBarLargeButton2: TdxBarLargeButton;
+    BrPpEntrada: TdxBarPopupMenu;
+    BrBtnEntradaProduto: TdxBarButton;
+    BrBtnEntradaAjuste: TdxBarButton;
+    BrBtnEntradaServico: TdxBarButton;
+    BrBtnEntradaKardex: TdxBarButton;
+    BrBtnRequisicaoMaterial: TdxBarLargeButton;
+    RbnTabNota: TdxRibbonTab;
+    RbnTabConsulta: TdxRibbonTab;
+    RbnTabFinanceiro: TdxRibbonTab;
+    RbnTabRelatorio: TdxRibbonTab;
+    RbnTabAjuda: TdxRibbonTab;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -277,6 +306,7 @@ implementation
 
 uses
   // Conexão e Controles Aplicação
+  UDMRecursos,
   UDMBusiness,
   UDMNFe,
   UFuncoes,

@@ -97,7 +97,7 @@ object frmGrUsuarioAlterarSenha: TfrmGrUsuarioAlterarSenha
     object dbNome: TDBEdit
       Left = 122
       Top = 14
-      Width = 231
+      Width = 167
       Height = 24
       CharCase = ecUpperCase
       DataField = 'NOME'

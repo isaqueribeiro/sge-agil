@@ -10316,3 +10316,195 @@ GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_STATUS_SOLICITACAO TO "PU
 CREATE INDEX IDX_TBPRODUTO_ALIQUOTA_TIPO
 ON TBPRODUTO (ALIQUOTA_TIPO);
 
+
+
+
+/*------ SYSDBA 19/02/2015 18:26:16 --------*/
+
+ALTER TABLE TBSOLICITACAO_ITEM
+    ADD CENTRO_CUSTO DMN_BIGINT_N;
+
+COMMENT ON COLUMN TBSOLICITACAO_ITEM.CENTRO_CUSTO IS
+'Centro de Custo';
+
+alter table TBSOLICITACAO_ITEM
+alter ANO position 1;
+
+alter table TBSOLICITACAO_ITEM
+alter CODIGO position 2;
+
+alter table TBSOLICITACAO_ITEM
+alter SEQ position 3;
+
+alter table TBSOLICITACAO_ITEM
+alter CENTRO_CUSTO position 4;
+
+alter table TBSOLICITACAO_ITEM
+alter ITEM_CODIGO position 5;
+
+alter table TBSOLICITACAO_ITEM
+alter ITEM_DESCRICAO position 6;
+
+alter table TBSOLICITACAO_ITEM
+alter ITEM_CADASTRADO position 7;
+
+alter table TBSOLICITACAO_ITEM
+alter QUANTIDADE position 8;
+
+alter table TBSOLICITACAO_ITEM
+alter UNIDADE position 9;
+
+alter table TBSOLICITACAO_ITEM
+alter USUARIO position 10;
+
+
+
+
+/*------ SYSDBA 19/02/2015 18:26:36 --------*/
+
+ALTER TABLE TBSOLICITACAO_ITEM
+ADD CONSTRAINT FK_TBSOLICITACAO_ITEM_CCU
+FOREIGN KEY (CENTRO_CUSTO)
+REFERENCES TBCENTRO_CUSTO(CODIGO);
+
+
+
+
+/*------ SYSDBA 19/02/2015 20:14:34 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_solicitacao_codigo for tbsolicitacao
+active before insert position 0
+AS
+begin
+  if (new.codigo is null) then
+    if ( new.ano = 2015 ) then
+      new.codigo = gen_id(GEN_SOLICITACAO_2015, 1);
+    else
+    if ( new.ano = 2016 ) then
+      new.codigo = gen_id(GEN_SOLICITACAO_2016, 1);
+    else
+    if ( new.ano = 2017 ) then
+      new.codigo = gen_id(GEN_SOLICITACAO_2017, 1);
+    else
+    if ( new.ano = 2018 ) then
+      new.codigo = gen_id(GEN_SOLICITACAO_2018, 1);
+    else
+    if ( new.ano = 2019 ) then
+      new.codigo = gen_id(GEN_SOLICITACAO_2019, 1);
+    else
+    if ( new.ano = 2020 ) then
+      new.codigo = gen_id(GEN_SOLICITACAO_2020, 1);
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_SOLICITACAO_CODIGO IS 'Trigger Nova Solicitacao de Compra/Servico.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/02/2015
+
+Trigger responsavel por gerar um sequencial unico para cada novo registro de solicitacao de compra e/ou servico no ano.';
+
+
+
+
+/*------ SYSDBA 19/02/2015 20:16:02 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_solicitacao_competencia for tbsolicitacao
+active before insert or update position 1
+AS
+  declare variable competencia Integer;
+begin
+  if ( coalesce(new.competencia, 0) = 0 ) then
+  begin
+    competencia = right('0000' || extract(year from new.data_emissao), 4) || right('00' || extract(month from new.data_emissao), 2);
+    execute procedure SET_COMPETENCIA(:competencia, null);
+    new.competencia = :competencia;
+  end
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_SOLICITACAO_COMPETENCIA IS 'Trigger Competencia Solicitacao
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/02/2015
+
+Trigger responsavel por identificar a competencia da solicitaao quando esta nao for informada, baseando-se na data de
+emissao.';
+
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+C.ANO.
+At line 24, column 68.
+
+*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+X.EMPRESA.
+At line 24, column 102.
+
+*/
+
+
+
+/*------ SYSDBA 19/02/2015 20:45:18 --------*/
+
+COMMENT ON COLUMN TBSOLICITACAO.STATUS IS
+'Status:
+0 - Em edicao
+1 - Aberta
+2 - Finalizada
+3 - Aprovada
+4 - Cancelada';
+
+
+
+
+/*------ SYSDBA 19/02/2015 21:09:00 --------*/
+
+DROP VIEW VW_STATUS_SOLICITACAO;
+
+CREATE VIEW VW_STATUS_SOLICITACAO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 0 as Codigo , 'Em Edição'    as Descricao from RDB$DATABASE Union
+Select 1 as Codigo , 'Aberta'       as Descricao from RDB$DATABASE Union
+Select 2 as Codigo , 'Finalizada'   as Descricao from RDB$DATABASE Union
+Select 3 as Codigo , 'Aprovada'  as Descricao from RDB$DATABASE Union
+Select 4 as Codigo , 'Cancelada' as Descricao from RDB$DATABASE
+;
+
+GRANT SELECT, UPDATE, DELETE, INSERT, REFERENCES ON VW_STATUS_SOLICITACAO TO "PUBLIC";
+
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+S.DESCRICAO_RESUMO.
+At line 6, column 7.
+
+*/
+
+
+
+/*------ SYSDBA 19/02/2015 23:42:33 --------*/
+
+CREATE INDEX IDX_TBSOLICITACAO_NUMERO
+ON TBSOLICITACAO (NUMERO);
+

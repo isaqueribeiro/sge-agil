@@ -20,8 +20,8 @@ object frmPrinc: TfrmPrinc
   TextHeight = 13
   object SptDockReqAlmox: TSplitter
     Left = 923
-    Top = 64
-    Height = 415
+    Top = 190
+    Height = 289
     Align = alRight
     Color = clBtnFace
     ParentColor = False
@@ -56,7 +56,7 @@ object frmPrinc: TfrmPrinc
   end
   object spbBarraAcessoRapido: TSpeedBar
     Left = 0
-    Top = 0
+    Top = 126
     Width = 927
     Height = 64
     Font.Charset = DEFAULT_CHARSET
@@ -1257,28 +1257,28 @@ object frmPrinc: TfrmPrinc
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 64
+    Top = 190
     Width = 923
-    Height = 415
+    Height = 289
     Align = alClient
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 2
     DesignSize = (
       923
-      415)
+      289)
     object imgFundo: TImage
       Left = 1
       Top = 1
       Width = 921
-      Height = 413
+      Height = 287
       Align = alClient
       AutoSize = True
       Transparent = True
     end
     object imgEmpresa: TImage
       Left = 8
-      Top = 294
+      Top = 168
       Width = 110
       Height = 110
       Anchors = [akLeft, akBottom]
@@ -5553,7 +5553,7 @@ object frmPrinc: TfrmPrinc
     end
     object ProductName: TLabel
       Left = 128
-      Top = 304
+      Top = 178
       Width = 138
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -5569,7 +5569,7 @@ object frmPrinc: TfrmPrinc
     end
     object Copyright: TLabel
       Left = 128
-      Top = 341
+      Top = 215
       Width = 279
       Height = 26
       Anchors = [akLeft, akBottom]
@@ -5587,7 +5587,7 @@ object frmPrinc: TfrmPrinc
     end
     object FileDescription: TLabel
       Left = 128
-      Top = 326
+      Top = 200
       Width = 297
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -5603,7 +5603,7 @@ object frmPrinc: TfrmPrinc
     end
     object Version: TLabel
       Left = 129
-      Top = 372
+      Top = 246
       Width = 72
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -5620,13 +5620,74 @@ object frmPrinc: TfrmPrinc
   end
   object PnlDockReqAlmox: TPanel
     Left = 926
-    Top = 64
+    Top = 190
     Width = 1
-    Height = 415
+    Height = 289
     Align = alRight
     BevelOuter = bvNone
     DockSite = True
     TabOrder = 3
+  end
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 927
+    Height = 126
+    BarManager = BrManager
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 8
+    TabStop = False
+    object RbnTabPrincipal: TdxRibbonTab
+      Active = True
+      Caption = 'Principal'
+      Groups = <
+        item
+          ToolbarName = 'BrMngPrincipalCad'
+        end
+        item
+          ToolbarName = 'BrMngPrincipalMov'
+        end
+        item
+          ToolbarName = 'BrMngPrincipalFin'
+        end>
+      Index = 0
+    end
+    object RbnTabCadastro: TdxRibbonTab
+      Caption = 'Cadastro'
+      Groups = <>
+      Index = 1
+    end
+    object RbnTabMovimento: TdxRibbonTab
+      Caption = 'Movimenta'#231#227'o'
+      Groups = <>
+      Index = 2
+    end
+    object RbnTabNota: TdxRibbonTab
+      Caption = 'Notas Fiscais (NF-e)'
+      Groups = <>
+      Index = 3
+    end
+    object RbnTabConsulta: TdxRibbonTab
+      Caption = 'Consulta'
+      Groups = <>
+      Index = 4
+    end
+    object RbnTabFinanceiro: TdxRibbonTab
+      Caption = 'Financeiro'
+      Groups = <>
+      Index = 5
+    end
+    object RbnTabRelatorio: TdxRibbonTab
+      Caption = 'Relat'#243'rios'
+      Groups = <>
+      Index = 6
+    end
+    object RbnTabAjuda: TdxRibbonTab
+      Caption = 'Ajuda'
+      Groups = <>
+      Index = 7
+    end
   end
   object BcBarMainMenu: TBcBarMainMenu
     OwnerDraw = True
@@ -5650,8 +5711,8 @@ object frmPrinc: TfrmPrinc
     MenuFont.Height = -11
     MenuFont.Name = 'MS Sans Serif'
     MenuFont.Style = []
-    Left = 176
-    Top = 96
+    Left = 240
+    Top = 208
     object menuCadastro: TMenuItem
       Caption = '&Cadastro'
       Checked = True
@@ -10503,8 +10564,8 @@ object frmPrinc: TfrmPrinc
     end
   end
   object ppEstoque: TPopupMenu
-    Left = 144
-    Top = 96
+    Left = 208
+    Top = 208
     object popEntradaProduto: TMenuItem
       Bitmap.Data = {
         360C0000424D360C000000000000360000002800000020000000200000000100
@@ -10799,14 +10860,249 @@ object frmPrinc: TfrmPrinc
   object dxSkinController: TdxSkinController
     NativeStyle = False
     SkinName = 'MoneyTwins'
-    Left = 112
-    Top = 96
+    Left = 176
+    Top = 208
   end
   object TmrMonitorar: TTimer
     Enabled = False
     Interval = 100
     OnTimer = TmrMonitorarTimer
-    Left = 112
-    Top = 144
+    Left = 176
+    Top = 240
+  end
+  object BrManager: TdxBarManager
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Categories.Strings = (
+      'Default'
+      'Entrada')
+    Categories.ItemsVisibles = (
+      2
+      2)
+    Categories.Visibles = (
+      True
+      True)
+    LookAndFeel.Kind = lfUltraFlat
+    LookAndFeel.SkinName = 'MoneyTwins'
+    PopupMenuLinks = <>
+    UseSystemFont = True
+    Left = 272
+    Top = 208
+    DockControlHeights = (
+      0
+      0
+      0
+      0)
+    object BrMngPrincipalCad: TdxBar
+      Caption = 'Cadastros'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 335
+      FloatTop = 213
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnEmpresa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnCliente'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnProduto'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnFornecedor'
+        end>
+      OneOnRow = True
+      Row = 2
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngPrincipalMov: TdxBar
+      Caption = 'Movimentos'
+      CaptionButtons = <>
+      DockedLeft = 261
+      DockedTop = 0
+      FloatLeft = 335
+      FloatTop = 213
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnAutorizacao'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEntrada'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRequisicaoMaterial'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngPrincipalFin: TdxBar
+      Caption = 'Financeiro'
+      CaptionButtons = <>
+      DockedLeft = 485
+      DockedTop = 0
+      FloatLeft = 335
+      FloatTop = 213
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnTesouraria'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton1'
+        end
+        item
+          Visible = True
+          ItemName = 'dxBarLargeButton2'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrBtnEmpresa: TdxBarLargeButton
+      Caption = 'Empresa'
+      Category = 0
+      Hint = 'Empresa'
+      Visible = ivAlways
+    end
+    object BrBtnCliente: TdxBarLargeButton
+      Caption = 'Cliente'
+      Category = 0
+      Hint = 'Cliente'
+      Visible = ivAlways
+    end
+    object BrBtnProduto: TdxBarLargeButton
+      Caption = 'Produto / Servi'#231'o'
+      Category = 0
+      Hint = 'Produto / Servi'#231'o'
+      Visible = ivAlways
+    end
+    object BrBtnFornecedor: TdxBarLargeButton
+      Caption = 'Fornecedor'
+      Category = 0
+      Hint = 'Fornecedor'
+      Visible = ivAlways
+    end
+    object BrBtnAutorizacao: TdxBarLargeButton
+      Caption = 'Autoriza'#231#227'o'
+      Category = 0
+      Hint = 'Autoriza'#231#227'o'
+      Visible = ivAlways
+    end
+    object BrBtnEntrada: TdxBarLargeButton
+      Caption = 'Entrada'
+      Category = 0
+      Hint = 'Entrada'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpEntrada
+    end
+    object BrBtnRequisicaoMaterial: TdxBarLargeButton
+      Caption = 'Requisi'#231#227'o de Materiais'
+      Category = 0
+      Hint = 'Requisi'#231#227'o de Materiais'
+      Visible = ivAlways
+    end
+    object BrBtnTesouraria: TdxBarLargeButton
+      Caption = 'Tesouraria'
+      Category = 0
+      Hint = 'Tesouraria'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton1: TdxBarLargeButton
+      Caption = 'Contas A Pagar'
+      Category = 0
+      Hint = 'Contas A Pagar'
+      Visible = ivAlways
+    end
+    object dxBarLargeButton2: TdxBarLargeButton
+      Caption = 'Contas A Receber'
+      Category = 0
+      Hint = 'Contas A Receber'
+      Visible = ivAlways
+    end
+    object BrBtnEntradaProduto: TdxBarButton
+      Caption = 'Produtos'
+      Category = 1
+      Hint = 'Produtos'
+      Visible = ivAlways
+    end
+    object BrBtnEntradaAjuste: TdxBarButton
+      Caption = 'Ajustes Manual'
+      Category = 1
+      Hint = 'Ajustes Manual'
+      Visible = ivAlways
+    end
+    object BrBtnEntradaKardex: TdxBarButton
+      Caption = 'Kardex'
+      Category = 1
+      Hint = 'Kardex'
+      Visible = ivAlways
+    end
+    object BrBtnApropriacao: TdxBarLargeButton
+      Caption = 'Apropria'#231#227'o de Estoque'
+      Category = 1
+      Hint = 'Apropria'#231#227'o de Estoque'
+      Visible = ivAlways
+    end
+    object BrBtnEntradaServico: TdxBarButton
+      Caption = 'Servi'#231'os'
+      Category = 1
+      Hint = 'Servi'#231'os'
+      Visible = ivAlways
+    end
+  end
+  object BrPpEntrada: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnEntradaProduto'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnEntradaAjuste'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnEntradaKardex'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnApropriacao'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnEntradaServico'
+      end>
+    UseOwnFont = False
+    Left = 272
+    Top = 246
   end
 end

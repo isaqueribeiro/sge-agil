@@ -81,6 +81,7 @@ type
     { Private declarations }
     fDisplayFormat  ,
     fWhereAdditional: String;
+    fManterDados    ,
     fLiberarUso     ,
     fOcorreuErro    ,
     fAbrirTabelaAuto: Boolean;
@@ -94,9 +95,11 @@ type
     _ApenasConsolidado : Boolean;
 
     procedure SetWhereAdditional(Value : String);
+    procedure SetManterDados(Value : Boolean);
     procedure ClearFieldEmptyStr;
     procedure CarregarControleAcesso;
 
+    function GetManterDados : Boolean;
     function GetRotinaInserirID   : String;
     function GetRotinaEditarID    : String;
     function GetRotinaExcluirID   : String;
@@ -112,6 +115,7 @@ type
     property SQLTabela : TStringList read sSQL;
     property ControlFirstEdit : TWinControl read fControlFirst write fControlFirst;
     property frReport : TfrxReport read _frReport write _frReport;
+    property ManterDados : Boolean read GetManterDados write SetManterDados;
 
     property RotinaInserirID   : String read GetRotinaInserirID;
     property RotinaEditarID    : String read GetRotinaEditarID;
@@ -173,6 +177,7 @@ begin
   CampoCodigo     := EmptyStr;
   CampoDescricao  := EmptyStr;
   CampoOrdenacao  := EmptyStr;
+  fManterDados    := True;
   fOcorreuErro    := False;
   AbrirTabelaAuto := False;    //True; alterado em 11-01-2013 Dorivaldo
 
@@ -959,6 +964,19 @@ procedure TfrmGrPadraoCadastro.FormActivate(Sender: TObject);
 begin
   inherited;
   SetEmpresaIDDefault( gUsuarioLogado.Empresa );
+end;
+
+function TfrmGrPadraoCadastro.GetManterDados: Boolean;
+begin
+  if ( Trim(RotinaID) = EmptyStr ) then
+    Result := fManterDados
+  else
+    Result := fManterDados and (GetPermissaoRotinaInterna(btbtnIncluir, False) or GetPermissaoRotinaInterna(btbtnAlterar, False));
+end;
+
+procedure TfrmGrPadraoCadastro.SetManterDados(Value: Boolean);
+begin
+  fManterDados := Value;
 end;
 
 end.
