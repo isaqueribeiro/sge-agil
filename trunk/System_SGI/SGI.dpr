@@ -129,7 +129,9 @@ uses
   UGeInventario in 'UGeInventario.pas' {frmGeInventario},
   UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo},
   UGeProdutoEstoqueImpressao in '..\System_SGE\UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao},
-  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule};
+  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule},
+  UGeSolicitacaoCompra in 'UGeSolicitacaoCompra.pas' {frmGeSolicitacaoCompra},
+  UGeSolicitacaoCompraCancelar in 'UGeSolicitacaoCompraCancelar.pas' {frmGeSolicitacaoCompraCancelar};
 
 {$R *.res}
 
