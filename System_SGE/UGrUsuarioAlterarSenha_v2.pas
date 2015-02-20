@@ -112,7 +112,7 @@ end;
 
 procedure TfrmGrUsuarioAlterarSenha.FormShow(Sender: TObject);
 begin
-  if tblUsersNOME.AsString <> GetUserApp then
+  if ( tblUsersNOME.AsString <> gUsuarioLogado.Login ) then
     tblUsers.Close
   else
     tblUsers.Edit;
@@ -122,7 +122,7 @@ procedure TfrmGrUsuarioAlterarSenha.FormCreate(Sender: TObject);
 begin
   inherited;
   tblUsers.Close;
-  tblUsers.ParamByName('nome').AsString := GetUserApp;
+  tblUsers.ParamByName('nome').AsString := gUsuarioLogado.Login;
   tblUsers.Open;
 end;
 

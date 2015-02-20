@@ -128,7 +128,8 @@ uses
   UGeRequisicaoAlmoxMonitor in 'UGeRequisicaoAlmoxMonitor.pas' {frmGeRequisicaoAlmoxMonitor},
   UGeInventario in 'UGeInventario.pas' {frmGeInventario},
   UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo},
-  UGeProdutoEstoqueImpressao in '..\System_SGE\UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao};
+  UGeProdutoEstoqueImpressao in '..\System_SGE\UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao},
+  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule};
 
 {$R *.res}
 
@@ -137,6 +138,7 @@ begin
 
   Application.Initialize;
   Application.Title := 'SGI | Sistema Integrado de Gestão Industrial';
+  Application.CreateForm(TDMRecursos, DMRecursos);
   Application.CreateForm(TDMBusiness, DMBusiness);
   Application.CreateForm(TDMNFe, DMNFe);
   Application.CreateForm(TfrmPrinc, frmPrinc);

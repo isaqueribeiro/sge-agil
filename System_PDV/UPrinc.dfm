@@ -46,7 +46,7 @@ object frmPrinc: TfrmPrinc
   end
   object spbBarraAcessoRapido: TSpeedBar
     Left = 0
-    Top = 0
+    Top = 126
     Width = 927
     Height = 64
     Font.Charset = DEFAULT_CHARSET
@@ -695,21 +695,21 @@ object frmPrinc: TfrmPrinc
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 64
+    Top = 190
     Width = 927
-    Height = 415
+    Height = 289
     Align = alClient
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 2
     DesignSize = (
       927
-      415)
+      289)
     object imgFundo: TImage
       Left = 1
       Top = 1
       Width = 925
-      Height = 413
+      Height = 287
       Align = alClient
       AutoSize = True
       Picture.Data = {
@@ -15659,7 +15659,7 @@ object frmPrinc: TfrmPrinc
     end
     object imgEmpresa: TImage
       Left = 8
-      Top = 294
+      Top = 168
       Width = 110
       Height = 110
       Anchors = [akLeft, akBottom]
@@ -19934,7 +19934,7 @@ object frmPrinc: TfrmPrinc
     end
     object ProductName: TLabel
       Left = 128
-      Top = 304
+      Top = 178
       Width = 38
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -19950,7 +19950,7 @@ object frmPrinc: TfrmPrinc
     end
     object Copyright: TLabel
       Left = 128
-      Top = 342
+      Top = 216
       Width = 279
       Height = 26
       Anchors = [akLeft, akBottom]
@@ -19968,7 +19968,7 @@ object frmPrinc: TfrmPrinc
     end
     object FileDescription: TLabel
       Left = 128
-      Top = 327
+      Top = 201
       Width = 296
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -19984,7 +19984,7 @@ object frmPrinc: TfrmPrinc
     end
     object Version: TLabel
       Left = 128
-      Top = 373
+      Top = 247
       Width = 72
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -19997,6 +19997,29 @@ object frmPrinc: TfrmPrinc
       ParentFont = False
       Transparent = True
       IsControl = True
+    end
+  end
+  object dxRibbon1: TdxRibbon
+    Left = 0
+    Top = 0
+    Width = 927
+    Height = 126
+    BarManager = BrManager
+    ColorSchemeName = 'Blue'
+    Contexts = <>
+    TabOrder = 7
+    TabStop = False
+    object RbbTabPrincipal: TdxRibbonTab
+      Active = True
+      Caption = 'Principal'
+      Groups = <
+        item
+          ToolbarName = 'BrMngPrincipalMov'
+        end
+        item
+          ToolbarName = 'BrMngPrincipalCad'
+        end>
+      Index = 0
     end
   end
   object BrMainMenu: TBcBarMainMenu
@@ -21258,5 +21281,103 @@ object frmPrinc: TfrmPrinc
     SkinName = 'McSkin'
     Left = 344
     Top = 216
+  end
+  object BrManager: TdxBarManager
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    Categories.Strings = (
+      'Default')
+    Categories.ItemsVisibles = (
+      2)
+    Categories.Visibles = (
+      True)
+    PopupMenuLinks = <>
+    UseSystemFont = True
+    Left = 344
+    Top = 248
+    DockControlHeights = (
+      0
+      0
+      0
+      0)
+    object BrMngPrincipalMov: TdxBar
+      Caption = 'Movimentos'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnVenda'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnOrcamento'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngPrincipalCad: TdxBar
+      Caption = 'Cadastros'
+      CaptionButtons = <>
+      DockedLeft = 144
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnProduto'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnCliente'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrBtnVenda: TdxBarLargeButton
+      Caption = 'F2 | Vendas'
+      Category = 0
+      Hint = 'F2 | Vendas'
+      Visible = ivAlways
+      ShortCut = 113
+    end
+    object BrBtnOrcamento: TdxBarLargeButton
+      Caption = 'F3 | Or'#231'amentos'
+      Category = 0
+      Hint = 'F3 | Or'#231'amentos'
+      Visible = ivAlways
+      ShortCut = 114
+    end
+    object BrBtnProduto: TdxBarLargeButton
+      Caption = 'F6 | Produtos'
+      Category = 0
+      Hint = 'F6 | Produtos'
+      Visible = ivAlways
+      ShortCut = 117
+    end
+    object BrBtnCliente: TdxBarLargeButton
+      Caption = 'F7 | Clientes'
+      Category = 0
+      Hint = 'F7 | Clientes'
+      Visible = ivAlways
+      ShortCut = 118
+    end
   end
 end

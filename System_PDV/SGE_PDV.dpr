@@ -83,7 +83,8 @@ uses
   UGeVendaPDVOrcamento in 'UGeVendaPDVOrcamento.pas' {frmGeVendaPDVOrcamento},
   UGrRegistroEstacao in '..\Sys\lib\UGrRegistroEstacao.pas' {FrmGrRegistroEstacao},
   UGeVendaPDVFinalizar in 'UGeVendaPDVFinalizar.pas' {frmGeVendaPDVFinalizar},
-  UGeVendaPDVItem in 'UGeVendaPDVItem.pas' {frmGeVendaPDVItem};
+  UGeVendaPDVItem in 'UGeVendaPDVItem.pas' {frmGeVendaPDVItem},
+  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule};
 
 {$R *.res}
 
@@ -92,6 +93,7 @@ begin
 
   Application.Initialize;
   Application.Title := 'PDV | Ponto de Venda do SGE/SGI';
+  Application.CreateForm(TDMRecursos, DMRecursos);
   Application.CreateForm(TDMBusiness, DMBusiness);
   Application.CreateForm(TDMNFe, DMNFe);
   Application.CreateForm(TfrmPrinc, frmPrinc);
