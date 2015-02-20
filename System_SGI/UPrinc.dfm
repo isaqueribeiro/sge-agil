@@ -5628,7 +5628,7 @@ object frmPrinc: TfrmPrinc
     DockSite = True
     TabOrder = 3
   end
-  object dxRibbon1: TdxRibbon
+  object Ribbon: TdxRibbon
     Left = 0
     Top = 0
     Width = 927
@@ -5656,36 +5656,43 @@ object frmPrinc: TfrmPrinc
     object RbnTabCadastro: TdxRibbonTab
       Caption = 'Cadastro'
       Groups = <>
+      Visible = False
       Index = 1
     end
     object RbnTabMovimento: TdxRibbonTab
       Caption = 'Movimenta'#231#227'o'
       Groups = <>
+      Visible = False
       Index = 2
     end
     object RbnTabNota: TdxRibbonTab
       Caption = 'Notas Fiscais (NF-e)'
       Groups = <>
+      Visible = False
       Index = 3
     end
     object RbnTabConsulta: TdxRibbonTab
       Caption = 'Consulta'
       Groups = <>
+      Visible = False
       Index = 4
     end
     object RbnTabFinanceiro: TdxRibbonTab
       Caption = 'Financeiro'
       Groups = <>
+      Visible = False
       Index = 5
     end
     object RbnTabRelatorio: TdxRibbonTab
       Caption = 'Relat'#243'rios'
       Groups = <>
+      Visible = False
       Index = 6
     end
     object RbnTabAjuda: TdxRibbonTab
       Caption = 'Ajuda'
       Groups = <>
+      Visible = False
       Index = 7
     end
   end
@@ -10922,8 +10929,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnFornecedor'
         end>
-      OneOnRow = True
-      Row = 2
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -10950,8 +10957,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnRequisicaoMaterial'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -10978,7 +10985,7 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'dxBarLargeButton2'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

@@ -181,7 +181,7 @@ type
     TmrMonitorar: TTimer;
     BrManager: TdxBarManager;
     RbnTabPrincipal: TdxRibbonTab;
-    dxRibbon1: TdxRibbon;
+    Ribbon: TdxRibbon;
     BrMngPrincipalCad: TdxBar;
     BrBtnEmpresa: TdxBarLargeButton;
     BrBtnCliente: TdxBarLargeButton;
@@ -618,6 +618,7 @@ begin
   nmSecaoProduto.Caption     := 'Seções de ' + StrDescricaoProduto;
   nmProduto.Caption          := StrDescricaoProduto;
   btnProduto.Caption         := StrDescricaoProduto;
+  BrBtnProduto.Caption       := StrDescricaoProduto;
   nmRelatorioProduto.Caption := StrDescricaoProduto;
   mnRelatorioEntradaProduto.Caption := StrDescricaoProduto;
 
