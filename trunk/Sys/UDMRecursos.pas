@@ -3,10 +3,13 @@ unit UDMRecursos;
 interface
 
 uses
-  SysUtils, Classes;
+  SysUtils, Classes, ImgList, Controls, cxGraphics;
 
 type
   TDMRecursos = class(TDataModule)
+    ImgPrincipalEnabled: TcxImageList;
+    ImgPrincipalDisabled: TcxImageList;
+    ImgPrincipalHot: TcxImageList;
   private
     { Private declarations }
   public

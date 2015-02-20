@@ -6077,6 +6077,12 @@ begin
         else
           Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
 
+        if ( qryFormaPagtosVENDA_PRAZO.AsInteger = 1 ) then  
+          Ecf.Texto_Livre('* ' + RemoveAcentos(
+            IfThen(Trim(qryFormaPagtosCOND_DESCRICAO_PDV.AsString) = EmptyStr
+              , qryFormaPagtosCOND_DESCRICAO_FULL.Text
+              , qryFormaPagtosCOND_DESCRICAO_PDV.AsString)));
+
         qryFormaPagtos.Next;
       end;
 
