@@ -99,6 +99,14 @@ type
     BrBtnConfigurarEmpresa: TdxBarLargeButton;
     BrBtnConfigurarNFe: TdxBarLargeButton;
     BrBtnConfigurarAmbiente: TdxBarLargeButton;
+    RbbTabMovimento: TdxRibbonTab;
+    RbbTabCaixa: TdxRibbonTab;
+    RbbTabAjuda: TdxRibbonTab;
+    BrPpTabelaAuxiliar: TdxBarPopupMenu;
+    BrMngCadastroAcc: TdxBar;
+    BrBtnPerfilAcesso: TdxBarLargeButton;
+    BrBtnUsuario: TdxBarLargeButton;
+    BtBtnTributacaoIBPT: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);

@@ -18,7 +18,12 @@ uses
   cxFilter, cxData, cxDataStorage, cxDBData, cxCurrencyEdit, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridBandedTableView,
   cxGridDBBandedTableView, cxClasses, cxGridCustomView, cxGrid, DBClient,
-  frxClass, frxDBSet, Provider, IBQuery;
+  frxClass, frxDBSet, Provider, IBQuery, dxSkinBlack, dxSkinBlue,
+  dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinPumpkin, dxSkinSeven, dxSkinSharp,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
 
 type
   TfrmGeInventario = class(TfrmGrPadrao)
@@ -78,7 +83,6 @@ type
     qryInventarioCONTROLE: TIntegerField;
     qryInventarioTIPO: TSmallintField;
     qryInventarioEMPRESA: TIBStringField;
-    qryInventarioCENTRO_CUSTO: TIntegerField;
     qryInventarioCONFERIR_ESTOQUE_VENDA: TSmallintField;
     qryInventarioDATA: TDateField;
     qryInventarioCOMPETENCIA: TIntegerField;
@@ -165,6 +169,7 @@ type
     DspRelacaoInventarioCC: TDataSetProvider;
     CdsRelacaoInventarioCC: TClientDataSet;
     FrdsRelacaoInventarioCC: TfrxDBDataset;
+    qryInventarioCENTRO_CUSTO: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure nmCarregarIAClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -463,7 +468,10 @@ begin
   qryInventarioCANCEL_USUARIO.Clear;
   qryInventarioCANCEL_MOVITO.Clear;
 
-  dbCentroCusto.SetFocus;
+  if ( dbCentroCusto.Visible and dbCentroCusto.Enabled ) then
+    dbCentroCusto.SetFocus
+  else
+    dbTipo.SetFocus;  
 end;
 
 procedure TfrmGeInventario.BtnCancelarClick(Sender: TObject);
@@ -621,7 +629,15 @@ begin
         qryMaterialESTOQUE.AsCurrency           := FieldByName('estoque').AsCurrency;
         qryMaterialFRACIONADOR.AsCurrency       := FieldByName('fracionador').AsCurrency;
         qryMaterialUNIDADE.AsInteger            := FieldByName('unidade').AsInteger;
-        qryMaterialCUSTO.AsCurrency             := FieldByName('custo_medio').AsCurrency;
+
+        if (gSistema.Codigo = SISTEMA_GESTAO_COM) then
+          qryMaterialCUSTO.AsCurrency           := FieldByName('preco').AsCurrency
+        else
+        if ( FieldByName('custo_medio').AsCurrency > 0.0 ) then
+          qryMaterialCUSTO.AsCurrency           := FieldByName('custo_medio').AsCurrency
+        else
+          qryMaterialCUSTO.AsCurrency           := FieldByName('preco').AsCurrency;
+
         qryMaterialUNP_DESCRICAO.AsString       := FieldByName('und_descricao').AsString;
         qryMaterialUNP_SIGLA.AsString           := FieldByName('und_sigla').AsString;
 
@@ -711,9 +727,9 @@ end;
 
 procedure TfrmGeInventario.BtnConfirmarItemClick(Sender: TObject);
 begin
-  if ( Trim(dbProdutoCodigo.Field.AsString) = EmptyStr ) then
+  if (Trim(dbProdutoCodigo.Field.AsString) = EmptyStr) or (Trim(dbProdutoNome.Field.AsString) = EmptyStr) then
   begin
-    ShowWarning('Favor informar o código do material/produto');
+    ShowWarning('Favor informar o código do material/produto cadastrado para a empresa');
     dbProdutoCodigo.SetFocus;
   end
   else

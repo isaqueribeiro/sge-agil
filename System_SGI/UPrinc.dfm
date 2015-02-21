@@ -1,7 +1,7 @@
 object frmPrinc: TfrmPrinc
   Tag = 2
-  Left = 385
-  Top = 213
+  Left = 528
+  Top = 221
   Width = 1064
   Height = 680
   Caption = 'SGI | Sistema Integrado de Gest'#227'o Industrial'
@@ -5640,6 +5640,7 @@ object frmPrinc: TfrmPrinc
     TabOrder = 8
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
+      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -5654,7 +5655,6 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbnTabCadastro: TdxRibbonTab
-      Active = True
       Caption = 'Cadastro'
       Groups = <
         item
@@ -5668,35 +5668,43 @@ object frmPrinc: TfrmPrinc
         end>
       Index = 1
     end
+    object RbnTabEntrada: TdxRibbonTab
+      Caption = 'Entradas'
+      Groups = <
+        item
+          ToolbarName = 'BrMngEntradaCusto'
+        end>
+      Index = 2
+    end
     object RbnTabMovimento: TdxRibbonTab
       Caption = 'Movimenta'#231#227'o'
       Groups = <>
-      Index = 2
+      Index = 3
     end
     object RbnTabNota: TdxRibbonTab
       Caption = 'Notas Fiscais (NF-e)'
       Groups = <>
-      Index = 3
+      Index = 4
     end
     object RbnTabConsulta: TdxRibbonTab
       Caption = 'Consulta'
       Groups = <>
-      Index = 4
+      Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
       Caption = 'Financeiro'
       Groups = <>
-      Index = 5
+      Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
       Caption = 'Relat'#243'rios'
       Groups = <>
-      Index = 6
+      Index = 7
     end
     object RbnTabAjuda: TdxRibbonTab
       Caption = 'Ajuda'
       Groups = <>
-      Index = 7
+      Index = 8
     end
   end
   object BcBarMainMenu: TBcBarMainMenu
@@ -10886,14 +10894,17 @@ object frmPrinc: TfrmPrinc
     Font.Height = -12
     Font.Name = 'Segoe UI'
     Font.Style = []
+    CanCustomize = False
     Categories.Strings = (
       'Default'
       'Entrada'
       'Configura'#231#245'es'
       'Permiss'#245'es de Acesso'
       'Cadastros'
-      'Tabelas Auxiliares')
+      'Tabelas Auxiliares'
+      'Produtos e Servi'#231'os')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
@@ -10906,11 +10917,12 @@ object frmPrinc: TfrmPrinc
       True
       True
       True
+      True
       True)
     ImageOptions.DisabledImages = DMRecursos.ImgPrincipalDisabled
     ImageOptions.DisabledLargeImages = DMRecursos.ImgPrincipalDisabled
     ImageOptions.HotImages = DMRecursos.ImgPrincipalHot
-    ImageOptions.Images = DMRecursos.ImgPrincipalEnabled
+    ImageOptions.Images = DMRecursos.ImgPrincipal16x16
     ImageOptions.LargeImages = DMRecursos.ImgPrincipalEnabled
     LookAndFeel.Kind = lfUltraFlat
     LookAndFeel.SkinName = 'MoneyTwins'
@@ -10935,6 +10947,15 @@ object frmPrinc: TfrmPrinc
       ItemLinks = <
         item
           Visible = True
+          ItemName = 'BrBtnAlterarSenha'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEfetuarLogoff'
+        end
+        item
+          BeginGroup = True
+          Visible = True
           ItemName = 'BrBtnEmpresa'
         end
         item
@@ -10958,7 +10979,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalMov: TdxBar
       Caption = 'Movimentos'
       CaptionButtons = <>
-      DockedLeft = 261
+      DockedLeft = 404
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -10986,7 +11007,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Financeiro'
       CaptionButtons = <>
-      DockedLeft = 485
+      DockedLeft = 628
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -11033,8 +11054,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnConfigurarAmbiente'
         end>
-      OneOnRow = True
-      Row = 2
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11057,14 +11078,14 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnUsuario'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
     end
     object BrMngCadastroCad: TdxBar
-      Caption = 'Cadastros gerais'
+      Caption = 'Tabelas'
       CaptionButtons = <>
       DockedLeft = 352
       DockedTop = 0
@@ -11103,16 +11124,56 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnTabelaProduto'
         end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngEntradaCusto: TdxBar
+      Caption = 'Registros de Custos'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 478
+      FloatTop = 221
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnEntradaProduto'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEntradaAjuste'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnEntradaEstoque'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnEntradaServico'
+        end>
       OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
     end
-    object BrBtnProduto: TdxBarLargeButton
-      Caption = 'Produto / Servi'#231'o'
+    object BrBtnAlterarSenha: TdxBarLargeButton
+      Caption = 'Altera'#231#227'o de Senha (%s)'
       Category = 0
-      Hint = 'Cadastro de Produtos/Servi'#231'os'
+      Hint = 'Altera'#231#227'o de Senha (%s)'
+      Visible = ivAlways
+    end
+    object BrBtnEfetuarLogoff: TdxBarLargeButton
+      Caption = 'Efetuar Logoff'
+      Category = 0
+      Hint = 'Efetuar Logoff'
       Visible = ivAlways
     end
     object BrBtnAutorizacao: TdxBarLargeButton
@@ -11128,6 +11189,10 @@ object frmPrinc: TfrmPrinc
       Visible = ivAlways
       ButtonStyle = bsDropDown
       DropDownMenu = BrPpEntrada
+      LargeImageIndex = 20
+      HotImageIndex = 20
+      SyncImageIndex = False
+      ImageIndex = 20
     end
     object BrBtnRequisicaoMaterial: TdxBarLargeButton
       Caption = 'Requisi'#231#227'o de Materiais'
@@ -11153,35 +11218,64 @@ object frmPrinc: TfrmPrinc
       Hint = 'Contas A Receber'
       Visible = ivAlways
     end
-    object BrBtnEntradaProduto: TdxBarButton
+    object BrBtnEntradaProduto: TdxBarLargeButton
       Caption = 'Produtos'
       Category = 1
       Hint = 'Produtos'
       Visible = ivAlways
+      LargeImageIndex = 20
+      OnClick = nmEntradaProdutoClick
+      HotImageIndex = 20
+      SyncImageIndex = False
+      ImageIndex = 20
     end
-    object BrBtnEntradaAjuste: TdxBarButton
-      Caption = 'Ajustes Manual'
+    object BrBtnEntradaAjuste: TdxBarLargeButton
+      Caption = 'Ajuste Manual de Estoque'
       Category = 1
-      Hint = 'Ajustes Manual'
+      Hint = 'Ajuste Manual de Estoque'
       Visible = ivAlways
+      LargeImageIndex = 21
+      OnClick = nmAjusteManualClick
+      HotImageIndex = 21
+      SyncImageIndex = False
+      ImageIndex = 21
     end
-    object BrBtnEntradaKardex: TdxBarButton
+    object BrBtnEntradaEstoque: TdxBarLargeButton
+      Caption = 'Estoque'
+      Category = 1
+      Hint = 'Estoque'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpEntradaEstoque
+      LargeImageIndex = 22
+      HotImageIndex = 22
+      SyncImageIndex = False
+      ImageIndex = 22
+    end
+    object BrBtnEntradaKardex: TdxBarLargeButton
       Caption = 'Kardex'
       Category = 1
       Hint = 'Kardex'
       Visible = ivAlways
+      OnClick = nmKardexClick
     end
     object BrBtnApropriacao: TdxBarLargeButton
       Caption = 'Apropria'#231#227'o de Estoque'
       Category = 1
       Hint = 'Apropria'#231#227'o de Estoque'
       Visible = ivAlways
+      OnClick = nmApropriacaoEstoqueClick
     end
-    object BrBtnEntradaServico: TdxBarButton
+    object BrBtnEntradaServico: TdxBarLargeButton
       Caption = 'Servi'#231'os'
       Category = 1
       Hint = 'Servi'#231'os'
       Visible = ivAlways
+      LargeImageIndex = 18
+      OnClick = nmEntradaServicoClick
+      HotImageIndex = 18
+      SyncImageIndex = False
+      ImageIndex = 18
     end
     object BrBtnConfigurarEmpresa: TdxBarLargeButton
       Caption = 'Configurar Empresa'
@@ -11189,6 +11283,7 @@ object frmPrinc: TfrmPrinc
       Hint = 'Configurar Empresa'
       Visible = ivAlways
       LargeImageIndex = 12
+      OnClick = nmConfiguracaoEmpresaClick
       HotImageIndex = 12
       SyncImageIndex = False
       ImageIndex = 12
@@ -11199,6 +11294,7 @@ object frmPrinc: TfrmPrinc
       Hint = 'Configurar NF-e'
       Visible = ivAlways
       LargeImageIndex = 9
+      OnClick = nmConfigurarNFeACBrClick
       HotImageIndex = 9
       SyncImageIndex = False
       ImageIndex = 9
@@ -11209,6 +11305,7 @@ object frmPrinc: TfrmPrinc
       Hint = 'Configurar Ambiente'
       Visible = ivAlways
       LargeImageIndex = 10
+      OnClick = nmConfigurarAmbienteClick
       HotImageIndex = 10
       SyncImageIndex = False
       ImageIndex = 10
@@ -11218,12 +11315,22 @@ object frmPrinc: TfrmPrinc
       Category = 3
       Hint = 'Perfil de Acesso'
       Visible = ivAlways
+      LargeImageIndex = 13
+      OnClick = nmPerfilAcessoClick
+      HotImageIndex = 13
+      SyncImageIndex = False
+      ImageIndex = 13
     end
     object BrBtnUsuario: TdxBarLargeButton
       Caption = 'Usu'#225'rio'
       Category = 3
       Hint = 'Usu'#225'rio'
       Visible = ivAlways
+      LargeImageIndex = 14
+      OnClick = nmUsuarioClick
+      HotImageIndex = 14
+      SyncImageIndex = False
+      ImageIndex = 14
     end
     object BrBtnTabelaAuxiliar: TdxBarLargeButton
       Caption = 'Tabelas Auxiliares'
@@ -11264,12 +11371,22 @@ object frmPrinc: TfrmPrinc
       Category = 4
       Hint = 'Cadastro de Fornecedores'
       Visible = ivAlways
+      LargeImageIndex = 15
+      OnClick = nmFornecedorClick
+      HotImageIndex = 15
+      SyncImageIndex = False
+      ImageIndex = 15
     end
     object BrBtnVendedor: TdxBarLargeButton
       Caption = 'Vendedor'
       Category = 4
       Hint = 'Vendedor'
       Visible = ivAlways
+      LargeImageIndex = 4
+      OnClick = nmVendedorClick
+      HotImageIndex = 4
+      SyncImageIndex = False
+      ImageIndex = 4
     end
     object BrBrntBanco: TdxBarLargeButton
       Caption = 'Banco'
@@ -11277,6 +11394,7 @@ object frmPrinc: TfrmPrinc
       Hint = 'Banco'
       Visible = ivAlways
       LargeImageIndex = 5
+      OnClick = mnBancoClick
       HotImageIndex = 5
       SyncImageIndex = False
       ImageIndex = 5
@@ -11288,42 +11406,177 @@ object frmPrinc: TfrmPrinc
       Visible = ivAlways
       ButtonStyle = bsDropDown
       DropDownMenu = BrPpTabelaProduto
+      LargeImageIndex = 19
+      HotImageIndex = 19
+      SyncImageIndex = False
+      ImageIndex = 19
     end
     object BrBtnEstado: TdxBarLargeButton
       Caption = 'Estados'
       Category = 5
       Hint = 'Estados'
       Visible = ivAlways
+      OnClick = nmEstadosClick
     end
     object BrBtnCidade: TdxBarLargeButton
       Caption = 'Cidades'
       Category = 5
       Hint = 'Cidades'
       Visible = ivAlways
+      OnClick = nmCidadesClick
     end
     object BrBtnDistrito: TdxBarLargeButton
       Caption = 'Distritos'
       Category = 5
       Hint = 'Distritos'
       Visible = ivAlways
+      OnClick = nmDistritosClick
     end
     object BrBtnBairro: TdxBarLargeButton
       Caption = 'Bairros'
       Category = 5
       Hint = 'Bairros'
       Visible = ivAlways
+      OnClick = nmBairrosClick
     end
     object BrBtnTipoLogradouro: TdxBarLargeButton
       Caption = 'Tipos de Logradouros'
       Category = 5
       Hint = 'Tipos de Logradouros'
       Visible = ivAlways
+      OnClick = nmTiposdeLogradourosClick
     end
     object BrBtnLogradouro: TdxBarLargeButton
       Caption = 'Logradouros'
       Category = 5
       Hint = 'Logradouros'
       Visible = ivAlways
+      OnClick = nmLogradourosClick
+    end
+    object BrBtnTabelaCFOP: TdxBarLargeButton
+      Caption = 'Tabela CFOP'
+      Category = 5
+      Hint = 'Tabela CFOP'
+      Visible = ivAlways
+      OnClick = nmTabelaCFOPClick
+    end
+    object BrBtnTabelaCNAE: TdxBarLargeButton
+      Caption = 'Tabela CNAE'
+      Category = 5
+      Enabled = False
+      Hint = 'Tabela CNAE'
+      Visible = ivAlways
+    end
+    object BrBtnTabelaIBPT: TdxBarLargeButton
+      Caption = 'Tabela de Tributa'#231#245'es IBPT'
+      Category = 5
+      Enabled = False
+      Hint = 'Tabela de Tributa'#231#245'es IBPT'
+      Visible = ivAlways
+    end
+    object BrBtnContaCorrente: TdxBarLargeButton
+      Caption = 'Contas Correntes'
+      Category = 5
+      Hint = 'Contas Correntes'
+      Visible = ivAlways
+      LargeImageIndex = 6
+      OnClick = nmContaCorrenteClick
+      HotImageIndex = 6
+      SyncImageIndex = False
+      ImageIndex = 6
+    end
+    object BrBtnFormaPagto: TdxBarLargeButton
+      Caption = 'Formas de Pagamentos'
+      Category = 5
+      Hint = 'Formas de Pagamentos'
+      Visible = ivAlways
+      LargeImageIndex = 7
+      OnClick = nmFormaPagtoClick
+      HotImageIndex = 7
+      SyncImageIndex = False
+      ImageIndex = 7
+    end
+    object BrBtnCondicaoPagto: TdxBarLargeButton
+      Caption = 'Condi'#231#245'es de Pagamentos'
+      Category = 5
+      Hint = 'Condi'#231#245'es de Pagamentos'
+      Visible = ivAlways
+      LargeImageIndex = 8
+      OnClick = nmCondicaoPagtoClick
+      HotImageIndex = 8
+      SyncImageIndex = False
+      ImageIndex = 8
+    end
+    object BrBtnPlanoConta: TdxBarLargeButton
+      Caption = 'Plano de Contas'
+      Category = 5
+      Hint = 'Plano de Contas'
+      Visible = ivAlways
+      OnClick = nmPlanoContaClick
+    end
+    object BrBtnTipoDespesa: TdxBarLargeButton
+      Caption = 'Tipos de Despesas'
+      Category = 5
+      Hint = 'Tipos de Despesas'
+      Visible = ivAlways
+      OnClick = nmTipoDespesaClick
+    end
+    object BrBtnCentroCusto: TdxBarLargeButton
+      Caption = 'Departamentos / Centros de Custos'
+      Category = 5
+      Hint = 'Departamentos / Centros de Custos'
+      Visible = ivAlways
+      OnClick = nmCentroCustoClick
+    end
+    object BrBtnGrupoProduto: TdxBarLargeButton
+      Caption = 'Grupos de Produtos'
+      Category = 6
+      Hint = 'Grupos de Produtos'
+      Visible = ivAlways
+      OnClick = nmGruposProdutoClick
+    end
+    object BrBtnSecaoProduto: TdxBarLargeButton
+      Caption = 'Se'#231#245'es de Produtos'
+      Category = 6
+      Hint = 'Se'#231#245'es de Produtos'
+      Visible = ivAlways
+      OnClick = nmSecaoProdutoClick
+    end
+    object BrBtnFabricante: TdxBarLargeButton
+      Caption = 'Fabricantes'
+      Category = 6
+      Hint = 'Fabricantes'
+      Visible = ivAlways
+      OnClick = nmFabricanteProdutoClick
+    end
+    object BrBtnUnidadeCompra: TdxBarLargeButton
+      Caption = 'Unidades de Compra/Consumo'
+      Category = 6
+      Hint = 'Unidades de Compra/Consumo'
+      Visible = ivAlways
+      OnClick = nmUnidadeClick
+    end
+    object BrBtnProduto: TdxBarLargeButton
+      Caption = 'Produto / Servi'#231'o'
+      Category = 6
+      Hint = 'Cadastro de Produtos/Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 19
+      OnClick = btnProdutoClick
+      HotImageIndex = 19
+      SyncImageIndex = False
+      ImageIndex = 19
+    end
+    object BrBtnPromocao: TdxBarLargeButton
+      Caption = 'Promo'#231#245'es'
+      Category = 6
+      Hint = 'Promo'#231#245'es'
+      Visible = ivAlways
+      LargeImageIndex = 16
+      OnClick = nmPromocoesClick
+      HotImageIndex = 16
+      SyncImageIndex = False
+      ImageIndex = 16
     end
   end
   object BrPpEntrada: TdxBarPopupMenu
@@ -11381,6 +11634,45 @@ object frmPrinc: TfrmPrinc
       item
         Visible = True
         ItemName = 'BrBtnLogradouro'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnTabelaCFOP'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnTabelaCNAE'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnTabelaIBPT'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnContaCorrente'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnFormaPagto'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnCondicaoPagto'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnPlanoConta'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnTipoDespesa'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnCentroCusto'
       end>
     UseOwnFont = False
     Left = 304
@@ -11388,9 +11680,49 @@ object frmPrinc: TfrmPrinc
   end
   object BrPpTabelaProduto: TdxBarPopupMenu
     BarManager = BrManager
-    ItemLinks = <>
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnGrupoProduto'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnSecaoProduto'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnFabricante'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnUnidadeCompra'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnProduto'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnPromocao'
+      end>
     UseOwnFont = False
     Left = 336
+    Top = 246
+  end
+  object BrPpEntradaEstoque: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnEntradaKardex'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnApropriacao'
+      end>
+    UseOwnFont = False
+    Left = 368
     Top = 246
   end
 end

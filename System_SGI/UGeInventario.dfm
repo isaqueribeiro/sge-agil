@@ -1539,19 +1539,18 @@ inherited frmGeInventario: TfrmGeInventario
       Required = True
       Size = 18
     end
-    object qryInventarioCENTRO_CUSTO: TIntegerField
-      DisplayLabel = 'Centro de Custo'
-      FieldName = 'CENTRO_CUSTO'
-      Origin = '"TBINVENTARIO_ALMOX"."CENTRO_CUSTO"'
-      ProviderFlags = [pfInUpdate]
-      Required = True
-    end
     object qryInventarioTIPO: TSmallintField
       DisplayLabel = 'Tipo'
       FieldName = 'TIPO'
       Origin = '"TBINVENTARIO_ALMOX"."TIPO"'
       ProviderFlags = [pfInUpdate]
       Required = True
+    end
+    object qryInventarioCENTRO_CUSTO: TIntegerField
+      DisplayLabel = 'Centro de Custo'
+      FieldName = 'CENTRO_CUSTO'
+      Origin = '"TBINVENTARIO_ALMOX"."CENTRO_CUSTO"'
+      ProviderFlags = [pfInUpdate]
     end
     object qryInventarioCONFERIR_ESTOQUE_VENDA: TSmallintField
       FieldName = 'CONFERIR_ESTOQUE_VENDA'
@@ -1760,6 +1759,7 @@ inherited frmGeInventario: TfrmGeInventario
       '  , g.fracionador'
       '  , g.unidade'
       '  , g.custo_medio'
+      '  , p.preco'
       '  , g.lote_id'
       '  , u.unp_descricao as und_descricao'
       '  , u.unp_sigla     as und_sigla'
@@ -4779,11 +4779,12 @@ inherited frmGeInventario: TfrmGeInventario
       '  , p.movimenta_estoque'
       'from TBINVENTARIO_ALMOX i'
       '  inner join TBEMPRESA e on (e.cnpj = i.empresa)'
-      '  inner join TBCENTRO_CUSTO c on (c.codigo = i.centro_custo)'
       
         '  inner join TBINVENTARIO_ALMOX_ITEM ip on (ip.ano = i.ano and i' +
         'p.controle = i.controle)'
       '  inner join TBPRODUTO p on (p.cod = ip.produto)'
+      ''
+      '  left join TBCENTRO_CUSTO c on (c.codigo = i.centro_custo)'
       ''
       '  left join VW_TIPO_INVENTARIO_ALMOX ti on (ti.codigo = i.tipo)'
       
