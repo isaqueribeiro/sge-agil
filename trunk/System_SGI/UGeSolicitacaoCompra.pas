@@ -52,7 +52,7 @@ type
     Bevel6: TBevel;
     dbgProdutos: TDBGrid;
     ppImprimir: TPopupMenu;
-    nmImprimirCotacao: TMenuItem;
+    nmImprimirSolicitacao: TMenuItem;
     qryProduto: TIBDataSet;
     lblNumero: TLabel;
     dbNumero: TDBEdit;
@@ -73,10 +73,9 @@ type
     lblNomeSolicitante: TLabel;
     dbNomeSolicitante: TDBEdit;
     dbEventoLOG: TDBMemo;
-    nmImprimirCotacaoMapa: TMenuItem;
-    btnFinalizarCotacao: TcxButton;
-    btnAutorizarCotacao: TcxButton;
-    btnCancelarCotacao: TcxButton;
+    btnFinalizarSolicitacao: TcxButton;
+    btnAprovarSolicitacao: TcxButton;
+    btnCancelarSolicitacao: TcxButton;
     lblCentroCustoSolicitacao: TLabel;
     dbCentroCustoSolicitacao: TRxDBComboEdit;
     lblProdutoNome: TLabel;
@@ -137,7 +136,7 @@ type
     procedure btnProdutoExcluirClick(Sender: TObject);
     procedure btnProdutoSalvarClick(Sender: TObject);
     procedure cdsTabelaItensNewRecord(DataSet: TDataSet);
-    procedure btnAutorizarCotacaoClick(Sender: TObject);
+    procedure btnAprovarSolicitacaoClick(Sender: TObject);
     procedure DtSrcTabelaStateChange(Sender: TObject);
     procedure DtSrcTabelaItensStateChange(Sender: TObject);
     procedure pgcGuiasChange(Sender: TObject);
@@ -149,11 +148,11 @@ type
     procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure dbProdutoButtonClick(Sender: TObject);
-    procedure nmImprimirCotacaoClick(Sender: TObject);
-    procedure btnCancelarCotacaoClick(Sender: TObject);
+    procedure nmImprimirSolicitacaoClick(Sender: TObject);
+    procedure btnCancelarSolicitacaoClick(Sender: TObject);
     procedure IbDtstTabelaSTATUSGetText(Sender: TField; var Text: String;
       DisplayText: Boolean);
-    procedure btnFinalizarCotacaoClick(Sender: TObject);
+    procedure btnFinalizarSolicitacaoClick(Sender: TObject);
     procedure DtSrcTabelaItensDataChange(Sender: TObject; Field: TField);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -172,7 +171,6 @@ type
     SQL_Itens : TStringList;
     iCentroCusto    : Integer;
     procedure AbrirTabelaItens(const AnoCotacao : Smallint; const CodigoCotacao : Integer);
-    procedure AbrirTabelaFornecedores(const AnoCotacao : Smallint; const CodigoCotacao : Integer);
     procedure CarregarDadosProduto( Codigo : Integer );
     procedure HabilitarDesabilitar_Btns;
     procedure RecarregarRegistro;
@@ -197,7 +195,7 @@ type
 var
   frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra;
 
-  procedure MostrarSolicitacaoCotacao(const AOwner : TComponent);
+  procedure MostrarSolicitacao(const AOwner : TComponent);
 
   function SelecionarSolicitacao(const AOwner : TComponent; CentroCusto : Integer; DataInicial : TDateTime;
     var Ano, Codigo : Integer; var Empresa : String) : Boolean;
@@ -210,7 +208,7 @@ uses
 
 {$R *.dfm}
 
-procedure MostrarSolicitacaoCotacao(const AOwner : TComponent);
+procedure MostrarSolicitacao(const AOwner : TComponent);
 var
   frm : TfrmGeSolicitacaoCompra;
   whr : String;
@@ -238,7 +236,7 @@ begin
   end;
 end;
 
-function SelecionarCotacao(const AOwner : TComponent; CentroCusto : Integer; DataInicial : TDateTime;
+function SelecionarSolicitacao(const AOwner : TComponent; CentroCusto : Integer; DataInicial : TDateTime;
   var Ano, Codigo : Integer; var Empresa : String) : Boolean;
 var
   frm : TfrmGeSolicitacaoCompra;
@@ -247,10 +245,10 @@ var
 begin
   frm := TfrmGeSolicitacaoCompra.Create(AOwner);
   try
-    frm.btbtnIncluir.Visible        := False;
-    frm.btnFinalizarCotacao.Visible := False;
-    frm.btnAutorizarCotacao.Visible := False;
-    frm.btnCancelarCotacao.Visible  := False;
+    frm.btbtnIncluir.Visible            := False;
+    frm.btnFinalizarSolicitacao.Visible := False;
+    frm.btnAprovarSolicitacao.Visible   := False;
+    frm.btnCancelarSolicitacao.Visible  := False;
 
     frm.RdgStatusSolicitacao.ItemIndex := STATUS_SOLICITACAO_FIN + 1;
 
@@ -400,24 +398,19 @@ procedure TfrmGeSolicitacaoCompra.HabilitarDesabilitar_Btns;
 begin
   if ( pgcGuias.ActivePage = tbsCadastro ) then
   begin
-    btnFinalizarCotacao.Enabled := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_EDC) and (not cdsTabelaItens.IsEmpty);
-    btnAutorizarCotacao.Enabled := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) and (not cdsTabelaItens.IsEmpty);
-    btnCancelarCotacao.Enabled  := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT);
+    btnFinalizarSolicitacao.Enabled := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_EDC) and (not cdsTabelaItens.IsEmpty);
+    btnAprovarSolicitacao.Enabled   := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN]) and (not cdsTabelaItens.IsEmpty);
+    btnCancelarSolicitacao.Enabled  := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
 
-    nmImprimirCotacao.Enabled     := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR) or (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) or (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ENC);
-    nmImprimirCotacaoMapa.Enabled := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) or (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ENC);
-
-    dtsFornecedor.AutoEdit := (not IbDtstTabela.IsEmpty) and (IbDtstTabela.State = dsBrowse) and (IbDtstTabelaSTATUS.AsInteger < STATUS_SOLICITACAO_ENC);
-    dtsFornecedorStateChange( dtsFornecedor );
+    nmImprimirSolicitacao.Enabled   := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR) or (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
   end
   else
   begin
-    btnFinalizarCotacao.Enabled := False;
-    btnAutorizarCotacao.Enabled := False; //(not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger = STATUS_AUTORIZACAO_COT) and (not cdsTabelaItens.IsEmpty);
-    btnCancelarCotacao.Enabled  := False;
+    btnFinalizarSolicitacao.Enabled := False;
+    btnAprovarSolicitacao.Enabled   := False;
+    btnCancelarSolicitacao.Enabled  := False;
 
-    nmImprimirCotacao.Enabled     := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR) or (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) or (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ENC);
-    nmImprimirCotacaoMapa.Enabled := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) or (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ENC);
+    nmImprimirSolicitacao.Enabled   := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR) or (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
   end;
 end;
 
@@ -440,13 +433,13 @@ begin
     iAno := IbDtstTabelaANO.AsInteger;
     iCod := IbDtstTabelaCODIGO.AsInteger;
 
-    if ( not IbDtstTabelaEMISSAO_DATA.IsNull ) then
+    if ( not IbDtstTabelaDATA_EMISSAO.IsNull ) then
     begin
-      if ( IbDtstTabelaEMISSAO_DATA.AsDateTime < e1Data.Date ) then
-        e1Data.Date := IbDtstTabelaEMISSAO_DATA.AsDateTime;
+      if ( IbDtstTabelaDATA_EMISSAO.AsDateTime < e1Data.Date ) then
+        e1Data.Date := IbDtstTabelaDATA_EMISSAO.AsDateTime;
 
-      if ( IbDtstTabelaEMISSAO_DATA.AsDateTime > e2Data.Date ) then
-        e2Data.Date := IbDtstTabelaEMISSAO_DATA.AsDateTime;
+      if ( IbDtstTabelaDATA_EMISSAO.AsDateTime > e2Data.Date ) then
+        e2Data.Date := IbDtstTabelaDATA_EMISSAO.AsDateTime;
     end;
 
     IbDtstTabela.Close;
@@ -461,10 +454,10 @@ var
 begin
   RecarregarRegistro;
 
-  if ( IbDtstTabelaSTATUS.AsInteger > STATUS_SOLICITACAO_COT ) then
+  if ( IbDtstTabelaSTATUS.AsInteger > STATUS_SOLICITACAO_FIN ) then
   begin
     Case IbDtstTabelaSTATUS.AsInteger of
-      STATUS_SOLICITACAO_ENC : sMsg := 'Esta solicitação não pode ser alterada por já está autorizada/encerrada.';
+      STATUS_SOLICITACAO_APR : sMsg := 'Esta solicitação não pode ser alterada por já está aprovada/encerrada.';
       STATUS_SOLICITACAO_CAN : sMsg := 'Esta solicitação não pode ser alterada porque está cancelada.';
     end;
 
@@ -473,17 +466,14 @@ begin
   end
   else
   begin
-    if (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) then
-      if not ShowConfirm('A edição da solicitação selecionada está em andamento.' + #13 + 'Deseja colocá-la em edição novamente?') then
+    if (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN]) then
+      if not ShowConfirm('A análise da solicitação selecionada está em andamento.' + #13 + 'Deseja colocá-la em edição novamente?') then
         Abort;
 
     inherited;
 
     if ( not OcorreuErro ) then
-    begin
       AbrirTabelaItens( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-      AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-    end;
   end;
 end;
 
@@ -493,11 +483,10 @@ var
 begin
   RecarregarRegistro;
 
-  if ( IbDtstTabelaSTATUS.AsInteger > STATUS_SOLICITACAO_ABR ) then
+  if ( IbDtstTabelaSTATUS.AsInteger > STATUS_SOLICITACAO_FIN ) then
   begin
     Case IbDtstTabelaSTATUS.AsInteger of
-      STATUS_SOLICITACAO_COT : sMsg := 'Esta solicitação não pode ser excluída porque já está aguardando encerramento.';
-      STATUS_SOLICITACAO_ENC : sMsg := 'Esta solicitação não pode ser excluída por já está autorizada/encerrada.';
+      STATUS_SOLICITACAO_APR : sMsg := 'Esta solicitação não pode ser excluída por já está aprovada/encerrada.';
       STATUS_SOLICITACAO_CAN : sMsg := 'Esta solicitação não pode ser excluída porque está cancelada.';
     end;
 
@@ -508,10 +497,7 @@ begin
   begin
     inherited;
     if ( not OcorreuErro ) then
-    begin
       AbrirTabelaItens( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-      AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-    end;  
   end;
 end;
 
@@ -665,7 +651,7 @@ begin
   cdsTabelaItensUNP_SIGLA.Clear;
 end;
 
-procedure TfrmGeSolicitacaoCompra.btnAutorizarCotacaoClick(
+procedure TfrmGeSolicitacaoCompra.btnAprovarSolicitacaoClick(
   Sender: TObject);
 begin
   if ( IbDtstTabela.IsEmpty ) then
@@ -999,7 +985,7 @@ begin
   end;
 end;
 
-procedure TfrmGeSolicitacaoCompra.nmImprimirCotacaoClick(
+procedure TfrmGeSolicitacaoCompra.nmImprimirSolicitacaoClick(
   Sender: TObject);
 begin
   if ( IbDtstTabela.IsEmpty ) then
@@ -1044,7 +1030,7 @@ begin
   end;
 end;
 
-procedure TfrmGeSolicitacaoCompra.btnCancelarCotacaoClick(
+procedure TfrmGeSolicitacaoCompra.btnCancelarSolicitacaoClick(
   Sender: TObject);
 begin
   if ( IbDtstTabela.IsEmpty ) then
@@ -1083,7 +1069,7 @@ begin
   end;
 end;
 
-procedure TfrmGeSolicitacaoCompra.btnFinalizarCotacaoClick(
+procedure TfrmGeSolicitacaoCompra.btnFinalizarSolicitacaoClick(
   Sender: TObject);
 (*
   function QuantidadeInvalida : Boolean;
