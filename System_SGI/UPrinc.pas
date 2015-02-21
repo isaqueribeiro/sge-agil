@@ -208,6 +208,26 @@ type
     RbnTabFinanceiro: TdxRibbonTab;
     RbnTabRelatorio: TdxRibbonTab;
     RbnTabAjuda: TdxRibbonTab;
+    BrPpTabelaAuxiliar: TdxBarPopupMenu;
+    BrMngCadastroCnf: TdxBar;
+    BrMngCadastroAcc: TdxBar;
+    BrBtnConfigurarEmpresa: TdxBarLargeButton;
+    BrBtnConfigurarNFe: TdxBarLargeButton;
+    BrBtnConfigurarAmbiente: TdxBarLargeButton;
+    BrBtnPerfilAcesso: TdxBarLargeButton;
+    BrBtnUsuario: TdxBarLargeButton;
+    BrMngCadastroCad: TdxBar;
+    BrBtnTabelaAuxiliar: TdxBarLargeButton;
+    BrBtnEstado: TdxBarLargeButton;
+    BrBtnCidade: TdxBarLargeButton;
+    BrBtnDistrito: TdxBarLargeButton;
+    BrBtnBairro: TdxBarLargeButton;
+    BrBtnTipoLogradouro: TdxBarLargeButton;
+    BrBtnLogradouro: TdxBarLargeButton;
+    BrBtnVendedor: TdxBarLargeButton;
+    BrBrntBanco: TdxBarLargeButton;
+    BrBtnTabelaProduto: TdxBarLargeButton;
+    BrPpTabelaProduto: TdxBarPopupMenu;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -291,6 +311,7 @@ type
     procedure nmInventarioMaterialClick(Sender: TObject);
     procedure TmrMonitorarTimer(Sender: TObject);
     procedure mnRelatorioEstoqueProdutoClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -1045,6 +1066,11 @@ procedure TfrmPrinc.mnRelatorioEstoqueProdutoClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_PROD_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeProdutoEstoqueImpressao');
+end;
+
+procedure TfrmPrinc.FormShow(Sender: TObject);
+begin
+  Ribbon.Visible := False;
 end;
 
 end.

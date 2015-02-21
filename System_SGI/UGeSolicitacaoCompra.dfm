@@ -20,7 +20,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     inherited btbtnLista: TcxButton
       Visible = True
     end
-    object btnFinalizarCotacao: TcxButton
+    object btnFinalizarSolicitacao: TcxButton
       Tag = 11
       Left = 726
       Top = 2
@@ -32,7 +32,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       ParentShowHint = False
       ShowHint = True
       TabOrder = 10
-      OnClick = btnFinalizarCotacaoClick
+      OnClick = btnFinalizarSolicitacaoClick
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
@@ -86,19 +86,19 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
       NumGlyphs = 2
     end
-    object btnAutorizarCotacao: TcxButton
+    object btnAprovarSolicitacao: TcxButton
       Tag = 12
       Left = 846
       Top = 2
       Width = 120
       Height = 31
-      Hint = 'Autorizar/Encerrar Cota'#231#227'o'
+      Hint = 'Aprovar Solicita'#231#227'o'
       Caption = 'Autorizar'
       Enabled = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 8
-      OnClick = btnAutorizarCotacaoClick
+      OnClick = btnAprovarSolicitacaoClick
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
@@ -152,19 +152,19 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
       NumGlyphs = 2
     end
-    object btnCancelarCotacao: TcxButton
+    object btnCancelarSolicitacao: TcxButton
       Tag = 13
       Left = 966
       Top = 2
       Width = 120
       Height = 31
-      Hint = 'Cancelar Cota'#231#227'o Selecionada'
+      Hint = 'Cancelar Solicita'#231#227'o selecionada'
       Caption = 'Cancelar Cot.'
       Enabled = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 9
-      OnClick = btnCancelarCotacaoClick
+      OnClick = btnCancelarSolicitacaoClick
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
@@ -3800,13 +3800,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     Images = ImgList
     Left = 352
     Top = 376
-    object nmImprimirCotacao: TMenuItem
-      Caption = 'Cota'#231#227'o de Compra/Servi'#231'o'
+    object nmImprimirSolicitacao: TMenuItem
+      Caption = 'Solicita'#231#227'o de Compra/Servi'#231'o'
       ImageIndex = 16
-      OnClick = nmImprimirCotacaoClick
-    end
-    object nmImprimirCotacaoMapa: TMenuItem
-      Caption = 'Cota'#231#227'o de Compra/Servi'#231'o (Mapa de Pre'#231'os)'
+      OnClick = nmImprimirSolicitacaoClick
     end
   end
   object qryProduto: TIBDataSet
