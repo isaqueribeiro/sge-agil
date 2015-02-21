@@ -172,6 +172,7 @@ var
   function IfThen(AValue: Boolean; const ATrue: string; AFalse: string = ''): string; overload;
   function IfThen(AValue: Boolean; const ATrue: TDateTime; AFalse: TDateTime = 0): TDateTime; overload;
   function IfThen(AValue: Boolean; const ATrue: Integer; AFalse: Integer = 0): Integer; overload;
+  function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency = 0.0): Currency; overload;
   function NetWorkActive(const Alertar : Boolean = FALSE) : Boolean;
   function DataBaseOnLine : Boolean;
 
@@ -474,6 +475,14 @@ begin
 end;
 
 function IfThen(AValue: Boolean; const ATrue: Integer; AFalse: Integer = 0): Integer;
+begin
+  if AValue then
+    Result := ATrue
+  else
+    Result := AFalse;
+end;
+
+function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency = 0.0): Currency;
 begin
   if AValue then
     Result := ATrue

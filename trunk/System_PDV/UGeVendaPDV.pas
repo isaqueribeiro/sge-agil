@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, ExtCtrls, dxGDIPlusClasses, StdCtrls, DBCtrls, Grids,
   DBGrids, DB, ActnList, IBCustomDataSet, IBUpdateSQL, IBTable, IBQuery,
-  IBStoredProc;
+  IBStoredProc, pngimage;
 
 type
   TTipoAlteraItem = (alterarQuantidade, alterarValor, excluirProduto);

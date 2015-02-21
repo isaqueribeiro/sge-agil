@@ -933,6 +933,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       '  , p.apresentacao'
       '  , p.descri_apresentacao'
       '  , p.qtde'
+      '  , p.movimenta_estoque'
       '  , u.unp_sigla'
       'from TBPRODUTO p'
       '  left join TBUNIDADEPROD u on (u.unp_cod = p.codunidade)')
@@ -974,6 +975,10 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       EditFormat = ',0.###'
       Precision = 18
       Size = 3
+    end
+    object qryProdutoMOVIMENTA_ESTOQUE: TSmallintField
+      FieldName = 'MOVIMENTA_ESTOQUE'
+      Origin = '"TBPRODUTO"."MOVIMENTA_ESTOQUE"'
     end
     object qryProdutoUNP_SIGLA: TIBStringField
       FieldName = 'UNP_SIGLA'

@@ -10,6 +10,7 @@ type
     ImgPrincipalEnabled: TcxImageList;
     ImgPrincipalDisabled: TcxImageList;
     ImgPrincipalHot: TcxImageList;
+    ImgPrincipal16x16: TcxImageList;
   private
     { Private declarations }
   public

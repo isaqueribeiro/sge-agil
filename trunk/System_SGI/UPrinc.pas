@@ -198,10 +198,6 @@ type
     dxBarLargeButton1: TdxBarLargeButton;
     dxBarLargeButton2: TdxBarLargeButton;
     BrPpEntrada: TdxBarPopupMenu;
-    BrBtnEntradaProduto: TdxBarButton;
-    BrBtnEntradaAjuste: TdxBarButton;
-    BrBtnEntradaServico: TdxBarButton;
-    BrBtnEntradaKardex: TdxBarButton;
     BrBtnRequisicaoMaterial: TdxBarLargeButton;
     RbnTabNota: TdxRibbonTab;
     RbnTabConsulta: TdxRibbonTab;
@@ -228,6 +224,30 @@ type
     BrBrntBanco: TdxBarLargeButton;
     BrBtnTabelaProduto: TdxBarLargeButton;
     BrPpTabelaProduto: TdxBarPopupMenu;
+    BrBtnTabelaCFOP: TdxBarLargeButton;
+    BrBtnTabelaCNAE: TdxBarLargeButton;
+    BrBtnTabelaIBPT: TdxBarLargeButton;
+    BrBtnCondicaoPagto: TdxBarLargeButton;
+    BrBtnFormaPagto: TdxBarLargeButton;
+    BrBtnContaCorrente: TdxBarLargeButton;
+    BrBtnPlanoConta: TdxBarLargeButton;
+    BrBtnTipoDespesa: TdxBarLargeButton;
+    BrBtnCentroCusto: TdxBarLargeButton;
+    BrBtnPromocao: TdxBarLargeButton;
+    RbnTabEntrada: TdxRibbonTab;
+    BrBtnGrupoProduto: TdxBarLargeButton;
+    BrBtnSecaoProduto: TdxBarLargeButton;
+    BrBtnFabricante: TdxBarLargeButton;
+    BrBtnUnidadeCompra: TdxBarLargeButton;
+    BrMngEntradaCusto: TdxBar;
+    BrBtnEntradaProduto: TdxBarLargeButton;
+    BrBtnEntradaAjuste: TdxBarLargeButton;
+    BrBtnEntradaKardex: TdxBarLargeButton;
+    BrBtnEntradaServico: TdxBarLargeButton;
+    BrBtnEntradaEstoque: TdxBarLargeButton;
+    BrPpEntradaEstoque: TdxBarPopupMenu;
+    BrBtnAlterarSenha: TdxBarLargeButton;
+    BrBtnEfetuarLogoff: TdxBarLargeButton;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -637,6 +657,7 @@ begin
 
   nmGruposProduto.Caption    := 'Grupos de ' + StrDescricaoProduto;
   nmSecaoProduto.Caption     := 'Seções de ' + StrDescricaoProduto;
+  BrBtnTabelaProduto.Caption := StrDescricaoProduto;
   nmProduto.Caption          := StrDescricaoProduto;
   btnProduto.Caption         := StrDescricaoProduto;
   BrBtnProduto.Caption       := StrDescricaoProduto;
@@ -1070,7 +1091,8 @@ end;
 
 procedure TfrmPrinc.FormShow(Sender: TObject);
 begin
-  Ribbon.Visible := False;
+  Ribbon.Visible   := False;
+  Ribbon.ActiveTab := RbnTabPrincipal;
 end;
 
 end.

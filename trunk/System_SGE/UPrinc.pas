@@ -170,6 +170,7 @@ type
     nmRequisicaoCompra: TMenuItem;
     nmConverterReqAutCompra: TMenuItem;
     TmrMonitorar: TTimer;
+    nmControleInventario: TMenuItem;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -248,6 +249,7 @@ type
     procedure nmCentroCustoClick(Sender: TObject);
     procedure nmConverterReqAutCompraClick(Sender: TObject);
     procedure nmPlanoContaClick(Sender: TObject);
+    procedure nmControleInventarioClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -791,6 +793,10 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_ENT_AJUSTE_ID, Trim(nmAjusteManual.Caption), ROTINA_MENU_ENTRADA_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_ENT_KARDEX_ID, Trim(nmKardex.Caption),       ROTINA_MENU_ENTRADA_ID);
 
+  // Movimento
+
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_INVENTARIO_ESTOQU_ID, Trim(nmControleInventario.Caption),   ROTINA_MENU_MOVIMENTO_ID);
+
   // Notas Fiscais
 
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_NFE_INUTILIZAR_NRO_ID,  Trim(nmInutilizarNumeroNFe.Caption),    ROTINA_MENU_NOTAFISCAL_ID);
@@ -967,6 +973,12 @@ procedure TfrmPrinc.nmPlanoContaClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_CAD_PLANO_CONTAS_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGePlanoContas');
+end;
+
+procedure TfrmPrinc.nmControleInventarioClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_MOV_INVENTARIO_ESTOQU_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeInventario');
 end;
 
 end.
