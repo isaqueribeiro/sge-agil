@@ -20014,6 +20014,9 @@ object frmPrinc: TfrmPrinc
       Caption = 'Principal'
       Groups = <
         item
+          ToolbarName = 'BrMngPrincipalAcc'
+        end
+        item
           ToolbarName = 'BrMngPrincipalMov'
         end
         item
@@ -21353,7 +21356,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalMov: TdxBar
       Caption = 'Movimentos'
       CaptionButtons = <>
-      DockedLeft = 0
+      DockedLeft = 144
       DockedTop = 0
       FloatLeft = 441
       FloatTop = 226
@@ -21369,7 +21372,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnOrcamento'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -21377,7 +21380,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalCad: TdxBar
       Caption = 'Cadastros'
       CaptionButtons = <>
-      DockedLeft = 144
+      DockedLeft = 288
       DockedTop = 0
       FloatLeft = 441
       FloatTop = 226
@@ -21393,7 +21396,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnCliente'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -21478,6 +21481,30 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnUsuario'
         end>
       OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngPrincipalAcc: TdxBar
+      Caption = 'Autentica'#231#227'o Acesso'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnAlterarSenha'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEfetuarLogoff'
+        end>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -21615,6 +21642,28 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 14
       SyncImageIndex = False
       ImageIndex = 14
+    end
+    object BrBtnAlterarSenha: TdxBarLargeButton
+      Caption = 'Altera'#231#227'o de Senha (%s)'
+      Category = 3
+      Hint = 'Altera'#231#227'o de Senha (%s)'
+      Visible = ivAlways
+      LargeImageIndex = 26
+      OnClick = nmUsuarioAlterarSenhaClick
+      HotImageIndex = 26
+      SyncImageIndex = False
+      ImageIndex = 26
+    end
+    object BrBtnEfetuarLogoff: TdxBarLargeButton
+      Caption = 'Efetuar Logoff'
+      Category = 3
+      Hint = 'Efetuar Logoff'
+      Visible = ivAlways
+      LargeImageIndex = 25
+      OnClick = nmEfetuarLogoffClick
+      HotImageIndex = 25
+      SyncImageIndex = False
+      ImageIndex = 25
     end
     object BtBtnTributacaoIBPT: TdxBarLargeButton
       Caption = 'Tributa'#231#245'es IBPT'

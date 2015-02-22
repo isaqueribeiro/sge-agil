@@ -107,6 +107,9 @@ type
     BrBtnPerfilAcesso: TdxBarLargeButton;
     BrBtnUsuario: TdxBarLargeButton;
     BtBtnTributacaoIBPT: TdxBarLargeButton;
+    BrMngPrincipalAcc: TdxBar;
+    BrBtnAlterarSenha: TdxBarLargeButton;
+    BrBtnEfetuarLogoff: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);

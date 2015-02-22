@@ -10,15 +10,15 @@ File_7=SourceModule,'C:\Delphi\DevExpress VCL\ExpressEditors Library 5\Sources\c
 
 [Modules]
 Module0=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas
-Module1=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas
-Module2=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas
-Module3=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
-Module4=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas
-Module5=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
-Module6=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas
-Module7=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompraCancelar.pas
-Module8=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas
-Module9=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas
+Module1=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas
+Module2=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
+Module3=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas
+Module4=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompraCancelar.pas
+Module5=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas
+Module6=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas
+Module7=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
+Module8=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas
+Module9=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas
 Module10=C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas
 Module11=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
 Module12=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr
@@ -30,22 +30,7 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=1
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
@@ -55,7 +40,7 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
@@ -65,12 +50,27 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas]
+[C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
@@ -98,11 +98,11 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoCadastro.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas]
 FormState=0
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoCadastro.pas]
 FormState=0
 FormOnTop=0
 
@@ -216,8 +216,8 @@ LeftCol=1
 [View10]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas
 CursorX=1
-CursorY=419
-TopLine=411
+CursorY=424
+TopLine=416
 LeftCol=1
 
 [View11]
