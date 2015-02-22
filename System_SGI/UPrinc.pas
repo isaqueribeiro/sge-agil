@@ -248,6 +248,11 @@ type
     BrPpEntradaEstoque: TdxBarPopupMenu;
     BrBtnAlterarSenha: TdxBarLargeButton;
     BrBtnEfetuarLogoff: TdxBarLargeButton;
+    BrMngMovimentoFat: TdxBar;
+    BrBtnVenda: TdxBarLargeButton;
+    BrBtnOrdemServico: TdxBarLargeButton;
+    BrBtnRequisicaoCliente: TdxBarLargeButton;
+    BrMngPrincipalAcc: TdxBar;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);

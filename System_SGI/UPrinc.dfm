@@ -5644,6 +5644,9 @@ object frmPrinc: TfrmPrinc
       Caption = 'Principal'
       Groups = <
         item
+          ToolbarName = 'BrMngPrincipalAcc'
+        end
+        item
           ToolbarName = 'BrMngPrincipalCad'
         end
         item
@@ -5678,7 +5681,10 @@ object frmPrinc: TfrmPrinc
     end
     object RbnTabMovimento: TdxRibbonTab
       Caption = 'Movimenta'#231#227'o'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngMovimentoFat'
+        end>
       Index = 3
     end
     object RbnTabNota: TdxRibbonTab
@@ -10902,8 +10908,10 @@ object frmPrinc: TfrmPrinc
       'Permiss'#245'es de Acesso'
       'Cadastros'
       'Tabelas Auxiliares'
-      'Produtos e Servi'#231'os')
+      'Produtos e Servi'#231'os'
+      'Movimento')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
@@ -10912,6 +10920,7 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -10938,7 +10947,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalCad: TdxBar
       Caption = 'Cadastros'
       CaptionButtons = <>
-      DockedLeft = 0
+      DockedLeft = 144
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -10946,15 +10955,6 @@ object frmPrinc: TfrmPrinc
       FloatClientHeight = 0
       ItemLinks = <
         item
-          Visible = True
-          ItemName = 'BrBtnAlterarSenha'
-        end
-        item
-          Visible = True
-          ItemName = 'BrBtnEfetuarLogoff'
-        end
-        item
-          BeginGroup = True
           Visible = True
           ItemName = 'BrBtnEmpresa'
         end
@@ -10971,7 +10971,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnFornecedor'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -10979,7 +10979,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalMov: TdxBar
       Caption = 'Movimentos'
       CaptionButtons = <>
-      DockedLeft = 404
+      DockedLeft = 405
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -10999,7 +10999,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnRequisicaoMaterial'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11007,7 +11007,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Financeiro'
       CaptionButtons = <>
-      DockedLeft = 628
+      DockedLeft = 629
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -11027,7 +11027,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'dxBarLargeButton2'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11164,17 +11164,75 @@ object frmPrinc: TfrmPrinc
       Visible = True
       WholeRow = False
     end
+    object BrMngMovimentoFat: TdxBar
+      Caption = 'Faturamento'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 478
+      FloatTop = 221
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnVenda'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnOrdemServico'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngPrincipalAcc: TdxBar
+      Caption = 'Autentica'#231#227'o Acesso'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 478
+      FloatTop = 221
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnAlterarSenha'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEfetuarLogoff'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object BrBtnAlterarSenha: TdxBarLargeButton
       Caption = 'Altera'#231#227'o de Senha (%s)'
       Category = 0
       Hint = 'Altera'#231#227'o de Senha (%s)'
       Visible = ivAlways
+      LargeImageIndex = 26
+      OnClick = nmUsuarioAlterarSenhaClick
+      HotImageIndex = 26
+      SyncImageIndex = False
+      ImageIndex = 26
     end
     object BrBtnEfetuarLogoff: TdxBarLargeButton
       Caption = 'Efetuar Logoff'
       Category = 0
       Hint = 'Efetuar Logoff'
       Visible = ivAlways
+      LargeImageIndex = 25
+      OnClick = nmEfetuarLogoffClick
+      HotImageIndex = 25
+      SyncImageIndex = False
+      ImageIndex = 25
     end
     object BrBtnAutorizacao: TdxBarLargeButton
       Caption = 'Autoriza'#231#227'o'
@@ -11577,6 +11635,39 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 16
       SyncImageIndex = False
       ImageIndex = 16
+    end
+    object BrBtnVenda: TdxBarLargeButton
+      Caption = 'Vendas'
+      Category = 7
+      Hint = 'Vendas'
+      Visible = ivAlways
+      LargeImageIndex = 17
+      OnClick = nmVendaClick
+      HotImageIndex = 17
+      SyncImageIndex = False
+      ImageIndex = 17
+    end
+    object BrBtnOrdemServico: TdxBarLargeButton
+      Caption = 'Ordens de Servi'#231'os'
+      Category = 7
+      Enabled = False
+      Hint = 'Ordens de Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 27
+      HotImageIndex = 27
+      SyncImageIndex = False
+      ImageIndex = 27
+    end
+    object BrBtnRequisicaoCliente: TdxBarLargeButton
+      Caption = 'Requisi'#231#245'es de Clientes'
+      Category = 7
+      Hint = 'Requisi'#231#245'es de Clientes'
+      Visible = ivAlways
+      LargeImageIndex = 28
+      OnClick = nmRequisicaoClienteClick
+      HotImageIndex = 28
+      SyncImageIndex = False
+      ImageIndex = 28
     end
   end
   object BrPpEntrada: TdxBarPopupMenu
