@@ -20025,7 +20025,6 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbbTabCadastro: TdxRibbonTab
-      Active = True
       Caption = 'Cadastro'
       Groups = <
         item
@@ -20041,10 +20040,14 @@ object frmPrinc: TfrmPrinc
     end
     object RbbTabMovimento: TdxRibbonTab
       Caption = 'Movimenta'#231#245'es'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngPrincipalMov'
+        end>
       Index = 2
     end
     object RbbTabCaixa: TdxRibbonTab
+      Active = True
       Caption = 'Caixa'
       Groups = <>
       Index = 3
@@ -21342,7 +21345,7 @@ object frmPrinc: TfrmPrinc
     ImageOptions.DisabledImages = DMRecursos.ImgPrincipalDisabled
     ImageOptions.DisabledLargeImages = DMRecursos.ImgPrincipalDisabled
     ImageOptions.HotImages = DMRecursos.ImgPrincipalHot
-    ImageOptions.Images = DMRecursos.ImgPrincipalEnabled
+    ImageOptions.Images = DMRecursos.ImgPrincipal16x16
     ImageOptions.LargeImages = DMRecursos.ImgPrincipalEnabled
     PopupMenuLinks = <>
     UseSystemFont = True
@@ -21371,8 +21374,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnOrcamento'
         end>
-      OneOnRow = False
-      Row = 1
+      OneOnRow = True
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -21396,7 +21399,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnCliente'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -21427,6 +21430,11 @@ object frmPrinc: TfrmPrinc
         item
           Visible = True
           ItemName = 'BrBtnVendedor'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnProduto'
         end>
       OneOnRow = False
       Row = 0
@@ -21504,7 +21512,7 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnEfetuarLogoff'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -21531,17 +21539,6 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 24
       SyncImageIndex = False
       ImageIndex = 24
-    end
-    object BrBtnProduto: TdxBarLargeButton
-      Caption = 'F6 | Produtos'
-      Category = 0
-      Hint = 'F6 | Produtos'
-      Visible = ivAlways
-      LargeImageIndex = 19
-      OnClick = nmProdutoClick
-      HotImageIndex = 19
-      SyncImageIndex = False
-      ImageIndex = 19
     end
     object BrBtnTabelaAuxiliar: TdxBarLargeButton
       Caption = 'Tabelas Auxiliares'
@@ -21587,6 +21584,17 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 4
       SyncImageIndex = False
       ImageIndex = 4
+    end
+    object BrBtnProduto: TdxBarLargeButton
+      Caption = 'F6 | Produtos'
+      Category = 1
+      Hint = 'F6 | Produtos'
+      Visible = ivAlways
+      LargeImageIndex = 19
+      OnClick = nmProdutoClick
+      HotImageIndex = 19
+      SyncImageIndex = False
+      ImageIndex = 19
     end
     object BrBtnConfigurarEmpresa: TdxBarLargeButton
       Caption = 'Configurar Empresa'
@@ -21671,6 +21679,40 @@ object frmPrinc: TfrmPrinc
       Enabled = False
       Hint = 'Tributa'#231#245'es IBPT'
       Visible = ivAlways
+      OnClick = nmTributacaoClick
+    end
+    object BrBtnContaCorrente: TdxBarLargeButton
+      Caption = 'Contas Correntes'
+      Category = 4
+      Hint = 'Contas Correntes'
+      Visible = ivAlways
+      LargeImageIndex = 6
+      OnClick = nmContaCorrenteClick
+      HotImageIndex = 6
+      SyncImageIndex = False
+      ImageIndex = 6
+    end
+    object BrBtnFormaPagto: TdxBarLargeButton
+      Caption = 'Formas de Pagamentos'
+      Category = 4
+      Hint = 'Formas de Pagamentos'
+      Visible = ivAlways
+      LargeImageIndex = 7
+      OnClick = nmFormaPagtoClick
+      HotImageIndex = 7
+      SyncImageIndex = False
+      ImageIndex = 7
+    end
+    object BrBtnCondicaoPagto: TdxBarLargeButton
+      Caption = 'Condi'#231#245'es de Pagamentos'
+      Category = 4
+      Hint = 'Condi'#231#245'es de Pagamentos'
+      Visible = ivAlways
+      LargeImageIndex = 8
+      OnClick = nmCondicaoPagtoClick
+      HotImageIndex = 8
+      SyncImageIndex = False
+      ImageIndex = 8
     end
   end
   object TmrMonitorar: TTimer
@@ -21683,6 +21725,19 @@ object frmPrinc: TfrmPrinc
       item
         Visible = True
         ItemName = 'BtBtnTributacaoIBPT'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnContaCorrente'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnFormaPagto'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnCondicaoPagto'
       end>
     UseOwnFont = False
     Left = 376

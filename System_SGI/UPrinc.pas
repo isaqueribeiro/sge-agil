@@ -190,15 +190,13 @@ type
     BrMngPrincipalMov: TdxBar;
     RbnTabCadastro: TdxRibbonTab;
     BrBtnEntrada: TdxBarLargeButton;
-    BrBtnAutorizacao: TdxBarLargeButton;
     RbnTabMovimento: TdxRibbonTab;
     BrBtnApropriacao: TdxBarLargeButton;
     BrMngPrincipalFin: TdxBar;
     BrBtnTesouraria: TdxBarLargeButton;
-    dxBarLargeButton1: TdxBarLargeButton;
-    dxBarLargeButton2: TdxBarLargeButton;
+    BrBtnContaAPagar: TdxBarLargeButton;
+    BrBtnContaAReceber: TdxBarLargeButton;
     BrPpEntrada: TdxBarPopupMenu;
-    BrBtnRequisicaoMaterial: TdxBarLargeButton;
     RbnTabNota: TdxRibbonTab;
     RbnTabConsulta: TdxRibbonTab;
     RbnTabFinanceiro: TdxRibbonTab;
@@ -253,6 +251,21 @@ type
     BrBtnOrdemServico: TdxBarLargeButton;
     BrBtnRequisicaoCliente: TdxBarLargeButton;
     BrMngPrincipalAcc: TdxBar;
+    BrMngMovimentoCmp: TdxBar;
+    BrBtnCotacaoCompra: TdxBarLargeButton;
+    BrBtnRequisicaoCompra: TdxBarLargeButton;
+    BrBtnConverterRequisicaoCompra: TdxBarLargeButton;
+    BrBtnAutorizacaoCompra: TdxBarLargeButton;
+    BrPpRequisicaoCompra: TdxBarPopupMenu;
+    BrBtnRequisicaoCompraPopup: TdxBarLargeButton;
+    BrBtnSolicitacaoCompra: TdxBarLargeButton;
+    BrMngMovimentoEst: TdxBar;
+    BrBtnRequisicaoAlmox: TdxBarLargeButton;
+    BrBtnRequisicaoAlmoxMonitor: TdxBarLargeButton;
+    BrBtnRequisicaoAlmoxMenu: TdxBarLargeButton;
+    BrPpRequisicaoAlmox: TdxBarPopupMenu;
+    BrBtnInventarioProduto: TdxBarLargeButton;
+    nmSolicitacaoCompra: TMenuItem;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -337,6 +350,7 @@ type
     procedure TmrMonitorarTimer(Sender: TObject);
     procedure mnRelatorioEstoqueProdutoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure nmSolicitacaoCompraClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -360,6 +374,7 @@ uses
   UGeSobre,
 
   // Movimentação
+  UGeSolicitacaoCompra,  
   UGeCotacaoCompra,
   UGeRequisicaoCliente,
   UGeAutorizacaoCompra,
@@ -1098,6 +1113,12 @@ procedure TfrmPrinc.FormShow(Sender: TObject);
 begin
   Ribbon.Visible   := False;
   Ribbon.ActiveTab := RbnTabPrincipal;
+end;
+
+procedure TfrmPrinc.nmSolicitacaoCompraClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_MOV_SOLICITACAO_ID, True) then
+    MostrarControleSolicitacao(Self);
 end;
 
 end.

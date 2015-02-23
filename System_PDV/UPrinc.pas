@@ -110,6 +110,9 @@ type
     BrMngPrincipalAcc: TdxBar;
     BrBtnAlterarSenha: TdxBarLargeButton;
     BrBtnEfetuarLogoff: TdxBarLargeButton;
+    BrBtnContaCorrente: TdxBarLargeButton;
+    BrBtnFormaPagto: TdxBarLargeButton;
+    BrBtnCondicaoPagto: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
