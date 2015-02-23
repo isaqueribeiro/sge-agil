@@ -1877,7 +1877,7 @@ inherited frmGeProduto: TfrmGeProduto
             object lblEspecificacao: TLabel
               Left = 2
               Top = 2
-              Width = 105
+              Width = 941
               Height = 13
               Align = alTop
               Caption = 'Especifica'#231#227'o textual:'
@@ -2367,7 +2367,7 @@ inherited frmGeProduto: TfrmGeProduto
         'culo, '#39#39') as modelo_fabricacao'
       '  , Case when p.Customedio > 0'
       '      then ((p.Preco / p.Customedio) - 1) * 100'
-      '      else 0.0'
+      '      else 100.0'
       '    end Lucro_Calculado'
       '  , (p.Preco - p.Customedio) as Lucro_Valor'
       

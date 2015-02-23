@@ -195,7 +195,7 @@ type
 var
   frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra;
 
-  procedure MostrarSolicitacao(const AOwner : TComponent);
+  procedure MostrarControleSolicitacao(const AOwner : TComponent);
 
   function SelecionarSolicitacao(const AOwner : TComponent; CentroCusto : Integer; DataInicial : TDateTime;
     var Ano, Codigo : Integer; var Empresa : String) : Boolean;
@@ -208,7 +208,7 @@ uses
 
 {$R *.dfm}
 
-procedure MostrarSolicitacao(const AOwner : TComponent);
+procedure MostrarControleSolicitacao(const AOwner : TComponent);
 var
   frm : TfrmGeSolicitacaoCompra;
   whr : String;

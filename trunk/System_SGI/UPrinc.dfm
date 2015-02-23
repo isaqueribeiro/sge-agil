@@ -5640,7 +5640,6 @@ object frmPrinc: TfrmPrinc
     TabOrder = 8
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -5680,10 +5679,17 @@ object frmPrinc: TfrmPrinc
       Index = 2
     end
     object RbnTabMovimento: TdxRibbonTab
+      Active = True
       Caption = 'Movimenta'#231#227'o'
       Groups = <
         item
           ToolbarName = 'BrMngMovimentoFat'
+        end
+        item
+          ToolbarName = 'BrMngMovimentoCmp'
+        end
+        item
+          ToolbarName = 'BrMngMovimentoEst'
         end>
       Index = 3
     end
@@ -8031,6 +8037,52 @@ object frmPrinc: TfrmPrinc
       end
       object N9: TMenuItem
         Caption = '-'
+      end
+      object nmSolicitacaoCompra: TMenuItem
+        Bitmap.Data = {
+          16050000424D160500000000000036040000280000000E0000000E0000000100
+          080000000000E000000000000000000000000001000000000000000000000000
+          80000080000000808000800000008000800080800000C0C0C000C0DCC000F0CA
+          A6000020400000206000002080000020A0000020C0000020E000004000000040
+          20000040400000406000004080000040A0000040C0000040E000006000000060
+          20000060400000606000006080000060A0000060C0000060E000008000000080
+          20000080400000806000008080000080A0000080C0000080E00000A0000000A0
+          200000A0400000A0600000A0800000A0A00000A0C00000A0E00000C0000000C0
+          200000C0400000C0600000C0800000C0A00000C0C00000C0E00000E0000000E0
+          200000E0400000E0600000E0800000E0A00000E0C00000E0E000400000004000
+          20004000400040006000400080004000A0004000C0004000E000402000004020
+          20004020400040206000402080004020A0004020C0004020E000404000004040
+          20004040400040406000404080004040A0004040C0004040E000406000004060
+          20004060400040606000406080004060A0004060C0004060E000408000004080
+          20004080400040806000408080004080A0004080C0004080E00040A0000040A0
+          200040A0400040A0600040A0800040A0A00040A0C00040A0E00040C0000040C0
+          200040C0400040C0600040C0800040C0A00040C0C00040C0E00040E0000040E0
+          200040E0400040E0600040E0800040E0A00040E0C00040E0E000800000008000
+          20008000400080006000800080008000A0008000C0008000E000802000008020
+          20008020400080206000802080008020A0008020C0008020E000804000008040
+          20008040400080406000804080008040A0008040C0008040E000806000008060
+          20008060400080606000806080008060A0008060C0008060E000808000008080
+          20008080400080806000808080008080A0008080C0008080E00080A0000080A0
+          200080A0400080A0600080A0800080A0A00080A0C00080A0E00080C0000080C0
+          200080C0400080C0600080C0800080C0A00080C0C00080C0E00080E0000080E0
+          200080E0400080E0600080E0800080E0A00080E0C00080E0E000C0000000C000
+          2000C0004000C0006000C0008000C000A000C000C000C000E000C0200000C020
+          2000C0204000C0206000C0208000C020A000C020C000C020E000C0400000C040
+          2000C0404000C0406000C0408000C040A000C040C000C040E000C0600000C060
+          2000C0604000C0606000C0608000C060A000C060C000C060E000C0800000C080
+          2000C0804000C0806000C0808000C080A000C080C000C080E000C0A00000C0A0
+          2000C0A04000C0A06000C0A08000C0A0A000C0A0C000C0A0E000C0C00000C0C0
+          2000C0C04000C0C06000C0C08000C0C0A000F0FBFF00A4A0A000808080000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
+          3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
+        Caption = 'Solicita'#231#245'es de Compras/Servi'#231'os'
+        OnClick = nmSolicitacaoCompraClick
       end
       object nmCotacaoCompra: TMenuItem
         Bitmap.Data = {
@@ -10909,8 +10961,12 @@ object frmPrinc: TfrmPrinc
       'Cadastros'
       'Tabelas Auxiliares'
       'Produtos e Servi'#231'os'
-      'Movimento')
+      'Movimento'
+      'Compras'
+      'Estoque')
     Categories.ItemsVisibles = (
+      2
+      2
       2
       2
       2
@@ -10920,6 +10976,8 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
+      True
       True
       True
       True
@@ -10971,7 +11029,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnFornecedor'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -10988,7 +11046,7 @@ object frmPrinc: TfrmPrinc
       ItemLinks = <
         item
           Visible = True
-          ItemName = 'BrBtnAutorizacao'
+          ItemName = 'BrBtnAutorizacaoCompra'
         end
         item
           Visible = True
@@ -10996,10 +11054,10 @@ object frmPrinc: TfrmPrinc
         end
         item
           Visible = True
-          ItemName = 'BrBtnRequisicaoMaterial'
+          ItemName = 'BrBtnRequisicaoAlmox'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11007,7 +11065,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Financeiro'
       CaptionButtons = <>
-      DockedLeft = 629
+      DockedLeft = 699
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -11020,14 +11078,14 @@ object frmPrinc: TfrmPrinc
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton1'
+          ItemName = 'BrBtnContaAPagar'
         end
         item
           Visible = True
-          ItemName = 'dxBarLargeButton2'
+          ItemName = 'BrBtnContaAReceber'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11131,7 +11189,7 @@ object frmPrinc: TfrmPrinc
       WholeRow = False
     end
     object BrMngEntradaCusto: TdxBar
-      Caption = 'Registros de Custos'
+      Caption = 'Registros de Estoques / Custos'
       CaptionButtons = <>
       DockedLeft = 0
       DockedTop = 0
@@ -11182,7 +11240,7 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnOrdemServico'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -11206,7 +11264,64 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnEfetuarLogoff'
         end>
-      OneOnRow = True
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngMovimentoCmp: TdxBar
+      Caption = 'Compras'
+      CaptionButtons = <>
+      DockedLeft = 133
+      DockedTop = 0
+      FloatLeft = 478
+      FloatTop = 221
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnSolicitacaoCompra'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnCotacaoCompra'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnRequisicaoCompraPopup'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnAutorizacaoCompra'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngMovimentoEst: TdxBar
+      Caption = 'Estoque'
+      CaptionButtons = <>
+      DockedLeft = 607
+      DockedTop = 0
+      FloatLeft = 478
+      FloatTop = 221
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnRequisicaoAlmoxMenu'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnInventarioProduto'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -11234,12 +11349,6 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 25
     end
-    object BrBtnAutorizacao: TdxBarLargeButton
-      Caption = 'Autoriza'#231#227'o'
-      Category = 0
-      Hint = 'Autoriza'#231#227'o'
-      Visible = ivAlways
-    end
     object BrBtnEntrada: TdxBarLargeButton
       Caption = 'Entrada'
       Category = 0
@@ -11252,25 +11361,19 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 20
     end
-    object BrBtnRequisicaoMaterial: TdxBarLargeButton
-      Caption = 'Requisi'#231#227'o de Materiais'
-      Category = 0
-      Hint = 'Requisi'#231#227'o de Materiais'
-      Visible = ivAlways
-    end
     object BrBtnTesouraria: TdxBarLargeButton
       Caption = 'Tesouraria'
       Category = 0
       Hint = 'Tesouraria'
       Visible = ivAlways
     end
-    object dxBarLargeButton1: TdxBarLargeButton
+    object BrBtnContaAPagar: TdxBarLargeButton
       Caption = 'Contas A Pagar'
       Category = 0
       Hint = 'Contas A Pagar'
       Visible = ivAlways
     end
-    object dxBarLargeButton2: TdxBarLargeButton
+    object BrBtnContaAReceber: TdxBarLargeButton
       Caption = 'Contas A Receber'
       Category = 0
       Hint = 'Contas A Receber'
@@ -11464,10 +11567,10 @@ object frmPrinc: TfrmPrinc
       Visible = ivAlways
       ButtonStyle = bsDropDown
       DropDownMenu = BrPpTabelaProduto
-      LargeImageIndex = 19
-      HotImageIndex = 19
+      LargeImageIndex = 33
+      HotImageIndex = 33
       SyncImageIndex = False
-      ImageIndex = 19
+      ImageIndex = 33
     end
     object BrBtnEstado: TdxBarLargeButton
       Caption = 'Estados'
@@ -11669,6 +11772,95 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 28
     end
+    object BrBtnSolicitacaoCompra: TdxBarLargeButton
+      Caption = 'Solicita'#231#245'es de Compras/Servi'#231'os'
+      Category = 8
+      Hint = 'Solicita'#231#245'es de Compras/Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 30
+      OnClick = nmSolicitacaoCompraClick
+      HotImageIndex = 30
+      SyncImageIndex = False
+      ImageIndex = 30
+    end
+    object BrBtnCotacaoCompra: TdxBarLargeButton
+      Caption = 'Cota'#231#245'es Compras/Servi'#231'os'
+      Category = 8
+      Hint = 'Cota'#231#245'es Compras/Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 29
+      OnClick = nmCotacaoCompraClick
+      HotImageIndex = 29
+      SyncImageIndex = False
+      ImageIndex = 29
+    end
+    object BrBtnRequisicaoCompraPopup: TdxBarLargeButton
+      Caption = 'Requisi'#231#245'es Compras/Servi'#231'os'
+      Category = 8
+      Hint = 'Requisi'#231#245'es Compras/Servi'#231'os'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpRequisicaoCompra
+      LargeImageIndex = 31
+      HotImageIndex = 31
+      SyncImageIndex = False
+      ImageIndex = 31
+    end
+    object BrBtnRequisicaoCompra: TdxBarLargeButton
+      Caption = 'Requisi'#231#245'es Compras/Servi'#231'os'
+      Category = 8
+      Hint = 'Requisi'#231#245'es Compras/Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 31
+      OnClick = nmRequisicaoCompraClick
+      HotImageIndex = 31
+      SyncImageIndex = False
+      ImageIndex = 31
+    end
+    object BrBtnConverterRequisicaoCompra: TdxBarLargeButton
+      Caption = 'Converter Requisi'#231#245'es em Autoriza'#231#245'es'
+      Category = 8
+      Hint = 'Converter Requisi'#231#245'es em Autoriza'#231#245'es'
+      Visible = ivAlways
+      OnClick = nmConverterReqAutCompraClick
+    end
+    object BrBtnAutorizacaoCompra: TdxBarLargeButton
+      Caption = 'Autoriza'#231#245'es de Compras/Servi'#231'os'
+      Category = 8
+      Hint = 'Autoriza'#231#245'es de Compras/Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 32
+      OnClick = nmAutorizacaoCompraClick
+      HotImageIndex = 32
+      SyncImageIndex = False
+      ImageIndex = 32
+    end
+    object BrBtnRequisicaoAlmoxMenu: TdxBarLargeButton
+      Caption = 'Requisi'#231#245'es ao Estoque'
+      Category = 9
+      Hint = 'Requisi'#231#245'es ao Estoque'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpRequisicaoAlmox
+    end
+    object BrBtnRequisicaoAlmox: TdxBarLargeButton
+      Caption = 'Requisi'#231#245'es de Materiais/Produtos'
+      Category = 9
+      Hint = 'Requisi'#231#245'es de Materiais/Produtos'
+      Visible = ivAlways
+    end
+    object BrBtnRequisicaoAlmoxMonitor: TdxBarLargeButton
+      Caption = 'Monitorar Requisi'#231#245'es ao Estoque'
+      Category = 9
+      Hint = 'Monitorar Requisi'#231#245'es ao Estoque'
+      Visible = ivAlways
+    end
+    object BrBtnInventarioProduto: TdxBarLargeButton
+      Caption = 'Invent'#225'rio de Materiais/Produtos'
+      Category = 9
+      Hint = 'Invent'#225'rio de Materiais/Produtos'
+      Visible = ivAlways
+    end
   end
   object BrPpEntrada: TdxBarPopupMenu
     BarManager = BrManager
@@ -11814,6 +12006,36 @@ object frmPrinc: TfrmPrinc
       end>
     UseOwnFont = False
     Left = 368
+    Top = 246
+  end
+  object BrPpRequisicaoCompra: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnRequisicaoCompra'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnConverterRequisicaoCompra'
+      end>
+    UseOwnFont = False
+    Left = 400
+    Top = 246
+  end
+  object BrPpRequisicaoAlmox: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnRequisicaoAlmox'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnRequisicaoAlmoxMonitor'
+      end>
+    UseOwnFont = False
+    Left = 432
     Top = 246
   end
 end

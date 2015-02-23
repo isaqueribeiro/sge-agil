@@ -4287,7 +4287,8 @@ inherited frmGeVenda: TfrmGeVenda
       '  , i.Qtdefinal'
       '  , i.Unid_cod'
       '  , i.Cfop_cod'
-      '  , coalesce(i.Cst, p.Cst) as Cst'
+      '  , coalesce(nullif(trim(i.Cst), '#39#39'), p.Cst) as Cst'
+      '  , coalesce(nullif(trim(i.Csosn), '#39#39'), p.Csosn) as Csosn'
       '  , i.Aliquota'
       '  , i.Aliquota_csosn'
       '  , i.Aliquota_pis'
@@ -4303,8 +4304,6 @@ inherited frmGeVenda: TfrmGeVenda
       '  , p.Reserva'
       '  , u.Unp_sigla'
       '  , o.Cfop_descricao'
-      '  , p.Cst'
-      '  , p.Csosn'
       '  , p.Movimenta_Estoque'
       'from TVENDASITENS i'
       '  inner join TBPRODUTO p on (p.Cod = i.Codprod)'
@@ -4432,6 +4431,13 @@ inherited frmGeVenda: TfrmGeVenda
       ProviderFlags = [pfInUpdate]
       Size = 3
     end
+    object cdsTabelaItensCSOSN: TIBStringField
+      Alignment = taCenter
+      FieldName = 'CSOSN'
+      Origin = 'TBPRODUTO.CSOSN'
+      ProviderFlags = [pfInUpdate]
+      Size = 3
+    end
     object cdsTabelaItensALIQUOTA: TIBBCDField
       FieldName = 'ALIQUOTA'
       Origin = 'TVENDASITENS.ALIQUOTA'
@@ -4524,12 +4530,6 @@ inherited frmGeVenda: TfrmGeVenda
       Origin = 'TBCFOP.CFOP_DESCRICAO'
       Size = 250
     end
-    object cdsTabelaItensCSOSN: TIBStringField
-      Alignment = taCenter
-      FieldName = 'CSOSN'
-      Origin = 'TBPRODUTO.CSOSN'
-      Size = 3
-    end
     object cdsTabelaItensESTOQUE: TIBBCDField
       FieldName = 'ESTOQUE'
       Origin = '"TBPRODUTO"."QTDE"'
@@ -4602,6 +4602,7 @@ inherited frmGeVenda: TfrmGeVenda
       '  CODEMP = :CODEMP,'
       '  CODPROD = :CODPROD,'
       '  CST = :CST,'
+      '  CSOSN = :CSOSN,'
       '  DESCONTO = :DESCONTO,'
       '  DESCONTO_VALOR = :DESCONTO_VALOR,'
       '  DTVENDA = :DTVENDA,'
@@ -4628,8 +4629,8 @@ inherited frmGeVenda: TfrmGeVenda
         '  (ALIQUOTA, ALIQUOTA_COFINS, ALIQUOTA_CSOSN, ALIQUOTA_PIS, ANO,' +
         ' CFOP_COD, '
       
-        '   CODCLI, CODCLIENTE, CODCONTROL, CODEMP, CODPROD, CST, DESCONT' +
-        'O, DESCONTO_VALOR, '
+        '   CODCLI, CODCLIENTE, CODCONTROL, CODEMP, CODPROD, CST, CSOSN, ' +
+        'DESCONTO, DESCONTO_VALOR, '
       
         '   DTVENDA, PERCENTUAL_REDUCAO_BC, PFINAL, PUNIT, PUNIT_PROMOCAO' +
         ', QTDE, '
@@ -4643,7 +4644,7 @@ inherited frmGeVenda: TfrmGeVenda
         ':ANO, :CFOP_COD, '
       
         '   :CODCLI, :CODCLIENTE, :CODCONTROL, :CODEMP, :CODPROD, :CST, :' +
-        'DESCONTO, '
+        'CSOSN, :DESCONTO, '
       
         '   :DESCONTO_VALOR, :DTVENDA, :PERCENTUAL_REDUCAO_BC, :PFINAL, :' +
         'PUNIT, '
