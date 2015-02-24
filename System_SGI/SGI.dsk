@@ -1,33 +1,53 @@
 [Closed Files]
-File_0=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeAutorizacaoCompra.pas',0,1,221,39,260,1,0
-File_1=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeVenda.pas',0,1,841,152,844,1,0
-File_2=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProduto.pas',0,1,1247,155,1252,1,0
-File_3=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGrUsuarioAlterarSenha_v2.pas',0,1,1,108,6,1,0
-File_4=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeCaixa.pas',0,1,685,142,686,1,0
-File_5=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UCdEmpresa.pas',0,1,4,101,12,1,0
-File_6=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeCliente.pas',0,1,1069,5,1100,1,0
-File_7=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UfrmAcessoSistema.pas',0,1,1,111,9,1,0
-File_8=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UCdCliente.pas',0,1,61,50,28,1,0
-File_9=SourceModule,'C:\Delphi\DevExpress VCL\ExpressEditors Library 5\Sources\cxEdit.pas',0,1,7140,73,7142,0,0
+File_0=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeRequisicaoAlmox.pas',0,1,227,112,229,1,0
+File_1=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeCotacaoCompra.pas',0,1,1268,154,1269,1,0
+File_2=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeAutorizacaoCompra.pas',0,1,221,39,260,1,0
+File_3=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeVenda.pas',0,1,841,152,844,1,0
+File_4=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeProduto.pas',0,1,1247,155,1252,1,0
+File_5=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGrUsuarioAlterarSenha_v2.pas',0,1,1,108,6,1,0
+File_6=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeCaixa.pas',0,1,685,142,686,1,0
+File_7=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UCdEmpresa.pas',0,1,4,101,12,1,0
+File_8=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UGeCliente.pas',0,1,1069,5,1100,1,0
+File_9=SourceModule,'E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UfrmAcessoSistema.pas',0,1,1,111,9,1,0
 
 [Modules]
 Module0=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas
-Module1=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas
-Module2=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompraCancelar.pas
+Module1=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
+Module2=C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas
 Module3=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas
 Module4=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas
-Module5=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas
-Module6=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
-Module7=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas
+Module5=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas
+Module6=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompraCancelar.pas
+Module7=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
 Module8=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGE\UGeEfetuarLogin.pas
-Module9=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
-Module10=C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas
-Module11=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
+Module9=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas
+Module10=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
+Module11=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas
 Module12=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr
 Count=13
 EditWindowCount=1
 
 [E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UPrinc.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=1
+
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas]
+ModuleType=SourceModule
+FormState=0
+FormOnTop=0
+
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas]
+ModuleType=SourceModule
+FormState=1
+FormOnTop=0
+
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
@@ -42,27 +62,7 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMRecursos.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas]
-ModuleType=SourceModule
-FormState=1
-FormOnTop=0
-
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
@@ -72,19 +72,19 @@ ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoLogin.pas]
 ModuleType=SourceModule
 FormState=1
 FormOnTop=0
 
-[C:\Program Files (x86)\Borland\Delphi7\Source\VCL\Consts.pas]
+[C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas]
 ModuleType=SourceModule
-FormState=0
+FormState=1
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas]
+[C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas]
 ModuleType=SourceModule
-FormState=0
+FormState=1
 FormOnTop=0
 
 [E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr]
@@ -100,11 +100,11 @@ FormOnTop=0
 FormState=0
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoCadastro.pas]
 FormState=0
 FormOnTop=0
 
-[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadraoCadastro.pas]
+[E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\lib\UGrPadrao.pas]
 FormState=0
 FormOnTop=0
 
@@ -143,7 +143,7 @@ LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000
 RightPanelSize=0
 BottomPanelSize=0
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
+BottomPanelData=00000400010000000B0000004D6573736167655669657700000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr
@@ -154,9 +154,9 @@ LeftCol=1
 
 [View1]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UConstantesDGE.pas
-CursorX=28
-CursorY=157
-TopLine=119
+CursorX=30
+CursorY=54
+TopLine=37
 LeftCol=1
 
 [View2]
@@ -168,16 +168,16 @@ LeftCol=1
 
 [View3]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
-CursorX=22
-CursorY=1812
-TopLine=1769
+CursorX=36
+CursorY=2591
+TopLine=2564
 LeftCol=1
 
 [View4]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas
 CursorX=12
-CursorY=6076
-TopLine=6038
+CursorY=6079
+TopLine=6041
 LeftCol=1
 
 [View5]
@@ -224,16 +224,16 @@ LeftCol=1
 
 [View11]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompra.pas
-CursorX=26
-CursorY=1
-TopLine=13
+CursorX=1
+CursorY=625
+TopLine=598
 LeftCol=1
 
 [View12]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\UGeSolicitacaoCompraCancelar.pas
 CursorX=132
 CursorY=84
-TopLine=84
+TopLine=72
 LeftCol=1
 
 [Watches]
@@ -248,7 +248,7 @@ Breakpoint0='E:\Projetos\MasterDados\trunk\DGESTAO\Sys\UGeRetornoBoletos.pas',40
 Breakpoint1='C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeNotasFiscais.pas',305,'',0,1,'',1,0,0,'',1,'','',''
 Breakpoint2='C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFe.pas',564,'',0,1,'',1,0,0,'',1,'','',''
 Breakpoint3='C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFe.pas',737,'',0,1,'',1,0,0,'',1,'','',''
-Breakpoint4='E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas',4889,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint4='E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas',4892,'',0,1,'',1,0,0,'',1,'','',''
 
 [AddressBreakpoints]
 Count=0
@@ -314,8 +314,8 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=Caption
-ExpandedItems=
+SelectedItem=Name
+ExpandedItems=Anchors
 HiddenCategories=
 
 [ObjectTree]
@@ -386,13 +386,13 @@ Dockable=1
 Create=1
 Visible=0
 State=0
-Left=-10
-Top=-713
-Width=443
+Left=12
+Top=0
+Width=1690
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=443
+ClientWidth=1690
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443

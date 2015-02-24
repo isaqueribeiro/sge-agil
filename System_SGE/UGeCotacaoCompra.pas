@@ -1176,8 +1176,8 @@ begin
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger);
   AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
 
-  if ( IbDtstTabelaSTATUS.AsInteger <> STATUS_AUTORIZACAO_AUT ) then
-    ShowInformation('Apenas registros autorizados podem ser cancelados!')
+  if ( IbDtstTabelaSTATUS.AsInteger <> STATUS_COTACAO_COT ) then
+    ShowInformation('Apenas registros em cotação podem ser cancelados!')
   else
   if ( CancelarCOT(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODIGO.Value) ) then
     with IbDtstTabela do
@@ -1279,7 +1279,7 @@ begin
       if dbNumero.Focused then
         if ( Length(Trim(dbNumero.Text)) > 0 ) then
           if GetExisteNumeroCotacao(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger, Trim(dbNumero.Text), sControle) then
-            ShowWarning('Número de cotaçaõ já existe!' + #13 + 'Controle: ' + sControle);
+            ShowWarning('Número de cotação já existe!' + #13 + 'Controle: ' + sControle);
 
       { DONE -oIsaque -cAutorizacao : 22/05/2014 - Verificar Data de Emissão da Autorização }
 

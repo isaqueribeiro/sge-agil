@@ -326,6 +326,7 @@ var
   function GetExisteCPF_CNPJ(iCodigoCliente : Integer; sCpfCnpj : String; var iCodigo : Integer; var sRazao : String) : Boolean;
   function GetExisteNumeroAutorizacao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetExisteNumeroCotacao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
+  function GetExisteNumeroSolicitacao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetExisteNumeroRequisicao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetExisteNumeroApropriacao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetExisteNumeroRequisicaoAlmox(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
@@ -2575,6 +2576,33 @@ begin
     SQL.Add('  and (not (');
     SQL.Add('           a.ano    = ' + IntToStr(iAno));
     SQL.Add('       and a.codigo = ' + IntToStr(iCodigo));
+    SQL.Add('  ))');
+    Open;
+
+    Result := (FieldByName('codigo').AsInteger > 0);
+
+    if Result then
+      sControleInterno := Trim(FieldByName('ano').AsString) + '/' + FormatFloat('###0000000', FieldByName('codigo').AsInteger);
+
+    Close;
+  end;
+end;
+
+function GetExisteNumeroSolicitacao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select');
+    SQL.Add('    s.ano');
+    SQL.Add('  , s.codigo');
+    SQL.Add('  , s.numero');
+    SQL.Add('from TBSOLICITACAO s');
+    SQL.Add('where s.Numero  = ' + QuotedStr(Trim(sNumero)));
+    SQL.Add('  and (not (');
+    SQL.Add('           s.ano    = ' + IntToStr(iAno));
+    SQL.Add('       and s.codigo = ' + IntToStr(iCodigo));
     SQL.Add('  ))');
     Open;
 

@@ -952,6 +952,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           ReadOnly = True
           ShowHint = True
           TabOrder = 11
+          OnButtonClick = dbCentroCustoSelecionar
         end
       end
       object pgcMaisDados: TPageControl
@@ -994,6 +995,9 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         Align = alTop
         Caption = 'Dados do produto/servi'#231'o'
         TabOrder = 1
+        DesignSize = (
+          1108
+          116)
         object lblProduto: TLabel
           Left = 88
           Top = 24
@@ -1053,6 +1057,22 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           Height = 13
           Caption = 'Departamento / Centro de Custo:'
           FocusControl = dbCentroCustoItem
+        end
+        object lblProdutoNaoCadastrado: TLabel
+          Left = 904
+          Top = 96
+          Width = 194
+          Height = 13
+          Alignment = taRightJustify
+          Anchors = [akRight, akBottom]
+          Caption = '* Produto/Servi'#231'o n'#227'o cadastrado'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
         end
         object dbProduto: TRxDBComboEdit
           Left = 88
@@ -1143,6 +1163,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
+          MaxLength = 250
           ParentFont = False
           TabOrder = 2
         end
@@ -1530,6 +1551,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           ReadOnly = True
           ShowHint = True
           TabOrder = 4
+          OnButtonClick = dbCentroCustoSelecionar
         end
       end
       object dbgProdutos: TDBGrid
@@ -3792,7 +3814,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     AutoEdit = False
     DataSet = cdsTabelaItens
     OnStateChange = DtSrcTabelaItensStateChange
-    OnDataChange = DtSrcTabelaItensDataChange
     Left = 744
     Top = 464
   end

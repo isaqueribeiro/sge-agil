@@ -5679,7 +5679,6 @@ object frmPrinc: TfrmPrinc
       Index = 2
     end
     object RbnTabMovimento: TdxRibbonTab
-      Active = True
       Caption = 'Movimenta'#231#227'o'
       Groups = <
         item
@@ -5694,6 +5693,7 @@ object frmPrinc: TfrmPrinc
       Index = 3
     end
     object RbnTabNota: TdxRibbonTab
+      Active = True
       Caption = 'Notas Fiscais (NF-e)'
       Groups = <>
       Index = 4
@@ -10963,8 +10963,10 @@ object frmPrinc: TfrmPrinc
       'Produtos e Servi'#231'os'
       'Movimento'
       'Compras'
-      'Estoque')
+      'Estoque'
+      'Notas Fiscais')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
@@ -10976,6 +10978,7 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -11842,24 +11845,43 @@ object frmPrinc: TfrmPrinc
       Visible = ivAlways
       ButtonStyle = bsDropDown
       DropDownMenu = BrPpRequisicaoAlmox
+      LargeImageIndex = 34
+      HotImageIndex = 34
+      SyncImageIndex = False
+      ImageIndex = 34
     end
     object BrBtnRequisicaoAlmox: TdxBarLargeButton
       Caption = 'Requisi'#231#245'es de Materiais/Produtos'
       Category = 9
       Hint = 'Requisi'#231#245'es de Materiais/Produtos'
       Visible = ivAlways
+      LargeImageIndex = 34
+      OnClick = nmRequisicaoAlmoxClick
+      HotImageIndex = 34
+      SyncImageIndex = False
+      ImageIndex = 34
     end
     object BrBtnRequisicaoAlmoxMonitor: TdxBarLargeButton
       Caption = 'Monitorar Requisi'#231#245'es ao Estoque'
       Category = 9
       Hint = 'Monitorar Requisi'#231#245'es ao Estoque'
       Visible = ivAlways
+      LargeImageIndex = 35
+      OnClick = nmRequisicaoAlmoxMonitorClick
+      HotImageIndex = 35
+      SyncImageIndex = False
+      ImageIndex = 35
     end
     object BrBtnInventarioProduto: TdxBarLargeButton
       Caption = 'Invent'#225'rio de Materiais/Produtos'
       Category = 9
       Hint = 'Invent'#225'rio de Materiais/Produtos'
       Visible = ivAlways
+      LargeImageIndex = 36
+      OnClick = nmInventarioMaterialClick
+      HotImageIndex = 36
+      SyncImageIndex = False
+      ImageIndex = 36
     end
   end
   object BrPpEntrada: TdxBarPopupMenu

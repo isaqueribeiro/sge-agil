@@ -49,6 +49,16 @@ const
   SYS_KEY_S = 83;
   SYS_KEY_T = 84;
 
+  // Indices de Imagens no ImageList de Recursos (ImgPrincipal16x16, ImgPrincipalEnabled, ...)
+
+  IMG_IDX_SOLICITACAO_COMPRA = 30;
+  IMG_IDX_REQUISICAO_COMPRA  = 31;
+  IMG_IDX_AUTORIZACAO_COMPRA = 32;
+  IMG_IDX_SERVICO            = 33;
+  IMG_IDX_REQUISICAO_ALMOX   = 34;
+  IMG_IDX_REQUISICAO_MONITOR = 35;
+  IMG_IDX_INVENTARIO_PRODUTO = 36;
+
   // Constantes FR3
 
   CATEGORY_VAR = 'Local';
