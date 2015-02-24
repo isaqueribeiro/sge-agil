@@ -123,6 +123,8 @@ type
     cdsTabelaItensCENTRO_CUSTO_NOME: TIBStringField;
     lblCentroCustoItem: TLabel;
     dbCentroCustoItem: TRxDBComboEdit;
+    lblProdutoNaoCadastrado: TLabel;
+    procedure dbCentroCustoSelecionar(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
@@ -153,17 +155,14 @@ type
     procedure IbDtstTabelaSTATUSGetText(Sender: TField; var Text: String;
       DisplayText: Boolean);
     procedure btnFinalizarSolicitacaoClick(Sender: TObject);
-    procedure DtSrcTabelaItensDataChange(Sender: TObject; Field: TField);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure IbDtstTabelaTIPOGetText(Sender: TField; var Text: String;
       DisplayText: Boolean);
     procedure FormShow(Sender: TObject);
     procedure IbDtstTabelaAfterScroll(DataSet: TDataSet);
-    procedure dtsFornecedorStateChange(Sender: TObject);
     procedure qryFornecedorVENCEDORGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
-    procedure dbgFornecedorDblClick(Sender: TObject);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -175,21 +174,17 @@ type
     procedure HabilitarDesabilitar_Btns;
     procedure RecarregarRegistro;
     procedure SetEventoLOG(sEvento : String);
-    procedure SetCotacaoFornecedorItem;
-    procedure SetCotacaoFornecedorProcessa(Empresa : String; Ano : Smallint; Codigo : Integer);
 
     function GetRotinaFinalizarID : String;
-    function GetRotinaAutorizarID : String;
-    function GetRotinaCancelarCotacaoID : String;
-    function GetRotinaManterFornecedorID : String;
+    function GetRotinaAprovarID : String;
+    function GetRotinaCancelarSolicitacaoID : String;
 
     procedure RegistrarNovaRotinaSistema;
   public
     { Public declarations }
     property RotinaFinalizarID : String read GetRotinaFinalizarID;
-    property RotinaAutorizarID : String read GetRotinaAutorizarID;
-    property RotinaCancelarCotacaoID : String read GetRotinaCancelarCotacaoID;
-    property RotinaManterFornecedorID : String read GetRotinaManterFornecedorID;
+    property RotinaAprovarID   : String read GetRotinaAprovarID;
+    property RotinaCancelarSolicitacaoID : String read GetRotinaCancelarSolicitacaoID;
   end;
 
 var
@@ -204,7 +199,7 @@ implementation
 
 uses
   DateUtils, SysConst, UConstantesDGE, UDMBusiness, UDMNFe, UGeProduto,
-  UGeSolicitacaoCompraCancelar;
+  UGeCentroCusto, UGeSolicitacaoCompraCancelar;
 
 {$R *.dfm}
 
@@ -402,7 +397,7 @@ begin
     btnAprovarSolicitacao.Enabled   := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN]) and (not cdsTabelaItens.IsEmpty);
     btnCancelarSolicitacao.Enabled  := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
 
-    nmImprimirSolicitacao.Enabled   := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR) or (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
+    nmImprimirSolicitacao.Enabled   := (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
   end
   else
   begin
@@ -410,7 +405,7 @@ begin
     btnAprovarSolicitacao.Enabled   := False;
     btnCancelarSolicitacao.Enabled  := False;
 
-    nmImprimirSolicitacao.Enabled   := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR) or (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
+    nmImprimirSolicitacao.Enabled   := (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
   end;
 end;
 
@@ -473,7 +468,11 @@ begin
     inherited;
 
     if ( not OcorreuErro ) then
+    begin
+      IbDtstTabelaSTATUS.AsInteger := STATUS_SOLICITACAO_EDC;
+      dbEventoLOG.Lines.Add(FormatDateTime('dd/mm/yyyy hh:mm:ss - ', GetDateTimeDB) + 'Solicitação reaberta para edição por ' + gUsuarioLogado.Login);
       AbrirTabelaItens( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
+    end;
   end;
 end;
 
@@ -519,10 +518,11 @@ procedure TfrmGeSolicitacaoCompra.btnProdutoInserirClick(Sender: TObject);
 var
   Sequencial : Integer;
 begin
-  if ( Trim(IbDtstTabelaDESCRICAO_RESUMO.AsString) = EmptyStr ) then
+  if ( Trim(IbDtstTabelaOBJETO_SOLICITACAO.AsString) = EmptyStr ) then
   begin
-    ShowWarning('Favor informar uma descrição resumo para a solicitação!');
-    dbDescricao.SetFocus;
+    ShowWarning('Favor informar uma breve descrição sobre o objeto da solicitação!');
+    PgcTextoSolicitacao.ActivePage := TbsSolicitacaoObjeto;
+    dbObjeto.SetFocus;
   end
   else
   if ( cdsTabelaItens.Active ) then
@@ -564,39 +564,25 @@ begin
 end;
 
 procedure TfrmGeSolicitacaoCompra.btnProdutoSalvarClick(Sender: TObject);
-
-  procedure GetToTais(var Total_Referencia : Currency);
-  var
-    Item : Integer;
-  begin
-    Item := cdsTabelaItensSEQ.AsInteger;
-
-    Total_Referencia := 0.0;
-
-    cdsTabelaItens.First;
-
-    while not cdsTabelaItens.Eof do
-    begin
-      Total_Referencia := Total_Referencia + cdsTabelaItensVALOR_TOTAL_REF.AsCurrency;
-
-      cdsTabelaItens.Next;
-    end;
-
-    cdsTabelaItens.Locate('SEQ', Item, []);
-  end;
-
-var
-  cTotalReferencia ,
-  cTotalMaxBruto   ,
-  cTotalMinBruto   ,
-  cTotalMediaBruto : Currency;
 begin
   if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
   begin
-    if ( Trim(cdsTabelaItensPRODUTO.AsString) = EmptyStr ) then
+    if ( Trim(cdsTabelaItensITEM_CODIGO.AsString) = EmptyStr ) then
     begin
-      ShowWarning('Favor informar o código do produto.');
+      ShowWarning('Favor informar o código do produto/serviço.');
       dbProduto.SetFocus;
+    end
+    else
+    if ( Trim(cdsTabelaItensITEM_DESCRICAO.AsString) = EmptyStr ) then
+    begin
+      ShowWarning('Favor informar a descrição do produto/serviço.');
+      dbProdutoNome.SetFocus;
+    end
+    else
+    if ( cdsTabelaItensUNIDADE.AsInteger = 0 ) then
+    begin
+      ShowWarning('Favor selecionar a unidade de medida do produto/serviço.');
+      dbUnidade.SetFocus;
     end
     else
     if ( cdsTabelaItensQUANTIDADE.AsCurrency < 0 ) then
@@ -604,20 +590,10 @@ begin
       ShowWarning('Quantidade inválida.');
       dbQuantidade.SetFocus;
     end
-//    else
-//    if ( (cdsTabelaItensIPI_PERCENTUAL.AsCurrency < 0) or (cdsTabelaItensIPI_PERCENTUAL.AsCurrency > 100) ) then
-//    begin
-//      ShowWarning('Percentual do IPI inválido.');
-//      dbPercentualIPI.SetFocus;
-//    end
     else
     begin
 
       cdsTabelaItens.Post;
-
-      GetToTais(cTotalReferencia);
-
-      IbDtstTabelaVALOR_REF_TOTAL.AsCurrency := cTotalReferencia;
 
       if ( btnProdutoInserir.Visible and btnProdutoInserir.Enabled ) then
         btnProdutoInserir.SetFocus;
@@ -632,23 +608,15 @@ begin
   inherited;
   cdsTabelaItensANO.Value        := IbDtstTabelaANO.Value;
   cdsTabelaItensCODIGO.Value     := IbDtstTabelaCODIGO.Value;
-  cdsTabelaItensEMPRESA.Value    := IbDtstTabelaEMPRESA.Value;
   cdsTabelaItensQUANTIDADE.Value := 1;
-  cdsTabelaItensVALOR_UNITARIO_REF.AsCurrency := 0.0;
-  cdsTabelaItensVALOR_TOTAL_REF.AsCurrency    := 0.0;
-  cdsTabelaItensUSUARIO.Value                 := GetUserApp;
+  cdsTabelaItensUSUARIO.Value    := gUsuarioLogado.Login;
+  cdsTabelaItensITEM_CADASTRADO.Value := 0;
 
-  cdsTabelaItensVALOR_UNITARIO_MAX.AsCurrency   := 0.0;
-  cdsTabelaItensVALOR_UNITARIO_MIN.AsCurrency   := 0.0;
-  cdsTabelaItensVALOR_UNITARIO_MEDIA.AsCurrency := 0.0;
-  cdsTabelaItensVALOR_TOTAL_MAX.AsCurrency      := 0.0;
-  cdsTabelaItensVALOR_TOTAL_MIN.AsCurrency      := 0.0;
-  cdsTabelaItensVALOR_TOTAL_MEDIA.AsCurrency    := 0.0;
+  cdsTabelaItensCENTRO_CUSTO.Assign( IbDtstTabelaCENTRO_CUSTO );
+  cdsTabelaItensCENTRO_CUSTO_NOME.Assign( IbDtstTabelaCENTRO_CUSTO_NOME );
 
-  cdsTabelaItensPRODUTO.Clear;
-  cdsTabelaItensDESCRI_APRESENTACAO.Clear;
-  cdsTabelaItensUNIDADE.Clear;
-  cdsTabelaItensUNP_SIGLA.Clear;
+  cdsTabelaItensITEM_CODIGO.Clear;
+  cdsTabelaItensITEM_DESCRICAO.Clear;
 end;
 
 procedure TfrmGeSolicitacaoCompra.btnAprovarSolicitacaoClick(
@@ -660,48 +628,40 @@ begin
   RecarregarRegistro;
 
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger);
-  AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
 
-  if not (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_COT) then
-    ShowInformation('Apenas cotações que já possuem respostas de fornecedores poder ser autorizadas/encerradas!')
+  if not (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_FIN) then
+    ShowInformation('Apenas solicitações finalizadas/encerradas podem sem aprovadas!')
   else
-  if (qryFornecedor.RecordCount < IbDtstTabelaNUMERO_MINIMO_FORNECEDOR.Value) then
-    ShowInformation(
-      Format('Para que a solicitação possa ser autorizada/encerrada, esta deve possuir respostas de, no mínimo, %s fornecedor(es).',
-        [IbDtstTabelaNUMERO_MINIMO_FORNECEDOR.AsString]))
-  else
-  if ( ShowConfirm('Confirma a autorização do solicitação selecionada?') ) then
+  if ( ShowConfirm('Confirma a aprovação do solicitação selecionada?') ) then
   begin
     IbDtstTabela.Edit;
 
-    IbDtstTabelaSTATUS.Value             := STATUS_SOLICITACAO_ENC;
-    IbDtstTabelaAUTORIZADA_DATA.Value    := GetDateDB;
-    IbDtstTabelaAUTORIZADA_USUARIO.Value := GetUserApp;
+    dbEventoLOG.Lines.Add(FormatDateTime('dd/mm/yyyy hh:mm:ss - ', GetDateTimeDB) + 'Solicitação aprovada por ' + gUsuarioLogado.Login);
+    IbDtstTabelaSTATUS.Value            := STATUS_SOLICITACAO_APR;
+    IbDtstTabelaAPROVACAO_DATA.Value    := GetDateDB;
+    IbDtstTabelaAPROVACAO_USUARIO.Value := gUsuarioLogado.Login;
 
     IbDtstTabela.Post;
     IbDtstTabela.ApplyUpdates;
 
     CommitTransaction;
 
-    ShowInformation('solicitação Autorizada/Encerrada realizada com sucesso !' + #13#13 + 'Ano/Número: ' + IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger));
+    ShowInformation('Solicitação aprovada realizada com sucesso !' + #13#13 + 'Ano/Número: ' + IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger));
 
     HabilitarDesabilitar_Btns;
 
-    RdgStatusCotacao.ItemIndex := 0;
+    RdgStatusSolicitacao.ItemIndex := 0;
   end;
 end;
 
 procedure TfrmGeSolicitacaoCompra.DtSrcTabelaStateChange(Sender: TObject);
 begin
   inherited;
-  pgcMaisDados.ActivePageIndex := 0;
-  PgcTextoCotacao.ActivePage   := TbsCotacaoMotivo;
+  pgcMaisDados.ActivePageIndex   := 0;
+  PgcTextoSolicitacao.ActivePage := TbsSolicitacaoObjeto;
 
-  DtSrcTabelaItens.AutoEdit := DtSrcTabela.AutoEdit and (IbDtstTabelaSTATUS.AsInteger < STATUS_SOLICITACAO_ENC );
+  DtSrcTabelaItens.AutoEdit := DtSrcTabela.AutoEdit and (IbDtstTabelaSTATUS.AsInteger < STATUS_SOLICITACAO_APR );
   DtSrcTabelaItensStateChange( DtSrcTabelaItens );
-
-  dtsFornecedor.AutoEdit := (not IbDtstTabela.IsEmpty) and (IbDtstTabela.State = dsBrowse) and (IbDtstTabelaSTATUS.AsInteger < STATUS_SOLICITACAO_ENC);
-  dtsFornecedorStateChange( dtsFornecedor );
 end;
 
 procedure TfrmGeSolicitacaoCompra.DtSrcTabelaItensStateChange(
@@ -721,21 +681,20 @@ procedure TfrmGeSolicitacaoCompra.pgcGuiasChange(Sender: TObject);
 begin
   inherited;
   AbrirTabelaItens( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-  AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
 
-  pgcMaisDados.ActivePage := tbsDadoConsolidado;
+  pgcMaisDados.ActivePage := tbsEventoLOG;
   HabilitarDesabilitar_Btns;
 end;
 
 procedure TfrmGeSolicitacaoCompra.btnFiltrarClick(Sender: TObject);
 begin
-  WhereAdditional := IfThen(iFornecedor = 0, '', '(a.fornecedor = ' + IntToStr(iFornecedor) + ') and ') + 
-    'cast(c.emissao_data as date) between ' +
+  WhereAdditional := IfThen(iCentroCusto = 0, '', '(s.centro_custo = ' + IntToStr(iCentroCusto) + ') and ') +
+    'cast(s.data_emissao as date) between ' +
                        QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
                        QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
 
-  if ( RdgStatusCotacao.ItemIndex > 0 ) then
-    WhereAdditional := WhereAdditional + ' and (c.status = ' + IntToStr(RdgStatusCotacao.ItemIndex - 1) + ')';
+  if ( RdgStatusSolicitacao.ItemIndex > 0 ) then
+    WhereAdditional := WhereAdditional + ' and (s.status = ' + IntToStr(RdgStatusSolicitacao.ItemIndex - 1) + ')';
 
   inherited;
 end;
@@ -761,9 +720,11 @@ begin
 
       if not IsEmpty then
       begin
-        cdsTabelaItensPRODUTO.AsString             := FieldByName('cod').AsString;
-        cdsTabelaItensDESCRI_APRESENTACAO.AsString := FieldByName('descri_apresentacao').AsString;
-        cdsTabelaItensUNP_SIGLA.AsString           := FieldByName('Unp_sigla').AsString;
+        cdsTabelaItensITEM_CODIGO.AsString      := FieldByName('cod').AsString;
+        cdsTabelaItensITEM_DESCRICAO.AsString   := FieldByName('descri_apresentacao').AsString;
+        cdsTabelaItensUNP_DESCRICAO.AsString    := FieldByName('Unp_descricao').AsString;
+        cdsTabelaItensITEM_CADASTRADO.AsInteger := 1;
+
 
         if ( FieldByName('Codunidade').AsInteger > 0 ) then
           cdsTabelaItensUNIDADE.AsInteger := FieldByName('Codunidade').AsInteger;
@@ -771,9 +732,7 @@ begin
       else
       begin
         ShowWarning('Código de produto não cadastrado!');
-        cdsTabelaItensPRODUTO.Clear;
-        if ( dbProduto.Visible and dbProduto.Enabled ) then
-          dbProduto.SetFocus;
+        cdsTabelaItensITEM_CODIGO.Clear;
       end;
     end;
   end;
@@ -784,7 +743,6 @@ procedure TfrmGeSolicitacaoCompra.IbDtstTabelaAfterCancel(
 begin
   inherited;
   AbrirTabelaItens( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-  AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
 end;
 
 procedure TfrmGeSolicitacaoCompra.btbtnSalvarClick(Sender: TObject);
@@ -812,6 +770,7 @@ begin
       Abort;
     end;
 
+    IbDtstTabelaSTATUS.AsInteger    := STATUS_SOLICITACAO_ABR;
     IbDtstTabelaMOVITO.AsString     := Trim(AnsiUpperCase(IbDtstTabelaMOVITO.AsString));
     IbDtstTabelaOBSERVACAO.AsString := Trim(AnsiUpperCase(IbDtstTabelaOBSERVACAO.AsString));
 
@@ -835,9 +794,6 @@ begin
       IbDtstTabela.Locate(GetCampoCodigoLimpo, iCodigo, []);
 
       AbrirTabelaItens( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-      AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
-
-      SetCotacaoFornecedorItem;
     end;
 
     HabilitarDesabilitar_Btns;
@@ -850,20 +806,13 @@ begin
 
   if ( Sender = dbDataEmissao ) then
     if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
-      IbDtstTabelaVALIDADE.Value := IbDtstTabelaEMISSAO_DATA.Value + GetPrazoValidadeCotacaoCompra(IbDtstTabelaEMPRESA.AsString);
+      IbDtstTabelaVALIDADE.Value := IbDtstTabelaDATA_EMISSAO.Value + GetPrazoValidadeCotacaoCompra(IbDtstTabelaEMPRESA.AsString);
 
   if ( Sender = dbProduto ) then
     if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
-      CarregarDadosProduto( StrToIntDef(cdsTabelaItensPRODUTO.AsString, 0) );
+      CarregarDadosProduto( StrToIntDef(cdsTabelaItensITEM_CODIGO.AsString, 0) );
 
-  if ( (Sender = dbQuantidade) or (Sender = dbValorUn) ) then
-    if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
-    begin
-      cdsTabelaItensVALOR_TOTAL_REF.AsCurrency := cdsTabelaItensQUANTIDADE.AsCurrency * cdsTabelaItensVALOR_UNITARIO_REF.AsCurrency;
-      
-    end;
-
-  if ( Sender = dbValorTotal ) then
+  if ( Sender = dbQuantidade ) then
     if ( btnProdutoSalvar.Visible and btnProdutoSalvar.Enabled ) then
       btnProdutoSalvar.SetFocus;
 end;
@@ -883,35 +832,26 @@ begin
   begin
     // Destacar solicitação em edição
     if ( IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_EDC ) then
-      dbgDados.Canvas.Brush.Color := lblCotacaoEmEdicao.Color
+      dbgDados.Canvas.Brush.Color := lblSolicitacaoEmEdicao.Color
     else
     // Destacar solicitação aberta
     if ( IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_ABR ) then
-      dbgDados.Canvas.Font.Color := lblCotacaoAberta.Font.Color
+      dbgDados.Canvas.Font.Color := lblSolicitacaoAberta.Font.Color
     else
     // Destacar solicitação cancelada
     if ( IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_CAN ) then
-      dbgDados.Canvas.Font.Color := lblCotacaoCancelada.Font.Color;
+      dbgDados.Canvas.Font.Color := lblSolicitacaoCancelada.Font.Color;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end
   else
-  // Destacar produtos já em solicitação
+  // Destacar produtos já não cadastrados
   if ( Sender = dbgProdutos ) then
   begin
-//    if ( (IbDtstTabelaSTATUS.AsInteger = STATUS_AUTORIZACAO_FAT) and (cdsTabelaItensCONFIRMADO_RECEBIMENTO.AsInteger = 0) ) then
-//      dbgProdutos.Canvas.Font.Color := lblAutorizacaoCancelada.Font.Color;
-//
-//    dbgProdutos.DefaultDrawDataCell(Rect, dbgProdutos.Columns[DataCol].Field, State);
-  end
-  else
-  // Destacar fornecedores
-  if ( Sender = dbgFornecedor ) then
-  begin
-    if (qryFornecedorATIVO.AsInteger = 0) then
-      dbgFornecedor.Canvas.Font.Color := lblCotacaoCancelada.Font.Color;
+    if ( cdsTabelaItensITEM_CADASTRADO.AsInteger = 0 ) then
+      dbgProdutos.Canvas.Font.Color := lblProdutoNaoCadastrado.Font.Color;
 
-    dbgFornecedor.DefaultDrawDataCell(Rect, dbgFornecedor.Columns[DataCol].Field, State);
+    dbgProdutos.DefaultDrawDataCell(Rect, dbgProdutos.Columns[DataCol].Field, State);
   end;
 end;
 
@@ -937,10 +877,11 @@ var
   cValorIPI     ,
   cPercRedBC    : Currency;
 begin
-  if ( Trim(IbDtstTabelaDESCRICAO_RESUMO.AsString) = EmptyStr ) then
+  if ( Trim(IbDtstTabelaOBJETO_SOLICITACAO.AsString) = EmptyStr ) then
   begin
-    ShowWarning('Favor informar uma descrição resumo para a solicitação!');
-    dbDescricao.SetFocus;
+    ShowWarning('Favor informar uma breve descrição sobre o objeto da solicitação!');
+    PgcTextoSolicitacao.ActivePage := TbsSolicitacaoObjeto;
+    dbObjeto.SetFocus;
   end
   else
   if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
@@ -955,15 +896,15 @@ begin
     cPercRedBC      := 0.0;
 
     Case IbDtstTabelaTIPO.AsInteger of
-      TIPO_AUTORIZACAO_COMPRA:
+      TIPO_SOLICITACAO_COMPRA:
         bSelecionado := SelecionarProdutoParaCotacao(Self, iCodigo, sCodigoAlfa, sDescricao, sUnidade, sNCM_SH, sCST, iUnidade, iCFOP_CNAE,
                           cValorCusto, cValorVenda, cValorPromocao, cValorIPI, cPercRedBC, iEstoque, iReserva);
 
-      TIPO_AUTORIZACAO_SERVICO:
+      TIPO_SOLICITACAO_SERVICO:
         bSelecionado := SelecionarServicoParaCotacao(Self, iCodigo, sCodigoAlfa, sDescricao, sUnidade, sNCM_SH, sCST, iUnidade, iCFOP_CNAE,
                           cValorCusto, cValorVenda, cValorPromocao);
 
-      TIPO_AUTORIZACAO_COMPRA_SERVICO:
+      TIPO_SOLICITACAO_COMPRA_SERVICO:
         bSelecionado := SelecionarProdutoServicoParaCotacao(Self, iCodigo, sCodigoAlfa, sDescricao, sUnidade, sNCM_SH, sCST, iUnidade, iCFOP_CNAE,
                           cValorCusto, cValorVenda, cValorPromocao, cValorIPI, cPercRedBC, iEstoque, iReserva);
 
@@ -973,10 +914,10 @@ begin
 
     if ( bSelecionado ) then
     begin
-      cdsTabelaItensPRODUTO.AsString              := sCodigoAlfa;
-      cdsTabelaItensDESCRI_APRESENTACAO.AsString  := sDescricao;
-      cdsTabelaItensUNP_SIGLA.AsString            := sUnidade;
-      cdsTabelaItensVALOR_UNITARIO_REF.AsCurrency := cValorCusto;
+      cdsTabelaItensITEM_CODIGO.AsString      := sCodigoAlfa;
+      cdsTabelaItensITEM_DESCRICAO.AsString   := sDescricao;
+      cdsTabelaItensITEM_CADASTRADO.AsInteger := 1;
+      cdsTabelaItensUNP_DESCRICAO.AsString    := sUnidade;
 
       if ( iUnidade > 0 ) then
         cdsTabelaItensUNIDADE.AsInteger := iUnidade;
@@ -1006,7 +947,7 @@ begin
       Open;
     end;
 
-    with qryCotacaoCompra do
+    with qrySolicitacaoCompra do
     begin
       Close;
       ParamByName('ano').AsInteger := IbDtstTabelaANO.AsInteger;
@@ -1015,18 +956,7 @@ begin
       Open;
     end;
 
-    with qryCotacaoCompraFornecedor do
-    begin
-      Close;
-      ParamByName('ano').AsInteger   := IbDtstTabelaANO.AsInteger;
-      ParamByName('cod').AsInteger   := IbDtstTabelaCODIGO.AsInteger;
-      ParamByName('emp').AsString    := IbDtstTabelaEMPRESA.AsString;
-      ParamByName('frn').AsInteger   := 0;
-      ParamByName('todos').AsInteger := 0;
-      Open;
-    end;
-
-    frrCotacaoCompra.ShowReport;
+    frrSolicitacaoCompra.ShowReport;
   end;
 end;
 
@@ -1038,17 +968,16 @@ begin
 
   RecarregarRegistro;
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger);
-  AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
 
-  if ( IbDtstTabelaSTATUS.AsInteger <> STATUS_AUTORIZACAO_AUT ) then
-    ShowInformation('Apenas registros autorizados podem ser cancelados!')
+  if ( not (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]) ) then
+    ShowInformation('Apenas registros finalizados e/ou aprovados podem ser cancelados!')
   else
   if ( CancelarCOT(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODIGO.Value) ) then
     with IbDtstTabela do
     begin
       RecarregarRegistro;
 
-      ShowInformation('solicitação cancelada com sucesso.' + #13#13 + 'Ano/Controle: ' + IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger));
+      ShowInformation('Solicitação cancelada com sucesso.' + #13#13 + 'Ano/Controle: ' + IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger));
 
       HabilitarDesabilitar_Btns;
     end;
@@ -1071,25 +1000,6 @@ end;
 
 procedure TfrmGeSolicitacaoCompra.btnFinalizarSolicitacaoClick(
   Sender: TObject);
-(*
-  function QuantidadeInvalida : Boolean;
-  var
-    Return : Boolean;
-  begin
-    Return := False;
-
-    cdsTabelaItens.First;
-    while not cdsTabelaItens.Eof do
-    begin
-      Return := ( (cdsTabelaItensQUANTIDADE.AsInteger > cdsTabelaItensESTOQUE_SATELITE.AsInteger) or (cdsTabelaItensESTOQUE_SATELITE.AsInteger <= 0) );
-      if ( Return ) then
-        Break;
-      cdsTabelaItens.Next;
-    end;
-
-    Result := Return;
-  end;
-*)
 begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
@@ -1097,36 +1007,26 @@ begin
   RecarregarRegistro;
 
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger);
-  AbrirTabelaFornecedores( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger );
 
-  if ( ShowConfirm('Confirma a finalização da edição do solicitação?') ) then
+  if ( ShowConfirm('Confirma a finalização da solicitação?') ) then
   begin
     IbDtstTabela.Edit;
 
-    IbDtstTabelaSTATUS.Value := STATUS_SOLICITACAO_ABR;
+    dbEventoLOG.Lines.Add(FormatDateTime('dd/mm/yyyy hh:mm:ss - ', GetDateTimeDB) + 'Solicitação finaizada por ' + gUsuarioLogado.Login);
+
+    IbDtstTabelaSTATUS.Value := STATUS_SOLICITACAO_FIN;
 
     IbDtstTabela.Post;
     IbDtstTabela.ApplyUpdates;
 
     CommitTransaction;
 
-    ShowInformation('solicitação finalizada com sucesso !' + #13#13 + 'Ano/Número: ' + IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger));
+    ShowInformation('Solicitação finalizada com sucesso !' + #13#13 + 'Ano/Número: ' + IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger));
 
     HabilitarDesabilitar_Btns;
 
-    RdgStatusCotacao.ItemIndex := 0;
+    RdgStatusSolicitacao.ItemIndex := 0;
   end;
-end;
-
-procedure TfrmGeSolicitacaoCompra.DtSrcTabelaItensDataChange(
-  Sender: TObject; Field: TField);
-begin
-  if (cdsTabelaItens.State in [dsEdit, dsInsert]) then
-    if ( (Field = cdsTabelaItensQUANTIDADE) or (Field = cdsTabelaItensVALOR_UNITARIO_REF) ) then
-    begin
-      cdsTabelaItensVALOR_TOTAL_REF.AsCurrency := cdsTabelaItensQUANTIDADE.AsCurrency * cdsTabelaItensVALOR_UNITARIO_REF.AsCurrency;
-      
-    end;
 end;
 
 procedure TfrmGeSolicitacaoCompra.FormKeyDown(Sender: TObject;
@@ -1142,10 +1042,8 @@ begin
 
       if dbNumero.Focused then
         if ( Length(Trim(dbNumero.Text)) > 0 ) then
-          if GetExisteNumeroCotacao(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger, Trim(dbNumero.Text), sControle) then
-            ShowWarning('Número de cotaçaõ já existe!' + #13 + 'Controle: ' + sControle);
-
-      { DONE -oIsaque -cAutorizacao : 22/05/2014 - Verificar Data de Emissão da Autorização }
+          if GetExisteNumeroSolicitacao(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger, Trim(dbNumero.Text), sControle) then
+            ShowWarning('Número de solicitação já existe!' + #13 + 'Controle: ' + sControle);
 
       if dbDataEmissao.Focused then
         if ( dbDataEmissao.Date > GetDateTimeDB ) then
@@ -1174,36 +1072,33 @@ begin
     end;
 end;
 
-function TfrmGeSolicitacaoCompra.GetRotinaAutorizarID: String;
+function TfrmGeSolicitacaoCompra.GetRotinaAprovarID: String;
 begin
-  Result := GetRotinaInternaID(btnAutorizarCotacao);
+  Result := GetRotinaInternaID(btnAprovarSolicitacao);
 end;
 
-function TfrmGeSolicitacaoCompra.GetRotinaCancelarCotacaoID: String;
+function TfrmGeSolicitacaoCompra.GetRotinaCancelarSolicitacaoID: String;
 begin
-  Result := GetRotinaInternaID(btnCancelarCotacao);
+  Result := GetRotinaInternaID(btnCancelarSolicitacao);
 end;
 
 function TfrmGeSolicitacaoCompra.GetRotinaFinalizarID: String;
 begin
-  Result := GetRotinaInternaID(btnFinalizarCotacao);
+  Result := GetRotinaInternaID(btnFinalizarSolicitacao);
 end;
 
 procedure TfrmGeSolicitacaoCompra.RegistrarNovaRotinaSistema;
 begin
   if ( Trim(RotinaID) <> EmptyStr ) then
   begin
-    if btnFinalizarCotacao.Visible then
-      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaFinalizarID, btnFinalizarCotacao.Caption, RotinaID);
+    if btnFinalizarSolicitacao.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaFinalizarID, btnFinalizarSolicitacao.Caption, RotinaID);
 
-    if btnAutorizarCotacao.Visible then
-      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaAutorizarID, btnAutorizarCotacao.Caption, RotinaID);
+    if btnAprovarSolicitacao.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaAprovarID, btnAprovarSolicitacao.Caption, RotinaID);
 
-    if btnCancelarCotacao.Visible then
-      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaCancelarCotacaoID, btnCancelarCotacao.Caption, RotinaID);
-
-    if PnlFornecedor.Visible then
-      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaManterFornecedorID, PnlFornecedor.Hint, RotinaID);
+    if btnCancelarSolicitacao.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaCancelarSolicitacaoID, btnCancelarSolicitacao.Caption, RotinaID);
   end;
 end;
 
@@ -1219,22 +1114,6 @@ begin
   inherited;
   TbsSolicitacaoCancelado.TabVisible := (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_CAN);
   HabilitarDesabilitar_Btns;
-end;
-
-function TfrmGeSolicitacaoCompra.GetRotinaManterFornecedorID: String;
-begin
-  Result := GetRotinaInternaID(PnlFornecedor);
-end;
-
-procedure TfrmGeSolicitacaoCompra.dtsFornecedorStateChange(Sender: TObject);
-begin
-  btnFornecedorInserir.Enabled := ( dtsFornecedor.AutoEdit and (qryFornecedor.State = dsBrowse) );
-  btnFornecedorEditar.Enabled  := ( dtsFornecedor.AutoEdit and (qryFornecedor.State = dsBrowse) and (not qryFornecedor.IsEmpty) );
-  btnFornecedorExcluir.Enabled := ( dtsFornecedor.AutoEdit and (qryFornecedor.State = dsBrowse) and (not qryFornecedor.IsEmpty) );
-
-  BtnFornecedorOpcoes.Enabled   := ( dtsFornecedor.AutoEdit and (qryFornecedor.State = dsBrowse) and (not qryFornecedor.IsEmpty) );
-  nmGerarArquivoXLS.Enabled     := ( dtsFornecedor.AutoEdit and (qryFornecedor.State = dsBrowse) and (not qryFornecedor.IsEmpty) ) and ( IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_COT] );
-  nmProcessarArquivoXLS.Enabled := ( dtsFornecedor.AutoEdit and (qryFornecedor.State = dsBrowse) and (not qryFornecedor.IsEmpty) ) and ( IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_COT] );
 end;
 
 procedure TfrmGeSolicitacaoCompra.qryFornecedorVENCEDORGetText(Sender: TField;
@@ -1268,52 +1147,27 @@ begin
   end;
 end;
 
-procedure TfrmGeSolicitacaoCompra.dbgFornecedorDblClick(Sender: TObject);
+procedure TfrmGeSolicitacaoCompra.dbCentroCustoSelecionar(Sender: TObject);
+var
+  iCodigo  ,
+  iCliente : Integer;
+  sNome : String;
 begin
-  if ( qryFornecedor.IsEmpty ) then
-    Exit;
+  if (Sender = dbCentroCustoSolicitacao) then
+    if ( IbDtstTabela.State in [dsInsert] ) then
+      if ( SelecionarDepartamento(Self, 0, IbDtstTabelaEMPRESA.AsString, iCodigo, sNome, iCliente) ) then
+      begin
+          IbDtstTabelaCENTRO_CUSTO.AsInteger     := iCodigo;
+          IbDtstTabelaCENTRO_CUSTO_NOME.AsString := sNome;
+      end;
 
-  if CotacaoFornecedor(Self, cfoVisualizar,
-    qryFornecedorEMPRESA.Value, qryFornecedorANO.Value, qryFornecedorCODIGO.Value, qryFornecedorFORNECEDOR.Value,
-    IbDtstTabelaDESCRICAO_RESUMO.Value, EmptyStr, IbDtstTabelaEMISSAO_DATA.Value, IbDtstTabelaVALIDADE.Value) then
-end;
-
-procedure TfrmGeSolicitacaoCompra.SetCotacaoFornecedorItem;
-begin
-  qryFornecedor.First;
-
-  while not qryFornecedor.Eof do
-  begin
-    with stpSetCotacaoFornecedorItem do
-    begin
-      ParamByName('ano').AsInteger        := qryFornecedorANO.AsInteger;
-      ParamByName('codigo').AsInteger     := qryFornecedorCODIGO.AsInteger;
-      ParamByName('empresa').AsString     := qryFornecedorEMPRESA.AsString;
-      ParamByName('fornecedor').AsInteger := qryFornecedorFORNECEDOR.AsInteger;
-
-      ExecProc;
-    end;
-
-    qryFornecedor.Next;
-  end;
-  CommitTransaction;
-
-  qryFornecedor.Close;
-  qryFornecedor.Open;
-end;
-
-procedure TfrmGeSolicitacaoCompra.SetCotacaoFornecedorProcessa(Empresa: String;
-  Ano: Smallint; Codigo: Integer);
-begin
-  with stpSetCotacaoFornecedorProcessa do
-  begin
-    ParamByName('ano').AsInteger    := Ano;
-    ParamByName('codigo').AsInteger := Codigo;
-    ParamByName('empresa').AsString := Empresa;
-
-    ExecProc;
-    CommitTransaction;
-  end;
+  if (Sender = dbCentroCustoItem) then
+    if ( cdsTabelaItens.State in [dsInsert] ) then
+      if ( SelecionarDepartamento(Self, 0, IbDtstTabelaEMPRESA.AsString, iCodigo, sNome, iCliente) ) then
+      begin
+          cdsTabelaItensCENTRO_CUSTO.AsInteger     := iCodigo;
+          cdsTabelaItensCENTRO_CUSTO_NOME.AsString := sNome;
+      end;
 end;
 
 initialization
