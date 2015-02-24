@@ -21342,7 +21342,6 @@ object frmPrinc: TfrmPrinc
       True
       True
       True)
-    ImageOptions.DisabledImages = DMRecursos.ImgPrincipalDisabled
     ImageOptions.DisabledLargeImages = DMRecursos.ImgPrincipalDisabled
     ImageOptions.HotImages = DMRecursos.ImgPrincipalHot
     ImageOptions.Images = DMRecursos.ImgPrincipal16x16
