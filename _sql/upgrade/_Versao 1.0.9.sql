@@ -11693,3 +11693,167 @@ ADD CONSTRAINT FK_TBINVENTARIO_ALMOX_CNT
 FOREIGN KEY (CENTRO_CUSTO)
 REFERENCES TBCENTRO_CUSTO(CODIGO);
 
+
+
+
+/*------ SYSDBA 24/02/2015 10:22:26 --------*/
+
+ALTER TABLE TBVENDAS
+    ADD CAIXA_ANO DMN_SMALLINT_N,
+    ADD CAIXA_NUM DMN_INTEGER_N;
+
+COMMENT ON COLUMN TBVENDAS.CAIXA_ANO IS
+'Ano do Caixa de movimento.';
+
+COMMENT ON COLUMN TBVENDAS.CAIXA_NUM IS
+'Numero do Caixa de movimento.';
+
+
+
+
+/*------ SYSDBA 24/02/2015 10:23:00 --------*/
+
+ALTER TABLE TBVENDAS
+ADD CONSTRAINT FK_TBVENDAS_CAIXA
+FOREIGN KEY (CAIXA_ANO,CAIXA_NUM)
+REFERENCES TBCAIXA(ANO,NUMERO);
+
+
+
+
+/*------ SYSDBA 24/02/2015 12:00:14 --------*/
+
+ALTER TABLE TBVENDAS
+    ADD CAIXA_PDV DMN_LOGICO DEFAULT 1;
+
+COMMENT ON COLUMN TBVENDAS.CAIXA_PDV IS
+'Movimento de caixa finalizado no PDV:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 24/02/2015 12:02:10 --------*/
+
+CREATE INDEX IDX_TBVENDAS_CAIXA_PDV
+ON TBVENDAS (CAIXA_PDV);
+
+
+
+
+/*------ SYSDBA 24/02/2015 12:02:29 --------*/
+
+ALTER TABLE TBVENDAS ADD IBE$$TEMP_COLUMN
+ SMALLINT DEFAULT 0
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'TBVENDAS') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'TBVENDAS') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'TBVENDAS') AND
+      (F1.RDB$FIELD_NAME = 'CAIXA_PDV');
+
+ALTER TABLE TBVENDAS DROP IBE$$TEMP_COLUMN;
+
+
+
+
+/*------ SYSDBA 24/02/2015 14:32:38 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_vendas_caixa for tbvendas
+active before insert or update position 6
+AS
+begin
+  new.caixa_pdv = coalesce(new.caixa_pdv, 0);
+
+  if (not exists(
+    Select
+      c.ano
+    from TBCAIXA c
+    where c.ano    = new.caixa_ano
+      and c.numero = new.caixa_num
+  )) then
+  begin
+    new.caixa_ano = null;
+    new.caixa_num = null;
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 24/02/2015 14:33:56 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_vendas_caixa for tbvendas
+active before insert or update position 6
+AS
+begin
+  new.caixa_pdv = coalesce(new.caixa_pdv, 0);
+
+  if (not exists(
+    Select
+      c.ano
+    from TBCAIXA c
+    where c.ano    = new.caixa_ano
+      and c.numero = new.caixa_num
+  )) then
+  begin
+    new.caixa_ano = null;
+    new.caixa_num = null;
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_VENDAS_CAIXA IS 'Trigger Identificar Caixa PDV (Venda).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   24/02/2015
+
+Trigger responsavel por manter a integridades de dados en relacao ao caixa do PDV.';
+
+
+
+
+/*------ SYSDBA 24/02/2015 14:35:54 --------*/
+
+COMMENT ON TABLE TBVENDAS IS 'Tabela Vendas
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar todos os registros de vendas realizados pelo sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    20/08/2014 - IMR:
+        + Criacao do campo DESCONTO_CUPOM para armazenar o valor de desconto concedido no PDV (Novo sistema em
+          desenvolvimento).
+
+    04/09/2014 - IMR:
+        + Criacao dos campos NFE_DENEGADA e NFE_DENEGADA_MOTIVO para sinalizar as NF-e que foram denegadas na SEFA e
+          armazenar o motivo da denegacao.
+
+    24/02/2015 - IMR:
+        + Criacao dos campos CAIXA_ANO, CAIXA_NUM e CAIXA_PDV para facilitar a identificacao de vendas realizadas, mas
+          que ainda nao geraram movimentacao de caixa, nos caixas do usuarios.';
+

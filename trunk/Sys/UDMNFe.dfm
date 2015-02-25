@@ -263,6 +263,12 @@ object DMNFe: TDMNFe
       '  , r.Valorrec'
       '  , r.Valormulta'
       '  , r.Percentdesconto'
+      '  , r.valorrectot'
+      '  , r.valorsaldo'
+      '  , r.historic'
+      '  , r.tippag'
+      '  , r.baixado'
+      '  , r.dtrec '
       'from TBCONTREC r'
       'where r.Anovenda = :AnoVenda'
       '  and r.Numvenda = :NumVenda')
@@ -320,6 +326,38 @@ object DMNFe: TDMNFe
       Origin = 'TBCONTREC.PERCENTDESCONTO'
       Precision = 9
       Size = 2
+    end
+    object qryDuplicatasVALORRECTOT: TIBBCDField
+      FieldName = 'VALORRECTOT'
+      Origin = '"TBCONTREC"."VALORRECTOT"'
+      Precision = 18
+      Size = 2
+    end
+    object qryDuplicatasVALORSALDO: TIBBCDField
+      FieldName = 'VALORSALDO'
+      Origin = '"TBCONTREC"."VALORSALDO"'
+      Precision = 18
+      Size = 2
+    end
+    object qryDuplicatasHISTORIC: TMemoField
+      FieldName = 'HISTORIC'
+      Origin = '"TBCONTREC"."HISTORIC"'
+      ProviderFlags = [pfInUpdate]
+      BlobType = ftMemo
+      Size = 8
+    end
+    object qryDuplicatasTIPPAG: TIBStringField
+      FieldName = 'TIPPAG'
+      Origin = '"TBCONTREC"."TIPPAG"'
+      Size = 35
+    end
+    object qryDuplicatasBAIXADO: TSmallintField
+      FieldName = 'BAIXADO'
+      Origin = '"TBCONTREC"."BAIXADO"'
+    end
+    object qryDuplicatasDTREC: TDateField
+      FieldName = 'DTREC'
+      Origin = '"TBCONTREC"."DTREC"'
     end
   end
   object qryDadosProduto: TIBQuery
@@ -853,6 +891,20 @@ object DMNFe: TDMNFe
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
+      
+        'procedure bndReportSummaryOnAfterCalcHeight(Sender: TfrxComponen' +
+        't);'
+      'begin'
+      
+        '  mmTextoAutorizacao.Visible := (<frdVenda."STATUS"> = 1) or (<f' +
+        'rdVenda."STATUS"> = 2); // Em Antendimento, Or'#231'amento           ' +
+        '                                    '
+      
+        '  subRptTitulos.Visible      := (<frdVenda."STATUS"> = 3) or (<f' +
+        'rdVenda."STATUS"> = 4); // Finalizada, NF-e                     ' +
+        '                      '
+      'end;'
+      ''
       'begin'
       ''
       'end.')
@@ -883,13 +935,21 @@ object DMNFe: TDMNFe
         DataSet = frdVenda
         DataSetName = 'frdVenda'
       end>
-    Variables = <>
+    Variables = <
+      item
+        Name = ' Local'
+        Value = Null
+      end
+      item
+        Name = 'Descontos'
+        Value = '<frdVenda."DESCONTO">+<frdVenda."DESCONTO_CUPOM">'
+      end>
     Style = <>
     object Data: TfrxDataPage
       Height = 1000.000000000000000000
       Width = 1000.000000000000000000
     end
-    object Page1: TfrxReportPage
+    object PgVenda: TfrxReportPage
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -995,7 +1055,7 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
-            '[frdEmpresa."RZSOC"]')
+            '[frdEmpresa."NMFANT"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1082,7 +1142,10 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1265,7 +1328,7 @@ object DMNFe: TDMNFe
       end
       object bndPageFooter: TfrxPageFooter
         Height = 22.677180000000000000
-        Top = 710.551640000000000000
+        Top = 725.669760000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           Left = 566.929500000000000000
@@ -1617,9 +1680,10 @@ object DMNFe: TDMNFe
         end
       end
       object bndReportSummary: TfrxReportSummary
-        Height = 332.598640000000000000
+        Height = 347.716760000000000000
         Top = 355.275820000000000000
         Width = 718.110700000000000000
+        OnAfterCalcHeight = 'bndReportSummaryOnAfterCalcHeight'
         object SysMemo1: TfrxSysMemoView
           Left = 623.622450000000000000
           Width = 94.488250000000000000
@@ -1742,7 +1806,7 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8 = (
-            ' [frdVenda."LISTA_COND_PAGO"]')
+            ' [frdVenda."LISTA_COND_PAGO_FULL"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1813,7 +1877,7 @@ object DMNFe: TDMNFe
           Font.Style = [fsBold]
           HAlign = haRight
           Memo.UTF8 = (
-            '[FormatFloat('#39',0.00'#39',<frdVenda."DESCONTO">)] ')
+            '[FormatFloat('#39',0.00'#39',<Descontos>)] ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1909,7 +1973,7 @@ object DMNFe: TDMNFe
         end
         object Memo42: TfrxMemoView
           Left = 234.330860000000000000
-          Top = 308.921460000000000000
+          Top = 324.039580000000000000
           Width = 249.448980000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -1925,9 +1989,9 @@ object DMNFe: TDMNFe
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo43: TfrxMemoView
+        object mmTextoAutorizacao: TfrxMemoView
           Left = 37.795300000000000000
-          Top = 192.756030000000000000
+          Top = 211.653680000000000000
           Width = 623.622450000000000000
           Height = 45.354360000000000000
           ShowHint = False
@@ -1944,6 +2008,226 @@ object DMNFe: TDMNFe
               ' pagamentos estabelecida.')
           ParentFont = False
         end
+        object subRptTitulos: TfrxSubreport
+          Top = 181.417440000000000000
+          Width = 718.110700000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Page = frrVenda.PgTitulos
+        end
+      end
+    end
+    object PgTitulos: TfrxReportPage
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object BndHeaderTitulos: TfrxHeader
+        Height = 18.897650000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object Memo43: TfrxMemoView
+          Top = 3.779530000000000000
+          Width = 75.590600000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Titulo(s):')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo45: TfrxMemoView
+          Left = 75.590600000000000000
+          Top = 3.779530000000000000
+          Width = 75.590600000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Parcela(s):')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo46: TfrxMemoView
+          Left = 151.181200000000000000
+          Top = 3.779530000000000000
+          Width = 90.708720000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' Vencimento(s):')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo47: TfrxMemoView
+          Left = 241.889920000000000000
+          Top = 3.779530000000000000
+          Width = 90.708720000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            'Valor (R$):')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo48: TfrxMemoView
+          Left = 332.598640000000000000
+          Top = 3.779530000000000000
+          Width = 385.512060000000000000
+          Height = 15.118120000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftBottom]
+          Frame.Width = 0.100000000000000000
+          ParentFont = False
+          VAlign = vaCenter
+        end
+      end
+      object BndMasterDataTitulos: TfrxMasterData
+        Height = 18.897650000000000000
+        Top = 60.472480000000000000
+        Width = 718.110700000000000000
+        DataSet = frdTitulo
+        DataSetName = 'frdTitulo'
+        RowCount = 0
+        object frdTituloPARCELA: TfrxMemoView
+          Left = 75.590600000000000000
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = frdTitulo
+          DataSetName = 'frdTitulo'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Sans Typewriter'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' [frdTitulo."PARCELA"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdTituloANOLANC: TfrxMemoView
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = frdTitulo
+          DataSetName = 'frdTitulo'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Sans Typewriter'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            
+              ' [frdTitulo."ANOLANC"]/[FormatFloat('#39'000000'#39',<frdTitulo."NUMLANC' +
+              '">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdTituloDTVENC: TfrxMemoView
+          Left = 151.181200000000000000
+          Width = 90.708720000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = frdTitulo
+          DataSetName = 'frdTitulo'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Sans Typewriter'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' [frdTitulo."DTVENC"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdTituloVALORREC: TfrxMemoView
+          Left = 241.889920000000000000
+          Width = 90.708720000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataField = 'VALORREC'
+          DataSet = frdTitulo
+          DataSetName = 'frdTitulo'
+          DisplayFormat.FormatStr = '%2.2n'
+          DisplayFormat.Kind = fkNumeric
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Sans Typewriter'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8 = (
+            '[frdTitulo."VALORREC"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdTituloHISTORIC: TfrxMemoView
+          Left = 332.598640000000000000
+          Width = 385.512060000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          DataSet = frdTitulo
+          DataSetName = 'frdTitulo'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Lucida Sans Typewriter'
+          Font.Style = []
+          Memo.UTF8 = (
+            
+              ' [IIF(<frdTitulo."BAIXADO">=1,'#39'-> Baixa realizada em '#39'+FormatDat' +
+              'eTime('#39'dd/mm/yyyy'#39',<frdTitulo."DTREC">)+'#39' em '#39'+<frdTitulo."TIPPA' +
+              'G">,'#39#39')][IIF(<frdTitulo."BAIXADO">=1,'#39' (R$ '#39'+FormatFloat('#39',0.00'#39 +
+              ',<frdTitulo."VALORRECTOT">)+'#39')'#39','#39#39')]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
       end
     end
   end
@@ -1957,9 +2241,10 @@ object DMNFe: TDMNFe
       'CODCLI=CODCLI'
       'DTVENDA=DTVENDA'
       'STATUS=STATUS'
-      'DESCONTO=DESCONTO'
-      'TOTALVENDA=TOTALVENDA'
       'TOTALVENDABRUTA=TOTALVENDABRUTA'
+      'DESCONTO=DESCONTO'
+      'DESCONTO_CUPOM=DESCONTO_CUPOM'
+      'TOTALVENDA=TOTALVENDA'
       'DTFINALIZACAO_VENDA=DTFINALIZACAO_VENDA'
       'OBS=OBS'
       'SERIE=SERIE'
@@ -1974,6 +2259,7 @@ object DMNFe: TDMNFe
       'CANCEL_MOTIVO=CANCEL_MOTIVO'
       'CFOP=CFOP'
       'CFOP_DESCRICAO=CFOP_DESCRICAO'
+      'CFOP_INFORMACAO_FISCO=CFOP_INFORMACAO_FISCO'
       'VERIFICADOR_NFE=VERIFICADOR_NFE'
       'XML_NFE_FILENAME=XML_NFE_FILENAME'
       'XML_NFE=XML_NFE'
@@ -1998,7 +2284,18 @@ object DMNFe: TDMNFe
       'NFE_VALOR_PIS=NFE_VALOR_PIS'
       'NFE_VALOR_COFINS=NFE_VALOR_COFINS'
       'NFE_VALOR_OUTROS=NFE_VALOR_OUTROS'
-      'NFE_VALOR_TOTAL_NOTA=NFE_VALOR_TOTAL_NOTA')
+      'NFE_VALOR_TOTAL_NOTA=NFE_VALOR_TOTAL_NOTA'
+      'NFE_MODALIDADE_FRETE=NFE_MODALIDADE_FRETE'
+      'NFE_TRANSPORTADORA=NFE_TRANSPORTADORA'
+      'NFE_TRANSPORTADORA_NOME=NFE_TRANSPORTADORA_NOME'
+      'NFE_TRANSPORTADORA_CNPJ=NFE_TRANSPORTADORA_CNPJ'
+      'NFE_TRANSPORTADORA_IEST=NFE_TRANSPORTADORA_IEST'
+      'NFE_TRANSPORTADORA_ENDER=NFE_TRANSPORTADORA_ENDER'
+      'NFE_TRANSPORTADORA_CIDADE=NFE_TRANSPORTADORA_CIDADE'
+      'NFE_TRANSPORTADORA_UF=NFE_TRANSPORTADORA_UF'
+      'NFE_PLACA_VEICULO=NFE_PLACA_VEICULO'
+      'NFE_PLACA_UF=NFE_PLACA_UF'
+      'NFE_PLACA_RNTC=NFE_PLACA_RNTC')
     DataSet = qryCalculoImporto
     BCDToCurrency = False
     Left = 184
@@ -2085,7 +2382,13 @@ object DMNFe: TDMNFe
       'DTVENC=DTVENC'
       'VALORREC=VALORREC'
       'VALORMULTA=VALORMULTA'
-      'PERCENTDESCONTO=PERCENTDESCONTO')
+      'PERCENTDESCONTO=PERCENTDESCONTO'
+      'VALORRECTOT=VALORRECTOT'
+      'VALORSALDO=VALORSALDO'
+      'HISTORIC=HISTORIC'
+      'TIPPAG=TIPPAG'
+      'BAIXADO=BAIXADO'
+      'DTREC=DTREC')
     DataSet = qryDuplicatas
     BCDToCurrency = False
     Left = 180
@@ -2411,7 +2714,9 @@ object DMNFe: TDMNFe
       '    ) as lista_cond_pago'
       ''
       '  , ('
-      '    Select list(cp.cond_descricao_full)'
+      
+        '    Select list(case when y.venda_prazo = 1 then cp.cond_descric' +
+        'ao_full else cp.cond_descricao end)'
       '    from TBVENDAS_FORMAPAGTO y'
       
         '      inner join VW_CONDICAOPAGTO cp on (cp.cond_cod = y.condica' +
@@ -2854,6 +3159,10 @@ object DMNFe: TDMNFe
       item
         Name = 'CNPJCliente'
         Value = #39'00.000.000/0000-00'#39
+      end
+      item
+        Name = 'Descontos'
+        Value = '<frdVenda."DESCONTO">+<frdVenda."DESCONTO_CUPOM">'
       end>
     Style = <>
     object Data: TfrxDataPage
@@ -3405,7 +3714,7 @@ object DMNFe: TDMNFe
           Font.Style = []
           HAlign = haRight
           Memo.UTF8 = (
-            '[FormatFloat('#39',0.00'#39',<frdVenda."DESCONTO">)] ')
+            '[FormatFloat('#39',0.00'#39',<Descontos>)] ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -24028,5 +24337,259 @@ object DMNFe: TDMNFe
         end
       end
     end
+  end
+  object qryVendasCaixaDetalhe: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    SQL.Strings = (
+      'Select'
+      '    c.Ano'
+      '  , c.Numero'
+      '  , c.Data_abertura'
+      '  , c.Data_fech'
+      '  , c.Data_cancel'
+      '  , c.Usuario'
+      '  , u.Nomecompleto'
+      '  , c.Usuario_cancel'
+      '  , c.Situacao'
+      '  , Case'
+      '      when c.Situacao = 0 then '#39'Aberto'#39
+      '      when c.Situacao = 1 then '#39'Fechado'#39
+      '      when c.Situacao = 2 then '#39'Cancelado'#39
+      '      else '#39'* Indefinido'#39
+      '    end as Situacao_Desc'
+      '  , c.Conta_corrente'
+      '  , c.Valor_total_credito'
+      '  , c.Valor_total_debito'
+      '  , c.Motivo_cancel'
+      '  , cc.Descricao as Conta_corrente_Desc'
+      '  , Case'
+      '      when cc.Tipo = 1 then '#39'Caixa'#39
+      '      when cc.Tipo = 2 then '#39'Banco'#39
+      '      else '#39'* Indefinido'#39
+      '    end as Tipo'
+      '  , vf.ano_venda        as AnoMov'
+      '  , vf.controle_venda   as NumMov'
+      
+        '  , vf.ano_venda || '#39'/'#39' || right('#39'0000000'#39' || vf.controle_venda,' +
+        ' 7) as Movimento'
+      '  , vf.formapagto_cod   as Forma_pagto'
+      '  , f.Descri            as Forma_pagto_Desc'
+      '  , v.dtvenda as dataemissao'
+      '  , Case when v.status = 5'
+      '      then '#39'VENDA CANCELADA'#39
+      '      else '#39'VENDA NO CAIXA'#39
+      '    end as Historico'
+      '  , Case when v.status = 5'
+      '      then 0'
+      '      else 1'
+      '    end as SituacaoMov'
+      '  , Case when v.status = 5'
+      '      then '#39'D'#39
+      '      else '#39'C'#39
+      '    end as TipoMov'
+      '  , vf.valor_fpagto as Valor'
+      '  , Case when v.status in (3, 4)'
+      '      then vf.valor_fpagto'
+      '      else 0'
+      '    end as Valor_Credito'
+      '  , Case when v.status = 5'
+      '      then vf.valor_fpagto'
+      '      else 0'
+      '    end as Valor_Debito'
+      'from TBVENDAS v'
+      
+        '  inner join TBCAIXA c on (c.ano = v.caixa_ano and c.numero = v.' +
+        'caixa_num)'
+      
+        '  inner join TBVENDAS_FORMAPAGTO vf on (vf.ano_venda = v.ano and' +
+        ' vf.controle_venda = v.codcontrol)'
+      ''
+      
+        '  left join TBCONTA_CORRENTE cc on (cc.Codigo = c.Conta_corrente' +
+        ')'
+      '  left join TBFORMPAGTO f on (f.Cod = vf.formapagto_cod)'
+      '  left join TBUSERS u on (u.Nome = c.Usuario)'
+      ''
+      'where v.status > 2'
+      '  and v.caixa_ano = :anoCaixa'
+      '  and v.caixa_num = :numCaixa'
+      ''
+      'order by'
+      '    v.ano'
+      '  , v.codcontrol')
+    Left = 496
+    Top = 96
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'anoCaixa'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'numCaixa'
+        ParamType = ptInput
+        Value = 0
+      end>
+  end
+  object qryVendasCaixaFormaPagto: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    SQL.Strings = (
+      'Select'
+      '    c.Ano'
+      '  , c.Numero'
+      '  , c.Data_abertura'
+      '  , c.Data_fech'
+      '  , c.Data_cancel'
+      '  , c.Usuario'
+      '  , u.Nomecompleto'
+      '  , c.Usuario_cancel'
+      '  , c.Situacao'
+      '  , Case'
+      '      when c.Situacao = 0 then '#39'Aberto'#39
+      '      when c.Situacao = 1 then '#39'Fechado'#39
+      '      when c.Situacao = 2 then '#39'Cancelado'#39
+      '      else '#39'* Indefinido'#39
+      '    end as Situacao_Desc'
+      '  , vf.formapagto_cod   as Forma_pagto'
+      '  , f.Descri            as Forma_pagto_Desc'
+      '  , Case when v.status = 5'
+      '      then 0'
+      '      else 1'
+      '    end as SituacaoMov'
+      '  , Case when v.status = 5'
+      '      then '#39'D'#39
+      '      else '#39'C'#39
+      '    end as TipoMov'
+      '  , sum( vf.valor_fpagto ) as Valor'
+      '  , sum( Case when v.status in (3, 4)'
+      '      then vf.valor_fpagto'
+      '      else 0'
+      '    end ) as Valor_Credito'
+      '  , sum( Case when v.status = 5'
+      '      then vf.valor_fpagto'
+      '      else 0'
+      '    end ) as Valor_Debito'
+      'from TBVENDAS v'
+      
+        '  inner join TBCAIXA c on (c.ano = v.caixa_ano and c.numero = v.' +
+        'caixa_num)'
+      
+        '  inner join TBVENDAS_FORMAPAGTO vf on (vf.ano_venda = v.ano and' +
+        ' vf.controle_venda = v.codcontrol)'
+      ''
+      '  left join TBFORMPAGTO f on (f.Cod = vf.formapagto_cod)'
+      '  left join TBUSERS u on (u.Nome = c.Usuario)'
+      ''
+      'where v.status > 2'
+      '  and v.caixa_ano = :anoCaixa'
+      '  and v.caixa_num = :numCaixa'
+      ''
+      'group by'
+      '    c.Ano'
+      '  , c.Numero'
+      '  , c.Data_abertura'
+      '  , c.Data_fech'
+      '  , c.Data_cancel'
+      '  , c.Usuario'
+      '  , u.Nomecompleto'
+      '  , c.Usuario_cancel'
+      '  , c.Situacao'
+      '  , Case'
+      '      when c.Situacao = 0 then '#39'Aberto'#39
+      '      when c.Situacao = 1 then '#39'Fechado'#39
+      '      when c.Situacao = 2 then '#39'Cancelado'#39
+      '      else '#39'* Indefinido'#39
+      '    end'
+      '  , vf.formapagto_cod'
+      '  , f.Descri'
+      '  , Case when v.status = 5'
+      '      then 0'
+      '      else 1'
+      '    end'
+      '  , Case when v.status = 5'
+      '      then '#39'D'#39
+      '      else '#39'C'#39
+      '    end'
+      ''
+      'order by'
+      '    f.descri'
+      '')
+    Left = 496
+    Top = 48
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'anoCaixa'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'numCaixa'
+        ParamType = ptInput
+        Value = 0
+      end>
+  end
+  object qryVendasCaixaSoma: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    SQL.Strings = (
+      'Select'
+      '    d.cod'
+      '  , d.nome'
+      '  , d.cpf'
+      
+        '  , sum( Case when v.status <> 5 then v.desconto + v.desconto_cu' +
+        'pom else 0.0 end) as total_desconto'
+      
+        '  , sum( Case when v.status <> 5 then v.totalvenda_bruta        ' +
+        '         else 0.0 end) as totalvenda_bruta'
+      
+        '  , sum( Case when v.status <> 5 then v.totalvenda              ' +
+        '         else 0.0 end) as totalvenda'
+      
+        '  , sum( Case when v.status  = 5 then v.desconto + v.desconto_cu' +
+        'pom else 0.0 end) as total_desconto_c'
+      
+        '  , sum( Case when v.status  = 5 then v.totalvenda_bruta        ' +
+        '         else 0.0 end) as totalvenda_bruta_c'
+      
+        '  , sum( Case when v.status  = 5 then v.totalvenda              ' +
+        '         else 0.0 end) as totalvenda_c'
+      '  , sum( v.totalvenda ) as totalvenda_geral'
+      'from TBVENDAS v'
+      
+        '  inner join TBCAIXA c on (c.ano = v.caixa_ano and c.numero = v.' +
+        'caixa_num)'
+      '  left join TBUSERS u on (u.nome = c.usuario)'
+      '  left join TBVENDEDOR d on (d.cod = u.vendedor)'
+      ''
+      'where v.status in (3, 4, 5)'
+      '  and v.caixa_ano = :anoCaixa'
+      '  and v.caixa_num = :numCaixa'
+      ''
+      'group by'
+      '    d.cod'
+      '  , d.nome'
+      '  , d.cpf')
+    Left = 496
+    Top = 8
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'anoCaixa'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'numCaixa'
+        ParamType = ptInput
+        Value = 0
+      end>
   end
 end

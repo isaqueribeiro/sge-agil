@@ -164,6 +164,10 @@ type
     btnVoltar: TcxButton;
     btnRecuperarCNPJ: TcxButton;
     btnConsultarCPF: TcxButton;
+    Label15: TLabel;
+    EditCNAE1: TEdit;
+    Label16: TLabel;
+    ListCNAE2: TListBox;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);
@@ -573,19 +577,19 @@ end;
 procedure TfrmGeFornecedor.LabAtualizarCaptchaClick(Sender: TObject);
 var
   Stream : TMemoryStream;
-  Jpg : TJPEGImage;
+  ImgArq : String;
 begin
   Stream := TMemoryStream.Create;
-  Jpg    := TJPEGImage.Create;
   try
     if ( pgcGuias.ActivePage = tbsConsultarCNPJ ) then
       ACBrConsultaCNPJ.Captcha(Stream)
     else
     if ( pgcGuias.ActivePage = tbsConsultarCPF ) then
       ACBrConsultaCPF.Captcha(Stream);
-      
-    Jpg.LoadFromStream(Stream);
-    ImgCaptcha.Picture.Assign(Jpg);
+
+    ImgArq := ExtractFilePath(ParamStr(0)) + PathDelim + 'captch.png';
+    Stream.SaveToFile( ImgArq );
+    ImgCaptcha.Picture.LoadFromFile( ImgArq );
 
     edCaptcha.Clear;
     edCaptcha.SetFocus;
@@ -602,9 +606,10 @@ begin
     EditCidade.Clear;
     EditUF.Clear;
     EditCEP.Clear;
+    EditCNAE1.Clear;
+    ListCNAE2.Clear;
   finally
     Stream.Free;
-    Jpg.Free;
   end;
 end;
 
@@ -672,6 +677,8 @@ begin
 end;
 
 procedure TfrmGeFornecedor.btnConsultarCNPJClick(Sender: TObject);
+var
+  I : Integer;
 begin
   if Trim(edCaptcha.Text) <> EmptyStr then
   begin
@@ -690,6 +697,10 @@ begin
       EditUF.Text          := ACBrConsultaCNPJ.UF;
       EditCEP.Text         := ACBrConsultaCNPJ.CEP;
       EditSituacao.Text    := ACBrConsultaCNPJ.Situacao;
+      EditCNAE1.Text       := ACBrConsultaCNPJ.CNAE1;
+
+      for I := 0 to ACBrConsultaCNPJ.CNAE2.Count - 1 do
+        ListCNAE2.Items.Add(ACBrConsultaCNPJ.CNAE2[I]);
 
       btnRecuperarCNPJ.Enabled := True;
     end;

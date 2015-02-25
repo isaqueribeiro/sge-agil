@@ -90,6 +90,7 @@ type
     actProdutoQuantidade: TAction;
     actProdutoExcluir: TAction;
     dtsNotaFiscal: TDataSource;
+    imgCaixaLivre: TImage;
     procedure tmrContadorTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edProdutoCodigoKeyPress(Sender: TObject; var Key: Char);
@@ -1370,7 +1371,7 @@ begin
     // Formas de Pagamento que nao seja a prazo
 
     DataSetVenda.Edit;
-    
+
     DataSetFormaPagto.First;
     while not DataSetFormaPagto.Eof do
     begin
@@ -1395,7 +1396,16 @@ begin
     TIBDataSet(DataSetVenda).ApplyUpdates;
 
     CommitTransaction;
-    
+
+    // Registrar o Número do Caixa na Venda Finalizada
+
+    RegistrarCaixaNaVenda(
+        DataSetVenda.FieldByName('ANO').AsInteger
+      , DataSetVenda.FieldByName('CODCONTROL').AsInteger
+      , CxAno
+      , CxNumero
+      , True);
+
     if ( CxContaCorrente > 0 ) then
       GerarSaldoContaCorrente(CxContaCorrente, GetDateDB);
 
@@ -1403,6 +1413,7 @@ begin
 
     if GetEmitirCupom then
       if GetEmitirCupomAutomatico then
+      begin
         if DMNFe.IsEstacaoEmiteNFCe then
         begin
           // (INICIO) - Emissão de NFC-e
@@ -1492,7 +1503,7 @@ begin
               , DataSetVenda.FieldByName('ANO').AsInteger
               , DataSetVenda.FieldByName('CODCONTROL').AsInteger);
 
-          // (FINAL) - Emissão de NFC-e    
+          // (FINAL) - Emissão de NFC-e
         end
         else
         if GetCupomNaoFiscalEmitir then
@@ -1509,6 +1520,23 @@ begin
         end
         else
           ; // Emitir Cupom Fiscal
+      end
+      else
+      begin
+        bConfirmado := ShowConfirmation('Confirma a impressão do Cupom?');
+
+        if bConfirmado then
+          if GetCupomNaoFiscalEmitir then
+            DMNFe.ImprimirCupomNaoFiscal(
+                DataSetVenda.FieldByName('CODEMP').AsString
+              , DataSetVenda.FieldByName('CODCLIENTE').AsInteger
+              , FormatDateTime('dd/mm/yy hh:mm', GetDateTimeDB)
+              , DataSetVenda.FieldByName('ANO').AsInteger
+              , DataSetVenda.FieldByName('CODCONTROL').AsInteger)
+          else
+            ; // Emitir Cupom Fiscal
+
+      end;
 
     // Limpar Tela
 

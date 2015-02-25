@@ -1,24 +1,22 @@
 inherited frmGeFornecedor: TfrmGeFornecedor
   Left = 434
-  Top = 217
   Width = 860
-  Height = 518
-  ActiveControl = dbCodigo
+  Height = 539
   Caption = 'Cadastro de Fornecedores'
   OldCreateOrder = True
   OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel
-    Top = 476
+    Top = 497
     Width = 844
   end
   inherited Bevel3: TBevel
-    Top = 437
+    Top = 458
     Width = 844
   end
   inherited tlbBotoes: TToolBar
-    Top = 441
+    Top = 462
     Width = 844
     inherited bvlToolExpandir: TBevel
       Width = 81
@@ -32,16 +30,15 @@ inherited frmGeFornecedor: TfrmGeFornecedor
   end
   inherited pgcGuias: TPageControl
     Width = 844
-    Height = 437
-    ActivePage = tbsCadastro
+    Height = 458
     inherited tbsTabela: TTabSheet
       inherited Bevel4: TBevel
-        Top = 342
+        Top = 363
         Width = 836
       end
       inherited dbgDados: TDBGrid
         Width = 836
-        Height = 342
+        Height = 363
         Columns = <
           item
             Expanded = False
@@ -82,7 +79,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 346
+        Top = 367
         Width = 836
         inherited grpBxFiltro: TGroupBox
           Left = 561
@@ -865,7 +862,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         Left = 0
         Top = 237
         Width = 836
-        Height = 171
+        Height = 192
         ActivePage = tbsDadoFinanceiro
         Align = alClient
         TabOrder = 2
@@ -1190,7 +1187,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         Left = 377
         Top = 0
         Width = 4
-        Height = 408
+        Height = 429
         Align = alLeft
         Shape = bsSpacer
       end
@@ -1198,7 +1195,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         Left = 0
         Top = 0
         Width = 377
-        Height = 408
+        Height = 429
         Align = alLeft
         BevelInner = bvRaised
         BevelOuter = bvLowered
@@ -1286,7 +1283,6 @@ inherited frmGeFornecedor: TfrmGeFornecedor
             Align = alClient
             Center = True
             Proportional = True
-            Stretch = True
           end
           object LabAtualizarCaptcha: TLabel
             Left = 1
@@ -1343,7 +1339,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         Left = 381
         Top = 0
         Width = 455
-        Height = 408
+        Height = 429
         Align = alClient
         BevelInner = bvRaised
         BevelOuter = bvLowered
@@ -1503,6 +1499,32 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           Width = 48
           Height = 16
           Caption = 'Fantasia'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label15: TLabel
+          Left = 8
+          Top = 249
+          Width = 83
+          Height = 16
+          Caption = 'CNAE Principal'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label16: TLabel
+          Left = 10
+          Top = 298
+          Width = 115
+          Height = 16
+          Caption = 'CNAE Secund'#225'rio(s)'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -13
@@ -1692,7 +1714,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         end
         object btnVoltar: TcxButton
           Left = 8
-          Top = 256
+          Top = 376
           Width = 115
           Height = 41
           Caption = '&Voltar ao Cadastro'
@@ -1702,12 +1724,12 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 12
+          TabOrder = 14
           OnClick = btnVoltarClick
         end
         object btnRecuperarCNPJ: TcxButton
           Left = 328
-          Top = 256
+          Top = 376
           Width = 115
           Height = 41
           Caption = '&Recuperar Dados'
@@ -1718,8 +1740,30 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 13
+          TabOrder = 15
           OnClick = btnRecuperarCNPJClick
+        end
+        object EditCNAE1: TEdit
+          Left = 8
+          Top = 268
+          Width = 433
+          Height = 24
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 12
+        end
+        object ListCNAE2: TListBox
+          Left = 8
+          Top = 317
+          Width = 433
+          Height = 52
+          ItemHeight = 16
+          TabOrder = 13
         end
       end
     end

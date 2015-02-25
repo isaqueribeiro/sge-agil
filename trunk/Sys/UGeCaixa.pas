@@ -847,19 +847,35 @@ begin
       Open;
     end;
 
-    with qryCaixaAnalitico, SQL do
+    if ( gSistema.Codigo = SISTEMA_PDV ) then
     begin
-      Close;
-      Clear;
-      AddStrings( SQL_CaixaAnalitico );
-      Add('where c.Ano    = ' + IbDtstTabelaANO.AsString);
-      Add('  and c.Numero = ' + IbDtstTabelaNUMERO.AsString);
-      Add('order by cm.Forma_pagto, cm.Ano, cm.Numero');
-      Open;
-    end;
 
-    if ( not qryCaixaAnalitico.IsEmpty ) then
-      frrCaixaAnalitico.ShowReport;
+      if not GetCupomNaoFiscalEmitir then
+        ShowWarning(
+          'Esta estação não está configurada para a impressão de Cupom no Fechamento do Caixa.' + #13 +
+          'Favor realizar a impressão do Caixa no sistema de retaguarda!')
+      else
+        ImprimirCupomFechamentoCaixa(gUsuarioLogado.Empresa, IbDtstTabelaANO.AsInteger, IbDtstTabelaNUMERO.AsInteger);
+
+    end
+    else
+    begin
+
+      with qryCaixaAnalitico, SQL do
+      begin
+        Close;
+        Clear;
+        AddStrings( SQL_CaixaAnalitico );
+        Add('where c.Ano    = ' + IbDtstTabelaANO.AsString);
+        Add('  and c.Numero = ' + IbDtstTabelaNUMERO.AsString);
+        Add('order by cm.Forma_pagto, cm.Ano, cm.Numero');
+        Open;
+      end;
+
+      if ( not qryCaixaAnalitico.IsEmpty ) then
+        frrCaixaAnalitico.ShowReport;
+
+    end;
 
   end;
 end;

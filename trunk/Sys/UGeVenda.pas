@@ -1735,6 +1735,15 @@ begin
       cdsVendaFormaPagto.Next;
     end;
 
+    // Registrar o Número do Caixa na Venda Finalizada
+
+    RegistrarCaixaNaVenda(
+        IbDtstTabelaANO.AsInteger
+      , IbDtstTabelaCODCONTROL.AsInteger
+      , CxAno
+      , CxNumero
+      , (gSistema.Codigo = SISTEMA_PDV));
+
     if ( CxContaCorrente > 0 ) then
       GerarSaldoContaCorrente(CxContaCorrente, GetDateDB);
 
@@ -2643,19 +2652,13 @@ begin
             , IbDtstTabela.FieldByName('CODCONTROL').AsInteger);
         end
         else
-        if GetCupomNaoFiscalEmitir then
+        if GetCupomNaoFiscalEmitir and (IbDtstTabelaSTATUS.AsInteger in [STATUS_VND_FIN, STATUS_VND_NFE]) then
           ImprimirCupomNaoFiscal(
               IbDtstTabelaCODEMP.AsString
             , IbDtstTabelaCODCLIENTE.AsInteger
             , FormatDateTime('dd/mm/yy hh:mm', GetDateTimeDB)
             , IbDtstTabelaANO.Value
             , IbDtstTabelaCODCONTROL.Value)
-        else
-        if ( GetModeloEmissaoCupom = MODELO_CUPOM_POOLER ) then
-        begin
-          FrECFPooler.PrepareReport;
-          FrECFPooler.Print;
-        end
         else
         if ( GetModeloEmissaoCupom = MODELO_CUPOM_ORCAMENTO ) then
         begin
@@ -2665,8 +2668,14 @@ begin
             , FormatDateTime('dd/mm/yy hh:mm', GetDateTimeDB)
             , IbDtstTabelaANO.Value
             , IbDtstTabelaCODCONTROL.Value)
+        end
+        else
+        if ( GetModeloEmissaoCupom = MODELO_CUPOM_POOLER ) then
+        begin
+          FrECFPooler.PrepareReport;
+          FrECFPooler.Print;
         end;
-        
+
         Exit;
       end;
 
