@@ -200,6 +200,7 @@ var
   procedure DesbloquearCliente(iCodigoCliente : Integer; const Motivo : String = '');
   procedure BloquearCliente(iCodigoCliente : Integer; const Motivo : String = '');
   procedure RegistrarSegmentos(Codigo : Integer; Descricao : String);
+  procedure RegistrarCaixaNaVenda(const AnoVenda, NumVenda, AnoCaixa, NumCaixa : Integer; const IsPDV : Boolean);
   {$IFDEF DGE}
   procedure RegistrarControleAcesso(const AOnwer : TComponent; const EvUserAcesso : TEvUserAccess);
   {$ENDIF}
@@ -995,6 +996,28 @@ begin
     Close;
     SQL.Clear;
     SQL.Add('Execute Procedure SET_SEGMENTO(' + IntToStr(Codigo) + ', ' + QuotedStr(Trim(Descricao)) + ')');
+    ExecSQL;
+
+    CommitTransaction;
+  end;
+end;
+
+procedure RegistrarCaixaNaVenda(const AnoVenda, NumVenda, AnoCaixa, NumCaixa : Integer;
+  const IsPDV : Boolean);
+begin
+  if (AnoVenda = 0) or (NumVenda = 0) or (AnoCaixa = 0) or (NumCaixa = 0) then
+    Exit;
+
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Update TBVENDAS Set');
+    SQL.Add('    caixa_ano = ' + IntToStr(AnoCaixa));
+    SQL.Add('  , caixa_num = ' + IntToStr(NumCaixa));
+    SQL.Add('  , caixa_PDV = ' + IfThen(IsPDV, '1', '0'));
+    SQL.Add('where ano        = ' + IntToStr(AnoVenda));
+    SQL.Add('  and codcontrol = ' + IntToStr(NumVenda));
     ExecSQL;
 
     CommitTransaction;

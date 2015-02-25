@@ -1770,7 +1770,6 @@ inherited frmGeCliente: TfrmGeCliente
             Align = alClient
             Center = True
             Proportional = True
-            Stretch = True
           end
           object LabAtualizarCaptcha: TLabel
             Left = 1
@@ -1994,6 +1993,32 @@ inherited frmGeCliente: TfrmGeCliente
           Font.Style = []
           ParentFont = False
         end
+        object Label15: TLabel
+          Left = 8
+          Top = 249
+          Width = 83
+          Height = 16
+          Caption = 'CNAE Principal'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label16: TLabel
+          Left = 10
+          Top = 298
+          Width = 115
+          Height = 16
+          Caption = 'CNAE Secund'#225'rio(s)'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
         object EditTipo: TEdit
           Left = 8
           Top = 29
@@ -2176,7 +2201,7 @@ inherited frmGeCliente: TfrmGeCliente
         end
         object btnVoltar: TcxButton
           Left = 8
-          Top = 256
+          Top = 376
           Width = 115
           Height = 41
           Caption = '&Voltar ao Cadastro'
@@ -2186,12 +2211,12 @@ inherited frmGeCliente: TfrmGeCliente
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 12
+          TabOrder = 14
           OnClick = btnVoltarClick
         end
         object btnRecuperarCNPJ: TcxButton
           Left = 328
-          Top = 256
+          Top = 376
           Width = 115
           Height = 41
           Caption = '&Recuperar Dados'
@@ -2202,8 +2227,30 @@ inherited frmGeCliente: TfrmGeCliente
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 13
+          TabOrder = 15
           OnClick = btnRecuperarCNPJClick
+        end
+        object EditCNAE1: TEdit
+          Left = 8
+          Top = 268
+          Width = 433
+          Height = 24
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 12
+        end
+        object ListCNAE2: TListBox
+          Left = 8
+          Top = 317
+          Width = 433
+          Height = 52
+          ItemHeight = 16
+          TabOrder = 13
         end
       end
     end

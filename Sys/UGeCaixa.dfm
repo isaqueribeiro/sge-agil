@@ -2760,6 +2760,19 @@ inherited frmGeCaixa: TfrmGeCaixa
           WordWrap = False
           VAlign = vaCenter
         end
+        object Memo51: TfrxMemoView
+          Width = 566.929500000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8 = (
+            '* Movimenta'#195#167#195#181'es/Vendas Canceladas')
+          ParentFont = False
+        end
       end
       object bndReportSummary: TfrxReportSummary
         Height = 377.953000000000000000
@@ -3418,7 +3431,6 @@ inherited frmGeCaixa: TfrmGeCaixa
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Typ = [ftBottom]
-          HAlign = haCenter
           Memo.UTF8 = (
             'Tipo')
           ParentFont = False
@@ -3571,7 +3583,6 @@ inherited frmGeCaixa: TfrmGeCaixa
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          HAlign = haCenter
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -9
@@ -3579,7 +3590,9 @@ inherited frmGeCaixa: TfrmGeCaixa
           Highlight.Font.Style = []
           Highlight.Condition = '<frdCaixaAnalitico."SITUACAOMOV">=0'
           Memo.UTF8 = (
-            '[frdCaixaAnalitico."TIPOMOV"]')
+            
+              '[frdCaixaAnalitico."TIPOMOV"][IIF(<frdCaixaAnalitico."SITUACAOMO' +
+              'V">=0,'#39'*'#39','#39#39')]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter

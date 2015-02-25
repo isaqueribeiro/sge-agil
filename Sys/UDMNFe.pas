@@ -558,6 +558,15 @@ type
     qrySolicitacaoCompra: TIBQuery;
     frdSolicitacaoCompra: TfrxDBDataset;
     frrSolicitacaoCompra: TfrxReport;
+    qryVendasCaixaDetalhe: TIBQuery;
+    qryVendasCaixaFormaPagto: TIBQuery;
+    qryVendasCaixaSoma: TIBQuery;
+    qryDuplicatasVALORRECTOT: TIBBCDField;
+    qryDuplicatasVALORSALDO: TIBBCDField;
+    qryDuplicatasHISTORIC: TMemoField;
+    qryDuplicatasTIPPAG: TIBStringField;
+    qryDuplicatasBAIXADO: TSmallintField;
+    qryDuplicatasDTREC: TDateField;
     procedure SelecionarCertificado(Sender : TObject);
     procedure TestarServico(Sender : TObject);
     procedure DataModuleCreate(Sender: TObject);
@@ -595,6 +604,9 @@ type
     function ImprimirCupomNaoFiscal_ESCPOS(const sCNPJEmitente : String; iCodigoCliente : Integer;
       const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer) : Boolean; virtual; abstract;
 
+    function ImprimirCupomFechamentoCaixa_PORTA(const sEmpresa : String;
+      const iAnoCaixa, iNumCaixa : Integer) : Boolean;
+
   public
     { Public declarations }
     property ConfigACBr : TfrmGeConfigurarNFeACBr read frmACBr write frmACBr;
@@ -610,6 +622,7 @@ type
     procedure AbrirDestinatarioFornecedor(iCodigo : Integer);
     procedure AbrirVenda(AnoVenda, NumeroVenda : Integer);
     procedure AbrirVendaCartaCredito(AnoVenda, NumeroVenda : Integer);
+    procedure AbrirVendasCaixa(AnoCaixa, NumeroCaixa : Integer);
     procedure AbrirCompra(AnoCompra, NumeroCompra : Integer);
     procedure AbrirNFeEmitida(AnoVenda, NumeroVenda : Integer);
     procedure AbrirNFeEmitidaEntrada(AnoCompra, NumeroCompra : Integer);
@@ -676,6 +689,9 @@ type
 
     function ImprimirCupomOrcamento(const sCNPJEmitente : String; iCodigoCliente : Integer;
       const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer) : Boolean;
+
+    function ImprimirCupomFechamentoCaixa(const sEmpresa : String;
+      const iAnoCaixa, iNumCaixa : Integer) : Boolean;
 
     function GerarEnviarCCeACBr(const sCNPJEmitente : String; const ControleCCe : Integer; sCondicaoUso : String) : Boolean;
 
@@ -4753,18 +4769,22 @@ var
   aEcfConfig : TEcfConfiguracao;
   aEcf : TEcfFactory;
 begin
-  if GetCupomNaoFiscalPortaID = -1 then
+  LerConfiguracao(sCNPJEmitente, tipoDANFE_ESCPOS);
+
+  if GetCupomNaoFiscalTipoEmissaoID = -1 then
     aEcfTipo := ecfTEXTO
   else
-    aEcfTipo := TEcfTipo(GetCupomNaoFiscalPortaID);
+    aEcfTipo := TEcfTipo(GetCupomNaoFiscalTipoEmissaoID);
 
   AbrirEmitente(sCNPJEmitente);
   AbrirDestinatario(iCodigoCliente);
   AbrirVenda(iAnoVenda, iNumVenda);
   AbrirNFeEmitida(iAnoVenda, iNumVenda);
 
-  aEcfConfig.Impressora := GetCupomNaoFiscalPortaNM;
-  aEcfConfig.Porta      := GetCupomNaoFiscalPortaDS;
+  aEcfConfig.Dll              := EmptyStr;
+  aEcfConfig.Impressora       := GetCupomNaoFiscalPortaNM;
+  aEcfConfig.ModeloEspecifico := GetCupomNaoFiscalModeloEspID;
+  aEcfConfig.Porta            := GetCupomNaoFiscalPortaDS;
   aEcfConfig.Empresa  := AnsiUpperCase( qryEmitenteNMFANT.AsString );
   aEcfConfig.Endereco := RemoveAcentos( Trim(qryEmitenteTLG_SIGLA.AsString + ' ' + qryEmitenteLOG_NOME.AsString + ', ' + qryEmitenteNUMERO_END.AsString) );
   aEcfConfig.Bairro   := RemoveAcentos( Trim(qryEmitenteBAI_NOME.AsString) );
@@ -4781,6 +4801,10 @@ begin
 
     with aEcf do
     begin
+      Ecf.SoftHouse := GetCompanyName;
+      Ecf.Sistema   := GetProductName;
+      Ecf.Versao    := GetProductVersion;
+
       Ecf.Identifica_Cupom(Now, FormatFloat('###0000000', iNumVenda), qryCalculoImportoVENDEDOR_NOME.AsString);
 
       if ( qryDestinatarioCODIGO.AsInteger <> CONSUMIDOR_FINAL_CODIGO ) then
@@ -6080,7 +6104,7 @@ begin
         else
           Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
 
-        if ( qryFormaPagtosVENDA_PRAZO.AsInteger = 1 ) then  
+        if ( qryFormaPagtosVENDA_PRAZO.AsInteger = 1 ) then
           Ecf.Texto_Livre('* ' + RemoveAcentos(
             IfThen(Trim(qryFormaPagtosCOND_DESCRICAO_PDV.AsString) = EmptyStr
               , qryFormaPagtosCOND_DESCRICAO_FULL.Text
@@ -6289,6 +6313,162 @@ begin
     end;
   end;
 
+end;
+
+function TDMNFe.ImprimirCupomFechamentoCaixa_PORTA(const sEmpresa: String;
+  const iAnoCaixa, iNumCaixa: Integer): Boolean;
+var
+  aEcfTipo   : TEcfTipo;
+  aEcfConfig : TEcfConfiguracao;
+  aEcf : TEcfFactory;
+begin
+  LerConfiguracao(sEmpresa, tipoDANFE_ESCPOS);
+
+  if GetCupomNaoFiscalTipoEmissaoID = -1 then
+    aEcfTipo := ecfTEXTO
+  else
+    aEcfTipo := TEcfTipo(GetCupomNaoFiscalTipoEmissaoID);
+
+  AbrirEmitente(sEmpresa);
+  AbrirVendasCaixa(iAnoCaixa, iNumCaixa);
+
+  aEcfConfig.Dll              := EmptyStr;
+  aEcfConfig.Impressora       := GetCupomNaoFiscalPortaNM;
+  aEcfConfig.ModeloEspecifico := GetCupomNaoFiscalModeloEspID;
+  aEcfConfig.Porta            := GetCupomNaoFiscalPortaDS;
+  aEcfConfig.Empresa  := AnsiUpperCase( qryEmitenteNMFANT.AsString );
+  aEcfConfig.Endereco := RemoveAcentos( Trim(qryEmitenteTLG_SIGLA.AsString + ' ' + qryEmitenteLOG_NOME.AsString + ', ' + qryEmitenteNUMERO_END.AsString) );
+  aEcfConfig.Bairro   := RemoveAcentos( Trim(qryEmitenteBAI_NOME.AsString) );
+  aEcfConfig.Fone     := StrFormatarFONE(qryEmitenteFONE.AsString);
+  aEcfConfig.Cep      := StrFormatarCEP(qryEmitenteCEP.AsString);
+  aEcfConfig.Cidade   := RemoveAcentos( qryEmitenteCID_NOME.AsString + '/' + qryEmitenteEST_SIGLA.AsString );
+  aEcfConfig.Cnpj     := StrFormatarCnpj( sEmpresa );
+  aEcfConfig.InscEstadual   := qryEmitenteIE.AsString;
+  aEcfConfig.ID             := FormatFloat('###0000000', iNumCaixa);
+  aEcfConfig.ImprimirGliche := True;
+
+  aEcfConfig.ArquivoLogo   := Trim(ConfigACBr.edtLogoMarca.Text);
+  aEcfConfig.ArquivoQRCode := EmptyStr;
+
+  aEcf := TEcfFactory.CriarEcf(aEcfTipo, aEcfConfig);
+  try
+
+    with aEcf do
+    begin
+      Ecf.SoftHouse := GetCompanyName;
+      Ecf.Sistema   := GetProductName;
+      Ecf.Versao    := GetProductVersion;
+
+      Ecf.Identifica_Cupom(Now
+        , FormatFloat('###0000000', iNumCaixa)
+        , qryVendasCaixaSoma.FieldByName('nome').AsString);
+
+      Ecf.Titulo_Livre('RESUMO DAS VENDAS NO CAIXA');
+      Ecf.Linha;
+
+      qryVendasCaixaFormaPagto.First;
+      while not qryVendasCaixaFormaPagto.Eof do
+      begin
+        if ( qryVendasCaixaFormaPagto.FieldByName('Valor_Credito').AsCurrency > 0.0 ) then
+          Ecf.Incluir_Texto_Valor(
+              RemoveAcentos( qryVendasCaixaFormaPagto.FieldByName('Forma_pagto_Desc').AsString )
+            , FormatFloat(',0.00',  qryVendasCaixaFormaPagto.FieldByName('Valor_Credito').AsCurrency) + ' +');
+
+        qryVendasCaixaFormaPagto.Next;
+      end;
+      qryVendasCaixaFormaPagto.Close;
+
+      Ecf.SubTotalVenda( FormatFloat(',0.00',  qryVendasCaixaSoma.FieldByName('totalvenda_bruta').AsCurrency) + ' +', True );
+      Ecf.Desconto     ( FormatFloat(',0.00',  qryVendasCaixaSoma.FieldByName('total_desconto').AsCurrency)   + ' -');
+      Ecf.TotalVenda   ( FormatFloat(',0.00',  qryVendasCaixaSoma.FieldByName('totalvenda').AsCurrency)       );
+
+      Ecf.Linha;
+      Ecf.Titulo_Livre('DETALHES DAS VENDAS');
+      Ecf.Linha;
+
+      qryVendasCaixaDetalhe.First;
+      while not qryVendasCaixaDetalhe.Eof do
+      begin
+        Ecf.Incluir_Item(FormatFloat('00', qryVendasCaixaDetalhe.RecNo)
+          , qryVendasCaixaDetalhe.FieldByName('Movimento').AsString
+          , RemoveAcentos( Copy(AnsiUpperCase(qryVendasCaixaDetalhe.FieldByName('Historico').AsString), 1, 45) )
+          , '1'
+          , RemoveAcentos( Copy(qryVendasCaixaDetalhe.FieldByName('Forma_pagto_Desc').AsString, 1, 3) )
+          , qryVendasCaixaDetalhe.FieldByName('TipoMov').AsString
+          , FormatFloat(',0.00',  qryVendasCaixaDetalhe.FieldByName('Valor').AsCurrency) +
+              IfThen(qryVendasCaixaDetalhe.FieldByName('SituacaoMov').AsInteger = 1, ' +', ' -')
+        );
+        
+        qryVendasCaixaDetalhe.Next;
+      end;
+      qryVendasCaixaDetalhe.Close;
+
+      Ecf.SubTotalVenda( FormatFloat(',0.00',  qryVendasCaixaSoma.FieldByName('totalvenda_bruta').AsCurrency) + ' +', True );
+      Ecf.Desconto     ( FormatFloat(',0.00',  qryVendasCaixaSoma.FieldByName('total_desconto').AsCurrency)   + ' -');
+      Ecf.TotalVenda   ( FormatFloat(',0.00',  qryVendasCaixaSoma.FieldByName('totalvenda').AsCurrency)       );
+
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre_Centralizado('OBSERVACAO:');
+      Ecf.Texto_Livre_Centralizado('Os valores das vendas canceladas, apesar');
+      Ecf.Texto_Livre_Centralizado('de estarem no detalhe deste relatorio, nao');
+      Ecf.Texto_Livre_Centralizado('sao desconsideradas no total resumo acima.');
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre('.');
+      Ecf.Texto_Livre('.');
+      Ecf.Pular_Linha(PULAR_LINHA_FINAL);
+
+      Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas, '----------------------------------------') );
+      Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas, RemoveAcentos(AnsiUpperCase(qryVendasCaixaSoma.FieldByName('nome').AsString))) );
+      Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas,
+        IfThen(StrIsCPF(qryVendasCaixaSoma.FieldByName('cpf').AsString)
+          , StrFormatarCpf(qryVendasCaixaSoma.FieldByName('cpf').AsString)
+          , StrFormatarCnpj(qryVendasCaixaSoma.FieldByName('cpf').AsString))) );
+
+      qryVendasCaixaSoma.Close;
+    end;
+
+  finally
+    aEcf.Ecf.Finalizar;
+    aEcf.Free;
+  end;
+
+end;
+
+procedure TDMNFe.AbrirVendasCaixa(AnoCaixa, NumeroCaixa: Integer);
+begin
+  with qryVendasCaixaSoma do
+  begin
+    Close;
+    ParamByName('anoCaixa').AsInteger := AnoCaixa;
+    ParamByName('numCaixa').AsInteger := NumeroCaixa;
+    Open;
+  end;
+
+  with qryVendasCaixaFormaPagto do
+  begin
+    Close;
+    ParamByName('anoCaixa').AsInteger := AnoCaixa;
+    ParamByName('numCaixa').AsInteger := NumeroCaixa;
+    Open;
+  end;
+
+  with qryVendasCaixaDetalhe do
+  begin
+    Close;
+    ParamByName('anoCaixa').AsInteger := AnoCaixa;
+    ParamByName('numCaixa').AsInteger := NumeroCaixa;
+    Open;
+  end;
+end;
+
+function TDMNFe.ImprimirCupomFechamentoCaixa(const sEmpresa: String;
+  const iAnoCaixa, iNumCaixa: Integer): Boolean;
+begin
+  Result := ImprimirCupomFechamentoCaixa_PORTA(sEmpresa, iAnoCaixa, iNumCaixa);
 end;
 
 end.
