@@ -24,7 +24,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       Tag = 11
       Left = 726
       Top = 2
-      Width = 120
+      Width = 125
       Height = 31
       Hint = 'Finalizar/Enviar Solicita'#231#227'o'
       Caption = 'Finalizar / Enviar'
@@ -88,12 +88,12 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     end
     object btnAprovarSolicitacao: TcxButton
       Tag = 12
-      Left = 846
+      Left = 851
       Top = 2
-      Width = 120
+      Width = 125
       Height = 31
       Hint = 'Aprovar Solicita'#231#227'o'
-      Caption = 'Autorizar'
+      Caption = 'Aprovar Solicita'#231#227'o'
       Enabled = False
       ParentShowHint = False
       ShowHint = True
@@ -154,12 +154,12 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     end
     object btnCancelarSolicitacao: TcxButton
       Tag = 13
-      Left = 966
+      Left = 976
       Top = 2
-      Width = 120
+      Width = 125
       Height = 31
       Hint = 'Cancelar Solicita'#231#227'o selecionada'
-      Caption = 'Cancelar Cot.'
+      Caption = 'Cancelar Solicita'#231#227'o'
       Enabled = False
       ParentShowHint = False
       ShowHint = True
@@ -219,7 +219,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       NumGlyphs = 2
     end
     object Bevel12: TBevel
-      Left = 1086
+      Left = 1101
       Top = 2
       Width = 4
       Height = 31
@@ -253,7 +253,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           end
           item
             Expanded = False
-            FieldName = 'EMISSAO_DATA'
+            FieldName = 'DATA_EMISSAO'
             Title.Caption = 'Emiss'#227'o'
             Width = 85
             Visible = True
@@ -1163,7 +1163,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = []
-          MaxLength = 250
           ParentFont = False
           TabOrder = 2
         end
@@ -1182,6 +1181,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           Font.Style = []
           ParentFont = False
           TabOrder = 5
+          OnExit = ControlEditExit
         end
         object pnlBotoesProduto: TPanel
           Left = 6

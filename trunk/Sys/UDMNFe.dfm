@@ -3183,12 +3183,12 @@ object DMNFe: TDMNFe
       TopMargin = 4.000000000000000000
       BottomMargin = 4.000000000000000000
       object bndReportTitle: TfrxReportTitle
-        Height = 98.267780000000000000
+        Height = 117.165430000000000000
         Top = 18.897650000000000000
         Width = 249.448980000000000000
         object frdEmpresaNMFANT: TfrxMemoView
           Width = 249.448980000000000000
-          Height = 30.236240000000000000
+          Height = 26.456710000000000000
           ShowHint = False
           DataField = 'NMFANT'
           DataSet = frdEmpresa
@@ -3198,6 +3198,7 @@ object DMNFe: TDMNFe
           Font.Height = -19
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
+          Frame.Width = 0.100000000000000000
           HAlign = haCenter
           Memo.UTF8 = (
             '[frdEmpresa."NMFANT"]')
@@ -3205,15 +3206,17 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo1: TfrxMemoView
-          Top = 30.236240000000000000
+          ShiftMode = smWhenOverlapped
+          Top = 26.456710000000000000
           Width = 249.448980000000000000
-          Height = 45.354360000000000000
+          Height = 68.031540000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Lucida Console'
           Font.Style = []
+          Frame.Width = 0.100000000000000000
           HAlign = haCenter
           Memo.UTF8 = (
             
@@ -3225,7 +3228,8 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo3: TfrxMemoView
-          Top = 75.590600000000000000
+          ShiftMode = smWhenOverlapped
+          Top = 94.488250000000000000
           Width = 249.448980000000000000
           Height = 18.897650000000000000
           ShowHint = False
@@ -3235,6 +3239,7 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Frame.Typ = [ftBottom]
+          Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
             'CNPJ: [CNPJEmissor] IE: [frdEmpresa."IE"]')
           ParentFont = False
@@ -3244,7 +3249,7 @@ object DMNFe: TDMNFe
       end
       object bndMasterData: TfrxMasterData
         Height = 30.236240000000000000
-        Top = 347.716760000000000000
+        Top = 366.614410000000000000
         Width = 249.448980000000000000
         DataSet = frdItens
         DataSetName = 'frdItens'
@@ -3353,7 +3358,7 @@ object DMNFe: TDMNFe
       end
       object bndHeader: TfrxHeader
         Height = 147.401670000000000000
-        Top = 177.637910000000000000
+        Top = 196.535560000000000000
         Width = 249.448980000000000000
         object Memo13: TfrxMemoView
           Top = 75.590600000000000000
@@ -3643,7 +3648,7 @@ object DMNFe: TDMNFe
       end
       object bndReportSummary: TfrxReportSummary
         Height = 117.165430000000000000
-        Top = 438.425480000000000000
+        Top = 457.323130000000000000
         Width = 249.448980000000000000
         object Memo17: TfrxMemoView
           Width = 132.283550000000000000
@@ -8414,7 +8419,7 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
-            '[frdEmpresa."RZSOC"]')
+            '[frdEmpresa."NMFANT"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -8501,7 +8506,10 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -9274,7 +9282,7 @@ object DMNFe: TDMNFe
         Stretched = True
         object frdEmpresaNMFANT: TfrxMemoView
           Width = 249.448980000000000000
-          Height = 41.574830000000000000
+          Height = 26.456710000000000000
           ShowHint = False
           DataField = 'NMFANT'
           DataSet = frdEmpresa
@@ -9293,9 +9301,9 @@ object DMNFe: TDMNFe
         end
         object Memo1: TfrxMemoView
           ShiftMode = smWhenOverlapped
-          Top = 41.574830000000000000
+          Top = 26.456710000000000000
           Width = 249.448980000000000000
-          Height = 52.913420000000000000
+          Height = 68.031540000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -10574,7 +10582,10 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -10831,7 +10842,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
@@ -10847,7 +10858,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
@@ -10885,7 +10896,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           HAlign = haRight
@@ -11006,7 +11017,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
@@ -11074,7 +11085,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
@@ -11932,7 +11943,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -13341,7 +13355,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -14647,7 +14664,7 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Memo.UTF8 = (
-            '[frdEmpresa."RZSOC"]')
+            '[frdEmpresa."NMFANT"]')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -14734,7 +14751,10 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -15873,7 +15893,10 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -17028,7 +17051,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -17294,7 +17320,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -17311,7 +17337,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -17351,7 +17377,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -17479,7 +17505,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -17551,7 +17577,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20366,7 +20392,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -20632,7 +20661,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20649,7 +20678,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20691,7 +20720,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20852,7 +20881,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20927,7 +20956,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20944,7 +20973,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -20986,7 +21015,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -21585,7 +21614,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -21852,7 +21884,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -21909,7 +21941,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -22050,7 +22082,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -22105,7 +22137,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -22160,7 +22192,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -22592,7 +22624,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -22858,7 +22893,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -22875,7 +22910,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -22915,7 +22950,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -23056,7 +23091,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -23091,7 +23126,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -23127,7 +23162,7 @@ object DMNFe: TDMNFe
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -23735,7 +23770,10 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -23886,7 +23924,6 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          HAlign = haRight
           Memo.UTF8 = (
             ' [frdSolicitacaoCompra."CENTRO_CUSTO_NOME"]')
           ParentFont = False
@@ -24085,7 +24122,7 @@ object DMNFe: TDMNFe
         end
         object Memo48: TfrxMemoView
           Top = 11.338590000000000000
-          Width = 638.740570000000000000
+          Width = 631.181510000000000000
           Height = 18.897650000000000000
           ShowHint = False
           DataSet = frdVenda
@@ -24102,12 +24139,12 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo49: TfrxMemoView
-          Width = 638.740570000000000000
+          Width = 631.181510000000000000
           Height = 11.338590000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -24156,13 +24193,13 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo8: TfrxMemoView
-          Left = 638.740570000000000000
-          Width = 79.370130000000000000
+          Left = 631.181510000000000000
+          Width = 86.929190000000000000
           Height = 11.338590000000000000
           ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -11
+          Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
           Frame.Width = 0.100000000000000000
@@ -24172,9 +24209,9 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo9: TfrxMemoView
-          Left = 638.740570000000000000
+          Left = 631.181510000000000000
           Top = 11.338590000000000000
-          Width = 79.370130000000000000
+          Width = 86.929190000000000000
           Height = 18.897650000000000000
           ShowHint = False
           DataSet = frdVenda
@@ -24330,7 +24367,9 @@ object DMNFe: TDMNFe
           Font.Style = []
           Frame.Width = 0.100000000000000000
           Memo.UTF8 = (
-            ' [frdSolicitacaoCompra."APROVACAO_DATA"] ')
+            
+              ' [IIF(<frdSolicitacaoCompra."APROVACAO_DATA">=0,'#39#39',FormatDateTim' +
+              'e('#39'dd/mm/yyyy'#39',<frdSolicitacaoCompra."APROVACAO_DATA">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
