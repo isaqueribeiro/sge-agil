@@ -393,7 +393,7 @@ procedure TfrmGeSolicitacaoCompra.HabilitarDesabilitar_Btns;
 begin
   if ( pgcGuias.ActivePage = tbsCadastro ) then
   begin
-    btnFinalizarSolicitacao.Enabled := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger = STATUS_SOLICITACAO_EDC) and (not cdsTabelaItens.IsEmpty);
+    btnFinalizarSolicitacao.Enabled := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_EDC, STATUS_SOLICITACAO_ABR]) and (not cdsTabelaItens.IsEmpty);
     btnAprovarSolicitacao.Enabled   := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN]) and (not cdsTabelaItens.IsEmpty);
     btnCancelarSolicitacao.Enabled  := (not (IbDtstTabela.State in [dsEdit, dsInsert])) and (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_FIN, STATUS_SOLICITACAO_APR]);
 
@@ -462,7 +462,7 @@ begin
   else
   begin
     if (IbDtstTabelaSTATUS.AsInteger in [STATUS_SOLICITACAO_ABR, STATUS_SOLICITACAO_FIN]) then
-      if not ShowConfirm('A análise da solicitação selecionada está em andamento.' + #13 + 'Deseja colocá-la em edição novamente?') then
+      if not ShowConfirm('A análise da solicitação selecionada está em andamento (Aberta).' + #13 + 'Deseja colocá-la em edição novamente?') then
         Abort;
 
     inherited;
@@ -764,15 +764,16 @@ begin
     if Trim(IbDtstTabelaNUMERO.AsString) = EmptyStr then
       IbDtstTabelaNUMERO.AsString := IbDtstTabelaANO.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaCODIGO.AsInteger);
 
-    if GetExisteNumeroCotacao(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger, IbDtstTabelaNUMERO.AsString, sControle) then
+    if GetExisteNumeroSolicitacao(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger, IbDtstTabelaNUMERO.AsString, sControle) then
     begin
       ShowWarning('Número de solicitação já existe!');
       Abort;
     end;
 
-    IbDtstTabelaSTATUS.AsInteger    := STATUS_SOLICITACAO_ABR;
-    IbDtstTabelaMOVITO.AsString     := Trim(AnsiUpperCase(IbDtstTabelaMOVITO.AsString));
-    IbDtstTabelaOBSERVACAO.AsString := Trim(AnsiUpperCase(IbDtstTabelaOBSERVACAO.AsString));
+    IbDtstTabelaSTATUS.AsInteger            := STATUS_SOLICITACAO_ABR;
+    IbDtstTabelaOBJETO_SOLICITACAO.AsString := Trim(AnsiUpperCase(IbDtstTabelaOBJETO_SOLICITACAO.AsString));
+    IbDtstTabelaMOVITO.AsString             := Trim(AnsiUpperCase(IbDtstTabelaMOVITO.AsString));
+    IbDtstTabelaOBSERVACAO.AsString         := Trim(AnsiUpperCase(IbDtstTabelaOBSERVACAO.AsString));
 
     inherited;
 
