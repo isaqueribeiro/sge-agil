@@ -186,7 +186,7 @@ begin
   with cdsCentroCusto, Params, fPreferenciaINI do
   begin
     Close;
-    ParamByName('empresa').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
     Open;
 
     edCentroCusto.Clear;

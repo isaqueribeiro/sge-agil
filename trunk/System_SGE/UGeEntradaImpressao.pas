@@ -121,6 +121,8 @@ begin
   edSituacao.ItemIndex := SITUACAO_ENTRADA_PADRAO; // Entradas finalizadas e com NF-e emitidas
 
   inherited;
+  RotinaID := ROTINA_REL_ESTOQUE_PROD_ID;
+
   CarregarEmpresa;
   CarregarTipoEntrada;
   CarregarTipoDocumento;
