@@ -351,6 +351,7 @@ type
     procedure mnRelatorioEstoqueProdutoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure nmSolicitacaoCompraClick(Sender: TObject);
+    procedure mnRelatorioEstoqueApropriacaoClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -1119,6 +1120,12 @@ procedure TfrmPrinc.nmSolicitacaoCompraClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_MOV_SOLICITACAO_ID, True) then
     MostrarControleSolicitacao(Self);
+end;
+
+procedure TfrmPrinc.mnRelatorioEstoqueApropriacaoClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_APRO_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeApropriacaoEstoqueImpressao');
 end;
 
 end.

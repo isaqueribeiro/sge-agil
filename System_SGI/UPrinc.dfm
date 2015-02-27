@@ -1,7 +1,7 @@
 object frmPrinc: TfrmPrinc
   Tag = 2
-  Left = 528
-  Top = 221
+  Left = 429
+  Top = 206
   Width = 1064
   Height = 680
   Caption = 'SGI | Sistema Integrado de Gest'#227'o Industrial'
@@ -10185,7 +10185,7 @@ object frmPrinc: TfrmPrinc
             3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E00003E3E3E3E3E3E
             3E3E3E3E3E3E3E3E00003E3E3E3E3E3E3E3E3E3E3E3E3E3E0000}
           Caption = 'Apropria'#231#227'o de Estoque'
-          Enabled = False
+          OnClick = mnRelatorioEstoqueApropriacaoClick
         end
       end
       object nmRelatorioFaturamento: TMenuItem

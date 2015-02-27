@@ -69,7 +69,7 @@ var
 implementation
 
 uses
-  UConstantesDGE, UDMBusiness, UDMNFe;
+  UConstantesDGE, UDMBusiness, UDMNFe, UGrPadrao;
 
 const
   REPORT_RELACAO_ESTOQUE_PRODUTO = 0;
@@ -183,6 +183,7 @@ end;
 procedure TfrmGeProdutoEstoqueImpressao.FormCreate(Sender: TObject);
 begin
   inherited;
+  RotinaID := ROTINA_REL_ESTOQUE_PROD_ID;
 
   FSQL_RelacaoEstoqueProduto := TStringList.Create;
   FSQL_RelacaoEstoqueProduto.AddStrings( QryRelacaoEstoqueProduto.SQL );
