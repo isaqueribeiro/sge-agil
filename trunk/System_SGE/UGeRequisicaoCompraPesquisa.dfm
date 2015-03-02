@@ -60,6 +60,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Height = 22
         Cursor = crHandPoint
         Caption = '&Converter'
+        Enabled = False
         Flat = True
         Font.Charset = ANSI_CHARSET
         Font.Color = clRed

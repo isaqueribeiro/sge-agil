@@ -11857,3 +11857,219 @@ Historico:
         + Criacao dos campos CAIXA_ANO, CAIXA_NUM e CAIXA_PDV para facilitar a identificacao de vendas realizadas, mas
           que ainda nao geraram movimentacao de caixa, nos caixas do usuarios.';
 
+
+
+
+/*------ SYSDBA 27/02/2015 13:13:45 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_ATUALIZAR_CUSTO_PRODUTO (
+    PRODUTO DMN_VCHAR_10_KEY,
+    VALOR_CUSTO DMN_MONEY,
+    SISTEMA DMN_SMALLINT_N)
+as
+declare variable FRACIONADOR DMN_PERCENTUAL_3;
+begin
+  -- Abandonar o procedimento, caso o custo informado seja 0 (zero)
+  if ( coalesce(:valor_custo, 0.0) <= 0 ) then
+    Exit;
+
+  if (not exists(
+    Select
+      p.codigo
+    from TBPRODUTO p
+    where p.aliquota_tipo = 0
+      and p.cod = :produto
+  )) then
+  begin
+
+    -- 1. Atualizar Custo do Produto no Cadastro
+    Update TBPRODUTO p Set
+      p.customedio = :valor_custo
+    where p.aliquota_tipo = 0
+      and p.cod = :produto;
+
+    -- 2. Atualizar o Custo no Estoque Apropriado
+    if ( coalesce(:sistema, 0) = 2 ) then
+    begin
+      Select
+        coalesce(nullif(p.fracionador, 0), 1.0)
+      from TBPRODUTO p
+      where p.aliquota_tipo = 0
+        and p.cod = :produto
+      Into
+        fracionador;
+
+      Update TBESTOQUE_ALMOX e Set
+          e.custo_medio = (:valor_custo / :fracionador)
+      where e.produto = :produto;
+
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE SET_ATUALIZAR_CUSTO_PRODUTO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 27/02/2015 13:39:39 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_ATUALIZAR_CUSTO_PRODUTO (
+    PRODUTO DMN_VCHAR_10_KEY,
+    VALOR_CUSTO DMN_MONEY,
+    SISTEMA DMN_SMALLINT_N)
+as
+declare variable FRACIONADOR DMN_PERCENTUAL_3;
+begin
+  -- Abandonar o procedimento, caso o custo informado seja 0 (zero)
+  if ( coalesce(:valor_custo, 0.0) <= 0 ) then
+    Exit;
+
+  if (not exists(
+    Select
+      p.codigo
+    from TBPRODUTO p
+    where p.aliquota_tipo = 0
+      and p.cod = :produto
+  )) then
+  begin
+
+    -- 1. Atualizar Custo do Produto no Cadastro
+    Update TBPRODUTO p Set
+      p.customedio = :valor_custo
+    where p.aliquota_tipo = 0
+      and p.cod = :produto;
+
+    -- 2. Atualizar o Custo no Estoque Apropriado
+    if ( coalesce(:sistema, 0) = 2 ) then
+    begin
+      Select
+        coalesce(nullif(p.fracionador, 0), 1.0)
+      from TBPRODUTO p
+      where p.aliquota_tipo = 0
+        and p.cod = :produto
+      Into
+        fracionador;
+
+      Update TBESTOQUE_ALMOX e Set
+          e.custo_medio = (:valor_custo / :fracionador)
+      where e.produto = :produto;
+
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 27/02/2015 13:51:04 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_ATUALIZAR_CUSTO_PRODUTO (
+    PRODUTO DMN_VCHAR_10_KEY,
+    VALOR_CUSTO DMN_MONEY,
+    SISTEMA DMN_SMALLINT_N)
+as
+declare variable FRACIONADOR DMN_PERCENTUAL_3;
+begin
+  -- Abandonar o procedimento, caso o custo informado seja 0 (zero)
+  if ( coalesce(:valor_custo, 0.0) <= 0 ) then
+    Exit;
+
+  if (not exists(
+    Select
+      p.codigo
+    from TBPRODUTO p
+    where p.cod = :produto
+  )) then
+  begin
+
+    -- 1. Atualizar Custo do Produto no Cadastro
+    Update TBPRODUTO p Set
+      p.customedio = :valor_custo
+    where p.aliquota_tipo = 0
+      and p.cod = :produto;
+
+    -- 2. Atualizar o Custo no Estoque Apropriado
+    if ( coalesce(:sistema, 0) = 2 ) then
+    begin
+      Select
+        coalesce(nullif(p.fracionador, 0), 1.0)
+      from TBPRODUTO p
+      where p.aliquota_tipo = 0
+        and p.cod = :produto
+      Into
+        fracionador;
+
+      Update TBESTOQUE_ALMOX e Set
+          e.custo_medio = (:valor_custo / :fracionador)
+      where e.produto = :produto;
+
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 27/02/2015 13:51:21 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_ATUALIZAR_CUSTO_PRODUTO (
+    PRODUTO DMN_VCHAR_10_KEY,
+    VALOR_CUSTO DMN_MONEY,
+    SISTEMA DMN_SMALLINT_N)
+as
+declare variable FRACIONADOR DMN_PERCENTUAL_3;
+begin
+  -- Abandonar o procedimento, caso o custo informado seja 0 (zero)
+  if ( coalesce(:valor_custo, 0.0) <= 0 ) then
+    Exit;
+
+  if (exists(
+    Select
+      p.codigo
+    from TBPRODUTO p
+    where p.aliquota_tipo = 0
+      and p.cod = :produto
+  )) then
+  begin
+
+    -- 1. Atualizar Custo do Produto no Cadastro
+    Update TBPRODUTO p Set
+      p.customedio = :valor_custo
+    where p.aliquota_tipo = 0
+      and p.cod = :produto;
+
+    -- 2. Atualizar o Custo no Estoque Apropriado
+    if ( coalesce(:sistema, 0) = 2 ) then
+    begin
+      Select
+        coalesce(nullif(p.fracionador, 0), 1.0)
+      from TBPRODUTO p
+      where p.aliquota_tipo = 0
+        and p.cod = :produto
+      Into
+        fracionador;
+
+      Update TBESTOQUE_ALMOX e Set
+          e.custo_medio = (:valor_custo / :fracionador)
+      where e.produto = :produto;
+
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
