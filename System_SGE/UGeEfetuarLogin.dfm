@@ -9110,6 +9110,8 @@ inherited FrmEfetuarLogin: TFrmEfetuarLogin
     AnchorX = 129
   end
   inherited lblSystemName: TcxLabel
+    Style.Font.Color = clGreen
+    Style.TextColor = clGreen
     Style.IsFontAssigned = True
   end
 end

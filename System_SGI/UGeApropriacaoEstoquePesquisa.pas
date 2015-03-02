@@ -101,11 +101,12 @@ type
     dbgProdutoTblESTOQUE: TcxGridDBBandedColumn;
     dbgProdutoLvl: TcxGridLevel;
     btbtnSelecionar: TcxButton;
-    Bevel4: TBevel;
+    BvlSeparadorBotacao: TBevel;
     dbgProdutoTblPERCENTUAL: TcxGridDBBandedColumn;
     dbgFabTblPERCENTUAL: TcxGridDBBandedColumn;
     dbgGrupoTblPERCENTUAL: TcxGridDBBandedColumn;
     chkProdutoComEstoque: TCheckBox;
+    btBtnAtualizarCusto: TcxButton;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -119,6 +120,7 @@ type
     procedure btbtnSelecionarClick(Sender: TObject);
     procedure btBtnExportarClick(Sender: TObject);
     procedure btBtnEnviarEmailClick(Sender: TObject);
+    procedure btBtnAtualizarCustoClick(Sender: TObject);
   private
     { Private declarations }
     FSQLTotal   ,
@@ -176,7 +178,9 @@ begin
       lblCentroCusto.Enabled  := False;
       edCentroCusto.Enabled   := False;
 
-      btbtnSelecionar.Visible := True;
+      btBtnAtualizarCusto.Visible := False;
+      BvlSeparadorBotacao.Width   := BvlSeparadorBotacao.Width + btBtnAtualizarCusto.Width;
+      btbtnSelecionar.Visible     := True;
       
       Result := (ShowModal = mrOk);
 
@@ -201,7 +205,17 @@ end;
 
 procedure TfrmGeApropriacaoEstoquePesquisa.RegistrarRotinaSistema;
 begin
-  ;
+  if ( Trim(RotinaID) <> EmptyStr ) then
+  begin
+    if btBtnExportar.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, GetRotinaInternaID(btBtnExportar), btBtnExportar.Hint, RotinaID);
+
+    if btBtnEnviarEmail.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, GetRotinaInternaID(btBtnEnviarEmail), btBtnEnviarEmail.Hint, RotinaID);
+
+    if btBtnAtualizarCusto.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, GetRotinaInternaID(btBtnAtualizarCusto), btBtnAtualizarCusto.Hint, RotinaID);
+  end;
 end;
 
 procedure TfrmGeApropriacaoEstoquePesquisa.NovaPesquisaKeyPress(
@@ -296,6 +310,8 @@ begin
     PgcTabelas.Pages[TipoFiltro].TabVisible := True;
     PgcTabelas.Pages[TipoFiltro].Caption    := edTipoFiltro.Items.Strings[TipoFiltro];
   end;
+
+  btBtnAtualizarCusto.Enabled := (PgcTabelas.ActivePage = TbsProduto);
 end;
 
 procedure TfrmGeApropriacaoEstoquePesquisa.BtnPesquisarClick(
@@ -313,6 +329,7 @@ end;
 procedure TfrmGeApropriacaoEstoquePesquisa.FormCreate(Sender: TObject);
 begin
   inherited;
+  RotinaID := ROTINA_CNS_CONSULTA_ESTOQUE_APR_ID;
 
   FSQLTotal := TStringList.Create;
   FSQLTotal.AddStrings( QryTotal.SQL );
@@ -328,6 +345,10 @@ begin
 
   edTipoFiltro.ItemIndex := TIPO_PRD;
   HabilitarGuia(edTipoFiltro.ItemIndex);
+
+  btBtnAtualizarCusto.Visible := True;
+  btbtnSelecionar.Visible     := False;
+  BvlSeparadorBotacao.Width   := BvlSeparadorBotacao.Width + btbtnSelecionar.Width;
 end;
 
 procedure TfrmGeApropriacaoEstoquePesquisa.ExecutarPesquisa(
@@ -344,7 +365,7 @@ begin
     SQL.Clear;
     SQL.AddStrings( FSQLTotal );
 
-    SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
+    SQL.Text := StringReplace(SQL.Text, 'e=e', gUsuarioLogado.Empresa, [rfReplaceAll]);
     SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
   end;
 
@@ -368,7 +389,7 @@ begin
           if chkProdutoComEstoque.Checked then
             sWhr := sWhr + ' and (e.estoque > 0.0)';
 
-          SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
+          SQL.Text := StringReplace(SQL.Text, 'e=e', gUsuarioLogado.Empresa, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
 
@@ -410,7 +431,7 @@ begin
           if chkProdutoComEstoque.Checked then
             sWhr := sWhr + ' and (e.estoque > 0.0)';
 
-          SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
+          SQL.Text := StringReplace(SQL.Text, 'e=e', gUsuarioLogado.Empresa, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
         end;
@@ -444,7 +465,7 @@ begin
           if chkProdutoComEstoque.Checked then
             sWhr := sWhr + ' and (e.estoque > 0.0)';
 
-          SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
+          SQL.Text := StringReplace(SQL.Text, 'e=e', gUsuarioLogado.Empresa, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
         end;
@@ -521,7 +542,7 @@ begin
           else
             sWhr := sWhr + ' and (p.codgrupo = ' + CdsGrupo.FieldByName('GRUPO_COD').AsString + ')';
 
-          SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
+          SQL.Text := StringReplace(SQL.Text, 'e=e', gUsuarioLogado.Empresa, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
         end;
@@ -561,7 +582,7 @@ begin
           else
             sWhr := sWhr + ' and (p.codfabricante = ' + CdsFabricante.FieldByName('FABRICANTE_COD').AsString + ')';
 
-          SQL.Text := StringReplace(SQL.Text, 'e=e', GetEmpresaIDDefault, [rfReplaceAll]);
+          SQL.Text := StringReplace(SQL.Text, 'e=e', gUsuarioLogado.Empresa, [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, 'c=c', IntToStr(edCentroCusto.Tag), [rfReplaceAll]);
           SQL.Text := StringReplace(SQL.Text, WHR_DEFAULT, sWhr, [rfReplaceAll]);
         end;
@@ -587,6 +608,9 @@ end;
 procedure TfrmGeApropriacaoEstoquePesquisa.btBtnExportarClick(
   Sender: TObject);
 begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
   Case PgcTabelas.ActivePageIndex of
     TIPO_GRP:
       if ( CdsGrupo.IsEmpty ) then
@@ -628,6 +652,9 @@ var
   sFileNameHtml  ,
   sFileNameXls   : String;
 begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
   Case PgcTabelas.ActivePageIndex of
     TIPO_GRP:
       if ( CdsGrupo.IsEmpty ) then
@@ -728,6 +755,81 @@ begin
     Screen.Cursor := crDefault;
     if smtpEmail.Connected then
       smtpEmail.Disconnect;
+  end;
+end;
+
+procedure TfrmGeApropriacaoEstoquePesquisa.btBtnAtualizarCustoClick(
+  Sender: TObject);
+var
+  cValorCusto : Currency;
+  sProduto    ,
+  sValorCusto : String;
+const
+  LOG = 'Insert Into TBLOG_TRANSACAO (USUARIO, DATA_HORA, TIPO, DESCRICAO, ESPECIFICACAO) values (%s, current_timestamp, 2, %s, %s)';
+begin
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Exit;
+
+  if not CdsProduto.Active then
+    Exit;
+
+  if CdsProduto.IsEmpty then
+    Exit;
+
+  sValorCusto := EmptyStr;
+
+  if InputQuery('Atualizar Custo (R$)', 'Favor informar o Custo de Compra do Produto:', sValorCusto) then
+  begin
+    sValorCusto := Trim( StringReplace(StringReplace(sValorCusto, '.', '', [rfReplaceAll]), 'R$', '', [rfReplaceAll]) );
+
+    if StrToCurrDef(sValorCusto, 0.0) <=0 then
+      ShowWarning('Valor de Custo informado não é válido!')
+    else
+    begin
+      sProduto    := CdsProduto.FieldByName('produto').AsString;
+      cValorCusto := StrToCurr(sValorCusto);
+
+      // Gravar Log
+
+      with DMBusiness, qryBusca do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add(Format(LOG, [
+            QuotedStr(gUsuarioLogado.Login)
+          , QuotedStr(DESC_LOG_EVENTO_ATUALIZAR_CUSTO)
+          , QuotedStr('Atualização de custo do produto "' +
+              sProduto + '" para o valor de R$ ' +
+              FormatFloat(',0.00', cValorCusto) + ' correspondente ao custo de compra.' )
+        ]));
+        ExecSQL;
+
+        CommitTransaction;
+      end;
+
+      // Executar atualização de custo
+
+      with DMBusiness, qryBusca do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('Execute Procedure SET_ATUALIZAR_CUSTO_PRODUTO (' +
+          QuotedStr(sProduto) + ', ' +
+          StringReplace(FormatFloat('#########################0.00', cValorCusto), ',', '.', [rfReplaceAll]) + ', ' +
+          IntToStr(gSistema.Codigo) + ')');
+        ExecSQL;
+
+        CommitTransaction;
+      end;
+
+      ShowInformation('Custo atualizado com sucesso');
+
+      CdsProduto.Close;
+      CdsProduto.Open;
+      CalcularPercentuais( CdsProduto );
+      
+      CdsProduto.Locate('PRODUTO', sProduto, []);
+    end;
   end;
 end;
 

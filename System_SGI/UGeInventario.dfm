@@ -1028,6 +1028,15 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 17
       Shape = bsTopLine
     end
+    object lblCustoUnitario: TLabel
+      Left = 352
+      Top = 104
+      Width = 85
+      Height = 16
+      Caption = 'Custo Unit'#225'rio:'
+      FocusControl = dbCustoUnitario
+      Transparent = True
+    end
     object PnlMaterialTitulo: TPanel
       Left = 1
       Top = 1
@@ -1088,7 +1097,7 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 31
       Anchors = [akRight, akBottom]
       Caption = 'Confirmar'
-      TabOrder = 5
+      TabOrder = 7
       OnClick = BtnConfirmarItemClick
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
@@ -1150,7 +1159,7 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 31
       Anchors = [akRight, akBottom]
       Caption = 'Cancelar'
-      TabOrder = 6
+      TabOrder = 8
       OnClick = BtnCancelarItemClick
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
@@ -1290,7 +1299,23 @@ inherited frmGeInventario: TfrmGeInventario
       Font.Style = []
       ParentFont = False
       ReadOnly = True
-      TabOrder = 7
+      TabOrder = 5
+    end
+    object dbCustoUnitario: TDBEdit
+      Left = 352
+      Top = 120
+      Width = 113
+      Height = 24
+      CharCase = ecUpperCase
+      DataField = 'CUSTO'
+      DataSource = dtsMaterial
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 6
     end
   end
   object tblEmpresa: TIBTable

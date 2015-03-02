@@ -181,6 +181,8 @@ begin
     CdsPesquisa.Open;
 
     Result := not CdsPesquisa.IsEmpty;
+
+    BtnConverter.Enabled := Result;
   finally
     Screen.Cursor := crDefault;
   end;
@@ -225,6 +227,9 @@ end;
 
 procedure TfrmGeRequisicaoCompraPesquisa.dbgDadosDblClick(Sender: TObject);
 begin
+  if not CdsPesquisa.Active then
+    Exit;
+
   if ( not CdsPesquisa.IsEmpty ) then
   begin
     CdsPesquisa.Edit;
@@ -283,8 +288,15 @@ begin
     ShowInformation('Nenhum requisição de compra/serviço foi selecionada para conversão em autorização de compra/serviço!')
   else
   if ShowConfirmation('Confirma a conversão das requisições de compras/serviços selecionadas em um autorização de compra/serviço?') then
+  begin
+    BtnConverter.Enabled := False;
+    
     if GerarAutorizacao then
-      CdsPesquisa.Close;
+    begin
+      ShowInformation('Para processar nova conversão de requisições, favor pesquisar novamente.');
+      Self.Close;
+    end;  
+  end;
 end;
 
 function TfrmGeRequisicaoCompraPesquisa.EstaSelecionada: Boolean;
@@ -292,6 +304,9 @@ var
   bSelecionada : Boolean;
 begin
   bSelecionada := False;
+
+  if not CdsPesquisa.Active then
+    Exit;
 
   with CdsPesquisa do
   begin
@@ -343,7 +358,7 @@ begin
       cdsAutorizacao.Close;
       cdsAutorizacao.ParamByName('ano').AsInteger    := iAno;
       cdsAutorizacao.ParamByName('codigo').AsInteger := iNum;
-      cdsAutorizacao.ParamByName('empresa').AsString := GetEmpresaIDDefault;
+      cdsAutorizacao.ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
       cdsAutorizacao.Open;
 
       // Gerar cabeçalho da autorização
@@ -357,7 +372,7 @@ begin
       cdsAutorizacaoTIPO.Value       := GetTipoRequisicao;
       cdsAutorizacaoINSERCAO_DATA.Value    := GetDateTimeDB;
       cdsAutorizacaoEMISSAO_DATA.Value     := GetDateDB;
-      cdsAutorizacaoEMISSAO_USUARIO.Value  := GetUserApp;
+      cdsAutorizacaoEMISSAO_USUARIO.Value  := gUsuarioLogado.Login;
       cdsAutorizacaoVALIDADE.Value         := cdsAutorizacaoEMISSAO_DATA.Value + GetPrazoValidadeAutorizacaoCompra(GetEmpresaIDDefault);
       cdsAutorizacaoSTATUS.AsInteger       := STATUS_AUTORIZACAO_EDC;
 
@@ -423,7 +438,7 @@ begin
       stpGerarAutorizacaoItens.ParamByName('autorizacao_ano').AsInteger := cdsAutorizacaoANO.AsInteger;
       stpGerarAutorizacaoItens.ParamByName('autorizacao_cod').AsInteger := cdsAutorizacaoCODIGO.AsInteger;
       stpGerarAutorizacaoItens.ParamByName('autorizacao_emp').AsString  := cdsAutorizacaoEMPRESA.AsString;
-      stpGerarAutorizacaoItens.ParamByName('usuario').AsString          := GetUserApp;
+      stpGerarAutorizacaoItens.ParamByName('usuario').AsString          := gUsuarioLogado.Login;
       stpGerarAutorizacaoItens.ExecProc;
 
       CommitTransaction;
@@ -435,7 +450,7 @@ begin
       cdsAutorizacaoMOVITO.AsString          := AnsiUpperCase(sTextoMotivo);
       cdsAutorizacaoSTATUS.Value             := STATUS_AUTORIZACAO_AUT;
       cdsAutorizacaoAUTORIZADO_DATA.Value    := GetDateDB;
-      cdsAutorizacaoAUTORIZADO_USUARIO.Value := GetUserApp;
+      cdsAutorizacaoAUTORIZADO_USUARIO.Value := gUsuarioLogado.Login;
 
       cdsAutorizacao.Post;
       cdsAutorizacao.ApplyUpdates;
@@ -457,6 +472,9 @@ end;
 procedure TfrmGeRequisicaoCompraPesquisa.GetValorTotal(var iFormaPagto, iCondicaoPagto : Integer;
   var cTotalBruto, cTotalDesconto, cTotalFrete, cTotalIPI, cTotalLiquido: Currency);
 begin
+  if not CdsPesquisa.Active then
+    Exit;
+
   cTotalBruto    := 0.0;
   cTotalDesconto := 0.0;
   cTotalFrete    := 0.0;

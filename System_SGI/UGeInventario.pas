@@ -170,6 +170,8 @@ type
     CdsRelacaoInventarioCC: TClientDataSet;
     FrdsRelacaoInventarioCC: TfrxDBDataset;
     qryInventarioCENTRO_CUSTO: TIntegerField;
+    lblCustoUnitario: TLabel;
+    dbCustoUnitario: TDBEdit;
     procedure FormCreate(Sender: TObject);
     procedure nmCarregarIAClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -737,6 +739,12 @@ begin
   begin
     ShowWarning('Favor informar uma quantidade válida');
     dbProdutoQtde.SetFocus;
+  end
+  else
+  if ( dbCustoUnitario.Field.AsCurrency <= 0.0 ) then
+  begin
+    ShowWarning('Favor informar um Valor de Custo unitário válido');
+    dbCustoUnitario.SetFocus;
   end
   else
   begin

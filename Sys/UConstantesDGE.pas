@@ -326,6 +326,7 @@ const
   DESC_LOG_EVENTO_CCE_NFE         = 'Carta de Correção Eletrônica';
   DESC_LOG_INUTILIZA_NRO_NFE      = 'Inutilização de numerão para NF-e';
   DESC_LOG_CONSULTAR_NRO_LOTE_NFE = 'Consultar retorno do Lote/Recibo de NF-e';
+  DESC_LOG_EVENTO_ATUALIZAR_CUSTO = 'Atualização de Custo de Produto';
 
   CONTA_CORRENTE_TIPO_CAIXA = 1;
   CONTA_CORRENTE_TIPO_BANCO = 2;
