@@ -2235,6 +2235,7 @@ begin
             infAdProd      := 'Cor: '         + qryDadosProdutoCOR_VEICULO_DESCRICAO.AsString + #13 +
                               'Placa: '       + qryDadosProdutoREFERENCIA.AsString      + #13 +
                               'Renavam: '     + qryDadosProdutoRENAVAM_VEICULO.AsString + #13 +
+                              'Chassi: '      + qryDadosProdutoCHASSI_VEICULO.AsString  + #13 + 
                               'Combustivel: ' + qryDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO.AsString;
 
   //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
@@ -2575,9 +2576,10 @@ begin
               if ( cPercentualTributoAprox > 0.0 ) then
               begin
                 vTotTrib  := Prod.vProd * cPercentualTributoAprox / 100;
-                infAdProd := Trim(IfThen(Trim(infAdProd) = EmptyStr, '', #13) + Format(' * Valor Aprox. Trib. R$ %s (%s). Fonte IBPT', [
-                  FormatFloat(',0.00', vTotTrib),
-                  FormatFloat(',0.##"%"', cPercentualTributoAprox)
+                infAdProd := infAdProd +
+                  Trim(IfThen(Trim(infAdProd) = EmptyStr, '', #13) + Format(' * Valor Aprox. Trib. R$ %s (%s). Fonte IBPT', [
+                    FormatFloat(',0.00', vTotTrib),
+                    FormatFloat(',0.##"%"', cPercentualTributoAprox)
                   ]));
                   
                 vTotalTributoAprox := vTotalTributoAprox + vTotTrib;
@@ -3479,6 +3481,7 @@ begin
             infAdProd      := 'Cor: '         + qryEntradaDadosProdutoCOR_VEICULO_DESCRICAO.AsString + #13 +
                               'Placa: '       + qryEntradaDadosProdutoREFERENCIA.AsString      + #13 +
                               'Renavam: '     + qryEntradaDadosProdutoRENAVAM_VEICULO.AsString + #13 +
+                              'Chassi: '      + qryEntradaDadosProdutoCHASSI_VEICULO.AsString  + #13 + 
                               'Combustivel: ' + qryEntradaDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO.AsString;
 
   //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
@@ -3821,9 +3824,10 @@ begin
               if ( cPercentualTributoAprox > 0.0 ) then
               begin
                 vTotTrib  := Prod.vProd * cPercentualTributoAprox / 100;
-                infAdProd := Trim(IfThen(Trim(infAdProd) = EmptyStr, '', #13) + Format(' * Valor Aprox. Trib. R$ %s (%s). Fonte IBPT', [
-                  FormatFloat(',0.00', vTotTrib),
-                  FormatFloat(',0.##"%"', cPercentualTributoAprox)
+                infAdProd := infAdProd +
+                  Trim(IfThen(Trim(infAdProd) = EmptyStr, '', #13) + Format(' * Valor Aprox. Trib. R$ %s (%s). Fonte IBPT', [
+                    FormatFloat(',0.00', vTotTrib),
+                    FormatFloat(',0.##"%"', cPercentualTributoAprox)
                   ]));
 
                 vTotalTributoAprox := vTotalTributoAprox + vTotTrib;
@@ -5720,9 +5724,10 @@ begin
               if ( cPercentualTributoAprox > 0.0 ) then
               begin
                 vTotTrib  := Prod.vProd * cPercentualTributoAprox / 100;
-                infAdProd := Trim(IfThen(Trim(infAdProd) = EmptyStr, '', #13) + Format(' * Valor Aprox. Trib. R$ %s (%s). Fonte IBPT', [
-                  FormatFloat(',0.00', vTotTrib),
-                  FormatFloat(',0.##"%"', cPercentualTributoAprox)
+                infAdProd := infAdProd +
+                  Trim(IfThen(Trim(infAdProd) = EmptyStr, '', #13) + Format(' * Valor Aprox. Trib. R$ %s (%s). Fonte IBPT', [
+                    FormatFloat(',0.00', vTotTrib),
+                    FormatFloat(',0.##"%"', cPercentualTributoAprox)
                   ]));
                   
                 vTotalTributoAprox := vTotalTributoAprox + vTotTrib;
