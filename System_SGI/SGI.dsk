@@ -27,7 +27,7 @@ EditWindowCount=1
 [E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas]
 ModuleType=SourceModule
 FormState=1
-FormOnTop=1
+FormOnTop=0
 
 [C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas]
 ModuleType=SourceModule
@@ -126,9 +126,9 @@ LeftPanelSize=140
 LeftPanelClients=CodeExplorer@EditWindow0
 LeftPanelData=000004000000000000000000000000000000000000000000000100000000000000000C000000436F64654578706C6F726572FFFFFFFF
 RightPanelSize=0
-BottomPanelSize=0
+BottomPanelSize=85
 BottomPanelClients=MessageView@EditWindow0
-BottomPanelData=00000400010000000B0000004D657373616765566965770000000000000000000000000000000000FFFFFFFF
+BottomPanelData=000004000000000000000000000000000000000000000000000100000000000000000B0000004D65737361676556696577FFFFFFFF
 
 [View0]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\System_SGI\SGI.dpr
@@ -155,14 +155,14 @@ LeftCol=1
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMBusiness.pas
 CursorX=143
 CursorY=865
-TopLine=854
+TopLine=202
 LeftCol=1
 
 [View4]
 Module=E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas
-CursorX=43
-CursorY=2014
-TopLine=2081
+CursorX=104
+CursorY=3484
+TopLine=3459
 LeftCol=1
 
 [View5]
@@ -219,7 +219,7 @@ Breakpoint0='E:\Projetos\MasterDados\trunk\DGESTAO\Sys\UGeRetornoBoletos.pas',40
 Breakpoint1='C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeNotasFiscais.pas',305,'',0,1,'',1,0,0,'',1,'','',''
 Breakpoint2='C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFe.pas',564,'',0,1,'',1,0,0,'',1,'','',''
 Breakpoint3='C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFe.pas',737,'',0,1,'',1,0,0,'',1,'','',''
-Breakpoint4='E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas',4892,'',0,1,'',1,0,0,'',1,'','',''
+Breakpoint4='E:\Projetos\Agil Solucoes em Softwares\SGE\trunk\Sys\UDMNFe.pas',4896,'',0,1,'',1,0,0,'',1,'','',''
 
 [AddressBreakpoints]
 Count=0
@@ -285,7 +285,7 @@ LRDockWidth=190
 Dockable=1
 SplitPos=85
 ArrangeBy=Name
-SelectedItem=SQL
+SelectedItem=Name
 ExpandedItems=
 HiddenCategories=
 
@@ -344,26 +344,26 @@ State=0
 Left=0
 Top=12
 Width=140
-Height=842
+Height=754
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=140
-ClientHeight=842
+ClientHeight=754
 TBDockHeight=305
 LRDockWidth=140
 Dockable=1
 
 [MessageView@EditWindow0]
 Create=1
-Visible=0
+Visible=1
 State=0
-Left=-10
-Top=-713
-Width=443
+Left=12
+Top=0
+Width=1690
 Height=85
 MaxLeft=-1
 MaxTop=-1
-ClientWidth=443
+ClientWidth=1690
 ClientHeight=85
 TBDockHeight=85
 LRDockWidth=443
