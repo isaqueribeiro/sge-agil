@@ -6,8 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, rxCurrEdit, Menus, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, Menus, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, cxButtons, JvExMask, JvToolEdit,
+  JvDBControls;
 
 type
   TAliquota = (taICMS, taISS);
@@ -42,9 +43,7 @@ type
     lblModelo: TLabel;
     dbModelo: TDBEdit;
     lblSecao: TLabel;
-    dbSecao: TRxDBComboEdit;
     lblGrupo: TLabel;
-    dbGrupo: TRxDBComboEdit;
     IbDtstTabelaALIQUOTA: TIBBCDField;
     IbDtstTabelaCFOP_DESCRICAO: TIBStringField;
     IbDtstTabelaCFOP_ESPECIFICACAO: TMemoField;
@@ -88,7 +87,6 @@ type
     lblProdutoSemEstoque: TLabel;
     lblProdutoDesativado: TLabel;
     lblFabricante: TLabel;
-    dbFabricante: TRxDBComboEdit;
     IbDtstTabelaCODFABRICANTE: TIntegerField;
     IbDtstTabelaNOME_FABRICANTE: TIBStringField;
     IbDtstTabelaAPRESENTACAO: TIBStringField;
@@ -136,7 +134,6 @@ type
     lblPercentualReducaoBC: TLabel;
     dbOrigem: TDBLookupComboBox;
     dbTipoTributacaoNM: TDBLookupComboBox;
-    dbCFOP: TRxDBComboEdit;
     dbAliquota: TDBEdit;
     dbIPI: TDBEdit;
     dbAliquotaTipo: TDBLookupComboBox;
@@ -196,7 +193,6 @@ type
     dbFracionador: TDBEdit;
     dbVendaFracionada: TDBCheckBox;
     lblUnidadeFracao: TLabel;
-    dbUnidadeFracao: TRxDBComboEdit;
     pnlVeiculo: TPanel;
     pnlVolume: TPanel;
     GrpVolume: TGroupBox;
@@ -240,7 +236,6 @@ type
     IbDtstTabelaPRECO_PROMOCAO_FRAC: TFMTBCDField;
     IbDtstTabelaPRECO_SUGERIDO_FRAC: TFMTBCDField;
     lblUnidade: TLabel;
-    dbUnidade: TRxDBComboEdit;
     lblTipoCadastro: TLabel;
     dbTipoCadastro: TDBLookupComboBox;
     IbDtstTabelaCOMPOR_FATURAMENTO: TSmallintField;
@@ -261,6 +256,12 @@ type
     dbCadastroAtivo: TDBCheckBox;
     IbDtstTabelaCADASTRO_ATIVO: TSmallintField;
     IbDtstTabelaPRODUTO_IMOBILIZADO: TSmallintField;
+    dbCFOP: TJvDBComboEdit;
+    dbGrupo: TJvDBComboEdit;
+    dbFabricante: TJvDBComboEdit;
+    dbUnidade: TJvDBComboEdit;
+    dbUnidadeFracao: TJvDBComboEdit;
+    dbSecao: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);

@@ -12,7 +12,8 @@ uses
   cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, DB, cxDBData,
   cxMemo, StdCtrls, DBClient, Provider, IBCustomDataSet, IBQuery,
   cxGridLevel, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxClasses, cxGridCustomView, cxGrid, rxToolEdit, Mask, cxLookAndFeels, dxSkinsForm,
+  cxClasses, cxGridCustomView, cxGrid, Mask, cxLookAndFeels, dxSkinsForm,
+  JvExMask, JvToolEdit, 
 
   dxSkinsCore, dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
   dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
@@ -24,14 +25,11 @@ type
     GrpBxPeriodo: TGroupBox;
     lblDataInicial: TLabel;
     lblDataFinal: TLabel;
-    edDataInicial: TDateEdit;
-    edDataFinal: TDateEdit;
     chkNFeCancelada: TCheckBox;
     Bevel8: TBevel;
     PnlBotoes: TPanel;
     Bevel3: TBevel;
     lblInforme: TLabel;
-    edDiretorioExportacao: TDirectoryEdit;
     Bevel2: TBevel;
     lblDiretorioExportacao: TLabel;
     Bevel1: TBevel;
@@ -54,6 +52,9 @@ type
     GrdExpTBLXML: TcxGridDBColumn;
     btnExportar: TcxButton;
     btnCancelar: TcxButton;
+    edDataInicial: TJvDateEdit;
+    edDataFinal: TJvDateEdit;
+    edDiretorioExportacao: TJvDirectoryEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnExportarClick(Sender: TObject);
@@ -191,7 +192,7 @@ procedure TfrmGeExportarChaveNFeGerada.edDataInicialChange(
 var
   D : TDateTime;
 begin
-  if TryStrToDate(TDateEdit(Sender).Text, D) then
+  if TryStrToDate(TJvDateEdit(Sender).Text, D) then
     CarregarChaveNFe;
 end;
 

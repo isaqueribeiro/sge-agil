@@ -5,13 +5,11 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
-  StdCtrls, Buttons, ExtCtrls, Mask, rxToolEdit;
+  StdCtrls, Buttons, ExtCtrls, Mask, JvExMask, JvToolEdit;
 
 type
   TFrmGeVendaItemPesquisa = class(TfrmGrPadraoPesquisa)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     QryPesquisaCODPROD: TIBStringField;
     QryPesquisaPRODUTO: TIBStringField;
     QryPesquisaGRUPO: TIBStringField;
@@ -23,6 +21,8 @@ type
     QryPesquisaCLIENTE_CPF: TIBStringField;
     QryPesquisaCLIENTE_NOME: TIBStringField;
     QryPesquisaQUANTIDADE: TIBBCDField;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }

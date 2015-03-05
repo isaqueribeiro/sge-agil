@@ -6,16 +6,15 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoImpressao, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Menus, StdCtrls, dxGDIPlusClasses, ExtCtrls,
-  cxButtons, ToolWin, ComCtrls, Mask, rxToolEdit, DBClient, Provider, DB,
-  IBCustomDataSet, IBQuery, IBTable, frxClass, frxDBSet;
+  cxButtons, ToolWin, ComCtrls, Mask, DBClient, Provider, DB,
+  IBCustomDataSet, IBQuery, IBTable, frxClass, frxDBSet, JvExMask,
+  JvToolEdit;
 
 type
   TfrmGeApropriacaoEstoqueImpressao = class(TfrmGrPadraoImpressao)
     lblEmpresa: TLabel;
     edEmpresa: TComboBox;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     lblSituacao: TLabel;
     edSituacao: TComboBox;
     lblCentroCusto: TLabel;
@@ -49,6 +48,8 @@ type
     DspRelacaoEstoqueResumo: TDataSetProvider;
     CdsRelacaoEstoqueResumo: TClientDataSet;
     FrdsRelacaoEstoqueResumo: TfrxDBDataset;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure edEmpresaChange(Sender: TObject);
     procedure edRelatorioChange(Sender: TObject);

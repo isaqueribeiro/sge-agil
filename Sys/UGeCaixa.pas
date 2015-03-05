@@ -6,9 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, Menus, IBStoredProc, frxClass,
-  frxDBSet, IBQuery, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  cxButtons;
+  ToolWin, IBTable, Menus, IBStoredProc, frxClass, frxDBSet, IBQuery, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvToolEdit, JvExMask, JvDBControls;
 
 type
   TfrmGeCaixa = class(TfrmGrPadraoCadastro)
@@ -33,20 +33,17 @@ type
     dbOperador: TDBLookupComboBox;
     lblContaCorrente: TLabel;
     dbContaCorrente: TDBLookupComboBox;
-    dbDataAbertura: TDBDateEdit;
     lblDataAbertura: TLabel;
     lblSituacao: TLabel;
     dbSituacao: TDBEdit;
     IbDtstTabelaMOTIVO_CANCEL: TIBStringField;
     GrpBxDadosEncerramento: TGroupBox;
     lblDataFech: TLabel;
-    dbDataFech: TDBDateEdit;
     lblEntrada: TLabel;
     dbEntrada: TDBEdit;
     lblSaida: TLabel;
     dbSaida: TDBEdit;
     lblDataCancel: TLabel;
-    dbDataCancel: TDBDateEdit;
     dbUsuarioCancel: TDBEdit;
     lblUsuarioCancel: TLabel;
     lblMotivoCancel: TLabel;
@@ -106,11 +103,14 @@ type
     qryCaixaAnalitico: TIBQuery;
     frdCaixaAnalitico: TfrxDBDataset;
     Label2: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     IbDtstTabelaEMPRESA: TIBStringField;
     btbtnEncerrar: TcxButton;
     btbtnCancelarCaixa: TcxButton;
+    dbDataFech: TJvDBDateEdit;
+    dbDataCancel: TJvDBDateEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
+    dbDataAbertura: TJvDBDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaSITUACAOGetText(Sender: TField; var Text: String;
       DisplayText: Boolean);

@@ -6,14 +6,12 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, IBTable, RXDBCtrl, Menus, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, Menus, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvToolEdit, JvDBControls, JvExMask;
 
 type
   TfrmGeRequisicaoCliente = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     RdgStatusRequisicao: TRadioGroup;
     lblRequisicaoAberta: TLabel;
     lblRequisicaoCancelada: TLabel;
@@ -39,12 +37,10 @@ type
     dbDataHora: TDBEdit;
     dbEmpresa: TDBLookupComboBox;
     lblEmpresa: TLabel;
-    dbCliente: TRxDBComboEdit;
     lblCliente: TLabel;
     dbSituacao: TDBEdit;
     lblSituacao: TLabel;
     lblDataMovimento: TLabel;
-    dbDataMovimento: TDBDateEdit;
     lblResponsavel: TLabel;
     dbResponsavel: TDBEdit;
     dbResponsavelRG: TDBEdit;
@@ -68,7 +64,6 @@ type
     lblQuantidade: TLabel;
     lblUnidade: TLabel;
     Bevel7: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     dbUnidade: TDBEdit;
@@ -102,6 +97,11 @@ type
     cdsTabelaItensESTOQUE_SATELITE: TIBBCDField;
     btnAutorizarRequisicao: TcxButton;
     btnCancelarRequisicao: TcxButton;
+    dbCliente: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
+    dbDataMovimento: TJvDBDateEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

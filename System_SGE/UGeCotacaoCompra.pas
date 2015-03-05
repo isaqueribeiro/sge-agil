@@ -6,14 +6,13 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, IBTable, RXDBCtrl, Menus, IBStoredProc, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, Menus, IBStoredProc, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, cxButtons, JvDBControls,
+  JvToolEdit, JvExMask;
 
 type
   TfrmGeCotacaoCompra = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     RdgStatusCotacao: TRadioGroup;
     lblCotacaoAberta: TLabel;
     lblCotacaoCancelada: TLabel;
@@ -26,7 +25,6 @@ type
     dbSituacao: TDBEdit;
     lblSituacao: TLabel;
     lblDataEmissao: TLabel;
-    dbDataEmissao: TDBDateEdit;
     lblUsuario: TLabel;
     dbUsuario: TDBEdit;
     lblAutorizador: TLabel;
@@ -41,7 +39,6 @@ type
     lblQuantidade: TLabel;
     lblUnidade: TLabel;
     Bevel7: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     dbUnidade: TDBEdit;
@@ -65,7 +62,6 @@ type
     tblTipoCotacao: TIBTable;
     dtsTipoCotacao: TDataSource;
     lblDataValidade: TLabel;
-    dbDataValidade: TDBDateEdit;
     GrpBxPagamento: TGroupBox;
     tblFormaPagto: TIBTable;
     dtsFormaPagto: TDataSource;
@@ -215,6 +211,11 @@ type
     btnFinalizarCotacao: TcxButton;
     btnAutorizarCotacao: TcxButton;
     btnCancelarCotacao: TcxButton;
+    dbDataEmissao: TJvDBDateEdit;
+    dbDataValidade: TJvDBDateEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
+    dbProduto: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

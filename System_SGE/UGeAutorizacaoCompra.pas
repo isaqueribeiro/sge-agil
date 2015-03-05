@@ -6,14 +6,12 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, IBTable, RXDBCtrl, Menus, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, Menus, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeAutorizacaoCompra = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     RdgStatusAutorizacao: TRadioGroup;
     lblAutorizacaoAberta: TLabel;
     lblAutorizacaoCancelada: TLabel;
@@ -23,12 +21,10 @@ type
     dbDataHora: TDBEdit;
     dbEmpresa: TDBLookupComboBox;
     lblEmpresa: TLabel;
-    dbFornecedor: TRxDBComboEdit;
     lblFornecedor: TLabel;
     dbSituacao: TDBEdit;
     lblSituacao: TLabel;
     lblDataEmissao: TLabel;
-    dbDataEmissao: TDBDateEdit;
     lblUsuario: TLabel;
     dbUsuario: TDBEdit;
     lblAutorizador: TLabel;
@@ -43,7 +39,6 @@ type
     lblQuantidade: TLabel;
     lblUnidade: TLabel;
     Bevel7: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     dbUnidade: TDBEdit;
@@ -100,7 +95,6 @@ type
     tblTipoAutorizacao: TIBTable;
     dtsTipoAutorizacao: TDataSource;
     lblDataValidade: TLabel;
-    dbDataValidade: TDBDateEdit;
     GrpBxPagamento: TGroupBox;
     lblFormaPagto: TLabel;
     dbFormaPagto: TDBLookupComboBox;
@@ -176,18 +170,24 @@ type
     dbMotivo: TDBMemo;
     IbDtstTabelaCLIENTE: TIntegerField;
     lblCliente: TLabel;
-    dbCliente: TRxDBComboEdit;
     IbDtstTabelaNOMECLIENTE: TIBStringField;
     TbsAutorizacaoCancelado: TTabSheet;
     dbMovitoCancelamento: TDBMemo;
     IbDtstTabelaFATURAMENTO_MINIMO: TIBBCDField;
     lblCentroCusto: TLabel;
-    dbCentroCusto: TRxDBComboEdit;
     IbDtstTabelaCENTRO_CUSTO: TIntegerField;
     IbDtstTabelaDESCRICAO_CENTRO_CUSTO: TIBStringField;
     btnFinalizarAutorizacao: TcxButton;
     btnAutorizarCompra: TcxButton;
     btnCancelarAutorizacao: TcxButton;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
+    dbDataEmissao: TJvDBDateEdit;
+    dbDataValidade: TJvDBDateEdit;
+    dbFornecedor: TJvDBComboEdit;
+    dbCliente: TJvDBComboEdit;
+    dbCentroCusto: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

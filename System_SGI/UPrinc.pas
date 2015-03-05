@@ -6,7 +6,7 @@ uses
   StdCtrls, Buttons,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, BarMenus, RxSpeedBar, RXCtrls, ExtCtrls, jpeg,
+  Dialogs, Menus, ComCtrls, BarMenus, ExtCtrls, jpeg,
   cxGraphics, dxGDIPlusClasses, cxLookAndFeelPainters, cxButtons, cxLookAndFeels,
   dxBar, dxSkinsForm, dxSkinsdxBarPainter, cxControls, cxClasses, dxRibbon,
 
@@ -37,8 +37,6 @@ type
     nmUsuario: TMenuItem;
     nmEntradaProduto: TMenuItem;
     nmEmpresa: TMenuItem;
-    spbBarraAcessoRapido: TSpeedBar;
-    SpeedbarSection1: TSpeedbarSection;
     menuSobre: TMenuItem;
     pnlMain: TPanel;
     nmFornecedor: TMenuItem;
@@ -88,9 +86,6 @@ type
     nmGerarBoleto: TMenuItem;
     nmCancelarNFe: TMenuItem;
     nmInutilizarNumeroNFe: TMenuItem;
-    SpeedbarSection2: TSpeedbarSection;
-    SpeedItem1: TSpeedItem;
-    SpeedItem2: TSpeedItem;
     nmImprimirDANFE: TMenuItem;
     N11: TMenuItem;
     nmRemessaBoleto: TMenuItem;
@@ -156,19 +151,9 @@ type
     N110: TMenuItem;
     nmRequisicaoCompra: TMenuItem;
     nmConverterReqAutCompra: TMenuItem;
-    btnSair: TcxButton;
-    btnEmpresa: TcxButton;
-    btnCliente: TcxButton;
-    btnProduto: TcxButton;
     nmApropriacaoEstoque: TMenuItem;
     N23: TMenuItem;
     nmRequisicaoAlmox: TMenuItem;
-    btnFornecedor: TcxButton;
-    btnEstoque: TcxButton;
-    btnVenda: TcxButton;
-    btnTesouraria: TcxButton;
-    btnContaAPagar: TcxButton;
-    btnContaAReceber: TcxButton;
     popApropriacaoEstoque: TMenuItem;
     nmEstoqueApropriado: TMenuItem;
     nmTabelaCNAE: TMenuItem;
@@ -266,6 +251,17 @@ type
     BrPpRequisicaoAlmox: TdxBarPopupMenu;
     BrBtnInventarioProduto: TdxBarLargeButton;
     nmSolicitacaoCompra: TMenuItem;
+    spbBarraAcessoRapido: TPanel;
+    btnSair: TcxButton;
+    btnEmpresa: TcxButton;
+    btnCliente: TcxButton;
+    btnProduto: TcxButton;
+    btnFornecedor: TcxButton;
+    btnEstoque: TcxButton;
+    btnVenda: TcxButton;
+    btnTesouraria: TcxButton;
+    btnContaAPagar: TcxButton;
+    btnContaAReceber: TcxButton;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);

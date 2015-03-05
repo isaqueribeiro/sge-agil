@@ -6,8 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, Menus, ExtDlgs, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, Menus, ExtDlgs, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, cxButtons, JvExMask, JvToolEdit,
+  JvDBControls;
 
 type
   TfrmGeEmpresa = class(TfrmGrPadraoCadastro)
@@ -49,17 +50,13 @@ type
     dbIM: TDBEdit;
     GroupBox1: TGroupBox;
     lblCidade: TLabel;
-    dbCidade: TRxDBComboEdit;
     Bevel5: TBevel;
     lblEstado: TLabel;
-    dbEstado: TRxDBComboEdit;
     pgcMaisDados: TPageControl;
     tbsContato: TTabSheet;
     tbsParametros: TTabSheet;
     lblBairro: TLabel;
-    dbBairro: TRxDBComboEdit;
     lblLogradouro: TLabel;
-    dbLogradouro: TRxDBComboEdit;
     lblCEP: TLabel;
     dbCEP: TDBEdit;
     lblNumero: TLabel;
@@ -74,7 +71,6 @@ type
     dbHome: TDBEdit;
     IbDtstTabelaPAIS_ID: TIBStringField;
     lblPais: TLabel;
-    dbPais: TRxDBComboEdit;
     lblChave: TLabel;
     dbChave: TDBEdit;
     IbDtstTabelaEST_NOME: TIBStringField;
@@ -123,6 +119,11 @@ type
     IbDtstTabelaCARTA_CORRECAO_NFE: TIntegerField;
     lblNumeroCCe: TLabel;
     dbNumeroCCe: TDBEdit;
+    dbEstado: TJvDBComboEdit;
+    dbCidade: TJvDBComboEdit;
+    dbBairro: TJvDBComboEdit;
+    dbLogradouro: TJvDBComboEdit;
+    dbPais: TJvDBComboEdit;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);

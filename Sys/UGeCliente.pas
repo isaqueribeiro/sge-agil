@@ -6,10 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, IBQuery, Menus, JPEG,
+  ToolWin, IBTable, IBQuery, Menus, JPEG,
   UObserverInterface, UCliente, ACBrBase, ACBrSocket, ACBrConsultaCNPJ,
   ACBrConsultaCPF, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  cxButtons;
+  cxButtons, JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeCliente = class(TfrmGrPadraoCadastro, IObserver) // Observador
@@ -41,17 +41,13 @@ type
     dbIM: TDBEdit;
     GroupBox1: TGroupBox;
     lblCidade: TLabel;
-    dbCidade: TRxDBComboEdit;
     Bevel5: TBevel;
     lblEstado: TLabel;
-    dbEstado: TRxDBComboEdit;
     pgcMaisDados: TPageControl;
     tbsContato: TTabSheet;
     tbsCompra: TTabSheet;
     lblBairro: TLabel;
-    dbBairro: TRxDBComboEdit;
     lblLogradouro: TLabel;
-    dbLogradouro: TRxDBComboEdit;
     lblCEP: TLabel;
     dbCEP: TDBEdit;
     lblNumero: TLabel;
@@ -73,7 +69,6 @@ type
     IbDtstTabelaINSCMUN: TIBStringField;
     IbDtstTabelaSITE: TIBStringField;
     lblPais: TLabel;
-    dbPais: TRxDBComboEdit;
     lblValorLimiteCompra: TLabel;
     dbValorLimiteCompra: TDBEdit;
     IbDtstTabelaVALOR_LIMITE_COMPRA: TIBBCDField;
@@ -143,7 +138,6 @@ type
     popProcesso: TPopupMenu;
     mpClienteBloquear: TMenuItem;
     mpClienteDesbloquear: TMenuItem;
-    dbCNPJ: TRxDBComboEdit;
     tbsConsultarCNPJ: TTabSheet;
     tbsConsultarCPF: TTabSheet;
     ACBrConsultaCNPJ: TACBrConsultaCNPJ;
@@ -272,6 +266,12 @@ type
     EditCNAE1: TEdit;
     Label16: TLabel;
     ListCNAE2: TListBox;
+    dbCNPJ: TJvDBComboEdit;
+    dbEstado: TJvDBComboEdit;
+    dbCidade: TJvDBComboEdit;
+    dbBairro: TJvDBComboEdit;
+    dbLogradouro: TJvDBComboEdit;
+    dbPais: TJvDBComboEdit;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);

@@ -5,9 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, StdCtrls, Mask, DBCtrls, ExtCtrls, DB,
-  IBCustomDataSet, IBUpdateSQL, IBTable, Buttons, IBStoredProc, rxToolEdit,
-  RXDBCtrl, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
-  cxButtons;
+  IBCustomDataSet, IBUpdateSQL, IBTable, Buttons, IBStoredProc, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeEfetuarPagtoREC = class(TfrmGrPadrao)
@@ -54,11 +54,11 @@ type
     lblHistorico: TLabel;
     dbHistorico: TDBMemo;
     cdsPagamentosUSUARIO: TIBStringField;
-    dbDataPagto: TDBDateEdit;
     lblInforme: TLabel;
     tmrAlerta: TTimer;
     btnConfirmar: TcxButton;
     btnCancelar: TcxButton;
+    dbDataPagto: TJvDBDateEdit;
     procedure dtsPagamentosStateChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);

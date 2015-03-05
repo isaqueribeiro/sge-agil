@@ -5,9 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, StdCtrls, Mask, DBCtrls, ExtCtrls, Buttons, DB,
-  IBCustomDataSet, IBUpdateSQL, rxToolEdit, RXDBCtrl, IBTable, OleServer,
-  ExcelXP, ComObj, ComCtrls, IBStoredProc, Grids, DBGrids, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
+  IBCustomDataSet, IBUpdateSQL, IBTable, OleServer, ExcelXP, ComObj, ComCtrls, IBStoredProc, 
+  Grids, DBGrids, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvDBControls, JvExMask, JvToolEdit;
 
 type
   TCotacaoFornecedorOpercao = (cfoInserir, cfoCarregarPlanilha, cfoEditar, cfoVisualizar);
@@ -62,7 +62,6 @@ type
     PgcResposta: TPageControl;
     TbsFornecedor: TTabSheet;
     lblFornecedor: TLabel;
-    dbFornecedor: TRxDBComboEdit;
     lblNomeContato: TLabel;
     dbNomeContato: TDBEdit;
     lblEmail: TLabel;
@@ -94,10 +93,11 @@ type
     qryItemVALOR_TOTAL: TIBBCDField;
     dbgProdutos: TDBGrid;
     lblDataResposta: TLabel;
-    dbDataResposta: TDBDateEdit;
     BtnCarregarXLS: TcxButton;
     btnSalvar: TcxButton;
     btFechar: TcxButton;
+    dbDataResposta: TJvDBDateEdit;
+    dbFornecedor: TJvDBComboEdit;
     procedure btFecharClick(Sender: TObject);
     procedure btnSalvarClick(Sender: TObject);
     procedure qryFornecedorNewRecord(DataSet: TDataSet);

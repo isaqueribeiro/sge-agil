@@ -13,7 +13,7 @@ uses
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
   dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
   cxGroupBox, StdCtrls, Mask, DBCtrls, DB, IBCustomDataSet, IBTable,
-  rxToolEdit, RXDBCtrl, cxCheckBox, cxDBEdit, Menus, cxButtons, ToolWin,
+  cxCheckBox, cxDBEdit, Menus, cxButtons, ToolWin,
   ComCtrls, IBUpdateSQL, cxStyles, dxSkinscxPCPainter, cxCustomData,
   cxFilter, cxData, cxDataStorage, cxDBData, cxCurrencyEdit, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridBandedTableView,
@@ -23,7 +23,8 @@ uses
   dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
   dxSkinLondonLiquidSky, dxSkinPumpkin, dxSkinSeven, dxSkinSharp,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
+  JvToolEdit, JvDBControls, JvExMask;
 
 type
   TfrmGeInventario = class(TfrmGrPadrao)
@@ -39,13 +40,11 @@ type
     lblEmpresa: TLabel;
     dbEmpresa: TDBLookupComboBox;
     lblCentroCusto: TLabel;
-    dbCentroCusto: TRxDBComboEdit;
     tblTipoInventario: TIBTable;
     dtsTipoInventario: TDataSource;
     lblTipo: TLabel;
     dbTipo: TDBLookupComboBox;
     lblData: TLabel;
-    dbData: TDBDateEdit;
     lblSituacao: TLabel;
     dbSituacao: TDBEdit;
     dbUsuario: TDBEdit;
@@ -172,6 +171,8 @@ type
     qryInventarioCENTRO_CUSTO: TIntegerField;
     lblCustoUnitario: TLabel;
     dbCustoUnitario: TDBEdit;
+    dbCentroCusto: TJvDBComboEdit;
+    dbData: TJvDBDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure nmCarregarIAClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

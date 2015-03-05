@@ -6,9 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, StdCtrls, DB, IBCustomDataSet, IBTable, ComCtrls,
   IBSQL, DBClient, Provider, IBUpdateSQL, IBQuery, Buttons, ToolWin, Grids,
-  DBGrids, ComObj, frxClass, frxDBSet, UGrPadrao, ACBrBoleto,
-  ACBrBoletoFCFR, ACBrBase, Mask, rxToolEdit, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  DBGrids, ComObj, frxClass, frxDBSet, UGrPadrao, ACBrBoleto, ACBrBoletoFCFR,
+  ACBrBase, Mask, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit;
 
 type
   TfrmGeRemessaBoleto = class(TfrmGrPadrao)
@@ -111,14 +111,14 @@ type
     CdsTitulosUF: TStringField;
     CdsTitulosCEP: TStringField;
     CdsTitulosEMAIL: TStringField;
-    edInicio: TDateEdit;
-    edFinal: TDateEdit;
     CdsTitulosSITUACAO: TSmallintField;
     chkEnviarCancelados: TCheckBox;
     Bevel7: TBevel;
     btnFechar: TcxButton;
     btnGerarRemessa: TcxButton;
     btnHistorico: TcxButton;
+    edInicio: TJvDateEdit;
+    edFinal: TJvDateEdit;
     procedure FormShow(Sender: TObject);
     procedure edBancoChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

@@ -2,7 +2,6 @@ inherited frmGeBancos: TfrmGeBancos
   Left = 394
   Top = 213
   Height = 510
-  ActiveControl = dbCodigo
   Caption = 'Tabela de Bancos'
   OldCreateOrder = True
   PixelsPerInch = 96
@@ -18,7 +17,6 @@ inherited frmGeBancos: TfrmGeBancos
   end
   inherited pgcGuias: TPageControl
     Height = 429
-    ActivePage = tbsCadastro
     inherited tbsTabela: TTabSheet
       inherited Bevel4: TBevel
         Top = 334

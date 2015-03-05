@@ -8,8 +8,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, IBStoredProc, Menus, IBQuery,
-  cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, IBStoredProc, Menus, IBQuery,
+  cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvDBControls, JvExMask, JvToolEdit;
 
 type
   TfrmGeEntradaEstoque = class(TfrmGrPadraoCadastro)
@@ -20,7 +21,6 @@ type
     lblEmpresa: TLabel;
     dbEmpresa: TDBLookupComboBox;
     lblFornecedor: TLabel;
-    dbFornecedor: TRxDBComboEdit;
     lblDataEmissao: TLabel;
     lblNotaFiscal: TLabel;
     dbNotaFiscal: TDBEdit;
@@ -28,7 +28,6 @@ type
     dbSerie: TDBEdit;
     lblDataEntrada: TLabel;
     lblCFOPNF: TLabel;
-    dbCFOPNF: TRxDBComboEdit;
     dbCFOPNFDescricao: TDBEdit;
     qryProduto: TIBDataSet;
     qryCFOP: TIBDataSet;
@@ -117,7 +116,6 @@ type
     lblTotalBruto: TLabel;
     lblValorIPIProduto: TLabel;
     Bevel10: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     dbValorUnit: TDBEdit;
@@ -231,8 +229,6 @@ type
     lblEntradaCancelada: TLabel;
     Label1: TLabel;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     lblAliquota: TLabel;
     dbAliquota: TDBEdit;
     lblPercRedBC: TLabel;
@@ -274,7 +270,6 @@ type
     cdsTabelaItensTOTAL_BRUTO: TFMTBCDField;
     cdsTabelaItensTOTAL_LIQUIDO: TFMTBCDField;
     lblAutorizacao: TLabel;
-    dbAutorizacao: TRxDBComboEdit;
     IbDtstTabelaAUTORIZACAO_ANO: TSmallintField;
     IbDtstTabelaAUTORIZACAO_CODIGO: TIntegerField;
     IbDtstTabelaAUTORIZACAO_EMPRESA: TIBStringField;
@@ -284,8 +279,6 @@ type
     Bevel13: TBevel;
     lblTipoDespesa: TLabel;
     dbTipoDespesa: TDBLookupComboBox;
-    dbDataEmissao: TDBDateEdit;
-    dbDataEntrada: TDBDateEdit;
     lblTipoDocumento: TLabel;
     dbTipoDocumento: TDBLookupComboBox;
     tblTipoDocumento: TIBTable;
@@ -302,6 +295,14 @@ type
     btbtnFinalizar: TcxButton;
     btbtnGerarNFe: TcxButton;
     btbtnCancelarENT: TcxButton;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
+    dbFornecedor: TJvDBComboEdit;
+    dbCFOPNF: TJvDBComboEdit;
+    dbAutorizacao: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
+    dbDataEmissao: TJvDBDateEdit;
+    dbDataEntrada: TJvDBDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);

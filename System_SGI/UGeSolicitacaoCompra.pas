@@ -6,14 +6,13 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, IBTable, RXDBCtrl, Menus, IBStoredProc, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  ToolWin, IBTable, Menus, IBStoredProc, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvToolEdit, JvDBControls, JvExMask;
 
 type
   TfrmGeSolicitacaoCompra = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     RdgStatusSolicitacao: TRadioGroup;
     lblSolicitacaoAberta: TLabel;
     lblSolicitacaoCancelada: TLabel;
@@ -26,7 +25,6 @@ type
     dbSituacao: TDBEdit;
     lblSituacao: TLabel;
     lblDataEmissao: TLabel;
-    dbDataEmissao: TDBDateEdit;
     lblUsuario: TLabel;
     dbUsuario: TDBEdit;
     lblAprovador: TLabel;
@@ -41,7 +39,6 @@ type
     lblQuantidade: TLabel;
     lblUnidade: TLabel;
     Bevel7: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     pnlBotoesProduto: TPanel;
@@ -61,7 +58,6 @@ type
     tblTipoSolicitacao: TIBTable;
     dtsTipoSolicitacao: TDataSource;
     lblDataValidade: TLabel;
-    dbDataValidade: TDBDateEdit;
     tbsEventoLOG: TTabSheet;
     lblSolicitacaoEmEdicao: TLabel;
     PgcTextoSolicitacao: TPageControl;
@@ -77,7 +73,6 @@ type
     btnAprovarSolicitacao: TcxButton;
     btnCancelarSolicitacao: TcxButton;
     lblCentroCustoSolicitacao: TLabel;
-    dbCentroCustoSolicitacao: TRxDBComboEdit;
     lblProdutoNome: TLabel;
     tblUnidade: TIBTable;
     dtsUnidade: TDataSource;
@@ -122,8 +117,14 @@ type
     cdsTabelaItensUNP_DESCRICAO: TIBStringField;
     cdsTabelaItensCENTRO_CUSTO_NOME: TIBStringField;
     lblCentroCustoItem: TLabel;
-    dbCentroCustoItem: TRxDBComboEdit;
     lblProdutoNaoCadastrado: TLabel;
+    dbDataEmissao: TJvDBDateEdit;
+    dbDataValidade: TJvDBDateEdit;
+    dbCentroCustoSolicitacao: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
+    dbCentroCustoItem: TJvDBComboEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure dbCentroCustoSelecionar(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;

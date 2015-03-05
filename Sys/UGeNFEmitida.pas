@@ -6,8 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, RxDBComb, rxToolEdit, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  ToolWin, IBTable, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit;
 
 type
   TDestinatarioNF = record
@@ -17,8 +17,6 @@ type
 
   TfrmGeNFEmitida = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     IbDtstTabelaNFE_DESTINATARIO: TIBStringField;
     IbDtstTabelaNFE_DESTINATARIO_RAZAO: TIBStringField;
     IbDtstTabelaNFE_DESTINATARIO_CNPJ: TIBStringField;
@@ -39,6 +37,8 @@ type
     IbDtstTabelaXML_FILENAME: TIBStringField;
     IbDtstTabelaXML_FILE: TMemoField;
     IbDtstTabelaNFE_VALOR_TOTAL: TIBBCDField;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFE_DESTINATARIO_CNPJGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

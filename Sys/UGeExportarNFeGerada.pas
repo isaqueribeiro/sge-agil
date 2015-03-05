@@ -4,16 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UGrPadrao, StdCtrls, Mask, rxToolEdit, ExtCtrls, DB, IBCustomDataSet,
+  Dialogs, UGrPadrao, StdCtrls, Mask, ExtCtrls, DB, IBCustomDataSet,
   Buttons, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
-  cxButtons;
+  cxButtons, JvToolEdit, JvExMask;
 
 type
   TfrmGeExportarNFeGerada = class(TfrmGrPadrao)
     GrpBxPeriodo: TGroupBox;
     lblDataInicial: TLabel;
-    edDataInicial: TDateEdit;
-    edDataFinal: TDateEdit;
     lblDataFinal: TLabel;
     Bevel8: TBevel;
     GrpBxTipoNFe: TRadioGroup;
@@ -36,10 +34,12 @@ type
     cdsNFeNUMCOMPRA: TIntegerField;
     cdsNFeSAIDA: TIntegerField;
     cdsNFeENTRADA: TIntegerField;
-    edDiretorioExportacao: TDirectoryEdit;
     chkNFeCancelada: TCheckBox;
     btnExportar: TcxButton;
     btnCancelar: TcxButton;
+    edDataInicial: TJvDateEdit;
+    edDataFinal: TJvDateEdit;
+    edDiretorioExportacao: TJvDirectoryEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnExportarClick(Sender: TObject);

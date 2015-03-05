@@ -5,9 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
-  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, RXDBCtrl, DBClient, Provider, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
+  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls, ToolWin, DBClient, 
+  Provider, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeCentroCusto = class(TfrmGrPadraoCadastro)
@@ -20,7 +20,6 @@ type
     dbDesricao: TDBEdit;
     IbDtstTabelaATIVO_TEMP: TStringField;
     lblCliente: TLabel;
-    dbCliente: TRxDBComboEdit;
     dbAtivo: TDBCheckBox;
     qryEmpresaLista: TIBDataSet;
     dspEmpresaLista: TDataSetProvider;
@@ -32,6 +31,7 @@ type
     cdsEmpresaListaCENTRO_CUSTO: TIntegerField;
     cdsEmpresaListaEMPRESA: TStringField;
     cdsEmpresaListaCNPJ: TStringField;
+    dbCliente: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaCalcFields(DataSet: TDataSet);
     procedure dbClienteButtonClick(Sender: TObject);

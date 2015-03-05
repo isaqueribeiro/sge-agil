@@ -5,15 +5,12 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
-  StdCtrls, Buttons, ExtCtrls, Mask, rxToolEdit;
+  StdCtrls, Buttons, ExtCtrls, Mask, JvToolEdit, JvExMask;
 
 type
   TfrmGeProdutoKardex = class(TfrmGrPadraoPesquisa)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     lblProduto: TLabel;
-    edProduto: TComboEdit;
     QryPesquisaCODEMPRESA: TIBStringField;
     QryPesquisaCODPROD: TIBStringField;
     QryPesquisaDOC: TIBStringField;
@@ -25,6 +22,9 @@ type
     QryPesquisaUNIDADE: TIBStringField;
     QryPesquisaRESP: TIBStringField;
     QryPesquisaMOTIVO: TIBStringField;
+    edProduto: TJvComboEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure edProdutoButtonClick(Sender: TObject);
     procedure edProdutoKeyPress(Sender: TObject; var Key: Char);

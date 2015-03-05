@@ -1,9 +1,7 @@
 inherited frmGeTipoDespesa: TfrmGeTipoDespesa
   Left = 385
-  Top = 217
   Width = 757
   Height = 447
-  ActiveControl = dbCodigo
   Caption = 'Cadastro de Tipos de Despesas'
   OldCreateOrder = True
   PixelsPerInch = 96
@@ -23,7 +21,6 @@ inherited frmGeTipoDespesa: TfrmGeTipoDespesa
   inherited pgcGuias: TPageControl
     Width = 741
     Height = 366
-    ActivePage = tbsCadastro
     inherited tbsTabela: TTabSheet
       inherited Bevel4: TBevel
         Top = 271
@@ -59,6 +56,9 @@ inherited frmGeTipoDespesa: TfrmGeTipoDespesa
         inherited grpBxFiltro: TGroupBox
           Left = 439
           Width = 290
+          DesignSize = (
+            290
+            54)
           inherited lbltFiltrar: TLabel
             Width = 78
             Caption = 'Tipo Despesa:'
@@ -137,7 +137,7 @@ inherited frmGeTipoDespesa: TfrmGeTipoDespesa
           Caption = 'Plano de Contas de lan'#231'amento:'
           FocusControl = dbPlanoContas
         end
-        object dbPlanoContas: TRxDBComboEdit
+        object dbPlanoContas: TJvDBComboEdit
           Left = 16
           Top = 36
           Width = 697

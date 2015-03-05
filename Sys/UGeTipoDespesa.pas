@@ -6,8 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, RXDBCtrl, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  ToolWin, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeTipoDespesa = class(TfrmGrPadraoCadastro)
@@ -20,9 +20,9 @@ type
     dbTipoParticular: TDBCheckBox;
     IbDtstTabelaTIPO_PARTICULAR_DESC: TIBStringField;
     lblPlanoContas: TLabel;
-    dbPlanoContas: TRxDBComboEdit;
     IbDtstTabelaPLANO_CONTA: TIntegerField;
     IbDtstTabelaDESCRICAO_RESUMIDA: TIBStringField;
+    dbPlanoContas: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);
     procedure IbDtstTabelaBeforePost(DataSet: TDataSet);

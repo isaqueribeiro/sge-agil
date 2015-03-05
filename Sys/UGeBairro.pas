@@ -6,8 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, DB, IBCustomDataSet, ImgList, IBUpdateSQL,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, RXDBCtrl, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  ToolWin, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, Menus, cxButtons, JvExMask, JvToolEdit,
+  JvDBControls;
 
 type
   TfrmGeBairro = class(TfrmGrPadraoCadastro)
@@ -18,11 +19,11 @@ type
     IbDtstTabelaCID_NOME: TIBStringField;
     IbDtstTabelaDIS_NOME: TIBStringField;
     lblCidade: TLabel;
-    dbCidade: TRxDBComboEdit;
     lblDistrito: TLabel;
-    dbDistrito: TRxDBComboEdit;
     lblNome: TLabel;
     dbNome: TDBEdit;
+    dbCidade: TJvDBComboEdit;
+    dbDistrito: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbCidadeButtonClick(Sender: TObject);
     procedure dbDistritoButtonClick(Sender: TObject);

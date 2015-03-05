@@ -23,7 +23,6 @@ inherited frmGePlanoContas: TfrmGePlanoContas
   inherited pgcGuias: TPageControl
     Width = 796
     Height = 440
-    ActivePage = tbsCadastro
     inherited tbsTabela: TTabSheet
       inherited Bevel4: TBevel
         Top = 345

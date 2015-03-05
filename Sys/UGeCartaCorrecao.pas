@@ -4,15 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
-  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, dblookup, IBQuery, rxToolEdit, RXDBCtrl, IBTable, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
+  Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB, Mask, DBCtrls,
+  StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls, ToolWin, dblookup, IBQuery,
+  IBTable, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeCartaCorrecao = class(TfrmGrPadraoCadastro)
     lblNFe: TLabel;
-    dbNFe: TRxDBComboEdit;
     tblEmpresa: TIBTable;
     dtsEmpresa: TDataSource;
     lblEmpresa: TLabel;
@@ -47,6 +46,7 @@ type
     lblCartaPendente: TLabel;
     Bevel5: TBevel;
     BtnEnviarCCe: TcxButton;
+    dbNFe: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbNFeButtonClick(Sender: TObject);
     procedure IbDtstTabelaCalcFields(DataSet: TDataSet);
@@ -86,7 +86,7 @@ uses
 procedure TfrmGeCartaCorrecao.FormCreate(Sender: TObject);
 begin
   inherited;
-  WhereAdditional  := 'c.cce_empresa = ' + QuotedStr(GetEmpresaIDDefault);
+  WhereAdditional  := 'c.cce_empresa = ' + QuotedStr(gUsuarioLogado.Empresa);
 
   RotinaID         := ROTINA_NFE_CARTA_CORRECAO_ID;
   ControlFirstEdit := dbEmpresa;
@@ -139,7 +139,7 @@ end;
 procedure TfrmGeCartaCorrecao.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaCCE_EMPRESA.Value := GetEmpresaIDDefault;
+  IbDtstTabelaCCE_EMPRESA.Value := gUsuarioLogado.Empresa;
   IbDtstTabelaCCE_DATA.Value    := GetDateDB;
   IbDtstTabelaCCE_HORA.Value    := GetTimeDB;
   IbDtstTabelaCCE_ENVIADA.Value := 0;
