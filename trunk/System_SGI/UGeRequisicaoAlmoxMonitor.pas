@@ -9,11 +9,12 @@ uses
   Dialogs, StdCtrls, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Menus, cxButtons, ExtCtrls, ToolWin, ComCtrls,
   cxControls, cxContainer, cxEdit, dxSkinsCore, dxSkinMcSkin,
-  Mask, rxToolEdit, cxGroupBox, DB, IBCustomDataSet, IBQuery, DBClient,
+  Mask, cxGroupBox, DB, IBCustomDataSet, IBQuery, DBClient,
   Provider, IniFiles, cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridBandedTableView,
   cxGridDBBandedTableView, cxGrid, cxImageComboBox, ImgList,
+  JvExMask, JvToolEdit,
 
   dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
   dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
@@ -32,8 +33,6 @@ type
     lblCentroCusto: TLabel;
     edCentroCusto: TComboBox;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     lblSituacao: TLabel;
     edSituacao: TComboBox;
     qryRequisicaoAlmox: TIBQuery;
@@ -64,6 +63,8 @@ type
     nmRequisicaoCancelar: TMenuItem;
     PnlTitulo: TPanel;
     ImgLogo: TImage;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure BtnPesquisarClick(Sender: TObject);

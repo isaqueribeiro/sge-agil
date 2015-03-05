@@ -5,8 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, HPL_Strings, StdCtrls, DBCtrls, IBCustomDataSet, DB, DBClient,
-  ExtCtrls, Mask, Grids, DBGrids, TypInfo, StrUtils, RXDBCtrl, 
-  ComCtrls, RxLookup, rxToolEdit, rxCurrEdit;
+  ExtCtrls, Mask, Grids, DBGrids, TypInfo, StrUtils,  ComCtrls,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGrPadrao = class(TForm)
@@ -84,9 +84,9 @@ begin
       or (Frm.ActiveControl is TComboBox)
       or (Frm.ActiveControl is TMaskEdit)
       or (Frm.ActiveControl is TLabeledEdit)
-      or (Frm.ActiveControl is TRxLookupEdit)
-      or (Frm.ActiveControl is TDateEdit)
-      or (Frm.ActiveControl is TDirectoryEdit)
+      //or (Frm.ActiveControl is TRxLookupEdit)
+      or (Frm.ActiveControl is TJvDateEdit)
+      or (Frm.ActiveControl is TJvDirectoryEdit)
       // DB Controls
       or (Frm.ActiveControl is TDBEdit)
       or (Frm.ActiveControl is TDBCheckBox)
@@ -95,10 +95,10 @@ begin
       or (Frm.ActiveControl is TDBLookupComboBox)
       or (Frm.ActiveControl is TDBLookupListBox)
       // DB Controls RXLIB
-      or (Frm.ActiveControl is TDBDateEdit)
-      or (Frm.ActiveControl is TRxDBCalcEdit)
-      or (Frm.ActiveControl is TRxDBComboEdit)
-      or (Frm.ActiveControl is TDBDateEdit)
+      or (Frm.ActiveControl is TJvDBDateEdit)
+      or (Frm.ActiveControl is TJvDBCalcEdit)
+      or (Frm.ActiveControl is TJvDBComboEdit)
+      or (Frm.ActiveControl is TJvDBDateEdit)
     ) then
 
       if ( Assigned(TEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TEdit(Frm.ActiveControl).OnKeyDown) ) then
@@ -399,21 +399,21 @@ begin
         TDateTimePicker(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
-    if ( Win.Components[i] is TDateEdit ) then
+    if ( Win.Components[i] is TJvDateEdit ) then
     begin
-      if ( not Assigned(TDateEdit(Win.Components[i]).OnEnter) ) then
-        TDateEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TDateEdit(Win.Components[i]).OnExit) ) then
-        TDateEdit(Win.Components[i]).OnExit  := ControlEditExit;
+      if ( not Assigned(TJvDateEdit(Win.Components[i]).OnEnter) ) then
+        TJvDateEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+      if ( not Assigned(TJvDateEdit(Win.Components[i]).OnExit) ) then
+        TJvDateEdit(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
-    if ( Win.Components[i] is TRxLookupEdit ) then
-    begin
-      if ( not Assigned(TRxLookupEdit(Win.Components[i]).OnEnter) ) then
-        TRxLookupEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TRxLookupEdit(Win.Components[i]).OnExit) ) then
-        TRxLookupEdit(Win.Components[i]).OnExit  := ControlEditExit;
-    end;
+    //if ( Win.Components[i] is TJvLookupEdit ) then
+    //begin
+    //  if ( not Assigned(TRxLookupEdit(Win.Components[i]).OnEnter) ) then
+    //    TRxLookupEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+    //  if ( not Assigned(TRxLookupEdit(Win.Components[i]).OnExit) ) then
+    //    TRxLookupEdit(Win.Components[i]).OnExit  := ControlEditExit;
+    //end;
 
     // Controls DB
 
@@ -473,38 +473,38 @@ begin
         TDBLookupComboBox(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
-    if ( Win.Components[i] is TRxDBComboEdit ) then
+    if ( Win.Components[i] is TJvDBComboEdit ) then
     begin
-      if ( not Assigned(TRxDBComboEdit(Win.Components[i]).OnEnter) ) then
-        TRxDBComboEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TRxDBComboEdit(Win.Components[i]).OnExit) ) then
-        TRxDBComboEdit(Win.Components[i]).OnExit  := ControlEditExit;
+      if ( not Assigned(TJvDBComboEdit(Win.Components[i]).OnEnter) ) then
+        TJvDBComboEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+      if ( not Assigned(TJvDBComboEdit(Win.Components[i]).OnExit) ) then
+        TJvDBComboEdit(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
     // Controls DB RXLIB
 
-    if ( Win.Components[i] is TDBDateEdit ) then
+    if ( Win.Components[i] is TJvDBDateEdit ) then
     begin
-      if ( not Assigned(TDBDateEdit(Win.Components[i]).OnEnter) ) then
-        TDBDateEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TDBDateEdit(Win.Components[i]).OnExit) ) then
-        TDBDateEdit(Win.Components[i]).OnExit  := ControlEditExit;
+      if ( not Assigned(TJvDBDateEdit(Win.Components[i]).OnEnter) ) then
+        TJvDBDateEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+      if ( not Assigned(TJvDBDateEdit(Win.Components[i]).OnExit) ) then
+        TJvDBDateEdit(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
-    if ( Win.Components[i] is TRxDBCalcEdit ) then
+    if ( Win.Components[i] is TJvDBCalcEdit ) then
     begin
-      if ( not Assigned(TRxDBCalcEdit(Win.Components[i]).OnEnter) ) then
-        TRxDBCalcEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TRxDBCalcEdit(Win.Components[i]).OnExit) ) then
-        TRxDBCalcEdit(Win.Components[i]).OnExit  := ControlEditExit;
+      if ( not Assigned(TJvDBCalcEdit(Win.Components[i]).OnEnter) ) then
+        TJvDBCalcEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+      if ( not Assigned(TJvDBCalcEdit(Win.Components[i]).OnExit) ) then
+        TJvDBCalcEdit(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
-    if ( Win.Components[i] is TRxDBComboEdit ) then
+    if ( Win.Components[i] is TJvDBComboEdit ) then
     begin
-      if ( not Assigned(TRxDBComboEdit(Win.Components[i]).OnEnter) ) then
-        TRxDBComboEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TRxDBComboEdit(Win.Components[i]).OnExit) ) then
-        TRxDBComboEdit(Win.Components[i]).OnExit  := ControlEditExit;
+      if ( not Assigned(TJvDBComboEdit(Win.Components[i]).OnEnter) ) then
+        TJvDBComboEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+      if ( not Assigned(TJvDBComboEdit(Win.Components[i]).OnExit) ) then
+        TJvDBComboEdit(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
   end;

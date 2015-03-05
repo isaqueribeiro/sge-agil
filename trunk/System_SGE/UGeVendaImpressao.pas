@@ -5,9 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoImpressao, StdCtrls, dxGDIPlusClasses, ExtCtrls,
-  Buttons, ToolWin, ComCtrls, DBClient, Provider, DB, IBCustomDataSet,
-  IBQuery, frxClass, frxDBSet, Mask, rxToolEdit, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
+  Buttons, ToolWin, ComCtrls, DBClient, Provider, DB, IBCustomDataSet, IBQuery, frxClass,
+  frxDBSet, Mask, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit;
 
 type
   TfrmGeVendaImpressao = class(TfrmGrPadraoImpressao)
@@ -22,8 +22,6 @@ type
     lblSituacao: TLabel;
     edSituacao: TComboBox;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     lblVendedor: TLabel;
     edVendedor: TComboBox;
     lblCidade: TLabel;
@@ -60,6 +58,8 @@ type
     QryEmpresas: TIBQuery;
     DspEmpresas: TDataSetProvider;
     CdsEmpresas: TClientDataSet;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnVisualizarClick(Sender: TObject);

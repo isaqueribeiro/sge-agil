@@ -6,15 +6,15 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, RXDBCtrl, IBTable, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  ToolWin, IBTable, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, Menus, cxButtons, JvToolEdit, JvExMask,
+  JvDBControls;
 
 type
   TfrmGeContasAReceber = class(TfrmGrPadraoCadastro)
     Bevel5: TBevel;
     GrpBxDadosValores: TGroupBox;
     lblCliente: TLabel;
-    dbCliente: TRxDBComboEdit;
     lblParcela: TLabel;
     dbParcela: TDBEdit;
     dbQuitado: TDBEdit;
@@ -113,8 +113,6 @@ type
     IbDtstTabelaNOMECLIENTE: TIBStringField;
     IbDtstTabelaSITUACAO: TSmallintField;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     IbDtstTabelaSERIE: TIBStringField;
     IbDtstTabelaNFE: TLargeintField;
     IbDtstTabelaNFE_VENDA: TIBStringField;
@@ -123,6 +121,9 @@ type
     IbDtstTabelaEMPRESA: TIBStringField;
     IbDtstTabelaCLIENTE: TIntegerField;
     btbtnEfetuarPagto: TcxButton;
+    dbCliente: TJvDBComboEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbClienteButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);

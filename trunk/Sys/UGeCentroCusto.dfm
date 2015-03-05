@@ -1,12 +1,10 @@
 inherited frmGeCentroCusto: TfrmGeCentroCusto
   Left = 395
   Top = 212
-  ActiveControl = dbCodigo
   Caption = 'Tabela de Departamentos / Centros de Custos'
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcGuias: TPageControl
-    ActivePage = tbsCadastro
     inherited tbsTabela: TTabSheet
       inherited dbgDados: TDBGrid
         Columns = <
@@ -40,6 +38,9 @@ inherited frmGeCentroCusto: TfrmGeCentroCusto
         inherited grpBxFiltro: TGroupBox
           Left = 304
           Width = 419
+          DesignSize = (
+            419
+            54)
           inherited lbltFiltrar: TLabel
             Left = 14
             Width = 93
@@ -97,7 +98,25 @@ inherited frmGeCentroCusto: TfrmGeCentroCusto
           ParentFont = False
           TabOrder = 1
         end
-        object dbCliente: TRxDBComboEdit
+        object dbAtivo: TDBCheckBox
+          Left = 16
+          Top = 112
+          Width = 57
+          Height = 17
+          Caption = 'Ativo'
+          DataField = 'ATIVO'
+          DataSource = DtSrcTabela
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 3
+          ValueChecked = '1'
+          ValueUnchecked = '0'
+        end
+        object dbCliente: TJvDBComboEdit
           Left = 16
           Top = 80
           Width = 689
@@ -172,24 +191,6 @@ inherited frmGeCentroCusto: TfrmGeCentroCusto
           ShowHint = True
           TabOrder = 2
           OnButtonClick = dbClienteButtonClick
-        end
-        object dbAtivo: TDBCheckBox
-          Left = 16
-          Top = 112
-          Width = 57
-          Height = 17
-          Caption = 'Ativo'
-          DataField = 'ATIVO'
-          DataSource = DtSrcTabela
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 3
-          ValueChecked = '1'
-          ValueUnchecked = '0'
         end
       end
       object dbgEmpresaLista: TDBGrid

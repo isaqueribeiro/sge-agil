@@ -5,21 +5,18 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
-  StdCtrls, Buttons, ExtCtrls, Mask, rxToolEdit, DBClient, Provider,
-  IBTable, RXDBCtrl, IBUpdateSQL, IBStoredProc;
+  StdCtrls, Buttons, ExtCtrls, Mask, DBClient, Provider, IBTable, IBUpdateSQL, IBStoredProc,
+  JvToolEdit, JvExMask;
 
 type
   TfrmGeRequisicaoCompraPesquisa = class(TfrmGrPadraoPesquisa)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     DspPesquisa: TDataSetProvider;
     CdsPesquisa: TClientDataSet;
     lblTipoRequisicao: TLabel;
     edTipoRequisicao: TComboBox;
     tblTipoRequisicao: TIBTable;
     lblFornecedor: TLabel;
-    edFornecedor: TComboEdit;
     cdsAutorizacao: TIBDataSet;
     cdsAutorizacaoANO: TSmallintField;
     cdsAutorizacaoCODIGO: TIntegerField;
@@ -103,6 +100,9 @@ type
     stpGerarAutorizacaoItens: TIBStoredProc;
     cdsAutorizacaoCENTRO_CUSTO: TIntegerField;
     CdsPesquisaCENTRO_CUSTO: TIntegerField;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
+    edFornecedor: TJvComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure CdsPesquisaSTATUSGetText(Sender: TField; var Text: String;
       DisplayText: Boolean);

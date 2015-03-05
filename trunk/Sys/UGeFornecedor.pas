@@ -6,9 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, ACBrConsultaCPF, ACBrBase,
+  ToolWin, IBTable, ACBrConsultaCPF, ACBrBase,
   ACBrSocket, ACBrConsultaCNPJ, JPEG, IBQuery, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  cxLookAndFeelPainters, Menus, cxButtons, JvExMask, JvToolEdit,
+  JvDBControls;
 
 type
   TfrmGeFornecedor = class(TfrmGrPadraoCadastro)
@@ -21,17 +22,13 @@ type
     dbIM: TDBEdit;
     GroupBox1: TGroupBox;
     lblCidade: TLabel;
-    dbCidade: TRxDBComboEdit;
     Bevel5: TBevel;
     lblEstado: TLabel;
-    dbEstado: TRxDBComboEdit;
     pgcMaisDados: TPageControl;
     tbsContato: TTabSheet;
     tbsDuplicatas: TTabSheet;
     lblBairro: TLabel;
-    dbBairro: TRxDBComboEdit;
     lblLogradouro: TLabel;
-    dbLogradouro: TRxDBComboEdit;
     lblCEP: TLabel;
     dbCEP: TDBEdit;
     lblNumero: TLabel;
@@ -45,7 +42,6 @@ type
     lblHome: TLabel;
     dbHome: TDBEdit;
     lblPais: TLabel;
-    dbPais: TRxDBComboEdit;
     IbDtstTabelaCODFORN: TIntegerField;
     IbDtstTabelaPESSOA_FISICA: TSmallintField;
     IbDtstTabelaCNPJ: TIBStringField;
@@ -124,7 +120,6 @@ type
     lblCPFX: TLabel;
     edCPF: TMaskEdit;
     lblCNPJ: TLabel;
-    dbCNPJ: TRxDBComboEdit;
     ACBrConsultaCNPJ: TACBrConsultaCNPJ;
     ACBrConsultaCPF: TACBrConsultaCPF;
     IbDtstTabelaDTCAD: TDateField;
@@ -168,6 +163,12 @@ type
     EditCNAE1: TEdit;
     Label16: TLabel;
     ListCNAE2: TListBox;
+    dbCNPJ: TJvDBComboEdit;
+    dbEstado: TJvDBComboEdit;
+    dbCidade: TJvDBComboEdit;
+    dbBairro: TJvDBComboEdit;
+    dbLogradouro: TJvDBComboEdit;
+    dbPais: TJvDBComboEdit;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);

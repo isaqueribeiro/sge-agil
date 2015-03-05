@@ -1,13 +1,11 @@
 inherited frmGeBairro: TfrmGeBairro
   Left = 390
   Top = 228
-  ActiveControl = dbCodigo
   Caption = 'Tabela de Bairros'
   OldCreateOrder = True
   PixelsPerInch = 96
   TextHeight = 13
   inherited pgcGuias: TPageControl
-    ActivePage = tbsCadastro
     inherited tbsTabela: TTabSheet
       inherited dbgDados: TDBGrid
         Columns = <
@@ -63,7 +61,23 @@ inherited frmGeBairro: TfrmGeBairro
           Color = clMoneyGreen
           DataField = 'BAI_COD'
         end
-        object dbCidade: TRxDBComboEdit
+        object dbNome: TDBEdit
+          Left = 88
+          Top = 40
+          Width = 609
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'BAI_NOME'
+          DataSource = DtSrcTabela
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 1
+        end
+        object dbCidade: TJvDBComboEdit
           Left = 16
           Top = 80
           Width = 345
@@ -138,7 +152,7 @@ inherited frmGeBairro: TfrmGeBairro
           TabOrder = 2
           OnButtonClick = dbCidadeButtonClick
         end
-        object dbDistrito: TRxDBComboEdit
+        object dbDistrito: TJvDBComboEdit
           Left = 368
           Top = 80
           Width = 329
@@ -212,22 +226,6 @@ inherited frmGeBairro: TfrmGeBairro
           ShowHint = True
           TabOrder = 3
           OnButtonClick = dbDistritoButtonClick
-        end
-        object dbNome: TDBEdit
-          Left = 88
-          Top = 40
-          Width = 609
-          Height = 21
-          CharCase = ecUpperCase
-          DataField = 'BAI_NOME'
-          DataSource = DtSrcTabela
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 1
         end
       end
     end

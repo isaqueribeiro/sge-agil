@@ -6,9 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, rxToolEdit, RXDBCtrl, DBClient, Provider, IBStoredProc,
+  ToolWin, IBTable, DBClient, Provider, IBStoredProc,
   frxClass, frxDBSet, Menus, IBQuery, ClipBrd, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, cxButtons;
+  cxLookAndFeelPainters, cxButtons, JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeVenda = class(TfrmGrPadraoCadastro)
@@ -17,7 +17,6 @@ type
     lblEmpresa: TLabel;
     dbEmpresa: TDBLookupComboBox;
     lblCliente: TLabel;
-    dbCliente: TRxDBComboEdit;
     lblDataHora: TLabel;
     dbDataHora: TDBEdit;
     GrpBxDadosProduto: TGroupBox;
@@ -27,7 +26,6 @@ type
     tbsRecebimento: TTabSheet;
     tbsITitulos: TTabSheet;
     lblProduto: TLabel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbgProdutos: TDBGrid;
     lblQuantidade: TLabel;
@@ -41,7 +39,6 @@ type
     lblUnidade: TLabel;
     dbUnidade: TDBEdit;
     lblCFOP: TLabel;
-    dbCFOP: TRxDBComboEdit;
     lblAliquota: TLabel;
     dbAliquota: TDBEdit;
     lblCST: TLabel;
@@ -164,7 +161,6 @@ type
     IbDtstTabelaDTFINALIZACAO_VENDA: TDateField;
     btnTituloQuitar: TBitBtn;
     lblCFOPVenda: TLabel;
-    dbCFOPVenda: TRxDBComboEdit;
     IbDtstTabelaCFOP: TIntegerField;
     IbDtstTabelaLOTE_NFE_ANO: TSmallintField;
     IbDtstTabelaLOTE_NFE_NUMERO: TIntegerField;
@@ -195,7 +191,6 @@ type
     qryNFELOTE_ANO: TSmallintField;
     qryNFELOTE_NUM: TIntegerField;
     Bevel13: TBevel;
-    dbTotalDesconto: TRxDBComboEdit;
     lblTotalDesconto: TLabel;
     cdsTabelaItensPUNIT_PROMOCAO: TIBBCDField;
     lblProdutoPromocao: TLabel;
@@ -259,8 +254,6 @@ type
     cdsTabelaItensDESCONTO_VALOR: TIBBCDField;
     IbDtstTabelaDESCONTO: TIBBCDField;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     cdsTabelaItensPFINAL: TIBBCDField;
     dbValorTotalBruto: TDBEdit;
     lblValorTotalBruto: TLabel;
@@ -374,6 +367,13 @@ type
     btbtnGerarNFe: TcxButton;
     btbtnCancelarVND: TcxButton;
     cdsTabelaItensDESCRI_APRESENTACAO: TIBStringField;
+    dbCliente: TJvDBComboEdit;
+    dbCFOPVenda: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
+    dbCFOP: TJvDBComboEdit;
+    dbTotalDesconto: TJvDBComboEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure ImprimirOpcoesClick(Sender: TObject);
     procedure ImprimirOrcamentoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);

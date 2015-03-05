@@ -5,15 +5,13 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoImpressao, StdCtrls, dxGDIPlusClasses, ExtCtrls,
-  Buttons, ToolWin, ComCtrls, Mask, rxToolEdit, frxClass, frxDBSet,
-  DBClient, Provider, DB, IBCustomDataSet, IBQuery, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
+  Buttons, ToolWin, ComCtrls, Mask, frxClass, frxDBSet, DBClient, Provider, DB, IBCustomDataSet,
+  IBQuery, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit;
 
 type
   TfrmGeContasAReceberImpressao = class(TfrmGrPadraoImpressao)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     lblSituacao: TLabel;
     edSituacao: TComboBox;
     frRelacaoAReceberVSintetico: TfrxReport;
@@ -58,6 +56,8 @@ type
     CdsEmpresas: TClientDataSet;
     lblEmpresa: TLabel;
     edEmpresa: TComboBox;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnVisualizarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

@@ -5,15 +5,13 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
-  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, IBTable, RXDBCtrl, Menus, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls, ToolWin, 
+  IBTable, Menus, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvToolEdit, JvDBControls, JvExMask;
 
 type
   TfrmGeApropriacaoEstoque = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     RdgStatusApropriacao: TRadioGroup;
     lblApropriacaoAberta: TLabel;
     lblApropriacaoCancelada: TLabel;
@@ -26,7 +24,6 @@ type
     dbSituacao: TDBEdit;
     lblSituacao: TLabel;
     lblDataApropriacao: TLabel;
-    dbDataApropriacao: TDBDateEdit;
     lblUsuario: TLabel;
     dbUsuario: TDBEdit;
     Bevel12: TBevel;
@@ -39,7 +36,6 @@ type
     lblQuantidade: TLabel;
     lblUnidade: TLabel;
     Bevel7: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     dbUnidade: TDBEdit;
@@ -68,10 +64,8 @@ type
     TbsApropriacaoCancelado: TTabSheet;
     dbMovitoCancelamento: TDBMemo;
     lblCentroCusto: TLabel;
-    dbCentroCusto: TRxDBComboEdit;
     dbObservacao: TDBMemo;
     lblEntrada: TLabel;
-    dbEntrada: TRxDBComboEdit;
     PnlValores: TPanel;
     lblCompetencia: TLabel;
     dbCompetencia: TDBEdit;
@@ -132,12 +126,18 @@ type
     qryEntradaProduto: TIBDataSet;
     cdsTabelaItensQTDE: TIBBCDField;
     lblAutorizacao: TLabel;
-    dbAutorizacao: TRxDBComboEdit;
     IbDtstTabelaAUTORIZACAO_ANO: TSmallintField;
     IbDtstTabelaAUTORIZACAO_NUM: TIntegerField;
     IbDtstTabelaAUTORIZACAO_EMP: TIBStringField;
     IbDtstTabelaAUTORIZACAO: TIBStringField;
     qryAutorizacaoProduto: TIBDataSet;
+    dbCentroCusto: TJvDBComboEdit;
+    dbEntrada: TJvDBComboEdit;
+    dbAutorizacao: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
+    dbDataApropriacao: TJvDBDateEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

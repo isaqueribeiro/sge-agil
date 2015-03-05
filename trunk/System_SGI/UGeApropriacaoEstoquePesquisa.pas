@@ -16,12 +16,12 @@ uses
   cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridBandedTableView, cxGridDBBandedTableView, cxClasses,
   cxGridCustomView, cxGrid, Buttons, cxLookAndFeels, cxButtons,
-  dxSkinsForm, Mask, rxToolEdit,
+  dxSkinsForm, Mask, cxCurrencyEdit, JvExMask, JvToolEdit,
 
   dxSkinsCore, dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
   dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
   dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
-  dxSkinOffice2010Silver, cxCurrencyEdit;
+  dxSkinOffice2010Silver;
 
 type        
   TfrmGeApropriacaoEstoquePesquisa = class(TfrmGrPadrao)
@@ -32,7 +32,6 @@ type
     lblTipoFiltro: TLabel;
     edPesquisar: TEdit;
     edTipoFiltro: TComboBox;
-    edCentroCusto: TComboEdit;
     lblCentroCusto: TLabel;
     Bevel1: TBevel;
     tlbBotoes: TToolBar;
@@ -107,6 +106,7 @@ type
     dbgGrupoTblPERCENTUAL: TcxGridDBBandedColumn;
     chkProdutoComEstoque: TCheckBox;
     btBtnAtualizarCusto: TcxButton;
+    edCentroCusto: TJvComboEdit;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

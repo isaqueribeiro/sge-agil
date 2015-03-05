@@ -4,9 +4,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UGrPadrao, IBCustomDataSet, IBUpdateSQL, DB, IBQuery, StdCtrls,
-  Buttons, ExtCtrls, Mask, DBCtrls, rxToolEdit, RXDBCtrl, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
+  Dialogs, UGrPadrao, IBCustomDataSet, IBUpdateSQL, DB, IBQuery, StdCtrls, Buttons, ExtCtrls,
+  Mask, DBCtrls, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
+  JvExMask, JvToolEdit, JvDBControls;
 
 type
   TfrmGeEstoqueAjusteManual = class(TfrmGrPadrao)
@@ -26,13 +26,11 @@ type
     qryProduto: TIBDataSet;
     updProduto: TIBUpdateSQL;
     lblProduto: TLabel;
-    dbProduto: TRxDBComboEdit;
     lblProdutoDesc: TLabel;
     dbProdutoDesc: TDBEdit;
     lblEstoque: TLabel;
     dbEstoque: TDBEdit;
     lblFornecedor: TLabel;
-    dbFornecedor: TRxDBComboEdit;
     lblDocumento: TLabel;
     dbDocumento: TDBEdit;
     lblQuantidade: TLabel;
@@ -71,6 +69,8 @@ type
     btnConfirmar: TcxButton;
     btnCancelar: TcxButton;
     qryProdutoMOVIMENTA_ESTOQUE: TSmallintField;
+    dbProduto: TJvDBComboEdit;
+    dbFornecedor: TJvDBComboEdit;
     procedure ControlEditExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure qryEmpresaCNPJGetText(Sender: TField; var Text: String;

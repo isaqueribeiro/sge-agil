@@ -5,15 +5,13 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
-  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, IBTable, RXDBCtrl, Menus, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls, ToolWin, 
+  IBTable, Menus, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
+  JvToolEdit, JvDBControls, JvExMask;
 
 type
   TfrmGeRequisicaoCompra = class(TfrmGrPadraoCadastro)
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     RdgStatusRequisicao: TRadioGroup;
     lblRequisicaoAberta: TLabel;
     lblRequisicaoCancelada: TLabel;
@@ -23,12 +21,10 @@ type
     dbDataHora: TDBEdit;
     dbEmpresa: TDBLookupComboBox;
     lblEmpresa: TLabel;
-    dbFornecedor: TRxDBComboEdit;
     lblFornecedor: TLabel;
     dbSituacao: TDBEdit;
     lblSituacao: TLabel;
     lblDataEmissao: TLabel;
-    dbDataEmissao: TDBDateEdit;
     lblUsuario: TLabel;
     dbUsuario: TDBEdit;
     lblAutorizador: TLabel;
@@ -43,7 +39,6 @@ type
     lblQuantidade: TLabel;
     lblUnidade: TLabel;
     Bevel7: TBevel;
-    dbProduto: TRxDBComboEdit;
     dbProdutoNome: TDBEdit;
     dbQuantidade: TDBEdit;
     dbUnidade: TDBEdit;
@@ -67,7 +62,6 @@ type
     tblTipoRequisicao: TIBTable;
     dtsTipoRequisicao: TDataSource;
     lblDataValidade: TLabel;
-    dbDataValidade: TDBDateEdit;
     GrpBxPagamento: TGroupBox;
     lblFormaPagto: TLabel;
     dbFormaPagto: TDBLookupComboBox;
@@ -136,7 +130,6 @@ type
     dbObservacao: TDBMemo;
     dbMotivo: TDBMemo;
     lblCliente: TLabel;
-    dbCliente: TRxDBComboEdit;
     TbsRequisicaoCancelado: TTabSheet;
     dbMovitoCancelamento: TDBMemo;
     IbDtstTabelaANO: TSmallintField;
@@ -182,12 +175,19 @@ type
     IbDtstTabelaNOMECLIENTE: TIBStringField;
     IbDtstTabelaFATURAMENTO_MINIMO: TIBBCDField;
     lblCentroCusto: TLabel;
-    dbCentroCusto: TRxDBComboEdit;
     IbDtstTabelaCENTRO_CUSTO: TIntegerField;
     IbDtstTabelaDESCRICAO_CENTRO_CUSTO: TIBStringField;
     btnFinalizarRequisicao: TcxButton;
     btnRequisitarCompra: TcxButton;
     btnCancelarRequisicao: TcxButton;
+    dbFornecedor: TJvDBComboEdit;
+    dbCliente: TJvDBComboEdit;
+    dbCentroCusto: TJvDBComboEdit;
+    dbProduto: TJvDBComboEdit;
+    dbDataEmissao: TJvDBDateEdit;
+    dbDataValidade: TJvDBDateEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

@@ -6,9 +6,10 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, rxToolEdit, RXDBCtrl, IBTable, IBQuery, frxClass, frxDBSet,
+  ToolWin, IBTable, IBQuery, frxClass, frxDBSet,
   DBClient, Provider, Menus, ACBrBase, ACBrExtenso, cxGraphics,
-  cxLookAndFeels, cxLookAndFeelPainters, cxButtons;
+  cxLookAndFeels, cxLookAndFeelPainters, cxButtons, JvToolEdit,
+  JvDBControls, JvExMask;
 
 type
   TfrmGeContasAPagar = class(TfrmGrPadraoCadastro)
@@ -36,7 +37,6 @@ type
     lblNotaFiscal: TLabel;
     dbNotaFiscal: TDBEdit;
     lblFornecedor: TLabel;
-    dbFornecedor: TRxDBComboEdit;
     lblParcela: TLabel;
     dbParcela: TDBEdit;
     dbQuitado: TDBEdit;
@@ -89,8 +89,6 @@ type
     lblCaixaCancelado: TLabel;
     Label1: TLabel;
     lblData: TLabel;
-    e1Data: TDateEdit;
-    e2Data: TDateEdit;
     FrdRecibo: TfrxDBDataset;
     FrRecibo: TfrxReport;
     QryRecibo: TIBQuery;
@@ -131,9 +129,12 @@ type
     IbDtstTabelaVALORSALDO: TIBBCDField;
     lblSaldoAPagar: TLabel;
     dbSaldoAPagar: TDBEdit;
-    dbEmissao: TDBDateEdit;
-    dbVencimento: TDBDateEdit;
     btbtnEfetuarPagto: TcxButton;
+    dbEmissao: TJvDBDateEdit;
+    dbVencimento: TJvDBDateEdit;
+    dbFornecedor: TJvDBComboEdit;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbFornecedorButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);

@@ -134,7 +134,16 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
           'Por Fabricante'
           'Por Produto')
       end
-      object edCentroCusto: TComboEdit
+      object chkProdutoComEstoque: TCheckBox
+        Left = 864
+        Top = 42
+        Width = 201
+        Height = 17
+        Anchors = [akTop, akRight]
+        Caption = 'Apenas Produtos com Estoque'
+        TabOrder = 2
+      end
+      object edCentroCusto: TJvComboEdit
         Left = 216
         Top = 40
         Width = 337
@@ -197,15 +206,6 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Text = '(Todos)'
         OnButtonClick = edCentroCustoButtonClick
         OnKeyPress = edCentroCustoKeyPress
-      end
-      object chkProdutoComEstoque: TCheckBox
-        Left = 864
-        Top = 42
-        Width = 201
-        Height = 17
-        Anchors = [akTop, akRight]
-        Caption = 'Apenas Produtos com Estoque'
-        TabOrder = 2
       end
     end
   end

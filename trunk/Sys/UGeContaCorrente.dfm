@@ -131,7 +131,43 @@ inherited frmGeContaCorrente: TfrmGeContaCorrente
           ParentFont = False
           TabOrder = 1
         end
-        object dbBanco: TRxDBComboEdit
+        object dbTipo: TDBRadioGroup
+          Left = 512
+          Top = 16
+          Width = 209
+          Height = 44
+          Caption = 'Tipo'
+          Columns = 2
+          DataField = 'TIPO'
+          DataSource = DtSrcTabela
+          Items.Strings = (
+            'Caixa'
+            'Banco')
+          TabOrder = 2
+          Values.Strings = (
+            '1'
+            '2')
+        end
+        object dbEmpresa: TDBLookupComboBox
+          Left = 16
+          Top = 120
+          Width = 705
+          Height = 21
+          DataField = 'EMPRESA'
+          DataSource = DtSrcTabela
+          DropDownRows = 10
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          KeyField = 'CNPJ'
+          ListField = 'RZSOC'
+          ListSource = dtsEmpresa
+          ParentFont = False
+          TabOrder = 4
+        end
+        object dbBanco: TJvDBComboEdit
           Left = 16
           Top = 80
           Width = 705
@@ -205,42 +241,6 @@ inherited frmGeContaCorrente: TfrmGeContaCorrente
           ShowHint = True
           TabOrder = 3
           OnButtonClick = dbBancoButtonClick
-        end
-        object dbTipo: TDBRadioGroup
-          Left = 512
-          Top = 16
-          Width = 209
-          Height = 44
-          Caption = 'Tipo'
-          Columns = 2
-          DataField = 'TIPO'
-          DataSource = DtSrcTabela
-          Items.Strings = (
-            'Caixa'
-            'Banco')
-          TabOrder = 2
-          Values.Strings = (
-            '1'
-            '2')
-        end
-        object dbEmpresa: TDBLookupComboBox
-          Left = 16
-          Top = 120
-          Width = 705
-          Height = 21
-          DataField = 'EMPRESA'
-          DataSource = DtSrcTabela
-          DropDownRows = 10
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          KeyField = 'CNPJ'
-          ListField = 'RZSOC'
-          ListSource = dtsEmpresa
-          ParentFont = False
-          TabOrder = 4
         end
       end
     end
