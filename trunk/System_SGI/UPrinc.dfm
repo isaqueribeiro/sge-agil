@@ -4492,14 +4492,23 @@ object frmPrinc: TfrmPrinc
       Index = 3
     end
     object RbnTabNota: TdxRibbonTab
-      Active = True
       Caption = 'Notas Fiscais (NF-e)'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngNotaFiscal'
+        end>
       Index = 4
     end
     object RbnTabConsulta: TdxRibbonTab
+      Active = True
       Caption = 'Consulta'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngConsultaGeral'
+        end
+        item
+          ToolbarName = 'BrMngConsultaEstatistica'
+        end>
       Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
@@ -10943,8 +10952,10 @@ object frmPrinc: TfrmPrinc
       'Movimento'
       'Compras'
       'Estoque'
-      'Notas Fiscais')
+      'Notas Fiscais'
+      'Consultas')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
@@ -10957,6 +10968,7 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -11303,6 +11315,97 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnInventarioProduto'
         end>
       OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngNotaFiscal: TdxBar
+      Caption = 'Servi'#231'os NF-e'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnNotaFiscalInutilizar'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnNotaFiscalRecibo'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnNotaFiscalCartaCorrecao'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnNotaFiscalExportar'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnNotaFiscalDownload'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngConsultaGeral: TdxBar
+      Caption = 'Consultas em Geral'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnConsultaCNPJ'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnConsultaVenda'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngConsultaEstatistica: TdxBar
+      Caption = 'Consultas Estat'#237'sticas'
+      CaptionButtons = <>
+      DockedLeft = 190
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnConsultaRotatividadeProduto'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnConsultaEstoqueMinimo'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnConsultaEstoqueApropriado'
+        end>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -11861,6 +11964,127 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 36
     end
+    object BrBtnNotaFiscalInutilizar: TdxBarLargeButton
+      Caption = 'Inutilizar Numera'#231#227'o'
+      Category = 10
+      Hint = 'Inutilizar Numera'#231#227'o'
+      Visible = ivAlways
+      LargeImageIndex = 41
+      OnClick = nmInutilizarNumeroNFeClick
+      HotImageIndex = 41
+      SyncImageIndex = False
+      ImageIndex = 41
+    end
+    object BrBtnNotaFiscalRecibo: TdxBarLargeButton
+      Caption = 'Consultar Recibo Lote NF-e'
+      Category = 10
+      Hint = 'Consultar Recibo Lote NF-e'
+      Visible = ivAlways
+      LargeImageIndex = 38
+      OnClick = nmConsultarLoteNFeClick
+      HotImageIndex = 38
+      SyncImageIndex = False
+      ImageIndex = 38
+    end
+    object BrBtnNotaFiscalCartaCorrecao: TdxBarLargeButton
+      Caption = 'Carta de Corre'#231#227'o Eletr'#244'nica (CC-e)'
+      Category = 10
+      Hint = 'Carta de Corre'#231#227'o Eletr'#244'nica (CC-e)'
+      Visible = ivAlways
+      LargeImageIndex = 37
+      OnClick = nmCartaCorrecaoNFeClick
+      HotImageIndex = 37
+      SyncImageIndex = False
+      ImageIndex = 37
+    end
+    object BrBtnNotaFiscalExportar: TdxBarLargeButton
+      Caption = 'Exportar'
+      Category = 10
+      Hint = 'Exportar'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpNotaFiscalExportar
+      LargeImageIndex = 40
+      HotImageIndex = 40
+      SyncImageIndex = False
+      ImageIndex = 40
+    end
+    object BrBtnNotaFiscalExportarNF: TdxBarLargeButton
+      Caption = 'Exportar NF-e(s) Gerada(s)'
+      Category = 10
+      Hint = 'Exportar NF-e(s) Gerada(s)'
+      Visible = ivAlways
+      LargeImageIndex = 40
+      OnClick = nmExportarNFeGeradaClick
+      HotImageIndex = 40
+      SyncImageIndex = False
+      ImageIndex = 40
+    end
+    object BrBtnNotaFiscalExportarChave: TdxBarLargeButton
+      Caption = 'Exportar Chave(s) de NF-e(s) Gerada(s)'
+      Category = 10
+      Hint = 'Exportar Chave(s) de NF-e(s) Gerada(s)'
+      Visible = ivAlways
+      OnClick = nmExportarChaveNFeGeradaClick
+    end
+    object BrBtnNotaFiscalExportarNFC: TdxBarLargeButton
+      Caption = 'Gerar Arquivo NFC (Nota Fiscal Cidad'#227')'
+      Category = 10
+      Hint = 'Gerar Arquivo NFC (Nota Fiscal Cidad'#227')'
+      Visible = ivAlways
+      OnClick = nmGerarArquivoNFCClick
+    end
+    object BrBtnNotaFiscalDownload: TdxBarLargeButton
+      Caption = 'Download de NF-e(s) Emitida(s)'
+      Category = 10
+      Hint = 'Download de NF-e(s) Emitida(s)'
+      Visible = ivAlways
+      LargeImageIndex = 39
+      OnClick = nmDownloadNFeGeradaClick
+      HotImageIndex = 39
+      SyncImageIndex = False
+      ImageIndex = 39
+    end
+    object BrBtnConsultaCNPJ: TdxBarLargeButton
+      Caption = 'Consultar CNPJ (Receita Federal)'
+      Category = 11
+      Hint = 'Consultar CNPJ (Receita Federal)'
+      Visible = ivAlways
+      LargeImageIndex = 42
+      OnClick = nmConsultarCNPJClick
+      HotImageIndex = 42
+      SyncImageIndex = False
+      ImageIndex = 42
+    end
+    object BrBtnConsultaVenda: TdxBarLargeButton
+      Caption = 'Vendas Realizadas'
+      Category = 11
+      Hint = 'Vendas Realizadas'
+      Visible = ivAlways
+      LargeImageIndex = 43
+      OnClick = nmVendaIemPesquisaClick
+      HotImageIndex = 43
+      SyncImageIndex = False
+      ImageIndex = 43
+    end
+    object BrBtnConsultaRotatividadeProduto: TdxBarLargeButton
+      Caption = 'Rotatividade de Produtos'
+      Category = 11
+      Hint = 'Rotatividade de Produtos'
+      Visible = ivAlways
+    end
+    object BrBtnConsultaEstoqueMinimo: TdxBarLargeButton
+      Caption = 'Estoque M'#237'nimo'
+      Category = 11
+      Hint = 'Estoque M'#237'nimo'
+      Visible = ivAlways
+    end
+    object BrBtnConsultaEstoqueApropriado: TdxBarLargeButton
+      Caption = 'Estoque Apropriado'
+      Category = 11
+      Hint = 'Estoque Apropriado'
+      Visible = ivAlways
+    end
   end
   object BrPpEntrada: TdxBarPopupMenu
     BarManager = BrManager
@@ -12036,6 +12260,25 @@ object frmPrinc: TfrmPrinc
       end>
     UseOwnFont = False
     Left = 432
+    Top = 246
+  end
+  object BrPpNotaFiscalExportar: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnNotaFiscalExportarNF'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnNotaFiscalExportarChave'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnNotaFiscalExportarNFC'
+      end>
+    UseOwnFont = False
+    Left = 464
     Top = 246
   end
 end
