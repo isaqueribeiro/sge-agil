@@ -1,23 +1,21 @@
 inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
-  Left = 414
-  Top = 223
+  Left = 491
+  Top = 208
   BorderStyle = bsDialog
   BorderWidth = 4
   Caption = 'Configurar NF-e / NFC-e (ACBr)'
   ClientHeight = 586
-  ClientWidth = 284
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
+  ClientWidth = 286
   OldCreateOrder = True
   DesignSize = (
-    284
+    286
     586)
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
     Top = 545
-    Width = 284
+    Width = 286
     Height = 4
     Align = alTop
     Shape = bsSpacer
@@ -25,7 +23,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
   object grpBxConfigurar: TGroupBox
     Left = 0
     Top = 0
-    Width = 284
+    Width = 286
     Height = 545
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -34,21 +32,21 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
     object pgcGuias: TPageControl
       Left = 2
       Top = 15
-      Width = 280
+      Width = 282
       Height = 528
-      ActivePage = TabSheet1
+      ActivePage = TabSheet2
       Align = alClient
       MultiLine = True
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Certificado'
         DesignSize = (
-          272
+          274
           500)
         object GroupBox2: TGroupBox
           Left = 0
           Top = 0
-          Width = 272
+          Width = 274
           Height = 144
           Align = alTop
           Caption = 'Certificado'
@@ -209,13 +207,13 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object GroupBox3: TGroupBox
           Left = 0
           Top = 0
-          Width = 272
+          Width = 274
           Height = 449
           Align = alTop
           Caption = 'Geral'
           TabOrder = 0
           DesignSize = (
-            272
+            274
             449)
           object lbltLogoMarca: TLabel
             Left = 8
@@ -450,7 +448,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object rgModoGerarNFe: TRadioGroup
           Left = 0
           Top = 449
-          Width = 272
+          Width = 274
           Height = 49
           Align = alTop
           Caption = 'Modo de Gerar a NF-e'
@@ -469,13 +467,13 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object GroupBox4: TGroupBox
           Left = 0
           Top = 0
-          Width = 272
+          Width = 274
           Height = 153
           Align = alTop
           Caption = 'WebService'
           TabOrder = 0
           DesignSize = (
-            272
+            274
             153)
           object lblUF: TLabel
             Left = 8
@@ -567,7 +565,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object gbProxy: TGroupBox
           Left = 0
           Top = 153
-          Width = 272
+          Width = 274
           Height = 105
           Align = alTop
           Caption = 'Proxy'
@@ -633,12 +631,12 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object WBResposta: TWebBrowser
           Left = 0
           Top = 465
-          Width = 272
+          Width = 274
           Height = 35
           Align = alBottom
           TabOrder = 2
           ControlData = {
-            4C0000001D1C00009E0300000000000000000000000000000000000000000000
+            4C000000521C00009E0300000000000000000000000000000000000000000000
             000000004C000000000000000000000001000000E0D057007335CF11AE690800
             2B2E126208000000000000004C0000000114020000000000C000000000000046
             8000000000000000000000000000000000000000000000000000000000000000
@@ -855,13 +853,13 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object GroupBox5: TGroupBox
           Left = 0
           Top = 0
-          Width = 272
+          Width = 274
           Height = 489
           Align = alTop
           Caption = 'Email'
           TabOrder = 0
           DesignSize = (
-            272
+            274
             489)
           object lbltSmtpHost: TLabel
             Left = 8
@@ -1024,7 +1022,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
     NumGlyphs = 2
   end
   object btnSalvar: TcxButton
-    Left = 113
+    Left = 115
     Top = 550
     Width = 83
     Height = 33
@@ -1086,7 +1084,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
     NumGlyphs = 2
   end
   object btnCancelar: TcxButton
-    Left = 201
+    Left = 203
     Top = 550
     Width = 83
     Height = 33

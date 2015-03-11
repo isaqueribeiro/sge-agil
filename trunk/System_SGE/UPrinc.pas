@@ -806,6 +806,10 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_NFE_GERAR_ARQUI_NFC_ID, Trim(nmGerarArquivoNFC.Caption),        ROTINA_MENU_NOTAFISCAL_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_NFE_DOWNLOAD_NFE_ID,    Trim(nmDownloadNFeGerada.Caption),      ROTINA_MENU_NOTAFISCAL_ID);
 
+  nmInutilizarNumeroNFe.Enabled := GetEstacaoEmitiNFe;
+  nmConsultarLoteNFe.Enabled    := GetEstacaoEmitiNFe;
+  nmCartaCorrecaoNFe.Enabled    := GetEstacaoEmitiNFe;
+
   // Consultas
 
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CNS_CONSULTA_CNPJ_ID,        Trim(nmConsultarCNPJ.Caption),    ROTINA_MENU_CONSULTA_ID);

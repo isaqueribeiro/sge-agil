@@ -84,7 +84,7 @@ begin
       or (Frm.ActiveControl is TComboBox)
       or (Frm.ActiveControl is TMaskEdit)
       or (Frm.ActiveControl is TLabeledEdit)
-      //or (Frm.ActiveControl is TRxLookupEdit)
+      or (Frm.ActiveControl is TJvComboEdit)
       or (Frm.ActiveControl is TJvDateEdit)
       or (Frm.ActiveControl is TJvDirectoryEdit)
       // DB Controls
@@ -94,15 +94,64 @@ begin
       or (Frm.ActiveControl is TDBComboBox)
       or (Frm.ActiveControl is TDBLookupComboBox)
       or (Frm.ActiveControl is TDBLookupListBox)
-      // DB Controls RXLIB
+      // DB Controls Jedi
       or (Frm.ActiveControl is TJvDBDateEdit)
       or (Frm.ActiveControl is TJvDBCalcEdit)
       or (Frm.ActiveControl is TJvDBComboEdit)
-      or (Frm.ActiveControl is TJvDBDateEdit)
     ) then
 
-      if ( Assigned(TEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TEdit(Frm.ActiveControl).OnKeyDown) ) then
-        Result := False
+      if (Frm.ActiveControl is TEdit) then
+        Result := not ( Assigned(TEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TCheckBox) then
+        Result := not ( Assigned(TCheckBox(Frm.ActiveControl).OnKeyPress) or Assigned(TCheckBox(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TRadioButton) then
+        Result := not ( Assigned(TRadioButton(Frm.ActiveControl).OnKeyPress) or Assigned(TRadioButton(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TComboBox) then
+        Result := not ( Assigned(TComboBox(Frm.ActiveControl).OnKeyPress) or Assigned(TComboBox(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TMaskEdit) then
+        Result := not ( Assigned(TMaskEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TMaskEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TLabeledEdit) then
+        Result := not ( Assigned(TLabeledEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TLabeledEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TJvComboEdit) then
+        Result := not ( Assigned(TJvComboEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TJvComboEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TJvDateEdit) then
+        Result := not ( Assigned(TJvDateEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TJvDateEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TJvDirectoryEdit) then
+        Result := not ( Assigned(TJvDirectoryEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TJvDirectoryEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      // DB Controls
+      if (Frm.ActiveControl is TDBEdit) then
+        Result := not ( Assigned(TDBEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TDBEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TDBCheckBox) then
+        Result := not ( Assigned(TDBCheckBox(Frm.ActiveControl).OnKeyPress) or Assigned(TDBCheckBox(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TDBComboBox) then
+        Result := not ( Assigned(TDBComboBox(Frm.ActiveControl).OnKeyPress) or Assigned(TDBComboBox(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TDBLookupComboBox) then
+        Result := not ( Assigned(TDBLookupComboBox(Frm.ActiveControl).OnKeyPress) or Assigned(TDBLookupComboBox(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TDBLookupListBox) then
+        Result := not ( Assigned(TDBLookupListBox(Frm.ActiveControl).OnKeyPress) or Assigned(TDBLookupListBox(Frm.ActiveControl).OnKeyDown) )
+      else
+      // DB Controls Jedi
+      if (Frm.ActiveControl is TJvDBDateEdit) then
+        Result := not ( Assigned(TJvDBDateEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TJvDBDateEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TJvDBCalcEdit) then
+        Result := not ( Assigned(TJvDBCalcEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TJvDBCalcEdit(Frm.ActiveControl).OnKeyDown) )
+      else
+      if (Frm.ActiveControl is TJvDBComboEdit) then
+        Result := not ( Assigned(TJvDBComboEdit(Frm.ActiveControl).OnKeyPress) or Assigned(TJvDBComboEdit(Frm.ActiveControl).OnKeyDown) )
       else
         Result := True
 
@@ -399,6 +448,14 @@ begin
         TDateTimePicker(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
+    if ( Win.Components[i] is TJvComboEdit ) then
+    begin
+      if ( not Assigned(TJvComboEdit(Win.Components[i]).OnEnter) ) then
+        TJvComboEdit(Win.Components[i]).OnEnter := ControlEditEnter;
+      if ( not Assigned(TJvComboEdit(Win.Components[i]).OnExit) ) then
+        TJvComboEdit(Win.Components[i]).OnExit  := ControlEditExit;
+    end;
+
     if ( Win.Components[i] is TJvDateEdit ) then
     begin
       if ( not Assigned(TJvDateEdit(Win.Components[i]).OnEnter) ) then
@@ -473,15 +530,7 @@ begin
         TDBLookupComboBox(Win.Components[i]).OnExit  := ControlEditExit;
     end;
 
-    if ( Win.Components[i] is TJvDBComboEdit ) then
-    begin
-      if ( not Assigned(TJvDBComboEdit(Win.Components[i]).OnEnter) ) then
-        TJvDBComboEdit(Win.Components[i]).OnEnter := ControlEditEnter;
-      if ( not Assigned(TJvDBComboEdit(Win.Components[i]).OnExit) ) then
-        TJvDBComboEdit(Win.Components[i]).OnExit  := ControlEditExit;
-    end;
-
-    // Controls DB RXLIB
+    // Controls DB Jedi
 
     if ( Win.Components[i] is TJvDBDateEdit ) then
     begin

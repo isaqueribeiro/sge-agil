@@ -262,6 +262,27 @@ type
     dbUnidade: TJvDBComboEdit;
     dbUnidadeFracao: TJvDBComboEdit;
     dbSecao: TJvDBComboEdit;
+    tbsCustoVeiculo: TTabSheet;
+    grpCustosVeiculo: TGroupBox;
+    lblValorCompraVeiculo: TLabel;
+    lblOutros: TLabel;
+    lblValorOficinaVeiculo: TLabel;
+    lblValorComissaoVeiculo: TLabel;
+    lblImpostos: TLabel;
+    lblAdm: TLabel;
+    dbValorCompraVeiculo: TDBEdit;
+    dbValorComissaoVeiculo: TDBEdit;
+    dbValorOficinaVeiculo: TDBEdit;
+    dbImpostos: TDBEdit;
+    dbAdm: TDBEdit;
+    dbOutros: TDBEdit;
+    grpFIVeiculo: TGroupBox;
+    lblRetPlano: TLabel;
+    lblFinanciadora: TLabel;
+    lvlValorRetornoVeiculo: TLabel;
+    dbFinanciadora: TDBEdit;
+    dbPorPlano: TDBEdit;
+    dbValorRetornoVeiculo: TDBEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
@@ -1176,6 +1197,7 @@ begin
   // Configurar Legendas de acordo com o segmento
   pnlVeiculo.Visible             := (GetSegmentoID(gUsuarioLogado.Empresa) = SEGMENTO_MERCADO_CARRO_ID);
   tbsHistoricoVeiculo.TabVisible := (GetSegmentoID(gUsuarioLogado.Empresa) = SEGMENTO_MERCADO_CARRO_ID);
+  tbsCustoVeiculo.TabVisible     := (GetSegmentoID(gUsuarioLogado.Empresa) = SEGMENTO_MERCADO_CARRO_ID);
 
   if ( pnlVeiculo.Visible ) then
   begin
@@ -1306,7 +1328,21 @@ procedure TfrmGeProduto.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
+    if ( (ActiveControl = dbComporFaturamento) and tbsCustoVeiculo.TabVisible ) then
+    begin
+      pgcMaisDados.ActivePage := tbsCustoVeiculo;
+      dbValorCompraVeiculo.SetFocus;
+      Exit;
+    end
+    else
     if ( (ActiveControl = dbComporFaturamento) and tbsTributacao.TabVisible ) then
+    begin
+      pgcMaisDados.ActivePage := tbsTributacao;
+      dbOrigem.SetFocus;
+      Exit;
+    end
+    else
+    if ( (ActiveControl = dbValorRetornoVeiculo) and tbsTributacao.TabVisible ) then
     begin
       pgcMaisDados.ActivePage := tbsTributacao;
       dbOrigem.SetFocus;

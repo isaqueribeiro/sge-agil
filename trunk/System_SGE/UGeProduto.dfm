@@ -1061,6 +1061,300 @@ inherited frmGeProduto: TfrmGeProduto
             ValueUnchecked = '0'
           end
         end
+        object tbsCustoVeiculo: TTabSheet
+          Caption = 'Custos e F&&I p/ Ve'#237'culos'
+          ImageIndex = 4
+          object grpCustosVeiculo: TGroupBox
+            Left = 0
+            Top = 0
+            Width = 945
+            Height = 121
+            Align = alTop
+            Caption = 'Custos'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            object lblValorCompraVeiculo: TLabel
+              Left = 16
+              Top = 24
+              Width = 107
+              Height = 13
+              Caption = 'Valor Compra (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblOutros: TLabel
+              Left = 295
+              Top = 72
+              Width = 69
+              Height = 13
+              Caption = 'Outros (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblValorOficinaVeiculo: TLabel
+              Left = 295
+              Top = 24
+              Width = 69
+              Height = 13
+              Caption = 'Oficina (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblValorComissaoVeiculo: TLabel
+              Left = 155
+              Top = 24
+              Width = 85
+              Height = 13
+              Caption = 'Comiss'#227'o (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblImpostos: TLabel
+              Left = 16
+              Top = 72
+              Width = 85
+              Height = 13
+              Caption = 'Impostos (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblAdm: TLabel
+              Left = 155
+              Top = 72
+              Width = 57
+              Height = 13
+              Caption = 'ADM (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object dbValorCompraVeiculo: TDBEdit
+              Left = 16
+              Top = 41
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'PRECO2'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 0
+            end
+            object dbValorComissaoVeiculo: TDBEdit
+              Left = 155
+              Top = 41
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'CUST_COMISSAO'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 1
+            end
+            object dbValorOficinaVeiculo: TDBEdit
+              Left = 295
+              Top = 41
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'CUST_DESP_OFIC'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 2
+            end
+            object dbImpostos: TDBEdit
+              Left = 16
+              Top = 89
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'CUST_IMPOSTO'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 3
+            end
+            object dbAdm: TDBEdit
+              Left = 155
+              Top = 89
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'CUST_DESP_ADM'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 4
+            end
+            object dbOutros: TDBEdit
+              Left = 295
+              Top = 89
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'CUST_DESP_GERAIS'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 5
+            end
+          end
+          object grpFIVeiculo: TGroupBox
+            Left = 0
+            Top = 121
+            Width = 945
+            Height = 72
+            Align = alTop
+            Caption = 'F&&I - Retorno'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 1
+            object lblRetPlano: TLabel
+              Left = 155
+              Top = 24
+              Width = 84
+              Height = 13
+              Caption = 'Por Plano (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lblFinanciadora: TLabel
+              Left = 16
+              Top = 24
+              Width = 103
+              Height = 13
+              Caption = 'Financiadora (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object lvlValorRetornoVeiculo: TLabel
+              Left = 296
+              Top = 24
+              Width = 109
+              Height = 13
+              Caption = 'Total Retorno (R$):'
+              FocusControl = dbTipoVeiculo
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = [fsBold]
+              ParentFont = False
+            end
+            object dbFinanciadora: TDBEdit
+              Left = 16
+              Top = 41
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'FI_RET_FINANC'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 0
+            end
+            object dbPorPlano: TDBEdit
+              Left = 155
+              Top = 41
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              DataField = 'FI_RET_PLANO'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 1
+            end
+            object dbValorRetornoVeiculo: TDBEdit
+              Left = 294
+              Top = 41
+              Width = 129
+              Height = 21
+              CharCase = ecUpperCase
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 2
+            end
+          end
+        end
         object tbsTributacao: TTabSheet
           Caption = 'Tributa'#231#245'es'
           ImageIndex = 3
@@ -3176,13 +3470,13 @@ inherited frmGeProduto: TfrmGeProduto
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     TableName = 'TBEMPRESA'
-    Left = 312
-    Top = 400
+    Left = 576
+    Top = 416
   end
   object dtsEmpresa: TDataSource
     DataSet = tblEmpresa
-    Left = 344
-    Top = 400
+    Left = 608
+    Top = 416
   end
   object tblOrigem: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3212,13 +3506,13 @@ inherited frmGeProduto: TfrmGeProduto
     StoreDefs = True
     TableName = 'VW_ORIGEM_PRODUTO'
     TableTypes = [ttView]
-    Left = 312
-    Top = 432
+    Left = 576
+    Top = 448
   end
   object dtsOrigem: TDataSource
     DataSet = tblOrigem
-    Left = 344
-    Top = 432
+    Left = 608
+    Top = 448
   end
   object tblTributacaoNM: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3254,13 +3548,13 @@ inherited frmGeProduto: TfrmGeProduto
     StoreDefs = True
     TableName = 'VW_TIPO_TRIBUTACAO'
     TableTypes = [ttView]
-    Left = 376
-    Top = 400
+    Left = 640
+    Top = 416
   end
   object dtsTributacaoNM: TDataSource
     DataSet = tblTributacaoNM
-    Left = 408
-    Top = 400
+    Left = 672
+    Top = 416
   end
   object tblAliquota: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3286,13 +3580,13 @@ inherited frmGeProduto: TfrmGeProduto
     StoreDefs = True
     TableName = 'VW_TIPO_ALIQUOTA'
     TableTypes = [ttView]
-    Left = 440
-    Top = 400
+    Left = 704
+    Top = 416
   end
   object dtsAliquota: TDataSource
     DataSet = tblAliquota
-    Left = 472
-    Top = 400
+    Left = 736
+    Top = 416
   end
   object tblTributacaoSN: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3324,13 +3618,13 @@ inherited frmGeProduto: TfrmGeProduto
     StoreDefs = True
     TableName = 'VW_TIPO_TRIBUTACAO'
     TableTypes = [ttView]
-    Left = 376
-    Top = 432
+    Left = 640
+    Top = 448
   end
   object dtsTributacaoSN: TDataSource
     DataSet = tblTributacaoSN
-    Left = 408
-    Top = 432
+    Left = 672
+    Top = 448
   end
   object tblCor: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3348,13 +3642,13 @@ inherited frmGeProduto: TfrmGeProduto
       end>
     StoreDefs = True
     TableName = 'RENAVAM_COR'
-    Left = 504
-    Top = 400
+    Left = 768
+    Top = 416
   end
   object dtsCor: TDataSource
     DataSet = tblCor
-    Left = 536
-    Top = 400
+    Left = 800
+    Top = 416
   end
   object tblCombustivel: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3372,13 +3666,13 @@ inherited frmGeProduto: TfrmGeProduto
       end>
     StoreDefs = True
     TableName = 'RENAVAM_COBUSTIVEL'
-    Left = 440
-    Top = 432
+    Left = 704
+    Top = 448
   end
   object dtsCombustivel: TDataSource
     DataSet = tblCombustivel
-    Left = 472
-    Top = 432
+    Left = 736
+    Top = 448
   end
   object tblTipoVeiculo: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -3396,23 +3690,23 @@ inherited frmGeProduto: TfrmGeProduto
       end>
     StoreDefs = True
     TableName = 'RENAVAM_TIPOVEICULO'
-    Left = 504
-    Top = 432
+    Left = 768
+    Top = 448
   end
   object dtsTipoVeiculo: TDataSource
     DataSet = tblTipoVeiculo
-    Left = 536
-    Top = 432
+    Left = 800
+    Top = 448
   end
   object dtsAliquotaPIS: TDataSource
     DataSet = qryAliquotaPIS
-    Left = 600
-    Top = 400
+    Left = 864
+    Top = 416
   end
   object dtsAliquotaCOFINS: TDataSource
     DataSet = qryAliquotaCOFINS
-    Left = 600
-    Top = 432
+    Left = 864
+    Top = 448
   end
   object qryAliquotaPIS: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
@@ -3428,8 +3722,8 @@ inherited frmGeProduto: TfrmGeProduto
       'from VW_ALIQUOTA_PIS')
     ModifySQL.Strings = (
       '')
-    Left = 568
-    Top = 400
+    Left = 832
+    Top = 416
   end
   object qryAliquotaCOFINS: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
@@ -3445,12 +3739,12 @@ inherited frmGeProduto: TfrmGeProduto
       'from VW_ALIQUOTA_PIS')
     ModifySQL.Strings = (
       '')
-    Left = 568
-    Top = 432
+    Left = 832
+    Top = 448
   end
   object popFerramentas: TPopupMenu
-    Left = 312
-    Top = 463
+    Left = 576
+    Top = 479
     object ppMnAtualizarMetafonema: TMenuItem
       Caption = 'Atualizar C'#243'digo Metaf'#244'nico'
       OnClick = ppMnAtualizarMetafonemaClick

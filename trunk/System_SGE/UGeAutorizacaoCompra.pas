@@ -650,7 +650,7 @@ procedure TfrmGeAutorizacaoCompra.btnProdutoInserirClick(Sender: TObject);
   procedure GerarSequencial(var Seq : Integer);
   begin
     Seq := cdsTabelaItens.RecordCount + 1;
-    if ( cdsTabelaItens.Locate('SEQ', Seq, []) ) then
+    while ( cdsTabelaItens.Locate('SEQ', Seq, []) ) do
       Seq := Seq + 1;
   end;
 

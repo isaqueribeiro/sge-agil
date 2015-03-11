@@ -598,7 +598,7 @@ procedure TfrmGeRequisicaoAlmox.btnProdutoInserirClick(Sender: TObject);
   procedure GerarSequencial(var Seq : Integer);
   begin
     Seq := cdsTabelaItens.RecordCount + 1;
-    if ( cdsTabelaItens.Locate('ITEM', Seq, []) ) then
+    while ( cdsTabelaItens.Locate('ITEM', Seq, []) ) do
       Seq := Seq + 1;
   end;
 

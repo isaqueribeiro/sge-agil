@@ -11377,8 +11377,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnConsultaVenda'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11405,7 +11405,7 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnConsultaEstoqueApropriado'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True

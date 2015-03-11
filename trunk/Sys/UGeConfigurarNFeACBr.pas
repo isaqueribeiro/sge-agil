@@ -151,15 +151,19 @@ var
  K : TpcnVersaoDF;
 begin
   cbFormaEmissao.Items.Clear ;
+
   For I := Low(TpcnTipoEmissao) to High(TpcnTipoEmissao) do
      cbFormaEmissao.Items.Add( GetEnumName(TypeInfo(TpcnTipoEmissao), integer(I) ) ) ;
-  cbFormaEmissao.Items[0] := 'teNormal' ;
+
+  cbFormaEmissao.Items[0]  := 'teNormal' ;
   cbFormaEmissao.ItemIndex := 0 ;
 
   cbVersaoDF.Items.Clear ;
+
   For K := Low(TpcnVersaoDF) to High(TpcnVersaoDF) do
      cbVersaoDF.Items.Add( GetEnumName(TypeInfo(TpcnVersaoDF), integer(K) ) ) ;
-  cbVersaoDF.Items[0] := 've200' ;
+
+  cbVersaoDF.Items[0]  := 've200' ;
   cbVersaoDF.ItemIndex := 0 ;
 
   inherited;
