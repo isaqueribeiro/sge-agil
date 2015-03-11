@@ -374,6 +374,8 @@ type
     dbTotalDesconto: TJvDBComboEdit;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    qryNFEANOCOMPRA: TSmallintField;
+    qryNFENUMCOMPRA: TIntegerField;
     procedure ImprimirOpcoesClick(Sender: TObject);
     procedure ImprimirOrcamentoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -646,7 +648,7 @@ begin
   IbDtstTabelaNFE_ENVIADA.Value           := 0;
   IbDtstTabelaNFE_DENEGADA.Value          := 0;
   IbDtstTabelaNFE_MODALIDADE_FRETE.Value  := MODALIDADE_FRETE_SEMFRETE;
-  IbDtstTabelaUSUARIO.Value     := GetUserApp;
+  IbDtstTabelaUSUARIO.Value     := gUsuarioLogado.Login;
 
   IbDtstTabelaCODCLIENTE.Value := CONSUMIDOR_FINAL_CODIGO;
   IbDtstTabelaCODCLI.Value     := CONSUMIDOR_FINAL_CNPJ;
@@ -1047,7 +1049,7 @@ procedure TfrmGeVenda.btnProdutoInserirClick(Sender: TObject);
   procedure GerarSequencial(var Seq : Integer);
   begin
     Seq := cdsTabelaItens.RecordCount + 1;
-    if ( cdsTabelaItens.Locate('SEQ', Seq, []) ) then
+    while ( cdsTabelaItens.Locate('SEQ', Seq, []) ) do
       Seq := Seq + 1;
   end;
 
@@ -1628,7 +1630,7 @@ begin
   // Verificar se existe caixa aberto para o usuário do sistema
 
   if cdsVendaFormaPagto.Locate('VENDA_PRAZO', 0, []) then
-    if ( not CaixaAberto(IbDtstTabelaCODEMP.AsString, GetUserApp, GetDateDB, cdsVendaFormaPagtoFORMAPAGTO_COD.AsInteger, CxAno, CxNumero, CxContaCorrente) ) then
+    if ( not CaixaAberto(IbDtstTabelaCODEMP.AsString, gUsuarioLogado.Login, GetDateDB, cdsVendaFormaPagtoFORMAPAGTO_COD.AsInteger, CxAno, CxNumero, CxContaCorrente) ) then
     begin
       ShowWarning('Não existe caixa aberto para o usuário na forma de pagamento ' + QuotedStr(cdsVendaFormaPagtoFormaPagto.AsString) + '.');
       Exit;
@@ -1844,6 +1846,9 @@ begin
           qryNFEXML_FILENAME.Value := ExtractFileName( sFileNameXML );
           qryNFEXML_FILE.LoadFromFile( sFileNameXML );
         end;
+
+        qryNFEANOCOMPRA.Clear;
+        qryNFENUMCOMPRA.Clear;
 
         Post;
         ApplyUpdates;
@@ -2159,7 +2164,7 @@ begin
 
       if ( tblFormaPagto.Locate('cod', qryTitulosFORMA_PAGTO.AsInteger, []) ) then
         if ( tblFormaPagto.FieldByName('Conta_corrente').AsInteger > 0 ) then
-          if ( not CaixaAberto(IbDtstTabelaCODEMP.AsString, GetUserApp, GetDateDB, qryTitulosFORMA_PAGTO.AsInteger, CxAno, CxNumero, CxContaCorrente) ) then
+          if ( not CaixaAberto(IbDtstTabelaCODEMP.AsString, gUsuarioLogado.Login, GetDateDB, qryTitulosFORMA_PAGTO.AsInteger, CxAno, CxNumero, CxContaCorrente) ) then
           begin
             ShowWarning('Não existe caixa aberto para o usuário na forma de pagamento deste movimento.');
             Exit;

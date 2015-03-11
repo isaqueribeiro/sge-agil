@@ -1,14 +1,12 @@
 inherited frmGeEntradaEstoqueGerarNFe: TfrmGeEntradaEstoqueGerarNFe
-  Left = 403
-  Top = 220
+  Left = 391
+  Top = 207
   ActiveControl = dbBaseICMS
   BorderStyle = bsDialog
   BorderWidth = 4
   Caption = 'Gerar NF-e de Entrada'
   ClientHeight = 410
   ClientWidth = 596
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   OldCreateOrder = True
   DesignSize = (
     596

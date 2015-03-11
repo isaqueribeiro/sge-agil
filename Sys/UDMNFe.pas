@@ -140,138 +140,10 @@ type
     qryFormaPagtosPRAZO_12: TSmallintField;
     qryFornecedorDestinatario: TIBQuery;
     frdFornecedor: TfrxDBDataset;
-    qryFornecedorDestinatarioCODIGO: TIntegerField;
-    qryFornecedorDestinatarioPESSOA_FISICA: TSmallintField;
-    qryFornecedorDestinatarioCNPJ: TIBStringField;
-    qryFornecedorDestinatarioNOME: TIBStringField;
-    qryFornecedorDestinatarioINSCEST: TIBStringField;
-    qryFornecedorDestinatarioINSCMUN: TIBStringField;
-    qryFornecedorDestinatarioFONE: TIBStringField;
-    qryFornecedorDestinatarioEMAIL: TIBStringField;
-    qryFornecedorDestinatarioSITE: TIBStringField;
-    qryFornecedorDestinatarioTLG_TIPO: TSmallintField;
-    qryFornecedorDestinatarioTLG_DESCRICAO: TIBStringField;
-    qryFornecedorDestinatarioTLG_SIGLA: TIBStringField;
-    qryFornecedorDestinatarioLOG_COD: TIntegerField;
-    qryFornecedorDestinatarioLOG_NOME: TIBStringField;
-    qryFornecedorDestinatarioCOMPLEMENTO: TIBStringField;
-    qryFornecedorDestinatarioNUMERO_END: TIBStringField;
-    qryFornecedorDestinatarioCEP: TIBStringField;
-    qryFornecedorDestinatarioBAI_COD: TIntegerField;
-    qryFornecedorDestinatarioBAI_NOME: TIBStringField;
-    qryFornecedorDestinatarioCID_COD: TIntegerField;
-    qryFornecedorDestinatarioCID_NOME: TIBStringField;
-    qryFornecedorDestinatarioCID_SIAFI: TIntegerField;
-    qryFornecedorDestinatarioCID_IBGE: TIntegerField;
-    qryFornecedorDestinatarioCID_DDD: TSmallintField;
-    qryFornecedorDestinatarioEST_COD: TSmallintField;
-    qryFornecedorDestinatarioEST_NOME: TIBStringField;
-    qryFornecedorDestinatarioEST_SIGLA: TIBStringField;
-    qryFornecedorDestinatarioEST_SIAFI: TIntegerField;
-    qryFornecedorDestinatarioPAIS_ID: TIBStringField;
-    qryFornecedorDestinatarioPAIS_NOME: TIBStringField;
     frdEntrada: TfrxDBDataset;
     qryEntradaCalculoImporto: TIBDataSet;
-    qryEntradaCalculoImportoANO: TSmallintField;
-    qryEntradaCalculoImportoCODCONTROL: TIntegerField;
-    qryEntradaCalculoImportoCODEMP: TIBStringField;
-    qryEntradaCalculoImportoCODFORN: TIntegerField;
-    qryEntradaCalculoImportoDTENT: TDateField;
-    qryEntradaCalculoImportoSTATUS: TSmallintField;
-    qryEntradaCalculoImportoDESCONTO: TIBBCDField;
-    qryEntradaCalculoImportoDTFINALIZACAO_COMPRA: TDateTimeField;
-    qryEntradaCalculoImportoOBS: TMemoField;
-    qryEntradaCalculoImportoSERIE: TIBStringField;
-    qryEntradaCalculoImportoNF: TIntegerField;
-    qryEntradaCalculoImportoLOTE_NFE_ANO: TSmallintField;
-    qryEntradaCalculoImportoLOTE_NFE_NUMERO: TIntegerField;
-    qryEntradaCalculoImportoNFE_ENVIADA: TSmallintField;
-    qryEntradaCalculoImportoDATAEMISSAO: TDateField;
-    qryEntradaCalculoImportoHORAEMISSAO: TTimeField;
-    qryEntradaCalculoImportoCANCEL_USUARIO: TIBStringField;
-    qryEntradaCalculoImportoCANCEL_DATAHORA: TDateTimeField;
-    qryEntradaCalculoImportoCANCEL_MOTIVO: TMemoField;
-    qryEntradaCalculoImportoCFOP: TIntegerField;
-    qryEntradaCalculoImportoCFOP_DESCRICAO: TIBStringField;
-    qryEntradaCalculoImportoVERIFICADOR_NFE: TIBStringField;
-    qryEntradaCalculoImportoXML_NFE_FILENAME: TIBStringField;
-    qryEntradaCalculoImportoXML_NFE: TMemoField;
-    qryEntradaCalculoImportoUSUARIO: TIBStringField;
-    qryEntradaCalculoImportoUSUARIO_NOME_COMPLETO: TIBStringField;
-    qryEntradaCalculoImportoUSUARIO_FUNCAO: TIBStringField;
-    qryEntradaCalculoImportoFORMA_PAGO: TIBStringField;
-    qryEntradaCalculoImportoCOND_PAGO: TIBStringField;
-    qryEntradaCalculoImportoCOND_PAGO_FULL: TIBStringField;
-    qryEntradaCalculoImportoCOMPRA_PRAZO: TSmallintField;
-    qryEntradaCalculoImportoNFE_VALOR_BASE_ICMS: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_ICMS: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_BASE_ICMS_SUBST: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_ICMS_SUBST: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_TOTAL_PRODUTO: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_FRETE: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_SEGURO: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_DESCONTO: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_TOTAL_II: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_TOTAL_IPI: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_PIS: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_COFINS: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_OUTROS: TIBBCDField;
-    qryEntradaCalculoImportoNFE_VALOR_TOTAL_NOTA: TIBBCDField;
     qryEntradaDadosProduto: TIBQuery;
     frdEntradaItens: TfrxDBDataset;
-    qryEntradaCalculoImportoCODFORN_CNPJ: TIBStringField;
-    qryEntradaDadosProdutoANO: TSmallintField;
-    qryEntradaDadosProdutoCODCONTROL: TIntegerField;
-    qryEntradaDadosProdutoSEQ: TSmallintField;
-    qryEntradaDadosProdutoCODPROD: TIBStringField;
-    qryEntradaDadosProdutoCODBARRA_EAN: TIBStringField;
-    qryEntradaDadosProdutoDESCRI: TIBStringField;
-    qryEntradaDadosProdutoAPRESENTACAO: TIBStringField;
-    qryEntradaDadosProdutoDESCRI_APRESENTACAO: TIBStringField;
-    qryEntradaDadosProdutoMODELO: TIBStringField;
-    qryEntradaDadosProdutoREFERENCIA: TIBStringField;
-    qryEntradaDadosProdutoNCM_SH: TIBStringField;
-    qryEntradaDadosProdutoCODORIGEM: TIBStringField;
-    qryEntradaDadosProdutoCODTRIBUTACAO: TIBStringField;
-    qryEntradaDadosProdutoCST: TIBStringField;
-    qryEntradaDadosProdutoCSOSN: TIBStringField;
-    qryEntradaDadosProdutoCST_PIS: TIBStringField;
-    qryEntradaDadosProdutoCST_COFINS: TIBStringField;
-    qryEntradaDadosProdutoCST_PIS_INDICE_ACBR: TIntegerField;
-    qryEntradaDadosProdutoCST_COFINS_INDICE_ACBR: TIntegerField;
-    qryEntradaDadosProdutoCODEMP: TIBStringField;
-    qryEntradaDadosProdutoCODFORN: TIntegerField;
-    qryEntradaDadosProdutoCODFORN_CNPJ: TIBStringField;
-    qryEntradaDadosProdutoDTENT: TDateField;
-    qryEntradaDadosProdutoPUNIT: TIBBCDField;
-    qryEntradaDadosProdutoDESCONTO: TIBBCDField;
-    qryEntradaDadosProdutoDESCONTO_VALOR: TIBBCDField;
-    qryEntradaDadosProdutoPFINAL: TIBBCDField;
-    qryEntradaDadosProdutoUNID_COD: TSmallintField;
-    qryEntradaDadosProdutoUNP_DESCRICAO: TIBStringField;
-    qryEntradaDadosProdutoUNP_SIGLA: TIBStringField;
-    qryEntradaDadosProdutoCFOP_COD: TIntegerField;
-    qryEntradaDadosProdutoALIQUOTA: TIBBCDField;
-    qryEntradaDadosProdutoALIQUOTA_CSOSN: TIBBCDField;
-    qryEntradaDadosProdutoALIQUOTA_PIS: TIBBCDField;
-    qryEntradaDadosProdutoALIQUOTA_COFINS: TIBBCDField;
-    qryEntradaDadosProdutoVALOR_IPI: TIBBCDField;
-    qryEntradaDadosProdutoPERCENTUAL_REDUCAO_BC: TIBBCDField;
-    qryEntradaDadosProdutoVALOR_REDUCAO_BC: TIBBCDField;
-    qryEntradaDadosProdutoTOTAL_DESCONTO: TIBBCDField;
-    qryEntradaDadosProdutoPRODUTO_NOVO: TSmallintField;
-    qryEntradaDadosProdutoCOR_VEICULO: TIBStringField;
-    qryEntradaDadosProdutoCOR_VEICULO_DESCRICAO: TIBStringField;
-    qryEntradaDadosProdutoCOMBUSTIVEL_VEICULO: TIBStringField;
-    qryEntradaDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO: TIBStringField;
-    qryEntradaDadosProdutoANO_FABRICACAO_VEICULO: TSmallintField;
-    qryEntradaDadosProdutoANO_MODELO_VEICULO: TSmallintField;
-    qryEntradaDadosProdutoANO_FAB_MODELO_VEICULO: TIBStringField;
-    qryEntradaDadosProdutoTIPO_VEICULO: TIBStringField;
-    qryEntradaDadosProdutoTIPO_VEICULO_DESCRICAO: TIBStringField;
-    qryEntradaDadosProdutoRENAVAM_VEICULO: TIBStringField;
-    qryEntradaDadosProdutoCHASSI_VEICULO: TIBStringField;
-    qryEntradaDadosProdutoKILOMETRAGEM_VEICULO: TIntegerField;
     qryEntradaDuplicatas: TIBQuery;
     frdEntradaDuplicata: TfrxDBDataset;
     qryEntradaDuplicatasANOLANC: TSmallintField;
@@ -282,8 +154,6 @@ type
     qryEntradaDuplicatasVALORPAG: TIBBCDField;
     qryEntradaDuplicatasVALORMULTA: TIBBCDField;
     qryEntradaDuplicatasPERCENTDESCONTO: TIBBCDField;
-    qryEntradaDadosProdutoTOTAL_BRUTO: TIBBCDField;
-    qryEntradaDadosProdutoTOTAL_LIQUIDO: TIBBCDField;
     qryCalculoImportoANO: TSmallintField;
     qryCalculoImportoCODCONTROL: TIntegerField;
     qryCalculoImportoCODEMP: TIBStringField;
@@ -463,17 +333,11 @@ type
     qryDadosProdutoESTOQUE: TIBBCDField;
     qryDadosProdutoRESERVA: TIBBCDField;
     qryDadosProdutoDISPONIVEL: TIBBCDField;
-    qryEntradaDadosProdutoQTDE: TIBBCDField;
-    qryEntradaDadosProdutoESTOQUE: TIBBCDField;
-    qryEntradaDadosProdutoRESERVA: TIBBCDField;
-    qryEntradaDadosProdutoDISPONIVEL: TIBBCDField;
     qryDadosProdutoQTDEFINAL: TIBBCDField;
-    qryEntradaDadosProdutoQTDEFINAL: TIBBCDField;
     qryAutorizacaoCompra: TIBQuery;
     frdAutorizacaoCompra: TfrxDBDataset;
     frrAutorizacaoCompra: TfrxReport;
     qryCalculoImportoCFOP_INFORMACAO_FISCO: TIBStringField;
-    qryEntradaCalculoImportoCFOP_INFORMACAO_FISCO: TIBStringField;
     qryCotacaoCompra: TIBQuery;
     frdCotacaoCompra: TfrxDBDataset;
     frrCotacaoCompra: TfrxReport;
@@ -495,8 +359,6 @@ type
     qryNFeEmitidaEntradaVERSAO: TSmallintField;
     qryDadosProdutoNCM_ALIQUOTA_NAC: TIBBCDField;
     qryDadosProdutoNCM_ALIQUOTA_IMP: TIBBCDField;
-    qryEntradaDadosProdutoNCM_ALIQUOTA_NAC: TIBBCDField;
-    qryEntradaDadosProdutoNCM_ALIQUOTA_IMP: TIBBCDField;
     qryRequisicaoCompra: TIBQuery;
     frdRequisicaoCompra: TfrxDBDataset;
     frrRequisicaoCompra: TfrxReport;
@@ -1517,7 +1379,7 @@ begin
     sTexto := Trim(qryCalculoImportoCFOP_INFORMACAO_FISCO.AsString)
   else
   if qryEntradaCalculoImporto.Active then
-    sTexto := Trim(qryEntradaCalculoImportoCFOP_INFORMACAO_FISCO.AsString);
+    sTexto := Trim(qryEntradaCalculoImporto.FieldByName('CFOP_INFORMACAO_FISCO').AsString);
 
   Result := IfThen(sTexto = EmptyStr, ConfigACBr.edInfoFisco.Text, sTexto );
 end;
@@ -3269,10 +3131,10 @@ begin
     with ACBrNFe.NotasFiscais.Add.NFe do
     begin
       Ide.cNF       := iNumeroNFe; // Caso não seja preenchido será gerado um número aleatório pelo componente
-      Ide.natOp     := qryEntradaCalculoImportoCFOP_DESCRICAO.AsString;
-      Ide.idDest    := TpcnDestinoOperacao( IfThen(Trim(qryEmitenteEST_SIGLA.AsString) = Trim(qryFornecedorDestinatarioEST_SIGLA.AsString), 0, 1) );
+      Ide.natOp     := qryEntradaCalculoImporto.FieldByName('CFOP_DESCRICAO').AsString;
+      Ide.idDest    := TpcnDestinoOperacao( IfThen(Trim(qryEmitenteEST_SIGLA.AsString) = Trim(qryFornecedorDestinatario.FieldByName('EST_SIGLA').AsString), 0, 1) );
 
-      if ( qryEntradaCalculoImportoCOMPRA_PRAZO.AsInteger = 0 ) then
+      if ( qryEntradaCalculoImporto.FieldByName('COMPRA_PRAZO').AsInteger = 0 ) then
         Ide.indPag  := ipVista
       else
         Ide.indPag  := ipPrazo;
@@ -3359,18 +3221,18 @@ begin
         Avulsa.repEmi  := '';
         Avulsa.dPag    := now;             }
 
-      Dest.CNPJCPF := qryFornecedorDestinatarioCNPJ.AsString; // FormatFloat('00000000000000', qryDestinatarioCNPJ.AsInteger);
-      Dest.xNome   := qryFornecedorDestinatarioNOME.AsString;
-      Dest.Email   := Trim(AnsiLowerCase(qryFornecedorDestinatarioEMAIL.AsString));
+      Dest.CNPJCPF := qryFornecedorDestinatario.FieldByName('CNPJ').AsString; // FormatFloat('00000000000000', qryDestinatarioCNPJ.AsInteger);
+      Dest.xNome   := qryFornecedorDestinatario.FieldByName('NOME').AsString;
+      Dest.Email   := Trim(AnsiLowerCase(qryFornecedorDestinatario.FieldByName('EMAIL').AsString));
 
-      if ( qryFornecedorDestinatarioPESSOA_FISICA.AsInteger = 0 ) then
+      if ( qryFornecedorDestinatario.FieldByName('PESSOA_FISICA').AsInteger = 0 ) then
       begin
-        if (AnsiUpperCase(Trim(qryFornecedorDestinatarioINSCEST.AsString)) = 'ISENTO') or (Trim(qryFornecedorDestinatarioINSCEST.AsString) = EmptyStr) then
+        if (AnsiUpperCase(Trim(qryFornecedorDestinatario.FieldByName('INSCEST').AsString)) = 'ISENTO') or (Trim(qryFornecedorDestinatario.FieldByName('INSCEST').AsString) = EmptyStr) then
           Dest.indIEDest     := inIsento
         else
           Dest.indIEDest     := inContribuinte;
 
-        Dest.IE              := Trim(qryFornecedorDestinatarioINSCEST.AsString);
+        Dest.IE              := Trim(qryFornecedorDestinatario.FieldByName('INSCEST').AsString);
         Dest.ISUF            := EmptyStr;
       end
       else
@@ -3380,17 +3242,17 @@ begin
         Dest.ISUF            := EmptyStr;
       end;
 
-      Dest.EnderDest.Fone    := qryFornecedorDestinatarioFONE.AsString;
-      Dest.EnderDest.CEP     := qryFornecedorDestinatarioCEP.AsInteger;
-      Dest.EnderDest.xLgr    := Trim( qryFornecedorDestinatarioTLG_SIGLA.AsString + ' ' + qryFornecedorDestinatarioLOG_NOME.AsString );
-      Dest.EnderDest.nro     := qryFornecedorDestinatarioNUMERO_END.AsString;
-      Dest.EnderDest.xCpl    := qryFornecedorDestinatarioCOMPLEMENTO.AsString;
-      Dest.EnderDest.xBairro := qryFornecedorDestinatarioBAI_NOME.AsString;
-      Dest.EnderDest.cMun    := qryFornecedorDestinatarioCID_IBGE.AsInteger;
-      Dest.EnderDest.xMun    := qryFornecedorDestinatarioCID_NOME.AsString;
-      Dest.EnderDest.UF      := qryFornecedorDestinatarioEST_SIGLA.AsString;
-      Dest.EnderDest.cPais   := qryFornecedorDestinatarioPAIS_ID.AsInteger;  // 1058;
-      Dest.EnderDest.xPais   := qryFornecedorDestinatarioPAIS_NOME.AsString; // 'BRASIL';
+      Dest.EnderDest.Fone    := qryFornecedorDestinatario.FieldByName('FONE').AsString;
+      Dest.EnderDest.CEP     := qryFornecedorDestinatario.FieldByName('CEP').AsInteger;
+      Dest.EnderDest.xLgr    := Trim( qryFornecedorDestinatario.FieldByName('TLG_SIGLA').AsString + ' ' + qryFornecedorDestinatario.FieldByName('LOG_NOME').AsString );
+      Dest.EnderDest.nro     := qryFornecedorDestinatario.FieldByName('NUMERO_END').AsString;
+      Dest.EnderDest.xCpl    := qryFornecedorDestinatario.FieldByName('COMPLEMENTO').AsString;
+      Dest.EnderDest.xBairro := qryFornecedorDestinatario.FieldByName('BAI_NOME').AsString;
+      Dest.EnderDest.cMun    := qryFornecedorDestinatario.FieldByName('CID_IBGE').AsInteger;
+      Dest.EnderDest.xMun    := qryFornecedorDestinatario.FieldByName('CID_NOME').AsString;
+      Dest.EnderDest.UF      := qryFornecedorDestinatario.FieldByName('EST_SIGLA').AsString;
+      Dest.EnderDest.cPais   := qryFornecedorDestinatario.FieldByName('PAIS_ID').AsInteger;  // 1058;
+      Dest.EnderDest.xPais   := qryFornecedorDestinatario.FieldByName('PAIS_NOME').AsString; // 'BRASIL';
 
   //Use os campos abaixo para informar o endereço de retirada quando for diferente do Emitente
   {      Retirada.CNPJCPF := '';
@@ -3424,38 +3286,38 @@ begin
         with Det.Add do
         begin
           Prod.nItem    := qryEntradaDadosProduto.RecNo; // qryDadosProdutoSEQ.AsInteger;              // Número sequencial, para cada item deve ser incrementado
-          Prod.cProd    := qryEntradaDadosProdutoCODPROD.AsString;
+          Prod.cProd    := qryEntradaDadosProduto.FieldByName('CODPROD').AsString;
 
           if ( GetSegmentoID(qryEmitenteCNPJ.AsString) <> SEGMENTO_MERCADO_CARRO_ID ) then
-            Prod.xProd  := qryEntradaDadosProdutoDESCRI_APRESENTACAO.AsString
+            Prod.xProd  := qryEntradaDadosProduto.FieldByName('DESCRI_APRESENTACAO').AsString
           else
-            Prod.xProd  := qryEntradaDadosProdutoDESCRI.AsString + ' ' + qryEntradaDadosProdutoANO_FAB_MODELO_VEICULO.AsString;
+            Prod.xProd  := qryEntradaDadosProduto.FieldByName('DESCRI').AsString + ' ' + qryEntradaDadosProduto.FieldByName('ANO_FAB_MODELO_VEICULO').AsString;
 
-          Prod.NCM      := qryEntradaDadosProdutoNCM_SH.AsString;            // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+          Prod.NCM      := qryEntradaDadosProduto.FieldByName('NCM_SH').AsString;            // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
           Prod.EXTIPI   := '';
-          Prod.CFOP     := qryEntradaDadosProdutoCFOP_COD.AsString;
+          Prod.CFOP     := qryEntradaDadosProduto.FieldByName('CFOP_COD').AsString;
 
-          if EAN13Valido(qryEntradaDadosProdutoCODBARRA_EAN.AsString) then  // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
-            Prod.cEAN   := qryEntradaDadosProdutoCODBARRA_EAN.AsString
+          if EAN13Valido(qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString) then  // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+            Prod.cEAN   := qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEAN   := EmptyStr;
 
-          Prod.uCom     := qryEntradaDadosProdutoUNP_SIGLA.AsString;
-          Prod.qCom     := qryEntradaDadosProdutoQTDE.AsCurrency;
+          Prod.uCom     := qryEntradaDadosProduto.FieldByName('UNP_SIGLA').AsString;
+          Prod.qCom     := qryEntradaDadosProduto.FieldByName('QTDE').AsCurrency;
 
-          Prod.vUnCom   := qryEntradaDadosProdutoPUNIT.AsCurrency;           // I10a  Valor Unitário de comercialização
+          Prod.vUnCom   := qryEntradaDadosProduto.FieldByName('PUNIT').AsCurrency;           // I10a  Valor Unitário de comercialização
 
-          Prod.vProd    := qryEntradaDadosProdutoTOTAL_BRUTO.AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
+          Prod.vProd    := qryEntradaDadosProduto.FieldByName('TOTAL_BRUTO').AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
 
-          if EAN13Valido(qryEntradaDadosProdutoCODBARRA_EAN.AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
-            Prod.cEANTrib := qryEntradaDadosProdutoCODBARRA_EAN.AsString
+          if EAN13Valido(qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+            Prod.cEANTrib := qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEANTrib := EmptyStr;
               
-          Prod.uTrib     := qryEntradaDadosProdutoUNP_SIGLA.AsString;
-          Prod.qTrib     := qryEntradaDadosProdutoQTDE.AsCurrency;
+          Prod.uTrib     := qryEntradaDadosProduto.FieldByName('UNP_SIGLA').AsString;
+          Prod.qTrib     := qryEntradaDadosProduto.FieldByName('QTDE').AsCurrency;
 
-          Prod.vUnTrib   := qryEntradaDadosProdutoPUNIT.AsCurrency;          // I14a  Valor Unitário de tributação
+          Prod.vUnTrib   := qryEntradaDadosProduto.FieldByName('PUNIT').AsCurrency;          // I14a  Valor Unitário de tributação
 
 (* EXEMPLO *)
           // NFe.Det[i].Prod.uCom    := 'CX';                                                   = 'UN'
@@ -3468,21 +3330,21 @@ begin
 
           Prod.vFrete    := 0;                                               // I15 - Valor Total do Frete
           Prod.vSeg      := 0;                                               // I16 - Valor Total do Seguro
-          Prod.vDesc     := qryEntradaDadosProdutoTOTAL_DESCONTO.AsCurrency; // I17 - Valor do Desconto
+          Prod.vDesc     := qryEntradaDadosProduto.FieldByName('TOTAL_DESCONTO').AsCurrency; // I17 - Valor do Desconto
 
           // Informação Adicional do Produto
           
           if ( GetSegmentoID(qryEmitenteCNPJ.AsString) <> SEGMENTO_MERCADO_CARRO_ID ) then
-            if ( Trim(qryEntradaDadosProdutoREFERENCIA.AsString) <> EmptyStr ) then
-              infAdProd    := 'Ref.: ' + qryEntradaDadosProdutoREFERENCIA.AsString
+            if ( Trim(qryEntradaDadosProduto.FieldByName('REFERENCIA').AsString) <> EmptyStr ) then
+              infAdProd    := 'Ref.: ' + qryEntradaDadosProduto.FieldByName('REFERENCIA').AsString
             else
               infAdProd    := EmptyStr
           else
-            infAdProd      := 'Cor: '         + qryEntradaDadosProdutoCOR_VEICULO_DESCRICAO.AsString + #13 +
-                              'Placa: '       + qryEntradaDadosProdutoREFERENCIA.AsString      + #13 +
-                              'Renavam: '     + qryEntradaDadosProdutoRENAVAM_VEICULO.AsString + #13 +
-                              'Chassi: '      + qryEntradaDadosProdutoCHASSI_VEICULO.AsString  + #13 + 
-                              'Combustivel: ' + qryEntradaDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO.AsString;
+            infAdProd      := 'Cor: '         + qryEntradaDadosProduto.FieldByName('COR_VEICULO_DESCRICAO').AsString + #13 +
+                              'Placa: '       + qryEntradaDadosProduto.FieldByName('REFERENCIA').AsString      + #13 +
+                              'Renavam: '     + qryEntradaDadosProduto.FieldByName('RENAVAM_VEICULO').AsString + #13 +
+                              'Chassi: '      + qryEntradaDadosProduto.FieldByName('CHASSI_VEICULO').AsString  + #13 +
+                              'Combustivel: ' + qryEntradaDadosProduto.FieldByName('COMBUSTIVEL_VEICULO_DESCRICAO').AsString;
 
   //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
   
@@ -3507,7 +3369,7 @@ begin
 
   //Campos para venda de veículos novos
 
-          if ( (GetSegmentoID(qryEmitenteCNPJ.AsString) = SEGMENTO_MERCADO_CARRO_ID) and (qryEntradaDadosProdutoPRODUTO_NOVO.AsInteger = 1) ) then
+          if ( (GetSegmentoID(qryEmitenteCNPJ.AsString) = SEGMENTO_MERCADO_CARRO_ID) and (qryEntradaDadosProduto.FieldByName('PRODUTO_NOVO').AsInteger = 1) ) then
           begin
 
             with Prod.veicProd do
@@ -3517,23 +3379,23 @@ begin
                                                    //    (2) = toFaturamentoDireto
                                                    //    (3) = toVendaDireta
                                                    //    (0) = toOutros
-                chassi   := qryEntradaDadosProdutoCHASSI_VEICULO.AsString;        // J03 - Chassi do veículo
-                cCor     := qryEntradaDadosProdutoCOR_VEICULO.AsString;           // J04 - Cor
-                xCor     := qryEntradaDadosProdutoCOR_VEICULO_DESCRICAO.AsString; // J05 - Descrição da Cor
+                chassi   := qryEntradaDadosProduto.FieldByName('CHASSI_VEICULO').AsString;        // J03 - Chassi do veículo
+                cCor     := qryEntradaDadosProduto.FieldByName('COR_VEICULO').AsString;           // J04 - Cor
+                xCor     := qryEntradaDadosProduto.FieldByName('COR_VEICULO_DESCRICAO').AsString; // J05 - Descrição da Cor
                 pot      := ''; // J06 - Potência Motor
                 Cilin    := '';
                 pesoL    := ''; // J08 - Peso Líquido
                 pesoB    := ''; // J09 - Peso Bruto
                 nSerie   := ''; // J10 - Serial (série)
-                tpComb   := qryEntradaDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO.AsString; // J11 - Tipo de combustível
+                tpComb   := qryEntradaDadosProduto.FieldByName('COMBUSTIVEL_VEICULO_DESCRICAO').AsString; // J11 - Tipo de combustível
                 nMotor   := ''; // J12 - Número de Motor
                 CMT      := '';
                 dist     := '';        // J14 - Distância entre eixos
 //                RENAVAM  := '';        // J15 - RENAVAM            (Não informar a TAG na exportação)
-                anoMod   := qryEntradaDadosProdutoANO_MODELO_VEICULO.AsInteger;         // J16 - Ano Modelo de Fabricação
-                anoFab   := qryEntradaDadosProdutoANO_FABRICACAO_VEICULO.AsInteger;     // J17 - Ano de Fabricação
+                anoMod   := qryEntradaDadosProduto.FieldByName('ANO_MODELO_VEICULO').AsInteger;         // J16 - Ano Modelo de Fabricação
+                anoFab   := qryEntradaDadosProduto.FieldByName('ANO_FABRICACAO_VEICULO').AsInteger;     // J17 - Ano de Fabricação
                 tpPint   := '';        // J18 - Tipo de Pintura
-                tpVeic   := StrToIntDef(qryEntradaDadosProdutoTIPO_VEICULO.AsString, 0); // J19 - Tipo de Veículo    (Utilizar Tabela RENAVAM)
+                tpVeic   := StrToIntDef(qryEntradaDadosProduto.FieldByName('TIPO_VEICULO').AsString, 0); // J19 - Tipo de Veículo    (Utilizar Tabela RENAVAM)
                 espVeic  := 0;         // J20 - Espécie de Veículo (Utilizar Tabela RENAVAM)
                 VIN      := '';        // J21 - Condição do VIN
                 condVeic := cvAcabado; // J22 - Condição do Veículo (1 - Acabado; 2 - Inacabado; 3 - Semi-acabado)
@@ -3624,7 +3486,7 @@ begin
 
                 // csosnVazio, csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500, csosn900
                 
-                Case qryEntradaDadosProdutoCSOSN.AsInteger of
+                Case qryEntradaDadosProduto.FieldByName('CSOSN').AsInteger of
                   101 : CSOSN := csosn101;
                   102 : CSOSN := csosn102;
                   103 : CSOSN := csosn103;
@@ -3638,15 +3500,14 @@ begin
                     CSOSN := csosn900;
                 end;
 
-                pCredSN     := qryEntradaDadosProdutoALIQUOTA_CSOSN.AsCurrency;
-                vCredICMSSN := qryEntradaDadosProdutoPFINAL.AsCurrency * pCredSN / 100;
+                pCredSN     := qryEntradaDadosProduto.FieldByName('ALIQUOTA_CSOSN').AsCurrency;
+                vCredICMSSN := qryEntradaDadosProduto.FieldByName('PFINAL').AsCurrency * pCredSN / 100;
 
               end
               else
               begin
 
-//                Case qryEntradaDadosProdutoCODTRIBUTACAO.AsInteger of
-                Case StrToInt(Copy(qryEntradaDadosProdutoCST.AsString, 2, 2)) of
+                Case StrToInt(Copy(qryEntradaDadosProduto.FieldByName('CST').AsString, 2, 2)) of
                    0 : CST := cst00;
                   10 : CST := cst10;
                   20 : CST := cst20;
@@ -3662,20 +3523,19 @@ begin
                 end;
 
                 ICMS.modBC   := dbiValorOperacao;
-                ICMS.pRedBC  := qryEntradaDadosProdutoPERCENTUAL_REDUCAO_BC.AsCurrency;
+                ICMS.pRedBC  := qryEntradaDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency;
 
                 if ( ICMS.pRedBC > 0 ) then
-                  ICMS.vBC   := qryEntradaDadosProdutoVALOR_REDUCAO_BC.AsCurrency
+                  ICMS.vBC   := qryEntradaDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency
                 else
-                  ICMS.vBC   := qryEntradaDadosProdutoPFINAL.AsCurrency;
+                  ICMS.vBC   := qryEntradaDadosProduto.FieldByName('PFINAL').AsCurrency;
 
-                ICMS.pICMS   := qryEntradaDadosProdutoALIQUOTA.AsCurrency;
+                ICMS.pICMS   := qryEntradaDadosProduto.FieldByName('ALIQUOTA').AsCurrency;
                 ICMS.vICMS   := ICMS.vBC * ICMS.pICMS / 100;
 
               end;
 
-//              ICMS.orig    := TpcnOrigemMercadoria( qryEntradaDadosProdutoCODORIGEM.AsInteger );
-              ICMS.orig    := TpcnOrigemMercadoria( StrToInt(Copy(qryEntradaDadosProdutoCST.AsString, 1, 1)) );
+              ICMS.orig    := TpcnOrigemMercadoria( StrToInt(Copy(qryEntradaDadosProduto.FieldByName('CST').AsString, 1, 1)) );
               ICMS.modBCST := dbisMargemValorAgregado;
               ICMS.pMVAST  := 0;
               ICMS.pRedBCST:= 0;
@@ -3702,7 +3562,7 @@ begin
               else
               begin
 
-                CST := TpcnCstPis(qryEntradaDadosProdutoCST_PIS_INDICE_ACBR.AsInteger);
+                CST := TpcnCstPis(qryEntradaDadosProduto.FieldByName('CST_PIS_INDICE_ACBR').AsInteger);
 
                 if ( CST = pis99 ) then
                 begin
@@ -3712,8 +3572,8 @@ begin
                 end
                 else
                 begin
-                  PIS.vBC  := qryEntradaDadosProdutoPFINAL.AsCurrency;
-                  PIS.pPIS := qryEntradaDadosProdutoALIQUOTA_PIS.AsCurrency;
+                  PIS.vBC  := qryEntradaDadosProduto.FieldByName('PFINAL').AsCurrency;
+                  PIS.pPIS := qryEntradaDadosProduto.FieldByName('ALIQUOTA_PIS').AsCurrency;
                   PIS.vPIS := PIS.vBC * PIS.pPIS / 100;
                 end;
 
@@ -3740,7 +3600,7 @@ begin
               else
               begin
 
-                CST := TpcnCstCofins(qryEntradaDadosProdutoCST_COFINS_INDICE_ACBR.AsInteger);
+                CST := TpcnCstCofins(qryEntradaDadosProduto.FieldByName('CST_COFINS_INDICE_ACBR').AsInteger);
 
                 if ( CST = cof99 ) then
                 begin
@@ -3750,8 +3610,8 @@ begin
                 end
                 else
                 begin
-                  COFINS.vBC     := qryEntradaDadosProdutoPFINAL.AsCurrency;
-                  COFINS.pCOFINS := qryEntradaDadosProdutoALIQUOTA_COFINS.AsCurrency;
+                  COFINS.vBC     := qryEntradaDadosProduto.FieldByName('PFINAL').AsCurrency;
+                  COFINS.pCOFINS := qryEntradaDadosProduto.FieldByName('ALIQUOTA_COFINS').AsCurrency;
                   COFINS.vCOFINS := COFINS.vBC * COFINS.pCOFINS / 100;
                 end;
 
@@ -3819,7 +3679,7 @@ begin
 
             if ( Trim(Prod.NCM) <> EmptyStr ) then
             begin
-              cPercentualTributoAprox := qryEntradaDadosProdutoNCM_ALIQUOTA_NAC.AsCurrency;
+              cPercentualTributoAprox := qryEntradaDadosProduto.FieldByName('NCM_ALIQUOTA_NAC').AsCurrency;
 
               if ( cPercentualTributoAprox > 0.0 ) then
               begin
@@ -3840,20 +3700,20 @@ begin
         qryEntradaDadosProduto.Next;
       end;
 
-      Total.ICMSTot.vBC     := qryEntradaCalculoImportoNFE_VALOR_BASE_ICMS.AsCurrency;
-      Total.ICMSTot.vICMS   := qryEntradaCalculoImportoNFE_VALOR_ICMS.AsCurrency;
-      Total.ICMSTot.vBCST   := qryEntradaCalculoImportoNFE_VALOR_BASE_ICMS_SUBST.AsCurrency;
-      Total.ICMSTot.vST     := qryEntradaCalculoImportoNFE_VALOR_ICMS_SUBST.AsCurrency;
-      Total.ICMSTot.vProd   := qryEntradaCalculoImportoNFE_VALOR_TOTAL_PRODUTO.AsCurrency;
-      Total.ICMSTot.vFrete  := qryEntradaCalculoImportoNFE_VALOR_FRETE.AsCurrency;
-      Total.ICMSTot.vSeg    := qryEntradaCalculoImportoNFE_VALOR_SEGURO.AsCurrency;
-      Total.ICMSTot.vDesc   := qryEntradaCalculoImportoNFE_VALOR_DESCONTO.AsCurrency;
-      Total.ICMSTot.vII     := qryEntradaCalculoImportoNFE_VALOR_TOTAL_II.AsCurrency;
-      Total.ICMSTot.vIPI    := qryEntradaCalculoImportoNFE_VALOR_TOTAL_IPI.AsCurrency;
-      Total.ICMSTot.vPIS    := qryEntradaCalculoImportoNFE_VALOR_PIS.AsCurrency;
-      Total.ICMSTot.vCOFINS := qryEntradaCalculoImportoNFE_VALOR_COFINS.AsCurrency;
-      Total.ICMSTot.vOutro  := qryEntradaCalculoImportoNFE_VALOR_OUTROS.AsCurrency;
-      Total.ICMSTot.vNF     := qryEntradaCalculoImportoNFE_VALOR_TOTAL_NOTA.AsCurrency;
+      Total.ICMSTot.vBC     := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_BASE_ICMS').AsCurrency;
+      Total.ICMSTot.vICMS   := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_ICMS').AsCurrency;
+      Total.ICMSTot.vBCST   := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_BASE_ICMS_SUBST').AsCurrency;
+      Total.ICMSTot.vST     := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_ICMS_SUBST').AsCurrency;
+      Total.ICMSTot.vProd   := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_TOTAL_PRODUTO').AsCurrency;
+      Total.ICMSTot.vFrete  := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_FRETE').AsCurrency;
+      Total.ICMSTot.vSeg    := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_SEGURO').AsCurrency;
+      Total.ICMSTot.vDesc   := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_DESCONTO').AsCurrency;
+      Total.ICMSTot.vII     := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_TOTAL_II').AsCurrency;
+      Total.ICMSTot.vIPI    := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_TOTAL_IPI').AsCurrency;
+      Total.ICMSTot.vPIS    := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_PIS').AsCurrency;
+      Total.ICMSTot.vCOFINS := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_COFINS').AsCurrency;
+      Total.ICMSTot.vOutro  := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_OUTROS').AsCurrency;
+      Total.ICMSTot.vNF     := qryEntradaCalculoImporto.FieldByName('NFE_VALOR_TOTAL_NOTA').AsCurrency;
 
       if ( vTotalTributoAprox > 0.0 ) then
         Total.ICMSTot.vTotTrib := vTotalTributoAprox;
@@ -3926,7 +3786,7 @@ begin
 
       // Dados da(s) Duplicata(s)
       
-      if ( qryEntradaCalculoImportoCOMPRA_PRAZO.AsInteger = 1 ) then
+      if ( qryEntradaCalculoImporto.FieldByName('COMPRA_PRAZO').AsInteger = 1 ) then
       begin
         qryEntradaDuplicatas.First;
         while not qryEntradaDuplicatas.Eof do
@@ -3943,10 +3803,10 @@ begin
       end;
 
       InfAdic.infCpl     := ' * * * ' + #13 +
-                            'Compra: ' + qryEntradaCalculoImportoANO.AsString + '/' + FormatFloat('###0000000', qryEntradaCalculoImportoCODCONTROL.AsInteger)  +
-                            ' - Forma/Cond. Pgto.: ' + qryEntradaCalculoImportoFORMA_PAGO.AsString + '/' + qryEntradaCalculoImportoCOND_PAGO_FULL.AsString + ' * * * ' + #13 +
-                            'Usuário: ' + qryEntradaCalculoImportoUSUARIO_NOME_COMPLETO.AsString + ' * * * ' + #13 +
-                            'Observações: ' + qryEntradaCalculoImportoOBS.AsString + 
+                            'Compra: ' + qryEntradaCalculoImporto.FieldByName('ANO').AsString + '/' + FormatFloat('###0000000', qryEntradaCalculoImporto.FieldByName('CODCONTROL').AsInteger)  +
+                            ' - Forma/Cond. Pgto.: ' + qryEntradaCalculoImporto.FieldByName('FORMA_PAGO').AsString + '/' + qryEntradaCalculoImporto.FieldByName('COND_PAGO_FULL').AsString + ' * * * ' + #13 +
+                            'Usuário: ' + qryEntradaCalculoImporto.FieldByName('USUARIO_NOME_COMPLETO').AsString + ' * * * ' + #13 +
+                            'Observações: ' + qryEntradaCalculoImporto.FieldByName('OBS').AsString +
                             IfThen(vTotalTributoAprox = 0, EmptyStr, #13 + Format('* Valor Total Aprox. Trib. R$ %s (%s). Fonte IBPT', [
                               FormatFloat(',0.00', Total.ICMSTot.vTotTrib),
                               FormatFloat(',0.##"%"', Total.ICMSTot.vTotTrib / Total.ICMSTot.vNF * 100)]));
@@ -4041,13 +3901,13 @@ begin
     AbrirNFeEmitidaEntrada( iAnoCompra, iNumCompra );
 
     if ( IsPDF ) then
-      FileNameXML := ExtractFilePath( ParamStr(0) ) + DIRECTORY_CLIENT + qryEntradaCalculoImportoXML_NFE_FILENAME.AsString
+      FileNameXML := ExtractFilePath( ParamStr(0) ) + DIRECTORY_CLIENT + qryEntradaCalculoImporto.FieldByName('XML_NFE_FILENAME').AsString
     else
-      FileNameXML := ExtractFilePath( ParamStr(0) ) + DIRECTORY_PRINT  + qryEntradaCalculoImportoXML_NFE_FILENAME.AsString;
+      FileNameXML := ExtractFilePath( ParamStr(0) ) + DIRECTORY_PRINT  + qryEntradaCalculoImporto.FieldByName('XML_NFE_FILENAME').AsString;
 
     ForceDirectories( ExtractFilePath(FileNameXML) );
 
-    qryEntradaCalculoImportoXML_NFE.SaveToFile( FileNameXML );
+    TMemoField(qryEntradaCalculoImporto.FieldByName('XML_NFE')).SaveToFile( FileNameXML );
 
     with ACBrNFe do
     begin
@@ -4155,11 +4015,11 @@ begin
     AbrirCompra( iAnoCompra, iNumCompra );
     AbrirNFeEmitidaEntrada( iAnoCompra, iNumCompra );
 
-    FileNameXML := ExtractFilePath( ParamStr(0) ) + DIRECTORY_CANCEL + qryEntradaCalculoImportoXML_NFE_FILENAME.AsString;
+    FileNameXML := ExtractFilePath( ParamStr(0) ) + DIRECTORY_CANCEL + qryEntradaCalculoImporto.FieldByName('XML_NFE_FILENAME').AsString;
 
     ForceDirectories( ExtractFilePath(FileNameXML) );
 
-    qryEntradaCalculoImportoXML_NFE.SaveToFile( FileNameXML );
+    TMemoField(qryEntradaCalculoImporto.FieldByName('XML_NFE')).SaveToFile( FileNameXML );
 
     with ACBrNFe do
     begin

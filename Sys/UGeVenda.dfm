@@ -2030,7 +2030,7 @@ inherited frmGeVenda: TfrmGeVenda
         Top = 424
         Width = 1108
         Height = 190
-        ActivePage = tbsRecebimento
+        ActivePage = TbsInformeNFe
         Align = alBottom
         TabOrder = 3
         object tbsRecebimento: TTabSheet
@@ -5291,14 +5291,12 @@ inherited frmGeVenda: TfrmGeVenda
     SelectSQL.Strings = (
       'Select'
       '    n.EMPRESA'
-      '  , n.ANOVENDA'
-      '  , n.NUMVENDA'
-      '  , n.DATAEMISSAO'
-      '  , n.HORAEMISSAO'
       '  , n.SERIE'
       '  , n.NUMERO'
       '  , n.MODELO'
       '  , n.VERSAO'
+      '  , n.DATAEMISSAO'
+      '  , n.HORAEMISSAO'
       '  , n.CHAVE'
       '  , n.PROTOCOLO'
       '  , n.RECIBO'
@@ -5306,6 +5304,10 @@ inherited frmGeVenda: TfrmGeVenda
       '  , n.XML_FILE'
       '  , n.LOTE_ANO'
       '  , n.LOTE_NUM'
+      '  , n.ANOVENDA'
+      '  , n.NUMVENDA'
+      '  , n.ANOCOMPRA'
+      '  , n.NUMCOMPRA'
       'from TBNFE_ENVIADA n'
       'where n.EMPRESA = :empresa'
       '  and n.ANOVENDA = :anovenda'
@@ -5326,6 +5328,14 @@ inherited frmGeVenda: TfrmGeVenda
     object qryNFENUMVENDA: TIntegerField
       FieldName = 'NUMVENDA'
       Origin = 'TBNFE_ENVIADA.NUMVENDA'
+    end
+    object qryNFEANOCOMPRA: TSmallintField
+      FieldName = 'ANOCOMPRA'
+      Origin = '"TBNFE_ENVIADA"."ANOCOMPRA"'
+    end
+    object qryNFENUMCOMPRA: TIntegerField
+      FieldName = 'NUMCOMPRA'
+      Origin = '"TBNFE_ENVIADA"."NUMCOMPRA"'
     end
     object qryNFEDATAEMISSAO: TDateField
       FieldName = 'DATAEMISSAO'
@@ -5416,11 +5426,13 @@ inherited frmGeVenda: TfrmGeVenda
       'from TBNFE_ENVIADA '
       'where'
       '  EMPRESA = :EMPRESA and'
+      '  MODELO = :MODELO and'
       '  NUMERO = :NUMERO and'
       '  SERIE = :SERIE')
     ModifySQL.Strings = (
       'update TBNFE_ENVIADA'
       'set'
+      '  ANOCOMPRA = :ANOCOMPRA,'
       '  ANOVENDA = :ANOVENDA,'
       '  CHAVE = :CHAVE,'
       '  DATAEMISSAO = :DATAEMISSAO,'
@@ -5429,6 +5441,7 @@ inherited frmGeVenda: TfrmGeVenda
       '  LOTE_ANO = :LOTE_ANO,'
       '  LOTE_NUM = :LOTE_NUM,'
       '  MODELO = :MODELO,'
+      '  NUMCOMPRA = :NUMCOMPRA,'
       '  NUMERO = :NUMERO,'
       '  NUMVENDA = :NUMVENDA,'
       '  PROTOCOLO = :PROTOCOLO,'
@@ -5439,29 +5452,31 @@ inherited frmGeVenda: TfrmGeVenda
       '  XML_FILENAME = :XML_FILENAME'
       'where'
       '  EMPRESA = :OLD_EMPRESA and'
+      '  MODELO = :OLD_MODELO and'
       '  NUMERO = :OLD_NUMERO and'
       '  SERIE = :OLD_SERIE')
     InsertSQL.Strings = (
       'insert into TBNFE_ENVIADA'
       
-        '  (ANOVENDA, CHAVE, DATAEMISSAO, EMPRESA, HORAEMISSAO, LOTE_ANO,' +
-        ' LOTE_NUM, '
+        '  (ANOCOMPRA, ANOVENDA, CHAVE, DATAEMISSAO, EMPRESA, HORAEMISSAO' +
+        ', LOTE_ANO, '
       
-        '   MODELO, NUMERO, NUMVENDA, PROTOCOLO, RECIBO, SERIE, VERSAO, X' +
-        'ML_FILE, '
-      '   XML_FILENAME)'
+        '   LOTE_NUM, MODELO, NUMCOMPRA, NUMERO, NUMVENDA, PROTOCOLO, REC' +
+        'IBO, SERIE, '
+      '   VERSAO, XML_FILE, XML_FILENAME)'
       'values'
       
-        '  (:ANOVENDA, :CHAVE, :DATAEMISSAO, :EMPRESA, :HORAEMISSAO, :LOT' +
-        'E_ANO, '
+        '  (:ANOCOMPRA, :ANOVENDA, :CHAVE, :DATAEMISSAO, :EMPRESA, :HORAE' +
+        'MISSAO, '
       
-        '   :LOTE_NUM, :MODELO, :NUMERO, :NUMVENDA, :PROTOCOLO, :RECIBO, ' +
-        ':SERIE, '
-      '   :VERSAO, :XML_FILE, :XML_FILENAME)')
+        '   :LOTE_ANO, :LOTE_NUM, :MODELO, :NUMCOMPRA, :NUMERO, :NUMVENDA' +
+        ', :PROTOCOLO, '
+      '   :RECIBO, :SERIE, :VERSAO, :XML_FILE, :XML_FILENAME)')
     DeleteSQL.Strings = (
       'delete from TBNFE_ENVIADA'
       'where'
       '  EMPRESA = :OLD_EMPRESA and'
+      '  MODELO = :OLD_MODELO and'
       '  NUMERO = :OLD_NUMERO and'
       '  SERIE = :OLD_SERIE')
     Left = 1024
