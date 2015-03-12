@@ -1,6 +1,6 @@
 inherited frmGeFornecedorImpressao: TfrmGeFornecedorImpressao
-  Left = 400
-  Top = 226
+  Left = 752
+  Top = 256
   Caption = 'Relat'#243'rio de Fornecedores'
   PixelsPerInch = 96
   TextHeight = 13

@@ -698,7 +698,7 @@ inherited frmGeProduto: TfrmGeProduto
         Top = 197
         Width = 953
         Height = 341
-        ActivePage = tbsValores
+        ActivePage = TbsEspecificacao
         Align = alClient
         TabOrder = 2
         object tbsValores: TTabSheet

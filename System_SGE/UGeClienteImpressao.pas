@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoImpressao, StdCtrls, dxGDIPlusClasses, ExtCtrls,
-  Buttons, ToolWin, ComCtrls, frxClass, DB, IBCustomDataSet, IBQuery,
+  Buttons, ComCtrls, frxClass, DB, IBCustomDataSet, IBQuery,
   DBClient, Provider, frxDBSet, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Menus, cxButtons;
 

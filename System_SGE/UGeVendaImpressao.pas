@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoImpressao, StdCtrls, dxGDIPlusClasses, ExtCtrls,
-  Buttons, ToolWin, ComCtrls, DBClient, Provider, DB, IBCustomDataSet, IBQuery, frxClass,
+  Buttons, ComCtrls, DBClient, Provider, DB, IBCustomDataSet, IBQuery, frxClass,
   frxDBSet, Mask, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
   JvExMask, JvToolEdit;
 
