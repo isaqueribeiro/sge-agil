@@ -12197,3 +12197,933 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 11/03/2015 19:51:55 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_USUARIO;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' ',     '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|xxx'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 11/03/2015 19:55:48 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_USUARIO;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' ',     '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|xxx'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+COMMENT ON PROCEDURE SET_USUARIO_FUNCIONARIO IS 'Procedure SET Usuario x Funcionario.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   11/03/2015
+
+Store procedure responsavel por cadastrar gerar um registro de usuario correspondente ao nome completo do funcionario
+informado atraves do sistema SGI.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    12/03/2015 - IMR :
+        * Documentacao da procedure.';
+
+GRANT EXECUTE ON PROCEDURE SET_USUARIO_FUNCIONARIO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 11/03/2015 19:57:54 --------*/
+
+ALTER TABLE TBVENDEDOR ADD IBE$$TEMP_COLUMN
+ NUMERIC(1,1) DEFAULT 0.0
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'TBVENDEDOR') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'TBVENDEDOR') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'TBVENDEDOR') AND
+      (F1.RDB$FIELD_NAME = 'COMISSAO');
+
+ALTER TABLE TBVENDEDOR DROP IBE$$TEMP_COLUMN;
+
+
+
+
+/*------ SYSDBA 11/03/2015 19:58:06 --------*/
+
+ALTER TABLE TBVENDEDOR ADD IBE$$TEMP_COLUMN
+ NUMERIC(1,1) DEFAULT 0.0
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'TBVENDEDOR') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'TBVENDEDOR') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'TBVENDEDOR') AND
+      (F1.RDB$FIELD_NAME = 'COMISSAO_VL');
+
+ALTER TABLE TBVENDEDOR DROP IBE$$TEMP_COLUMN;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:01:05 --------*/
+
+ALTER TABLE TBVENDEDOR
+    ADD CODIGO_FUNCIONARIO DMN_INTEGER_N;
+
+COMMENT ON COLUMN TBVENDEDOR.CODIGO_FUNCIONARIO IS
+'Registro do Funcionario';
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column COD position 1;
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column NOME position 2;
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column CPF position 3;
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column COMISSAO position 4;
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column COMISSAO_VL position 5;
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column ATIVO position 6;
+
+
+/*------ SYSDBA 11/03/2015 20:01:12 --------*/
+
+alter table TBVENDEDOR
+alter column CODIGO_FUNCIONARIO position 7;
+
+
+/*------ SYSDBA 11/03/2015 20:09:09 --------*/
+
+ALTER TABLE TBVENDEDOR DROP CODIGO_FUNCIONARIO;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:09:31 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure SET_VENDEDOR_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    CPF DMN_CPF,
+    ATIVO DMN_LOGICO)
+returns (
+    CODIGO_VENDEDOR DMN_INTEGER_N)
+as
+begin
+  -- Buscar codigo do vendedor de acordo com o CPF
+  Select first 1
+    v.cod
+  from TBVENDEDOR v
+  where v.cpf = :cpf
+  Into
+    codigo_vendedor;
+
+  if ( coalesce(:codigo_vendedor, 0) = 0 ) then
+  begin
+    -- Gerar codigo para o novo registro de vendedor
+    Select
+      max(v.cod)
+    from TBVENDEDOR v
+    Into
+      codigo_vendedor;
+
+    codigo_vendedor = coalesce(:codigo_vendedor, 0) + 1;
+
+    Insert Into TBVENDEDOR (
+        cod
+      , nome
+      , cpf
+      , ativo
+    ) values (
+        :codigo_vendedor
+      , :nome_completo
+      , :cpf
+      , :ativo
+    );
+  end 
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:10:11 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_VENDEDOR_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    CPF DMN_CPF,
+    ATIVO DMN_LOGICO)
+returns (
+    CODIGO_VENDEDOR DMN_INTEGER_N)
+as
+begin
+  -- Buscar codigo do vendedor de acordo com o CPF
+  Select first 1
+    v.cod
+  from TBVENDEDOR v
+  where v.cpf = :cpf
+  Into
+    codigo_vendedor;
+
+  if ( coalesce(:codigo_vendedor, 0) = 0 ) then
+  begin
+    -- Gerar codigo para o novo registro de vendedor
+    Select
+      max(v.cod)
+    from TBVENDEDOR v
+    Into
+      codigo_vendedor;
+
+    codigo_vendedor = coalesce(:codigo_vendedor, 0) + 1;
+
+    Insert Into TBVENDEDOR (
+        cod
+      , nome
+      , cpf
+      , ativo
+    ) values (
+        :codigo_vendedor
+      , :nome_completo
+      , :cpf
+      , :ativo
+    );
+  end 
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+COMMENT ON PROCEDURE SET_VENDEDOR_FUNCIONARIO IS 'Procedure SET Vendedor x Funcionario.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   11/03/2015
+
+Store procedure responsavel por cadastrar gerar um registro de vendedor correspondente ao CPF do funcionario
+informado atraves do sistema SGI.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    12/03/2015 - IMR :
+        * Documentacao da procedure.';
+
+GRANT EXECUTE ON PROCEDURE SET_VENDEDOR_FUNCIONARIO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 11/03/2015 20:13:48 --------*/
+
+CREATE DOMAIN DMN_SEXO AS
+VARCHAR(1)
+DEFAULT 'M'
+NOT NULL
+CHECK ((value = 'F') or (value = 'M'));COMMENT ON DOMAIN DMN_SEXO IS 'Sexo:
+M- Masculino
+F - Feminino';
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:15:00 --------*/
+
+CREATE DOMAIN DMN_IMAGEM AS
+BLOB SUB_TYPE 0 SEGMENT SIZE 80;
+
+
+/*------ SYSDBA 11/03/2015 20:21:14 --------*/
+
+CREATE TABLE TBFUNCIONARIO (
+    CODIGO DMN_BIGINT_NN NOT NULL,
+    MATRICULA DMN_VCHAR_10,
+    NOME_COMPLETO DMN_NOME,
+    SEXO DMN_SEXO,
+    FOTO_3X4 DMN_IMAGEM,
+    FLAG_VENDEDOR DMN_LOGICO DEFAULT 0,
+    ATIVO DMN_LOGICO DEFAULT 1,
+    USUARIO DMN_USUARIO,
+    VENDEDOR DMN_INTEGER_N);
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT PK_TBFUNCIONARIO
+PRIMARY KEY (CODIGO);
+
+COMMENT ON COLUMN TBFUNCIONARIO.CODIGO IS
+'Codigo';
+
+COMMENT ON COLUMN TBFUNCIONARIO.MATRICULA IS
+'Matricula';
+
+COMMENT ON COLUMN TBFUNCIONARIO.NOME_COMPLETO IS
+'Nome Completo';
+
+COMMENT ON COLUMN TBFUNCIONARIO.SEXO IS
+'Sexo:
+M- Masculino
+F - Feminino';
+
+COMMENT ON COLUMN TBFUNCIONARIO.FOTO_3X4 IS
+'Foto 3x4 (Atual)';
+
+COMMENT ON COLUMN TBFUNCIONARIO.FLAG_VENDEDOR IS
+'Vendedor:
+0 - Nao
+1 - Sim';
+
+COMMENT ON COLUMN TBFUNCIONARIO.ATIVO IS
+'Ativo:
+0 - Nao
+1 - Sim';
+
+COMMENT ON COLUMN TBFUNCIONARIO.USUARIO IS
+'Login de acesso ao sistema.';
+
+COMMENT ON COLUMN TBFUNCIONARIO.VENDEDOR IS
+'Codigo do registro de vendedor.';
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:21:15 --------*/
+
+COMMENT ON TABLE TBFUNCIONARIO IS 'Tabela de FUncionarios (SGI).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   11/03/2015
+
+Tabela responsavel por armazenar o cadastro simplificado dos funcionarios da(s) empresa(s) registros pelo SGI.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    12/03/2015 - IMR :
+        * Documentacao da procedure.';
+
+GRANT ALL ON TBFUNCIONARIO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 11/03/2015 20:23:13 --------*/
+
+CREATE INDEX IDX_TBFUNCIONARIO_ATIVO
+ON TBFUNCIONARIO (ATIVO);
+
+CREATE INDEX IDX_TBFUNCIONARIO_VEND
+ON TBFUNCIONARIO (FLAG_VENDEDOR);
+
+CREATE INDEX IDX_TBFUNCIONARIO_SEXO
+ON TBFUNCIONARIO (SEXO);
+
+CREATE INDEX IDX_TBFUNCIONARIO_MATRICULA
+ON TBFUNCIONARIO (MATRICULA);
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:24:55 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_USUARIO
+FOREIGN KEY (USUARIO)
+REFERENCES TBUSERS(NOME)
+ON DELETE SET NULL;
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_VENDEDOR
+FOREIGN KEY (VENDEDOR)
+REFERENCES TBVENDEDOR(COD)
+ON DELETE SET NULL;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:25:40 --------*/
+
+CREATE SEQUENCE GEN_FUNCIONARIO;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:26:02 --------*/
+
+DROP SEQUENCE GEN_FUNCIONARIO;
+
+CREATE SEQUENCE GEN_FUNCIONARIO_COD;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:27:05 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_funcionario_codigo for tbfuncionario
+active before insert position 0
+AS
+begin
+  if ( new.codigo is null ) then
+    new.codigo = GEN_ID(GEN_FUNCIONARIO_COD, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:28:08 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_funcionario_codigo for tbfuncionario
+active before insert position 0
+AS
+begin
+  if ( new.codigo is null ) then
+    new.codigo = GEN_ID(GEN_FUNCIONARIO_COD, 1);
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_FUNCIONARIO_CODIGO IS 'Trigger Novo Codigo Funcionario.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   11/03/2015
+
+Trigger responsavel por gerar um sequencial unico para cada novo registro de funcionario.';
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:29:37 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD FLAG_FORNECEDOR DMN_LOGICO;
+
+COMMENT ON COLUMN TBFUNCIONARIO.FLAG_FORNECEDOR IS
+'Apresentar como Fornecedor:
+0 - Nao
+1 - Sim';
+
+alter table TBFUNCIONARIO
+alter CODIGO position 1;
+
+alter table TBFUNCIONARIO
+alter MATRICULA position 2;
+
+alter table TBFUNCIONARIO
+alter NOME_COMPLETO position 3;
+
+alter table TBFUNCIONARIO
+alter SEXO position 4;
+
+alter table TBFUNCIONARIO
+alter FOTO_3X4 position 5;
+
+alter table TBFUNCIONARIO
+alter FLAG_VENDEDOR position 6;
+
+alter table TBFUNCIONARIO
+alter FLAG_FORNECEDOR position 7;
+
+alter table TBFUNCIONARIO
+alter ATIVO position 8;
+
+alter table TBFUNCIONARIO
+alter USUARIO position 9;
+
+alter table TBFUNCIONARIO
+alter VENDEDOR position 10;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:29:45 --------*/
+
+ALTER TABLE TBFUNCIONARIO ADD IBE$$TEMP_COLUMN
+ SMALLINT DEFAULT 0
+;
+
+UPDATE RDB$RELATION_FIELDS F1
+SET
+F1.RDB$DEFAULT_VALUE  = (SELECT F2.RDB$DEFAULT_VALUE
+                         FROM RDB$RELATION_FIELDS F2
+                         WHERE (F2.RDB$RELATION_NAME = 'TBFUNCIONARIO') AND
+                               (F2.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN')),
+F1.RDB$DEFAULT_SOURCE = (SELECT F3.RDB$DEFAULT_SOURCE FROM RDB$RELATION_FIELDS F3
+                         WHERE (F3.RDB$RELATION_NAME = 'TBFUNCIONARIO') AND
+                               (F3.RDB$FIELD_NAME = 'IBE$$TEMP_COLUMN'))
+WHERE (F1.RDB$RELATION_NAME = 'TBFUNCIONARIO') AND
+      (F1.RDB$FIELD_NAME = 'FLAG_FORNECEDOR');
+
+ALTER TABLE TBFUNCIONARIO DROP IBE$$TEMP_COLUMN;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:31:27 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD FORNECEDOR DMN_INTEGER_N;
+
+COMMENT ON COLUMN TBFUNCIONARIO.FORNECEDOR IS
+'Codigo do registro de fornecedor.';
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:31:48 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_FORNECEDOR
+FOREIGN KEY (FORNECEDOR)
+REFERENCES TBFORNECEDOR(CODFORN)
+ON DELETE SET NULL;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:33:24 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD METAFONEMA DMN_NOME;
+
+COMMENT ON COLUMN TBFUNCIONARIO.METAFONEMA IS
+'Codigo metafonico do nome completo.';
+
+alter table TBFUNCIONARIO
+alter CODIGO position 1;
+
+alter table TBFUNCIONARIO
+alter MATRICULA position 2;
+
+alter table TBFUNCIONARIO
+alter NOME_COMPLETO position 3;
+
+alter table TBFUNCIONARIO
+alter METAFONEMA position 4;
+
+alter table TBFUNCIONARIO
+alter SEXO position 5;
+
+alter table TBFUNCIONARIO
+alter FOTO_3X4 position 6;
+
+alter table TBFUNCIONARIO
+alter FLAG_VENDEDOR position 7;
+
+alter table TBFUNCIONARIO
+alter FLAG_FORNECEDOR position 8;
+
+alter table TBFUNCIONARIO
+alter ATIVO position 9;
+
+alter table TBFUNCIONARIO
+alter USUARIO position 10;
+
+alter table TBFUNCIONARIO
+alter VENDEDOR position 11;
+
+alter table TBFUNCIONARIO
+alter FORNECEDOR position 12;
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:33:47 --------*/
+
+CREATE INDEX IDX_TBFUNCIONARIO_METAPHONE
+ON TBFUNCIONARIO (NOME_COMPLETO,METAFONEMA);
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:40:42 --------*/
+
+CREATE TABLE TBFORMPAGTO_CONDICAO (
+    FORMA_PAGTO DMN_SMALLINT_NN NOT NULL,
+    CONDICAO_PAGTO DMN_SMALLINT_NN NOT NULL);
+
+ALTER TABLE TBFORMPAGTO_CONDICAO
+ADD CONSTRAINT PK_TBFORMPAGTO_CONDICAO
+PRIMARY KEY (FORMA_PAGTO,CONDICAO_PAGTO);
+
+COMMENT ON COLUMN TBFORMPAGTO_CONDICAO.FORMA_PAGTO IS
+'Forma de Pagamento';
+
+COMMENT ON COLUMN TBFORMPAGTO_CONDICAO.CONDICAO_PAGTO IS
+'Condicao de Pagamento';
+
+
+
+
+/*------ SYSDBA 11/03/2015 20:40:43 --------*/
+
+COMMENT ON TABLE TBFORMPAGTO_CONDICAO IS 'Tabela Forma de Pagamento x Condicao de Pagamento.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   11/03/2015
+
+Tabela responsavel por armazenar a relacao "Forma de Pagamento" X "Condicao de Pagamento". Ela permitira que uma forma de
+pagamento possa esta associada a mais de uma condicao de pagamento e uma condicao de pagamento associada a varias formas
+de pagamentos.
+
+Esta relacao e importante para impedir que, no PDV, escolha-se uma condicao de pagamento inadequada a forma de pagamento
+da venda.
+
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    12/03/2015 - IMR :
+        * Documentacao da tabela.';
+
+GRANT ALL ON TBFORMPAGTO_CONDICAO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 11/03/2015 20:41:38 --------*/
+
+ALTER TABLE TBFORMPAGTO_CONDICAO
+ADD CONSTRAINT FK_TBFORMPAGTO_CONDICAO_FPGTO
+FOREIGN KEY (FORMA_PAGTO)
+REFERENCES TBFORMPAGTO(COD)
+ON DELETE CASCADE;
+
+ALTER TABLE TBFORMPAGTO_CONDICAO
+ADD CONSTRAINT FK_TBFORMPAGTO_CONDICAO_CPGTO
+FOREIGN KEY (CONDICAO_PAGTO)
+REFERENCES TBCONDICAOPAGTO(COND_COD)
+ON DELETE CASCADE;
+
+
+
+
+/*------ SYSDBA 11/03/2015 23:33:06 --------*/
+
+CREATE DOMAIN DMN_VCHAR_05 AS
+VARCHAR(5);
+
+
+/*------ SYSDBA 11/03/2015 23:37:16 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD ENDER DMN_END,
+    ADD NUMERO_END DMN_VCHAR_10,
+    ADD COMPLEMENTO DMN_VCHAR_50,
+    ADD BAIRRO DMN_BAIRRO,
+    ADD CEP DMN_CEP,
+    ADD CIDADE DMN_CIDADE,
+    ADD UF DMN_UF,
+    ADD TLG_TIPO DMN_SMALLINT_N,
+    ADD LOG_COD DMN_INTEGER_N,
+    ADD BAI_COD DMN_INTEGER_N,
+    ADD CID_COD DMN_INTEGER_N,
+    ADD EST_COD DMN_SMALLINT_N,
+    ADD PAIS_ID DMN_VCHAR_05,
+    ADD FONE_FIXO DMN_FONERSD,
+    ADD FONE_CELULAR DMN_FONERSD,
+    ADD FONE_COMERCIAL DMN_FONERSD,
+    ADD EMAIL DMN_VCHAR_60;
+
+COMMENT ON COLUMN TBFUNCIONARIO.ENDER IS
+'Endereco';
+
+COMMENT ON COLUMN TBFUNCIONARIO.NUMERO_END IS
+'Numero Endereco';
+
+COMMENT ON COLUMN TBFUNCIONARIO.COMPLEMENTO IS
+'Complemento';
+
+COMMENT ON COLUMN TBFUNCIONARIO.BAIRRO IS
+'Bairro';
+
+COMMENT ON COLUMN TBFUNCIONARIO.CEP IS
+'CEP';
+
+COMMENT ON COLUMN TBFUNCIONARIO.CIDADE IS
+'Cidade';
+
+COMMENT ON COLUMN TBFUNCIONARIO.UF IS
+'UF';
+
+COMMENT ON COLUMN TBFUNCIONARIO.TLG_TIPO IS
+'Tipo Logradouro';
+
+COMMENT ON COLUMN TBFUNCIONARIO.LOG_COD IS
+'Logradouro';
+
+COMMENT ON COLUMN TBFUNCIONARIO.BAI_COD IS
+'Bairro';
+
+COMMENT ON COLUMN TBFUNCIONARIO.CID_COD IS
+'Cidade';
+
+COMMENT ON COLUMN TBFUNCIONARIO.EST_COD IS
+'Estado';
+
+COMMENT ON COLUMN TBFUNCIONARIO.PAIS_ID IS
+'Pais';
+
+COMMENT ON COLUMN TBFUNCIONARIO.FONE_FIXO IS
+'Telefone Fixo';
+
+COMMENT ON COLUMN TBFUNCIONARIO.FONE_CELULAR IS
+'Telefone Celular';
+
+COMMENT ON COLUMN TBFUNCIONARIO.FONE_COMERCIAL IS
+'Telefone Comercial';
+
+COMMENT ON COLUMN TBFUNCIONARIO.EMAIL IS
+'E-mail';
+
+
+
+
+/*------ SYSDBA 11/03/2015 23:41:10 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_END_TIPOLOG
+FOREIGN KEY (TLG_TIPO)
+REFERENCES TBTIPO_LOGRADOURO(TLG_COD);
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_END_LOG
+FOREIGN KEY (LOG_COD)
+REFERENCES TBLOGRADOURO(LOG_COD);
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_END_BAIRRO
+FOREIGN KEY (BAI_COD)
+REFERENCES TBBAIRRO(BAI_COD);
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_END_CIDADE
+FOREIGN KEY (CID_COD)
+REFERENCES TBCIDADE(CID_COD);
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_END_ESTADO
+FOREIGN KEY (EST_COD)
+REFERENCES TBESTADO(EST_COD);
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_END_PAIS
+FOREIGN KEY (PAIS_ID)
+REFERENCES TBPAIS(PAIS_ID);
+

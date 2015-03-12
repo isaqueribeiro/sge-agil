@@ -1,6 +1,6 @@
 inherited frmGeClienteImpressao: TfrmGeClienteImpressao
-  Left = 394
-  Top = 211
+  Left = 397
+  Top = 220
   Caption = 'Relat'#243'rio de Clientes'
   PixelsPerInch = 96
   TextHeight = 13

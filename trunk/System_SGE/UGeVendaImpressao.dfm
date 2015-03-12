@@ -11,9 +11,6 @@ inherited frmGeVendaImpressao: TfrmGeVendaImpressao
   inherited Bevel3: TBevel
     Top = 277
   end
-  inherited tlbBotoes: TToolBar
-    Top = 281
-  end
   inherited pnlBanner: TPanel
     Height = 277
     inherited imgBanner: TImage
@@ -279,6 +276,9 @@ inherited frmGeVendaImpressao: TfrmGeVendaImpressao
         TabOrder = 2
       end
     end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 281
   end
   object QryCidades: TIBQuery
     Database = DMBusiness.ibdtbsBusiness

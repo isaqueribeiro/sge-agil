@@ -5127,7 +5127,6 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
     object qryNFEANOVENDA: TSmallintField
       FieldName = 'ANOVENDA'
       Origin = 'TBNFE_ENVIADA.ANOVENDA'
-      Required = True
     end
     object qryNFENUMVENDA: TIntegerField
       FieldName = 'NUMVENDA'

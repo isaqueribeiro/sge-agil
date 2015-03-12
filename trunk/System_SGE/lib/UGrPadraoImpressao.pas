@@ -4,16 +4,13 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, UGrPadrao, UInfoVersao, StdCtrls, Buttons, ToolWin, ComCtrls, ExtCtrls,
+  Dialogs, UGrPadrao, UInfoVersao, StdCtrls, Buttons, ComCtrls, ExtCtrls,
   dxGDIPlusClasses, frxClass, frxExportRTF, frxExportXLS, frxExportPDF, frxExportMail,
   cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
 
 type
   TfrmGrPadraoImpressao = class(TfrmGrPadrao)
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
-    bvlTool4: TBevel;
     Bevel3: TBevel;
     pnlBanner: TPanel;
     pnlRelatorio: TPanel;
@@ -23,7 +20,10 @@ type
     Bevel4: TBevel;
     GrpBxFiltro: TGroupBox;
     imgBanner: TImage;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
     btnVisualizar: TcxButton;
+    bvlTool4: TBevel;
     procedure frGetValue(const VarName: String; var Value: Variant);
     procedure edRelatorioChange(Sender: TObject);
     procedure btnVisualizarClick(Sender: TObject);

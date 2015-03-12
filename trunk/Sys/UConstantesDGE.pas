@@ -87,6 +87,7 @@ const
   FUNCTION_USER_ID_ESTOQUISTA  = 10;
   FUNCTION_USER_ID_SUPORTE_TI  = 11;
   FUNCTION_USER_ID_SYSTEM_ADM  = 12;
+  FUNCTION_USER_ID_COMMON_USER = 13;
 
   // Menu Principal -> Identificacores de rotinas no sistema
 

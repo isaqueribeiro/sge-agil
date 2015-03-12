@@ -1,6 +1,6 @@
 inherited frmGeContasAReceberImpressao: TfrmGeContasAReceberImpressao
-  Left = 392
-  Top = 218
+  Left = 410
+  Top = 214
   Caption = 'Relat'#243'rios de Contas A Receber'
   PixelsPerInch = 96
   TextHeight = 13

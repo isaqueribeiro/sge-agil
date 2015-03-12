@@ -1,4 +1,6 @@
 inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
+  Left = 410
+  Top = 229
   Caption = 'Relat'#243'rios de Apropria'#231#227'o de Estoque'
   ClientHeight = 328
   ClientWidth = 562
@@ -9,11 +11,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
     Width = 562
   end
   inherited Bevel3: TBevel
-    Top = 285
-    Width = 562
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 289
+    Top = 320
     Width = 562
   end
   inherited pnlBanner: TPanel
@@ -311,6 +309,10 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         TabOrder = 5
       end
     end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 285
+    Width = 562
   end
   object QryEmpresas: TIBQuery
     Database = DMBusiness.ibdtbsBusiness

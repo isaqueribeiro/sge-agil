@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoImpressao, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Menus, StdCtrls, dxGDIPlusClasses, ExtCtrls,
-  cxButtons, ToolWin, ComCtrls, DBClient, Provider, DB, IBCustomDataSet,
+  cxButtons, ComCtrls, DBClient, Provider, DB, IBCustomDataSet,
   IBQuery, frxClass, frxDBSet;
 
 type

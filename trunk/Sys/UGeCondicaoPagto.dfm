@@ -403,9 +403,75 @@ inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
           ValueUnchecked = '0'
         end
       end
+      object dbgFormaPagto: TDBGrid
+        Left = 0
+        Top = 189
+        Width = 727
+        Height = 141
+        Hint = 
+          'Dica:'#13#10#13#10'Pressione a tecla "Espa'#231'o" para marcar o desmarcar a Fo' +
+          'rma de Pagamento'#13#10'selecionada. E atente para o fato de que a for' +
+          'ma de pagamento marcada est'#225#13#10'relacionada a condi'#231#227'o de pagament' +
+          'o em quest'#227'o.'
+        Align = alClient
+        DataSource = dtsFormaPagtoLista
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+        ParentFont = False
+        ParentShowHint = False
+        ReadOnly = True
+        ShowHint = True
+        TabOrder = 1
+        TitleFont.Charset = ANSI_CHARSET
+        TitleFont.Color = clBlack
+        TitleFont.Height = -11
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = [fsBold]
+        OnDrawColumnCell = dbgDadosDrawColumnCell
+        OnDblClick = dbgFormaPagtoDblClick
+        OnKeyDown = dbgFormaPagtoKeyDown
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'SELECIONAR'
+            Title.Alignment = taCenter
+            Title.Caption = 'S'
+            Width = 30
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'CODIGO'
+            Title.Alignment = taCenter
+            Title.Caption = 'C'#243'digo'
+            Width = 50
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DESCRICAO'
+            Title.Caption = 'Forma de Pagamento'
+            Width = 350
+            Visible = True
+          end
+          item
+            Alignment = taCenter
+            Expanded = False
+            FieldName = 'USAR_PDV'
+            Title.Alignment = taCenter
+            Title.Caption = 'PDV'
+            Width = 50
+            Visible = True
+          end>
+      end
     end
   end
   inherited IbDtstTabela: TIBDataSet
+    AfterScroll = IbDtstTabelaAfterScroll
     BeforePost = IbDtstTabelaBeforePost
     OnCalcFields = IbDtstTabelaCalcFields
     OnNewRecord = IbDtstTabelaNewRecord
@@ -657,5 +723,69 @@ inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
   inherited ImgList: TImageList
     Left = 576
     Top = 192
+  end
+  object qryFormaPagtoLista: TIBDataSet
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    SelectSQL.Strings = (
+      'Select'
+      
+        '    Case when c.condicao_pagto is null then 0 else 1 end as sele' +
+        'cionar'
+      '  , f.cod    as codigo'
+      '  , f.descri as descricao'
+      
+        '  , Case when f.formapagto_pdv = 1 then '#39'X'#39' else '#39'.'#39' end usar_pd' +
+        'v'
+      'from TBFORMPAGTO f'
+      
+        '  left join TBFORMPAGTO_CONDICAO c on (c.forma_pagto = f.cod and' +
+        ' c.condicao_pagto = :condicao_pagto)'
+      ''
+      'order by'
+      '    f.cod')
+    Left = 140
+    Top = 281
+  end
+  object dspFormaPagtoLista: TDataSetProvider
+    DataSet = qryFormaPagtoLista
+    Left = 172
+    Top = 281
+  end
+  object cdsFormaPagtoLista: TClientDataSet
+    Aggregates = <>
+    Params = <
+      item
+        DataType = ftSmallint
+        Name = 'CONDICAO_PAGTO'
+        ParamType = ptInput
+        Value = 0
+      end>
+    ProviderName = 'dspFormaPagtoLista'
+    Left = 204
+    Top = 281
+    object cdsFormaPagtoListaSELECIONAR: TIntegerField
+      FieldName = 'SELECIONAR'
+    end
+    object cdsFormaPagtoListaCODIGO: TSmallintField
+      Alignment = taCenter
+      FieldName = 'CODIGO'
+      Required = True
+      DisplayFormat = '00'
+    end
+    object cdsFormaPagtoListaDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Size = 30
+    end
+    object cdsFormaPagtoListaUSAR_PDV: TStringField
+      FieldName = 'USAR_PDV'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dtsFormaPagtoLista: TDataSource
+    DataSet = cdsFormaPagtoLista
+    Left = 236
+    Top = 281
   end
 end

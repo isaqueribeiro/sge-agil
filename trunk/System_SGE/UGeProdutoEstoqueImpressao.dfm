@@ -1,6 +1,6 @@
 inherited frmGeProdutoEstoqueImpressao: TfrmGeProdutoEstoqueImpressao
-  Left = 719
-  Top = 322
+  Left = 690
+  Top = 295
   Caption = 'Relat'#243'rio de Estoque de Produtos'
   PixelsPerInch = 96
   TextHeight = 13

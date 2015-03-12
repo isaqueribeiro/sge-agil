@@ -1201,8 +1201,14 @@ begin
 
   if ( pnlVeiculo.Visible ) then
   begin
-    lblReferencia.Caption               := 'Placa:';
-    IbDtstTabelaREFERENCIA.DisplayLabel := 'Placa';
+    lblDescricao.Caption                  := 'Modelo Veículo:';
+    IbDtstTabelaDESCRI.DisplayLabel       := 'Modelo Veículo';
+    lblApresentacao.Caption               := 'Linha:';
+    IbDtstTabelaAPRESENTACAO.DisplayLabel := 'Linha';
+    lblReferencia.Caption                 := 'Placa:';
+    IbDtstTabelaREFERENCIA.DisplayLabel   := 'Placa';
+    lblGrupo.Caption                         := 'Família:';
+    IbDtstTabelaDESCRICAO_GRUPO.DisplayLabel := 'Família';
   end;
 
   IbDtstTabelaCOR_VEICULO.Required            := pnlVeiculo.Visible;
