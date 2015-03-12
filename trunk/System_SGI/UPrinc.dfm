@@ -4500,7 +4500,6 @@ object frmPrinc: TfrmPrinc
       Index = 4
     end
     object RbnTabConsulta: TdxRibbonTab
-      Active = True
       Caption = 'Consulta'
       Groups = <
         item
@@ -4512,8 +4511,18 @@ object frmPrinc: TfrmPrinc
       Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
+      Active = True
       Caption = 'Financeiro'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngFinanceiroCaixa'
+        end
+        item
+          ToolbarName = 'BrMngPrincipalFin'
+        end
+        item
+          ToolbarName = 'BrMngFinanceiroBoleto'
+        end>
       Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
@@ -10953,8 +10962,14 @@ object frmPrinc: TfrmPrinc
       'Compras'
       'Estoque'
       'Notas Fiscais'
-      'Consultas')
+      'Consultas'
+      'Caixa'
+      'Movimento Financeiro'
+      'Boleto Banc'#225'rio')
     Categories.ItemsVisibles = (
+      2
+      2
+      2
       2
       2
       2
@@ -10968,6 +10983,9 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
+      True
+      True
       True
       True
       True
@@ -11056,7 +11074,7 @@ object frmPrinc: TfrmPrinc
       WholeRow = False
     end
     object BrMngPrincipalFin: TdxBar
-      Caption = 'Financeiro'
+      Caption = 'Movimento Financeiro'
       CaptionButtons = <>
       DockedLeft = 699
       DockedTop = 0
@@ -11411,6 +11429,68 @@ object frmPrinc: TfrmPrinc
       Visible = True
       WholeRow = False
     end
+    object BrMngFinanceiroCaixa: TdxBar
+      Caption = 'Caixa'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnAbrirCaixa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEncerrarCaixa'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnGerenciarCaixa'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngFinanceiroBoleto: TdxBar
+      Caption = 'Boletos Banc'#225'rios / Quita'#231#245'es'
+      CaptionButtons = <>
+      DockedLeft = 435
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnGerarBoleto'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnGerarRemessaBoleto'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnProcessarRetornoBoleto'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnQuitarLote'
+        end>
+      OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
     object BrBtnAlterarSenha: TdxBarLargeButton
       Caption = 'Altera'#231#227'o de Senha (%s)'
       Category = 0
@@ -11444,24 +11524,6 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 20
       SyncImageIndex = False
       ImageIndex = 20
-    end
-    object BrBtnTesouraria: TdxBarLargeButton
-      Caption = 'Tesouraria'
-      Category = 0
-      Hint = 'Tesouraria'
-      Visible = ivAlways
-    end
-    object BrBtnContaAPagar: TdxBarLargeButton
-      Caption = 'Contas A Pagar'
-      Category = 0
-      Hint = 'Contas A Pagar'
-      Visible = ivAlways
-    end
-    object BrBtnContaAReceber: TdxBarLargeButton
-      Caption = 'Contas A Receber'
-      Category = 0
-      Hint = 'Contas A Receber'
-      Visible = ivAlways
     end
     object BrBtnEntradaProduto: TdxBarLargeButton
       Caption = 'Produtos'
@@ -12072,17 +12134,137 @@ object frmPrinc: TfrmPrinc
       Category = 11
       Hint = 'Rotatividade de Produtos'
       Visible = ivAlways
+      LargeImageIndex = 44
+      OnClick = nmRotatividadeClick
+      HotImageIndex = 44
+      SyncImageIndex = False
+      ImageIndex = 44
     end
     object BrBtnConsultaEstoqueMinimo: TdxBarLargeButton
       Caption = 'Estoque M'#237'nimo'
       Category = 11
       Hint = 'Estoque M'#237'nimo'
       Visible = ivAlways
+      LargeImageIndex = 45
+      OnClick = nmEstoqueMinimoClick
+      HotImageIndex = 45
+      SyncImageIndex = False
+      ImageIndex = 45
     end
     object BrBtnConsultaEstoqueApropriado: TdxBarLargeButton
       Caption = 'Estoque Apropriado'
       Category = 11
       Hint = 'Estoque Apropriado'
+      Visible = ivAlways
+      LargeImageIndex = 46
+      OnClick = nmEstoqueApropriadoClick
+      HotImageIndex = 46
+      SyncImageIndex = False
+      ImageIndex = 46
+    end
+    object BrBtnAbrirCaixa: TdxBarLargeButton
+      Caption = 'Abertura de Caixa'
+      Category = 12
+      Hint = 'Abertura de Caixa'
+      Visible = ivAlways
+      LargeImageIndex = 51
+      OnClick = nmAberturaCaixaClick
+      HotImageIndex = 51
+      SyncImageIndex = False
+      ImageIndex = 51
+    end
+    object BrBtnEncerrarCaixa: TdxBarLargeButton
+      Caption = 'Encerramento de Caixa'
+      Category = 12
+      Hint = 'Encerramento de Caixa'
+      Visible = ivAlways
+      LargeImageIndex = 52
+      OnClick = nmEncerramentoCaixaClick
+      HotImageIndex = 52
+      SyncImageIndex = False
+      ImageIndex = 52
+    end
+    object BrBtnGerenciarCaixa: TdxBarLargeButton
+      Caption = 'Ger'#234'ncia de Caixas'
+      Category = 12
+      Hint = 'Ger'#234'ncia de Caixas'
+      Visible = ivAlways
+      LargeImageIndex = 47
+      OnClick = nmGerenciaCaixaClick
+      HotImageIndex = 47
+      SyncImageIndex = False
+      ImageIndex = 47
+    end
+    object BrBtnTesouraria: TdxBarLargeButton
+      Caption = 'Tesouraria'
+      Category = 13
+      Hint = 'Tesouraria (Movimento de Caixa)'
+      Visible = ivAlways
+      LargeImageIndex = 50
+      OnClick = nmFluxoDeCaixaClick
+      HotImageIndex = 50
+      SyncImageIndex = False
+      ImageIndex = 50
+    end
+    object BrBtnContaAPagar: TdxBarLargeButton
+      Caption = 'Contas A Pagar'
+      Category = 13
+      Hint = 'Contas A Pagar (Programa'#231#227'o)'
+      Visible = ivAlways
+      LargeImageIndex = 48
+      OnClick = btnContaAPagarClick
+      HotImageIndex = 48
+      SyncImageIndex = False
+      ImageIndex = 48
+    end
+    object BrBtnContaAReceber: TdxBarLargeButton
+      Caption = 'Contas A Receber'
+      Category = 13
+      Hint = 'Contas A Receber (Programa'#231#227'o)'
+      Visible = ivAlways
+      LargeImageIndex = 49
+      OnClick = btnContaAReceberClick
+      HotImageIndex = 49
+      SyncImageIndex = False
+      ImageIndex = 49
+    end
+    object BrBtnGerarBoleto: TdxBarLargeButton
+      Caption = 'Gera'#231#227'o de Boletos'
+      Category = 14
+      Hint = 'Gera'#231#227'o de Boletos'
+      Visible = ivAlways
+    end
+    object BrBtnGerarRemessaBoleto: TdxBarLargeButton
+      Caption = 'Gerar Remessas de Boletos'
+      Category = 14
+      Hint = 'Gerar Remessas de Boletos'
+      Visible = ivAlways
+    end
+    object BrBtnProcessarRetornoBoleto: TdxBarLargeButton
+      Caption = 'Processar Retorno de Boletos'
+      Category = 14
+      Hint = 'Processar Retorno de Boletos'
+      Visible = ivAlways
+    end
+    object BrBtnQuitarLote: TdxBarLargeButton
+      Caption = 'Quitar Contas (Lote)'
+      Category = 14
+      Hint = 'Quitar Contas (Lote)'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpFinanceiroQuitarLote
+    end
+    object BrBtnQuitarAPagarLote: TdxBarLargeButton
+      Caption = 'Quitar Contas A Pagar (Por Lote)'
+      Category = 14
+      Hint = 'Quitar Contas A Pagar (Por Lote)'
+      Visible = ivAlways
+    end
+    object BrBtnQuitarAReceberLote: TdxBarLargeButton
+      Caption = 'Quitar Contas A Receber (Por Lote)'
+      Category = 14
+      Enabled = False
+      Hint = 'Quitar Contas A Receber (Por Lote)'
       Visible = ivAlways
     end
   end
@@ -12279,6 +12461,21 @@ object frmPrinc: TfrmPrinc
       end>
     UseOwnFont = False
     Left = 464
+    Top = 246
+  end
+  object BrPpFinanceiroQuitarLote: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnQuitarAPagarLote'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnQuitarAReceberLote'
+      end>
+    UseOwnFont = False
+    Left = 496
     Top = 246
   end
 end

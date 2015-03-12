@@ -113,6 +113,10 @@ type
     BrBtnContaCorrente: TdxBarLargeButton;
     BrBtnFormaPagto: TdxBarLargeButton;
     BrBtnCondicaoPagto: TdxBarLargeButton;
+    BrMngCaixaControle: TdxBar;
+    BrBtnAbrirCaixa: TdxBarLargeButton;
+    BrBtnEncerrarCaixa: TdxBarLargeButton;
+    BrBtnGerenciarCaixa: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);

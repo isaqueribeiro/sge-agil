@@ -20047,12 +20047,15 @@ object frmPrinc: TfrmPrinc
       Index = 2
     end
     object RbbTabCaixa: TdxRibbonTab
-      Active = True
       Caption = 'Caixa'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngCaixaControle'
+        end>
       Index = 3
     end
     object RbbTabAjuda: TdxRibbonTab
+      Active = True
       Caption = 'Ajuda'
       Groups = <>
       Index = 4
@@ -21329,14 +21332,17 @@ object frmPrinc: TfrmPrinc
       'Cadastros'
       'Configura'#231#245'es'
       'Acesso'
-      'Tabelas Auxiliares')
+      'Tabelas Auxiliares'
+      'Caixa')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -21358,7 +21364,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalMov: TdxBar
       Caption = 'Movimentos'
       CaptionButtons = <>
-      DockedLeft = 144
+      DockedLeft = 0
       DockedTop = 0
       FloatLeft = 441
       FloatTop = 226
@@ -21398,7 +21404,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnCliente'
         end>
       OneOnRow = False
-      Row = 0
+      Row = 1
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -21512,6 +21518,34 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnEfetuarLogoff'
         end>
       OneOnRow = False
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngCaixaControle: TdxBar
+      Caption = 'Controle de Caixa'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnAbrirCaixa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEncerrarCaixa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnGerenciarCaixa'
+        end>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -21712,6 +21746,39 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 8
       SyncImageIndex = False
       ImageIndex = 8
+    end
+    object BrBtnAbrirCaixa: TdxBarLargeButton
+      Caption = 'Abertura de Caixa'
+      Category = 5
+      Hint = 'Abertura de Caixa'
+      Visible = ivAlways
+      LargeImageIndex = 51
+      OnClick = nmAberturaCaixaClick
+      HotImageIndex = 51
+      SyncImageIndex = False
+      ImageIndex = 51
+    end
+    object BrBtnEncerrarCaixa: TdxBarLargeButton
+      Caption = 'Encerramento de Caixa'
+      Category = 5
+      Hint = 'Encerramento de Caixa'
+      Visible = ivAlways
+      LargeImageIndex = 52
+      OnClick = nmEncerramentoCaixaClick
+      HotImageIndex = 52
+      SyncImageIndex = False
+      ImageIndex = 52
+    end
+    object BrBtnGerenciarCaixa: TdxBarLargeButton
+      Caption = 'Gerenciar Caixas'
+      Category = 5
+      Hint = 'Gerenciar Caixas'
+      Visible = ivAlways
+      LargeImageIndex = 47
+      OnClick = nmGerenciaCaixaClick
+      HotImageIndex = 47
+      SyncImageIndex = False
+      ImageIndex = 47
     end
   end
   object TmrMonitorar: TTimer

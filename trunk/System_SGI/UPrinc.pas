@@ -279,6 +279,18 @@ type
     BrBtnConsultaRotatividadeProduto: TdxBarLargeButton;
     BrBtnConsultaEstoqueMinimo: TdxBarLargeButton;
     BrBtnConsultaEstoqueApropriado: TdxBarLargeButton;
+    BrMngFinanceiroCaixa: TdxBar;
+    BrBtnAbrirCaixa: TdxBarLargeButton;
+    BrBtnEncerrarCaixa: TdxBarLargeButton;
+    BrBtnGerenciarCaixa: TdxBarLargeButton;
+    BrMngFinanceiroBoleto: TdxBar;
+    BrBtnGerarBoleto: TdxBarLargeButton;
+    BrBtnGerarRemessaBoleto: TdxBarLargeButton;
+    BrBtnProcessarRetornoBoleto: TdxBarLargeButton;
+    BrBtnQuitarLote: TdxBarLargeButton;
+    BrBtnQuitarAPagarLote: TdxBarLargeButton;
+    BrBtnQuitarAReceberLote: TdxBarLargeButton;
+    BrPpFinanceiroQuitarLote: TdxBarPopupMenu;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -910,7 +922,7 @@ begin
   nmCartaCorrecaoNFe.Enabled    := GetEstacaoEmitiNFe;
 
   // Consultas
-  
+
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CNS_CONSULTA_CNPJ_ID,        Trim(nmConsultarCNPJ.Caption),     ROTINA_MENU_CONSULTA_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CNS_CONSULTA_VENDA_ID,       Trim(nmVendaIemPesquisa.Caption),  ROTINA_MENU_CONSULTA_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CNS_CONSULTA_ROTATIVIDAD_ID, Trim(nmRotatividade.Caption),      ROTINA_MENU_CONSULTA_ID);

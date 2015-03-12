@@ -256,6 +256,7 @@ begin
 
     cdsContaCorrenteLista.Next;
   end;
+  cdsContaCorrenteLista.First;
 end;
 
 procedure TfrmGeFormaPagto.btbtnSalvarClick(Sender: TObject);

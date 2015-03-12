@@ -305,6 +305,7 @@ var
   function GetVendedorNome(const iCodigo : Integer) : String;
   function GetFormaPagtoNomeDefault : String;
   function GetFormaPagtoNome(const iCodigo : Integer) : String;
+  function GetFormaPagtoCondicaoPagto(const iFormaPagto, iCondicaoPagto : Integer) : Boolean;
   function GetCondicaoPagtoNomeDefault : String;
   function GetCondicaoPagtoNome(const iCodigo : Integer) : String;
   function GetSenhaAutorizacao : String;
@@ -2334,6 +2335,23 @@ begin
   end;
 end;
 
+function GetFormaPagtoCondicaoPagto(const iFormaPagto, iCondicaoPagto : Integer) : Boolean;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select count(*) as Itens from TBFORMPAGTO_CONDICAO');
+    SQL.Add('where forma_pagto    = ' + IntToStr(iFormaPagto));
+    SQL.Add('  and condicao_pagto = ' + IntToStr(iCondicaoPagto));
+    Open;
+
+    Result := (FieldByName('Itens').AsInteger > 0);
+
+    Close;
+  end;
+end;
+
 function GetCondicaoPagtoNomeDefault : String;
 begin
   Result := GetCondicaoPagtoNome( GetCondicaoPagtoIDDefault );
@@ -2432,43 +2450,64 @@ end;
 function GetUserApp : String;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := AnsiUpperCase( Trim(ibdtstUsersNOME.AsString) );
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := AnsiUpperCase( Trim(ibdtstUsersNOME.AsString) )
+    else
+      Result := EmptyStr;  
 end;
 
 function GetUserFullName : String;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := AnsiUpperCase( Trim(ibdtstUsersNOMECOMPLETO.AsString) );
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := AnsiUpperCase( Trim(ibdtstUsersNOMECOMPLETO.AsString) )
+    else
+      Result := EmptyStr;
 end;
 
 function GetUserFunctionID : Integer;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := ibdtstUsersCODFUNCAO.AsInteger;
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := ibdtstUsersCODFUNCAO.AsInteger
+    else
+      Result := 0;
 end;
 
 function GetUserCodigoVendedorID : Integer;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := ibdtstUsersVENDEDOR.AsInteger;
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := ibdtstUsersVENDEDOR.AsInteger
+    else
+      Result := 0;
 end;
 
 function GetUserUpdatePassWord : Boolean;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := (ibdtstUsersALTERAR_SENHA.AsInteger = 1);
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := (ibdtstUsersALTERAR_SENHA.AsInteger = 1)
+    else
+      Result := False;
 end;
 
 function GetLimiteDescontoUser : Currency;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := ibdtstUsersLIMIDESC.AsCurrency;
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := ibdtstUsersLIMIDESC.AsCurrency
+    else
+      Result := 0.0;
 end;
 
 function GetUserPermitirAlterarValorVenda : Boolean;
 begin
   with DMBusiness, ibdtstUsers do
-    Result := (ibdtstUsersPERM_ALTERAR_VALOR_VENDA.AsInteger = 1);
+    if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
+      Result := (ibdtstUsersPERM_ALTERAR_VALOR_VENDA.AsInteger = 1)
+    else
+      Result := False;
 end;
 
 function GetPermititEmissaoNFe(const sCNPJEmitente : String) : Boolean;

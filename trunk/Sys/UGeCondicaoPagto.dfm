@@ -455,16 +455,15 @@ inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
             Expanded = False
             FieldName = 'DESCRICAO'
             Title.Caption = 'Forma de Pagamento'
-            Width = 350
+            Width = 400
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'USAR_PDV'
             Title.Alignment = taCenter
             Title.Caption = 'PDV'
-            Width = 50
+            Width = 30
             Visible = True
           end>
       end
@@ -765,7 +764,9 @@ inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
     Left = 204
     Top = 281
     object cdsFormaPagtoListaSELECIONAR: TIntegerField
+      Alignment = taCenter
       FieldName = 'SELECIONAR'
+      OnGetText = cdsFormaPagtoListaSELECIONARGetText
     end
     object cdsFormaPagtoListaCODIGO: TSmallintField
       Alignment = taCenter
@@ -778,6 +779,7 @@ inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
       Size = 30
     end
     object cdsFormaPagtoListaUSAR_PDV: TStringField
+      Alignment = taCenter
       FieldName = 'USAR_PDV'
       FixedChar = True
       Size = 1
