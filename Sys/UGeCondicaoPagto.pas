@@ -79,6 +79,8 @@ type
     procedure btbtnCancelarClick(Sender: TObject);
     procedure btbtnSalvarClick(Sender: TObject);
     procedure DtSrcTabelaStateChange(Sender: TObject);
+    procedure cdsFormaPagtoListaSELECIONARGetText(Sender: TField;
+      var Text: String; DisplayText: Boolean);
   private
     { Private declarations }
     procedure CarregarFormaPagto;
@@ -372,6 +374,7 @@ begin
 
     cdsFormaPagtoLista.Next;
   end;
+  cdsFormaPagtoLista.First;
 end;
 
 procedure TfrmGeCondicaoPagto.dbgFormaPagtoDblClick(Sender: TObject);
@@ -426,6 +429,16 @@ procedure TfrmGeCondicaoPagto.DtSrcTabelaStateChange(Sender: TObject);
 begin
   inherited;
   dtsFormaPagtoLista.AutoEdit := (IbDtstTabela.State in [dsEdit, dsInsert]);
+end;
+
+procedure TfrmGeCondicaoPagto.cdsFormaPagtoListaSELECIONARGetText(
+  Sender: TField; var Text: String; DisplayText: Boolean);
+begin
+  if not Sender.IsNull then
+    Case Sender.AsInteger of
+      0 : Text := '.';
+      1 : Text := 'X';
+    end;
 end;
 
 initialization
