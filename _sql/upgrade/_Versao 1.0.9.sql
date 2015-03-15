@@ -13127,3 +13127,423 @@ ADD CONSTRAINT FK_TBFUNCIONARIO_END_PAIS
 FOREIGN KEY (PAIS_ID)
 REFERENCES TBPAIS(PAIS_ID);
 
+
+
+
+/*------ SYSDBA 15/03/2015 10:25:06 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_nfe_atualizar_compra for tbnfe_enviada
+active after insert position 1
+AS
+begin
+  if ( (new.anocompra > 0) and (new.numcompra > 0) ) then
+  begin
+    Update TBCOMPRAS c Set
+        c.nfserie = new.serie
+      , c.nf      = new.numero
+      , c.nfe_enviada      = 1
+      , c.tipo_documento   = 1 -- Nota Fiscal
+      , c.verificador_nfe  = new.chave
+      , c.xml_nfe_filename = new.xml_filename
+      , c.xml_nfe          = new.xml_file
+      , c.lote_nfe_ano     = new.lote_ano
+      , c.lote_nfe_numero  = new.lote_num
+      , c.lote_nfe_recibo  = new.recibo
+      , c.status  = 4 -- Nota Fiscal Gerada
+      , c.dtemiss = new.dataemissao
+      , c.hremiss = new.horaemissao
+    where c.ano        = new.anocompra
+      and c.codcontrol = new.numcompra;
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/03/2015 10:45:09 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_TITULO_RECEBER (
+    ANOVENDA smallint,
+    NUMVENDA integer,
+    EMPRESA varchar(18),
+    CLIENTE_COD integer,
+    CLIENTE_CNPJ varchar(18),
+    FORMA_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable FORMA_PAGTO_DESC varchar(30);
+begin
+  if ( Exists(
+    Select
+      r.Numlanc
+    from TBCONTREC r
+    where r.Anovenda = :Anovenda
+      and r.Numvenda = :Numvenda
+      and r.forma_pagto = :forma_pagto
+      and r.Parcela     = :Parcela
+  ) ) then
+    Exit;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anovenda;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2020, 1);
+
+  Insert Into TBCONTREC (
+      Anolanc
+    , numlanc
+    , Anovenda
+    , Numvenda
+    , Empresa
+    , Cliente
+    , Cnpj
+    , Tippag
+    , Forma_pagto
+    , Dtemiss
+    , Dtvenc
+    , Valorrec
+    , Parcela
+    , Percentjuros
+    , Percentmulta
+    , Percentdesconto
+    , Baixado
+    , Enviado
+    , Situacao
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Anovenda
+    , :Numvenda
+    , :Empresa
+    , :cliente_cod
+    , :cliente_cnpj
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , :Parcela
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 1
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/03/2015 10:45:51 --------*/
+
+CREATE INDEX IDX_TBCONTREC_PARCELA
+ON TBCONTREC (FORMA_PAGTO,PARCELA);
+
+
+
+
+/*------ SYSDBA 15/03/2015 10:46:02 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_TITULO_RECEBER (
+    ANOVENDA smallint,
+    NUMVENDA integer,
+    EMPRESA varchar(18),
+    CLIENTE_COD integer,
+    CLIENTE_CNPJ varchar(18),
+    FORMA_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable FORMA_PAGTO_DESC varchar(30);
+begin
+  if ( Exists(
+    Select
+      r.Numlanc
+    from TBCONTREC r
+    where r.Anovenda = :Anovenda
+      and r.Numvenda = :Numvenda
+      and r.forma_pagto = :forma_pagto
+      and r.Parcela     = :Parcela
+  ) ) then
+    Exit;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anovenda;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(Gen_contarec_num_2020, 1);
+
+  Insert Into TBCONTREC (
+      Anolanc
+    , numlanc
+    , Anovenda
+    , Numvenda
+    , Empresa
+    , Cliente
+    , Cnpj
+    , Tippag
+    , Forma_pagto
+    , Dtemiss
+    , Dtvenc
+    , Valorrec
+    , Parcela
+    , Percentjuros
+    , Percentmulta
+    , Percentdesconto
+    , Baixado
+    , Enviado
+    , Situacao
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Anovenda
+    , :Numvenda
+    , :Empresa
+    , :cliente_cod
+    , :cliente_cnpj
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , :Parcela
+    , 0
+    , 0
+    , 0
+    , 0
+    , 0
+    , 1
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 15/03/2015 10:46:36 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_DUPLICATA_PAGAR (
+    ANOCOMPRA smallint,
+    NUMCOMPRA integer,
+    FORNECEDOR integer,
+    NF integer,
+    FORMA_PAGTO smallint,
+    CONDICAO_PAGTO smallint,
+    EMISSAO date,
+    VENCIMENTO date,
+    VALOR_DOCUMENTO numeric(15,2),
+    PARCELA smallint,
+    TIPO_DESPESA smallint)
+returns (
+    ANOLANCAMENTO smallint,
+    NUMLANCAMENTO integer)
+as
+declare variable EMPRESA DMN_CNPJ;
+declare variable EMPRESA_NOME DMN_VCHAR_60;
+declare variable FORMA_PAGTO_DESC DMN_VCHAR_30;
+begin
+  if ( Exists(
+    Select
+      p.Numlanc
+    from TBCONTPAG p
+    where p.Anocompra = :Anocompra
+      and p.Numcompra = :Numcompra
+      and p.forma_pagto = :forma_pagto
+      and p.Parcela     = :Parcela
+  ) ) then
+    Exit;
+
+  -- Buscar o CNPJ da Empresa para se usar no lancamento da duplicata (Contas A Pagar)
+  Select first 1
+      c.codemp
+    , e.rzsoc
+  from TBCOMPRAS c
+    left join TBEMPRESA e on (e.cnpj = c.codemp)
+  where c.ano = :anocompra
+    and c.codcontrol = :numcompra
+  Into
+      Empresa
+    , Empresa_Nome;
+
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = :Forma_pagto
+  into
+    Forma_pagto_desc;
+
+  Anolancamento = :Anocompra;
+
+  if ( :Anolancamento = 2011 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2011, 1);
+  else
+  if ( :Anolancamento = 2012 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2012, 1);
+  else
+  if ( :Anolancamento = 2013 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2013, 1);
+  else
+  if ( :Anolancamento = 2014 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2014, 1);
+  else
+  if ( :Anolancamento = 2015 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2015, 1);
+  else
+  if ( :Anolancamento = 2016 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2016, 1);
+  else
+  if ( :Anolancamento = 2017 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2017, 1);
+  else
+  if ( :Anolancamento = 2018 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2018, 1);
+  else
+  if ( :Anolancamento = 2019 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2019, 1);
+  else
+  if ( :Anolancamento = 2020 ) then
+    Numlancamento = gen_id(GEN_CONTAPAG_NUM_2020, 1);
+
+  Insert Into TBCONTPAG (
+      Anolanc
+    , Numlanc
+    , Empresa
+    , NomeEmp
+    , Anocompra
+    , Numcompra
+    , Parcela
+    , Codforn
+    , Tippag
+    , Forma_pagto
+    , Condicao_pagto
+    , Codtpdesp
+    , Notfisc
+    , Dtemiss
+    , Dtvenc
+    , Valorpag
+    , ValorSaldo
+    , Quitado
+    , Situacao
+  ) values (
+      :Anolancamento
+    , :Numlancamento
+    , :Empresa
+    , substring(:Empresa_Nome from 1 for 40)
+    , :Anocompra
+    , :Numcompra
+    , :Parcela
+    , :Fornecedor
+    , :Forma_pagto_desc
+    , :Forma_pagto
+    , :Condicao_pagto
+    , :Tipo_Despesa
+    , :Nf
+    , :Emissao
+    , :Vencimento
+    , :Valor_documento
+    , :Valor_documento
+    , 0
+    , 1
+  );
+
+  suspend;
+end^
+
+SET TERM ; ^
+

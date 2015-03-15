@@ -291,6 +291,10 @@ type
     BrBtnQuitarAPagarLote: TdxBarLargeButton;
     BrBtnQuitarAReceberLote: TdxBarLargeButton;
     BrPpFinanceiroQuitarLote: TdxBarPopupMenu;
+    BrMngRelatorioCadastro: TdxBar;
+    BrBtnRelatorioCliente: TdxBarLargeButton;
+    BrBtnRelatorioFornecedor: TdxBarLargeButton;
+    BrBtnRelatorioProduto: TdxBarLargeButton;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -701,12 +705,16 @@ begin
 
   // (INICIO) Configurar Legendas de acordo com o segmento
 
+  BrBtnGrupoProduto.Caption     := 'Grupos de ' + StrDescricaoProduto;
+  BrBtnSecaoProduto.Caption     := 'Seções de ' + StrDescricaoProduto;
+  BrBtnTabelaProduto.Caption    := StrDescricaoProduto;
+  BrBtnProduto.Caption          := StrDescricaoProduto;
+  BrBtnRelatorioProduto.Caption := StrDescricaoProduto;
+
   nmGruposProduto.Caption    := 'Grupos de ' + StrDescricaoProduto;
   nmSecaoProduto.Caption     := 'Seções de ' + StrDescricaoProduto;
-  BrBtnTabelaProduto.Caption := StrDescricaoProduto;
   nmProduto.Caption          := StrDescricaoProduto;
   btnProduto.Caption         := StrDescricaoProduto;
-  BrBtnProduto.Caption       := StrDescricaoProduto;
   nmRelatorioProduto.Caption := StrDescricaoProduto;
   mnRelatorioEntradaProduto.Caption := StrDescricaoProduto;
 

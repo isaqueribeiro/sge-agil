@@ -4511,7 +4511,6 @@ object frmPrinc: TfrmPrinc
       Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
-      Active = True
       Caption = 'Financeiro'
       Groups = <
         item
@@ -4526,8 +4525,12 @@ object frmPrinc: TfrmPrinc
       Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
+      Active = True
       Caption = 'Relat'#243'rios'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngRelatorioCadastro'
+        end>
       Index = 7
     end
     object RbnTabAjuda: TdxRibbonTab
@@ -10965,8 +10968,10 @@ object frmPrinc: TfrmPrinc
       'Consultas'
       'Caixa'
       'Movimento Financeiro'
-      'Boleto Banc'#225'rio')
+      'Boleto Banc'#225'rio'
+      'Relat'#243'rios Cadastrais')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
@@ -10983,6 +10988,7 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -11486,6 +11492,34 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnQuitarLote'
         end>
       OneOnRow = False
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngRelatorioCadastro: TdxBar
+      Caption = 'Relat'#243'rios Cadastrais'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioCliente'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioFornecedor'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioProduto'
+        end>
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -12233,18 +12267,33 @@ object frmPrinc: TfrmPrinc
       Category = 14
       Hint = 'Gera'#231#227'o de Boletos'
       Visible = ivAlways
+      LargeImageIndex = 53
+      OnClick = nmGerarBoletoClick
+      HotImageIndex = 53
+      SyncImageIndex = False
+      ImageIndex = 53
     end
     object BrBtnGerarRemessaBoleto: TdxBarLargeButton
       Caption = 'Gerar Remessas de Boletos'
       Category = 14
       Hint = 'Gerar Remessas de Boletos'
       Visible = ivAlways
+      LargeImageIndex = 55
+      OnClick = nmRemessaBoletoClick
+      HotImageIndex = 55
+      SyncImageIndex = False
+      ImageIndex = 55
     end
     object BrBtnProcessarRetornoBoleto: TdxBarLargeButton
       Caption = 'Processar Retorno de Boletos'
       Category = 14
       Hint = 'Processar Retorno de Boletos'
       Visible = ivAlways
+      LargeImageIndex = 57
+      OnClick = nmRetornoBoletoClick
+      HotImageIndex = 57
+      SyncImageIndex = False
+      ImageIndex = 57
     end
     object BrBtnQuitarLote: TdxBarLargeButton
       Caption = 'Quitar Contas (Lote)'
@@ -12253,12 +12302,17 @@ object frmPrinc: TfrmPrinc
       Visible = ivAlways
       ButtonStyle = bsDropDown
       DropDownMenu = BrPpFinanceiroQuitarLote
+      LargeImageIndex = 59
+      HotImageIndex = 59
+      SyncImageIndex = False
+      ImageIndex = 59
     end
     object BrBtnQuitarAPagarLote: TdxBarLargeButton
       Caption = 'Quitar Contas A Pagar (Por Lote)'
       Category = 14
       Hint = 'Quitar Contas A Pagar (Por Lote)'
       Visible = ivAlways
+      OnClick = nmQuitarContaAPagar_LoteClick
     end
     object BrBtnQuitarAReceberLote: TdxBarLargeButton
       Caption = 'Quitar Contas A Receber (Por Lote)'
@@ -12266,6 +12320,39 @@ object frmPrinc: TfrmPrinc
       Enabled = False
       Hint = 'Quitar Contas A Receber (Por Lote)'
       Visible = ivAlways
+    end
+    object BrBtnRelatorioCliente: TdxBarLargeButton
+      Caption = 'Clientes'
+      Category = 15
+      Hint = 'Clientes'
+      Visible = ivAlways
+      LargeImageIndex = 60
+      OnClick = nmRelatorioClienteClick
+      HotImageIndex = 60
+      SyncImageIndex = False
+      ImageIndex = 60
+    end
+    object BrBtnRelatorioFornecedor: TdxBarLargeButton
+      Caption = 'Fornecedores'
+      Category = 15
+      Hint = 'Fornecedores'
+      Visible = ivAlways
+      LargeImageIndex = 61
+      OnClick = nmRelatorioFornecedorClick
+      HotImageIndex = 61
+      SyncImageIndex = False
+      ImageIndex = 61
+    end
+    object BrBtnRelatorioProduto: TdxBarLargeButton
+      Caption = 'Produtos'
+      Category = 15
+      Hint = 'Produtos'
+      Visible = ivAlways
+      LargeImageIndex = 62
+      OnClick = nmRelatorioProdutoClick
+      HotImageIndex = 62
+      SyncImageIndex = False
+      ImageIndex = 62
     end
   end
   object BrPpEntrada: TdxBarPopupMenu
