@@ -521,8 +521,8 @@ begin
     dbValorLimiteCompra.Enabled := False;
 
   tbsEstoqueSatelite.TabVisible := False;
-  GrpBxCustosOper.Enabled       := GetCalcularCustoOperEmpresa(GetEmpresaIDDefault);
-  dbEntregaFracionada.ReadOnly  := not GetEstoqueSateliteEmpresa(GetEmpresaIDDefault);
+  GrpBxCustosOper.Enabled       := GetCalcularCustoOperEmpresa(gUsuarioLogado.Empresa);
+  dbEntregaFracionada.ReadOnly  := not GetEstoqueSateliteEmpresa(gUsuarioLogado.Empresa);
 
   tbsDadosAdcionais.TabVisible := (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
   tbsCompra.TabVisible         := (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
@@ -779,7 +779,7 @@ begin
   { DONE 1 -oIsaque -cCliente : 16/05/2014 - Rotina para verificar a duplicidade de CPF/CNPJ (1) }
   
   if GetExisteCPF_CNPJ(IbDtstTabelaCODIGO.AsInteger, IbDtstTabelaCNPJ.AsString, iCodigo, sRazao) then
-    if not GetPermitirDuplicarCNPJCliente(GetEmpresaIDDefault) then
+    if not GetPermitirDuplicarCNPJCliente(gUsuarioLogado.Empresa) then
     begin
       ShowWarning('CPF/CNJP já cadastrado para o cliente ' + sRazao + ' ' + FormatFloat('"("###00000")."', iCodigo) );
       Abort;
@@ -1260,7 +1260,7 @@ end;
 
 procedure TfrmGeCliente.HabilitarAbaEstoque;
 begin
-  tbsEstoqueSatelite.TabVisible := GetEstoqueSateliteEmpresa(GetEmpresaIDDefault) and (IbDtstTabelaENTREGA_FRACIONADA_VENDA.AsInteger = 1)
+  tbsEstoqueSatelite.TabVisible := GetEstoqueSateliteEmpresa(gUsuarioLogado.Empresa) and (IbDtstTabelaENTREGA_FRACIONADA_VENDA.AsInteger = 1)
     and GetUserVisualizaEstoque;
 end;
 

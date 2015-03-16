@@ -234,7 +234,7 @@ begin
   IbDtstTabelaINSERCAO_DATA.Value    := GetDateDB;
   IbDtstTabelaINSERCAO_HORA.Value    := GetTimeDB;
   IbDtstTabelaINSERCAO_USUARIO.Value := GetUserApp;
-  IbDtstTabelaCODEMPRESA.Value       := GetEmpresaIDDefault;
+  IbDtstTabelaCODEMPRESA.Value       := gUsuarioLogado.Empresa;
   IbDtstTabelaDATA_MOVIMENTO.Value   := GetDateDB;
   IbDtstTabelaSITUACAO.AsInteger     := STATUS_REQ_ABR;
 

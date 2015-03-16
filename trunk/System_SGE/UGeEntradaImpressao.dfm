@@ -3967,7 +3967,9 @@ inherited frmGeEntradaImpressao: TfrmGeEntradaImpressao
             
               ' [FormatFloat('#39'###0000000'#39', <FrdsRelacaoEntradaGeralAnalitico."D' +
               'OCUMENTO_NUMERO">)]-[FrdsRelacaoEntradaGeralAnalitico."DOCUMENTO' +
-              '_SERIE"]')
+              '_SERIE"][IIF(<FrdsRelacaoEntradaGeralAnalitico."TIPO_DOCUMENTO">' +
+              '=0,'#39'*'#39',IIF(<FrdsRelacaoEntradaGeralAnalitico."TIPO_DOCUMENTO">=4' +
+              ','#39'*'#39','#39#39'))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -4125,6 +4127,21 @@ inherited frmGeEntradaImpressao: TfrmGeEntradaImpressao
           ParentFont = False
           VAlign = vaCenter
           WordWrap = False
+        end
+        object Memo9: TfrxMemoView
+          Top = 18.897650000000000000
+          Width = 544.252320000000000000
+          Height = 18.897650000000000000
+          ShowHint = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8 = (
+            ' * N'#195#186'mero de documento n'#195#163'o corresponde a uma Nota Fiscal')
+          ParentFont = False
         end
       end
       object BndGrpHeaderComp: TfrxGroupHeader

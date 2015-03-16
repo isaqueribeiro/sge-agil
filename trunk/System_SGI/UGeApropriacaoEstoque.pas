@@ -349,7 +349,7 @@ end;
 procedure TfrmGeApropriacaoEstoque.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaEMPRESA.Value          := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.Value          := gUsuarioLogado.Empresa;
   IbDtstTabelaINSERCAO_DATA.Value    := GetDateTimeDB;
   IbDtstTabelaDATA_APROPRIACAO.Value := GetDateDB;
   IbDtstTabelaUSUARIO.Value          := gUsuarioLogado.Login;
@@ -1068,7 +1068,7 @@ begin
   begin
 
     try
-      ConfigurarEmail(GetEmpresaIDDefault, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), 'Apropriação de Estoque', EmptyStr);
+      ConfigurarEmail(gUsuarioLogado.Empresa, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), 'Apropriação de Estoque', EmptyStr);
     except
     end;
 

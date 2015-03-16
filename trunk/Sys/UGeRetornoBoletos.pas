@@ -189,7 +189,7 @@ begin
   with IbQryBancos, edBanco do
   begin
     Close;
-    ParamByName('empresa').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
     Open;
     
     if ( not IsEmpty ) then
@@ -837,7 +837,7 @@ begin
     CxContaCorrente := 0;
     sTotalAPagar    := CdsTitulosTotalAPagar.AsString;
 
-    if ( not CaixaAberto(GetEmpresaIDDefault, GetUserApp, GetDateDB, edFormaPagto.Tag, CxAno, CxNumero, CxContaCorrente) ) then
+    if ( not CaixaAberto(gUsuarioLogado.Empresa, GetUserApp, GetDateDB, edFormaPagto.Tag, CxAno, CxNumero, CxContaCorrente) ) then
     begin
       ShowWarning('Não existe caixa aberto para o usuário na forma de pagamento BOLETO.');
       Exit;

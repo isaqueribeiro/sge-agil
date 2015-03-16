@@ -102,7 +102,7 @@ begin
   CampoCodigo     := 'nf.numero';
   CampoDescricao  := 'nf.chave';
   CampoOrdenacao  := 'nf.empresa, nf.serie, nf.numero';
-  WhereAdditional := 'nf.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ' and ' +
+  WhereAdditional := 'nf.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ' and ' +
     'nf.dataemissao between ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
@@ -126,7 +126,7 @@ end;
 
 procedure TfrmGeNFEmitida.btnFiltrarClick(Sender: TObject);
 begin
-  WhereAdditional := 'nf.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ' and ' +
+  WhereAdditional := 'nf.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ' and ' +
     'nf.dataemissao between ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );

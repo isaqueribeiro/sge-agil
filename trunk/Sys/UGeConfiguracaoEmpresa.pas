@@ -110,7 +110,7 @@ begin
 
   pgcConfigurar.ActivePage := tbsContaEmail;
 
-  dbAutorizacaoInformaCliente.Visible := (GetSegmentoID(GetEmpresaIDDefault) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID]);
+  dbAutorizacaoInformaCliente.Visible := (GetSegmentoID(gUsuarioLogado.Empresa) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID]);
 end;
 
 procedure TfrmGeConfiguracaoEmpresa.DtSrcTabelaStateChange(
@@ -176,7 +176,7 @@ end;
 procedure TfrmGeConfiguracaoEmpresa.IbDtstTabelaNewRecord(
   DataSet: TDataSet);
 begin
-  IbDtstTabelaEMPRESA.AsString            := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.AsString            := gUsuarioLogado.Empresa;
   IbDtstTabelaEMAIL_SMTP_PORTA.AsInteger  := PORTA_SMTP_PADRAO;
   IbDtstTabelaEMAIL_REQUER_AUTENTICACAO.AsInteger := 0;
   IbDtstTabelaEMAIL_CONEXAO_SSL.AsInteger         := 0;

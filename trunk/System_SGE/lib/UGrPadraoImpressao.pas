@@ -181,7 +181,7 @@ begin
   else
     edRelatorio.ItemIndex := -1;
 
-  DMNFe.AbrirEmitente( GetEmpresaIDDefault );
+  DMNFe.AbrirEmitente(GetEmpresaIDDefault);
 end;
 
 procedure TfrmGrPadraoImpressao.SetVariablesDefault(

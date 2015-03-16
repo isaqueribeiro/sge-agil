@@ -130,7 +130,7 @@ begin
   with qryEmpresa do
   begin
     Close;
-    ParamByName('cnpj').AsString := GetEmpresaIDDefault;
+    ParamByName('cnpj').AsString := gUsuarioLogado.Empresa;
     Open;
   end;
 
@@ -198,7 +198,7 @@ begin
       SQL.Add('  , v.lote_nfe_recibo as Recibo');
       SQL.Add('  , v.codcli          as Destinatario');
       SQL.Add('from TBVENDAS v');
-      SQL.Add('where v.codemp = ' + QuotedStr(GetEmpresaIDDefault));
+      SQL.Add('where v.codemp = ' + QuotedStr(gUsuarioLogado.Empresa));
 
       if (StrToIntDef(Trim(edAno.Text), 0) > 0) and (StrToIntDef(Trim(edNumeroLote.Text), 0) > 0) then
         SQL.Add('  and v.lote_nfe_ano = ' + Trim(edAno.Text) + ' and v.lote_nfe_numero = ' + Trim(edNumeroLote.Text));
@@ -219,7 +219,7 @@ begin
       SQL.Add('  , f.cnpj             as Destinatario');
       SQL.Add('from TBCOMPRAS c');
       SQL.Add('  left join TBFORNECEDOR f on (f.codforn = c.codforn)');
-      SQL.Add('where c.codemp = ' + QuotedStr(GetEmpresaIDDefault));
+      SQL.Add('where c.codemp = ' + QuotedStr(gUsuarioLogado.Empresa));
 
       if (StrToIntDef(Trim(edAno.Text), 0) > 0) and (StrToIntDef(Trim(edNumeroLote.Text), 0) > 0) then
         SQL.Add('  and c.lote_nfe_ano = ' + Trim(edAno.Text) + ' and c.lote_nfe_numero = ' + Trim(edNumeroLote.Text));
@@ -296,7 +296,7 @@ begin
 
     // Executar Consulta por Recibo para obter a Chave NF-e
 
-    if DMNFe.ConsultarNumeroLoteNFeACBr(GetEmpresaIDDefault, Trim(edNumeroRecibo.Text), sChaveNFE, sProtocoloTMP, sRetorno, dDataEnvio ) then
+    if DMNFe.ConsultarNumeroLoteNFeACBr(gUsuarioLogado.Empresa, Trim(edNumeroRecibo.Text), sChaveNFE, sProtocoloTMP, sRetorno, dDataEnvio ) then
     begin
 
       edChaveNFe.Text     := Trim(sChaveNFE);
@@ -312,7 +312,7 @@ begin
 
       // Executar Consulta por Chave NF-e para obter o arquivo e o Protocolo
 
-      if ( DMNFe.ConsultarChaveNFeACBr(GetEmpresaIDDefault, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
+      if ( DMNFe.ConsultarChaveNFeACBr(gUsuarioLogado.Empresa, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
         sDestinatarioCNPJ, sFileNameXML, sChaveNFE, sProtocoloNFE, dDataEmissao) ) then
       begin
         sMensagem := sMensagem + #13#13 + 'Arquivo a processar:' + #13#13 + sFileNameXML;
@@ -351,17 +351,17 @@ begin
 
       // Executar Consulta Lote e Consulta Chave NF-e
       
-      if DMNFe.ConsultarNumeroLoteNFeACBr(GetEmpresaIDDefault, Trim(edNumeroRecibo.Text), sChaveNFE, sRetorno ) then
+      if DMNFe.ConsultarNumeroLoteNFeACBr(gUsuarioLogado.Empresa, Trim(edNumeroRecibo.Text), sChaveNFE, sRetorno ) then
       begin
 
-        if ( DMNFe.ConsultarChaveNFeACBr(GetEmpresaIDDefault, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
+        if ( DMNFe.ConsultarChaveNFeACBr(gUsuarioLogado.Empresa, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
           sDestinatarioCNPJ, sFileNameXML, sChaveNFE, sProtocoloNFE, dDataEmissao) ) then
         begin
 
           with qryNFE do
           begin
             Close;
-            ParamByName('empresa').AsString      := GetEmpresaIDDefault;
+            ParamByName('empresa').AsString      := gUsuarioLogado.Empresa;
 
             ParamByName('tipo_compra').AsInteger := Ord(FTipoMovimento);
             ParamByName('anocompra').AsInteger   := iAnoMov;
@@ -376,7 +376,7 @@ begin
             begin
               Append;
 
-              qryNFEEMPRESA.Value := GetEmpresaIDDefault;
+              qryNFEEMPRESA.Value := gUsuarioLogado.Empresa;
               if ( FTipoMovimento = tmNFeEntrada ) then
               begin
                 qryNFEANOCOMPRA.AsInteger := iAnoMov;

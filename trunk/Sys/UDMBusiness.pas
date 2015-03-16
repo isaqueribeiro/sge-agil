@@ -227,7 +227,7 @@ var
   function GetFormaPagtoIDDefault : Integer;
   function GetCondicaoPagtoIDDefault : Integer;
   function GetEstacaoEmitiBoleto : Boolean;
-  function GetEstacaoEmitiNFe : Boolean;
+  function GetEstacaoEmitiNFe(const sCNPJEmpresa : String) : Boolean;
   function GetCondicaoPagtoIDBoleto_Descontinuada : Integer;  // Descontinuada
   function GetEmitirApenasOrcamento : Boolean;
   function GetEmitirCupom : Boolean;
@@ -1316,19 +1316,19 @@ begin
   Result := FileINI.ReadBool('Boleto', 'EmitirBoleto', False);
 end;
 
-function GetEstacaoEmitiNFe : Boolean;
+function GetEstacaoEmitiNFe(const sCNPJEmpresa : String) : Boolean;
 Var
   sPrefixoSecao     ,
   sSecaoCertificado : String;
 begin
   if ( GetQuantidadeEmpresasEmiteNFe > 1 ) then
-    sPrefixoSecao := Trim(GetEmpresaIDDefault) + '_'
+    sPrefixoSecao := Trim(sCNPJEmpresa) + '_'
   else
     sPrefixoSecao := EmptyStr;
 
   sSecaoCertificado := sPrefixoSecao + INI_SECAO_CERTIFICADO;
 
-  Result := GetPermititEmissaoNFe(GetEmpresaIDDefault) and (Trim(FileINI.ReadString(sSecaoCertificado, 'NumSerie', EmptyStr)) <> EmptyStr);
+  Result := GetPermititEmissaoNFe(sCNPJEmpresa) and (Trim(FileINI.ReadString(sSecaoCertificado, 'NumSerie', EmptyStr)) <> EmptyStr);
 end;
 
 function GetCondicaoPagtoIDBoleto_Descontinuada : Integer; // Descontinuada
@@ -1830,7 +1830,7 @@ begin
   try
     S := 'Produtos';
 
-    Case GetSegmentoID(GetEmpresaIDDefault)  of
+    Case GetSegmentoID(gUsuarioLogado.Empresa)  of
       SEGMENTO_MERCADO_CARRO_ID:
         S := 'Veículos';
       SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID:
@@ -2203,7 +2203,10 @@ begin
     SQL.Add('  , e.uf');
     SQL.Add('  , e.cep');
     SQL.Add('from TBEMPRESA e');
-    SQL.Add('where e.cnpj = ' + QuotedStr(GetEmpresaIDDefault));
+    if Trim(sCNPJEmitente) = EmptyStr then
+      SQL.Add('where e.cnpj = ' + QuotedStr(GetEmpresaIDDefault))
+    else
+      SQL.Add('where e.cnpj = ' + QuotedStr(sCNPJEmitente));
     Open;
 
     Result := Trim(FieldByName('ender').AsString) + ', No. ' + Trim(FieldByName('numero_end').AsString) +

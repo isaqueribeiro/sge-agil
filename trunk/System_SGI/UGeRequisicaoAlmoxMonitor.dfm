@@ -5,8 +5,6 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
   Height = 724
   BorderWidth = 4
   Caption = 'Monitor de Requisi'#231#245'es de Materiais'
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   OnActivate = FormActivate
   OnClose = FormClose
   PixelsPerInch = 96

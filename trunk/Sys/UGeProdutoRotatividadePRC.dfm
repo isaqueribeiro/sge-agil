@@ -5,8 +5,6 @@ inherited FrmGeProdutoRotatividadePRC: TFrmGeProdutoRotatividadePRC
   Height = 628
   ActiveControl = edTipoProcesso
   Caption = 'Rotatividade de Produtos'
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   OldCreateOrder = True
   WindowState = wsMaximized
   DesignSize = (

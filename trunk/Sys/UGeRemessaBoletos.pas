@@ -205,7 +205,7 @@ begin
   with IbQryBancos, edBanco do
   begin
     Close;
-    ParamByName('empresa').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
     Open;
     
     if ( not IsEmpty ) then
@@ -352,7 +352,7 @@ begin
   with CdsTitulos, Params do
   begin
     Close;
-    ParamByName('empresa').AsString   := GetEmpresaIDDefault;
+    ParamByName('empresa').AsString   := gUsuarioLogado.Empresa;
     ParamByName('banco').Value        := iBanco;
     ParamByName('dataInicial').AsDate := DataInicial;
     ParamByName('dataFinal').AsDate   := DataFinal;

@@ -113,7 +113,7 @@ begin
   with qryEmpresa do
   begin
     Close;
-    SQL.Add('where e.cnpj = ' + QuotedStr(GetEmpresaIDDefault));
+    SQL.Add('where e.cnpj = ' + QuotedStr(gUsuarioLogado.Empresa));
     Open;
   end;
 
@@ -272,7 +272,7 @@ var
   sNome      : String;
 begin
   if ( qryAjuste.State in [dsEdit, dsInsert] ) then
-    if SelecionarProdutoParaAjuste(Self, GetEmpresaIDDefault, iCodigo, sCodigoAlfa, sNome) then
+    if SelecionarProdutoParaAjuste(Self, gUsuarioLogado.Empresa, iCodigo, sCodigoAlfa, sNome) then
       CarregarDadosProduto( sCodigoAlfa );
 end;
 

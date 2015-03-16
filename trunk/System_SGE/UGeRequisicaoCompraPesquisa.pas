@@ -170,7 +170,7 @@ begin
 
     with CdsPesquisa, Params do
     begin
-      ParamByName('empresa').AsString := GetEmpresaIDDefault;
+      ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
       ParamByName('tipo').AsInteger   := GetTipoRequisicao;
       ParamByName('data_inicial').AsDateTime := e1Data.Date;
       ParamByName('data_final').AsDateTime   := e2Data.Date;
@@ -368,12 +368,12 @@ begin
       cdsAutorizacaoANO.AsInteger    := iAno;
       cdsAutorizacaoCODIGO.AsInteger := iNum;
       cdsAutorizacaoNUMERO.AsString  := FormatFloat('##0000000', cdsAutorizacaoCODIGO.AsInteger) + '/' + Copy(cdsAutorizacaoANO.AsString, 3, 2);
-      cdsAutorizacaoEMPRESA.Value    := GetEmpresaIDDefault;
+      cdsAutorizacaoEMPRESA.Value    := gUsuarioLogado.Empresa;
       cdsAutorizacaoTIPO.Value       := GetTipoRequisicao;
       cdsAutorizacaoINSERCAO_DATA.Value    := GetDateTimeDB;
       cdsAutorizacaoEMISSAO_DATA.Value     := GetDateDB;
       cdsAutorizacaoEMISSAO_USUARIO.Value  := gUsuarioLogado.Login;
-      cdsAutorizacaoVALIDADE.Value         := cdsAutorizacaoEMISSAO_DATA.Value + GetPrazoValidadeAutorizacaoCompra(GetEmpresaIDDefault);
+      cdsAutorizacaoVALIDADE.Value         := cdsAutorizacaoEMISSAO_DATA.Value + GetPrazoValidadeAutorizacaoCompra(gUsuarioLogado.Empresa);
       cdsAutorizacaoSTATUS.AsInteger       := STATUS_AUTORIZACAO_EDC;
 
       cdsAutorizacaoFORNECEDOR.AsInteger     := edFornecedor.Tag;

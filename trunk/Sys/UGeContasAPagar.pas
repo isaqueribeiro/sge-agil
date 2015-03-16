@@ -203,7 +203,7 @@ begin
   frm := TfrmGeContasAPagar.Create(AOwner);
   try
     whr :=
-      '(p.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ')' +
+      '(p.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ')' +
       ' and (cast(p.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', frm.e1Data.Date) ) +
       ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', frm.e2Data.Date) ) + ')';
 
@@ -249,7 +249,7 @@ begin
   CampoOrdenacao := 'p.dtvenc, f.NomeForn';
 
   WhereAdditional :=
-    '(p.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ')' +
+    '(p.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ')' +
     ' and (cast(p.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) +
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
 
@@ -276,7 +276,7 @@ end;
 procedure TfrmGeContasAPagar.btnFiltrarClick(Sender: TObject);
 begin
   WhereAdditional :=
-    '(p.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ')' +
+    '(p.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ')' +
     ' and (cast(p.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) +
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
 
@@ -301,8 +301,8 @@ procedure TfrmGeContasAPagar.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
   IbDtstTabelaANOLANC.Value := YearOf(Date);
-  IbDtstTabelaEMPRESA.Value := GetEmpresaIDDefault;
-  IbDtstTabelaNOMEEMP.Value := GetEmpresaNomeDefault;
+  IbDtstTabelaEMPRESA.Value := gUsuarioLogado.Empresa;
+  IbDtstTabelaNOMEEMP.Value := GetEmpresaNome(gUsuarioLogado.Empresa);
   IbDtstTabelaPARCELA.Value := 0;
   IbDtstTabelaDTEMISS.Value := Date;
   IbDtstTabelaQUITADO.Value := STATUS_APAGAR_PENDENTE;

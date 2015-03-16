@@ -86,7 +86,7 @@ begin
   with cdsCompetencia do
   begin
     Close;
-    ParamByName('empresa').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
     Open;
 
     edCompetencia.Items.Clear;
@@ -121,7 +121,7 @@ begin
 
   Arquivo  := TStringList.Create;
   sArquivo := edDiretorioExportacao.Text +
-    GetEmpresaIDDefault + '_' +
+    gUsuarioLogado.Empresa + '_' +
     StringReplace(StringReplace(edCompetencia.Text, '/', '-', [rfReplaceAll]), '\', '-', [rfReplaceAll]) +
     '.txt';
 
@@ -213,7 +213,7 @@ begin
       ParamByName('data_inicial').AsDate    := edDataInicial.Date;
       ParamByName('data_final').AsDate      := edDataFinal.Date;
       ParamByName('tipo_arquivo').AsInteger := TipoArquivo;
-      ParamByName('empresa').AsString       := GetEmpresaIDDefault;
+      ParamByName('empresa').AsString       := gUsuarioLogado.Empresa;
       ParamByName('status_venda').AsInteger := STATUS_VND_NFE;
 
       Open;

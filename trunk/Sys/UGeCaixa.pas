@@ -802,7 +802,7 @@ begin
     with qryEmitente do
     begin
       Close;
-      ParamByName('Cnpj').AsString := GetEmpresaIDDefault;
+      ParamByName('Cnpj').AsString := gUsuarioLogado.Empresa;
       Open;
     end;
 
@@ -833,7 +833,7 @@ begin
     with qryEmitente do
     begin
       Close;
-      ParamByName('Cnpj').AsString := IfThen(Trim(IbDtstTabelaEMPRESA.AsString) = EmptyStr, GetEmpresaIDDefault, Trim(IbDtstTabelaEMPRESA.AsString));
+      ParamByName('Cnpj').AsString := IfThen(Trim(IbDtstTabelaEMPRESA.AsString) = EmptyStr, gUsuarioLogado.Empresa, Trim(IbDtstTabelaEMPRESA.AsString));
       Open;
     end;
 

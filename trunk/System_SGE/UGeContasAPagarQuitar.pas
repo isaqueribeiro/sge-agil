@@ -119,7 +119,7 @@ begin
     begin
       SQL.Clear;
       SQL.AddStrings( SQLSelect );
-      SQL.Add('where c.empresa  = ' + QuotedStr(GetEmpresaIDDefault));
+      SQL.Add('where c.empresa  = ' + QuotedStr(gUsuarioLogado.Empresa));
       SQL.Add('  and c.situacao = 1');    // Situação Ativa
       SQL.Add('  and c.quitado  = 0');    // Não quitados
       SQL.Add('  and c.dtvenc between ' + QuotedStr(sDataInicial) + ' and ' + QuotedStr(sDataFinal));
@@ -254,7 +254,7 @@ begin
     CdsPesquisa.DisableControls;
     CdsPesquisa.First;
 
-    if ( not CaixaAberto(GetEmpresaIDDefault, GetUserApp, GetDateDB, cdsPagamentoLOTEFormaPagto.AsInteger, CxAno, CxNumero, CxContaCorrente) ) then
+    if ( not CaixaAberto(gUsuarioLogado.Empresa, GetUserApp, GetDateDB, cdsPagamentoLOTEFormaPagto.AsInteger, CxAno, CxNumero, CxContaCorrente) ) then
     begin
       ShowWarning('Não existe caixa aberto para o usuário na forma de pagamento desta quitação.');
       Exit;

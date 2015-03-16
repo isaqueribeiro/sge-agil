@@ -628,7 +628,7 @@ begin
   with IbQryBancos, cmbBanco do
   begin
     Close;
-    ParamByName('empresa').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
     Open;
     
     if ( not IsEmpty ) then

@@ -6,8 +6,6 @@ inherited frmGeExportarNFC: TfrmGeExportarNFC
   Caption = 'Gerar Arquivo NFC (Nota Fiscal Cidad'#227')'
   ClientHeight = 223
   ClientWidth = 531
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel8: TBevel

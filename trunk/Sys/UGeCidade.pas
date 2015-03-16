@@ -131,7 +131,7 @@ begin
 
   UpdateGenerator;
 
-  GrpBxCustosOper.Enabled := GetCalcularCustoOperEmpresa(GetEmpresaIDDefault);
+  GrpBxCustosOper.Enabled := GetCalcularCustoOperEmpresa(gUsuarioLogado.Empresa);
 end;
 
 procedure TfrmGeCidade.dbEstadoButtonClick(Sender: TObject);
