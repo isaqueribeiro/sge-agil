@@ -588,7 +588,7 @@ begin
   btnConsultarProduto.Hint    := 'Consultar ' + StrDescricaoProduto;
 
   RdgStatusVenda.Controls[2].Enabled := False;
-  btbtnGerarNFe.Visible              := GetEstacaoEmitiNFe and (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
+  btbtnGerarNFe.Visible              := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
 
   if GetUserPermitirAlterarValorVenda then
   begin

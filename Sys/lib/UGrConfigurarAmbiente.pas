@@ -181,7 +181,7 @@ begin
   edCFOPEntradaNome.Text := GetCfopNome( StrToIntDef(edCFOPEntrada.Text, 0) );
   edCFOPSaidaNome.Text   := GetCfopNome( StrToIntDef(edCFOPSaida.Text, 0) );
 
-  chkCarregarPeloEAN.Checked := FileINI.ReadBool  (INI_SECAO_VENDA, INI_KEY_CODIGO_EAN, GetCarregarProdutoCodigoBarra(GetEmpresaIDDefault));
+  chkCarregarPeloEAN.Checked := FileINI.ReadBool  (INI_SECAO_VENDA, INI_KEY_CODIGO_EAN, GetCarregarProdutoCodigoBarra(gUsuarioLogado.Empresa));
   edNumeroCaixa.Text         := FileINI.ReadString(INI_SECAO_VENDA, INI_KEY_NUMERO_CAIXA, '1');
 
   // PDV

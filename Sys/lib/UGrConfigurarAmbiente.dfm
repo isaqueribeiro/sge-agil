@@ -6,8 +6,6 @@ inherited frmGrConfigurarAmbiente: TfrmGrConfigurarAmbiente
   Caption = 'Configurar Ambiente (Esta'#231#227'o)'
   ClientHeight = 534
   ClientWidth = 498
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   PixelsPerInch = 96
   TextHeight = 13
   object PnlBotoes: TPanel

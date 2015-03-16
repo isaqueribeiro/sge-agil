@@ -342,7 +342,6 @@ end;
 procedure TfrmGeEntradaImpressao.edRelatorioChange(Sender: TObject);
 begin
   inherited;
-  chkNFInformada.Enabled := not (edRelatorio.ItemIndex = REPORT_RELACAO_ENTRADA_NOTA_FISCAL);
   chkNFInformada.Checked := (edRelatorio.ItemIndex = REPORT_RELACAO_ENTRADA_NOTA_FISCAL);
 end;
 

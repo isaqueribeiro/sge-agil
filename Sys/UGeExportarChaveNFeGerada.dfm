@@ -6,8 +6,6 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
   Caption = 'Exportar Chaves de NF-e Geradas'
   ClientHeight = 367
   ClientWidth = 531
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel8: TBevel

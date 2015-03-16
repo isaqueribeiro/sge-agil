@@ -470,10 +470,10 @@ begin
   if ( GetUserFunctionID <> FUNCTION_USER_ID_SYSTEM_ADM ) then
     ShowInformation('Usuário sem permissão de acesso para esta rotina.' + #13 + 'Favor entrar em contato com suporte.')
   else
-  if not GetPermititEmissaoNFe( GetEmpresaIDDefault ) then
+  if not GetPermititEmissaoNFe( gUsuarioLogado.Empresa ) then
     ShowInformation('Empresa selecionada não habilitada para emissão de NF-e.' + #13 + 'Favor entrar em contato com suporte.')
   else
-    ConfigurarNFeACBr( GetEmpresaIDDefault );
+    ConfigurarNFeACBr( gUsuarioLogado.Empresa );
 end;
 
 procedure TfrmPrinc.nmTipoDespesaClick(Sender: TObject);
@@ -499,7 +499,7 @@ begin
 
   Self.WindowState := wsMaximized;
 
-  nmRequisicaoCliente.Enabled := GetEstoqueSateliteEmpresa( GetEmpresaIDDefault );
+  nmRequisicaoCliente.Enabled := GetEstoqueSateliteEmpresa( gUsuarioLogado.Empresa );
 
   if GetUserUpdatePassWord then
     nmUsuarioAlterarSenhaClick( nmUsuarioAlterarSenha );
@@ -583,8 +583,8 @@ begin
   nmRelatorioProduto.Caption := StrDescricaoProduto;
   mnRelatorioEntradaProduto.Caption := StrDescricaoProduto;
 
-  nmRequisicaoCliente.Visible     := (GetSegmentoID(GetEmpresaIDDefault) <= SEGMENTO_VAREJO_SERVICOS_ID);
-  nmCotacaoCompra.Visible         := (GetSegmentoID(GetEmpresaIDDefault) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID]);
+  nmRequisicaoCliente.Visible     := (GetSegmentoID(gUsuarioLogado.Empresa) <= SEGMENTO_VAREJO_SERVICOS_ID);
+  nmCotacaoCompra.Visible         := (GetSegmentoID(gUsuarioLogado.Empresa) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID]);
   nmRequisicaoCompra.Visible      := nmCotacaoCompra.Visible;
   nmConverterReqAutCompra.Visible := nmCotacaoCompra.Visible;
   nmAutorizacaoCompra.Visible     := nmCotacaoCompra.Visible;
@@ -700,6 +700,9 @@ end;
 
 procedure TfrmPrinc.nmInutilizarNumeroNFeClick(Sender: TObject);
 begin
+  if not GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) then
+    ShowWarning('Certificado não configurado nesta estação de trabalho para que esta rotina seja executada!')
+  else
   if GetPermissaoRotinaSistema(ROTINA_NFE_INUTILIZAR_NRO_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeInutilizarNumeroNFe');
 end;
@@ -720,6 +723,9 @@ end;
 
 procedure TfrmPrinc.nmConsultarLoteNFeClick(Sender: TObject);
 begin
+  if not GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) then
+    ShowWarning('Certificado não configurado nesta estação de trabalho para que esta rotina seja executada!')
+  else
   if GetPermissaoRotinaSistema(ROTINA_NFE_CONSULTA_RECIBO_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeConsultarLoteNFe_v2');
 end;
@@ -806,9 +812,9 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_NFE_GERAR_ARQUI_NFC_ID, Trim(nmGerarArquivoNFC.Caption),        ROTINA_MENU_NOTAFISCAL_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_NFE_DOWNLOAD_NFE_ID,    Trim(nmDownloadNFeGerada.Caption),      ROTINA_MENU_NOTAFISCAL_ID);
 
-  nmInutilizarNumeroNFe.Enabled := GetEstacaoEmitiNFe;
-  nmConsultarLoteNFe.Enabled    := GetEstacaoEmitiNFe;
-  nmCartaCorrecaoNFe.Enabled    := GetEstacaoEmitiNFe;
+  nmInutilizarNumeroNFe.Enabled := GetEstacaoEmitiNFe(GetEmpresaIDDefault);
+  nmConsultarLoteNFe.Enabled    := GetEstacaoEmitiNFe(GetEmpresaIDDefault);
+  nmCartaCorrecaoNFe.Enabled    := GetEstacaoEmitiNFe(GetEmpresaIDDefault);
 
   // Consultas
 
@@ -957,6 +963,9 @@ end;
 
 procedure TfrmPrinc.nmCartaCorrecaoNFeClick(Sender: TObject);
 begin
+  if not GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) then
+    ShowWarning('Certificado não configurado nesta estação de trabalho para que esta rotina seja executada!')
+  else
   if GetPermissaoRotinaSistema(ROTINA_NFE_CARTA_CORRECAO_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeCartaCorrecao');
 end;

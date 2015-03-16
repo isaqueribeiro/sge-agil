@@ -442,7 +442,7 @@ begin
 
   UpdateGenerator( 'where ano = ' + FormatFloat('0000', YearOf(Date)) );
 
-  lblCliente.Visible := GetAutorizacaoInformarCliente( GetEmpresaIDDefault );
+  lblCliente.Visible := GetAutorizacaoInformarCliente( gUsuarioLogado.Empresa );
   dbCliente.Visible  := lblCliente.Visible;
 end;
 
@@ -458,7 +458,7 @@ end;
 procedure TfrmGeAutorizacaoCompra.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaEMPRESA.Value          := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.Value          := gUsuarioLogado.Empresa;
   IbDtstTabelaTIPO.Value             := TIPO_AUTORIZACAO_COMPRA;
   IbDtstTabelaINSERCAO_DATA.Value    := GetDateTimeDB;
   IbDtstTabelaEMISSAO_DATA.Value     := GetDateDB;
@@ -1207,7 +1207,7 @@ begin
   begin
 
     try
-      ConfigurarEmail(GetEmpresaIDDefault, GetFornecedorEmail(IbDtstTabelaFORNECEDOR.AsInteger), dbTipo.Text, EmptyStr);
+      ConfigurarEmail(gUsuarioLogado.Empresa, GetFornecedorEmail(IbDtstTabelaFORNECEDOR.AsInteger), dbTipo.Text, EmptyStr);
     except
     end;
 

@@ -446,7 +446,7 @@ end;
 procedure TfrmGeCotacaoCompra.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaEMPRESA.Value             := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.Value             := gUsuarioLogado.Empresa;
   IbDtstTabelaTIPO.Value                := TIPO_COTACAO_COMPRA;
   IbDtstTabelaINSERCAO_DATA.Value       := GetDateTimeDB;
   IbDtstTabelaEMISSAO_DATA.Value        := GetDateDB;
@@ -1132,7 +1132,7 @@ begin
   begin
 
     try
-      ConfigurarEmail(GetEmpresaIDDefault, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), dbTipo.Text, EmptyStr);
+      ConfigurarEmail(gUsuarioLogado.Empresa, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), dbTipo.Text, EmptyStr);
     except
     end;
 
@@ -1484,7 +1484,7 @@ begin
   begin
 
     try
-      ConfigurarEmail(GetEmpresaIDDefault, GetEmailEmpresa(qryFornecedorEMPRESA.AsString), dbTipo.Text, EmptyStr);
+      ConfigurarEmail(gUsuarioLogado.Empresa, GetEmailEmpresa(qryFornecedorEMPRESA.AsString), dbTipo.Text, EmptyStr);
     except
     end;
 
@@ -1657,7 +1657,7 @@ begin
     begin
 
       try
-        ConfigurarEmail(GetEmpresaIDDefault, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), dbTipo.Text, EmptyStr);
+        ConfigurarEmail(gUsuarioLogado.Empresa, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), dbTipo.Text, EmptyStr);
       except
       end;
 

@@ -76,7 +76,7 @@ begin
     begin
       SQL.Clear;
       SQL.AddStrings( SQLSelect );
-      SQL.Add('where v.codemp = ' + QuotedStr(GetEmpresaIDDefault));
+      SQL.Add('where v.codemp = ' + QuotedStr(gUsuarioLogado.Empresa));
       SQL.Add('  and v.status in (3, 4)');
       SQL.Add('  and v.dtvenda between ' + QuotedStr(sDataInicial) + ' and ' + QuotedStr(sDataFinal));
 

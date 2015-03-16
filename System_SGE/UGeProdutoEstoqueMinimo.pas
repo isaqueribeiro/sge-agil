@@ -302,7 +302,7 @@ procedure TFrmGeProdutoEstoqueMinimo.ExecutarPesquisa(
 var
   sWhr : String;
 begin
-  sWhr := '(p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+  sWhr := '(p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
 
   CdsTotal.Close;
   with QryTotal do
@@ -458,7 +458,7 @@ procedure TFrmGeProdutoEstoqueMinimo.dbgGrupoTblDblClick(Sender: TObject);
 var
   sWhr : String;
 begin
-  sWhr := '(p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+  sWhr := '(p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
 
   Case edTipoFiltro.ItemIndex of
     TIPO_GRP:
@@ -492,7 +492,7 @@ procedure TFrmGeProdutoEstoqueMinimo.dbgFabTblDblClick(Sender: TObject);
 var
   sWhr : String;
 begin
-  sWhr := '(p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+  sWhr := '(p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
 
   Case edTipoFiltro.ItemIndex of
     TIPO_FAB:
@@ -588,7 +588,7 @@ begin
       end;
   end;
 
-  sEmailTo := GetEmailEmpresa(GetEmpresaIDDefault);
+  sEmailTo := GetEmailEmpresa(gUsuarioLogado.Empresa);
   if not InputQuery('Enviar e-mail', 'Favor informar e-mail do destinatário:', sEmailTo) then
     Exit;
 
@@ -623,7 +623,7 @@ begin
   try
     try
       sAssunto := FormatDateTime('dd/mm/yyyy', Date) + ' - Alerta de Estoque Mínimo (' + edTipoFiltro.Text + ')';;
-      CarregarConfiguracoesEmpresa(GetEmpresaIDDefault, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
+      CarregarConfiguracoesEmpresa(gUsuarioLogado.Empresa, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
 
       smtpEmail.Username    := gContaEmail.Conta;
       smtpEmail.Password    := gContaEmail.Senha;

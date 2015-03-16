@@ -1,7 +1,7 @@
 object frmGrUsuarioAlterarSenha: TfrmGrUsuarioAlterarSenha
   Left = 388
   Top = 221
-  ActiveControl = dbNome
+  ActiveControl = dbSenhaAtual
   BorderStyle = bsDialog
   Caption = 'Altera'#231#227'o de Senha'
   ClientHeight = 187
@@ -48,6 +48,7 @@ object frmGrUsuarioAlterarSenha: TfrmGrUsuarioAlterarSenha
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      Transparent = True
     end
     object lblSenhaNova: TLabel
       Left = 38
@@ -63,6 +64,7 @@ object frmGrUsuarioAlterarSenha: TfrmGrUsuarioAlterarSenha
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      Transparent = True
     end
     object lblSenhaConfirmar: TLabel
       Left = 15
@@ -78,6 +80,7 @@ object frmGrUsuarioAlterarSenha: TfrmGrUsuarioAlterarSenha
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      Transparent = True
     end
     object lblSenhaAtual: TLabel
       Left = 35
@@ -93,6 +96,7 @@ object frmGrUsuarioAlterarSenha: TfrmGrUsuarioAlterarSenha
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
+      Transparent = True
     end
     object dbNome: TDBEdit
       Left = 122

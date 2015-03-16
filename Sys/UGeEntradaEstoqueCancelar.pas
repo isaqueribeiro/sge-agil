@@ -168,7 +168,7 @@ begin
           Exit;
         end;
 
-        if not GetEstacaoEmitiNFe then
+        if not GetEstacaoEmitiNFe(cdsEntradaCODEMP.AsString) then
         begin
           ShowWarning('Estação de trabalho não habilitada para cancelar Entrada/NFe!');
           Exit;

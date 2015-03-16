@@ -131,7 +131,7 @@ var
 begin
   frm := TfrmGeBancos.Create(AOwner);
   try
-    // frm.WhereAdditional := '(b.Empresa = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+    // frm.WhereAdditional := '(b.Empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
     Result := frm.SelecionarRegistro(Codigo, Nome);
   finally
     frm.Destroy;
@@ -144,7 +144,7 @@ var
 begin
   frm := TfrmGeBancos.Create(AOwner);
   try
-    // frm.WhereAdditional := '(b.Empresa = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+    // frm.WhereAdditional := '(b.Empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
     Result := frm.SelecionarRegistro(Codigo, Nome);
     if ( Result ) then
     begin
@@ -174,7 +174,7 @@ end;
 procedure TfrmGeBancos.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaEMPRESA.AsString            := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.AsString            := gUsuarioLogado.Empresa;
   IbDtstTabelaBCO_GERAR_BOLETO.Value      := 0;
   IbDtstTabelaBCO_NOSSO_NUM_INICIO.Value  := FormatFloat('0000000', 1);
   IbDtstTabelaBCO_NOSSO_NUM_FINAL.Value   := FormatFloat('0000000', 999999);

@@ -558,7 +558,7 @@ begin
     Application.ProcessMessages;
 
     CdsListaProduto.Close;
-    CdsListaProduto.Params.ParamByName('empresa').AsString := GetEmpresaIDDefault;
+    CdsListaProduto.Params.ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
     CdsListaProduto.Open;
 
     gagProcesso.MaxValue := CdsListaProduto.RecordCount;
@@ -626,7 +626,7 @@ procedure TFrmGeProdutoRotatividadePRC.ExecutarPesquisa(
 var
   sWhr : String;
 begin
-  sWhr := 'where (p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ') and (p.qtde > 0)';
+  sWhr := 'where (p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ') and (p.qtde > 0)';
 
   Case edTipoFiltro.ItemIndex of
     1 : sWhr := sWhr + ' and (r.movimentado = 1)';
@@ -854,7 +854,7 @@ procedure TFrmGeProdutoRotatividadePRC.dbgGrupoTblDblClick(Sender: TObject);
 var
   sWhr : String;
 begin
-  sWhr := 'where (p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+  sWhr := 'where (p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
 
   Case edTipoFiltro.ItemIndex of
     1 : sWhr := sWhr + ' and (r.movimentado = 1)';
@@ -934,7 +934,7 @@ procedure TFrmGeProdutoRotatividadePRC.dbgFabTblDblClick(Sender: TObject);
 var
   sWhr : String;
 begin
-  sWhr := 'where (p.codemp = ' + QuotedStr(GetEmpresaIDDefault) + ')';
+  sWhr := 'where (p.codemp = ' + QuotedStr(gUsuarioLogado.Empresa) + ')';
 
   Case edTipoFiltro.ItemIndex of
     1 : sWhr := sWhr + ' and (r.movimentado = 1)';
@@ -1044,7 +1044,7 @@ begin
   try
     try
       sAssunto := FormatDateTime('dd/mm/yyyy', Date) + ' - Rotatividade de Produtos (' + edTipoProcesso.Text + ')';;
-      CarregarConfiguracoesEmpresa(GetEmpresaIDDefault, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
+      CarregarConfiguracoesEmpresa(gUsuarioLogado.Empresa, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
 
       smtpEmail.Username    := gContaEmail.Conta;
       smtpEmail.Password    := gContaEmail.Senha;

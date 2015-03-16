@@ -12,7 +12,7 @@ uses
   cxDataStorage, cxEdit, DB, cxDBData, StdCtrls, IdIOHandler,
   IdIOHandlerSocket, IdSSLOpenSSL, IdMessage, IdBaseComponent, IdComponent,
   IdTCPConnection, IdTCPClient, IdMessageClient, IdSMTP, IBStoredProc,
-  DBClient, Provider, IBCustomDataSet, IBQuery, DBCtrls, Gauges, ToolWin,
+  DBClient, Provider, IBCustomDataSet, IBQuery, DBCtrls, Gauges, 
   cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridBandedTableView, cxGridDBBandedTableView, cxClasses,
   cxGridCustomView, cxGrid, Buttons, cxLookAndFeels, cxButtons,
@@ -34,10 +34,6 @@ type
     edTipoFiltro: TComboBox;
     lblCentroCusto: TLabel;
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
-    btBtnExportar: TcxButton;
-    btBtnEnviarEmail: TcxButton;
     Bevel3: TBevel;
     svdArquivo: TSaveDialog;
     smtpEmail: TIdSMTP;
@@ -99,14 +95,18 @@ type
     dbgProdutoTblFABRICANTE_NOME: TcxGridDBBandedColumn;
     dbgProdutoTblESTOQUE: TcxGridDBBandedColumn;
     dbgProdutoLvl: TcxGridLevel;
-    btbtnSelecionar: TcxButton;
-    BvlSeparadorBotacao: TBevel;
     dbgProdutoTblPERCENTUAL: TcxGridDBBandedColumn;
     dbgFabTblPERCENTUAL: TcxGridDBBandedColumn;
     dbgGrupoTblPERCENTUAL: TcxGridDBBandedColumn;
     chkProdutoComEstoque: TCheckBox;
-    btBtnAtualizarCusto: TcxButton;
     edCentroCusto: TJvComboEdit;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
+    btBtnExportar: TcxButton;
+    btBtnEnviarEmail: TcxButton;
+    btBtnAtualizarCusto: TcxButton;
+    btbtnSelecionar: TcxButton;
+    Bevel4: TBevel;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -179,7 +179,6 @@ begin
       edCentroCusto.Enabled   := False;
 
       btBtnAtualizarCusto.Visible := False;
-      BvlSeparadorBotacao.Width   := BvlSeparadorBotacao.Width + btBtnAtualizarCusto.Width;
       btbtnSelecionar.Visible     := True;
       
       Result := (ShowModal = mrOk);
@@ -281,7 +280,7 @@ var
   iCliente : Integer;
   sNome : String;
 begin
-  if ( SelecionarDepartamento(Self, 0, GetEmpresaIDDefault, iCodigo, sNome, iCliente) ) then
+  if ( SelecionarDepartamento(Self, 0, gUsuarioLogado.Empresa, iCodigo, sNome, iCliente) ) then
   begin
     edCentroCusto.Tag  := iCodigo;
     edCentroCusto.Text := sNome;
@@ -348,7 +347,6 @@ begin
 
   btBtnAtualizarCusto.Visible := True;
   btbtnSelecionar.Visible     := False;
-  BvlSeparadorBotacao.Width   := BvlSeparadorBotacao.Width + btbtnSelecionar.Width;
 end;
 
 procedure TfrmGeApropriacaoEstoquePesquisa.ExecutarPesquisa(
@@ -678,7 +676,7 @@ begin
       end;
   end;
 
-  sEmailTo := GetEmailEmpresa(GetEmpresaIDDefault);
+  sEmailTo := GetEmailEmpresa(gUsuarioLogado.Empresa);
   if not InputQuery('Enviar e-mail', 'Favor informar e-mail do destinatário:', sEmailTo) then
     Exit;
 
@@ -713,7 +711,7 @@ begin
   try
     try
       sAssunto := FormatDateTime('dd/mm/yyyy', Date) + ' - Apropriação de Estoque (' + edTipoFiltro.Text + ' / ' + edCentroCusto.Text + ')';;
-      CarregarConfiguracoesEmpresa(GetEmpresaIDDefault, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
+      CarregarConfiguracoesEmpresa(gUsuarioLogado.Empresa, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
 
       smtpEmail.Username    := gContaEmail.Conta;
       smtpEmail.Password    := gContaEmail.Senha;

@@ -101,7 +101,7 @@ begin
   
   tblEmpresa.Open;
 
-  BtnEnviarCCe.Visible := GetEstacaoEmitiNFe and (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
+  BtnEnviarCCe.Visible := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
 end;
 
 procedure TfrmGeCartaCorrecao.dbNFeButtonClick(Sender: TObject);

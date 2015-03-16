@@ -102,7 +102,7 @@ begin
   with qryEmpresa do
   begin
     Close;
-    ParamByName('cnpj').AsString := GetEmpresaIDDefault;
+    ParamByName('cnpj').AsString := gUsuarioLogado.Empresa;
     Open;
   end;
 
@@ -165,7 +165,7 @@ begin
       Exit;
 
     sRetorno := EmptyStr;
-    if DMNFe.InutilizaNumeroNFeACBr(GetEmpresaIDDefault, iAno, iModelo, iSerie, iNroInicial, iNroFinal, sJustific, sRetorno ) then
+    if DMNFe.InutilizaNumeroNFeACBr(gUsuarioLogado.Empresa, iAno, iModelo, iSerie, iNroInicial, iNroFinal, sJustific, sRetorno ) then
     begin
 
       with cdsLOG do
@@ -218,12 +218,12 @@ begin
   with qryNFeEmitida do
   begin
     Close;
-    ParamByName('empresa1').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa1').AsString := gUsuarioLogado.Empresa;
     ParamByName('serie1').AsInteger  := iSerie;
     ParamByName('inicio1').AsInteger := iInicio;
     ParamByName('final1').AsInteger  := iFinal;
 
-    ParamByName('empresa2').AsString := GetEmpresaIDDefault;
+    ParamByName('empresa2').AsString := gUsuarioLogado.Empresa;
     ParamByName('serie2').AsInteger  := iSerie;
     ParamByName('inicio2').AsInteger := iInicio;
     ParamByName('final2').AsInteger  := iFinal;

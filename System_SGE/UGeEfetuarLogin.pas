@@ -51,7 +51,7 @@ begin
 
   try
 
-    if not DMBusiness.ibdtstUsers.Locate('NOME', edNome.Text, []) then
+    if not DMBusiness.ibdtstUsers.Locate('NOME', Usuario, []) then
     begin
       pnlMensagem.Caption := 'Entrada recusada ... USUÁRIO DESCONHECIDO!';
 
@@ -65,7 +65,7 @@ begin
     vSenha := DMBusiness.ibdtstUsersSENHA as tStringfield;
     sSenha := GetSenhaFormatada(Senha);
 
-    if (vSenha.Value = edSenha.Text) or (vSenha.Value = sSenha) then
+    if (vSenha.Value = Senha) or (vSenha.Value = sSenha) then
     begin
       frmPrinc.Enabled := True;
       frmPrinc.stbMain.Panels[1].Text := AnsiLowerCase(edNome.Text + '@' + DMBusiness.ibdtbsBusiness.DatabaseName);
@@ -121,7 +121,7 @@ begin
   begin
     SetEmpresaIDDefault( Empresa );
 
-    gUsuarioLogado.Login    := GetUserApp;
+    gUsuarioLogado.Login    := Usuario;
     gUsuarioLogado.Nome     := GetUserFullName;
     gUsuarioLogado.Funcao   := GetUserFunctionID;
     gUsuarioLogado.Empresa  := Empresa;

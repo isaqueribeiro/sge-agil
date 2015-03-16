@@ -183,7 +183,7 @@ begin
   try
 
     whr :=
-      '( (r.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ') and (r.Situacao > 0) and (r.Parcela > 0) ) and (' +
+      '( (r.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ') and (r.Situacao > 0) and (r.Parcela > 0) ) and (' +
       'cast(r.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', frm.e1Data.Date) ) +
       ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', frm.e2Data.Date) ) + ')';
 
@@ -229,7 +229,7 @@ begin
   CampoOrdenacao := 'r.dtvenc, c.Nome';
 
   WhereAdditional :=
-    '( (r.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ') and (r.Situacao > 0) and (r.Parcela > 0) ) and (' +
+    '( (r.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ') and (r.Situacao > 0) and (r.Parcela > 0) ) and (' +
     'cast(r.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) +
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
 
@@ -256,7 +256,7 @@ end;
 procedure TfrmGeContasAReceber.btnFiltrarClick(Sender: TObject);
 begin
   WhereAdditional :=
-    '( (r.empresa = ' + QuotedStr(GetEmpresaIDDefault) + ') and (r.Situacao > 0) and (r.Parcela > 0) ) and (' +
+    '( (r.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ') and (r.Situacao > 0) and (r.Parcela > 0) ) and (' +
     'cast(r.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) +
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
     
@@ -266,7 +266,7 @@ end;
 procedure TfrmGeContasAReceber.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaEMPRESA.AsString := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.AsString := gUsuarioLogado.Empresa;
   IbDtstTabelaANOLANC.Value    := YearOf(Date);
   IbDtstTabelaPARCELA.Value    := 0;
   IbDtstTabelaDTEMISS.Value    := Date;

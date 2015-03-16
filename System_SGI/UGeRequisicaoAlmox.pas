@@ -410,7 +410,7 @@ end;
 procedure TfrmGeRequisicaoAlmox.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
   inherited;
-  IbDtstTabelaEMPRESA.Value       := GetEmpresaIDDefault;
+  IbDtstTabelaEMPRESA.Value       := gUsuarioLogado.Empresa;
   IbDtstTabelaINSERCAO_DATA.Value := GetDateTimeDB;
   IbDtstTabelaDATA_EMISSAO.Value  := GetDateDB;
   IbDtstTabelaREQUISITANTE.Value  := gUsuarioLogado.Login; 
@@ -1096,7 +1096,7 @@ begin
   begin
 
     try
-      ConfigurarEmail(GetEmpresaIDDefault, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), 'Requisição de Materiais', EmptyStr);
+      ConfigurarEmail(gUsuarioLogado.Empresa, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), 'Requisição de Materiais', EmptyStr);
     except
     end;
 
@@ -1147,8 +1147,8 @@ begin
     Abort;
   end;
 
-  if ( IbDtstTabelaSTATUS.AsInteger <> STATUS_REQUISICAO_ALMOX_ATD ) then
-    ShowInformation('Apenas registros atendidos/encerrados podem ser cancelados!')
+  if not (IbDtstTabelaSTATUS.AsInteger in [STATUS_REQUISICAO_ALMOX_ENV, STATUS_REQUISICAO_ALMOX_REC, STATUS_REQUISICAO_ALMOX_ATD]) then
+    ShowInformation('Apenas registros enviados, recebidos e/ou atendidos podem ser cancelados!')
   else
   if ( CancelarRequisicaoAlmox(Self, IbDtstTabelaANO.Value, IbDtstTabelaCONTROLE.Value) ) then
     with IbDtstTabela do
@@ -1610,7 +1610,7 @@ begin
   begin
 
     try
-      ConfigurarEmail(GetEmpresaIDDefault, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), 'Requisição de Materiais', EmptyStr);
+      ConfigurarEmail(gUsuarioLogado.Empresa, GetEmailEmpresa(IbDtstTabelaEMPRESA.AsString), 'Requisição de Materiais', EmptyStr);
     except
     end;
 

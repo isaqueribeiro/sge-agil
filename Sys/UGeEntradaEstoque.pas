@@ -606,7 +606,7 @@ begin
 
   UpdateGenerator( 'where Ano = ' + FormatFloat('0000', YearOf(Date)) );
 
-  btbtnGerarNFe.Visible := GetEstacaoEmitiNFe;
+  btbtnGerarNFe.Visible := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa);
 
   TipoMovimento     := tmeProduto;
   ApenasFinalizadas := False;

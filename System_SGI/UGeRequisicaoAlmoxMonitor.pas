@@ -248,7 +248,7 @@ begin
     with cdsRequisicaoAlmox, Params do
     begin
       Close;
-      ParamByName('empresa').AsString        := GetEmpresaIDDefault;
+      ParamByName('empresa').AsString        := gUsuarioLogado.Empresa;
       ParamByName('data_inicial').AsDateTime := StrToDateDef(e1Data.Text, GetDateDB);
       ParamByName('data_final').AsDateTime   := StrToDateDef(e2Data.Text, GetDateDB);
       ParamByName('centro_custo').AsInteger  := CentroCusto;
@@ -423,8 +423,8 @@ begin
       Abort;
     end;
 
-    if FieldByName('status').AsInteger <> STATUS_REQUISICAO_ALMOX_ATD then
-      ShowWarning('Apenas requisições de materiais atendidas/encerradas podem ser canceladas.')
+    if not (FieldByName('status').AsInteger in [STATUS_REQUISICAO_ALMOX_ENV, STATUS_REQUISICAO_ALMOX_REC, STATUS_REQUISICAO_ALMOX_ATD]) then
+      ShowInformation('Apenas registros enviados, recebidos e/ou atendidos podem ser cancelados!')
     else
     if CancelarRequisicaoAlmox(Self, FieldByName('ano').AsInteger, FieldByName('controle').AsInteger) then
     begin
