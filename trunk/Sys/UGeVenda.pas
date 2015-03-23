@@ -581,7 +581,8 @@ begin
                         QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
                         QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
 
-  UpdateGenerator( 'where Ano = ' + FormatFloat('0000', YearOf(GetDateDB)) );
+  // A tela de vendas não pode atualizar generator porque este processo está gerando erros
+  // UpdateGenerator( 'where Ano = ' + FormatFloat('0000', YearOf(GetDateDB)) );
 
   // Configurar Legendas de acordo com o segmento
   btnConsultarProduto.Caption := StrDescricaoProduto;
@@ -1540,6 +1541,13 @@ begin
   end
   else
   begin
+    if not qryCFOP.Active then
+    begin
+      qryCFOP.Close;
+      qryCFOP.ParamByName('Cfop_cod').AsInteger := IbDtstTabelaCFOP.AsInteger;
+      qryCFOP.Open;
+    end;
+
     cdsTabelaItensCFOP_COD.Assign( IbDtstTabelaCFOP );
     cdsTabelaItensCFOP_DESCRICAO.Assign( qryCFOP.FieldByName('cfop_descricao') );
   end;
@@ -1794,7 +1802,7 @@ begin
   end;
 
   if ( not DelphiIsRunning ) then
-    if not DMNFe.GetValidadeCertificado then
+    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCODEMP.AsString) then
       Exit;
 
   if not GetPermititEmissaoNFe( IbDtstTabelaCODEMP.AsString ) then

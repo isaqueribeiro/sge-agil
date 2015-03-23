@@ -493,9 +493,9 @@ type
 
     function ReciboNaoExisteNaVenda(const sRecibo : String) : Boolean;
     function ReciboNaoExisteNaEntrada(const sRecibo : String) : Boolean;
-    function GerarNFeOnLine : Boolean;
+    function GerarNFeOnLine(const sCNPJEmitente : String) : Boolean;
     function GetInformacaoFisco : String;
-    function GetValidadeCertificado(const Informe : Boolean = FALSE) : Boolean;
+    function GetValidadeCertificado(const sCNPJEmitente : String; const Informe : Boolean = FALSE) : Boolean;
 
     function GerarNFeOnLineACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
       var iSerieNFe, iNumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE, ReciboNFE : String; var iNumeroLote  : Int64;
@@ -604,7 +604,7 @@ const
 
   PULAR_LINHA_FINAL = 3;
 
-  procedure ConfigurarNFeACBr(const sCNPJEmitente : String = '');
+  procedure ConfigurarNFeACBr(const sCNPJEmitente : String);
 
 implementation
 
@@ -653,7 +653,7 @@ begin
   Result := StringReplace(DMNFe.ACBrNFe.Configuracoes.Geral.PathSalvar + '\', '\\', '\', [rfReplaceAll]);
 end;
 
-procedure ConfigurarNFeACBr(const sCNPJEmitente : String = '');
+procedure ConfigurarNFeACBr(const sCNPJEmitente : String);
 var
  I : Integer;
 begin
@@ -853,7 +853,8 @@ begin
   rvDANFE.Sistema := GetCompanyName + ' - Contato(s): ' + GetContacts;
   frDANFE.Sistema := GetCompanyName + ' - Contato(s): ' + GetContacts;
 
-  LerConfiguracao(GetEmpresaIDDefault);
+  // A leitura do Certificado será feita agora apenas na emissão da NF-e
+  //LerConfiguracao(GetEmpresaIDDefault);
 
   fr3Designer := TfrxDesigner.Create(Self);
 
@@ -1003,15 +1004,14 @@ begin
       {$IFDEF ACBrNFeOpenSSL}
          edtCaminho.Text  := ReadString( sSecaoCertificado, 'Caminho' , '') ;
          edtSenha.Text    := ReadString( sSecaoCertificado, 'Senha'   , '') ;
-         ACBrNFe.Configuracoes.Certificados.Certificado  := edtCaminho.Text;
-         ACBrNFe.Configuracoes.Certificados.Senha        := edtSenha.Text;
          edtNumSerie.Visible := False;
          Label25.Visible     := False;
          sbtnGetCert.Visible := False;
+         
+         ACBrNFe.Configuracoes.Certificados.Certificado  := Trim(edtCaminho.Text);
+         ACBrNFe.Configuracoes.Certificados.Senha        := Trim(edtSenha.Text);
       {$ELSE}
-         edtNumSerie.Text := ReadString( sSecaoCertificado, 'NumSerie', '') ;
-         ACBrNFe.Configuracoes.Certificados.NumeroSerie := edtNumSerie.Text;
-         edtNumSerie.Text := ACBrNFe.Configuracoes.Certificados.NumeroSerie;
+         edtNumSerie.Text    := ReadString( sSecaoCertificado, 'NumSerie', '') ;
          lbltCaminho.Caption := 'Informe o número de série do certificado'#13+
                                 'Disponível no Internet Explorer no menu'#13+
                                 'Ferramentas - Opções da Internet - Conteúdo '#13+
@@ -1021,6 +1021,8 @@ begin
          edtCaminho.Visible := False;
          edtSenha.Visible   := False;
          sbtnCaminhoCert.Visible := False;
+
+         ACBrNFe.Configuracoes.Certificados.NumeroSerie := Trim(edtNumSerie.Text);
       {$ENDIF}
 
       cbFormaEmissao.ItemIndex := ReadInteger(sSecaoGeral, 'FormaEmissao', 0) ;
@@ -1119,7 +1121,8 @@ begin
 
       // Configuração para envio de e-mails
 
-      CarregarConfiguracoesEmpresa(GetEmpresaIDDefault, 'Envio de NF-e (Emitente: ' + edtEmitRazao.Text + ')', sAssinaturaHtml, sAssinaturaTxt);
+      CarregarConfiguracoesEmpresa(sCNPJEmitente, 'Envio de NF-e (Emitente: ' + edtEmitRazao.Text + ')', sAssinaturaHtml, sAssinaturaTxt);
+
       if ( Trim(gContaEmail.Conta) <> EmptyStr ) then
       begin
         edtSmtpHost.Text      := gContaEmail.Servidor_SMTP;
@@ -1300,7 +1303,7 @@ begin
       LoadXML(memResp, WBResposta);
 
       Add('');
-      Add('Status Serviço');
+      Add('Status Serviço para o Emitente ' + StrFormatarCnpj(gUsuarioLogado.Empresa));
       Add('tpAmb : '    + TpAmbToStr(WebServices.StatusServico.tpAmb));
       Add('verAplic : ' + WebServices.StatusServico.verAplic);
       Add('cStat : '    + IntToStr(WebServices.StatusServico.cStat));
@@ -1364,8 +1367,13 @@ begin
     end;
 end;
 
-function TDMNFe.GerarNFeOnLine : Boolean;
+function TDMNFe.GerarNFeOnLine(const sCNPJEmitente : String) : Boolean;
 begin
+  if Trim(sCNPJEmitente) = EmptyStr then
+    LerConfiguracao(gUsuarioLogado.Empresa)
+  else
+    LerConfiguracao(sCNPJEmitente);
+      
   Result := ( ConfigACBr.rgModoGerarNFe.ItemIndex = 1 );
 end;
 
@@ -4135,12 +4143,17 @@ begin
   sLOG.Free;
 end;
 
-function TDMNFe.GetValidadeCertificado(const Informe : Boolean = FALSE): Boolean;
+function TDMNFe.GetValidadeCertificado(const sCNPJEmitente : String; const Informe : Boolean = FALSE): Boolean;
 var
   sDataVenc,
   sMsg     : String;
   iPrazo   : Integer;
 begin
+  if Trim(sCNPJEmitente) = EmptyStr then
+    LerConfiguracao(gUsuarioLogado.Empresa)
+  else
+    LerConfiguracao(sCNPJEmitente);
+      
   sDataVenc := FormatDateTime('dd/mm/yyyy', ACBrNFe.Configuracoes.Certificados.DataVenc);
   iPrazo    := DaysBetween(now, ACBrNFe.Configuracoes.Certificados.DataVenc);
 

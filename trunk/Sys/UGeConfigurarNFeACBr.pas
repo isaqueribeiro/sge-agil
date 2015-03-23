@@ -225,7 +225,7 @@ end;
 procedure TfrmGeConfigurarNFeACBr.btnValidadeCertificadoClick(
   Sender: TObject);
 begin
-  DMNFe.GetValidadeCertificado(True);
+  DMNFe.GetValidadeCertificado(EmptyStr, True);
 end;
 
 procedure TfrmGeConfigurarNFeACBr.RegistrarRotinaSistema;

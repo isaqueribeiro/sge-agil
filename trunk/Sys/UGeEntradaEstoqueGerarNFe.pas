@@ -235,7 +235,7 @@ begin
     
     Application.ProcessMessages;
     
-    if ( DMNFe.GerarNFeOnLine ) then
+    if ( DMNFe.GerarNFeOnLine(cdsCompraCODEMP.AsString) ) then
       bOK := DMNFe.GerarNFeEntradaOnLineACBr ( cdsCompraCODEMP.AsString, cdsCompraCODFORN.AsInteger, cdsCompraANO.AsInteger, cdsCompraCODCONTROL.AsInteger,
                iSerieNFe, iNumeroNFe, sFileNameXML, sChaveNFE, sProtocoloNFE, sReciboNFE, iNumeroLote, False)
     else

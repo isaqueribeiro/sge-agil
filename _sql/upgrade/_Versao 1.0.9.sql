@@ -13561,3 +13561,566 @@ DROP INDEX IDX_TBFUNCIONARIO_MATRICULA;
 
 ALTER TABLE TBFUNCIONARIO DROP MATRICULA;
 
+
+
+/*------ 20/03/2015 14:42:40 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_estoque for tbapropriacao_almox
+active after update position 2
+AS
+  declare variable empresa      varchar(18);
+  declare variable centro_custo Integer;
+  declare variable produto varchar(10);
+  declare variable lote    Integer;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable estoque_cc  DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable unidade_cns DMN_SMALLINT_N;
+  declare variable custo_produto DMN_MONEY;
+  declare variable custo_cc      DMN_MONEY;
+  declare variable custo_medio   DMN_MONEY;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 2) ) then /* Encerrada */
+  begin
+
+    empresa       = new.empresa;
+    centro_custo  = new.centro_custo;
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.customedio, 0)
+        , coalesce(nullif(p.fracionador, 0), 1)
+        , p.codunidade_fracionada
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , custo_produto
+        , fracionador
+        , unidade_cns
+        , Movimentar
+    do
+    begin
+      lote = 0;
+
+      estoque     = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde = :Estoque
+      where (p.Cod  = :Produto);
+
+      -- Verificar se ja existe estoque para o Centro de Custo
+      Select
+          ea.qtde
+        , ea.custo_medio
+      from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+      Into
+          estoque_cc
+        , custo_cc;
+
+      -- Gravar apropriacao de estoque para o centro de custo
+      if (not exists(
+        Select
+          ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+      )) then
+      begin
+
+        Insert Into TBESTOQUE_ALMOX (
+            empresa
+          , centro_custo
+          , produto
+          , lote
+          , data_fabricacao
+          , data_validade
+          , qtde
+          , fracionador
+          , unidade
+          , custo_medio
+        ) values (
+            :empresa
+          , :centro_custo
+          , :produto
+          , :lote
+          , null
+          , null
+          , :quantidade * :fracionador
+          , :fracionador
+          , :unidade_cns
+          , :custo_produto / :fracionador
+        );
+
+      end
+      else
+      begin
+
+        -- Calcular o Custo Medido para Apropriacao de Estoque
+        estoque_cc  = coalesce(:estoque_cc, 0.0);
+        custo_cc    = coalesce(:custo_cc, 0.0);
+        custo_medio = Case when ( (:estoque_cc <= 0) or (:custo_cc = 0.0) )
+            then (:custo_produto / :fracionador)
+            else ( ((:custo_cc * :estoque_cc) + ((:custo_produto / :fracionador) * (:quantidade * :fracionador))) / 2 ) end;
+
+        Update TBESTOQUE_ALMOX ea Set
+            ea.qtde        = coalesce(ea.qtde, 0.0) + (:quantidade * :fracionador)
+          , ea.custo_medio = :custo_medio
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote;
+
+      end
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('SAIDA - APROPRIACAO DE ESTOQUE ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Custo médio no valor de R$ ' || :custo_produto, '.', ',')
+      );
+    end
+
+  end
+end^
+
+/*------ 20/03/2015 14:42:40 --------*/
+
+SET TERM ; ^
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_cancelar for tbapropriacao_almox
+active after update position 3
+AS
+  declare variable empresa      varchar(18);
+  declare variable centro_custo Integer;
+  declare variable produto varchar(10);
+  declare variable lote    Integer;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable estoque_cc  DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 3) ) then /* Cancelada */
+  begin
+
+    empresa      = new.empresa;
+    centro_custo = new.centro_custo;
+
+    -- Retornar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0) -- Quantidade inteira
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , Movimentar
+    do
+    begin
+      estoque = Case when :Movimentar = 1 then (:Estoque + :Quantidade) else :Estoque end;
+      lote    = 0;
+
+      -- Retornar estoque geral
+      Update TBPRODUTO p Set
+        p.Qtde = :Estoque
+      where (p.Cod = :Produto);
+
+      -- Retirar apropriacao das quantidades em estoque da Empresa/Centro de Custo
+      Select
+          ea.qtde / coalesce(nullif(ea.fracionador, 0), 1) -- Quantidade fracionada transformada em inteira
+        , coalesce(nullif(ea.fracionador, 0), 1)
+      from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+      Into
+          estoque_cc   -- Quantidade Inteira
+        , fracionador; -- Fracionador
+
+      estoque_cc = coalesce(:estoque_cc, 0.0) - :quantidade;
+
+      Update TBESTOQUE_ALMOX ea Set
+          ea.qtde  = :estoque_cc * :fracionador -- Quantidade fracionada
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote;
+
+      -- Remover registro de estoque apropriadado com quantidade zerada
+      Delete from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+        and ea.qtde         = 0;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('ENTRADA - APROPRIACAO CANCELADA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque - :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Cancel_usuario
+        , 'Valor de Custo (R$) fixado no cadastro do produto.'
+      );
+
+    end
+
+  end
+end^
+
+/*------ 20/03/2015 14:42:40 --------*/
+
+SET TERM ; ^
+
+
+/*------ SYSDBA 20/03/2015 14:48:21 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_cancelar for tbapropriacao_almox
+active after update position 3
+AS
+  declare variable empresa      varchar(18);
+  declare variable centro_custo Integer;
+  declare variable produto varchar(10);
+  declare variable lote    Integer;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable estoque_cc  DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 3) ) then /* Cancelada */
+  begin
+
+    empresa      = new.empresa;
+    centro_custo = new.centro_custo;
+
+    -- Retornar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0) -- Quantidade inteira
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , Movimentar
+    do
+    begin
+      estoque = Case when :Movimentar = 1 then (:Estoque + :Quantidade) else :Estoque end;
+      lote    = 0;
+
+      -- Retornar estoque geral
+      Update TBPRODUTO p Set
+        p.Qtde = :Estoque
+      where (p.Cod = :Produto);
+
+      -- Retirar apropriacao das quantidades em estoque da Empresa/Centro de Custo
+      Select
+          ea.qtde / coalesce(nullif(ea.fracionador, 0), 1) -- Recuperando a quantidade fracionada transformada em inteira
+        , coalesce(nullif(ea.fracionador, 0), 1)
+      from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+      Into
+          estoque_cc   -- Quantidade Inteira
+        , fracionador; -- Fracionador
+
+      estoque_cc = coalesce(:estoque_cc, 0.0) - :quantidade;
+
+      Update TBESTOQUE_ALMOX ea Set
+          ea.qtde  = :estoque_cc * :fracionador -- Devolvendo a quantidade fracionada atualizada
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote;
+
+      -- Remover registro de estoque apropriadado com quantidade zerada
+      Delete from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+        and ea.qtde         = 0;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('ENTRADA - APROPRIACAO CANCELADA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque - :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Cancel_usuario
+        , 'Valor de Custo (R$) fixado no cadastro do produto.'
+      );
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/03/2015 14:49:45 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_apropriacao_almox_estoque for tbapropriacao_almox
+active after update position 2
+AS
+  declare variable empresa      varchar(18);
+  declare variable centro_custo Integer;
+  declare variable produto varchar(10);
+  declare variable lote    Integer;
+  declare variable estoque     DMN_QUANTIDADE_D3;
+  declare variable estoque_cc  DMN_QUANTIDADE_D3;
+  declare variable quantidade  DMN_QUANTIDADE_D3;
+  declare variable fracionador DMN_PERCENTUAL_3;
+  declare variable unidade_cns DMN_SMALLINT_N;
+  declare variable custo_produto DMN_MONEY;
+  declare variable custo_cc      DMN_MONEY;
+  declare variable custo_medio   DMN_MONEY;
+  declare variable Movimentar Smallint;
+begin
+  if ( (old.status <> new.status) and (new.status = 2) ) then /* Encerrada */
+  begin
+
+    empresa       = new.empresa;
+    centro_custo  = new.centro_custo;
+
+    -- Baixar produto do Estoque
+    for
+      Select
+          i.produto
+        , i.qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.customedio, 0)
+        , coalesce(nullif(p.fracionador, 0), 1)
+        , p.codunidade_fracionada
+        , coalesce(p.movimenta_estoque, 1)
+      from TBAPROPRIACAO_ALMOX_ITEM i
+        inner join TBPRODUTO p on (p.Cod = i.produto)
+      where i.ano      = new.ano
+        and i.controle = new.controle
+      into
+          produto
+        , quantidade
+        , estoque
+        , custo_produto
+        , fracionador
+        , unidade_cns
+        , Movimentar
+    do
+    begin
+      lote = 0;
+
+      estoque     = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end;
+      fracionador = Case when :fracionador <= 0 then 1 else :fracionador end;
+
+      -- Baixar estoque
+      Update TBPRODUTO p Set
+          p.Qtde = :Estoque
+      where (p.Cod  = :Produto);
+
+      -- Verificar se ja existe estoque para o Centro de Custo
+      Select
+          ea.qtde
+        , ea.custo_medio
+      from TBESTOQUE_ALMOX ea
+      where ea.empresa      = :empresa
+        and ea.centro_custo = :centro_custo
+        and ea.produto      = :produto
+        and ea.lote         = :lote
+      Into
+          estoque_cc
+        , custo_cc;
+
+      -- Gravar apropriacao de estoque para o centro de custo
+      if (not exists(
+        Select
+          ea.qtde
+        from TBESTOQUE_ALMOX ea
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote
+      )) then
+      begin
+
+        Insert Into TBESTOQUE_ALMOX (
+            empresa
+          , centro_custo
+          , produto
+          , lote
+          , data_fabricacao
+          , data_validade
+          , qtde
+          , fracionador
+          , unidade
+          , custo_medio
+        ) values (
+            :empresa
+          , :centro_custo
+          , :produto
+          , :lote
+          , null
+          , null
+          , :quantidade * :fracionador     -- Informando a quantidade fracionada
+          , :fracionador
+          , :unidade_cns
+          , :custo_produto / :fracionador  -- Informando o custo medio fracionado
+        );
+
+      end
+      else
+      begin
+
+        -- Calcular o Custo Medido para Apropriacao de Estoque
+        estoque_cc  = coalesce(:estoque_cc, 0.0);
+        custo_cc    = coalesce(:custo_cc, 0.0);
+        custo_medio = Case when ( (:estoque_cc <= 0) or (:custo_cc = 0.0) )
+            then (:custo_produto / :fracionador)
+            else ( ((:custo_cc * :estoque_cc) + ((:custo_produto / :fracionador) * (:quantidade * :fracionador))) / 2 ) end;
+
+        Update TBESTOQUE_ALMOX ea Set
+            ea.qtde        = coalesce(ea.qtde, 0.0) + (:quantidade * :fracionador) -- Informando a quantidade fracionada
+          , ea.custo_medio = :custo_medio                                          -- Informando o custo medio fracionado anteriormente
+        where ea.empresa      = :empresa
+          and ea.centro_custo = :centro_custo
+          and ea.produto      = :produto
+          and ea.lote         = :lote;
+
+      end
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.ano || '/' || new.controle
+        , Trim('SAIDA - APROPRIACAO DE ESTOQUE ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque + :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Usuario
+        , replace('Custo médio no valor de R$ ' || :custo_produto, '.', ',')
+      );
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 20/03/2015 14:51:06 --------*/
+
+COMMENT ON DOMAIN DMN_SEXO IS 'Sexo:
+M - Masculino
+F - Feminino';
+

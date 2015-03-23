@@ -7,8 +7,6 @@ inherited frmGeVendaGerarNFe: TfrmGeVendaGerarNFe
   Caption = 'Gerar NF-e de Sa'#237'da'
   ClientHeight = 410
   ClientWidth = 596
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   OldCreateOrder = True
   DesignSize = (
     596

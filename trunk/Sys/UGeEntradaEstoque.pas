@@ -1446,13 +1446,13 @@ begin
     Abort;
 
   if ( not DelphiIsRunning ) then
-    if not DMNFe.GetValidadeCertificado then
+    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCODEMP.AsString) then
       Exit;
 
   RecarregarRegistro;
 
   pgcGuias.ActivePage := tbsCadastro;
-  
+
   if (IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_NFE) then
   begin
     ShowWarning('Movimento de Entrada já está com NF-e gerada!');

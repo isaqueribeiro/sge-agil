@@ -161,7 +161,7 @@ begin
   if ShowConfirm('Confirma a initilização do intervalor de numeração de NF-e informado?') then
   begin
 
-    if not DMNFe.GetValidadeCertificado then
+    if not DMNFe.GetValidadeCertificado(gUsuarioLogado.Empresa) then
       Exit;
 
     sRetorno := EmptyStr;
