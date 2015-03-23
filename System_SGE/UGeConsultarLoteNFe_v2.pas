@@ -289,7 +289,7 @@ begin
 
     PesquisarLote(0, 0, Trim(edNumeroRecibo.Text), iAnoMov, iCodMov, sDestinatarioCNPJ);
 
-    if not DMNFe.GetValidadeCertificado then
+    if not DMNFe.GetValidadeCertificado(gUsuarioLogado.Empresa) then
       Exit;
 
     sRetorno := EmptyStr;

@@ -6,8 +6,6 @@ inherited frmGeVendaPDV: TfrmGeVendaPDV
   ActiveControl = edProdutoCodigo
   BorderIcons = [biMaximize]
   Caption = 'Vendas PDV'
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   OnCloseQuery = FormCloseQuery
   PixelsPerInch = 96
   TextHeight = 13

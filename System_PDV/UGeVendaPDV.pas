@@ -252,8 +252,10 @@ end;
 
 procedure TfrmGeVendaPDV.FormShow(Sender: TObject);
 begin
-  if ( (sGeneratorName <> EmptyStr) and (sNomeTabela <> EmptyStr) and (sCampoCodigo <> EmptyStr) ) then
-    UpdateSequence(sGeneratorName, sNomeTabela, sCampoCodigo, 'where Ano = ' + FormatFloat('0000', YearOf(GetDateDB)) );
+  // A tela de vendas não pode atualizar generator porque este processo está gerando erros
+  
+  //if ( (sGeneratorName <> EmptyStr) and (sNomeTabela <> EmptyStr) and (sCampoCodigo <> EmptyStr) ) then
+  //  UpdateSequence(sGeneratorName, sNomeTabela, sCampoCodigo, 'where Ano = ' + FormatFloat('0000', YearOf(GetDateDB)) );
 
   inherited;
 

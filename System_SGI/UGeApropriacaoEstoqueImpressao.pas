@@ -50,6 +50,16 @@ type
     FrdsRelacaoEstoqueResumo: TfrxDBDataset;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    frRelacaoApropriacaoSintetico: TfrxReport;
+    qryRelacaoApropriacaoSintetico: TIBQuery;
+    dspRelacaoApropriacaoSintetico: TDataSetProvider;
+    cdsRelacaoApropriacaoSintetico: TClientDataSet;
+    frdsRelacaoApropriacaoSintetico: TfrxDBDataset;
+    frRelacaoApropriacaoAnalitico: TfrxReport;
+    QryRelacaoApropriacaoAnalitico: TIBQuery;
+    DspRelacaoApropriacaoAnalitico: TDataSetProvider;
+    CdsRelacaoApropriacaoAnalitico: TClientDataSet;
+    FrdsRelacaoApropriacaoAnalitico: TfrxDBDataset;
     procedure FormCreate(Sender: TObject);
     procedure edEmpresaChange(Sender: TObject);
     procedure edRelatorioChange(Sender: TObject);
@@ -74,6 +84,8 @@ type
     procedure CarregarTipoApropriacao;
     procedure MontarRelacaoEstoqueApropSintetico;
     procedure MontarRelacaoEstoqueApropAnalitico;
+    procedure MontarApropriacaoSintetico;
+    procedure MontarApropriacaoAnalitico;
   end;
 
 var
@@ -92,7 +104,7 @@ const
   REPORT_RELACAO_APROPRIACAO_SINTETICO = 2;
   REPORT_RELACAO_APROPRIACAO_ANALITICO = 3;
 
-  SITUACAO_APROPRIACAO_PADRAO = 3; // Encerradas
+  IDX_SITUACAO_APRORIACAO_PADRAO = 0; // Todas
 
 { TfrmGeApropriacaoEstoqueImpressao }
 
@@ -250,7 +262,7 @@ begin
   with edTipoApropriacao, tblTipoApropriacao do
   begin
     Items.Clear;
-    Items.Add('(Todos)');
+    Items.Add('(Todas)');
 
     Open;
     while not Eof do
@@ -266,7 +278,12 @@ end;
 
 procedure TfrmGeApropriacaoEstoqueImpressao.FormCreate(Sender: TObject);
 begin
+  e1Data.Date := StrToDate('01/' + FormatDateTime('mm/yyyy', GetDateDB));
+  e2Data.Date := GetDateDB;
+  edSituacao.ItemIndex := IDX_SITUACAO_APRORIACAO_PADRAO; 
+
   inherited;
+
   RotinaID := ROTINA_REL_ESTOQUE_APRO_ID;
 
   CarregarEmpresa;
@@ -280,6 +297,12 @@ begin
 
   FSQL_RelacaoEstoqueApropA := TStringList.Create;
   FSQL_RelacaoEstoqueApropA.AddStrings( QryRelacaoEstoqueAprop.SQL );
+
+  FSQL_ApropriacaoGeralS := TStringList.Create;
+  FSQL_ApropriacaoGeralS.AddStrings( qryRelacaoApropriacaoSintetico.SQL );
+
+  FSQL_ApropriacaoGeralA := TStringList.Create;
+  FSQL_ApropriacaoGeralA.AddStrings( QryRelacaoApropriacaoAnalitico.SQL );
 end;
 
 procedure TfrmGeApropriacaoEstoqueImpressao.edEmpresaChange(
@@ -429,15 +452,152 @@ begin
         frReport := FrRelacaoEstoqueAprop;
       end;
 
-    REPORT_RELACAO_APROPRIACAO_SINTETICO: ;
+    REPORT_RELACAO_APROPRIACAO_SINTETICO:
+      begin
+        SubTituloRelario := EmptyStr;
+        MontarApropriacaoSintetico;
+        frReport := frRelacaoApropriacaoSintetico;
+      end;
 
-    REPORT_RELACAO_APROPRIACAO_ANALITICO: ;
+    REPORT_RELACAO_APROPRIACAO_ANALITICO:
+      begin
+        SubTituloRelario := EmptyStr;
+        MontarApropriacaoAnalitico;
+        frReport := frRelacaoApropriacaoAnalitico;
+      end;
   end;
 
   inherited;
 
   Screen.Cursor         := crDefault;
   btnVisualizar.Enabled := True;
+end;
+
+procedure TfrmGeApropriacaoEstoqueImpressao.MontarApropriacaoSintetico;
+begin
+  try
+    SubTituloRelario := edSituacao.Text;
+
+    if ( edTipoApropriacao.ItemIndex = 0 ) then
+      PeriodoRelatorio := Format('Apropriações realizadas no período de %s a %s.', [e1Data.Text, e2Data.Text])
+    else
+      PeriodoRelatorio := Format('Apropriações realizadas no período de %s a %s, para o tipo %s.', [e1Data.Text, e2Data.Text,
+        Trim(Copy(edTipoApropriacao.Text, Pos('-', edTipoApropriacao.Text) + 1, Length(edTipoApropriacao.Text)))]);
+
+    cdsRelacaoApropriacaoSintetico.Close;
+
+    with qryRelacaoApropriacaoSintetico do
+    begin
+      SQL.Clear;
+      SQL.AddStrings( FSQL_ApropriacaoGeralS );
+      SQL.Add('where a.empresa = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+      SQL.Add('  and a.status  > ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_EDC));
+
+      if StrIsDateTime(e1Data.Text) then
+        SQL.Add('  and a.data_apropriacao >= ' + QuotedStr(FormatDateTime('yyyy.mm.dd', e1Data.Date)));
+
+      if StrIsDateTime(e2Data.Text) then
+        SQL.Add('  and a.data_apropriacao <= ' + QuotedStr(FormatDateTime('yyyy.mm.dd', e2Data.Date)));
+
+      Case edSituacao.ItemIndex of
+        1:
+          SQL.Add('  and a.status = ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_ABR));
+
+        2:
+          SQL.Add('  and a.status = ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_ENC));
+
+        3:
+          SQL.Add('  and a.status = ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_CAN));
+      end;
+
+      if ( edTipoApropriacao.ItemIndex > 0 ) then
+        SQL.Add('  and a.tipo = ' + Trim(Copy(edTipoApropriacao.Text, 1, Pos('-', edTipoApropriacao.Text) - 1)));
+
+      SQL.Add('group by');
+      SQL.Add('    a.empresa');
+      SQL.Add('  , e.rzsoc');
+      SQL.Add('  , a.tipo');
+      SQL.Add('  , ta.descricao');
+      SQL.Add('  , a.centro_custo');
+      SQL.Add('  , c.descricao');
+      SQL.Add('  , a.status');
+      SQL.Add('  , c.codcliente');
+      SQL.Add('  , cc.nome');
+      SQL.Add('  , cc.nomefant');
+      SQL.Add('  , cc.cnpj');
+      SQL.Add(' ');
+      SQL.Add('order by');
+      SQL.Add('    e.rzsoc');
+      SQL.Add('  , a.tipo');
+      SQL.Add('  , c.descricao');
+    end;
+  except
+    On E : Exception do
+    begin
+      ShowError('Erro ao tentar montar a relatório sintético de apropriação (por data de emissão).' + #13#13 + E.Message);
+
+      Screen.Cursor         := crDefault;
+      btnVisualizar.Enabled := True;
+    end;
+  end;
+end;
+
+procedure TfrmGeApropriacaoEstoqueImpressao.MontarApropriacaoAnalitico;
+begin
+  try
+    SubTituloRelario := edSituacao.Text;
+
+    if ( edTipoApropriacao.ItemIndex = 0 ) then
+      PeriodoRelatorio := Format('Apropriações realizadas no período de %s a %s.', [e1Data.Text, e2Data.Text])
+    else
+      PeriodoRelatorio := Format('Apropriações realizadas no período de %s a %s, para o tipo %s.', [e1Data.Text, e2Data.Text,
+        Trim(Copy(edTipoApropriacao.Text, Pos('-', edTipoApropriacao.Text) + 1, Length(edTipoApropriacao.Text)))]);
+
+    CdsRelacaoApropriacaoAnalitico.Close;
+
+    with QryRelacaoApropriacaoAnalitico do
+    begin
+      SQL.Clear;
+      SQL.AddStrings( FSQL_ApropriacaoGeralA );
+      SQL.Add('where a.empresa = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+      SQL.Add('  and a.status  > ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_EDC));
+
+      if StrIsDateTime(e1Data.Text) then
+        SQL.Add('  and a.data_apropriacao >= ' + QuotedStr(FormatDateTime('yyyy.mm.dd', e1Data.Date)));
+
+      if StrIsDateTime(e2Data.Text) then
+        SQL.Add('  and a.data_apropriacao <= ' + QuotedStr(FormatDateTime('yyyy.mm.dd', e2Data.Date)));
+
+      Case edSituacao.ItemIndex of
+        1:
+          SQL.Add('  and a.status = ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_ABR));
+
+        2:
+          SQL.Add('  and a.status = ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_ENC));
+
+        3:
+          SQL.Add('  and a.status = ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_CAN));
+      end;
+
+      if ( edTipoApropriacao.ItemIndex > 0 ) then
+        SQL.Add('  and a.tipo = ' + Trim(Copy(edTipoApropriacao.Text, 1, Pos('-', edTipoApropriacao.Text) - 1)));
+
+      SQL.Add('order by');
+      SQL.Add('    a.empresa');
+      SQL.Add('  , a.tipo');
+      SQL.Add('  , f.nomeforn');
+      SQL.Add('  , f.nomefant');
+      SQL.Add('  , a.data_apropriacao');
+    end;
+  except
+    On E : Exception do
+    begin
+      ShowError('Erro ao tentar montar a relatório sintético de apropriação (por data de emissão).' + #13#13 + E.Message);
+
+      Screen.Cursor         := crDefault;
+      btnVisualizar.Enabled := True;
+    end;
+  end;
 end;
 
 initialization

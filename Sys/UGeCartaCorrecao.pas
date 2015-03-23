@@ -213,7 +213,7 @@ begin
   RecarregarRegistro;
 
   if ( not DelphiIsRunning ) then
-    if not DMNFe.GetValidadeCertificado then
+    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCCE_EMPRESA.AsString) then
       Exit;
 
   if DMNFe.GerarEnviarCCeACBr(IbDtstTabelaCCE_EMPRESA.AsString, IbDtstTabelaCCE_NUMERO.AsInteger, mmCondicaoUso.Lines.Text) then

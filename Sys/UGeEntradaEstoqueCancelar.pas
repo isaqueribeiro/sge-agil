@@ -174,7 +174,7 @@ begin
           Exit;
         end;
 
-        if not DMNFe.GetValidadeCertificado then
+        if not DMNFe.GetValidadeCertificado(cdsEntradaCODEMP.AsString) then
           Exit;
 
         lblInforme.Caption := 'Cancelando NF-e junto a SEFA. Aguarde . . . ';
