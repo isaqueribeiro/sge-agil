@@ -117,6 +117,9 @@ type
     BrBtnAbrirCaixa: TdxBarLargeButton;
     BrBtnEncerrarCaixa: TdxBarLargeButton;
     BrBtnGerenciarCaixa: TdxBarLargeButton;
+    BrMngAjudaDiversos: TdxBar;
+    BrBtnRegistroEstacao: TdxBarLargeButton;
+    BrBtnSobre: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);

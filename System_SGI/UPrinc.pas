@@ -295,6 +295,28 @@ type
     BrBtnRelatorioCliente: TdxBarLargeButton;
     BrBtnRelatorioFornecedor: TdxBarLargeButton;
     BrBtnRelatorioProduto: TdxBarLargeButton;
+    BrMngRelatorioOperacional: TdxBar;
+    BrBtnRelatorioEntrada: TdxBarLargeButton;
+    BrPpRelatorioEstoque: TdxBarPopupMenu;
+    BrBtnRelatorioEstoque: TdxBarLargeButton;
+    BrBtnRelatorioEstoqueProd: TdxBarLargeButton;
+    BrBtnRelatorioEstoqueApr: TdxBarLargeButton;
+    BrBtnRelatorioFaturamento: TdxBarLargeButton;
+    BrBtnRelatorioFinanceiro: TdxBarLargeButton;
+    BrBtnRelatorioFaturamentoVnd: TdxBarLargeButton;
+    BrBtnRelatorioFaturamentoOrd: TdxBarLargeButton;
+    BrBtnRelatorioFinanceiroAP: TdxBarLargeButton;
+    BrBtnRelatorioFinanceiroAR: TdxBarLargeButton;
+    BrPpRelatorioFaturamento: TdxBarPopupMenu;
+    BrPpRelatorioFinanceiro: TdxBarPopupMenu;
+    BrBtnRelatorioEstoqueReq: TdxBarLargeButton;
+    BrBtnRelatorioFinanceiroMV: TdxBarLargeButton;
+    BrMngRelatorioGerencial: TdxBar;
+    BrMngAjudaDiversos: TdxBar;
+    BrBtnCarregarLicenca: TdxBarLargeButton;
+    BrBtnRegistroEstacao: TdxBarLargeButton;
+    BrBtnSobre: TdxBarLargeButton;
+    BrBtnNotaFiscalComplementar: TdxBarLargeButton;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -710,6 +732,7 @@ begin
   BrBtnTabelaProduto.Caption    := StrDescricaoProduto;
   BrBtnProduto.Caption          := StrDescricaoProduto;
   BrBtnRelatorioProduto.Caption := StrDescricaoProduto;
+  BrBtnRelatorioEntrada.Caption := 'Entradas de ' + StrDescricaoProduto;
 
   nmGruposProduto.Caption    := 'Grupos de ' + StrDescricaoProduto;
   nmSecaoProduto.Caption     := 'Seções de ' + StrDescricaoProduto;

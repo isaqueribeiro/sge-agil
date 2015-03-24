@@ -266,7 +266,7 @@ var
   function StrFormatarCpf(sCpf: String): String;
   function StrFormatarCEP(sCEP: String): String;
   function StrFormatarFONE(sFone: String): String;
-  function StrDescricaoProduto : String;
+  function StrDescricaoProduto(const NoPlural : Boolean = TRUE) : String;
   function StrOnlyNumbers(const Str : String) : String;
 
   function SetBairro(const iCidade : Integer; const sNome : String) : Integer;
@@ -1823,20 +1823,20 @@ begin
   Result := S;
 end;
 
-function StrDescricaoProduto : String;
+function StrDescricaoProduto(const NoPlural : Boolean = TRUE) : String;
 var
   S : String;
 begin
   try
-    S := 'Produtos';
+    S := 'Produto' + IfThen(NoPlural, 's', EmptyStr);
 
     Case GetSegmentoID(gUsuarioLogado.Empresa)  of
       SEGMENTO_MERCADO_CARRO_ID:
-        S := 'Veículos';
+        S := 'Veículo' + IfThen(NoPlural, 's', EmptyStr);
       SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID:
-        s := 'Produto/Serviço'  
+        s := IfThen(NoPlural, 'Produtos/Serviços', 'Produto/Serviço')
       else
-        S := 'Produtos';
+        S := 'Produto' + IfThen(NoPlural, 's', EmptyStr);
     end;
 
   finally

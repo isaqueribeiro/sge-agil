@@ -918,6 +918,8 @@ begin
   else
   if ( cdsTabelaItens.Active ) then
   begin
+    GerarSequencial(Sequencial);
+
     cdsTabelaItens.Append;
     cdsTabelaItensSEQ.Value := Sequencial;
     dbProduto.SetFocus;

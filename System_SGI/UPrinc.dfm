@@ -4530,12 +4530,21 @@ object frmPrinc: TfrmPrinc
       Groups = <
         item
           ToolbarName = 'BrMngRelatorioCadastro'
+        end
+        item
+          ToolbarName = 'BrMngRelatorioOperacional'
+        end
+        item
+          ToolbarName = 'BrMngRelatorioGerencial'
         end>
       Index = 7
     end
     object RbnTabAjuda: TdxRibbonTab
       Caption = 'Ajuda'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngAjudaDiversos'
+        end>
       Index = 8
     end
   end
@@ -10969,8 +10978,12 @@ object frmPrinc: TfrmPrinc
       'Caixa'
       'Movimento Financeiro'
       'Boleto Banc'#225'rio'
-      'Relat'#243'rios Cadastrais')
+      'Relat'#243'rios Cadastrais'
+      'Relat'#243'rios Operacionais'
+      'Ajuda')
     Categories.ItemsVisibles = (
+      2
+      2
       2
       2
       2
@@ -10988,6 +11001,8 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
+      True
       True
       True
       True
@@ -11367,6 +11382,10 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnNotaFiscalCartaCorrecao'
         end
         item
+          Visible = True
+          ItemName = 'BrBtnNotaFiscalComplementar'
+        end
+        item
           BeginGroup = True
           Visible = True
           ItemName = 'BrBtnNotaFiscalExportar'
@@ -11518,6 +11537,84 @@ object frmPrinc: TfrmPrinc
         item
           Visible = True
           ItemName = 'BrBtnRelatorioProduto'
+        end>
+      OneOnRow = True
+      Row = 2
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngRelatorioOperacional: TdxBar
+      Caption = 'Relat'#243'rios Operacionais'
+      CaptionButtons = <>
+      DockedLeft = 218
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioEntrada'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnRelatorioEstoque'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioFaturamento'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioFinanceiro'
+        end>
+      OneOnRow = True
+      Row = 1
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngRelatorioGerencial: TdxBar
+      Caption = 'Relat'#243'rios Gerenciais'
+      CaptionButtons = <>
+      DockedLeft = 560
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngAjudaDiversos: TdxBar
+      Caption = 'Diversos'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 379
+      FloatTop = 206
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnCarregarLicenca'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRegistroEstacao'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnSobre'
         end>
       OneOnRow = True
       Row = 0
@@ -12093,6 +12190,17 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 37
     end
+    object BrBtnNotaFiscalComplementar: TdxBarLargeButton
+      Caption = 'Nota Fiscal Complementar'
+      Category = 10
+      Enabled = False
+      Hint = 'Nota Fiscal Complementar'
+      Visible = ivAlways
+      LargeImageIndex = 69
+      HotImageIndex = 69
+      SyncImageIndex = False
+      ImageIndex = 69
+    end
     object BrBtnNotaFiscalExportar: TdxBarLargeButton
       Caption = 'Exportar'
       Category = 10
@@ -12354,6 +12462,142 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 62
     end
+    object BrBtnRelatorioEntrada: TdxBarLargeButton
+      Caption = 'Entradas de Produtos/Servi'#231'os'
+      Category = 16
+      Hint = 'Entradas de Produtos/Servi'#231'os'
+      Visible = ivAlways
+      LargeImageIndex = 62
+      OnClick = mnRelatorioEntradaProdutoClick
+      HotImageIndex = 62
+      SyncImageIndex = False
+      ImageIndex = 62
+    end
+    object BrBtnRelatorioEstoque: TdxBarLargeButton
+      Caption = 'Estoque'
+      Category = 16
+      Hint = 'Estoque'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpRelatorioEstoque
+      LargeImageIndex = 62
+      HotImageIndex = 62
+      SyncImageIndex = False
+      ImageIndex = 62
+    end
+    object BrBtnRelatorioEstoqueProd: TdxBarLargeButton
+      Caption = 'Produtos'
+      Category = 16
+      Hint = 'Produtos'
+      Visible = ivAlways
+      OnClick = mnRelatorioEstoqueProdutoClick
+    end
+    object BrBtnRelatorioEstoqueApr: TdxBarLargeButton
+      Caption = 'Apropria'#231#245'es de Estoque'
+      Category = 16
+      Hint = 'Apropria'#231#245'es de Estoque'
+      Visible = ivAlways
+      OnClick = mnRelatorioEstoqueApropriacaoClick
+    end
+    object BrBtnRelatorioEstoqueReq: TdxBarLargeButton
+      Caption = 'Requisi'#231#245'es ao Estoque'
+      Category = 16
+      Enabled = False
+      Hint = 'Requisi'#231#245'es ao Estoque'
+      Visible = ivAlways
+    end
+    object BrBtnRelatorioFaturamento: TdxBarLargeButton
+      Caption = 'Faturamento'
+      Category = 16
+      Hint = 'Faturamento'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpRelatorioFaturamento
+      LargeImageIndex = 63
+      HotImageIndex = 63
+      SyncImageIndex = False
+      ImageIndex = 63
+    end
+    object BrBtnRelatorioFaturamentoVnd: TdxBarLargeButton
+      Caption = 'Vendas'
+      Category = 16
+      Hint = 'Vendas'
+      Visible = ivAlways
+      OnClick = nmRelatorioFaturamentoVendasClick
+    end
+    object BrBtnRelatorioFaturamentoOrd: TdxBarLargeButton
+      Caption = 'Ordens de Servi'#231'os'
+      Category = 16
+      Enabled = False
+      Hint = 'Ordens de Servi'#231'os'
+      Visible = ivAlways
+    end
+    object BrBtnRelatorioFinanceiro: TdxBarLargeButton
+      Caption = 'Financeiro'
+      Category = 16
+      Hint = 'Financeiro'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpRelatorioFinanceiro
+      LargeImageIndex = 64
+      HotImageIndex = 64
+      SyncImageIndex = False
+      ImageIndex = 64
+    end
+    object BrBtnRelatorioFinanceiroAP: TdxBarLargeButton
+      Caption = 'Contas A Pagar'
+      Category = 16
+      Hint = 'Contas A Pagar'
+      Visible = ivAlways
+      OnClick = nmRelatorioFinanceiroContasAPagarClick
+    end
+    object BrBtnRelatorioFinanceiroAR: TdxBarLargeButton
+      Caption = 'Contas A Receber'
+      Category = 16
+      Hint = 'Contas A Receber'
+      Visible = ivAlways
+      OnClick = nmRelatorioFinanceiroContasAReceberClick
+    end
+    object BrBtnRelatorioFinanceiroMV: TdxBarLargeButton
+      Caption = 'Movimenta'#231#245'es'
+      Category = 16
+      Enabled = False
+      Hint = 'Movimenta'#231#245'es'
+      Visible = ivAlways
+    end
+    object BrBtnCarregarLicenca: TdxBarLargeButton
+      Caption = 'Carregar Licen'#231'a'
+      Category = 17
+      Hint = 'Carregar Licen'#231'a'
+      Visible = ivAlways
+      LargeImageIndex = 67
+      OnClick = nmCarregarLicencaClick
+      HotImageIndex = 67
+      SyncImageIndex = False
+      ImageIndex = 67
+    end
+    object BrBtnRegistroEstacao: TdxBarLargeButton
+      Caption = 'Registros de Computadores'
+      Category = 17
+      Hint = 'Registros de Computadores'
+      Visible = ivAlways
+      LargeImageIndex = 65
+      OnClick = nmRegistroEstacaoClick
+      HotImageIndex = 65
+      SyncImageIndex = False
+      ImageIndex = 65
+    end
+    object BrBtnSobre: TdxBarLargeButton
+      Caption = 'Sobre o Sistema'
+      Category = 17
+      Hint = 'Sobre o Sistema'
+      Visible = ivAlways
+      LargeImageIndex = 68
+      OnClick = nmAboutClick
+      HotImageIndex = 68
+      SyncImageIndex = False
+      ImageIndex = 68
+    end
   end
   object BrPpEntrada: TdxBarPopupMenu
     BarManager = BrManager
@@ -12563,6 +12807,61 @@ object frmPrinc: TfrmPrinc
       end>
     UseOwnFont = False
     Left = 496
+    Top = 246
+  end
+  object BrPpRelatorioEstoque: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioEstoqueProd'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioEstoqueApr'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnRelatorioEstoqueReq'
+      end>
+    UseOwnFont = False
+    Left = 528
+    Top = 246
+  end
+  object BrPpRelatorioFaturamento: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioFaturamentoVnd'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioFaturamentoOrd'
+      end>
+    UseOwnFont = False
+    Left = 560
+    Top = 246
+  end
+  object BrPpRelatorioFinanceiro: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioFinanceiroAP'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioFinanceiroAR'
+      end
+      item
+        BeginGroup = True
+        Visible = True
+        ItemName = 'BrBtnRelatorioFinanceiroMV'
+      end>
+    UseOwnFont = False
+    Left = 592
     Top = 246
   end
 end
