@@ -20011,6 +20011,7 @@ object frmPrinc: TfrmPrinc
     TabOrder = 7
     TabStop = False
     object RbbTabPrincipal: TdxRibbonTab
+      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -20055,9 +20056,11 @@ object frmPrinc: TfrmPrinc
       Index = 3
     end
     object RbbTabAjuda: TdxRibbonTab
-      Active = True
       Caption = 'Ajuda'
-      Groups = <>
+      Groups = <
+        item
+          ToolbarName = 'BrMngAjudaDiversos'
+        end>
       Index = 4
     end
   end
@@ -21333,8 +21336,10 @@ object frmPrinc: TfrmPrinc
       'Configura'#231#245'es'
       'Acesso'
       'Tabelas Auxiliares'
-      'Caixa')
+      'Caixa'
+      'Ajuda')
     Categories.ItemsVisibles = (
+      2
       2
       2
       2
@@ -21342,6 +21347,7 @@ object frmPrinc: TfrmPrinc
       2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -21544,6 +21550,31 @@ object frmPrinc: TfrmPrinc
         item
           Visible = True
           ItemName = 'BrBtnGerenciarCaixa'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMngAjudaDiversos: TdxBar
+      Caption = 'Diversos'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 441
+      FloatTop = 226
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnRegistroEstacao'
+        end
+        item
+          BeginGroup = True
+          Visible = True
+          ItemName = 'BrBtnSobre'
         end>
       OneOnRow = True
       Row = 0
@@ -21779,6 +21810,28 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 47
       SyncImageIndex = False
       ImageIndex = 47
+    end
+    object BrBtnRegistroEstacao: TdxBarLargeButton
+      Caption = 'Registro de Computadores'
+      Category = 6
+      Hint = 'Registro de Computadores'
+      Visible = ivAlways
+      LargeImageIndex = 65
+      OnClick = mnRegistroEstacaoClick
+      HotImageIndex = 65
+      SyncImageIndex = False
+      ImageIndex = 65
+    end
+    object BrBtnSobre: TdxBarLargeButton
+      Caption = 'Sobre o Sistema'
+      Category = 6
+      Hint = 'Sobre o Sistema'
+      Visible = ivAlways
+      LargeImageIndex = 68
+      OnClick = nmAboutClick
+      HotImageIndex = 68
+      SyncImageIndex = False
+      ImageIndex = 68
     end
   end
   object TmrMonitorar: TTimer
