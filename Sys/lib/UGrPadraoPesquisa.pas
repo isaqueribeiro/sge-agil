@@ -48,7 +48,7 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE;
+  UConstantesDGE, UDMBusiness, UDMRecursos;
 
 {$R *.dfm}
 

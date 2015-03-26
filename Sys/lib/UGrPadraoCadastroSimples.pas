@@ -37,6 +37,9 @@ implementation
 
 {$R *.dfm}
 
+uses
+  UConstantesDGE, UFuncoes, UDMBusiness, UDMRecursos;
+
 { TfrmGrPadraoCadastroSimples }
 
 procedure TfrmGrPadraoCadastroSimples.RegistrarRotinaSistema;

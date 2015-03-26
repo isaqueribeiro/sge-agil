@@ -5,7 +5,6 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
   Caption = ' Efetuar Login!'
   ClientHeight = 285
   ClientWidth = 475
-  Font.Charset = ANSI_CHARSET
   Font.Height = -16
   Font.Name = 'Calibri'
   DesignSize = (
