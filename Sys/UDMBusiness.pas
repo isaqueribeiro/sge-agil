@@ -4,11 +4,11 @@ interface
 
 uses
   {$IFDEF DGE}
-  EUserAcs,
+  EUserAcs, EMsgDlg,
   {$ENDIF}
   Windows, Forms, SysUtils, Classes, Controls, IBDatabase, DB, IBCustomDataSet, IniFIles,
-  ShellApi, Printers, DateUtils, IBQuery, RpDefine, RpRave,
-  frxClass, frxDBSet, EMsgDlg, IdBaseComponent, IdComponent, IdIPWatch, IBStoredProc,
+  ShellApi, Printers, DateUtils, IBQuery,
+  frxClass, frxDBSet, IdBaseComponent, IdComponent, IdIPWatch, IBStoredProc,
   FuncoesFormulario, UConstantesDGE, IBUpdateSQL, DBClient,
   Provider, Dialogs, Registry, frxChart, frxCross, frxRich, frxExportMail,
   frxExportImage, frxExportRTF, frxExportXLS, frxExportPDF;
@@ -72,9 +72,7 @@ type
     ibdtstAjustEstoqLookFornec: TStringField;
     qryBusca: TIBQuery;
     ibdtstUsers: TIBDataSet;
-    EvMsgDialog: TEvMsgDlg;
     dtsrcUsers: TDataSource;
-    raveReport: TRvProject;
     IdIPWatch: TIdIPWatch;
     qryCaixaAberto: TIBDataSet;
     qryCaixaAbertoANO: TSmallintField;
