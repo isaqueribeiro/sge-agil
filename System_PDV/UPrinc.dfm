@@ -4522,7 +4522,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalMov: TdxBar
       Caption = 'Movimentos'
       CaptionButtons = <>
-      DockedLeft = 0
+      DockedLeft = 144
       DockedTop = 0
       FloatLeft = 441
       FloatTop = 226
@@ -4537,7 +4537,7 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnOrcamento'
         end>
-      OneOnRow = True
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -4562,7 +4562,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnCliente'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -4681,7 +4681,7 @@ object frmPrinc: TfrmPrinc
           ItemName = 'BrBtnEfetuarLogoff'
         end>
       OneOnRow = False
-      Row = 1
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False

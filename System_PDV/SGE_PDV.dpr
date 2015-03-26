@@ -33,7 +33,6 @@ uses
   UDMNFe in '..\Sys\UDMNFe.pas' {DMNFe: TDataModule},
   UGeConfigurarNFeACBr in '..\Sys\UGeConfigurarNFeACBr.pas' {frmGeConfigurarNFeACBr},
   UEnviarLoteNFe in '..\Sys\UEnviarLoteNFe.pas' {frmEnviarLoteNFe},
-  ChkDgVer in '..\Sys\lib\ChkDgVer.pas',
   UGrCampoRequisitado in '..\Sys\lib\UGrCampoRequisitado.pas' {frmCampoRequisitado},
   UGeGerarBoletos in '..\Sys\UGeGerarBoletos.pas' {frmGeGerarBoleto},
   UGePromocao in '..\Sys\UGePromocao.pas' {frmGePromocao},
