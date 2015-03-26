@@ -155,7 +155,7 @@ const
 implementation
 
 uses
-  UDMBusiness, UGrCampoRequisitado, UConstantesDGE;
+  UConstantesDGE, UFuncoes, UGrCampoRequisitado, UDMBusiness, UDMRecursos, UDMNFe;
 
 {$R *.dfm}
 
