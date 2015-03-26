@@ -298,27 +298,9 @@ object DMBusiness: TDMBusiness
       Origin = '"TBUSERS"."VENDEDOR"'
     end
   end
-  object EvMsgDialog: TEvMsgDlg
-    ButtonFont.Charset = ANSI_CHARSET
-    ButtonFont.Color = clWindowText
-    ButtonFont.Height = -11
-    ButtonFont.Name = 'Tahoma'
-    ButtonFont.Style = []
-    MessageFont.Charset = DEFAULT_CHARSET
-    MessageFont.Color = clWindowText
-    MessageFont.Height = -11
-    MessageFont.Name = 'MS Sans Serif'
-    MessageFont.Style = []
-    Left = 312
-    Top = 56
-  end
   object dtsrcUsers: TDataSource
     DataSet = ibdtstUsers
     Left = 208
-    Top = 120
-  end
-  object raveReport: TRvProject
-    Left = 40
     Top = 120
   end
   object IdIPWatch: TIdIPWatch
@@ -999,7 +981,7 @@ object DMBusiness: TDMBusiness
       ''
       'end.')
     OnReportPrint = 'frxReportOnReportPrint'
-    Left = 72
+    Left = 40
     Top = 120
     Datasets = <
       item
