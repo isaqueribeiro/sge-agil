@@ -1,6 +1,6 @@
 inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
-  Left = 411
-  Top = 228
+  Left = 395
+  Top = 218
   Width = 1132
   Height = 615
   ActiveControl = edTipoRequisicao
@@ -22,14 +22,11 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       DesignSize = (
         888
         73)
-      inherited BrnPesquisar: TSpeedButton
-        Left = 763
-      end
       inherited lblPesquisar: TLabel
         Left = 440
         Visible = False
       end
-      object lblData: TLabel [2]
+      object lblData: TLabel [1]
         Left = 216
         Top = 24
         Width = 46
@@ -37,7 +34,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Caption = 'Per'#237'o&do:'
         FocusControl = e1Data
       end
-      object lblTipoRequisicao: TLabel [3]
+      object lblTipoRequisicao: TLabel [2]
         Left = 16
         Top = 24
         Width = 91
@@ -45,7 +42,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Caption = '&Tipo Requisi'#231#227'o:'
         FocusControl = edTipoRequisicao
       end
-      object lblFornecedor: TLabel [4]
+      object lblFornecedor: TLabel [3]
         Left = 440
         Top = 24
         Width = 67
@@ -53,7 +50,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Caption = '&Fornecedor:'
         FocusControl = edFornecedor
       end
-      object BtnConverter: TSpeedButton [5]
+      object BtnConverter: TSpeedButton [4]
         Left = 792
         Top = 40
         Width = 89
@@ -128,6 +125,10 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Enabled = False
         TabOrder = 4
         Visible = False
+      end
+      inherited BrnPesquisar: TcxButton
+        Left = 763
+        TabOrder = 5
       end
       object edTipoRequisicao: TComboBox
         Left = 16

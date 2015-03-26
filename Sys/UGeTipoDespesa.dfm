@@ -1,5 +1,5 @@
 inherited frmGeTipoDespesa: TfrmGeTipoDespesa
-  Left = 385
+  Left = 390
   Width = 757
   Height = 447
   Caption = 'Cadastro de Tipos de Despesas'
@@ -12,10 +12,6 @@ inherited frmGeTipoDespesa: TfrmGeTipoDespesa
   end
   inherited Bevel3: TBevel
     Top = 366
-    Width = 741
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 370
     Width = 741
   end
   inherited pgcGuias: TPageControl
@@ -63,12 +59,12 @@ inherited frmGeTipoDespesa: TfrmGeTipoDespesa
             Width = 78
             Caption = 'Tipo Despesa:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 245
-          end
           inherited edtFiltrar: TEdit
             Left = 88
             Width = 153
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 245
           end
         end
       end
@@ -213,6 +209,22 @@ inherited frmGeTipoDespesa: TfrmGeTipoDespesa
           OnButtonClick = dbPlanoContasButtonClick
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 370
+    Width = 741
+    inherited bvlTool3: TBevel
+      Left = 658
+    end
+    inherited bvlTool4: TBevel
+      Left = 737
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 662
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 538
     end
   end
   inherited IbDtstTabela: TIBDataSet

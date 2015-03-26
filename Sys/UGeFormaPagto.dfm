@@ -1,6 +1,6 @@
 inherited frmGeFormaPagto: TfrmGeFormaPagto
-  Left = 403
-  Top = 212
+  Left = 393
+  Top = 215
   Caption = 'Tabela de Formas de Pagamento'
   OldCreateOrder = True
   PixelsPerInch = 96
@@ -41,12 +41,12 @@ inherited frmGeFormaPagto: TfrmGeFormaPagto
             Width = 107
             Caption = 'Forma Pagamento:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 277
-          end
           inherited edtFiltrar: TEdit
             Left = 120
             Width = 153
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 277
           end
         end
       end

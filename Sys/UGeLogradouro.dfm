@@ -1,6 +1,6 @@
 inherited frmGeLogradouro: TfrmGeLogradouro
-  Left = 423
-  Top = 239
+  Left = 403
+  Top = 260
   Caption = 'Tabela de Logradouros'
   OldCreateOrder = True
   PixelsPerInch = 96

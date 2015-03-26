@@ -1,5 +1,6 @@
 inherited frmGeFornecedor: TfrmGeFornecedor
-  Left = 434
+  Left = 394
+  Top = 219
   Width = 860
   Height = 539
   Caption = 'Cadastro de Fornecedores'
@@ -14,19 +15,6 @@ inherited frmGeFornecedor: TfrmGeFornecedor
   inherited Bevel3: TBevel
     Top = 458
     Width = 844
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 462
-    Width = 844
-    inherited bvlToolExpandir: TBevel
-      Width = 81
-    end
-    inherited btbtnSelecionar: TcxButton
-      Left = 622
-    end
-    inherited bvlTool4: TBevel
-      Left = 742
-    end
   end
   inherited pgcGuias: TPageControl
     Width = 844
@@ -91,12 +79,12 @@ inherited frmGeFornecedor: TfrmGeFornecedor
             Width = 67
             Caption = 'Fornecedor:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 226
-          end
           inherited edtFiltrar: TEdit
             Left = 80
             Width = 142
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 226
           end
         end
       end
@@ -1832,6 +1820,22 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           OnClick = btnConsultarCPFClick
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 462
+    Width = 844
+    inherited bvlTool3: TBevel
+      Left = 761
+    end
+    inherited bvlTool4: TBevel
+      Left = 840
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 765
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 641
     end
   end
   inherited IbDtstTabela: TIBDataSet

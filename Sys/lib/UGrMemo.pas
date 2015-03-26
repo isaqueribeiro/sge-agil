@@ -9,14 +9,14 @@ uses
 
 type
   TfrmGrMemo = class(TfrmGrPadrao)
-    tlbBotoes: TToolBar;
+    Bevel1: TBevel;
+    Bevel3: TBevel;
+    edObservacao: TMemo;
+    tlbBotoes: TPanel;
     Bevel2: TBevel;
     BtnConfirmar: TcxButton;
     bvlTool4: TBevel;
-    Bevel1: TBevel;
-    Bevel3: TBevel;
     BtnCancelar: TcxButton;
-    edObservacao: TMemo;
     procedure BtnConfirmarClick(Sender: TObject);
     procedure BtnCancelarClick(Sender: TObject);
   private

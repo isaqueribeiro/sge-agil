@@ -6,7 +6,7 @@ uses
   UInfoVersao,
   PngImage,
 
-  Windows, SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFeDANFERave, ACBrNFe, DB,
+  Windows, SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFe, DB,
   IBCustomDataSet, IBQuery, frxClass, frxDBSet, frxExportRTF, frxExportXLS,
   frxExportPDF, frxExportMail, UGeConfigurarNFeACBr, TypInfo,
   HTTPApp, WinInet, Graphics, ExtCtrls, Jpeg,
@@ -19,12 +19,11 @@ uses
   ACBrSATExtratoESCPOS, ACBrNFeDANFeESCPOS, ACBrSAT;
 
 type
-  TTipoDANFE = (tipoDANFERave, tipoDANFEFast, tipoDANFE_ESCPOS);
+  TTipoDANFE = (tipoDANFEFast, tipoDANFE_ESCPOS); 
   TQrImage_ErrCorrLevel = (L, M, Q, H);
   TTamanhoQrCode = (tamQrCode150, tamQrCode160, tamQrCode175, tamQrCode180, tamQrCode200, tamQrCode300);
   TDMNFe = class(TDataModule)
     ACBrNFe: TACBrNFe;
-    rvDANFE: TACBrNFeDANFERave;
     frDANFE: TACBrNFeDANFEFR;
     qryDestinatario: TIBQuery;
     qryDestinatarioCODIGO: TIntegerField;
@@ -429,6 +428,8 @@ type
     qryDuplicatasTIPPAG: TIBStringField;
     qryDuplicatasBAIXADO: TSmallintField;
     qryDuplicatasDTREC: TDateField;
+    frrNFeRetrato: TfrxReport;
+    frrNFePaisagem: TfrxReport;
     procedure SelecionarCertificado(Sender : TObject);
     procedure TestarServico(Sender : TObject);
     procedure DataModuleCreate(Sender: TObject);
@@ -474,7 +475,7 @@ type
     property ConfigACBr : TfrmGeConfigurarNFeACBr read frmACBr write frmACBr;
     procedure LoadXML(MyMemo: TStringList; MyWebBrowser: TWebBrowser);
 
-    procedure LerConfiguracao(const sCNPJEmitente : String; const tipoDANFE : TTipoDANFE = tipoDANFERave);
+    procedure LerConfiguracao(const sCNPJEmitente : String; const tipoDANFE : TTipoDANFE = tipoDANFEFast);
     procedure GravarConfiguracao(const sCNPJEmitente : String);
     procedure ConfigurarEmail(const sCNPJEmitente, sDestinatario, sAssunto, sMensagem : String);
     procedure GerarArquivoQRCODE(const FileNameQRCODE, StringQRCODE : String; const tamanhoQrCode : TTamanhoQrCode);
@@ -850,7 +851,6 @@ begin
   ConfigACBr.sbtnGetCert.OnClick := SelecionarCertificado;
   ConfigACBr.btnServico.OnClick  := TestarServico;
 
-  rvDANFE.Sistema := GetCompanyName + ' - Contato(s): ' + GetContacts;
   frDANFE.Sistema := GetCompanyName + ' - Contato(s): ' + GetContacts;
 
   // A leitura do Certificado será feita agora apenas na emissão da NF-e
@@ -950,7 +950,7 @@ begin
   end;
 end;
 
-procedure TDMNFe.LerConfiguracao(const sCNPJEmitente : String; const tipoDANFE : TTipoDANFE = tipoDANFERave);
+procedure TDMNFe.LerConfiguracao(const sCNPJEmitente : String; const tipoDANFE : TTipoDANFE = tipoDANFEFast);
 Var
   Ok : Boolean;
   StreamMemo : TMemoryStream;
@@ -1046,7 +1046,6 @@ begin
       ACBrNFe.Configuracoes.Geral.ModeloDF := moNFe;
       ACBrNFe.Configuracoes.Geral.VersaoDF := TpcnVersaoDF(cbVersaoDF.ItemIndex); // ve310;
 
-      rvDANFE.PathPDF := ExtractFilePath( ParamStr(0) ) + DIRECTORY_PRINT;
       frDANFE.PathPDF := ExtractFilePath( ParamStr(0) ) + DIRECTORY_PRINT;
 
       with ACBrNFe.Configuracoes do
@@ -1060,9 +1059,6 @@ begin
         Arquivos.PathDPEC   := StringReplace(Geral.PathSalvar + '\DPEC',        '\\', '\', [rfReplaceAll]);
       end;
 
-      if ( tipoDANFE = tipoDANFERave ) then
-        ACBrNFe.DANFE := rvDANFE
-      else
       if ( tipoDANFE = tipoDANFEFast ) then
         ACBrNFe.DANFE := frDANFE
       else
@@ -1104,19 +1100,19 @@ begin
           ACBrNFe.DANFE.Logo := EmptyStr;
       end;
 
-      edtEmitCNPJ.Text       := ReadString( sSecaoEmitente, 'CNPJ'       , '' ) ;
-      edtEmitIE.Text         := ReadString( sSecaoEmitente, 'IE'         , '' ) ;
-      edtEmitRazao.Text      := ReadString( sSecaoEmitente, 'RazaoSocial', '' ) ;
-      edtEmitFantasia.Text   := ReadString( sSecaoEmitente, 'Fantasia'   , '' ) ;
-      edtEmitFone.Text       := ReadString( sSecaoEmitente, 'Fone'       , '' ) ;
-      edtEmitCEP.Text        := ReadString( sSecaoEmitente, 'CEP'        , '' ) ;
-      edtEmitLogradouro.Text := ReadString( sSecaoEmitente, 'Logradouro' , '' ) ;
-      edtEmitNumero.Text     := ReadString( sSecaoEmitente, 'Numero'     , '' ) ;
-      edtEmitComp.Text       := ReadString( sSecaoEmitente, 'Complemento', '' ) ;
-      edtEmitBairro.Text     := ReadString( sSecaoEmitente, 'Bairro'     , '' ) ;
-      edtEmitCodCidade.Text  := ReadString( sSecaoEmitente, 'CodCidade'  , '' ) ;
-      edtEmitCidade.Text     := ReadString( sSecaoEmitente, 'Cidade'     , '' ) ;
-      edtEmitUF.Text         := ReadString( sSecaoEmitente, 'UF'         , '' ) ;
+      edtEmitCNPJ.Text       := ReadString( sSecaoEmitente, 'CNPJ'       , EmptyStr ) ;
+      edtEmitIE.Text         := ReadString( sSecaoEmitente, 'IE'         , EmptyStr ) ;
+      edtEmitRazao.Text      := ReadString( sSecaoEmitente, 'RazaoSocial', EmptyStr ) ;
+      edtEmitFantasia.Text   := ReadString( sSecaoEmitente, 'Fantasia'   , EmptyStr ) ;
+      edtEmitFone.Text       := ReadString( sSecaoEmitente, 'Fone'       , EmptyStr ) ;
+      edtEmitCEP.Text        := ReadString( sSecaoEmitente, 'CEP'        , EmptyStr ) ;
+      edtEmitLogradouro.Text := ReadString( sSecaoEmitente, 'Logradouro' , EmptyStr ) ;
+      edtEmitNumero.Text     := ReadString( sSecaoEmitente, 'Numero'     , EmptyStr ) ;
+      edtEmitComp.Text       := ReadString( sSecaoEmitente, 'Complemento', EmptyStr ) ;
+      edtEmitBairro.Text     := ReadString( sSecaoEmitente, 'Bairro'     , EmptyStr ) ;
+      edtEmitCodCidade.Text  := ReadString( sSecaoEmitente, 'CodCidade'  , EmptyStr ) ;
+      edtEmitCidade.Text     := ReadString( sSecaoEmitente, 'Cidade'     , EmptyStr ) ;
+      edtEmitUF.Text         := ReadString( sSecaoEmitente, 'UF'         , EmptyStr ) ;
       edInfoFisco.Text       := ReadString( sSecaoEmitente, 'InfoFisco'  , 'EMPRESA OPTANTE PELO SIMPLES DE ACORDO COM A LEI COMPLEMENTAR 123, DE DEZEMBRO DE 2006' ) ;
 
       // Configuração para envio de e-mails
@@ -1151,19 +1147,19 @@ begin
 
       if ( (Trim(edtEmitCNPJ.Text) = EmptyStr) and (not qryEmitente.IsEmpty) ) then
       begin
-        edtEmitCNPJ.Text       := qryEmitenteCNPJ.AsString;
-        edtEmitIE.Text         := qryEmitenteIE.AsString;
-        edtEmitRazao.Text      := qryEmitenteRZSOC.AsString;
-        edtEmitFantasia.Text   := qryEmitenteNMFANT.AsString;
-        edtEmitFone.Text       := qryEmitenteFONE.AsString;
-        edtEmitCEP.Text        := qryEmitenteCEP.AsString;
-        edtEmitLogradouro.Text := qryEmitenteTLG_SIGLA.AsString + ' ' + qryEmitenteLOG_NOME.AsString;
-        edtEmitNumero.Text     := qryEmitenteNUMERO_END.AsString;
-        edtEmitComp.Text       := qryEmitenteCOMPLEMENTO.AsString;
-        edtEmitBairro.Text     := qryEmitenteBAI_NOME.AsString;
-        edtEmitCodCidade.Text  := qryEmitenteCID_IBGE.AsString;
-        edtEmitCidade.Text     := qryEmitenteCID_NOME.AsString;
-        edtEmitUF.Text         := qryEmitenteEST_SIGLA.AsString;
+        edtEmitCNPJ.Text       := Trim(qryEmitenteCNPJ.AsString);
+        edtEmitIE.Text         := Trim(qryEmitenteIE.AsString);
+        edtEmitRazao.Text      := Trim(qryEmitenteRZSOC.AsString);
+        edtEmitFantasia.Text   := Trim(qryEmitenteNMFANT.AsString);
+        edtEmitFone.Text       := Trim(qryEmitenteFONE.AsString);
+        edtEmitCEP.Text        := Trim(qryEmitenteCEP.AsString);
+        edtEmitLogradouro.Text := Trim(qryEmitenteTLG_SIGLA.AsString + ' ' + qryEmitenteLOG_NOME.AsString);
+        edtEmitNumero.Text     := Trim(qryEmitenteNUMERO_END.AsString);
+        edtEmitComp.Text       := Trim(qryEmitenteCOMPLEMENTO.AsString);
+        edtEmitBairro.Text     := Trim(qryEmitenteBAI_NOME.AsString);
+        edtEmitCodCidade.Text  := Trim(qryEmitenteCID_IBGE.AsString);
+        edtEmitCidade.Text     := Trim(qryEmitenteCID_NOME.AsString);
+        edtEmitUF.Text         := Trim(qryEmitenteEST_SIGLA.AsString);
 
         edIdToken.Text       := GetTokenID_NFCe(sCNPJEmitente);
         edToken.Text         := GetToken_NFCe(sCNPJEmitente);
@@ -1260,12 +1256,6 @@ begin
     ACBrNFe.DANFE.Email := qryEmitenteEMAIL.AsString;
     ACBrNFe.DANFE.Site  := qryEmitenteHOME_PAGE.AsString;
 
-    if ACBrNFe.DANFE is TACBrNFeDANFERave then
-    begin
-      TACBrNFeDANFERave(ACBrNFe.DANFE).TamanhoFonte_RazaoSocial := 10;
-      TACBrNFeDANFERave(ACBrNFe.DANFE).RavFile                  := sFileNFERave;
-    end
-    else
     if ACBrNFe.DANFE is TACBrNFeDANFEFR then
     begin
       TACBrNFeDANFEFR(ACBrNFe.DANFE).FastFile       := sFileNFEFast;
@@ -2557,15 +2547,15 @@ begin
         
       end;
 
-//      // Dados da Fatura
-//
-//      Cobr.Fat.nFat  := FormatFloat('0000', qryCalculoImportoANO.AsInteger) + '/' + FormatFloat('0000000', qryCalculoImportoCODCONTROL.AsInteger);
-//      Cobr.Fat.vOrig := qryCalculoImportoTOTALVENDABRUTA.AsCurrency;
-//      Cobr.Fat.vDesc := qryCalculoImportoDESCONTO.AsCurrency ;
-//      Cobr.Fat.vLiq  := qryCalculoImportoTOTALVENDA.AsCurrency ;
+      // Dados da Fatura
+
+      Cobr.Fat.nFat  := FormatFloat('0000', qryCalculoImportoANO.AsInteger) + '/' + FormatFloat('0000000', qryCalculoImportoCODCONTROL.AsInteger);
+      Cobr.Fat.vOrig := qryCalculoImportoTOTALVENDABRUTA.AsCurrency;
+      Cobr.Fat.vDesc := qryCalculoImportoDESCONTO.AsCurrency ;
+      Cobr.Fat.vLiq  := qryCalculoImportoTOTALVENDA.AsCurrency ;
 
       // Dados da(s) Duplicata(s)
-      
+
       if ( qryCalculoImportoVENDA_PRAZO.AsInteger = 1 ) then
       begin
         qryDuplicatas.First;
@@ -4460,7 +4450,7 @@ begin
       if not FileExists(FileNameXML) then
         raise Exception.Create(Format('Arquivo %s não encontrado.', [QuotedStr(FileNameXML)]))
       else
-        Result := True;  
+        Result := True;
     end;
 
   except

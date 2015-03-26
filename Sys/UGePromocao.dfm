@@ -1,6 +1,6 @@
 inherited frmGePromocao: TfrmGePromocao
-  Left = 460
-  Top = 254
+  Left = 422
+  Top = 240
   Width = 770
   Height = 520
   Caption = 'Cadastro de Promo'#231#245'es'
@@ -13,10 +13,6 @@ inherited frmGePromocao: TfrmGePromocao
   end
   inherited Bevel3: TBevel
     Top = 439
-    Width = 754
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 443
     Width = 754
   end
   inherited pgcGuias: TPageControl
@@ -83,12 +79,12 @@ inherited frmGePromocao: TfrmGePromocao
             Width = 58
             Caption = 'Descri'#231#227'o:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 277
-          end
           inherited edtFiltrar: TEdit
             Left = 72
             Width = 201
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 277
           end
         end
       end
@@ -952,6 +948,22 @@ inherited frmGePromocao: TfrmGePromocao
             Visible = True
           end>
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 443
+    Width = 754
+    inherited bvlTool3: TBevel
+      Left = 671
+    end
+    inherited bvlTool4: TBevel
+      Left = 750
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 675
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 551
     end
   end
   inherited IbDtstTabela: TIBDataSet

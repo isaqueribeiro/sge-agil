@@ -27,7 +27,6 @@ type
   TfrmGeApropriacaoEstoquePesquisa = class(TfrmGrPadrao)
     pnlPesquisa: TPanel;
     GrpBxFiltro: TGroupBox;
-    BtnPesquisar: TSpeedButton;
     lblPesquisar: TLabel;
     lblTipoFiltro: TLabel;
     edPesquisar: TEdit;
@@ -107,6 +106,7 @@ type
     btBtnAtualizarCusto: TcxButton;
     btbtnSelecionar: TcxButton;
     Bevel4: TBevel;
+    BtnPesquisar: TcxButton;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);

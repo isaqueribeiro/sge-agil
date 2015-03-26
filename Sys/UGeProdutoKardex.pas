@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
-  StdCtrls, Buttons, ExtCtrls, Mask, JvToolEdit, JvExMask;
+  StdCtrls, Buttons, ExtCtrls, Mask, JvToolEdit, JvExMask, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
 
 type
   TfrmGeProdutoKardex = class(TfrmGrPadraoPesquisa)

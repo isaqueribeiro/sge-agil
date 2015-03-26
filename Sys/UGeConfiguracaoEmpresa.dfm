@@ -1,5 +1,6 @@
 inherited frmGeConfiguracaoEmpresa: TfrmGeConfiguracaoEmpresa
-  Top = 209
+  Left = 407
+  Top = 238
   Width = 767
   Height = 495
   ActiveControl = nil
@@ -13,10 +14,6 @@ inherited frmGeConfiguracaoEmpresa: TfrmGeConfiguracaoEmpresa
   end
   inherited Bevel3: TBevel
     Top = 414
-    Width = 751
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 418
     Width = 751
   end
   inherited pgcGuias: TPageControl
@@ -65,12 +62,12 @@ inherited frmGeConfiguracaoEmpresa: TfrmGeConfiguracaoEmpresa
             Width = 52
             Caption = 'Empresa:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 277
-          end
           inherited edtFiltrar: TEdit
             Left = 72
             Width = 201
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 277
           end
         end
       end
@@ -527,6 +524,22 @@ inherited frmGeConfiguracaoEmpresa: TfrmGeConfiguracaoEmpresa
           end
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 418
+    Width = 751
+    inherited bvlTool3: TBevel
+      Left = 668
+    end
+    inherited bvlTool4: TBevel
+      Left = 747
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 672
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 548
     end
   end
   inherited IbDtstTabela: TIBDataSet

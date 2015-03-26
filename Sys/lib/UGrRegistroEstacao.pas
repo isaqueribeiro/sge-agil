@@ -10,8 +10,6 @@ uses
 
 type
   TFrmGrRegistroEstacao = class(TfrmGrPadrao)
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
     Bevel3: TBevel;
     Bevel1: TBevel;
     pgcGuia: TPageControl;
@@ -27,6 +25,8 @@ type
     cdsRegistroEST_REGISTRO: TIBStringField;
     cdsRegistroEST_ULTIMO_ACESSO: TDateTimeField;
     cdsRegistroSEQ: TIntegerField;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
     btbtnIncluir: TcxButton;
     btbtnExcluir: TcxButton;
     procedure FormCreate(Sender: TObject);

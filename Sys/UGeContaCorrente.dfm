@@ -1,6 +1,6 @@
 inherited frmGeContaCorrente: TfrmGeContaCorrente
-  Left = 401
-  Top = 224
+  Left = 393
+  Top = 212
   Width = 759
   Height = 478
   Caption = 'Controle de Conta Corrente'
@@ -13,10 +13,6 @@ inherited frmGeContaCorrente: TfrmGeContaCorrente
   end
   inherited Bevel3: TBevel
     Top = 397
-    Width = 743
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 401
     Width = 743
   end
   inherited pgcGuias: TPageControl
@@ -70,12 +66,12 @@ inherited frmGeContaCorrente: TfrmGeContaCorrente
             Width = 89
             Caption = 'Conta Corrente:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 277
-          end
           inherited edtFiltrar: TEdit
             Left = 112
             Width = 161
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 277
           end
         end
       end
@@ -243,6 +239,22 @@ inherited frmGeContaCorrente: TfrmGeContaCorrente
           OnButtonClick = dbBancoButtonClick
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 401
+    Width = 743
+    inherited bvlTool3: TBevel
+      Left = 660
+    end
+    inherited bvlTool4: TBevel
+      Left = 739
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 664
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 540
     end
   end
   inherited IbDtstTabela: TIBDataSet

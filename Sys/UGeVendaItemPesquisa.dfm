@@ -1,6 +1,6 @@
 inherited FrmGeVendaItemPesquisa: TFrmGeVendaItemPesquisa
-  Left = 392
-  Top = 215
+  Left = 387
+  Top = 208
   Width = 1132
   Height = 677
   ActiveControl = nil
@@ -28,13 +28,10 @@ inherited FrmGeVendaItemPesquisa: TFrmGeVendaItemPesquisa
       DesignSize = (
         888
         73)
-      inherited BrnPesquisar: TSpeedButton
-        Left = 851
-      end
       inherited lblPesquisar: TLabel
         Left = 240
       end
-      object lblData: TLabel [2]
+      object lblData: TLabel [1]
         Left = 16
         Top = 24
         Width = 46
@@ -46,6 +43,10 @@ inherited FrmGeVendaItemPesquisa: TFrmGeVendaItemPesquisa
         Left = 240
         Width = 604
         TabOrder = 2
+      end
+      inherited BrnPesquisar: TcxButton
+        Left = 851
+        TabOrder = 3
       end
       object e1Data: TJvDateEdit
         Left = 16

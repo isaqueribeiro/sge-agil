@@ -1,6 +1,6 @@
 inherited frmGeTabelaCFOP: TfrmGeTabelaCFOP
-  Left = 408
-  Top = 219
+  Left = 391
+  Top = 217
   Width = 744
   Height = 485
   ActiveControl = dbCodigo
@@ -14,10 +14,6 @@ inherited frmGeTabelaCFOP: TfrmGeTabelaCFOP
   end
   inherited Bevel3: TBevel
     Top = 404
-    Width = 728
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 408
     Width = 728
   end
   inherited pgcGuias: TPageControl
@@ -225,6 +221,22 @@ inherited frmGeTabelaCFOP: TfrmGeTabelaCFOP
           TabOrder = 2
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 408
+    Width = 728
+    inherited bvlTool3: TBevel
+      Left = 645
+    end
+    inherited bvlTool4: TBevel
+      Left = 724
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 649
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 525
     end
   end
   inherited IbDtstTabela: TIBDataSet

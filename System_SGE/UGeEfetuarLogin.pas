@@ -127,8 +127,9 @@ begin
     gUsuarioLogado.Empresa  := Empresa;
     gUsuarioLogado.Vendedor := GetUserCodigoVendedorID;
 
-    frmPrinc.nmUsuarioAlterarSenha.Caption := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
-    frmPrinc.TmrMonitorar.Enabled          := True;
+    frmPrinc.BrBtnAlterarSenha.Caption := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
+    frmPrinc.BrBtnAlterarSenha.Hint    := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
+    frmPrinc.TmrMonitorar.Enabled      := True;
 
     if (StrFormatarCnpj(gUsuarioLogado.Empresa) = StrFormatarCnpj(gLicencaSistema.CNPJ)) then
       frmPrinc.stbMain.Panels.Items[2].Text  := Format('Licenciado a empresa %s, %s', [gLicencaSistema.Empresa, sCNPJ])

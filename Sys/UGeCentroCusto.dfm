@@ -1,6 +1,6 @@
 inherited frmGeCentroCusto: TfrmGeCentroCusto
-  Left = 395
-  Top = 212
+  Left = 394
+  Top = 218
   Caption = 'Tabela de Departamentos / Centros de Custos'
   PixelsPerInch = 96
   TextHeight = 13
@@ -46,12 +46,12 @@ inherited frmGeCentroCusto: TfrmGeCentroCusto
             Width = 93
             Caption = 'Centro de Custo:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 374
-          end
           inherited edtFiltrar: TEdit
             Left = 112
             Width = 258
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 374
           end
         end
       end

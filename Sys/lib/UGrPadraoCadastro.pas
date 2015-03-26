@@ -15,11 +15,7 @@ uses
 type
   TfrmGrPadraoCadastro = class(TfrmGrPadrao)
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
     Bevel3: TBevel;
-    bvlTool3: TBevel;
-    bvlTool2: TBevel;
     pgcGuias: TPageControl;
     tbsTabela: TTabSheet;
     Bevel4: TBevel;
@@ -27,28 +23,31 @@ type
     pnlFiltros: TPanel;
     grpBxFiltro: TGroupBox;
     lbltFiltrar: TLabel;
-    btnFiltrar: TSpeedButton;
     edtFiltrar: TEdit;
     tbsCadastro: TTabSheet;
     IbDtstTabela: TIBDataSet;
     DtSrcTabela: TDataSource;
-    bvlTool1: TBevel;
     GrpBxDadosNominais: TGroupBox;
     Bevel8: TBevel;
     lblCodigo: TLabel;
     dbCodigo: TDBEdit;
     IbUpdTabela: TIBUpdateSQL;
     ImgList: TImageList;
-    bvlToolExpandir: TBevel;
-    bvlTool4: TBevel;
-    btbtnFechar: TcxButton;
-    btbtnSelecionar: TcxButton;
+    btnFiltrar: TcxButton;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
     btbtnIncluir: TcxButton;
     btbtnAlterar: TcxButton;
     btbtnExcluir: TcxButton;
+    bvlTool1: TBevel;
     btbtnCancelar: TcxButton;
     btbtnSalvar: TcxButton;
+    bvlTool2: TBevel;
     btbtnLista: TcxButton;
+    bvlTool3: TBevel;
+    btbtnFechar: TcxButton;
+    btbtnSelecionar: TcxButton;
+    bvlTool4: TBevel;
     procedure dbgDadosKeyPressENTER(Sender: TObject; var Key: Char);
     procedure dbgDadosKeyPressNO_ENTER(Sender: TObject; var Key: Char);
     procedure btbtnFecharClick(Sender: TObject);
@@ -611,7 +610,6 @@ end;
 procedure TfrmGrPadraoCadastro.FormShow(Sender: TObject);
 begin
   inherited;
-  RedimencionarBevel(tlbBotoes, bvlToolExpandir);
   CentralizarCodigo;
 
   if ( not IbDtstTabela.Active ) then

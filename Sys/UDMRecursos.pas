@@ -11,6 +11,10 @@ type
     ImgPrincipalDisabled: TcxImageList;
     ImgPrincipalHot: TcxImageList;
     ImgPrincipal16x16: TcxImageList;
+    ImgBotoesEnabled: TcxImageList;
+    ImgBotoesDisabled: TcxImageList;
+    ImgBotoesHot: TcxImageList;
+    ImgBotoes16x16: TcxImageList;
   private
     { Private declarations }
   public

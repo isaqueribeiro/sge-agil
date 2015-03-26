@@ -22,33 +22,60 @@ inherited frmGrMemo: TfrmGrMemo
     Align = alBottom
     Shape = bsSpacer
   end
-  object tlbBotoes: TToolBar
+  object edObservacao: TMemo
+    Left = 0
+    Top = 0
+    Width = 539
+    Height = 251
+    Align = alClient
+    Color = clWhite
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    MaxLength = 250
+    ParentFont = False
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object tlbBotoes: TPanel
     Left = 0
     Top = 255
     Width = 539
     Height = 35
     Align = alBottom
-    ButtonHeight = 31
-    ButtonWidth = 96
+    BevelOuter = bvNone
     Caption = #39
+    ParentColor = True
     TabOrder = 1
     object Bevel2: TBevel
-      Left = 0
-      Top = 2
+      Left = 438
+      Top = 0
       Width = 4
-      Height = 31
+      Height = 35
+      Align = alRight
+      Shape = bsSpacer
+    end
+    object bvlTool4: TBevel
+      Left = 535
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alRight
       Shape = bsSpacer
     end
     object BtnConfirmar: TcxButton
-      Left = 4
-      Top = 2
+      Left = 345
+      Top = 0
       Width = 93
-      Height = 31
+      Height = 35
       Caption = '&Confirma'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
       OnClick = BtnConfirmarClick
+      Align = alRight
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
@@ -102,24 +129,18 @@ inherited frmGrMemo: TfrmGrMemo
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
       NumGlyphs = 2
     end
-    object bvlTool4: TBevel
-      Left = 97
-      Top = 2
-      Width = 4
-      Height = 31
-      Shape = bsSpacer
-    end
     object BtnCancelar: TcxButton
-      Left = 101
-      Top = 2
+      Left = 442
+      Top = 0
       Width = 93
-      Height = 31
+      Height = 35
       Cancel = True
       Caption = 'Cancelar'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
       OnClick = BtnCancelarClick
+      Align = alRight
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
@@ -173,22 +194,5 @@ inherited frmGrMemo: TfrmGrMemo
         BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
       NumGlyphs = 2
     end
-  end
-  object edObservacao: TMemo
-    Left = 0
-    Top = 0
-    Width = 539
-    Height = 251
-    Align = alClient
-    Color = clWhite
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    MaxLength = 250
-    ParentFont = False
-    ScrollBars = ssVertical
-    TabOrder = 0
   end
 end

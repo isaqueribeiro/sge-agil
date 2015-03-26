@@ -102,7 +102,7 @@ type
     Copyright: TLabel;
     FileDescription: TLabel;
     Version: TLabel;
-    dxSkinController: TdxSkinController;
+    SknController: TdxSkinController;
     nmUsuarioAlterarSenha: TMenuItem;
     nmFabricanteProduto: TMenuItem;
     N13: TMenuItem;
@@ -317,6 +317,11 @@ type
     BrBtnRegistroEstacao: TdxBarLargeButton;
     BrBtnSobre: TdxBarLargeButton;
     BrBtnNotaFiscalComplementar: TdxBarLargeButton;
+    BrBtnRelatorioAutorizacaoEntrada: TdxBarLargeButton;
+    BrBtnRelatorioEntradaRequisicao: TdxBarLargeButton;
+    BrBtnRelatorioEntradaVenda: TdxBarLargeButton;
+    BrBtnRelatorioEntradaSaida: TdxBarLargeButton;
+    BrPpRelatorioEntradaSaida: TdxBarPopupMenu;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -400,7 +405,6 @@ type
     procedure nmInventarioMaterialClick(Sender: TObject);
     procedure TmrMonitorarTimer(Sender: TObject);
     procedure mnRelatorioEstoqueProdutoClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
     procedure nmSolicitacaoCompraClick(Sender: TObject);
     procedure mnRelatorioEstoqueApropriacaoClick(Sender: TObject);
   private
@@ -742,6 +746,9 @@ begin
   mnRelatorioEntradaProduto.Caption := StrDescricaoProduto;
 
   nmRequisicaoCliente.Visible     := (GetSegmentoID(gUsuarioLogado.Login) <= SEGMENTO_VAREJO_SERVICOS_ID);
+
+  Ribbon.Visible   := False;
+  Ribbon.ActiveTab := RbnTabPrincipal;
 
   // (FINAL) Configurar Legendas de acordo com o segmento
 
@@ -1177,12 +1184,6 @@ procedure TfrmPrinc.mnRelatorioEstoqueProdutoClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_PROD_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeProdutoEstoqueImpressao');
-end;
-
-procedure TfrmPrinc.FormShow(Sender: TObject);
-begin
-  Ribbon.Visible   := False;
-  Ribbon.ActiveTab := RbnTabPrincipal;
 end;
 
 procedure TfrmPrinc.nmSolicitacaoCompraClick(Sender: TObject);

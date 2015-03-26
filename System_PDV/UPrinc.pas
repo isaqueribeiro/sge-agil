@@ -6,7 +6,7 @@ uses
   EUserAcs, StdCtrls, Buttons,
   
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, BarMenus, RxSpeedBar, RXCtrls, ExtCtrls, jpeg,
+  Dialogs, Menus, ComCtrls, BarMenus, ExtCtrls, jpeg,
   
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
@@ -23,63 +23,15 @@ uses
 
 type
   TfrmPrinc = class(TForm)
-    BrMainMenu: TBcBarMainMenu;
     stbMain: TStatusBar;
-    menuCadastro: TMenuItem;
-    nmCliente: TMenuItem;
-    nmProduto: TMenuItem;
-    nmVendedor: TMenuItem;
-    menuCaixa: TMenuItem;
-    N2: TMenuItem;
-    nmUsuario: TMenuItem;
-    nmEmpresa: TMenuItem;
-    spbBarraAcessoRapido: TSpeedBar;
-    btnProduto: TRxSpeedButton;
-    btnCliente: TRxSpeedButton;
-    SpeedbarSection1: TSpeedbarSection;
-    menuSobre: TMenuItem;
     pnlMain: TPanel;
     imgFundo: TImage;
-    btnSair: TRxSpeedButton;
-    N3: TMenuItem;
-    menuMovimentacao: TMenuItem;
-    btnVenda: TRxSpeedButton;
-    nmAbout: TMenuItem;
-    mnTabelasAuxiliares: TMenuItem;
-    N4: TMenuItem;
-    nmTributacao: TMenuItem;
-    nmFormaPagto: TMenuItem;
-    nmCondicaoPagto: TMenuItem;
-    nmSenhaAutorizacao: TMenuItem;
-    nmConfigurarNFeACBr: TMenuItem;
-    N7: TMenuItem;
-    N8: TMenuItem;
-    SpeedbarSection2: TSpeedbarSection;
-    SpeedItem1: TSpeedItem;
-    SpeedItem2: TSpeedItem;
-    nmContaCorrente: TMenuItem;
-    nmAberturaCaixa: TMenuItem;
-    nmEncerramentoCaixa: TMenuItem;
-    nmGerenciaCaixa: TMenuItem;
     imgEmpresa: TImage;
     ProductName: TLabel;
     Copyright: TLabel;
     FileDescription: TLabel;
     Version: TLabel;
     dxSkinController: TdxSkinController;
-    nmUsuarioAlterarSenha: TMenuItem;
-    nmConfiguracaoEmpresa: TMenuItem;
-    nmConfigurarAmbiente: TMenuItem;
-    N16: TMenuItem;
-    btnOrcamento: TRxSpeedButton;
-    N9: TMenuItem;
-    nmVenda: TMenuItem;
-    nmOrcamento: TMenuItem;
-    nmPerfilAcesso: TMenuItem;
-    mnRegistroEstacao: TMenuItem;
-    N1: TMenuItem;
-    nmEfetuarLogoff: TMenuItem;
-    N5: TMenuItem;
     BrManager: TdxBarManager;
     BrMngPrincipalMov: TdxBar;
     BrMngPrincipalCad: TdxBar;
@@ -120,6 +72,7 @@ type
     BrMngAjudaDiversos: TdxBar;
     BrBtnRegistroEstacao: TdxBarLargeButton;
     BrBtnSobre: TdxBarLargeButton;
+    BrBtnSenhaAutorizacao: TdxBarLargeButton;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -127,10 +80,6 @@ type
     procedure nmGerenciaCaixaClick(Sender: TObject);
     procedure nmAberturaCaixaClick(Sender: TObject);
     procedure nmEncerramentoCaixaClick(Sender: TObject);
-    procedure btnVendaClick(Sender: TObject);
-    procedure btnOrcamentoClick(Sender: TObject);
-    procedure btnProdutoClick(Sender: TObject);
-    procedure btnClienteClick(Sender: TObject);
     procedure nmTributacaoClick(Sender: TObject);
     procedure nmContaCorrenteClick(Sender: TObject);
     procedure nmFormaPagtoClick(Sender: TObject);
@@ -151,7 +100,6 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure mnRegistroEstacaoClick(Sender: TObject);
     procedure nmEfetuarLogoffClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -205,35 +153,36 @@ begin
   else
     sCNPJ := ' CNPJ.: ' + StrFormatarCpf(GetEmpresaIDDefault);
 
-  stbMain.Panels.Items[2].Text  := 'Licenciado a empresa ' + GetEmpresaNomeDefault;
-  nmUsuarioAlterarSenha.Caption := Format('Alteração de Senha (%s)', [GetUserApp]);
+  stbMain.Panels.Items[2].Text := 'Licenciado a empresa ' + GetEmpresaNomeDefault;
+  BrBtnAlterarSenha.Caption    := Format('Alteração de Senha (%s)', [GetUserApp]);
 
   Self.WindowState := wsMaximized;
 
   if not DMBusiness.LiberarUsoLicenca(GetDateDB, True) then
   begin
-    menuCadastro.Enabled     := False;
-    menuMovimentacao.Enabled := False;
-    menuCaixa.Enabled        := False;
-    btnVenda.Enabled         := False;
+    RbbTabCadastro.Visible  := False;
+    RbbTabMovimento.Visible := False;
+    RbbTabCaixa.Visible     := False;
+
+    BrBtnVenda.Enabled      := False;
   end;
 
   if not SetAcessoEstacao(DMBusiness.IdIPWatch.LocalName) then
   begin
     ShowError('Estação de trabalho não registrada no sistema!');
 
-    menuCadastro.Enabled     := False;
-    menuMovimentacao.Enabled := False;
-    menuCaixa.Enabled        := False;
+    RbbTabCadastro.Visible  := False;
+    RbbTabMovimento.Visible := False;
+    RbbTabCaixa.Visible     := False;
 
-    btnVenda.Enabled     := False;
-    btnOrcamento.Enabled := False;
-    btnProduto.Enabled   := False;
-    btnCliente.Enabled   := False;
+    BrBtnVenda.Enabled     := False;
+    BrBtnOrcamento.Enabled := False;
+    BrBtnProduto.Enabled   := False;
+    BrBtnCliente.Enabled   := False;
   end;
 
   if GetUserUpdatePassWord then
-    nmUsuarioAlterarSenhaClick( nmUsuarioAlterarSenha );
+    nmUsuarioAlterarSenhaClick( BrBtnAlterarSenha );
 end;
 
 procedure TfrmPrinc.FormCreate(Sender: TObject);
@@ -251,7 +200,7 @@ begin
   Self.Version.Caption     := 'Versão ' + GetExeVersion;
   Self.Copyright.Caption   := GetCopyright;
 
-  BrMainMenu.Bar.BarCaption.Caption := Application.Title;
+  Ribbon.ActiveTab := RbbTabPrincipal;
 
   // Carregar Imagem de Fundo da Tele Principal
 
@@ -261,14 +210,6 @@ begin
   begin
     imgFundo.Picture.LoadFromFile(sFileImageWallPaper);
     imgFundo.Center := True;
-  end
-  else
-  begin
-    imgEmpresa.Visible  := False;
-    ProductName.Visible := False;
-    Version.Visible     := False;
-    FileDescription.Visible := False;
-    Copyright.Visible       := False;
   end;
 
   if not DataBaseOnLine then
@@ -297,30 +238,6 @@ begin
   if GetPermissaoRotinaSistema(ROTINA_FIN_ENCERRAR_CAIXA_PDV_ID, True) then
     if ( FecharCaixa(Self, GetUserApp) ) then
       ShowInformation('Caixa encerrado com sucesso!');
-end;
-
-procedure TfrmPrinc.btnVendaClick(Sender: TObject);
-begin
-  if ( nmVenda.Visible and nmVenda.Enabled ) then
-    nmVenda.Click;
-end;
-
-procedure TfrmPrinc.btnOrcamentoClick(Sender: TObject);
-begin
-  if ( nmOrcamento.Visible and nmOrcamento.Enabled ) then
-    nmOrcamento.Click;
-end;
-
-procedure TfrmPrinc.btnProdutoClick(Sender: TObject);
-begin
-  if ( nmProduto.Visible and nmProduto.Enabled ) then
-    nmProduto.Click;
-end;
-
-procedure TfrmPrinc.btnClienteClick(Sender: TObject);
-begin
-  if ( nmCliente.Visible and nmCliente.Enabled ) then
-    nmCliente.Click;
 end;
 
 procedure TfrmPrinc.nmTributacaoClick(Sender: TObject);
@@ -454,28 +371,28 @@ begin
 
   // Cadastros
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_EMP_ID, Trim(nmConfiguracaoEmpresa.Caption), ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(nmConfigurarNFeACBr.Caption),   ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(nmConfigurarAmbiente.Caption),  ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(nmSenhaAutorizacao.Caption),    ROTINA_MENU_CADASTRO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_EMP_ID, Trim(BrBtnConfigurarEmpresa.Caption),  ROTINA_MENU_CADASTRO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(BrBtnConfigurarNFe.Caption),      ROTINA_MENU_CADASTRO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(BrBtnConfigurarAmbiente.Caption), ROTINA_MENU_CADASTRO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(BrBtnSenhaAutorizacao.Caption),   ROTINA_MENU_CADASTRO_ID);
 
   // Cadastros -> Tabelas Auxiliares
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_TRIBUTACAO_ID,     Trim(nmTributacao.Caption),    ROTINA_MENU_TAB_AUXILIAR_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONTA_CORRENTE_ID, Trim(nmContaCorrente.Caption), ROTINA_MENU_TAB_AUXILIAR_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_FORMA_PAGTO_ID,    Trim(nmFormaPagto.Caption),    ROTINA_MENU_TAB_AUXILIAR_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONDICAO_PAGTO_ID, Trim(nmCondicaoPagto.Caption), ROTINA_MENU_TAB_AUXILIAR_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_TRIBUTACAO_ID,     Trim(BtBtnTributacaoIBPT.Caption), ROTINA_MENU_TAB_AUXILIAR_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONTA_CORRENTE_ID, Trim(BrBtnContaCorrente.Caption),  ROTINA_MENU_TAB_AUXILIAR_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_FORMA_PAGTO_ID,    Trim(BrBtnFormaPagto.Caption),     ROTINA_MENU_TAB_AUXILIAR_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONDICAO_PAGTO_ID, Trim(BrBtnCondicaoPagto.Caption),  ROTINA_MENU_TAB_AUXILIAR_ID);
 
   // Movimentações
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_VENDA_PDV_ID,     Trim(nmVenda.Caption),     ROTINA_MENU_MOVIMENTO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_ORCAMENTO_PDV_ID, Trim(nmOrcamento.Caption), ROTINA_MENU_MOVIMENTO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_VENDA_PDV_ID,     Trim(BrBtnVenda.Caption),     ROTINA_MENU_MOVIMENTO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_MOV_ORCAMENTO_PDV_ID, Trim(BrBtnOrcamento.Caption), ROTINA_MENU_MOVIMENTO_ID);
 
   // Caixa
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_ABRIR_CAIXA_PDV_ID,     Trim(nmAberturaCaixa.Caption),      ROTINA_MENU_CAIXA_PDV_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_ENCERRAR_CAIXA_PDV_ID,  Trim(nmEncerramentoCaixa.Caption),  ROTINA_MENU_CAIXA_PDV_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_GERENCIAR_CAIXA_PDV_ID, Trim(nmGerenciaCaixa.Caption),      ROTINA_MENU_CAIXA_PDV_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_ABRIR_CAIXA_PDV_ID,     Trim(BrBtnAbrirCaixa.Caption),     ROTINA_MENU_CAIXA_PDV_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_ENCERRAR_CAIXA_PDV_ID,  Trim(BrBtnEncerrarCaixa.Caption),  ROTINA_MENU_CAIXA_PDV_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_GERENCIAR_CAIXA_PDV_ID, Trim(BrBtnGerenciarCaixa.Caption), ROTINA_MENU_CAIXA_PDV_ID);
 end;
 
 procedure TfrmPrinc.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -491,11 +408,6 @@ end;
 procedure TfrmPrinc.nmEfetuarLogoffClick(Sender: TObject);
 begin
   FormFunction.ShowModalForm(Self, 'FrmEfetuarLogin');
-end;
-
-procedure TfrmPrinc.FormShow(Sender: TObject);
-begin
-  Ribbon.Visible := False;
 end;
 
 end.

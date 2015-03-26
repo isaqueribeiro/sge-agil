@@ -21,10 +21,6 @@ type
     Label2: TLabel;
     lstBxRetorno: TCheckListBox;
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
-    Bevel3: TBevel;
-    Bevel4: TBevel;
     Bevel5: TBevel;
     pnlTitulos: TPanel;
     Shape1: TShape;
@@ -94,9 +90,13 @@ type
     CdsTitulosNumVenda: TIntegerField;
     CdsTitulosArquivo: TStringField;
     FileListBox: TFileListBox;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
     btnFechar: TcxButton;
+    Bevel3: TBevel;
     btnCarregarRetorno: TcxButton;
     btnConfirmarBaixa: TcxButton;
+    Bevel4: TBevel;
     procedure edBancoChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
@@ -123,10 +123,13 @@ type
     function GetContaNumero : String;
     function GetContaDigito : String;
 
-    function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
+    {$IFDEF ACBR}
     function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
-    function CarregarRetorno( sArquivo : String; var Objeto : Variant ) : Boolean;
     function CarregarRetornoACBr( sArquivo : String ) : Boolean;
+    {$ELSE}
+    function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
+    function CarregarRetorno( sArquivo : String; var Objeto : Variant ) : Boolean;
+    {$ENDIF}
     function ArquivoSelecionado : Boolean;
     function LancamentoIdentificado( Banco : Integer; sNossoNumero, sDocumento : String;
       var Ano, Lancamento : Integer; var Parcela : Integer; var APagar : Currency; var Sacado, Cnpj : String; var Quidado : Boolean;
@@ -140,6 +143,7 @@ type
 var
   frmGeRetornoBoleto: TfrmGeRetornoBoleto;
 
+{$IFNDEF ACBR}
 const
   feeSMTPBoletoHTML              = $00000000;
   feeSMTPMensagemBoletoHTMLAnexo = $00000001;
@@ -157,6 +161,7 @@ const
   scpOK       = $00000001;
   scpInvalido = $00000002;
   scpErro     = $00000003;
+{$ENDIF}
 
   procedure ProcessarRetorno(const AOwer : TComponent);
 
@@ -318,6 +323,7 @@ begin
   TDbGrid(Sender).DefaultDrawDataCell(Rect, TDbGrid(Sender).Columns[DataCol].Field, State);
 end;
 
+{$IFNDEF ACBR}
 function TfrmGeRetornoBoleto.DefinirCedente(Banco, Carteira: Integer; var Objeto: Variant): Boolean;
 var
   sAppPath     ,
@@ -429,6 +435,7 @@ begin
     end;
   end;
 end;
+{$ENDIF}
 
 function TfrmGeRetornoBoleto.CarregarRetornoACBr(
   sArquivo: String): Boolean;

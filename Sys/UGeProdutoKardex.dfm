@@ -1,6 +1,6 @@
 inherited frmGeProdutoKardex: TfrmGeProdutoKardex
-  Left = 384
-  Top = 211
+  Left = 398
+  Top = 228
   Width = 1177
   Height = 648
   Caption = 'Pesquisa Kardex (Hist'#243'rico de Produtos/Servi'#231'os)'
@@ -13,15 +13,12 @@ inherited frmGeProdutoKardex: TfrmGeProdutoKardex
       DesignSize = (
         933
         73)
-      inherited BrnPesquisar: TSpeedButton
-        Left = 896
-      end
       inherited lblPesquisar: TLabel
         Left = 576
         Width = 110
         Caption = '&Descri'#231#227'o hist'#243'rico:'
       end
-      object lblData: TLabel [2]
+      object lblData: TLabel [1]
         Left = 352
         Top = 24
         Width = 46
@@ -29,7 +26,7 @@ inherited frmGeProdutoKardex: TfrmGeProdutoKardex
         Caption = 'Per'#237'o&do:'
         FocusControl = e1Data
       end
-      object lblProduto: TLabel [3]
+      object lblProduto: TLabel [2]
         Left = 16
         Top = 24
         Width = 96
@@ -41,6 +38,10 @@ inherited frmGeProdutoKardex: TfrmGeProdutoKardex
         Left = 576
         Width = 313
         TabOrder = 3
+      end
+      inherited BrnPesquisar: TcxButton
+        Left = 896
+        TabOrder = 4
       end
       object edProduto: TJvComboEdit
         Left = 16
