@@ -1,8 +1,6 @@
 object DMBusiness: TDMBusiness
   OldCreateOrder = True
   OnCreate = DataModuleCreate
-  Left = 446
-  Top = 248
   Height = 617
   Width = 812
   object ibdtbsBusiness: TIBDatabase
@@ -13,6 +11,7 @@ object DMBusiness: TDMBusiness
       'lc_ctype=ISO8859_2')
     LoginPrompt = False
     DefaultTransaction = ibtrnsctnBusiness
+    ServerType = 'IBServer'
     AllowStreamedConnected = False
     Left = 40
     Top = 8
@@ -35,6 +34,7 @@ object DMBusiness: TDMBusiness
   object ibdtstAjustEstoq: TIBDataSet
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     DeleteSQL.Strings = (
       'delete from TBAJUSTESTOQ'
@@ -78,6 +78,8 @@ object DMBusiness: TDMBusiness
       '  DTAJUST = :DTAJUST'
       'where'
       '  CODPROD = :OLD_CODPROD')
+    ParamCheck = True
+    UniDirectional = False
     Left = 144
     Top = 8
     object ibdtstAjustEstoqCODPROD: TIBStringField
@@ -169,32 +171,42 @@ object DMBusiness: TDMBusiness
   object ibdtstProduto: TIBDataSet
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     SelectSQL.Strings = (
       'select COD, DESCRI, QTDE from TBPRODUTO'
       'order by cod')
+    ParamCheck = True
+    UniDirectional = False
     Left = 232
     Top = 8
   end
   object ibdtstFornec: TIBDataSet
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     SelectSQL.Strings = (
       'select CODFORN, NOMEFORN from TBFORNECEDOR'
       'order by NOMEFORN')
+    ParamCheck = True
+    UniDirectional = False
     Left = 312
     Top = 8
   end
   object qryBusca: TIBQuery
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
+    ParamCheck = True
     Left = 232
     Top = 56
   end
   object ibdtstUsers: TIBDataSet
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     DeleteSQL.Strings = (
       'delete from TBUSERS'
@@ -242,6 +254,8 @@ object DMBusiness: TDMBusiness
       '  LIMIDESC = :LIMIDESC'
       'where'
       '  NOME = :OLD_NOME')
+    ParamCheck = True
+    UniDirectional = False
     Left = 144
     Top = 120
     object ibdtstUsersNOME: TIBStringField
@@ -312,6 +326,7 @@ object DMBusiness: TDMBusiness
   object qryCaixaAberto: TIBDataSet
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     DeleteSQL.Strings = (
       'delete from TBUSERS'
@@ -354,6 +369,8 @@ object DMBusiness: TDMBusiness
       '  LIMIDESC = :LIMIDESC'
       'where'
       '  NOME = :OLD_NOME')
+    ParamCheck = True
+    UniDirectional = False
     Left = 144
     Top = 168
     object qryCaixaAbertoANO: TSmallintField
@@ -501,6 +518,7 @@ object DMBusiness: TDMBusiness
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
     ForcedRefresh = True
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -514,6 +532,8 @@ object DMBusiness: TDMBusiness
       '  and ev.object_name = :objeto')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updEvAcessUser
     Left = 376
     Top = 216
@@ -569,6 +589,9 @@ object DMBusiness: TDMBusiness
   object ibqryEmpresa: TIBQuery
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'select CNPJ, NMFANT from TBEMPRESA')
     Left = 312
@@ -588,6 +611,9 @@ object DMBusiness: TDMBusiness
   object qryConfiguracoes: TIBQuery
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    c.empresa as empresa_cnpj'
@@ -690,6 +716,7 @@ object DMBusiness: TDMBusiness
   object cdsLicenca: TIBDataSet
     Database = ibdtbsBusiness
     Transaction = ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     DeleteSQL.Strings = (
       'delete from SYS_LICENCA'
@@ -714,6 +741,8 @@ object DMBusiness: TDMBusiness
       '  LINHA_CONTROLE = :LINHA_CONTROLE'
       'where'
       '  LINHA_CONTROLE = :OLD_LINHA_CONTROLE')
+    ParamCheck = True
+    UniDirectional = False
     GeneratorField.ApplyEvent = gamOnServer
     Left = 416
     Top = 32
@@ -735,10 +764,12 @@ object DMBusiness: TDMBusiness
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    DataOnly = False
     PrintOptimized = False
     Outline = False
     Background = False
     HTMLTags = True
+    Quality = 95
     Author = 'FastReport'
     Subject = 'FastReport PDF export'
     ProtectionFlags = [ePrint, eModify, eCopy, eAnnot]
@@ -755,6 +786,7 @@ object DMBusiness: TDMBusiness
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    DataOnly = False
     ExportEMF = True
     AsText = False
     Background = True
@@ -769,7 +801,8 @@ object DMBusiness: TDMBusiness
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
-    ExportEMF = True
+    DataOnly = False
+    PictureType = gpPNG
     Wysiwyg = True
     Creator = 'FastReport'
     SuppressPageHeadersFooters = False
@@ -782,6 +815,7 @@ object DMBusiness: TDMBusiness
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    DataOnly = False
     Left = 40
     Top = 312
   end
@@ -789,6 +823,7 @@ object DMBusiness: TDMBusiness
     UseFileCache = True
     ShowProgress = True
     OverwritePrompt = False
+    DataOnly = False
     Lines.Strings = (
       'Teste')
     ShowExportDialog = True
@@ -796,6 +831,7 @@ object DMBusiness: TDMBusiness
     UseIniFile = False
     TimeOut = 60
     ConfurmReading = False
+    UseMAPI = SMTP
     Left = 40
     Top = 360
   end
@@ -812,7 +848,7 @@ object DMBusiness: TDMBusiness
     Top = 504
   end
   object fastReport: TfrxReport
-    Version = '4.9.72'
+    Version = '5.1.9'
     DotMatrixReport = False
     EngineOptions.DoublePass = True
     IniFile = '\Software\Fast Reports'
@@ -985,63 +1021,48 @@ object DMBusiness: TDMBusiness
     Top = 120
     Datasets = <
       item
-        DataSet = dmACBrNFeFR.frxCalculoImposto
         DataSetName = 'CalculoImposto'
       end
       item
-        DataSet = dmACBrNFeFR.frxDadosProdutos
         DataSetName = 'DadosProdutos'
       end
       item
-        DataSet = dmACBrNFeFR.frxDestinatario
         DataSetName = 'Destinatario'
       end
       item
-        DataSet = dmACBrNFeFR.frxDuplicatas
         DataSetName = 'Duplicatas'
       end
       item
-        DataSet = dmACBrNFeFR.frxEmitente
         DataSetName = 'Emitente'
       end
       item
-        DataSet = dmACBrNFeFR.frxFatura
         DataSetName = 'Fatura'
       end
       item
-        DataSet = dmACBrNFeFR.frxIdentificacao
         DataSetName = 'Identificacao'
       end
       item
-        DataSet = dmACBrNFeFR.frxInformacoesAdicionais
         DataSetName = 'InformacoesAdicionais'
       end
       item
-        DataSet = dmACBrNFeFR.frxISSQN
         DataSetName = 'ISSQN'
       end
       item
-        DataSet = dmACBrNFeFR.frxLocalEntrega
         DataSetName = 'LocalEntrega'
       end
       item
-        DataSet = dmACBrNFeFR.frxLocalRetirada
         DataSetName = 'LocalRetirada'
       end
       item
-        DataSet = dmACBrNFeFR.frxParametros
         DataSetName = 'Parametros'
       end
       item
-        DataSet = dmACBrNFeFR.frxTransportador
         DataSetName = 'Transportador'
       end
       item
-        DataSet = dmACBrNFeFR.frxVeiculo
         DataSetName = 'Veiculo'
       end
       item
-        DataSet = dmACBrNFeFR.frxVolumes
         DataSetName = 'Volumes'
       end>
     Variables = <
@@ -1074,18 +1095,17 @@ object DMBusiness: TDMBusiness
       LargeDesignHeight = True
       OnBeforePrint = 'Page1OnBeforePrint'
       object DadosProdutos: TfrxMasterData
+        FillType = ftBrush
         Height = 11.338582680000000000
         Top = 1058.268400000000000000
         Width = 744.567410000000000000
         OnAfterPrint = 'DadosProdutosOnAfterPrint'
-        DataSet = dmACBrNFeFR.frxDadosProdutos
         DataSetName = 'DadosProdutos'
         RowCount = 0
         Stretched = True
         object Memo131: TfrxMemoView
           Width = 60.472480000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1095,7 +1115,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."CProd"]')
           ParentFont = False
         end
@@ -1103,7 +1123,6 @@ object DMBusiness: TDMBusiness
           Left = 60.472480000000000000
           Width = 215.433070866142000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1113,7 +1132,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haBlock
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."DescricaoProduto"]')
           ParentFont = False
         end
@@ -1121,7 +1140,6 @@ object DMBusiness: TDMBusiness
           Left = 275.905511811024000000
           Width = 37.795300000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1131,7 +1149,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."NCM"]')
           ParentFont = False
           WordWrap = False
@@ -1140,7 +1158,6 @@ object DMBusiness: TDMBusiness
           Left = 313.700787401575000000
           Width = 26.456695350000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1150,7 +1167,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."ORIGEM"][DadosProdutos."CST"]')
           ParentFont = False
           WordWrap = False
@@ -1159,7 +1176,6 @@ object DMBusiness: TDMBusiness
           Left = 340.157480314961000000
           Width = 24.566929130000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1169,7 +1185,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."CFOP"]')
           ParentFont = False
           WordWrap = False
@@ -1178,7 +1194,6 @@ object DMBusiness: TDMBusiness
           Left = 364.724409448819000000
           Width = 30.236220472440900000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1188,7 +1203,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."Unidade"]')
           ParentFont = False
           WordWrap = False
@@ -1197,7 +1212,6 @@ object DMBusiness: TDMBusiness
           Left = 394.960659210000000000
           Width = 43.464574250000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1210,7 +1224,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."Quantidade"]')
           ParentFont = False
           WordWrap = False
@@ -1219,7 +1233,6 @@ object DMBusiness: TDMBusiness
           Left = 438.425480000000000000
           Width = 45.354360000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1232,7 +1245,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."ValorUnitario"]')
           ParentFont = False
           WordWrap = False
@@ -1241,7 +1254,6 @@ object DMBusiness: TDMBusiness
           Left = 483.779840000000000000
           Width = 45.354360000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1254,7 +1266,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."vDesc"]')
           ParentFont = False
           WordWrap = False
@@ -1263,7 +1275,6 @@ object DMBusiness: TDMBusiness
           Left = 529.134200000000000000
           Width = 45.354360000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1276,7 +1287,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."VProd"]')
           ParentFont = False
           WordWrap = False
@@ -1285,7 +1296,6 @@ object DMBusiness: TDMBusiness
           Left = 574.488560000000000000
           Width = 45.354360000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1298,7 +1308,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."VBC"]')
           ParentFont = False
           WordWrap = False
@@ -1307,7 +1317,6 @@ object DMBusiness: TDMBusiness
           Left = 619.842920000000000000
           Width = 41.574803149606300000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1320,7 +1329,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."VICMS"]')
           ParentFont = False
           WordWrap = False
@@ -1329,7 +1338,6 @@ object DMBusiness: TDMBusiness
           Left = 661.417322834646000000
           Width = 41.574830000000000000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1342,7 +1350,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."VIPI"]')
           ParentFont = False
           WordWrap = False
@@ -1351,7 +1359,6 @@ object DMBusiness: TDMBusiness
           Left = 702.992125980000000000
           Width = 20.787401574803100000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1364,7 +1371,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."PICMS"]')
           ParentFont = False
           WordWrap = False
@@ -1373,7 +1380,6 @@ object DMBusiness: TDMBusiness
           Left = 723.779527559055000000
           Width = 20.787401574803100000
           Height = 11.338582680000000000
-          ShowHint = False
           StretchMode = smMaxHeight
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2f'
@@ -1386,20 +1392,20 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[DadosProdutos."PIPI"]')
           ParentFont = False
           WordWrap = False
         end
       end
       object Canhoto: TfrxReportTitle
+        FillType = ftBrush
         Height = 79.370078740000000000
         Top = 18.897650000000000000
         Width = 744.567410000000000000
         object Memo2: TfrxMemoView
           Width = 642.520100000000000000
           Height = 37.795275590000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -1408,10 +1414,10 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
-              'Recebemos de [Emitente."XNome"] os produtos e/ou servi'#195#167'os const' +
-              'antes da Nota Fiscal Eletr'#195#180'nica indicada ao lado. '
+              'Recebemos de [Emitente."XNome"] os produtos e/ou servi'#231'os consta' +
+              'ntes da Nota Fiscal Eletr'#244'nica indicada ao lado. '
             '[Parametros."ResumoCanhoto"]')
           ParentFont = False
           WordWrap = False
@@ -1421,7 +1427,6 @@ object DMBusiness: TDMBusiness
           Top = 37.795275590000000000
           Width = 498.897960000000000000
           Height = 30.236240000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -1430,15 +1435,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'IDENTIFICA'#195#8225#195#402'O E ASSINATURA DO RECEBEDOR')
+          Memo.UTF8W = (
+            'IDENTIFICA'#199#195'O E ASSINATURA DO RECEBEDOR')
           ParentFont = False
         end
         object Memo4: TfrxMemoView
           Top = 37.795275590000000000
           Width = 143.622140000000000000
           Height = 30.236240000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -1447,7 +1451,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'DATA DO RECEBIMENTO')
           ParentFont = False
         end
@@ -1455,7 +1459,7 @@ object DMBusiness: TDMBusiness
           Align = baWidth
           Top = 73.811070000000000000
           Width = 744.567410000000000000
-          ShowHint = False
+          Color = clBlack
           Frame.Style = fsDot
           Frame.Typ = [ftTop]
           Frame.Width = 0.500000000000000000
@@ -1464,7 +1468,6 @@ object DMBusiness: TDMBusiness
           Left = 642.520100000000000000
           Width = 102.047212360000000000
           Height = 68.031496060000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -1474,15 +1477,16 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'NF-e'
-            'N'#194#186' [Identificacao."NNF"]'
-            'S'#195#169'rie [Identificacao."Serie" #n#000]')
+            'N'#186' [Identificacao."NNF"]'
+            'S'#233'rie [Identificacao."Serie" #n#000]')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object Emitente: TfrxPageHeader
+        FillType = ftBrush
         Height = 173.858362910000000000
         Top = 120.944960000000000000
         Width = 744.567410000000000000
@@ -1493,10 +1497,8 @@ object DMBusiness: TDMBusiness
           Top = 84.370130000000000000
           Width = 233.000000000000000000
           Height = 34.015745590000000000
-          ShowHint = False
           BarType = bcCode128C
           DataField = 'Contingencia_ID'
-          DataSet = dmACBrNFeFR.frxParametros
           DataSetName = 'Parametros'
           Rotation = 0
           ShowText = False
@@ -1514,7 +1516,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370130000000000000
           Width = 321.260050000000000000
           Height = 41.574805590000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1524,7 +1525,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Parametros."ConsultaAutenticidade"]')
           ParentFont = False
           VAlign = vaCenter
@@ -1533,7 +1534,6 @@ object DMBusiness: TDMBusiness
           Left = 423.307360000000000000
           Width = 321.259842520000000000
           Height = 49.133890000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1549,10 +1549,8 @@ object DMBusiness: TDMBusiness
           Top = 5.559060000000000000
           Width = 277.000000000000000000
           Height = 37.795275590000000000
-          ShowHint = False
           BarType = bcCode128C
           DataField = 'Id'
-          DataSet = dmACBrNFeFR.frxIdentificacao
           DataSetName = 'Identificacao'
           Rotation = 0
           ShowText = False
@@ -1570,7 +1568,6 @@ object DMBusiness: TDMBusiness
           Top = 49.133890000000000000
           Width = 321.260050000000000000
           Height = 30.236240000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1579,7 +1576,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CHAVE DE ACESSO')
           ParentFont = False
         end
@@ -1588,7 +1585,6 @@ object DMBusiness: TDMBusiness
           Top = 56.692913390000000000
           Width = 321.260050000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -1596,7 +1592,7 @@ object DMBusiness: TDMBusiness
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Identificacao."Chave"]')
           ParentFont = False
           VAlign = vaBottom
@@ -1605,7 +1601,6 @@ object DMBusiness: TDMBusiness
           Left = 309.921460000000000000
           Width = 113.385826770000000000
           Height = 120.944960000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -16
@@ -1615,14 +1610,13 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'DANFE')
           ParentFont = False
         end
         object memEmitente: TfrxMemoView
           Width = 309.921460000000000000
           Height = 120.944960000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -16
@@ -1633,7 +1627,7 @@ object DMBusiness: TDMBusiness
           GapX = 1.000000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."XNome"]')
           ParentFont = False
         end
@@ -1642,7 +1636,6 @@ object DMBusiness: TDMBusiness
           Top = 37.795275590000000000
           Width = 207.874020630000000000
           Height = 81.259842520000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1651,7 +1644,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 1.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."DADOS_ENDERECO"]')
           ParentFont = False
           VAlign = vaCenter
@@ -1661,7 +1654,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 105.826840000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1669,9 +1661,9 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Documento Auxiliar da '
-            'Nota Fiscal Eletr'#195#180'nica')
+            'Nota Fiscal Eletr'#244'nica')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1680,16 +1672,15 @@ object DMBusiness: TDMBusiness
           Top = 70.811070000000000000
           Width = 98.267780000000000000
           Height = 49.133890000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -13
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
-            'N'#194#186' [Identificacao."NNF"]'
-            '   S'#195#8240'RIE [Identificacao."Serie" #n#000]'
+          Memo.UTF8W = (
+            'N'#186' [Identificacao."NNF"]'
+            '   S'#201'RIE [Identificacao."Serie" #n#000]'
             '   FOLHA [Page]/[TotalPages#]')
           ParentFont = False
           WordWrap = False
@@ -1699,16 +1690,15 @@ object DMBusiness: TDMBusiness
           Top = 45.354360000000000000
           Width = 75.590600000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Times New Roman'
           Font.Style = []
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '0 - ENTRADA'
-            '1 - SA'#195#141'DA')
+            '1 - SA'#205'DA')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1717,7 +1707,6 @@ object DMBusiness: TDMBusiness
           Top = 45.354330710000000000
           Width = 22.677165350000000000
           Height = 22.677165350000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -13
@@ -1726,7 +1715,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Identificacao."TpNF"]')
           ParentFont = False
           WordWrap = False
@@ -1736,7 +1725,6 @@ object DMBusiness: TDMBusiness
           Top = 120.944960000000000000
           Width = 423.307360000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1745,15 +1733,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'NATUREZA DA OPERA'#195#8225#195#402'O')
+          Memo.UTF8W = (
+            'NATUREZA DA OPERA'#199#195'O')
           ParentFont = False
         end
         object Memo20: TfrxMemoView
           Top = 129.259842520000000000
           Width = 423.307360000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1761,7 +1748,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Identificacao."NatOp"]')
           ParentFont = False
           VAlign = vaBottom
@@ -1771,7 +1758,6 @@ object DMBusiness: TDMBusiness
           Top = 120.944960000000000000
           Width = 321.260050000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1780,7 +1766,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Parametros."Contingencia_Descricao"]')
           ParentFont = False
         end
@@ -1789,7 +1775,6 @@ object DMBusiness: TDMBusiness
           Top = 129.259842520000000000
           Width = 321.260050000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1797,7 +1782,7 @@ object DMBusiness: TDMBusiness
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Parametros."Contingencia_Valor"]')
           ParentFont = False
           VAlign = vaBottom
@@ -1806,7 +1791,6 @@ object DMBusiness: TDMBusiness
           Top = 147.401670000000000000
           Width = 253.228510000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1815,15 +1799,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'INSCRI'#195#8225#195#402'O ESTADUAL')
+          Memo.UTF8W = (
+            'INSCRI'#199#195'O ESTADUAL')
           ParentFont = False
         end
         object Memo24: TfrxMemoView
           Top = 156.850410790000000000
           Width = 253.228510000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1831,7 +1814,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."IE"]')
           ParentFont = False
           VAlign = vaBottom
@@ -1841,7 +1824,6 @@ object DMBusiness: TDMBusiness
           Top = 147.401670000000000000
           Width = 253.228510000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1850,8 +1832,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'INSCRI'#195#8225#195#402'O ESTADUAL DO SUBSTITUTO TRIBUT'#195#129'RIO')
+          Memo.UTF8W = (
+            'INSCRI'#199#195'O ESTADUAL DO SUBSTITUTO TRIBUT'#193'RIO')
           ParentFont = False
         end
         object Memo26: TfrxMemoView
@@ -1859,7 +1841,6 @@ object DMBusiness: TDMBusiness
           Top = 156.850410790000000000
           Width = 253.228510000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1867,7 +1848,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."IEST"]')
           ParentFont = False
           VAlign = vaBottom
@@ -1877,7 +1858,6 @@ object DMBusiness: TDMBusiness
           Top = 147.401670000000000000
           Width = 238.110390000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1886,7 +1866,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CNPJ')
           ParentFont = False
         end
@@ -1895,7 +1875,6 @@ object DMBusiness: TDMBusiness
           Top = 156.850410790000000000
           Width = 238.110390000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1903,7 +1882,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."CNPJ"]')
           ParentFont = False
           VAlign = vaBottom
@@ -1913,10 +1892,8 @@ object DMBusiness: TDMBusiness
           Top = 37.795275590000000000
           Width = 98.267711650000000000
           Height = 81.259842520000000000
-          ShowHint = False
           Center = True
           DataField = 'LogoCarregado'
-          DataSet = dmACBrNFeFR.frxParametros
           DataSetName = 'Parametros'
           HightQuality = False
           Transparent = False
@@ -1924,6 +1901,7 @@ object DMBusiness: TDMBusiness
         end
       end
       object PageFooter: TfrxPageFooter
+        FillType = ftBrush
         Height = 162.519653310000000000
         Top = 2415.119670000000000000
         Width = 744.567410000000000000
@@ -1933,17 +1911,16 @@ object DMBusiness: TDMBusiness
           Top = 144.511781730000000000
           Width = 461.102660000000000000
           Height = 13.228346460000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -8
           Font.Name = 'Times New Roman'
           Font.Style = []
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
-              'DATA E HORA DA IMPRESS'#195#402'O: [Date #ddd/mm/yyyy] [Time #dhh:mm:ss]' +
-              ' [Parametros."Usuario"]')
+              'DATA E HORA DA IMPRESS'#195'O: [Date #ddd/mm/yyyy] [Time #dhh:mm:ss] ' +
+              '[Parametros."Usuario"]')
           ParentFont = False
         end
         object memFisco: TfrxMemoView
@@ -1951,7 +1928,6 @@ object DMBusiness: TDMBusiness
           Top = 16.677180000000000000
           Width = 257.007852050000000000
           Height = 124.724409450000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1960,7 +1936,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'RESERVADO AO FISCO')
           ParentFont = False
         end
@@ -1968,7 +1944,6 @@ object DMBusiness: TDMBusiness
           Top = 16.677180000000000000
           Width = 487.559055120000000000
           Height = 124.724402130000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -1977,15 +1952,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'INFORMA'#195#8225#195#8226'ES COMPLEMENTARES')
+          Memo.UTF8W = (
+            'INFORMA'#199#213'ES COMPLEMENTARES')
           ParentFont = False
         end
         object memOBS: TfrxMemoView
           Top = 23.881862910000000000
           Width = 485.669288900000000000
           Height = 117.165354330000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -1993,7 +1967,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[InformacoesAdicionais."OBS"]')
           ParentFont = False
         end
@@ -2003,7 +1977,6 @@ object DMBusiness: TDMBusiness
           Top = 144.511781730000000000
           Width = 291.023810000000000000
           Height = 13.228346460000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -2011,7 +1984,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Parametros."Sistema"]')
           ParentFont = False
         end
@@ -2019,31 +1992,29 @@ object DMBusiness: TDMBusiness
           Top = 1.889763780000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'DADOS ADICIONAIS')
           ParentFont = False
           VAlign = vaBottom
         end
       end
       object Destinatario: TfrxMasterData
+        FillType = ftBrush
         Height = 96.267762910000000000
         Top = 355.275820000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxIdentificacao
         DataSetName = 'Identificacao'
         RowCount = 1
         object Memo29: TfrxMemoView
           Top = 16.897650000000000000
           Width = 468.661720000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2052,15 +2023,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'NOME / RAZ'#195#402'O SOCIAL')
+          Memo.UTF8W = (
+            'NOME / RAZ'#195'O SOCIAL')
           ParentFont = False
         end
         object Memo30: TfrxMemoView
           Top = 26.346390790000000000
           Width = 464.882190000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2068,7 +2038,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."XNome"]')
           ParentFont = False
           WordWrap = False
@@ -2079,7 +2049,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2088,8 +2057,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'DATA DA EMISS'#195#402'O')
+          Memo.UTF8W = (
+            'DATA DA EMISS'#195'O')
           ParentFont = False
         end
         object Memo32: TfrxMemoView
@@ -2097,7 +2066,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 113.385900000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2106,7 +2074,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Identificacao."DEmi"]')
           ParentFont = False
           WordWrap = False
@@ -2117,7 +2085,6 @@ object DMBusiness: TDMBusiness
           Top = 43.354360000000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2126,8 +2093,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'DATA DA SA'#195#141'DA')
+          Memo.UTF8W = (
+            'DATA DA SA'#205'DA')
           ParentFont = False
         end
         object Memo34: TfrxMemoView
@@ -2135,7 +2102,6 @@ object DMBusiness: TDMBusiness
           Top = 52.803100790000000000
           Width = 113.385900000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2144,7 +2110,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Identificacao."DSaiEnt"]')
           ParentFont = False
           WordWrap = False
@@ -2155,7 +2121,6 @@ object DMBusiness: TDMBusiness
           Top = 69.811070000000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2164,8 +2129,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'HORA DA SA'#195#141'DA')
+          Memo.UTF8W = (
+            'HORA DA SA'#205'DA')
           ParentFont = False
         end
         object Memo36: TfrxMemoView
@@ -2173,7 +2138,6 @@ object DMBusiness: TDMBusiness
           Top = 79.259810790000000000
           Width = 113.385900000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2182,7 +2146,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Identificacao."HoraSaida"]')
           ParentFont = False
           WordWrap = False
@@ -2193,7 +2157,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 162.519790000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2202,7 +2165,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CNPJ / CPF')
           ParentFont = False
         end
@@ -2211,7 +2174,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 162.519790000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2219,7 +2181,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."CNPJCPF"]')
           ParentFont = False
           WordWrap = False
@@ -2230,7 +2192,6 @@ object DMBusiness: TDMBusiness
           Top = 43.354360000000000000
           Width = 75.590600000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2239,7 +2200,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CEP')
           ParentFont = False
         end
@@ -2248,7 +2209,6 @@ object DMBusiness: TDMBusiness
           Top = 52.803100790000000000
           Width = 75.590600000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2256,7 +2216,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."CEP"]')
           ParentFont = False
           WordWrap = False
@@ -2267,7 +2227,6 @@ object DMBusiness: TDMBusiness
           Top = 43.354360000000000000
           Width = 170.078850000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2276,7 +2235,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'BAIRRO / DISTRITO')
           ParentFont = False
         end
@@ -2285,7 +2244,6 @@ object DMBusiness: TDMBusiness
           Top = 52.803100790000000000
           Width = 170.078850000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2293,7 +2251,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."XBairro"]')
           ParentFont = False
           WordWrap = False
@@ -2303,7 +2261,6 @@ object DMBusiness: TDMBusiness
           Top = 43.354360000000000000
           Width = 385.512060000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2312,15 +2269,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'ENDERE'#195#8225'O')
+          Memo.UTF8W = (
+            'ENDERE'#199'O')
           ParentFont = False
         end
         object Memo44: TfrxMemoView
           Top = 52.803100790000000000
           Width = 381.732530000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2328,7 +2284,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[Destinatario."XLgr"], [Destinatario."Nro"]  [Destinatario."XCpl' +
               '"]')
@@ -2340,7 +2296,6 @@ object DMBusiness: TDMBusiness
           Top = 69.811070000000000000
           Width = 355.275820000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2349,15 +2304,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'MUNIC'#195#141'PIO')
+          Memo.UTF8W = (
+            'MUNIC'#205'PIO')
           ParentFont = False
         end
         object Memo46: TfrxMemoView
           Top = 79.259810790000000000
           Width = 351.496290000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2365,7 +2319,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."XMun"]')
           ParentFont = False
           WordWrap = False
@@ -2376,7 +2330,6 @@ object DMBusiness: TDMBusiness
           Top = 69.811070000000000000
           Width = 30.236240000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2385,7 +2338,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UF')
           ParentFont = False
         end
@@ -2394,7 +2347,6 @@ object DMBusiness: TDMBusiness
           Top = 79.259810790000000000
           Width = 30.236240000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2403,7 +2355,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."UF"]')
           ParentFont = False
           WordWrap = False
@@ -2414,7 +2366,6 @@ object DMBusiness: TDMBusiness
           Top = 69.811070000000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2423,7 +2374,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'TELEFONE / FAX')
           ParentFont = False
         end
@@ -2432,7 +2383,6 @@ object DMBusiness: TDMBusiness
           Top = 79.259810790000000000
           Width = 113.385900000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2440,7 +2390,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."Fone"]')
           ParentFont = False
           WordWrap = False
@@ -2451,7 +2401,6 @@ object DMBusiness: TDMBusiness
           Top = 69.811070000000000000
           Width = 132.283550000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2460,8 +2409,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'INSCRI'#195#8225#195#402'O ESTADUAL')
+          Memo.UTF8W = (
+            'INSCRI'#199#195'O ESTADUAL')
           ParentFont = False
         end
         object Memo52: TfrxMemoView
@@ -2469,7 +2418,6 @@ object DMBusiness: TDMBusiness
           Top = 79.259810790000000000
           Width = 132.283550000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2477,7 +2425,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Destinatario."IE"]')
           ParentFont = False
           WordWrap = False
@@ -2487,38 +2435,36 @@ object DMBusiness: TDMBusiness
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
-            'DESTINAT'#195#129'RIO / REMETENTE')
+          Memo.UTF8W = (
+            'DESTINAT'#193'RIO / REMETENTE')
           ParentFont = False
           VAlign = vaBottom
         end
       end
       object Fatura: TfrxMasterData
+        FillType = ftBrush
         Height = 40.440944880000000000
         Top = 612.283860000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxFatura
         DataSetName = 'Fatura'
         RowCount = 0
         object Memo190: TfrxMemoView
           Top = 3.779527560000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'FATURA')
           ParentFont = False
           VAlign = vaBottom
@@ -2527,7 +2473,6 @@ object DMBusiness: TDMBusiness
           Top = 17.897650000000000000
           Width = 744.566921810000000000
           Height = 20.787404020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2536,37 +2481,35 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapX = 3.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
-              '[Fatura."Pagamento"]   -   N'#195#186'mero:   [Fatura."nFat"]     -   Va' +
-              'lor Original: R$ [Fatura."vOrig" #n%2,2n]    -   Valor Desconto:' +
-              '  R$ [Fatura."vDesc" #n%2,2n]    -   ValorL'#195#173'quido: R$ [Fatura."' +
-              'vLiq" #n%2,2n]')
+              '[Fatura."Pagamento"]   -   N'#250'mero:   [Fatura."nFat"]     -   Val' +
+              'or Original: R$ [Fatura."vOrig" #n%2,2n]    -   Valor Desconto: ' +
+              ' R$ [Fatura."vDesc" #n%2,2n]    -   ValorL'#237'quido: R$ [Fatura."vL' +
+              'iq" #n%2,2n]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
       end
       object Duplicatas: TfrxMasterData
+        FillType = ftBrush
         Height = 37.795300000000000000
         Top = 718.110700000000000000
         Width = 744.567410000000000000
         Columns = 5
         ColumnWidth = 151.181102362205000000
-        DataSet = dmACBrNFeFR.frxDuplicatas
         DataSetName = 'Duplicatas'
         RowCount = 0
         object Shape2: TfrxShapeView
           Align = baClient
           Width = 744.567410000000000000
           Height = 37.795300000000000000
-          ShowHint = False
           Frame.Width = 0.500000000000000000
         end
         object Memo200: TfrxMemoView
           Width = 151.181200000000000000
           Height = 37.795275590000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2575,8 +2518,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapX = 3.000000000000000000
-          Memo.UTF8 = (
-            'N'#195#186'mero'
+          Memo.UTF8W = (
+            'N'#250'mero'
             'Vencimento'
             'Valor')
           ParentFont = False
@@ -2587,7 +2530,6 @@ object DMBusiness: TDMBusiness
           Left = 56.692950000000000000
           Width = 3.779530000000000000
           Height = 37.795275590000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -8
@@ -2596,7 +2538,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           LineSpacing = 3.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ':'
             ':'
             ':')
@@ -2608,7 +2550,6 @@ object DMBusiness: TDMBusiness
           Left = 60.472480000000000000
           Width = 86.929190000000000000
           Height = 12.472440940000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2616,7 +2557,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 3.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Duplicatas."NDup"]')
           ParentFont = False
           WordWrap = False
@@ -2627,7 +2568,6 @@ object DMBusiness: TDMBusiness
           Top = 12.472440940000000000
           Width = 86.929190000000000000
           Height = 12.472440940000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2635,7 +2575,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 3.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Duplicatas."DVenc"]')
           ParentFont = False
           WordWrap = False
@@ -2646,7 +2586,6 @@ object DMBusiness: TDMBusiness
           Top = 24.944881890000000000
           Width = 86.929190000000000000
           Height = 12.472440940000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2m'
           DisplayFormat.Kind = fkNumeric
@@ -2657,7 +2596,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 3.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Duplicatas."VDup"]')
           ParentFont = False
           WordWrap = False
@@ -2665,6 +2604,7 @@ object DMBusiness: TDMBusiness
         end
       end
       object DuplicatasHeader: TfrxGroupHeader
+        FillType = ftBrush
         Height = 17.007874020000000000
         Top = 676.535870000000000000
         Width = 744.567410000000000000
@@ -2674,20 +2614,20 @@ object DMBusiness: TDMBusiness
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'DUPLICATAS')
           ParentFont = False
           VAlign = vaBottom
         end
       end
       object DadosProdutosHeader: TfrxGroupHeader
+        FillType = ftBrush
         Height = 41.196850390000000000
         Top = 994.016390000000000000
         Width = 744.567410000000000000
@@ -2698,15 +2638,14 @@ object DMBusiness: TDMBusiness
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
-            'DADOS DOS PRODUTOS / SERVI'#195#8225'OS')
+          Memo.UTF8W = (
+            'DADOS DOS PRODUTOS / SERVI'#199'OS')
           ParentFont = False
           VAlign = vaBottom
         end
@@ -2714,7 +2653,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 60.472480000000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2724,8 +2662,8 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
-            'C'#195#8220'DIGO'
+          Memo.UTF8W = (
+            'C'#211'DIGO'
             'PRODUTO')
           ParentFont = False
           WordWrap = False
@@ -2736,7 +2674,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 215.433070866142000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2746,8 +2683,8 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
-            'DESCRI'#195#8225#195#402'O DO PRODUTO / SERVI'#195#8225'O')
+          Memo.UTF8W = (
+            'DESCRI'#199#195'O DO PRODUTO / SERVI'#199'O')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2757,7 +2694,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 37.795300000000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2767,7 +2703,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'NCM/SH')
           ParentFont = False
           WordWrap = False
@@ -2778,7 +2714,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 26.456695350000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2788,7 +2723,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."DESCR_CST"]')
           ParentFont = False
           WordWrap = False
@@ -2799,7 +2734,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 24.566929130000000000
           Height = 22.677167800000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2809,7 +2743,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CFOP')
           ParentFont = False
           WordWrap = False
@@ -2820,7 +2754,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 30.236220470000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2830,7 +2763,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UNID.')
           ParentFont = False
           WordWrap = False
@@ -2841,7 +2774,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 43.464574250000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2851,7 +2783,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'QTDE.')
           ParentFont = False
           WordWrap = False
@@ -2862,7 +2794,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 45.354360000000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2872,9 +2803,9 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR'
-            'UNIT'#195#129'RIO')
+            'UNIT'#193'RIO')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2884,7 +2815,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 45.354360000000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2894,7 +2824,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Parametros."Desconto"]'
             'DESCONTO')
           ParentFont = False
@@ -2906,7 +2836,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 45.354360000000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2916,7 +2845,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR'
             '[Parametros."TotalLiquido"]')
           ParentFont = False
@@ -2928,7 +2857,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 45.354360000000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2938,9 +2866,9 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'BASE DE '
-            'C'#195#129'LC. ICMS')
+            'C'#193'LC. ICMS')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2950,7 +2878,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 41.574803150000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2960,7 +2887,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR'
             'ICMS')
           ParentFont = False
@@ -2972,7 +2899,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 41.574803150000000000
           Height = 22.677162910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -2982,7 +2908,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR'
             'IPI')
           ParentFont = False
@@ -2994,7 +2920,6 @@ object DMBusiness: TDMBusiness
           Top = 29.677182440000000000
           Width = 20.787401574803100000
           Height = 11.338572910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3004,7 +2929,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'ICMS')
           ParentFont = False
           WordWrap = False
@@ -3015,7 +2940,6 @@ object DMBusiness: TDMBusiness
           Top = 29.677182440000000000
           Width = 20.787401574803100000
           Height = 11.338572910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3025,7 +2949,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'IPI')
           ParentFont = False
           WordWrap = False
@@ -3036,7 +2960,6 @@ object DMBusiness: TDMBusiness
           Top = 18.338592440000000000
           Width = 41.574830000000000000
           Height = 11.338572910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3046,34 +2969,33 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
-            'AL'#195#141'Q. %')
+          Memo.UTF8W = (
+            'AL'#205'Q. %')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
       end
       object Imposto: TfrxMasterData
+        FillType = ftBrush
         Height = 70.031525350000000000
         Top = 778.583180000000000000
         Width = 744.567410000000000000
         OnBeforePrint = 'ImpostoOnBeforePrint'
-        DataSet = dmACBrNFeFR.frxCalculoImposto
         DataSetName = 'CalculoImposto'
         RowCount = 1
         object Memo58: TfrxMemoView
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
-            'C'#195#129'LCULO DO IMPOSTO')
+          Memo.UTF8W = (
+            'C'#193'LCULO DO IMPOSTO')
           ParentFont = False
           VAlign = vaBottom
         end
@@ -3081,7 +3003,6 @@ object DMBusiness: TDMBusiness
           Top = 17.118122440000000000
           Width = 114.897637800000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3090,15 +3011,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'BASE DE C'#195#129'LCULO DO ICMS')
+          Memo.UTF8W = (
+            'BASE DE C'#193'LCULO DO ICMS')
           ParentFont = False
         end
         object memVBC: TfrxMemoView
           Top = 26.566863230000000000
           Width = 114.897637800000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3110,7 +3030,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VBC"]')
           ParentFont = False
           WordWrap = False
@@ -3121,7 +3041,6 @@ object DMBusiness: TDMBusiness
           Top = 17.118122440000000000
           Width = 114.897637800000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3130,7 +3049,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR DO ICMS')
           ParentFont = False
         end
@@ -3139,7 +3058,6 @@ object DMBusiness: TDMBusiness
           Top = 26.566863230000000000
           Width = 114.897637800000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3151,7 +3069,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VICMS"]')
           ParentFont = False
           WordWrap = False
@@ -3162,7 +3080,6 @@ object DMBusiness: TDMBusiness
           Top = 17.118122440000000000
           Width = 128.504020000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3171,8 +3088,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'BASE DE C'#195#129'LCULO DO ICMS SUBST.')
+          Memo.UTF8W = (
+            'BASE DE C'#193'LCULO DO ICMS SUBST.')
           ParentFont = False
         end
         object memVBCST: TfrxMemoView
@@ -3180,7 +3097,6 @@ object DMBusiness: TDMBusiness
           Top = 26.566863230000000000
           Width = 128.504020000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3192,7 +3108,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VBCST"]')
           ParentFont = False
           WordWrap = False
@@ -3203,7 +3119,6 @@ object DMBusiness: TDMBusiness
           Top = 17.118122440000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3212,7 +3127,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR DO ICMS SUBST.')
           ParentFont = False
         end
@@ -3221,7 +3136,6 @@ object DMBusiness: TDMBusiness
           Top = 26.566863230000000000
           Width = 113.385900000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3233,7 +3147,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VST"]')
           ParentFont = False
           WordWrap = False
@@ -3244,7 +3158,6 @@ object DMBusiness: TDMBusiness
           Top = 17.118122440000000000
           Width = 147.401670000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3253,7 +3166,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR TOTAL DOS PRODUTOS')
           ParentFont = False
         end
@@ -3262,7 +3175,6 @@ object DMBusiness: TDMBusiness
           Top = 25.566863230000000000
           Width = 147.401670000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3274,7 +3186,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VProd"]')
           ParentFont = False
           WordWrap = False
@@ -3285,7 +3197,6 @@ object DMBusiness: TDMBusiness
           Top = 43.574832440000000000
           Width = 137.574892000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3294,7 +3205,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR DO IPI')
           ParentFont = False
         end
@@ -3303,7 +3214,6 @@ object DMBusiness: TDMBusiness
           Top = 53.023573230000000000
           Width = 137.574892000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3315,7 +3225,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VIPI"]')
           ParentFont = False
           WordWrap = False
@@ -3326,7 +3236,6 @@ object DMBusiness: TDMBusiness
           Top = 43.574832440000000000
           Width = 130.015832000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3335,8 +3244,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'OUTRAS DESPESAS ACESS'#195#8220'RIAS')
+          Memo.UTF8W = (
+            'OUTRAS DESPESAS ACESS'#211'RIAS')
           ParentFont = False
         end
         object Memo72: TfrxMemoView
@@ -3344,7 +3253,6 @@ object DMBusiness: TDMBusiness
           Top = 53.023573230000000000
           Width = 130.015832000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3356,7 +3264,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VOutro"]')
           ParentFont = False
           WordWrap = False
@@ -3367,7 +3275,6 @@ object DMBusiness: TDMBusiness
           Top = 43.574832440000000000
           Width = 99.779592000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3376,7 +3283,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'DESCONTO')
           ParentFont = False
         end
@@ -3385,7 +3292,6 @@ object DMBusiness: TDMBusiness
           Top = 53.023573230000000000
           Width = 99.779592000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3397,7 +3303,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VDesc"]')
           ParentFont = False
           WordWrap = False
@@ -3408,7 +3314,6 @@ object DMBusiness: TDMBusiness
           Top = 43.574832440000000000
           Width = 114.897712000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3417,7 +3322,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR DO SEGURO')
           ParentFont = False
         end
@@ -3426,7 +3331,6 @@ object DMBusiness: TDMBusiness
           Top = 53.023573230000000000
           Width = 114.897712000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3438,7 +3342,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VSeg"]')
           ParentFont = False
           WordWrap = False
@@ -3448,7 +3352,6 @@ object DMBusiness: TDMBusiness
           Top = 43.574832440000000000
           Width = 114.897712000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3457,7 +3360,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR DO FRETE')
           ParentFont = False
         end
@@ -3465,7 +3368,6 @@ object DMBusiness: TDMBusiness
           Top = 53.023573230000000000
           Width = 114.897712000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3477,7 +3379,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VFrete"]')
           ParentFont = False
           WordWrap = False
@@ -3487,7 +3389,6 @@ object DMBusiness: TDMBusiness
           Top = 43.574832440000000000
           Width = 147.401670000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3496,7 +3397,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR TOTAL DA NOTA')
           ParentFont = False
         end
@@ -3505,7 +3406,6 @@ object DMBusiness: TDMBusiness
           Top = 52.023573230000000000
           Width = 147.401670000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3517,7 +3417,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VNF"]')
           ParentFont = False
           WordWrap = False
@@ -3528,7 +3428,6 @@ object DMBusiness: TDMBusiness
           Top = 17.196850390000000000
           Width = 125.480339370000000000
           Height = 26.267716540000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3537,7 +3436,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'V.APROX. TRIBUTOS [CalculoImposto."VTribFonte"]')
           ParentFont = False
         end
@@ -3546,7 +3445,6 @@ object DMBusiness: TDMBusiness
           Top = 26.645669290000000000
           Width = 124.724490000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -3558,7 +3456,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[CalculoImposto."VTotTrib"] ([CalculoImposto."VTribPerc"] %)')
           ParentFont = False
           WordWrap = False
@@ -3566,24 +3464,23 @@ object DMBusiness: TDMBusiness
         end
       end
       object TransportadorVolumes: TfrxMasterData
+        FillType = ftBrush
         Height = 96.378045510000000000
         Top = 873.071430000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxTransportador
         DataSetName = 'Transportador'
         RowCount = 1
         object Memo82: TfrxMemoView
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'TRANSPORTADOR / VOLUMES TRANSPORTADOS')
           ParentFont = False
         end
@@ -3592,7 +3489,6 @@ object DMBusiness: TDMBusiness
           Top = 17.007932600000000000
           Width = 108.472433620000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3601,7 +3497,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CNPJ / CPF')
           ParentFont = False
         end
@@ -3610,7 +3506,6 @@ object DMBusiness: TDMBusiness
           Top = 26.456673390000000000
           Width = 108.472433620000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3618,7 +3513,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."CNPJCPF"]')
           ParentFont = False
           WordWrap = False
@@ -3629,7 +3524,6 @@ object DMBusiness: TDMBusiness
           Top = 17.007932600000000000
           Width = 27.590548740000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3638,7 +3532,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UF')
           ParentFont = False
         end
@@ -3647,7 +3541,6 @@ object DMBusiness: TDMBusiness
           Top = 26.456673390000000000
           Width = 27.590548740000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3656,7 +3549,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Veiculo."UF"]')
           ParentFont = False
           WordWrap = False
@@ -3667,7 +3560,6 @@ object DMBusiness: TDMBusiness
           Top = 17.007932600000000000
           Width = 86.929190000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3676,8 +3568,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'PLACA DO VE'#195#141'CULO')
+          Memo.UTF8W = (
+            'PLACA DO VE'#205'CULO')
           ParentFont = False
         end
         object Memo88: TfrxMemoView
@@ -3685,7 +3577,6 @@ object DMBusiness: TDMBusiness
           Top = 26.456673390000000000
           Width = 86.929190000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3693,7 +3584,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Veiculo."PLACA"]')
           ParentFont = False
           WordWrap = False
@@ -3704,7 +3595,6 @@ object DMBusiness: TDMBusiness
           Top = 17.007932600000000000
           Width = 83.149660000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3713,8 +3603,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'C'#195#8220'DIGO ANTT')
+          Memo.UTF8W = (
+            'C'#211'DIGO ANTT')
           ParentFont = False
         end
         object Memo90: TfrxMemoView
@@ -3722,7 +3612,6 @@ object DMBusiness: TDMBusiness
           Top = 26.456673390000000000
           Width = 79.370130000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3730,7 +3619,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Veiculo."RNTC"]')
           ParentFont = False
           WordWrap = False
@@ -3741,7 +3630,6 @@ object DMBusiness: TDMBusiness
           Top = 17.007932600000000000
           Width = 83.149660000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3750,7 +3638,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'FRETE POR CONTA')
           ParentFont = False
         end
@@ -3759,7 +3647,6 @@ object DMBusiness: TDMBusiness
           Top = 26.456673390000000000
           Width = 83.149660000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3767,7 +3654,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."ModFrete"]')
           ParentFont = False
           WordWrap = False
@@ -3777,7 +3664,6 @@ object DMBusiness: TDMBusiness
           Top = 17.007932600000000000
           Width = 355.275820000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3786,15 +3672,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'NOME / RAZ'#195#402'O SOCIAL')
+          Memo.UTF8W = (
+            'NOME / RAZ'#195'O SOCIAL')
           ParentFont = False
         end
         object Memo94: TfrxMemoView
           Top = 26.456673390000000000
           Width = 355.275820000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3802,7 +3687,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."XNome"]')
           ParentFont = False
           WordWrap = False
@@ -3813,7 +3698,6 @@ object DMBusiness: TDMBusiness
           Top = 43.464642600000000000
           Width = 27.590548740000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3822,7 +3706,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UF')
           ParentFont = False
         end
@@ -3831,7 +3715,6 @@ object DMBusiness: TDMBusiness
           Top = 52.913383390000000000
           Width = 27.590548740000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3840,7 +3723,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."UF"]')
           ParentFont = False
           WordWrap = False
@@ -3851,7 +3734,6 @@ object DMBusiness: TDMBusiness
           Top = 43.464642600000000000
           Width = 108.472433620000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3860,8 +3742,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'INSCRI'#195#8225#195#402'O ESTADUAL')
+          Memo.UTF8W = (
+            'INSCRI'#199#195'O ESTADUAL')
           ParentFont = False
         end
         object Memo98: TfrxMemoView
@@ -3869,7 +3751,6 @@ object DMBusiness: TDMBusiness
           Top = 52.913383390000000000
           Width = 108.472433620000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3877,7 +3758,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."IE"]')
           ParentFont = False
           WordWrap = False
@@ -3888,7 +3769,6 @@ object DMBusiness: TDMBusiness
           Top = 43.464642600000000000
           Width = 253.228510000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3897,8 +3777,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'MUNIC'#195#141'PIO')
+          Memo.UTF8W = (
+            'MUNIC'#205'PIO')
           ParentFont = False
         end
         object Memo100: TfrxMemoView
@@ -3906,7 +3786,6 @@ object DMBusiness: TDMBusiness
           Top = 52.913383390000000000
           Width = 253.228510000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3914,7 +3793,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."XMun"]')
           ParentFont = False
           WordWrap = False
@@ -3924,7 +3803,6 @@ object DMBusiness: TDMBusiness
           Top = 43.464642600000000000
           Width = 355.275820000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3933,15 +3811,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'ENDERE'#195#8225'O')
+          Memo.UTF8W = (
+            'ENDERE'#199'O')
           ParentFont = False
         end
         object Memo102: TfrxMemoView
           Top = 52.913383390000000000
           Width = 355.275820000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3949,7 +3826,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Transportador."XEnder"]')
           ParentFont = False
           WordWrap = False
@@ -3959,7 +3836,6 @@ object DMBusiness: TDMBusiness
           Top = 69.921352600000000000
           Width = 59.212636670000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -3969,7 +3845,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
           HideZeros = True
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'QUANTIDADE')
           ParentFont = False
         end
@@ -3977,7 +3853,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370093390000000000
           Width = 59.212636670000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3987,7 +3862,7 @@ object DMBusiness: TDMBusiness
           GapX = 5.000000000000000000
           HAlign = haRight
           HideZeros = True
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Volumes."QVol"]')
           ParentFont = False
           WordWrap = False
@@ -3998,7 +3873,6 @@ object DMBusiness: TDMBusiness
           Top = 69.921352600000000000
           Width = 153.700886670000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4007,8 +3881,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'ESP'#195#8240'CIE')
+          Memo.UTF8W = (
+            'ESP'#201'CIE')
           ParentFont = False
         end
         object Memo106: TfrxMemoView
@@ -4016,7 +3890,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370093390000000000
           Width = 153.700886670000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4024,7 +3897,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Volumes."Esp"]')
           ParentFont = False
           WordWrap = False
@@ -4035,7 +3908,6 @@ object DMBusiness: TDMBusiness
           Top = 69.921352600000000000
           Width = 142.362296670000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4044,7 +3916,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'MARCA')
           ParentFont = False
         end
@@ -4053,7 +3925,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370093390000000000
           Width = 142.362296670000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4061,7 +3932,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Volumes."Marca"]')
           ParentFont = False
           WordWrap = False
@@ -4072,7 +3943,6 @@ object DMBusiness: TDMBusiness
           Top = 69.921352600000000000
           Width = 161.259946670000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4081,8 +3951,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'NUMERA'#195#8225#195#402'O')
+          Memo.UTF8W = (
+            'NUMERA'#199#195'O')
           ParentFont = False
         end
         object Memo110: TfrxMemoView
@@ -4090,7 +3960,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370093390000000000
           Width = 161.259946670000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4098,7 +3967,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Volumes."NVol"]')
           ParentFont = False
           WordWrap = False
@@ -4109,7 +3978,6 @@ object DMBusiness: TDMBusiness
           Top = 69.921352600000000000
           Width = 119.685116670000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4118,7 +3986,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'PESO BRUTO')
           ParentFont = False
         end
@@ -4127,7 +3995,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370093390000000000
           Width = 119.685116670000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.3n'
           DisplayFormat.Kind = fkNumeric
@@ -4140,7 +4007,7 @@ object DMBusiness: TDMBusiness
           GapX = 5.000000000000000000
           HAlign = haRight
           HideZeros = True
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Volumes."PesoB"]')
           ParentFont = False
           WordWrap = False
@@ -4151,7 +4018,6 @@ object DMBusiness: TDMBusiness
           Top = 69.921352600000000000
           Width = 108.346526670000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4160,8 +4026,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'PESO L'#195#141'QUIDO')
+          Memo.UTF8W = (
+            'PESO L'#205'QUIDO')
           ParentFont = False
         end
         object Memo114: TfrxMemoView
@@ -4169,7 +4035,6 @@ object DMBusiness: TDMBusiness
           Top = 79.370093390000000000
           Width = 108.346526670000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.3n'
           DisplayFormat.Kind = fkNumeric
@@ -4182,7 +4047,7 @@ object DMBusiness: TDMBusiness
           GapX = 5.000000000000000000
           HAlign = haRight
           HideZeros = True
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Volumes."PesoL"]')
           ParentFont = False
           WordWrap = False
@@ -4190,6 +4055,7 @@ object DMBusiness: TDMBusiness
         end
       end
       object MarcaDagua: TfrxOverlay
+        FillType = ftBrush
         Height = 1122.519685040000000000
         Top = 1164.095240000000000000
         Width = 744.567410000000000000
@@ -4197,27 +4063,26 @@ object DMBusiness: TDMBusiness
           Align = baClient
           Width = 744.567410000000000000
           Height = 1122.519685040000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = 14211288
           Font.Height = -67
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Parametros."Mensagem0"]')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object Child1: TfrxChild
+        FillType = ftBrush
         Height = 3.779527560000000000
         Top = 1114.961350000000000000
         Width = 744.567410000000000000
         object Memo161: TfrxMemoView
           Width = 60.472480000000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4234,7 +4099,6 @@ object DMBusiness: TDMBusiness
           Left = 60.472480000000000000
           Width = 215.433070866142000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4250,7 +4114,6 @@ object DMBusiness: TDMBusiness
           Left = 275.905511811024000000
           Width = 37.795300000000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4267,7 +4130,6 @@ object DMBusiness: TDMBusiness
           Left = 313.700787401575000000
           Width = 26.456695350000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4284,7 +4146,6 @@ object DMBusiness: TDMBusiness
           Left = 340.157480314961000000
           Width = 24.566929130000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4301,7 +4162,6 @@ object DMBusiness: TDMBusiness
           Left = 364.724409448819000000
           Width = 30.236220472440900000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4319,7 +4179,6 @@ object DMBusiness: TDMBusiness
           Left = 394.960659210000000000
           Width = 43.464574250000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4339,7 +4198,6 @@ object DMBusiness: TDMBusiness
           Left = 438.425480000000000000
           Width = 45.354360000000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4359,7 +4217,6 @@ object DMBusiness: TDMBusiness
           Left = 483.779840000000000000
           Width = 45.354360000000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4377,7 +4234,6 @@ object DMBusiness: TDMBusiness
           Left = 529.134200000000000000
           Width = 45.354360000000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4397,7 +4253,6 @@ object DMBusiness: TDMBusiness
           Left = 574.488560000000000000
           Width = 45.354360000000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4417,7 +4272,6 @@ object DMBusiness: TDMBusiness
           Left = 619.842920000000000000
           Width = 41.574803149606300000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4437,7 +4291,6 @@ object DMBusiness: TDMBusiness
           Left = 661.417322834646000000
           Width = 41.574803150000000000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4457,7 +4310,6 @@ object DMBusiness: TDMBusiness
           Left = 702.992125980000000000
           Width = 20.787401574803100000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4477,7 +4329,6 @@ object DMBusiness: TDMBusiness
           Left = 723.779527559055000000
           Width = 20.787401574803100000
           Height = 3.779527560000000000
-          ShowHint = False
           StretchMode = smActualHeight
           DisplayFormat.FormatStr = ',0.00##'
           DisplayFormat.Kind = fkNumeric
@@ -4495,33 +4346,34 @@ object DMBusiness: TDMBusiness
         end
       end
       object DadosProdutosFooter: TfrxGroupFooter
+        FillType = ftBrush
         Top = 1092.284170000000000000
         Width = 744.567410000000000000
         OnBeforePrint = 'DadosProdutosFooterOnBeforePrint'
       end
       object Child2: TfrxChild
+        FillType = ftBrush
         Top = 1141.418060000000000000
         Width = 744.567410000000000000
         object Line2: TfrxLineView
           Align = baWidth
           Width = 744.567410000000000000
-          ShowHint = False
+          Color = clBlack
           Frame.Typ = [ftTop]
           Frame.Width = 0.500000000000000000
         end
       end
       object LocalRetirada: TfrxMasterData
+        FillType = ftBrush
         Height = 43.354342910000000000
         Top = 476.220780000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxLocalRetirada
         DataSetName = 'LocalRetirada'
         RowCount = 0
         object Memo10: TfrxMemoView
           Top = 16.897650000000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4530,7 +4382,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CNPJ / CPF')
           ParentFont = False
         end
@@ -4538,7 +4390,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 113.385826770000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4546,7 +4397,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[LocalRetirada."CNPJ"]')
           ParentFont = False
           WordWrap = False
@@ -4557,7 +4408,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 631.181510000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4566,8 +4416,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'ENDERE'#195#8225'O')
+          Memo.UTF8W = (
+            'ENDERE'#199'O')
           ParentFont = False
         end
         object Memo18: TfrxMemoView
@@ -4575,7 +4425,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 631.181510000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4583,7 +4432,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[LocalRetirada."XLgr"] [LocalRetirada."Nro"] [LocalRetirada."XCp' +
               'l"] - [LocalRetirada."XBairro"] - [LocalRetirada."XMun"] - [Loca' +
@@ -4596,31 +4445,29 @@ object DMBusiness: TDMBusiness
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'LOCAL RETIRADA')
           ParentFont = False
           VAlign = vaBottom
         end
       end
       object LocalEntrega: TfrxMasterData
+        FillType = ftBrush
         Height = 43.354342910000000000
         Top = 544.252320000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxLocalEntrega
         DataSetName = 'LocalEntrega'
         RowCount = 0
         object Memo54: TfrxMemoView
           Top = 16.897650000000000000
           Width = 113.385900000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4629,7 +4476,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'CNPJ / CPF')
           ParentFont = False
         end
@@ -4637,7 +4484,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 113.385826770000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4645,7 +4491,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[LocalEntrega."CNPJ"]')
           ParentFont = False
           WordWrap = False
@@ -4656,7 +4502,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 631.181510000000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4665,8 +4510,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'ENDERE'#195#8225'O')
+          Memo.UTF8W = (
+            'ENDERE'#199'O')
           ParentFont = False
         end
         object Memo57: TfrxMemoView
@@ -4674,7 +4519,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 631.181510000000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4682,7 +4526,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[LocalEntrega."XLgr"] [LocalEntrega."Nro"] [LocalEntrega."XCpl"]' +
               ' - [LocalEntrega."XBairro"] - [LocalEntrega."XMun"] - [LocalEntr' +
@@ -4695,27 +4539,26 @@ object DMBusiness: TDMBusiness
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'LOCAL ENTREGA')
           ParentFont = False
           VAlign = vaBottom
         end
       end
       object ColumnFooter1: TfrxColumnFooter
+        FillType = ftBrush
         Height = 43.464566930000000000
         Top = 2347.088130000000000000
         Width = 744.567410000000000000
         object ISSQN: TfrxSubreport
           Width = 744.567410000000000000
           Height = 43.464566930000000000
-          ShowHint = False
           Page = fastReport.PageISSQN
           PrintOnParent = True
         end
@@ -4730,25 +4573,24 @@ object DMBusiness: TDMBusiness
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object subISSQN: TfrxMasterData
+        FillType = ftBrush
         Height = 43.354342910000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
-        DataSet = dmACBrNFeFR.frxISSQN
         DataSetName = 'ISSQN'
         RowCount = 0
         object Memo5: TfrxMemoView
           Top = 3.779530000000000000
           Width = 430.866420000000000000
           Height = 13.228344020000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Times New Roman'
           Font.Style = [fsBold]
           Frame.Width = 0.500000000000000000
-          Memo.UTF8 = (
-            'C'#195#129'LCULO DO ISSQN')
+          Memo.UTF8W = (
+            'C'#193'LCULO DO ISSQN')
           ParentFont = False
           VAlign = vaBottom
         end
@@ -4756,7 +4598,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 217.322859060000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4765,15 +4606,14 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'INSCRI'#195#8225#195#402'O MUNICIPAL')
+          Memo.UTF8W = (
+            'INSCRI'#199#195'O MUNICIPAL')
           ParentFont = False
         end
         object Memo59: TfrxMemoView
           Top = 26.346390790000000000
           Width = 217.322859060000000000
           Height = 17.007874020000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4781,7 +4621,7 @@ object DMBusiness: TDMBusiness
           Font.Style = []
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Emitente."IM"]')
           ParentFont = False
           VAlign = vaBottom
@@ -4791,7 +4631,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 179.527559060000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4800,8 +4639,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'VALOR TOTAL DOS SERVI'#195#8225'OS')
+          Memo.UTF8W = (
+            'VALOR TOTAL DOS SERVI'#199'OS')
           ParentFont = False
         end
         object Memo61: TfrxMemoView
@@ -4809,7 +4648,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 179.527559060000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -4821,7 +4659,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[ISSQN."VServ"]')
           ParentFont = False
           VAlign = vaBottom
@@ -4831,7 +4669,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 179.527559060000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4840,8 +4677,8 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
-            'BASE DE C'#195#129'LCULO DO ISSQN')
+          Memo.UTF8W = (
+            'BASE DE C'#193'LCULO DO ISSQN')
           ParentFont = False
         end
         object Memo63: TfrxMemoView
@@ -4849,7 +4686,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 179.527559060000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -4861,7 +4697,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[ISSQN."VBC"]')
           ParentFont = False
           VAlign = vaBottom
@@ -4871,7 +4707,6 @@ object DMBusiness: TDMBusiness
           Top = 16.897650000000000000
           Width = 179.527559060000000000
           Height = 26.456692910000000000
-          ShowHint = False
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -7
@@ -4880,7 +4715,7 @@ object DMBusiness: TDMBusiness
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.500000000000000000
           GapY = 2.000000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'VALOR TOTAL DO ISSQN')
           ParentFont = False
         end
@@ -4889,7 +4724,6 @@ object DMBusiness: TDMBusiness
           Top = 26.346390790000000000
           Width = 179.527559060000000000
           Height = 17.007874020000000000
-          ShowHint = False
           DisplayFormat.DecimalSeparator = ','
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
@@ -4901,7 +4735,7 @@ object DMBusiness: TDMBusiness
           Frame.Width = 0.500000000000000000
           GapX = 5.000000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[ISSQN."VISS"]')
           ParentFont = False
           VAlign = vaBottom

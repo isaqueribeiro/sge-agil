@@ -6,6 +6,7 @@ uses
   Windows, Forms, Messages, SysUtils, Classes, ExtCtrls, ShellApi, Printers,
   Graphics, IniFiles, PSApi, Winsock, WinSvc, WinInet, StrUtils;
 
+  function GetHostNameLocal : String;
   function GetExeVersion(const FileName : TFileName) : String; overload;
   function GetExeVersion : String; overload;
   function GetVersion : String;
@@ -41,7 +42,20 @@ var
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
     'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
     'u', 'v', 'w', 'x', 'y', 'z');
-    
+
+function GetHostNameLocal : String;
+var
+  Buffer     : array[0..255] of AnsiChar;
+  RemoteHost : PHostEnt;
+begin
+  Winsock.GetHostName(@Buffer, 255);
+  RemoteHost := Winsock.GetHostByName(Buffer);
+  if (RemoteHost = nil) then
+    Result := EmptyStr
+  else
+    Result := RemoteHost.h_name;
+end;
+
 function GetExeVersion(const FileName : TFileName) : String;
 type
   PFFI = ^vs_FixedFileInfo;

@@ -1,7 +1,5 @@
 object DMCupom: TDMCupom
   OldCreateOrder = False
-  Left = 544
-  Top = 307
   Height = 631
   Width = 1015
   object cdsVenda: TIBDataSet
@@ -9,6 +7,7 @@ object DMCupom: TDMCupom
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
     OnCalcFields = cdsVendaCalcFields
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -95,6 +94,8 @@ object DMCupom: TDMCupom
       '  and v.codcontrol = :controle')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updVenda
     Left = 80
     Top = 80
@@ -682,6 +683,7 @@ object DMCupom: TDMCupom
   object cdsVendaItem: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -732,6 +734,8 @@ object DMCupom: TDMCupom
       '  and i.codcontrol = :controle')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updVendaItem
     Left = 80
     Top = 128
@@ -1075,6 +1079,7 @@ object DMCupom: TDMCupom
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     OnCalcFields = cdsVendaFormaPagtoCalcFields
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -1105,6 +1110,8 @@ object DMCupom: TDMCupom
       '  and f.controle_venda = :controle')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updVendaFormaPagto
     Left = 80
     Top = 176
@@ -1292,6 +1299,7 @@ object DMCupom: TDMCupom
   object cdsVendaVolume: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -1309,6 +1317,8 @@ object DMCupom: TDMCupom
       'from TBVENDAS_VOLUME v')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updVendaVolume
     Left = 80
     Top = 224
@@ -1423,6 +1433,8 @@ object DMCupom: TDMCupom
   object qryCFOP: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     RefreshSQL.Strings = (
       '')
     SelectSQL.Strings = (
@@ -1435,12 +1447,16 @@ object DMCupom: TDMCupom
       'where c.Cfop_cod = :Cfop_cod')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     Left = 384
     Top = 56
   end
   object qryProduto: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     RefreshSQL.Strings = (
       '')
     SelectSQL.Strings = (
@@ -1495,12 +1511,16 @@ object DMCupom: TDMCupom
       '  or p.Codbarra_ean = :CodigoBarra')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     Left = 384
     Top = 104
   end
   object qryUltimoVenda: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     RefreshSQL.Strings = (
       '')
     SelectSQL.Strings = (
@@ -1513,12 +1533,16 @@ object DMCupom: TDMCupom
       '  and v.status  = :status')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     Left = 384
     Top = 152
   end
   object cdsVendaTitulo: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     RefreshSQL.Strings = (
       '')
     SelectSQL.Strings = (
@@ -1550,12 +1574,15 @@ object DMCupom: TDMCupom
       '  and r.numvenda = :numvenda')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     Left = 80
     Top = 272
   end
   object cdsVendaNFCe: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     SelectSQL.Strings = (
       'Select'
@@ -1579,6 +1606,8 @@ object DMCupom: TDMCupom
       'where n.EMPRESA = :empresa'
       '  and n.ANOVENDA = :ano'
       '  and n.NUMVENDA = :controle')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updVendaNFCe
     Left = 80
     Top = 320

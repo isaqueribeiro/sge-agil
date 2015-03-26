@@ -7,7 +7,7 @@ uses
   UFuncoes,
   UEcfFactory,
 
-  Windows, SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFeDANFERave, ACBrNFe, DB,
+  Windows, SysUtils, Classes, ACBrNFeDANFEClass, ACBrNFe, DB,
   IBCustomDataSet, IBQuery, frxClass, frxDBSet, frxExportRTF, frxExportXLS,
   frxExportPDF, frxExportMail, UGeConfigurarNFeACBr,
 

@@ -3,10 +3,10 @@ unit UPrinc;
 interface
 
 uses
-  EUserAcs, StdCtrls, Buttons,
-  
+  StdCtrls, Buttons,
+
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, BarMenus, ExtCtrls, jpeg,
+  Dialogs, Menus, ComCtrls, ExtCtrls, jpeg,
   
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
@@ -19,7 +19,12 @@ uses
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
   dxSkinsdxBarPainter, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, dxBar, dxRibbon, cxClasses, dxSkinsForm,
-  dxGDIPlusClasses;
+  dxGDIPlusClasses, dxRibbonSkins, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, dxSkinsdxRibbonPainter,
+  dxRibbonCustomizationForm;
 
 type
   TfrmPrinc = class(TForm)
@@ -167,7 +172,7 @@ begin
     BrBtnVenda.Enabled      := False;
   end;
 
-  if not SetAcessoEstacao(DMBusiness.IdIPWatch.LocalName) then
+  if not SetAcessoEstacao(GetHostNameLocal) then
   begin
     ShowError('Estação de trabalho não registrada no sistema!');
 
