@@ -1,6 +1,6 @@
 inherited frmGeProduto: TfrmGeProduto
-  Left = 405
-  Top = 214
+  Left = 383
+  Top = 220
   Width = 977
   Height = 648
   Caption = 'Cadastro de Produtos/Servi'#231'os'
@@ -13,10 +13,6 @@ inherited frmGeProduto: TfrmGeProduto
   end
   inherited Bevel3: TBevel
     Top = 567
-    Width = 961
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 571
     Width = 961
   end
   inherited pgcGuias: TPageControl
@@ -238,13 +234,14 @@ inherited frmGeProduto: TfrmGeProduto
             Caption = 'Produto:'
             Visible = False
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 512
-          end
           inherited edtFiltrar: TEdit
             Left = 224
             Width = 283
             TabOrder = 2
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 512
+            TabOrder = 3
           end
           object chkProdutoComEstoque: TCheckBox
             Left = 68
@@ -2171,7 +2168,7 @@ inherited frmGeProduto: TfrmGeProduto
             object lblEspecificacao: TLabel
               Left = 2
               Top = 2
-              Width = 941
+              Width = 105
               Height = 13
               Align = alTop
               Caption = 'Especifica'#231#227'o textual:'
@@ -2570,6 +2567,22 @@ inherited frmGeProduto: TfrmGeProduto
           OnButtonClick = dbUnidadeFracaoButtonClick
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 571
+    Width = 961
+    inherited bvlTool3: TBevel
+      Left = 878
+    end
+    inherited bvlTool4: TBevel
+      Left = 957
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 882
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 758
     end
   end
   inherited IbDtstTabela: TIBDataSet

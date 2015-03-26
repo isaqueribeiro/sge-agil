@@ -1,6 +1,5 @@
 inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
-  Left = 403
-  Top = 216
+  Left = 384
   Width = 1148
   Height = 690
   Caption = 'Tesouraria'
@@ -14,13 +13,6 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
   inherited Bevel3: TBevel
     Top = 609
     Width = 1132
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 613
-    Width = 1132
-    inherited btbtnLista: TcxButton
-      Visible = True
-    end
   end
   inherited pgcGuias: TPageControl
     Width = 1132
@@ -120,10 +112,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
             Width = 53
             Caption = 'Hist'#243'rico:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 1071
-          end
-          object lblData: TLabel [2]
+          object lblData: TLabel [1]
             Left = 14
             Top = 25
             Width = 46
@@ -131,7 +120,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
             Caption = '&Per'#237'odo:'
             FocusControl = e1Data
           end
-          object lblContaCorrentePesq: TLabel [3]
+          object lblContaCorrentePesq: TLabel [2]
             Left = 288
             Top = 25
             Width = 26
@@ -143,6 +132,10 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
             Left = 720
             Width = 347
             TabOrder = 3
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 1071
+            TabOrder = 4
           end
           object e1Data: TJvDateEdit
             Left = 72
@@ -1477,6 +1470,25 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
           OnButtonClick = dbFornecedorButtonClick
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 613
+    Width = 1132
+    inherited bvlTool3: TBevel
+      Left = 1049
+    end
+    inherited bvlTool4: TBevel
+      Left = 1128
+    end
+    inherited btbtnLista: TcxButton
+      Visible = True
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 1053
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 929
     end
   end
   inherited IbDtstTabela: TIBDataSet

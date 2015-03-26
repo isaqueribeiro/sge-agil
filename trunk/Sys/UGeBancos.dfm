@@ -1,6 +1,6 @@
 inherited frmGeBancos: TfrmGeBancos
-  Left = 394
-  Top = 213
+  Left = 383
+  Top = 208
   Height = 510
   Caption = 'Tabela de Bancos'
   OldCreateOrder = True
@@ -11,9 +11,6 @@ inherited frmGeBancos: TfrmGeBancos
   end
   inherited Bevel3: TBevel
     Top = 429
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 433
   end
   inherited pgcGuias: TPageControl
     Height = 429
@@ -1417,6 +1414,9 @@ inherited frmGeBancos: TfrmGeBancos
         end
       end
     end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 433
   end
   inherited IbDtstTabela: TIBDataSet
     BeforePost = IbDtstTabelaBeforePost

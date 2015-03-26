@@ -1,6 +1,6 @@
 inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
-  Left = 388
-  Top = 209
+  Left = 419
+  Top = 247
   ActiveControl = nil
   Caption = 'Tabela de Condi'#231#245'es de Pagamento'
   OldCreateOrder = True
@@ -39,12 +39,12 @@ inherited frmGeCondicaoPagto: TfrmGeCondicaoPagto
             Width = 86
             Caption = 'Condi'#231#227'o Pgto.:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 237
-          end
           inherited edtFiltrar: TEdit
             Left = 96
             Width = 137
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 237
           end
         end
       end

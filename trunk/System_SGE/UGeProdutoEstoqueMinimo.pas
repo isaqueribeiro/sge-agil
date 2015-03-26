@@ -26,14 +26,11 @@ type
   TFrmGeProdutoEstoqueMinimo = class(TfrmGrPadrao)
     pnlPesquisa: TPanel;
     GrpBxPesquisar: TGroupBox;
-    BtnPesquisar: TSpeedButton;
     lblPesquisar: TLabel;
     lblTipoFiltro: TLabel;
     edPesquisar: TEdit;
     edTipoFiltro: TComboBox;
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
     Bevel3: TBevel;
     QryProduto: TIBQuery;
     DspProduto: TDataSetProvider;
@@ -167,8 +164,11 @@ type
     CdsGrupoESTOQUE_MINIMO: TBCDField;
     CdsFabricanteESTOQUE_MINIMO: TBCDField;
     CdsProdutoESTOQMIN: TBCDField;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
     btBtnExportar: TcxButton;
     btBtnEnviarEmail: TcxButton;
+    BtnPesquisar: TcxButton;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;

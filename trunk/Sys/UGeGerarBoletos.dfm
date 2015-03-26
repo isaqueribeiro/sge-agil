@@ -1,6 +1,6 @@
 object frmGeGerarBoleto: TfrmGeGerarBoleto
-  Left = 445
-  Top = 240
+  Left = 414
+  Top = 224
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Gerar Boletos'
@@ -746,17 +746,24 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
       end
     end
   end
-  object tlbBotoes: TToolBar
+  object tlbBotoes: TPanel
     Left = 0
     Top = 403
     Width = 912
     Height = 35
     Align = alBottom
-    ButtonHeight = 31
-    Caption = #39
+    BevelOuter = bvNone
+    ParentColor = True
     TabOrder = 1
     object Bevel5: TBevel
       Left = 0
+      Top = 2
+      Width = 4
+      Height = 31
+      Shape = bsSpacer
+    end
+    object Bevel7: TBevel
+      Left = 79
       Top = 2
       Width = 4
       Height = 31
@@ -823,13 +830,6 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
       NumGlyphs = 2
-    end
-    object Bevel7: TBevel
-      Left = 79
-      Top = 2
-      Width = 4
-      Height = 31
-      Shape = bsSpacer
     end
     object btnGerarBoleto: TcxButton
       Left = 83

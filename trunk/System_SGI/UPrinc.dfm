@@ -16,7 +16,6 @@ object frmPrinc: TfrmPrinc
   OnActivate = FormActivate
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object SptDockReqAlmox: TSplitter
@@ -10942,7 +10941,7 @@ object frmPrinc: TfrmPrinc
       OnClick = nmEntradaServicoClick
     end
   end
-  object dxSkinController: TdxSkinController
+  object SknController: TdxSkinController
     NativeStyle = False
     SkinName = 'MoneyTwins'
     Left = 176
@@ -10980,6 +10979,7 @@ object frmPrinc: TfrmPrinc
       'Boleto Banc'#225'rio'
       'Relat'#243'rios Cadastrais'
       'Relat'#243'rios Operacionais'
+      'Relat'#243'rios Gerenciais'
       'Ajuda')
     Categories.ItemsVisibles = (
       2
@@ -10999,8 +10999,10 @@ object frmPrinc: TfrmPrinc
       2
       2
       2
+      2
       2)
     Categories.Visibles = (
+      True
       True
       True
       True
@@ -11538,8 +11540,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnRelatorioProduto'
         end>
-      OneOnRow = True
-      Row = 2
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11571,8 +11573,8 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnRelatorioFinanceiro'
         end>
-      OneOnRow = True
-      Row = 1
+      OneOnRow = False
+      Row = 0
       UseOwnFont = False
       Visible = True
       WholeRow = False
@@ -11586,8 +11588,16 @@ object frmPrinc: TfrmPrinc
       FloatTop = 206
       FloatClientWidth = 0
       FloatClientHeight = 0
-      ItemLinks = <>
-      OneOnRow = True
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioAutorizacaoEntrada'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRelatorioEntradaSaida'
+        end>
+      OneOnRow = False
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -12565,9 +12575,39 @@ object frmPrinc: TfrmPrinc
       Hint = 'Movimenta'#231#245'es'
       Visible = ivAlways
     end
+    object BrBtnRelatorioAutorizacaoEntrada: TdxBarLargeButton
+      Caption = 'Autoriza'#231#245'es x Entradas'
+      Category = 17
+      Enabled = False
+      Hint = 'Autoriza'#231#245'es x Entradas'
+      Visible = ivAlways
+    end
+    object BrBtnRelatorioEntradaSaida: TdxBarLargeButton
+      Caption = 'Entradas x Sa'#237'das'
+      Category = 17
+      Enabled = False
+      Hint = 'Entradas x Sa'#237'das'
+      Visible = ivAlways
+      ButtonStyle = bsDropDown
+      DropDownMenu = BrPpRelatorioEntradaSaida
+    end
+    object BrBtnRelatorioEntradaVenda: TdxBarLargeButton
+      Caption = 'Entradas x Vendas'
+      Category = 17
+      Enabled = False
+      Hint = 'Entradas x Vendas'
+      Visible = ivAlways
+    end
+    object BrBtnRelatorioEntradaRequisicao: TdxBarLargeButton
+      Caption = 'Entradas x Requisi'#231#245'es'
+      Category = 17
+      Enabled = False
+      Hint = 'Entradas x Requisi'#231#245'es'
+      Visible = ivAlways
+    end
     object BrBtnCarregarLicenca: TdxBarLargeButton
       Caption = 'Carregar Licen'#231'a'
-      Category = 17
+      Category = 18
       Hint = 'Carregar Licen'#231'a'
       Visible = ivAlways
       LargeImageIndex = 67
@@ -12578,7 +12618,7 @@ object frmPrinc: TfrmPrinc
     end
     object BrBtnRegistroEstacao: TdxBarLargeButton
       Caption = 'Registros de Computadores'
-      Category = 17
+      Category = 18
       Hint = 'Registros de Computadores'
       Visible = ivAlways
       LargeImageIndex = 65
@@ -12589,7 +12629,7 @@ object frmPrinc: TfrmPrinc
     end
     object BrBtnSobre: TdxBarLargeButton
       Caption = 'Sobre o Sistema'
-      Category = 17
+      Category = 18
       Hint = 'Sobre o Sistema'
       Visible = ivAlways
       LargeImageIndex = 68
@@ -12862,6 +12902,21 @@ object frmPrinc: TfrmPrinc
       end>
     UseOwnFont = False
     Left = 592
+    Top = 246
+  end
+  object BrPpRelatorioEntradaSaida: TdxBarPopupMenu
+    BarManager = BrManager
+    ItemLinks = <
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioEntradaVenda'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnRelatorioEntradaRequisicao'
+      end>
+    UseOwnFont = False
+    Left = 624
     Top = 246
   end
 end

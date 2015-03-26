@@ -1,6 +1,6 @@
 inherited frmGeDistrito: TfrmGeDistrito
-  Left = 388
-  Top = 223
+  Left = 394
+  Top = 222
   ActiveControl = dbCodigo
   Caption = 'Tabela de Distritos'
   OldCreateOrder = True

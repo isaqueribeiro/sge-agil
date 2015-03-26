@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, ExtCtrls, Buttons, StdCtrls, DB, IBCustomDataSet,
-  IBQuery, Grids, DBGrids;
+  IBQuery, Grids, DBGrids, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, Menus, cxButtons;
 
 type
   TfrmGrPadraoPesquisa = class(TfrmGrPadrao)
@@ -13,7 +14,6 @@ type
     GrpBxTipoPesquisa: TGroupBox;
     BvlTipoPesquisa: TBevel;
     GrpBxPesquisar: TGroupBox;
-    BrnPesquisar: TSpeedButton;
     edTipoPesquisa: TComboBox;
     lblTipoPesquisa: TLabel;
     lblPesquisar: TLabel;
@@ -22,6 +22,7 @@ type
     DtsPesquisa: TDataSource;
     PnlTabela: TPanel;
     dbgDados: TDBGrid;
+    BrnPesquisar: TcxButton;
     procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure FormCreate(Sender: TObject);

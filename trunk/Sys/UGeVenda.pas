@@ -115,7 +115,6 @@ type
     cdsTabelaItens: TIBDataSet;
     IbUpdTabelaItens: TIBUpdateSQL;
     DtSrcTabelaItens: TDataSource;
-    Bevel11: TBevel;
     Bevel12: TBevel;
     IbDtstTabelaANO: TSmallintField;
     IbDtstTabelaCODCONTROL: TIntegerField;
@@ -190,7 +189,6 @@ type
     qryNFEXML_FILE: TMemoField;
     qryNFELOTE_ANO: TSmallintField;
     qryNFELOTE_NUM: TIntegerField;
-    Bevel13: TBevel;
     lblTotalDesconto: TLabel;
     cdsTabelaItensPUNIT_PROMOCAO: TIBBCDField;
     lblProdutoPromocao: TLabel;

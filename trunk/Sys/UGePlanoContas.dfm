@@ -1,9 +1,9 @@
 inherited frmGePlanoContas: TfrmGePlanoContas
-  Left = 396
-  Top = 214
+  Left = 427
+  Top = 240
   Width = 812
   Height = 521
-  ActiveControl = dbNivel
+  ActiveControl = nil
   Caption = 'Tabela de Planos de Contas'
   OldCreateOrder = True
   PixelsPerInch = 96
@@ -14,10 +14,6 @@ inherited frmGePlanoContas: TfrmGePlanoContas
   end
   inherited Bevel3: TBevel
     Top = 440
-    Width = 796
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 444
     Width = 796
   end
   inherited pgcGuias: TPageControl
@@ -73,12 +69,12 @@ inherited frmGePlanoContas: TfrmGePlanoContas
             Width = 58
             Caption = 'Descri'#231#227'o:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 355
-          end
           inherited edtFiltrar: TEdit
             Left = 72
             Width = 279
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 355
           end
         end
       end
@@ -340,6 +336,22 @@ inherited frmGePlanoContas: TfrmGePlanoContas
           TabOrder = 1
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 444
+    Width = 796
+    inherited bvlTool3: TBevel
+      Left = 713
+    end
+    inherited bvlTool4: TBevel
+      Left = 792
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 717
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 593
     end
   end
   inherited IbDtstTabela: TIBDataSet

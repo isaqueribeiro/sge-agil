@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
   StdCtrls, Buttons, ExtCtrls, Mask, DBClient, Provider, IBTable, IBUpdateSQL, IBStoredProc,
-  JvToolEdit, JvExMask;
+  JvToolEdit, JvExMask, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
+  Menus, cxButtons;
 
 type
   TfrmGeRequisicaoCompraPesquisa = class(TfrmGrPadraoPesquisa)

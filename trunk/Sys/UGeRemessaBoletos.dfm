@@ -401,31 +401,57 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         end>
     end
   end
-  object tlbBotoes: TToolBar
+  object tlbBotoes: TPanel
     Left = 0
     Top = 403
     Width = 912
     Height = 35
     Align = alBottom
-    ButtonHeight = 31
-    Caption = #39
+    BevelOuter = bvNone
+    ParentColor = True
     TabOrder = 2
     object Bevel3: TBevel
       Left = 0
-      Top = 2
+      Top = 0
       Width = 4
-      Height = 31
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+    end
+    object Bevel4: TBevel
+      Left = 79
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+    end
+    object Bevel6: TBevel
+      Left = 201
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+    end
+    object Bevel7: TBevel
+      Left = 908
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alRight
       Shape = bsSpacer
     end
     object btnFechar: TcxButton
       Left = 4
-      Top = 2
+      Top = 0
       Width = 75
-      Height = 31
+      Height = 35
       Caption = '&Fechar'
       TabOrder = 0
       TabStop = False
       OnClick = btnFecharClick
+      Align = alLeft
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
@@ -479,22 +505,16 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
       NumGlyphs = 2
     end
-    object Bevel4: TBevel
-      Left = 79
-      Top = 2
-      Width = 4
-      Height = 31
-      Shape = bsSpacer
-    end
     object btnGerarRemessa: TcxButton
       Left = 83
-      Top = 2
+      Top = 0
       Width = 118
-      Height = 31
+      Height = 35
       Caption = '&Gerar Remessa'
       Enabled = False
       TabOrder = 1
       OnClick = btnGerarRemessaClick
+      Align = alLeft
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
@@ -548,13 +568,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
       NumGlyphs = 2
     end
-    object Bevel6: TBevel
-      Left = 201
-      Top = 2
-      Width = 4
-      Height = 31
-      Shape = bsSpacer
-    end
     object chkEnviarCancelados: TCheckBox
       Left = 205
       Top = 2
@@ -569,18 +582,11 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       ParentFont = False
       TabOrder = 2
     end
-    object Bevel7: TBevel
-      Left = 465
-      Top = 2
-      Width = 369
-      Height = 31
-      Shape = bsSpacer
-    end
     object btnHistorico: TcxButton
-      Left = 834
-      Top = 2
+      Left = 833
+      Top = 0
       Width = 75
-      Height = 31
+      Height = 35
       Hint = 'Consultar hist'#243'rico de Remessas de Boletos'
       Caption = '&Hist'#243'rico'
       Enabled = False
@@ -588,6 +594,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       ShowHint = True
       TabOrder = 3
       TabStop = False
+      Align = alRight
       Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000C40E0000C40E0000000000000000000000FF0000FF00

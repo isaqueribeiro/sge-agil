@@ -44,11 +44,7 @@ type
     Shape1: TShape;
     Bevel2: TBevel;
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel3: TBevel;
-    Bevel4: TBevel;
     Bevel5: TBevel;
-    Bevel6: TBevel;
     dbgTitulos: TDBGrid;
     Label5: TLabel;
     CdsTitulosINSCEST: TStringField;
@@ -112,13 +108,17 @@ type
     CdsTitulosCEP: TStringField;
     CdsTitulosEMAIL: TStringField;
     CdsTitulosSITUACAO: TSmallintField;
-    chkEnviarCancelados: TCheckBox;
-    Bevel7: TBevel;
-    btnFechar: TcxButton;
-    btnGerarRemessa: TcxButton;
-    btnHistorico: TcxButton;
     edInicio: TJvDateEdit;
     edFinal: TJvDateEdit;
+    tlbBotoes: TPanel;
+    Bevel3: TBevel;
+    btnFechar: TcxButton;
+    Bevel4: TBevel;
+    btnGerarRemessa: TcxButton;
+    Bevel6: TBevel;
+    chkEnviarCancelados: TCheckBox;
+    Bevel7: TBevel;
+    btnHistorico: TcxButton;
     procedure FormShow(Sender: TObject);
     procedure edBancoChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -150,8 +150,11 @@ type
 
     function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
     function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
-    function InserirBoleto( var Objeto : Variant ) : Boolean;
+    {$IFDEF ACBR}
     function InserirBoletoACBr : Boolean;
+    {$ELSE}
+    function InserirBoleto( var Objeto : Variant ) : Boolean;
+    {$ENDIF}
   public
     { Public declarations }
     procedure RegistrarRotinaSistema; override;
@@ -160,6 +163,7 @@ type
 var
   frmGeRemessaBoleto: TfrmGeRemessaBoleto;
 
+{$IFNDEF ACBR}
 const
   feeSMTPBoletoHTML              = $00000000;
   feeSMTPMensagemBoletoHTMLAnexo = $00000001;
@@ -177,6 +181,7 @@ const
   scpOK       = $00000001;
   scpInvalido = $00000002;
   scpErro     = $00000003;
+{$ENDIF}
 
   procedure GerarArquivoRemessa(const AOwer : TComponent);
 
@@ -436,6 +441,7 @@ begin
   end;
 end;
 
+{$IFNDEF ACBR}
 function TfrmGeRemessaBoleto.InserirBoleto(var Objeto: Variant): Boolean;
 var
   sDocumento  : String;
@@ -504,6 +510,7 @@ begin
     end;
   end;
 end;
+{$ENDIF}
 
 procedure TfrmGeRemessaBoleto.GravarHistoricoRemessa;
 var

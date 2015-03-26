@@ -30,14 +30,11 @@ type
     lblTipoProcesso: TLabel;
     edTipoProcesso: TComboBox;
     GrpBxPesquisar: TGroupBox;
-    BtnPesquisar: TSpeedButton;
     lblPesquisar: TLabel;
     edPesquisar: TEdit;
     BtnProcessar: TSpeedButton;
     pnlDados: TPanel;
     Bevel1: TBevel;
-    tlbBotoes: TToolBar;
-    Bevel2: TBevel;
     Bevel3: TBevel;
     PgcTabelas: TPageControl;
     TbsProduto: TTabSheet;
@@ -434,8 +431,11 @@ type
     CdsGrupoQTDE: TBCDField;
     CdsFabricanteQTDE: TBCDField;
     CdsTotalQTDE: TBCDField;
+    tlbBotoes: TPanel;
+    Bevel2: TBevel;
     btbtnIncluir: TcxButton;
     btBtnEnviarEmail: TcxButton;
+    BtnPesquisar: TcxButton;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure edTipoProcessoChange(Sender: TObject);

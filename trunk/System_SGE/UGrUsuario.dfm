@@ -1,6 +1,6 @@
 inherited frmGrUsuario: TfrmGrUsuario
-  Left = 391
-  Top = 219
+  Left = 392
+  Top = 207
   Width = 767
   Height = 495
   ActiveControl = nil
@@ -14,10 +14,6 @@ inherited frmGrUsuario: TfrmGrUsuario
   end
   inherited Bevel3: TBevel
     Top = 414
-    Width = 751
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 418
     Width = 751
   end
   inherited pgcGuias: TPageControl
@@ -70,12 +66,12 @@ inherited frmGrUsuario: TfrmGrUsuario
             Width = 46
             Caption = 'Usu'#225'rio:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 277
-          end
           inherited edtFiltrar: TEdit
             Left = 72
             Width = 201
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 277
           end
         end
       end
@@ -326,6 +322,22 @@ inherited frmGrUsuario: TfrmGrUsuario
           TabOrder = 1
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 418
+    Width = 751
+    inherited bvlTool3: TBevel
+      Left = 668
+    end
+    inherited bvlTool4: TBevel
+      Left = 747
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 672
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 548
     end
   end
   inherited IbDtstTabela: TIBDataSet

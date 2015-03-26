@@ -13,7 +13,6 @@ uses
 type
   TfrmGeGerarBoleto = class(TfrmGrPadrao)
     pnlGuias: TPanel;
-    tlbBotoes: TToolBar;
     pgcGuias: TPageControl;
     tbsClientes: TTabSheet;
     tbsTitulos: TTabSheet;
@@ -58,11 +57,9 @@ type
     Label10: TLabel;
     dbCEP: TDBEdit;
     Bevel4: TBevel;
-    Bevel5: TBevel;
     Shape1: TShape;
     Label11: TLabel;
     Bevel6: TBevel;
-    Bevel7: TBevel;
     dbgTitulos: TDBGrid;
     Bevel8: TBevel;
     IbQryTitulos: TIBQuery;
@@ -144,7 +141,10 @@ type
     IbQryBancosBCO_LAYOUT_RETORNO: TSmallintField;
     CdsTitulosPARCELA_MAXIMA: TSmallintField;
     IbQryClientesCODIGO: TIntegerField;
+    tlbBotoes: TPanel;
+    Bevel5: TBevel;
     btnFechar: TcxButton;
+    Bevel7: TBevel;
     btnGerarBoleto: TcxButton;
     procedure edtFiltrarKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -187,8 +187,11 @@ type
     function CarregarTitulos(iCodigoCliente: Integer; iBanco : Integer) : Boolean;
     function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
     function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
-    function InserirBoleto( var Objeto : Variant) : Boolean;
+    {$IFDEF ACBR}
     function InserirBoletoACBr(var iProximoNossoNumero : Integer; const NovosBoletos : Boolean = TRUE) : Boolean;
+    {$ELSE}
+    function InserirBoleto( var Objeto : Variant) : Boolean;
+    {$ENDIF}
   public
     { Public declarations }
     procedure RegistrarRotinaSistema; override;
@@ -197,6 +200,7 @@ type
 var
   frmGeGerarBoleto : TfrmGeGerarBoleto;
 
+{$IFNDEF ACBR}
 const
   feeSMTPBoletoHTML              = $00000000;
   feeSMTPMensagemBoletoHTMLAnexo = $00000001;
@@ -214,6 +218,7 @@ const
   scpOK       = $00000001;
   scpInvalido = $00000002;
   scpErro     = $00000003;
+{$ENDIF}
 
   procedure GerarBoleto(const AOwer : TComponent); overload;
   procedure GerarBoleto(const AOwer : TComponent; const NomeCliente : String; const iCodigoCliente : Integer; iAno, iVenda : Integer); overload;
@@ -660,6 +665,7 @@ begin
   end;
 end;
 
+{$IFNDEF ACBR}
 function TfrmGeGerarBoleto.InserirBoleto(var Objeto: Variant): Boolean;
 var
   sAppPath   ,
@@ -740,6 +746,7 @@ begin
     end;
   end;
 end;
+{$ENDIF}
 
 procedure TfrmGeGerarBoleto.GravarBoletosGerados;
 var

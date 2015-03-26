@@ -1,6 +1,6 @@
 inherited frmGeEstado: TfrmGeEstado
-  Left = 400
-  Top = 235
+  Left = 388
+  Top = 215
   ActiveControl = dbCodigo
   Caption = 'Tabela de Estados (UF)'
   OldCreateOrder = True

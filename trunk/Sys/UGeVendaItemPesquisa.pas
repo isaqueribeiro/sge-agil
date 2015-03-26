@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
-  StdCtrls, Buttons, ExtCtrls, Mask, JvExMask, JvToolEdit;
+  StdCtrls, Buttons, ExtCtrls, Mask, JvExMask, JvToolEdit, cxGraphics,
+  cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons;
 
 type
   TFrmGeVendaItemPesquisa = class(TfrmGrPadraoPesquisa)

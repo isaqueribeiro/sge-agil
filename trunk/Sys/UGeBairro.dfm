@@ -1,6 +1,6 @@
 inherited frmGeBairro: TfrmGeBairro
-  Left = 390
-  Top = 228
+  Left = 394
+  Top = 217
   Caption = 'Tabela de Bairros'
   OldCreateOrder = True
   PixelsPerInch = 96

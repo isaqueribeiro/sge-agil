@@ -1,6 +1,6 @@
 inherited frmGeNFEmitida: TfrmGeNFEmitida
-  Left = 422
-  Top = 223
+  Left = 399
+  Top = 207
   Height = 510
   Caption = 'Notas Fiscais Emitidas'
   OldCreateOrder = True
@@ -11,27 +11,6 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
   end
   inherited Bevel3: TBevel
     Top = 429
-  end
-  inherited tlbBotoes: TToolBar
-    Top = 433
-    inherited btbtnIncluir: TcxButton
-      Visible = False
-    end
-    inherited btbtnAlterar: TcxButton
-      Visible = False
-    end
-    inherited btbtnExcluir: TcxButton
-      Visible = False
-    end
-    inherited btbtnCancelar: TcxButton
-      Visible = False
-    end
-    inherited btbtnSalvar: TcxButton
-      Visible = False
-    end
-    inherited btbtnSelecionar: TcxButton
-      Visible = True
-    end
   end
   inherited pgcGuias: TPageControl
     Height = 429
@@ -90,10 +69,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
             Width = 73
             Caption = 'Destinat'#225'rio:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 526
-          end
-          object lblData: TLabel [2]
+          object lblData: TLabel [1]
             Left = 14
             Top = 27
             Width = 49
@@ -105,6 +81,10 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
             Left = 368
             Width = 154
             TabOrder = 2
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 526
+            TabOrder = 3
           end
           object e1Data: TJvDateEdit
             Left = 72
@@ -237,6 +217,27 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
           ReadOnly = False
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 433
+    inherited btbtnIncluir: TcxButton
+      Visible = False
+    end
+    inherited btbtnAlterar: TcxButton
+      Visible = False
+    end
+    inherited btbtnExcluir: TcxButton
+      Visible = False
+    end
+    inherited btbtnCancelar: TcxButton
+      Visible = False
+    end
+    inherited btbtnSalvar: TcxButton
+      Visible = False
+    end
+    inherited btbtnSelecionar: TcxButton
+      Visible = True
     end
   end
   inherited IbDtstTabela: TIBDataSet

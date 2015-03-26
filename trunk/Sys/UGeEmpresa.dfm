@@ -1,7 +1,9 @@
 inherited frmGeEmpresa: TfrmGeEmpresa
-  Top = 219
+  Left = 396
+  Top = 227
   Width = 763
   Height = 465
+  ActiveControl = dbCodigo
   Caption = 'Cadastro da Empresa(s)'
   OldCreateOrder = True
   OnClose = FormClose
@@ -15,22 +17,10 @@ inherited frmGeEmpresa: TfrmGeEmpresa
     Top = 384
     Width = 747
   end
-  inherited tlbBotoes: TToolBar
-    Top = 388
-    Width = 747
-    inherited bvlToolExpandir: TBevel
-      Width = 81
-    end
-    inherited btbtnSelecionar: TcxButton
-      Left = 622
-    end
-    inherited bvlTool4: TBevel
-      Left = 742
-    end
-  end
   inherited pgcGuias: TPageControl
     Width = 747
     Height = 384
+    ActivePage = tbsCadastro
     inherited tbsTabela: TTabSheet
       inherited Bevel4: TBevel
         Top = 289
@@ -83,12 +73,12 @@ inherited frmGeEmpresa: TfrmGeEmpresa
             Width = 52
             Caption = 'Empresa:'
           end
-          inherited btnFiltrar: TSpeedButton
-            Left = 237
-          end
           inherited edtFiltrar: TEdit
             Left = 64
             Width = 169
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 237
           end
         end
       end
@@ -711,7 +701,7 @@ inherited frmGeEmpresa: TfrmGeEmpresa
         Top = 237
         Width = 739
         Height = 118
-        ActivePage = tbsParametros
+        ActivePage = tbsContato
         Align = alClient
         TabOrder = 2
         object tbsContato: TTabSheet
@@ -1190,6 +1180,22 @@ inherited frmGeEmpresa: TfrmGeEmpresa
           end
         end
       end
+    end
+  end
+  inherited tlbBotoes: TPanel
+    Top = 388
+    Width = 747
+    inherited bvlTool3: TBevel
+      Left = 664
+    end
+    inherited bvlTool4: TBevel
+      Left = 743
+    end
+    inherited btbtnFechar: TcxButton
+      Left = 668
+    end
+    inherited btbtnSelecionar: TcxButton
+      Left = 544
     end
   end
   inherited IbDtstTabela: TIBDataSet

@@ -1,6 +1,6 @@
 inherited frmGeCidade: TfrmGeCidade
-  Left = 400
-  Top = 223
+  Left = 390
+  Top = 215
   Caption = 'Tabela de Cidades (Munic'#237'pios)'
   OldCreateOrder = True
   PixelsPerInch = 96
