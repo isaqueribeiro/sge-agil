@@ -11,7 +11,8 @@ uses
   frxClass, frxDBSet, IdBaseComponent, IdComponent, IdIPWatch, IBStoredProc,
   FuncoesFormulario, UConstantesDGE, IBUpdateSQL, DBClient,
   Provider, Dialogs, Registry, frxChart, frxCross, frxRich, frxExportMail,
-  frxExportImage, frxExportRTF, frxExportXLS, frxExportPDF;
+  frxExportImage, frxExportRTF, frxExportXLS, frxExportPDF, ACBrBase,
+  ACBrValidador;
 
 type
   TSistema = record
@@ -125,6 +126,7 @@ type
     frxChartObject: TfrxChartObject;
     ibdtstUsersVENDEDOR: TIntegerField;
     fastReport: TfrxReport;
+    ACBrValidador: TACBrValidador;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -260,12 +262,14 @@ var
   function StrIsCPF(const Num: string): Boolean;
   function StrIsDateTime(const S: string): Boolean;
   function StrIsInteger(const Num: string): Boolean;
+  function StrFormatar(Documento, Complemento : String; const TipoDocumento : TACBrValTipoDocto): String;
   function StrFormatarCnpj(sCnpj: String): String;
   function StrFormatarCpf(sCpf: String): String;
   function StrFormatarCEP(sCEP: String): String;
   function StrFormatarFONE(sFone: String): String;
   function StrDescricaoProduto(const NoPlural : Boolean = TRUE) : String;
   function StrOnlyNumbers(const Str : String) : String;
+  Function StrInscricaoEstadual(const IE, UF : String) : Boolean;
 
   function SetBairro(const iCidade : Integer; const sNome : String) : Integer;
   function SetLogradouro(const iCidade : Integer; const sNome : String; var Tipo : Smallint) : Integer;
@@ -1749,6 +1753,18 @@ begin
   Result := TryStrToInt(Num, I);
 end;
 
+function StrFormatar(Documento, Complemento : String; const TipoDocumento : TACBrValTipoDocto): String;
+begin
+  with DMBusiness do
+  begin
+    ACBrValidador.TipoDocto   := TipoDocumento;
+    ACBrValidador.Documento   := Trim(Documento);
+    ACBrValidador.Complemento := Trim(Complemento);
+
+    Result := ACBrValidador.Formatar;
+  end;
+end;
+
 function StrFormatarCnpj(sCnpj: String): String;
 var
   S : String;
@@ -1854,6 +1870,31 @@ begin
       Delete(Valor, I, 1);
 
   Result := Valor;
+end;
+
+function StrInscricaoEstadual(const IE, UF : String) : Boolean;
+var
+  sDocumento   ,
+  sComplemento ,
+  sMensErro    : String;
+begin
+  Result := (Trim(IE) = EmptyStr) or (Copy(AnsiUpperCase(IE), 1, 5) = 'ISENT');
+
+  if not Result  then
+    with DMBusiness do
+    begin
+      sDocumento   := StrFormatar(IE, UF, docInscEst);
+      sComplemento := Trim(UF);
+
+
+      ACBrValidador.Documento   := sDocumento;
+      ACBrValidador.Complemento := sComplemento;
+
+      Result := ACBrValidador.Validar;
+
+      if not Result then
+         sMensErro := Trim(ACBrValidador.MsgErro);
+    end;
 end;
 
 function SetBairro(const iCidade : Integer; const sNome : String) : Integer;

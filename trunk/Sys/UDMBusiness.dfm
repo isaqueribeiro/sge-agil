@@ -4909,4 +4909,9 @@ object DMBusiness: TDMBusiness
       end
     end
   end
+  object ACBrValidador: TACBrValidador
+    IgnorarChar = './-'
+    Left = 144
+    Top = 368
+  end
 end
