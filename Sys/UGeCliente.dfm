@@ -2560,6 +2560,7 @@ inherited frmGeCliente: TfrmGeCliente
     end
     inherited btbtnSelecionar: TcxButton
       Left = 641
+      TabOrder = 7
     end
     object BtBtnProcesso: TcxButton
       Tag = 11

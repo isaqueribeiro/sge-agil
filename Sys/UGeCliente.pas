@@ -350,7 +350,7 @@ implementation
 
 uses
   UDMBusiness, UGeBairro, UGeCidade, UGeDistrito, UGeEstado,
-  UGeLogradouro, UGrPadrao, ChkDgVer, FuncoesFormulario, UConstantesDGE;
+  UGeLogradouro, UGrPadrao, FuncoesFormulario, UConstantesDGE;
 
 {$R *.dfm}
 
@@ -769,7 +769,7 @@ begin
       Abort;
     end;
 
-    if ( not ChkInscEstadual(Trim(IbDtstTabelaINSCEST.AsString), Trim(IbDtstTabelaUF.AsString)) ) then
+    if ( not StrInscricaoEstadual(Trim(IbDtstTabelaINSCEST.AsString), Trim(IbDtstTabelaUF.AsString)) ) then
     begin
       ShowWarning('Favor informar uma Inscrição Estadual válida.');
       Abort;

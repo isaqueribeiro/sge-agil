@@ -152,7 +152,7 @@ var
 implementation
 
 uses UDMBusiness, UGeBairro, UGeCidade, UGeDistrito, UGeEstado,
-  UGeLogradouro, DateUtils, ChkDgVer, UConstantesDGE, UGrPadrao;
+  UGeLogradouro, DateUtils, UConstantesDGE, UGrPadrao;
 
 {$R *.dfm}
 
@@ -368,7 +368,7 @@ begin
       Abort;
     end;
 
-    if ( not ChkInscEstadual(Trim(IbDtstTabelaIE.AsString), Trim(IbDtstTabelaUF.AsString)) ) then
+    if ( not StrInscricaoEstadual(Trim(IbDtstTabelaIE.AsString), Trim(IbDtstTabelaUF.AsString)) ) then
     begin
       ShowWarning('Favor informar uma Inscrição Estadual válida.');
       Abort;
