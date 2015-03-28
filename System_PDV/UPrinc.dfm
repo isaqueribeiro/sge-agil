@@ -17,49 +17,23 @@ object frmPrinc: TfrmPrinc
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object stbMain: TStatusBar
-    Left = 0
-    Top = 498
-    Width = 927
-    Height = 19
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clBlue
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    Panels = <
-      item
-        Text = #193'gil Solu'#231#245'es em Softwares - Fone: (91) 9146.0444'
-        Width = 350
-      end
-      item
-        Width = 280
-      end
-      item
-        Alignment = taCenter
-        Bevel = pbNone
-        Text = 'Licenciado a Pontoluz'
-        Width = 50
-      end>
-    UseSystemFont = False
-  end
   object pnlMain: TPanel
     Left = 0
     Top = 126
     Width = 927
-    Height = 372
+    Height = 391
     Align = alClient
     BevelOuter = bvLowered
     Color = clBlack
-    TabOrder = 1
+    TabOrder = 0
     DesignSize = (
       927
-      372)
+      391)
     object imgFundo: TImage
       Left = 1
       Top = 1
       Width = 925
-      Height = 370
+      Height = 369
       Align = alClient
       AutoSize = True
       Transparent = True
@@ -67,7 +41,7 @@ object frmPrinc: TfrmPrinc
     end
     object imgEmpresa: TImage
       Left = 8
-      Top = 252
+      Top = 254
       Width = 110
       Height = 110
       Anchors = [akLeft, akBottom]
@@ -4341,7 +4315,7 @@ object frmPrinc: TfrmPrinc
     end
     object ProductName: TLabel
       Left = 128
-      Top = 262
+      Top = 264
       Width = 38
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -4357,7 +4331,7 @@ object frmPrinc: TfrmPrinc
     end
     object Copyright: TLabel
       Left = 128
-      Top = 300
+      Top = 302
       Width = 279
       Height = 26
       Anchors = [akLeft, akBottom]
@@ -4365,7 +4339,7 @@ object frmPrinc: TfrmPrinc
         'Copyright 2013 - 2015 '#169' '#193'gil Solu'#231#245'es em Softwares - ME'#13#10'Todos o' +
         's direitos reservados.'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clWhite
+      Font.Color = clGreen
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
@@ -4375,13 +4349,13 @@ object frmPrinc: TfrmPrinc
     end
     object FileDescription: TLabel
       Left = 128
-      Top = 285
+      Top = 287
       Width = 296
       Height = 13
       Anchors = [akLeft, akBottom]
       Caption = 'Sistema Integrado Compacto de Gest'#227'o Empresarial'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clWhite
+      Font.Color = clGreen
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
@@ -4391,7 +4365,7 @@ object frmPrinc: TfrmPrinc
     end
     object Version: TLabel
       Left = 128
-      Top = 331
+      Top = 333
       Width = 72
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -4405,6 +4379,37 @@ object frmPrinc: TfrmPrinc
       Transparent = True
       IsControl = True
     end
+    object stbMain: TdxStatusBar
+      Left = 1
+      Top = 370
+      Width = 925
+      Height = 20
+      Images = DMRecursos.ImgPrincipal16x16
+      Panels = <
+        item
+          PanelStyleClassName = 'TdxStatusBarTextPanelStyle'
+          PanelStyle.ImageIndex = 15
+          Text = #193'gil Solu'#231#245'es em Softwares - Fone: (91) 9146.0444'
+          Width = 350
+        end
+        item
+          PanelStyleClassName = 'TdxStatusBarTextPanelStyle'
+          PanelStyle.ImageIndex = 14
+          Text = 'Usu'#225'rio'
+          Width = 250
+        end
+        item
+          PanelStyleClassName = 'TdxStatusBarTextPanelStyle'
+          PanelStyle.ImageIndex = 67
+          Text = 'Licenciado para Empresa ?'
+        end>
+      PaintStyle = stpsUseLookAndFeel
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+    end
   end
   object Ribbon: TdxRibbon
     Left = 0
@@ -4414,7 +4419,7 @@ object frmPrinc: TfrmPrinc
     BarManager = BrManager
     ColorSchemeName = 'Blue'
     Contexts = <>
-    TabOrder = 6
+    TabOrder = 5
     TabStop = False
     object RbbTabPrincipal: TdxRibbonTab
       Active = True

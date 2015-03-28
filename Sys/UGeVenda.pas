@@ -8,7 +8,15 @@ uses
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, DBClient, Provider, IBStoredProc,
   frxClass, frxDBSet, Menus, IBQuery, ClipBrd, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, cxButtons, JvExMask, JvToolEdit, JvDBControls;
+  cxLookAndFeelPainters, cxButtons, JvExMask, JvToolEdit, JvDBControls,
+  dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver;
 
 type
   TfrmGeVenda = class(TfrmGrPadraoCadastro)
@@ -438,6 +446,7 @@ type
     procedure nmPpLimparDadosNFeClick(Sender: TObject);
     procedure BtnCorrigirDadosNFeClick(Sender: TObject);
     procedure nmPpCorrigirDadosNFeCFOPClick(Sender: TObject);
+    procedure RdgStatusVendaClick(Sender: TObject);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -494,7 +503,8 @@ implementation
 uses
   UDMBusiness, UFuncoes, UGeCliente, UGeCondicaoPagto, UGeProduto, UGeTabelaCFOP,
   DateUtils, UDMNFe, UGeVendaGerarNFe, SysConst, UGeVendaCancelar,
-  UGeGerarBoletos, UGeEfetuarPagtoREC, UGeVendaFormaPagto, UConstantesDGE, UGeVendaTransporte, UGeVendaConfirmaTitulos;
+  UGeGerarBoletos, UGeEfetuarPagtoREC, UGeVendaFormaPagto, UConstantesDGE, UGeVendaTransporte, UGeVendaConfirmaTitulos,
+  UDMRecursos;
 
 {$R *.dfm}
 
@@ -566,8 +576,14 @@ begin
   tblCondicaoPagto.Open;
   tblModalidadeFrete.Open;
 
+  Case gSistema.Codigo of
+    SISTEMA_PDV :
+      RotinaID := ROTINA_MOV_VENDA_PDV_ID;
+    else
+      RotinaID := ROTINA_MOV_VENDA_ID;
+  end;
+
   pgcMaisDados.Height := 150;
-  RotinaID            := ROTINA_MOV_VENDA_ID;
   DisplayFormatCodigo := '###0000000';
 
   NomeTabela     := 'TBVENDAS';
@@ -586,8 +602,7 @@ begin
   btnConsultarProduto.Caption := StrDescricaoProduto;
   btnConsultarProduto.Hint    := 'Consultar ' + StrDescricaoProduto;
 
-  RdgStatusVenda.Controls[2].Enabled := False;
-  btbtnGerarNFe.Visible              := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
+  btbtnGerarNFe.Visible := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and (gSistema.Codigo in [SISTEMA_GESTAO_COM, SISTEMA_GESTAO_IND]);
 
   if GetUserPermitirAlterarValorVenda then
   begin
@@ -616,7 +631,8 @@ begin
   begin
     Self.Caption       := 'Controle de Vendas';
     btbtnLista.OnClick := ImprimirOpcoesClick;
-  end;  
+  end;
+
 end;
 
 procedure TfrmGeVenda.btnFiltrarClick(Sender: TObject);
@@ -2468,6 +2484,12 @@ procedure TfrmGeVenda.cdsVendaVolumeNewRecord(DataSet: TDataSet);
 begin
   cdsVendaVolumeANO_VENDA.Assign( IbDtstTabelaANO );
   cdsVendaVolumeCONTROLE_VENDA.Assign( IbDtstTabelaCODCONTROL );
+end;
+
+procedure TfrmGeVenda.RdgStatusVendaClick(Sender: TObject);
+begin
+  if RdgStatusVenda.ItemIndex = 2 then
+    RdgStatusVenda.ItemIndex := RdgStatusVenda.ItemIndex - 1;
 end;
 
 procedure TfrmGeVenda.RecarregarRegistro;

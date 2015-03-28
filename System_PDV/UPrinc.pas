@@ -24,11 +24,10 @@ uses
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
   dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, dxSkinsdxRibbonPainter,
-  dxRibbonCustomizationForm;
+  dxRibbonCustomizationForm, dxSkinsdxStatusBarPainter, dxStatusBar;
 
 type
   TfrmPrinc = class(TForm)
-    stbMain: TStatusBar;
     pnlMain: TPanel;
     imgFundo: TImage;
     imgEmpresa: TImage;
@@ -78,6 +77,7 @@ type
     BrBtnRegistroEstacao: TdxBarLargeButton;
     BrBtnSobre: TdxBarLargeButton;
     BrBtnSenhaAutorizacao: TdxBarLargeButton;
+    stbMain: TdxStatusBar;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -186,8 +186,13 @@ begin
     BrBtnCliente.Enabled   := False;
   end;
 
-  if GetUserUpdatePassWord then
-    nmUsuarioAlterarSenhaClick( BrBtnAlterarSenha );
+  if not gLicencaSistema.UsarSGE then
+  begin
+    ShowWarning(
+      'A licença atual não permite que este sistema seja utilizado!' + #13 +
+      'Favor entrar em contato com o fornecedor do software.');
+    Application.Terminate;
+  end;
 end;
 
 procedure TfrmPrinc.FormCreate(Sender: TObject);

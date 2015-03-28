@@ -17,7 +17,12 @@ uses
   dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
   dxSkinLondonLiquidSky, dxSkinPumpkin, dxSkinSeven, dxSkinSharp,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint,
+  frxClass;
 
 type
   TFrmEfetuarLogin = class(TfrmGrPadraoLogin)
@@ -63,7 +68,7 @@ begin
     end;
 
     vSenha := DMBusiness.ibdtstUsersSENHA as tStringfield;
-    sSenha := GetSenhaFormatada(Senha);
+    sSenha := GetSenhaFormatada(Senha, False);
 
     if (vSenha.Value = Senha) or (vSenha.Value = sSenha) then
     begin
@@ -119,13 +124,13 @@ begin
 
   if EfetuarLogin then
   begin
-    SetEmpresaIDDefault( Empresa );
-
     gUsuarioLogado.Login    := Usuario;
     gUsuarioLogado.Nome     := GetUserFullName;
     gUsuarioLogado.Funcao   := GetUserFunctionID;
     gUsuarioLogado.Empresa  := Empresa;
     gUsuarioLogado.Vendedor := GetUserCodigoVendedorID;
+
+    SetEmpresaIDDefault( Empresa );
 
     frmPrinc.BrBtnAlterarSenha.Caption := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
     frmPrinc.BrBtnAlterarSenha.Hint    := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
@@ -137,6 +142,9 @@ begin
       frmPrinc.stbMain.Panels.Items[2].Text  := Format('[%s] Licenciado a empresa %s, %s', [GetEmpresaNome(gUsuarioLogado.Empresa), gLicencaSistema.Empresa, sCNPJ]);
 
     ModalResult := mrOk;
+
+    if GetUserUpdatePassWord then
+      frmPrinc.nmUsuarioAlterarSenhaClick( frmPrinc.BrBtnAlterarSenha );
   end
   else
     Contador := Contador + 1; 

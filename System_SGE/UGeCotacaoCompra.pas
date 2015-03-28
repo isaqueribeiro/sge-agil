@@ -8,7 +8,14 @@ uses
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, Menus, IBStoredProc, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, cxButtons, JvDBControls,
-  JvToolEdit, JvExMask;
+  JvToolEdit, JvExMask, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeCotacaoCompra = class(TfrmGrPadraoCadastro)
@@ -355,8 +362,9 @@ begin
 
     frm.RdgStatusCotacao.ItemIndex := STATUS_COTACAO_COT + 1;
 
-    for I := 0 to frm.RdgStatusCotacao.Items.Count - 1 do
-      frm.RdgStatusCotacao.Controls[I].Enabled := False;
+    frm.RdgStatusCotacao.Enabled := False;
+    //for I := 0 to frm.RdgStatusCotacao.Items.Count - 1 do
+    //  frm.RdgStatusCotacao.Controls[I].Enabled := False;
 
     frm.iFornecedor := 0; //Fornecedor;
     frm.e1Data.Date := DataInicial;

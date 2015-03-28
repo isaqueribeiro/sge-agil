@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, ExtCtrls, dxGDIPlusClasses, StdCtrls, DBCtrls, Grids,
   DBGrids, DB, ActnList, IBCustomDataSet, IBUpdateSQL, IBTable, IBQuery,
-  IBStoredProc, pngimage;
+  IBStoredProc, pngimage, System.Actions, frxClass;
 
 type
   TTipoAlteraItem = (alterarQuantidade, alterarValor, excluirProduto);
@@ -29,7 +29,7 @@ type
     dbNomeProduto: TDBText;
     dbValorProduto: TDBText;
     Panel1: TPanel;
-    Image1: TImage;
+    imgFechar: TImage;
     Label1: TLabel;
     lblFinalizarVenda: TLabel;
     lblCancelar: TLabel;

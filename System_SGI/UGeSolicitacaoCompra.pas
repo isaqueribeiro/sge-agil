@@ -8,7 +8,14 @@ uses
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, Menus, IBStoredProc, cxGraphics,
   cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
-  JvToolEdit, JvDBControls, JvExMask;
+  JvToolEdit, JvDBControls, JvExMask, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeSolicitacaoCompra = class(TfrmGrPadraoCadastro)
@@ -248,8 +255,9 @@ begin
 
     frm.RdgStatusSolicitacao.ItemIndex := STATUS_SOLICITACAO_FIN + 1;
 
-    for I := 0 to frm.RdgStatusSolicitacao.Items.Count - 1 do
-      frm.RdgStatusSolicitacao.Controls[I].Enabled := False;
+    frm.RdgStatusSolicitacao.Enabled := False;
+    //for I := 0 to frm.RdgStatusSolicitacao.Items.Count - 1 do
+    //  frm.RdgStatusSolicitacao.Controls[I].Enabled := False;
 
     frm.iCentroCusto := 0;
     frm.e1Data.Date  := DataInicial;
