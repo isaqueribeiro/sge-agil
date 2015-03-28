@@ -7,7 +7,13 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBQuery, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  Menus, cxButtons;
+  Menus, cxButtons, IdCoder, IdCoder3to4, IdCoderMIME, IdBaseComponent,
+  dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGrUsuario = class(TfrmGrPadraoCadastro)
@@ -68,7 +74,7 @@ const
 
   function EncriptSenha(const Value, Key : String) : String;
   function DecriptarSenha(const Value, Key : String) : String;
-  function GetSenhaFormatada(const Value : String) : String;
+  function GetSenhaFormatada(const Value : String; const WithKey : Boolean) : String;
 
 implementation
 
@@ -110,28 +116,62 @@ end;
 
 function EncriptSenha(const Value, Key : String) : String;
 var
-  iCarac ,
-  KeyAlt : Integer;
+  sKeyChar    ,
+  sStrEncode  ,
+  sResult     : String;
+  iTamanhoStr ,
+  iPosicaoKey : Integer;
+  IdEncoder   : TIdEncoderMIME;
 begin
-  KeyAlt := Length(Key);
+  IdEncoder := TIdEncoderMIME.Create(nil);
+  try
+    sKeyChar    := IdEncoder.EncodeString(Key);
+    sStrEncode  := IdEncoder.EncodeString(Value);
+    iTamanhoStr := Length(sStrEncode);
 
-  for iCarac := 1 to Length(Key) do
-    KeyAlt := KeyAlt xor Ord(Key[iCarac]);
+    iPosicaoKey := -1;
+    while (iPosicaoKey < 0) do
+      iPosicaoKey := Random(iTamanhoStr);
 
-  Result := Value;
+    sResult := Copy(sStrEncode, 1, iPosicaoKey) + sKeyChar + Copy(sStrEncode, iPosicaoKey + 1, iTamanhoStr);
 
-  for iCarac := 1 to Length(Value) do
-    Result[iCarac] := chr(not(ord(Value[iCarac]) xor Ord(KeyAlt)));
+    Result := sResult;
+  finally
+    IdEncoder.Free;
+  end;
 end;
 
 function DecriptarSenha(const Value, Key : String) : String;
+var
+  sKeyChar   ,
+  sStrEncode : String;
+  IdEncoder  : TIdEncoderMIME;
+  IdDecoder  : TIdDecoderMIME;
 begin
-  Result := EncriptSenha(Value, Key);
+  IdEncoder := TIdEncoderMIME.Create(nil);
+  IdDecoder := TIdDecoderMIME.Create(nil);
+  try
+    sKeyChar   := IdEncoder.EncodeString(Key);
+    sStrEncode := Value;
+
+    if (Pos(sKeyChar, sStrEncode) = 0)  then
+      raise Exception.Create('Criptografia corrompida!!!')
+    else
+      sStrEncode := StringReplace(sStrEncode, sKeyChar, EmptyStr, [rfReplaceAll]);
+
+    Result := IdDecoder.DecodeString(sStrEncode);
+  finally
+    IdEncoder.Free;
+    IdDecoder.Free;
+  end;
 end;
 
-function GetSenhaFormatada(const Value : String) : String;
+function GetSenhaFormatada(const Value : String; const WithKey : Boolean) : String;
 begin
-  Result := USER_PASSWD_ENCRIPT + Copy(EncriptSenha(Value, USER_PASSWD_KEY), 1, USER_PASSWD_LIMITE - 2);
+  if WithKey then
+    Result := USER_PASSWD_ENCRIPT + Copy(EncriptSenha(Value, USER_PASSWD_KEY), 1, USER_PASSWD_LIMITE - 2)
+  else
+    Result := USER_PASSWD_ENCRIPT + Copy(EncriptSenha(Value, EmptyStr), 1, USER_PASSWD_LIMITE - 2);
 end;
 
 procedure TfrmGrUsuario.FormCreate(Sender: TObject);
@@ -239,7 +279,7 @@ begin
     if ( Copy(IbDtstTabelaSENHA.AsString, 1, 2) <> USER_PASSWD_ENCRIPT ) then
     begin
       sSenha := Trim(IbDtstTabelaSENHA.AsString);
-      IbDtstTabelaSENHA.AsString := GetSenhaFormatada(sSenha);
+      IbDtstTabelaSENHA.AsString := GetSenhaFormatada(sSenha, False);
     end;
 
   inherited;

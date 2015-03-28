@@ -1,27 +1,41 @@
 inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
   Left = 388
   Top = 210
-  Width = 1132
-  Height = 724
   Caption = 'Controle p/ Solicita'#231#227'o de Compra/Servi'#231'o'
+  ClientHeight = 685
+  ClientWidth = 1116
+  ExplicitWidth = 1132
+  ExplicitHeight = 724
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel
-    Top = 682
+    Top = 681
     Width = 1116
+    ExplicitTop = 682
+    ExplicitWidth = 1116
   end
   inherited Bevel3: TBevel
-    Top = 643
+    Top = 642
     Width = 1116
+    ExplicitTop = 643
+    ExplicitWidth = 1116
   end
   inherited pgcGuias: TPageControl
     Width = 1116
-    Height = 643
+    Height = 642
     OnChange = pgcGuiasChange
+    ExplicitWidth = 1116
+    ExplicitHeight = 642
     inherited tbsTabela: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       inherited Bevel4: TBevel
         Top = 540
         Width = 1108
+        ExplicitTop = 540
+        ExplicitWidth = 1108
       end
       inherited dbgDados: TDBGrid
         Width = 1108
@@ -83,6 +97,9 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         Top = 544
         Width = 1108
         Height = 70
+        ExplicitTop = 544
+        ExplicitWidth = 1108
+        ExplicitHeight = 70
         object lblSolicitacaoAberta: TLabel [0]
           Left = 2
           Top = 4
@@ -131,6 +148,9 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           Width = 680
           Height = 62
           TabOrder = 1
+          ExplicitLeft = 424
+          ExplicitWidth = 680
+          ExplicitHeight = 62
           DesignSize = (
             680
             62)
@@ -139,6 +159,9 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             Top = 27
             Width = 64
             Caption = 'Solicita'#231#227'o:'
+            ExplicitLeft = 294
+            ExplicitTop = 27
+            ExplicitWidth = 64
           end
           object lblData: TLabel [1]
             Left = 14
@@ -153,11 +176,16 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             Top = 23
             Width = 263
             TabOrder = 2
+            ExplicitLeft = 368
+            ExplicitTop = 23
+            ExplicitWidth = 263
           end
           inherited btnFiltrar: TcxButton
             Left = 635
             Height = 35
             TabOrder = 3
+            ExplicitLeft = 635
+            ExplicitHeight = 35
           end
           object e1Data: TJvDateEdit
             Left = 72
@@ -213,6 +241,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             ImageKind = ikCustom
             NumGlyphs = 2
             PopupColor = clBtnFace
+            ShowNullDate = False
             TabOrder = 0
           end
           object e2Data: TJvDateEdit
@@ -269,6 +298,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             ImageKind = ikCustom
             NumGlyphs = 2
             PopupColor = clBtnFace
+            ShowNullDate = False
             TabOrder = 1
           end
         end
@@ -296,24 +326,30 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       inherited Bevel8: TBevel
         Top = 341
         Width = 1108
+        ExplicitTop = 341
+        ExplicitWidth = 1108
       end
       object Bevel6: TBevel [1]
         Left = 0
-        Top = 492
+        Top = 491
         Width = 1108
         Height = 4
         Align = alBottom
         Shape = bsSpacer
+        ExplicitTop = 492
       end
       inherited GrpBxDadosNominais: TGroupBox
         Width = 1108
         Height = 225
+        ExplicitWidth = 1108
+        ExplicitHeight = 225
         DesignSize = (
           1108
           225)
         inherited lblCodigo: TLabel
           Width = 71
           Caption = 'No. Controle:'
+          ExplicitWidth = 71
         end
         object lblDataHora: TLabel [1]
           Left = 112
@@ -443,6 +479,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           Width = 89
           Color = clMoneyGreen
           DataField = 'CODIGO'
+          ExplicitWidth = 89
         end
         object dbDataHora: TDBEdit
           Left = 112
@@ -581,6 +618,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           TabOrder = 12
           object TbsSolicitacaoObjeto: TTabSheet
             Caption = 'Objeto da Solicita'#231#227'o'
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object dbObjeto: TDBMemo
               Left = 0
               Top = 0
@@ -602,6 +643,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           object TbsSolicitacaoMotivo: TTabSheet
             Caption = 'Motivo da Solicita'#231#227'o'
             ImageIndex = 3
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object dbMotivo: TDBMemo
               Left = 0
               Top = 0
@@ -623,6 +668,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           object TbsSolicitacaoObservacao: TTabSheet
             Caption = 'Observa'#231#245'es Gerais'
             ImageIndex = 1
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object dbObservacao: TDBMemo
               Left = 0
               Top = 0
@@ -644,6 +693,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           object TbsSolicitacaoCancelado: TTabSheet
             Caption = 'Motivo do Cancelamento'
             ImageIndex = 2
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object dbMovitoCancelamento: TDBMemo
               Left = 0
               Top = 0
@@ -743,6 +796,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           NumGlyphs = 2
           ParentFont = False
           PopupColor = clBtnFace
+          ShowNullDate = False
           TabOrder = 6
           OnExit = ControlEditExit
         end
@@ -808,6 +862,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           NumGlyphs = 2
           ParentFont = False
           PopupColor = clBtnFace
+          ShowNullDate = False
           TabOrder = 7
         end
         object dbCentroCustoSolicitacao: TJvDBComboEdit
@@ -888,15 +943,20 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       end
       object pgcMaisDados: TPageControl
         Left = 0
-        Top = 496
+        Top = 495
         Width = 1108
         Height = 118
         ActivePage = tbsEventoLOG
         Align = alBottom
         TabOrder = 3
+        ExplicitTop = 496
         object tbsEventoLOG: TTabSheet
           Caption = 'LOG de Eventos'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object dbEventoLOG: TDBMemo
             Left = 0
             Top = 0
@@ -1062,10 +1122,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             Hint = 'Inserir Produto'
             Caption = 'Inserir'
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 0
-            OnClick = btnProdutoInserirClick
             Glyph.Data = {
               36060000424D3606000000000000360000002800000020000000100000000100
               18000000000000060000000000000000000000000000000000000000FF0000FF
@@ -1118,6 +1174,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
               FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
               00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            OnClick = btnProdutoInserirClick
           end
           object btnProdutoEditar: TBitBtn
             Left = 0
@@ -1127,10 +1187,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             Hint = 'Editar Produto'
             Caption = 'Editar'
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 1
-            OnClick = btnProdutoEditarClick
             Glyph.Data = {
               36060000424D3606000000000000360000002800000020000000100000000100
               180000000000000600000000000000000000000000000000000000FF0000FF00
@@ -1183,6 +1239,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
               CE6070B06070B0DFD2D100FF0000FF0000FF0000FF0000FF0000FF0000FF0000
               FF0000FF0000FF0000FF0000FF00C9C9C9818181818181D3D3D3}
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+            OnClick = btnProdutoEditarClick
           end
           object btnProdutoExcluir: TBitBtn
             Left = 0
@@ -1192,10 +1252,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             Hint = 'Excluir Produto'
             Caption = 'Excluir'
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 2
-            OnClick = btnProdutoExcluirClick
             Glyph.Data = {
               36060000424D3606000000000000360000002800000020000000100000000100
               1800000000000006000000000000000000000000000000000000FF00FFFF00FF
@@ -1248,6 +1304,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
               FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
               00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+            OnClick = btnProdutoExcluirClick
           end
           object btnProdutoSalvar: TBitBtn
             Left = 0
@@ -1257,10 +1317,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
             Hint = 'Salvar Produto'
             Caption = 'Salvar'
             Enabled = False
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 3
-            OnClick = btnProdutoSalvarClick
             Glyph.Data = {
               36060000424D3606000000000000360000002800000020000000100000000100
               18000000000000060000000000000000000000000000000000000000FF0000FF
@@ -1313,6 +1369,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
               FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
               00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
             NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+            OnClick = btnProdutoSalvarClick
           end
         end
         object dbUnidade: TDBLookupComboBox
@@ -1489,7 +1549,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         Left = 0
         Top = 345
         Width = 1108
-        Height = 147
+        Height = 146
         TabStop = False
         Align = alClient
         DataSource = DtSrcTabelaItens
@@ -1553,13 +1613,17 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     end
   end
   inherited tlbBotoes: TPanel
-    Top = 647
+    Top = 646
     Width = 1116
+    ExplicitTop = 647
+    ExplicitWidth = 1116
     inherited bvlTool3: TBevel
       Left = 1033
+      ExplicitLeft = 1033
     end
     inherited bvlTool4: TBevel
       Left = 1112
+      ExplicitLeft = 1112
     end
     object Bevel12: TBevel [5]
       Left = 1101
@@ -1574,10 +1638,12 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     inherited btbtnFechar: TcxButton
       Left = 1037
       TabOrder = 10
+      ExplicitLeft = 1037
     end
     inherited btbtnSelecionar: TcxButton
       Left = 913
       TabOrder = 9
+      ExplicitLeft = 913
     end
     object btnFinalizarSolicitacao: TcxButton
       Tag = 11
@@ -1586,14 +1652,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       Width = 125
       Height = 35
       Hint = 'Finalizar/Enviar Solicita'#231#227'o'
+      Align = alRight
       Caption = 'Finalizar / Enviar'
       Enabled = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 6
-      OnClick = btnFinalizarSolicitacaoClick
-      Align = alRight
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -1644,7 +1706,11 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 6
+      OnClick = btnFinalizarSolicitacaoClick
     end
     object btnAprovarSolicitacao: TcxButton
       Tag = 12
@@ -1653,14 +1719,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       Width = 125
       Height = 35
       Hint = 'Aprovar Solicita'#231#227'o'
+      Align = alRight
       Caption = 'Aprovar Solicita'#231#227'o'
       Enabled = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 7
-      OnClick = btnAprovarSolicitacaoClick
-      Align = alRight
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -1711,7 +1773,11 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 7
+      OnClick = btnAprovarSolicitacaoClick
     end
     object btnCancelarSolicitacao: TcxButton
       Tag = 13
@@ -1720,14 +1786,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       Width = 125
       Height = 35
       Hint = 'Cancelar Solicita'#231#227'o selecionada'
+      Align = alRight
       Caption = 'Cancelar Solicita'#231#227'o'
       Enabled = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 8
-      OnClick = btnCancelarSolicitacaoClick
-      Align = alRight
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -1778,7 +1840,11 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
         0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
         BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 8
+      OnClick = btnCancelarSolicitacaoClick
     end
   end
   inherited IbDtstTabela: TIBDataSet
@@ -2076,136 +2142,8 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     Left = 896
     Top = 352
     Bitmap = {
-      494C01012F003100040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
-      000000000000360000002800000040000000D0000000010020000000000000D0
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
+      494C01012F003100080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      000000000000360000002800000040000000C0000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000004A5B
       6F004A5B6F004A5B6F004354680043546800435468003A4B5F003A4B5F003A4B
       5F003242560032425600324256002C3C50000000000000000000000000006349
@@ -3743,12 +3681,8 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000000000424D3E000000000000003E000000
-      2800000040000000D00000000100010000000000800600000000000000000000
-      000000000000000000000000FFFFFF0000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      0000000000000000000000000000000000000000000000000000000000000000
-      00000000000000000000000000000000E000E000E00000008000E000E0000000
+      2800000040000000C00000000100010000000000000600000000000000000000
+      000000000000000000000000FFFFFF00E000E000E00000008000E000E0000000
       0000E000E00000000000E000E00000000000E000E00000000000000000000000
       00007F807F800000000078007800000000000000000000000000400040000000
       00004080408000000000000000000000000108000800000000017F817F810000
@@ -3802,7 +3736,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
   object tblEmpresa: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'TBEMPRESA'
+    UniDirectional = False
     Left = 928
     Top = 352
   end
@@ -3815,6 +3752,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     OnNewRecord = cdsTabelaItensNewRecord
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -3837,6 +3775,8 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       '  left join TBCENTRO_CUSTO c on (c.codigo = i.centro_custo)')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = IbUpdTabelaItens
     Left = 680
     Top = 464
@@ -3990,6 +3930,8 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
   object qryProduto: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     RefreshSQL.Strings = (
       '')
     SelectSQL.Strings = (
@@ -4005,14 +3947,19 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       'where p.codigo = :produto')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     Left = 1040
     Top = 264
   end
   object tblTipoSolicitacao: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'VW_TIPO_SOLICITACAO'
     TableTypes = [ttView]
+    UniDirectional = False
     Left = 928
     Top = 384
   end
@@ -4024,9 +3971,12 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
   object tblUnidade: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     IndexName = 'IDX_TBUNIDADEPROD_SIGLA'
     TableName = 'TBUNIDADEPROD'
     TableTypes = [ttView]
+    UniDirectional = False
     Left = 928
     Top = 416
   end

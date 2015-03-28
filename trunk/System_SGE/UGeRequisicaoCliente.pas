@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, Menus, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
-  JvToolEdit, JvDBControls, JvExMask;
+  JvToolEdit, JvDBControls, JvExMask, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeRequisicaoCliente = class(TfrmGrPadraoCadastro)
@@ -132,6 +139,7 @@ type
     procedure dbProdutoButtonClick(Sender: TObject);
     procedure nmImprimirRequisicaoClick(Sender: TObject);
     procedure btnCancelarRequisicaoClick(Sender: TObject);
+    procedure RdgStatusRequisicaoClick(Sender: TObject);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -215,8 +223,6 @@ begin
                         QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
 
   UpdateGenerator( 'where ano = ' + FormatFloat('0000', YearOf(Date)) );
-
-  RdgStatusRequisicao.Controls[3].Enabled := False;
 end;
 
 procedure TfrmGeRequisicaoCliente.IbDtstTabelaINSERCAO_DATAGetText(
@@ -313,6 +319,12 @@ begin
 
     nmImprimirRequisicao.Enabled   := (IbDtstTabelaSITUACAO.AsInteger = STATUS_REQ_AUT) or (IbDtstTabelaSITUACAO.AsInteger = STATUS_REQ_FCH);
   end;
+end;
+
+procedure TfrmGeRequisicaoCliente.RdgStatusRequisicaoClick(Sender: TObject);
+begin
+  if RdgStatusRequisicao.ItemIndex = 3 then
+    RdgStatusRequisicao.ItemIndex := RdgStatusRequisicao.ItemIndex - 1;
 end;
 
 procedure TfrmGeRequisicaoCliente.RecarregarRegistro;

@@ -7,7 +7,7 @@ uses
   EUserAcs, EMsgDlg,
   {$ENDIF}
   Windows, Forms, SysUtils, Classes, Controls, IBDatabase, DB, IBCustomDataSet, IniFIles,
-  ShellApi, Printers, DateUtils, IBQuery,
+  ShellApi, Printers, DateUtils, IBQuery, IdCoder, IdCoder3to4, IdCoderMIME,
   frxClass, frxDBSet, IdBaseComponent, IdComponent, IdIPWatch, IBStoredProc,
   FuncoesFormulario, UConstantesDGE, IBUpdateSQL, DBClient,
   Provider, Dialogs, Registry, frxChart, frxCross, frxRich, frxExportMail,
@@ -51,6 +51,9 @@ type
     CEP    : String;
     Competencia  : Integer;
     DataBloqueio : TDateTime;
+    UsarSGE : Boolean;
+    UsarSGI : Boolean;
+    UsarSGF : Boolean;
   end;
 
   TTipoRegime = (trSimplesNacional, trSimplesExcessoReceita, trRegimeNormal);
@@ -1224,23 +1227,54 @@ end;
 
 function EncriptSenha_Master(const Value, Key : String) : String;
 var
-  iCarac ,
-  KeyAlt : Integer;
+  sKeyChar    ,
+  sStrEncode  ,
+  sResult     : String;
+  iTamanhoStr ,
+  iPosicaoKey : Integer;
+  IdEncoder   : TIdEncoderMIME;
 begin
-  KeyAlt := Length(Key);
+  IdEncoder := TIdEncoderMIME.Create(nil);
+  try
+    sKeyChar    := IdEncoder.EncodeString(Key);
+    sStrEncode  := IdEncoder.EncodeString(Value);
+    iTamanhoStr := Length(sStrEncode);
 
-  for iCarac := 1 to Length(Key) do
-    KeyAlt := KeyAlt xor Ord(Key[iCarac]);
+    iPosicaoKey := -1;
+    while (iPosicaoKey < 0) do
+      iPosicaoKey := Random(iTamanhoStr);
 
-  Result := Value;
+    sResult := Copy(sStrEncode, 1, iPosicaoKey) + sKeyChar + Copy(sStrEncode, iPosicaoKey + 1, iTamanhoStr);
 
-  for iCarac := 1 to Length(Value) do
-    Result[iCarac] := chr(not(ord(Value[iCarac]) xor Ord(KeyAlt)));
+    Result := sResult;
+  finally
+    IdEncoder.Free;
+  end;
 end;
 
 function DecriptarSenha_Master(const Value, Key : String) : String;
+var
+  sKeyChar   ,
+  sStrEncode : String;
+  IdEncoder  : TIdEncoderMIME;
+  IdDecoder  : TIdDecoderMIME;
 begin
-  Result := EncriptSenha_Master(Value, Key);
+  IdEncoder := TIdEncoderMIME.Create(nil);
+  IdDecoder := TIdDecoderMIME.Create(nil);
+  try
+    sKeyChar   := IdEncoder.EncodeString(Key);
+    sStrEncode := Value;
+
+    if (Pos(sKeyChar, sStrEncode) = 0)  then
+      raise Exception.Create('Criptografia corrompida!!!')
+    else
+      sStrEncode := StringReplace(sStrEncode, sKeyChar, EmptyStr, [rfReplaceAll]);
+
+    Result := IdDecoder.DecodeString(sStrEncode);
+  finally
+    IdEncoder.Free;
+    IdDecoder.Free;
+  end;
 end;
 
 function DelphiIsRunning : Boolean;
@@ -2527,6 +2561,9 @@ end;
 
 function GetUserUpdatePassWord : Boolean;
 begin
+  if Trim(gUsuarioLogado.Login) = EmptyStr then
+    Result := False
+  else
   with DMBusiness, ibdtstUsers do
     if ibdtstUsers.Locate('NOME', gUsuarioLogado.Login, []) then
       Result := (ibdtstUsersALTERAR_SENHA.AsInteger = 1)
@@ -3222,6 +3259,9 @@ begin
     gLicencaSistema.CEP      := ini.ReadString('Licenca', 'edCEP',      '');
     gLicencaSistema.Competencia  := StrToIntDef(ini.ReadString('Licenca', 'edCompetencia', FormatDateTime('yyyymm', Date + 30)), 0);
     gLicencaSistema.DataBloqueio := ini.ReadDateTime('Licenca', 'edDataBloqueio', Date + 45);
+    gLicencaSistema.UsarSGE  := ini.ReadBool('Licenca', 'chkSGE', False);
+    gLicencaSistema.UsarSGI  := ini.ReadBool('Licenca', 'chkSGI', False);
+    gLicencaSistema.UsarSGF  := ini.ReadBool('Licenca', 'chkSGF', False);
 
     SetSegmento(SEGMENTO_PADRAO_ID,          SEGMENTO_PADRAO_DS);
     SetSegmento(SEGMENTO_VAREJO_ATACADO_ID,  SEGMENTO_VAREJO_ATACADO_DS);

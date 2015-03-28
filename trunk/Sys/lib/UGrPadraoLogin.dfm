@@ -7,6 +7,8 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
   ClientWidth = 475
   Font.Height = -16
   Font.Name = 'Calibri'
+  ExplicitWidth = 320
+  ExplicitHeight = 240
   DesignSize = (
     475
     285)
@@ -131,17 +133,7 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
     Width = 112
     Height = 41
     Caption = 'Entrar'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 3
-    OnClick = BtnEntrarClick
-    Glyph.Data = {
+    OptionsImage.Glyph.Data = {
       F6060000424DF606000000000000360000002800000018000000180000000100
       180000000000C0060000C40E0000C40E00000000000000000000FFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF87BFDF56A8D7FFFF
@@ -198,6 +190,16 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFAFC2D5749ABE5283B13F72A348749F819DB8FFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = BtnEntrarClick
   end
   object edNome: TcxTextEdit
     Left = 136
@@ -320,6 +322,9 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
   object QryEmpresa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select CNPJ, NMFANT from TBEMPRESA')
     Left = 136

@@ -9,7 +9,13 @@ uses
   ToolWin, IBTable, IBQuery, Menus, JPEG,
   UObserverInterface, UCliente, ACBrBase, ACBrSocket, ACBrConsultaCNPJ,
   ACBrConsultaCPF, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  cxButtons, JvExMask, JvToolEdit, JvDBControls;
+  cxButtons, JvExMask, JvToolEdit, JvDBControls, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  dxSkinSevenClassic, dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010,
+  dxSkinWhiteprint;
 
 type
   TfrmGeCliente = class(TfrmGrPadraoCadastro, IObserver) // Observador

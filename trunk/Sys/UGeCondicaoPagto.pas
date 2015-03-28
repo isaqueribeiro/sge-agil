@@ -7,7 +7,13 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
-  cxButtons, DBClient, Provider;
+  cxButtons, DBClient, Provider, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  dxSkinSevenClassic, dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010,
+  dxSkinWhiteprint;
 
 type
   TfrmGeCondicaoPagto = class(TfrmGrPadraoCadastro)
@@ -64,9 +70,9 @@ type
     dtsFormaPagtoLista: TDataSource;
     cdsFormaPagtoListaSELECIONAR: TIntegerField;
     cdsFormaPagtoListaCODIGO: TSmallintField;
-    cdsFormaPagtoListaDESCRICAO: TStringField;
-    cdsFormaPagtoListaUSAR_PDV: TStringField;
     dbgFormaPagto: TDBGrid;
+    cdsFormaPagtoListaDESCRICAO: TWideStringField;
+    cdsFormaPagtoListaUSAR_PDV: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure DtSrcTabelaDataChange(Sender: TObject; Field: TField);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);

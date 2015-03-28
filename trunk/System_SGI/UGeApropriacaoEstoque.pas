@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls, ToolWin, 
   IBTable, Menus, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
-  JvToolEdit, JvDBControls, JvExMask;
+  JvToolEdit, JvDBControls, JvExMask, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeApropriacaoEstoque = class(TfrmGrPadraoCadastro)
@@ -266,8 +273,9 @@ begin (*
 
     frm.RdgStatusAutorizacao.ItemIndex := STATUS_APROPRIACAO_ESTOQUE_AUT + 1;
 
-    for I := 0 to frm.RdgStatusAutorizacao.Items.Count - 1 do
-      frm.RdgStatusAutorizacao.Controls[I].Enabled := False;
+    frm.RdgStatusAutorizacao.Enabled := False;
+    //for I := 0 to frm.RdgStatusAutorizacao.Items.Count - 1 do
+    //  frm.RdgStatusAutorizacao.Controls[I].Enabled := False;
 
     frm.iFornecedor := Fornecedor;
     frm.e1Data.Date := DataInicial;
