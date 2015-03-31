@@ -87,18 +87,10 @@ type
     dbgProdutoTblColumn32: TcxGridDBBandedColumn;
     dbgProdutoLvl: TcxGridLevel;
     dbgProdutoTblColumn9: TcxGridDBBandedColumn;
-    CdsProdutoCODEMP: TStringField;
-    CdsProdutoCOD: TStringField;
     CdsProdutoCODIGO: TIntegerField;
-    CdsProdutoDESCRI: TStringField;
-    CdsProdutoAPRESENTACAO: TStringField;
-    CdsProdutoDESCRI_APRESENTACAO: TStringField;
     CdsProdutoCODGRUPO: TSmallintField;
-    CdsProdutoGRUPO: TStringField;
     CdsProdutoCODFABRICANTE: TIntegerField;
-    CdsProdutoFABRICANTE: TStringField;
     CdsProdutoCODUNIDADE: TSmallintField;
-    CdsProdutoUNIDADE: TStringField;
     CdsProdutoCOMPRA_QTDE_01: TBCDField;
     CdsProdutoCOMPRA_VALOR_01: TBCDField;
     CdsProdutoVENDA_QTDE_01: TBCDField;
@@ -117,7 +109,6 @@ type
     CdsTotal: TClientDataSet;
     dsTotal: TDataSource;
     CdsGrupoCODIGO: TSmallintField;
-    CdsGrupoDESCRICAO: TStringField;
     CdsGrupoITENS: TIntegerField;
     CdsGrupoCOMPRA_QTDE_01: TBCDField;
     CdsGrupoCOMPRA_VALOR_01: TBCDField;
@@ -150,7 +141,6 @@ type
     cxGridDBBandedColumn18: TcxGridDBBandedColumn;
     dbgFabLvl: TcxGridLevel;
     CdsFabricanteCODIGO: TIntegerField;
-    CdsFabricanteDESCRICAO: TStringField;
     CdsFabricanteITENS: TIntegerField;
     CdsFabricanteCOMPRA_QTDE_01: TBCDField;
     CdsFabricanteCOMPRA_VALOR_01: TBCDField;
@@ -173,6 +163,16 @@ type
     btBtnExportar: TcxButton;
     btBtnEnviarEmail: TcxButton;
     BtnPesquisar: TcxButton;
+    CdsGrupoDESCRICAO: TWideStringField;
+    CdsFabricanteDESCRICAO: TWideStringField;
+    CdsProdutoCODEMP: TWideStringField;
+    CdsProdutoCOD: TWideStringField;
+    CdsProdutoDESCRI: TWideStringField;
+    CdsProdutoAPRESENTACAO: TWideStringField;
+    CdsProdutoDESCRI_APRESENTACAO: TWideStringField;
+    CdsProdutoGRUPO: TWideStringField;
+    CdsProdutoFABRICANTE: TWideStringField;
+    CdsProdutoUNIDADE: TWideStringField;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
@@ -203,7 +203,7 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE, cxGridExportLink;
+  UDMBusiness, UConstantesDGE, cxGridExportLink, UDMRecursos;
 
 {$R *.dfm}
 

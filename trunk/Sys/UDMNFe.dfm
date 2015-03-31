@@ -2211,7 +2211,7 @@ object DMNFe: TDMNFe
       'NFE_PLACA_VEICULO=NFE_PLACA_VEICULO'
       'NFE_PLACA_UF=NFE_PLACA_UF'
       'NFE_PLACA_RNTC=NFE_PLACA_RNTC')
-    DataSet = qryCalculoImporto
+    DataSet = qryCalculoImposto
     BCDToCurrency = False
     Left = 184
     Top = 120
@@ -2571,7 +2571,7 @@ object DMNFe: TDMNFe
       Size = 150
     end
   end
-  object qryCalculoImporto: TIBDataSet
+  object qryCalculoImposto: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
@@ -2606,6 +2606,7 @@ object DMNFe: TDMNFe
       '  , v.Cfop'
       '  , cf.Cfop_descricao'
       '  , cf.cfop_informacao_fisco'
+      '  , cf.Cfop_devolucao'
       '  , v.Verificador_nfe'
       '  , v.Xml_nfe_filename'
       '  , v.Xml_nfe'
@@ -2687,328 +2688,6 @@ object DMNFe: TDMNFe
     GeneratorField.ApplyEvent = gamOnPost
     Left = 144
     Top = 120
-    object qryCalculoImportoANO: TSmallintField
-      FieldName = 'ANO'
-      Origin = '"TBVENDAS"."ANO"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object qryCalculoImportoCODCONTROL: TIntegerField
-      FieldName = 'CODCONTROL'
-      Origin = '"TBVENDAS"."CODCONTROL"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object qryCalculoImportoCODEMP: TIBStringField
-      FieldName = 'CODEMP'
-      Origin = '"TBVENDAS"."CODEMP"'
-      Size = 18
-    end
-    object qryCalculoImportoCODCLI: TIBStringField
-      FieldName = 'CODCLI'
-      Origin = '"TBVENDAS"."CODCLI"'
-      Size = 18
-    end
-    object qryCalculoImportoDTVENDA: TDateTimeField
-      FieldName = 'DTVENDA'
-      Origin = '"TBVENDAS"."DTVENDA"'
-    end
-    object qryCalculoImportoSTATUS: TSmallintField
-      FieldName = 'STATUS'
-      Origin = '"TBVENDAS"."STATUS"'
-    end
-    object qryCalculoImportoTOTALVENDABRUTA: TIBBCDField
-      FieldName = 'TOTALVENDABRUTA'
-      Origin = '"TBVENDAS"."TOTALVENDA_BRUTA"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoDESCONTO: TIBBCDField
-      FieldName = 'DESCONTO'
-      Origin = '"TBVENDAS"."DESCONTO"'
-      Precision = 18
-      Size = 4
-    end
-    object qryCalculoImportoDESCONTO_CUPOM: TIBBCDField
-      FieldName = 'DESCONTO_CUPOM'
-      Origin = '"TBVENDAS"."DESCONTO_CUPOM"'
-      ProviderFlags = []
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoTOTALVENDA: TIBBCDField
-      FieldName = 'TOTALVENDA'
-      Origin = '"TBVENDAS"."TOTALVENDA"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoDTFINALIZACAO_VENDA: TDateField
-      FieldName = 'DTFINALIZACAO_VENDA'
-      Origin = '"TBVENDAS"."DTFINALIZACAO_VENDA"'
-    end
-    object qryCalculoImportoOBS: TMemoField
-      FieldName = 'OBS'
-      Origin = '"TBVENDAS"."OBS"'
-      ProviderFlags = [pfInUpdate]
-      BlobType = ftMemo
-      Size = 8
-    end
-    object qryCalculoImportoSERIE: TIBStringField
-      FieldName = 'SERIE'
-      Origin = '"TBVENDAS"."SERIE"'
-      Size = 4
-    end
-    object qryCalculoImportoNFE: TLargeintField
-      FieldName = 'NFE'
-      Origin = '"TBVENDAS"."NFE"'
-    end
-    object qryCalculoImportoLOTE_NFE_ANO: TSmallintField
-      FieldName = 'LOTE_NFE_ANO'
-      Origin = '"TBVENDAS"."LOTE_NFE_ANO"'
-    end
-    object qryCalculoImportoLOTE_NFE_NUMERO: TIntegerField
-      FieldName = 'LOTE_NFE_NUMERO'
-      Origin = '"TBVENDAS"."LOTE_NFE_NUMERO"'
-    end
-    object qryCalculoImportoNFE_ENVIADA: TSmallintField
-      FieldName = 'NFE_ENVIADA'
-      Origin = '"TBVENDAS"."NFE_ENVIADA"'
-    end
-    object qryCalculoImportoDATAEMISSAO: TDateField
-      FieldName = 'DATAEMISSAO'
-      Origin = '"TBVENDAS"."DATAEMISSAO"'
-    end
-    object qryCalculoImportoHORAEMISSAO: TTimeField
-      FieldName = 'HORAEMISSAO'
-      Origin = '"TBVENDAS"."HORAEMISSAO"'
-    end
-    object qryCalculoImportoCANCEL_USUARIO: TIBStringField
-      FieldName = 'CANCEL_USUARIO'
-      Origin = '"TBVENDAS"."CANCEL_USUARIO"'
-      Size = 50
-    end
-    object qryCalculoImportoCANCEL_DATAHORA: TDateTimeField
-      FieldName = 'CANCEL_DATAHORA'
-      Origin = '"TBVENDAS"."CANCEL_DATAHORA"'
-    end
-    object qryCalculoImportoCANCEL_MOTIVO: TMemoField
-      FieldName = 'CANCEL_MOTIVO'
-      Origin = '"TBVENDAS"."CANCEL_MOTIVO"'
-      ProviderFlags = [pfInUpdate]
-      BlobType = ftMemo
-      Size = 8
-    end
-    object qryCalculoImportoCFOP: TIntegerField
-      FieldName = 'CFOP'
-      Origin = '"TBVENDAS"."CFOP"'
-    end
-    object qryCalculoImportoCFOP_DESCRICAO: TIBStringField
-      FieldName = 'CFOP_DESCRICAO'
-      Origin = '"TBCFOP"."CFOP_DESCRICAO"'
-      Size = 250
-    end
-    object qryCalculoImportoCFOP_INFORMACAO_FISCO: TIBStringField
-      FieldName = 'CFOP_INFORMACAO_FISCO'
-      Origin = '"TBCFOP"."CFOP_INFORMACAO_FISCO"'
-      ProviderFlags = []
-      Size = 250
-    end
-    object qryCalculoImportoVERIFICADOR_NFE: TIBStringField
-      FieldName = 'VERIFICADOR_NFE'
-      Origin = '"TBVENDAS"."VERIFICADOR_NFE"'
-      Size = 250
-    end
-    object qryCalculoImportoXML_NFE_FILENAME: TIBStringField
-      FieldName = 'XML_NFE_FILENAME'
-      Origin = '"TBVENDAS"."XML_NFE_FILENAME"'
-      Size = 250
-    end
-    object qryCalculoImportoXML_NFE: TMemoField
-      FieldName = 'XML_NFE'
-      Origin = '"TBVENDAS"."XML_NFE"'
-      ProviderFlags = [pfInUpdate]
-      BlobType = ftMemo
-      Size = 8
-    end
-    object qryCalculoImportoVENDEDOR_COD: TIntegerField
-      FieldName = 'VENDEDOR_COD'
-      Origin = '"TBVENDAS"."VENDEDOR_COD"'
-    end
-    object qryCalculoImportoVENDEDOR_NOME: TIBStringField
-      FieldName = 'VENDEDOR_NOME'
-      Origin = '"TBVENDEDOR"."NOME"'
-      Size = 60
-    end
-    object qryCalculoImportoVENDEDOR_CPF: TIBStringField
-      FieldName = 'VENDEDOR_CPF'
-      Origin = '"TBVENDEDOR"."CPF"'
-      Required = True
-      Size = 12
-    end
-    object qryCalculoImportoUSUARIO: TIBStringField
-      FieldName = 'USUARIO'
-      Origin = '"TBVENDAS"."USUARIO"'
-      Size = 50
-    end
-    object qryCalculoImportoLISTA_FORMA_PAGO: TMemoField
-      FieldName = 'LISTA_FORMA_PAGO'
-      ProviderFlags = []
-      BlobType = ftMemo
-      Size = 8
-    end
-    object qryCalculoImportoLISTA_COND_PAGO: TMemoField
-      FieldName = 'LISTA_COND_PAGO'
-      ProviderFlags = []
-      BlobType = ftMemo
-      Size = 8
-    end
-    object qryCalculoImportoLISTA_COND_PAGO_FULL: TMemoField
-      FieldName = 'LISTA_COND_PAGO_FULL'
-      ProviderFlags = []
-      BlobType = ftMemo
-      Size = 8
-    end
-    object qryCalculoImportoVENDA_PRAZO: TSmallintField
-      FieldName = 'VENDA_PRAZO'
-      Origin = '"TBVENDAS"."VENDA_PRAZO"'
-    end
-    object qryCalculoImportoNFE_VALOR_BASE_ICMS: TIBBCDField
-      FieldName = 'NFE_VALOR_BASE_ICMS'
-      Origin = '"TBVENDAS"."NFE_VALOR_BASE_ICMS"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_ICMS: TIBBCDField
-      FieldName = 'NFE_VALOR_ICMS'
-      Origin = '"TBVENDAS"."NFE_VALOR_ICMS"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_BASE_ICMS_SUBST: TIBBCDField
-      FieldName = 'NFE_VALOR_BASE_ICMS_SUBST'
-      Origin = '"TBVENDAS"."NFE_VALOR_BASE_ICMS_SUBST"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_ICMS_SUBST: TIBBCDField
-      FieldName = 'NFE_VALOR_ICMS_SUBST'
-      Origin = '"TBVENDAS"."NFE_VALOR_ICMS_SUBST"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_TOTAL_PRODUTO: TIBBCDField
-      FieldName = 'NFE_VALOR_TOTAL_PRODUTO'
-      Origin = '"TBVENDAS"."NFE_VALOR_TOTAL_PRODUTO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_FRETE: TIBBCDField
-      FieldName = 'NFE_VALOR_FRETE'
-      Origin = '"TBVENDAS"."NFE_VALOR_FRETE"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_SEGURO: TIBBCDField
-      FieldName = 'NFE_VALOR_SEGURO'
-      Origin = '"TBVENDAS"."NFE_VALOR_SEGURO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_DESCONTO: TIBBCDField
-      FieldName = 'NFE_VALOR_DESCONTO'
-      Origin = '"TBVENDAS"."NFE_VALOR_DESCONTO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_TOTAL_II: TIBBCDField
-      FieldName = 'NFE_VALOR_TOTAL_II'
-      Origin = '"TBVENDAS"."NFE_VALOR_TOTAL_II"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_TOTAL_IPI: TIBBCDField
-      FieldName = 'NFE_VALOR_TOTAL_IPI'
-      Origin = '"TBVENDAS"."NFE_VALOR_TOTAL_IPI"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_PIS: TIBBCDField
-      FieldName = 'NFE_VALOR_PIS'
-      Origin = '"TBVENDAS"."NFE_VALOR_PIS"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_COFINS: TIBBCDField
-      FieldName = 'NFE_VALOR_COFINS'
-      Origin = '"TBVENDAS"."NFE_VALOR_COFINS"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_OUTROS: TIBBCDField
-      FieldName = 'NFE_VALOR_OUTROS'
-      Origin = '"TBVENDAS"."NFE_VALOR_OUTROS"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_VALOR_TOTAL_NOTA: TIBBCDField
-      FieldName = 'NFE_VALOR_TOTAL_NOTA'
-      Origin = '"TBVENDAS"."NFE_VALOR_TOTAL_NOTA"'
-      Precision = 18
-      Size = 2
-    end
-    object qryCalculoImportoNFE_MODALIDADE_FRETE: TSmallintField
-      FieldName = 'NFE_MODALIDADE_FRETE'
-      Origin = '"TBVENDAS"."NFE_MODALIDADE_FRETE"'
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA: TIntegerField
-      FieldName = 'NFE_TRANSPORTADORA'
-      Origin = '"TBVENDAS"."NFE_TRANSPORTADORA"'
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA_NOME: TIBStringField
-      FieldName = 'NFE_TRANSPORTADORA_NOME'
-      Origin = '"TBFORNECEDOR"."NOMEFORN"'
-      Size = 60
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA_CNPJ: TIBStringField
-      FieldName = 'NFE_TRANSPORTADORA_CNPJ'
-      Origin = '"TBFORNECEDOR"."CNPJ"'
-      Size = 18
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA_IEST: TIBStringField
-      FieldName = 'NFE_TRANSPORTADORA_IEST'
-      Origin = '"TBFORNECEDOR"."INSCEST"'
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA_ENDER: TIBStringField
-      FieldName = 'NFE_TRANSPORTADORA_ENDER'
-      Origin = '"TBFORNECEDOR"."ENDER"'
-      Size = 250
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA_CIDADE: TIBStringField
-      FieldName = 'NFE_TRANSPORTADORA_CIDADE'
-      Origin = '"TBCIDADE"."CID_NOME"'
-      Size = 100
-    end
-    object qryCalculoImportoNFE_TRANSPORTADORA_UF: TIBStringField
-      FieldName = 'NFE_TRANSPORTADORA_UF'
-      Origin = '"TBFORNECEDOR"."UF"'
-      FixedChar = True
-      Size = 2
-    end
-    object qryCalculoImportoNFE_PLACA_VEICULO: TIBStringField
-      FieldName = 'NFE_PLACA_VEICULO'
-      Origin = '"TBVENDAS"."NFE_PLACA_VEICULO"'
-      Size = 10
-    end
-    object qryCalculoImportoNFE_PLACA_UF: TIBStringField
-      FieldName = 'NFE_PLACA_UF'
-      Origin = '"TBVENDAS"."NFE_PLACA_UF"'
-      Size = 2
-    end
-    object qryCalculoImportoNFE_PLACA_RNTC: TIBStringField
-      FieldName = 'NFE_PLACA_RNTC'
-      Origin = '"TBVENDAS"."NFE_PLACA_RNTC"'
-      Size = 10
-    end
   end
   object IBSQL: TIBSQL
     Database = DMBusiness.ibdtbsBusiness
@@ -4097,12 +3776,12 @@ object DMNFe: TDMNFe
       'NFE_VALOR_COFINS=NFE_VALOR_COFINS'
       'NFE_VALOR_OUTROS=NFE_VALOR_OUTROS'
       'NFE_VALOR_TOTAL_NOTA=NFE_VALOR_TOTAL_NOTA')
-    DataSet = qryEntradaCalculoImporto
+    DataSet = qryEntradaCalculoImposto
     BCDToCurrency = False
     Left = 264
     Top = 120
   end
-  object qryEntradaCalculoImporto: TIBDataSet
+  object qryEntradaCalculoImposto: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
@@ -4135,6 +3814,7 @@ object DMNFe: TDMNFe
       '  , c.nfcfop as Cfop'
       '  , cf.Cfop_descricao'
       '  , cf.cfop_informacao_fisco'
+      '  , cf.cfop_devolucao'
       '  , c.Verificador_nfe'
       '  , c.Xml_nfe_filename'
       '  , c.Xml_nfe'
@@ -15894,9 +15574,9 @@ object DMNFe: TDMNFe
           Frame.Width = 0.100000000000000000
           Memo.UTF8W = (
             
-              ' [frdRequisicaoCompra."DESCRI_APRESENTACAO"] IIF(Trim(<frdRequis' +
-              'icaoCompra."REFERENCIA">)='#39#39','#39#39',<frdRequisicaoCompra."REFERENCIA' +
-              '">)')
+              ' [frdRequisicaoCompra."DESCRI_APRESENTACAO"] [IIF(Trim(<frdRequi' +
+              'sicaoCompra."REFERENCIA">)='#39#39','#39#39',<frdRequisicaoCompra."REFERENCI' +
+              'A">)]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter

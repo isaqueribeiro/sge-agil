@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
   StdCtrls, Buttons, ExtCtrls, Mask, DBClient, Provider, IBTable, IBUpdateSQL, IBStoredProc,
   JvToolEdit, JvExMask, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  Menus, cxButtons;
+  Menus, cxButtons, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeRequisicaoCompraPesquisa = class(TfrmGrPadraoPesquisa)
@@ -56,24 +63,32 @@ type
     updAutorizacao: TIBUpdateSQL;
     CdsPesquisaANO: TSmallintField;
     CdsPesquisaCODIGO: TIntegerField;
-    CdsPesquisaEMPRESA: TStringField;
-    CdsPesquisaNUMERO: TStringField;
+    CdsPesquisaSELECIONAR: TIntegerField;
+    BtnConverter: TSpeedButton;
+    stpGerarAutorizacaoItens: TIBStoredProc;
+    cdsAutorizacaoCENTRO_CUSTO: TIntegerField;
+    e1Data: TJvDateEdit;
+    e2Data: TJvDateEdit;
+    edFornecedor: TJvComboEdit;
+    CdsPesquisaEMPRESA: TWideStringField;
+    CdsPesquisaNUMERO: TWideStringField;
     CdsPesquisaFORNECEDOR: TIntegerField;
-    CdsPesquisaNOME_CONTATO: TStringField;
+    CdsPesquisaNOME_CONTATO: TWideStringField;
     CdsPesquisaTIPO: TSmallintField;
     CdsPesquisaINSERCAO_DATA: TDateTimeField;
     CdsPesquisaEMISSAO_DATA: TDateField;
-    CdsPesquisaEMISSAO_USUARIO: TStringField;
+    CdsPesquisaEMISSAO_USUARIO: TWideStringField;
     CdsPesquisaVALIDADE: TDateField;
     CdsPesquisaCOMPETENCIA: TIntegerField;
-    CdsPesquisaMOVITO: TMemoField;
-    CdsPesquisaOBSERVACAO: TMemoField;
+    CdsPesquisaMOVITO: TWideMemoField;
+    CdsPesquisaOBSERVACAO: TWideMemoField;
     CdsPesquisaCLIENTE: TIntegerField;
-    CdsPesquisaENDERECO_ENTREGA: TMemoField;
+    CdsPesquisaCENTRO_CUSTO: TIntegerField;
+    CdsPesquisaENDERECO_ENTREGA: TWideMemoField;
     CdsPesquisaSTATUS: TSmallintField;
-    CdsPesquisaRECEBEDOR_NOME: TStringField;
-    CdsPesquisaRECEBEDOR_CPF: TStringField;
-    CdsPesquisaRECEBEDOR_FUNCAO: TStringField;
+    CdsPesquisaRECEBEDOR_NOME: TWideStringField;
+    CdsPesquisaRECEBEDOR_CPF: TWideStringField;
+    CdsPesquisaRECEBEDOR_FUNCAO: TWideStringField;
     CdsPesquisaFORMA_PAGTO: TSmallintField;
     CdsPesquisaCONDICAO_PAGTO: TSmallintField;
     CdsPesquisaTRANSPORTADOR: TIntegerField;
@@ -85,25 +100,17 @@ type
     CdsPesquisaVALOR_TOTAL: TBCDField;
     CdsPesquisaREQUISITADO_DATA: TDateField;
     CdsPesquisaDATA_FATURA: TDateField;
-    CdsPesquisaREQUISITADO_USUARIO: TStringField;
+    CdsPesquisaREQUISITADO_USUARIO: TWideStringField;
     CdsPesquisaCANCELADO_DATA: TDateField;
-    CdsPesquisaCANCELADO_USUARIO: TStringField;
-    CdsPesquisaCANCELADO_MOTIVO: TMemoField;
-    CdsPesquisaNOMEFORN: TStringField;
-    CdsPesquisaCNPJ: TStringField;
+    CdsPesquisaCANCELADO_USUARIO: TWideStringField;
+    CdsPesquisaCANCELADO_MOTIVO: TWideMemoField;
+    CdsPesquisaNOMEFORN: TWideStringField;
+    CdsPesquisaCNPJ: TWideStringField;
     CdsPesquisaPESSOA_FISICA: TSmallintField;
     CdsPesquisaFATURAMENTO_MINIMO: TBCDField;
-    CdsPesquisaTRANSPORTADOR_NOME: TStringField;
-    CdsPesquisaTRANSPORTADOR_CPF_CNPJ: TStringField;
-    CdsPesquisaNOMECLIENTE: TStringField;
-    CdsPesquisaSELECIONAR: TIntegerField;
-    BtnConverter: TSpeedButton;
-    stpGerarAutorizacaoItens: TIBStoredProc;
-    cdsAutorizacaoCENTRO_CUSTO: TIntegerField;
-    CdsPesquisaCENTRO_CUSTO: TIntegerField;
-    e1Data: TJvDateEdit;
-    e2Data: TJvDateEdit;
-    edFornecedor: TJvComboEdit;
+    CdsPesquisaTRANSPORTADOR_NOME: TWideStringField;
+    CdsPesquisaTRANSPORTADOR_CPF_CNPJ: TWideStringField;
+    CdsPesquisaNOMECLIENTE: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure CdsPesquisaSTATUSGetText(Sender: TField; var Text: String;
       DisplayText: Boolean);

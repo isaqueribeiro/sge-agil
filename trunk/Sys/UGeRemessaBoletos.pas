@@ -8,7 +8,14 @@ uses
   IBSQL, DBClient, Provider, IBUpdateSQL, IBQuery, Buttons, ToolWin, Grids,
   DBGrids, ComObj, frxClass, frxDBSet, UGrPadrao, ACBrBoleto, ACBrBoletoFCFR,
   ACBrBase, Mask, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
-  JvExMask, JvToolEdit;
+  JvExMask, JvToolEdit, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeRemessaBoleto = class(TfrmGrPadrao)
@@ -26,9 +33,6 @@ type
     CdsTitulos: TClientDataSet;
     CdsTitulosPARCELA: TSmallintField;
     CdsTitulosCODBANCO: TIntegerField;
-    CdsTitulosNOSSONUMERO: TStringField;
-    CdsTitulosCNPJ: TStringField;
-    CdsTitulosTIPPAG: TStringField;
     CdsTitulosDTEMISS: TDateField;
     CdsTitulosDTVENC: TDateField;
     CdsTitulosVALORREC: TBCDField;
@@ -47,9 +51,6 @@ type
     Bevel5: TBevel;
     dbgTitulos: TDBGrid;
     Label5: TLabel;
-    CdsTitulosINSCEST: TStringField;
-    CdsTitulosNOME: TStringField;
-    CdsTitulosFONE: TStringField;
     frrRemessa: TfrxReport;
     frdRemessa: TfrxDBDataset;
     CdsTitulosANOLANC: TSmallintField;
@@ -58,9 +59,7 @@ type
     CdsTitulosNUMLANC: TIntegerField;
     ACBrBoleto: TACBrBoleto;
     ACBrBoletoFCFR: TACBrBoletoFCFR;
-    CdsTitulosSERIE: TStringField;
     CdsTitulosNFE: TLargeintField;
-    CdsTitulosNumeroDocumento: TStringField;
     IbQryBancos: TIBQuery;
     IbQryBancosBCO_COD: TSmallintField;
     IbQryBancosEMPRESA: TIBStringField;
@@ -99,14 +98,6 @@ type
     IbQryBancosEMAIL: TIBStringField;
     IbUpdBancos: TIBUpdateSQL;
     CdsTitulosPARCELA_MAXIMA: TSmallintField;
-    CdsTitulosENDER: TStringField;
-    CdsTitulosENDER_DESC: TStringField;
-    CdsTitulosENDER_NUM: TStringField;
-    CdsTitulosBAIRRO: TStringField;
-    CdsTitulosCIDADE: TStringField;
-    CdsTitulosUF: TStringField;
-    CdsTitulosCEP: TStringField;
-    CdsTitulosEMAIL: TStringField;
     CdsTitulosSITUACAO: TSmallintField;
     edInicio: TJvDateEdit;
     edFinal: TJvDateEdit;
@@ -119,6 +110,22 @@ type
     chkEnviarCancelados: TCheckBox;
     Bevel7: TBevel;
     btnHistorico: TcxButton;
+    CdsTitulosNOSSONUMERO: TWideStringField;
+    CdsTitulosCNPJ: TWideStringField;
+    CdsTitulosTIPPAG: TWideStringField;
+    CdsTitulosINSCEST: TWideStringField;
+    CdsTitulosNOME: TWideStringField;
+    CdsTitulosFONE: TWideStringField;
+    CdsTitulosSERIE: TWideStringField;
+    CdsTitulosNumeroDocumento: TStringField;
+    CdsTitulosENDER: TWideStringField;
+    CdsTitulosENDER_DESC: TWideStringField;
+    CdsTitulosENDER_NUM: TWideStringField;
+    CdsTitulosBAIRRO: TWideStringField;
+    CdsTitulosCIDADE: TWideStringField;
+    CdsTitulosUF: TWideStringField;
+    CdsTitulosCEP: TWideStringField;
+    CdsTitulosEMAIL: TWideStringField;
     procedure FormShow(Sender: TObject);
     procedure edBancoChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);

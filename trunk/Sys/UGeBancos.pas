@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  cxLookAndFeelPainters, Menus, cxButtons, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeBancos = class(TfrmGrPadraoCadastro)
@@ -233,7 +240,7 @@ begin
     '---' + #13#13 + 
     '1. Para alguns bancos o "Código da Empresa" informado por eles é o mesmo "Código do Cedente" solicitado pela aplicação.' + #13 +
     '2. O código da Agência deve ser informada com o dígito. Ex: 1232-1' + #13 +
-    '3. A Conta Corrente (C/C) deverá ser infrmanda funatmente com o seu dígito. Ex: 06598-7' + #13 +
+    '3. A Conta Corrente (C/C) deverá ser informanda fundamentalmente com o seu dígito. Ex: 06598-7' + #13 +
     '4. Para determinados bancos o Código do Cedente é o mesmo número de Conta Corrente.';
 
   ShowInformation(Self.Caption, sMsg);

@@ -2,29 +2,29 @@ inherited frmGeCliente: TfrmGeCliente
   Left = 400
   Top = 237
   Caption = 'Cadastro de Clientes'
-  ClientHeight = 497
+  ClientHeight = 535
   ClientWidth = 844
   OldCreateOrder = True
   OnClose = FormClose
   ExplicitWidth = 860
-  ExplicitHeight = 536
+  ExplicitHeight = 574
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel
-    Top = 493
+    Top = 531
     Width = 844
     ExplicitTop = 494
     ExplicitWidth = 844
   end
   inherited Bevel3: TBevel
-    Top = 454
+    Top = 492
     Width = 844
     ExplicitTop = 455
     ExplicitWidth = 844
   end
   inherited pgcGuias: TPageControl
     Width = 844
-    Height = 454
+    Height = 492
     OnChange = pgcGuiasChange
     ExplicitWidth = 844
     ExplicitHeight = 454
@@ -32,14 +32,14 @@ inherited frmGeCliente: TfrmGeCliente
       ExplicitWidth = 836
       ExplicitHeight = 425
       inherited Bevel4: TBevel
-        Top = 359
+        Top = 397
         Width = 836
         ExplicitTop = 360
         ExplicitWidth = 836
       end
       inherited dbgDados: TDBGrid
         Width = 836
-        Height = 359
+        Height = 397
         Columns = <
           item
             Expanded = False
@@ -74,7 +74,7 @@ inherited frmGeCliente: TfrmGeCliente
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 363
+        Top = 401
         Width = 836
         ExplicitTop = 363
         ExplicitWidth = 836
@@ -992,13 +992,15 @@ inherited frmGeCliente: TfrmGeCliente
         Left = 0
         Top = 237
         Width = 836
-        Height = 188
-        ActivePage = tbsContato
+        Height = 226
+        ActivePage = tbsCompra
         Align = alClient
         TabOrder = 2
         TabStop = False
+        ExplicitHeight = 188
         object tbsContato: TTabSheet
           Caption = '&1. Contato'
+          ExplicitHeight = 160
           object lblFoneFixo: TLabel
             Left = 8
             Top = 0
@@ -1127,6 +1129,7 @@ inherited frmGeCliente: TfrmGeCliente
         object tbsDadosAdcionais: TTabSheet
           Caption = '&2. Outras Informa'#231#245'es'
           ImageIndex = 2
+          ExplicitHeight = 160
           object dbNFeDevolucao: TDBCheckBox
             Left = 5
             Top = 114
@@ -1243,6 +1246,7 @@ inherited frmGeCliente: TfrmGeCliente
         object tbsDadoFinanceiro: TTabSheet
           Caption = '&3. Dados Financeiro'
           ImageIndex = 3
+          ExplicitHeight = 160
           object lblBanco: TLabel
             Left = 8
             Top = 0
@@ -1347,34 +1351,37 @@ inherited frmGeCliente: TfrmGeCliente
         object tbsObservacao: TTabSheet
           Caption = '&4. Observa'#231#245'es'
           ImageIndex = 4
+          ExplicitHeight = 160
           object dbObservacao: TDBMemo
             Left = 0
             Top = 0
             Width = 828
-            Height = 160
+            Height = 198
             Align = alClient
             DataField = 'OBSERVACAO'
             DataSource = DtSrcTabela
             TabOrder = 0
+            ExplicitHeight = 160
           end
         end
         object tbsCompra: TTabSheet
           Caption = '&5. Compras'
           ImageIndex = 1
+          ExplicitHeight = 160
           DesignSize = (
             828
-            160)
+            198)
           object lblValorLimiteCompra: TLabel
-            Left = 8
-            Top = 0
+            Left = 9
+            Top = 8
             Width = 111
             Height = 13
             Caption = 'Limte p/ Compras (R$):'
             FocusControl = dbValorLimiteCompra
           end
           object lblTotalCompras: TLabel
-            Left = 8
-            Top = 40
+            Left = 9
+            Top = 48
             Width = 138
             Height = 13
             Caption = 'Total Compras Abertas (R$):'
@@ -1387,8 +1394,8 @@ inherited frmGeCliente: TfrmGeCliente
             ParentFont = False
           end
           object lblLimiteDisponivel: TLabel
-            Left = 8
-            Top = 80
+            Left = 9
+            Top = 88
             Width = 127
             Height = 13
             Caption = 'Limite Dispon'#237'vel (R$):'
@@ -1402,7 +1409,7 @@ inherited frmGeCliente: TfrmGeCliente
           end
           object lblTituloCancelado: TLabel
             Left = 8
-            Top = 137
+            Top = 175
             Width = 114
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1413,10 +1420,11 @@ inherited frmGeCliente: TfrmGeCliente
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 137
           end
           object lblTituloPagando: TLabel
             Left = 8
-            Top = 121
+            Top = 159
             Width = 122
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1427,10 +1435,11 @@ inherited frmGeCliente: TfrmGeCliente
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 121
           end
           object dbValorLimiteCompra: TDBEdit
-            Left = 8
-            Top = 16
+            Left = 9
+            Top = 24
             Width = 153
             Height = 21
             CharCase = ecUpperCase
@@ -1445,8 +1454,8 @@ inherited frmGeCliente: TfrmGeCliente
             TabOrder = 0
           end
           object dbTotalCompras: TDBEdit
-            Left = 8
-            Top = 56
+            Left = 9
+            Top = 64
             Width = 153
             Height = 21
             Color = clMoneyGreen
@@ -1462,8 +1471,8 @@ inherited frmGeCliente: TfrmGeCliente
             TabOrder = 1
           end
           object dbLimiteDisponivel: TDBEdit
-            Left = 8
-            Top = 96
+            Left = 9
+            Top = 104
             Width = 153
             Height = 21
             Color = clMoneyGreen
@@ -1482,16 +1491,17 @@ inherited frmGeCliente: TfrmGeCliente
             Left = 168
             Top = 0
             Width = 660
-            Height = 160
+            Height = 198
             Align = alRight
             Anchors = [akLeft, akTop, akRight, akBottom]
             BevelOuter = bvNone
-            TabOrder = 3
+            TabOrder = 4
+            ExplicitHeight = 160
             object dbgTitulos: TDBGrid
               Left = 0
               Top = 0
               Width = 660
-              Height = 160
+              Height = 198
               Align = alClient
               DataSource = dtsTitulos
               Font.Charset = ANSI_CHARSET
@@ -1583,8 +1593,8 @@ inherited frmGeCliente: TfrmGeCliente
             end
           end
           object dbcBloqueio: TDBCheckBox
-            Left = 8
-            Top = 122
+            Left = 9
+            Top = 131
             Width = 153
             Height = 17
             TabStop = False
@@ -1598,7 +1608,7 @@ inherited frmGeCliente: TfrmGeCliente
             Font.Style = [fsBold]
             ParentFont = False
             ReadOnly = True
-            TabOrder = 4
+            TabOrder = 3
             ValueChecked = '1'
             ValueUnchecked = '0'
           end
@@ -1608,11 +1618,12 @@ inherited frmGeCliente: TfrmGeCliente
     object tbsConsultarCNPJ: TTabSheet
       Caption = 'Consultar CNPJ'
       ImageIndex = 12
+      ExplicitHeight = 425
       object BvlConsultar: TBevel
         Left = 377
         Top = 0
         Width = 4
-        Height = 425
+        Height = 463
         Align = alLeft
         Shape = bsSpacer
         ExplicitHeight = 426
@@ -1621,7 +1632,7 @@ inherited frmGeCliente: TfrmGeCliente
         Left = 0
         Top = 0
         Width = 377
-        Height = 425
+        Height = 463
         Align = alLeft
         BevelInner = bvRaised
         BevelOuter = bvLowered
@@ -1632,6 +1643,7 @@ inherited frmGeCliente: TfrmGeCliente
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitHeight = 425
         object lblCNPJX: TLabel
           Left = 9
           Top = 172
@@ -1765,7 +1777,7 @@ inherited frmGeCliente: TfrmGeCliente
         Left = 381
         Top = 0
         Width = 455
-        Height = 425
+        Height = 463
         Align = alClient
         BevelInner = bvRaised
         BevelOuter = bvLowered
@@ -1776,6 +1788,7 @@ inherited frmGeCliente: TfrmGeCliente
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        ExplicitHeight = 425
         object lblTipoX: TLabel
           Left = 8
           Top = 11
@@ -2195,11 +2208,12 @@ inherited frmGeCliente: TfrmGeCliente
     object tbsConsultarCPF: TTabSheet
       Caption = 'Consultar CPF'
       ImageIndex = 12
+      ExplicitHeight = 425
       object pnlConsultarCPF: TPanel
         Left = 0
         Top = 0
         Width = 377
-        Height = 425
+        Height = 463
         Align = alLeft
         BevelInner = bvRaised
         BevelOuter = bvLowered
@@ -2210,6 +2224,7 @@ inherited frmGeCliente: TfrmGeCliente
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitHeight = 425
         object lblCPFX: TLabel
           Left = 9
           Top = 172
@@ -2261,6 +2276,7 @@ inherited frmGeCliente: TfrmGeCliente
     object tbsEstoqueSatelite: TTabSheet
       Caption = 'Estoque &Sat'#233'lite'
       ImageIndex = 30
+      ExplicitHeight = 425
       object Bevel11: TBevel
         Left = 0
         Top = 62
@@ -2271,7 +2287,7 @@ inherited frmGeCliente: TfrmGeCliente
       end
       object Bevel12: TBevel
         Left = 0
-        Top = 390
+        Top = 428
         Width = 836
         Height = 4
         Align = alBottom
@@ -2398,7 +2414,7 @@ inherited frmGeCliente: TfrmGeCliente
         Left = 0
         Top = 66
         Width = 836
-        Height = 324
+        Height = 362
         Align = alClient
         DataSource = DtsEstoqueSatelite
         Font.Charset = ANSI_CHARSET
@@ -2493,13 +2509,14 @@ inherited frmGeCliente: TfrmGeCliente
       end
       object pnlControleRequisicao: TPanel
         Left = 0
-        Top = 394
+        Top = 432
         Width = 836
         Height = 31
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
+        ExplicitTop = 394
         object BtnRequisicoes: TcxButton
           Left = 1
           Top = 0
@@ -2566,7 +2583,7 @@ inherited frmGeCliente: TfrmGeCliente
     end
   end
   inherited tlbBotoes: TPanel
-    Top = 458
+    Top = 496
     Width = 844
     ExplicitTop = 458
     ExplicitWidth = 844
@@ -2584,6 +2601,10 @@ inherited frmGeCliente: TfrmGeCliente
       Width = 4
       Height = 31
       Shape = bsSpacer
+    end
+    inherited btbtnExcluir: TcxButton
+      ExplicitLeft = 154
+      ExplicitTop = 0
     end
     inherited btbtnFechar: TcxButton
       Left = 765
@@ -3186,7 +3207,7 @@ inherited frmGeCliente: TfrmGeCliente
   inherited ImgList: TImageList
     Left = 552
     Bitmap = {
-      494C01012B002C000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

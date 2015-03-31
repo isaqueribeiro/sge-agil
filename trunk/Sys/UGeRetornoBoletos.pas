@@ -8,7 +8,14 @@ uses
   Buttons, ToolWin, ComCtrls, Grids, DBGrids, ComObj, IBSQL, DBClient,
   IBQuery, UGrPadrao, IBUpdateSQL, ACBrBoleto, ACBrBoletoFCFR, ACBrBase,
   FileCtrl, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
-  cxButtons;
+  cxButtons, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeRetornoBoleto = class(TfrmGrPadrao)
@@ -30,17 +37,12 @@ type
     UpdateLanc: TIBSQL;
     CdsTitulos: TClientDataSet;
     DtsTitulos: TDataSource;
-    CdsTitulosQuitar: TStringField;
-    CdsTitulosNossoNumero: TStringField;
     CdsTitulosDataPagamento: TDateField;
     CdsTitulosValorPago: TCurrencyField;
-    CdsTitulosNumeroDocumento: TStringField;
     CdsTitulosLancamento: TLargeintField;
     CdsTitulosParcela: TIntegerField;
     CdsTitulosBanco: TIntegerField;
     CdsTitulosAPagar: TCurrencyField;
-    CdsTitulosSacado: TStringField;
-    CdsTitulosCnpj: TStringField;
     gFind: TIBQuery;
     CdsTitulosAno: TSmallintField;
     IbQryBancos: TIBQuery;
@@ -88,7 +90,6 @@ type
     CdsTitulosTotalAPagar: TAggregateField;
     CdsTitulosAnoVenda: TIntegerField;
     CdsTitulosNumVenda: TIntegerField;
-    CdsTitulosArquivo: TStringField;
     FileListBox: TFileListBox;
     tlbBotoes: TPanel;
     Bevel2: TBevel;
@@ -97,6 +98,12 @@ type
     btnCarregarRetorno: TcxButton;
     btnConfirmarBaixa: TcxButton;
     Bevel4: TBevel;
+    CdsTitulosQuitar: TStringField;
+    CdsTitulosNossoNumero: TStringField;
+    CdsTitulosNumeroDocumento: TStringField;
+    CdsTitulosSacado: TStringField;
+    CdsTitulosCnpj: TStringField;
+    CdsTitulosArquivo: TStringField;
     procedure edBancoChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);

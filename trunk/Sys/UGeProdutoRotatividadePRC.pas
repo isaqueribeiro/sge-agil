@@ -63,8 +63,6 @@ type
     dsListaProduto: TDataSource;
     DspProduto: TDataSetProvider;
     CdsProduto: TClientDataSet;
-    CdsProdutoCODIGO: TStringField;
-    CdsProdutoDESCRICAO: TStringField;
     CdsProdutoDATA_ULTIMA_COMPRA: TDateField;
     CdsProdutoDATA_ULTIMA_VENDA: TDateField;
     CdsProdutoCOMPRA_QTDE_01: TBCDField;
@@ -94,7 +92,6 @@ type
     CdsProdutoMOVIMENTADO: TSmallintField;
     CdsProdutoPROCESSO_DATA: TDateField;
     CdsProdutoPROCESSO_HORA: TTimeField;
-    CdsProdutoPROCESSO_USUARIO: TStringField;
     dbgProdutoTblColumn1: TcxGridDBBandedColumn;
     dbgProdutoTblColumn2: TcxGridDBBandedColumn;
     dbgProdutoTblColumn3: TcxGridDBBandedColumn;
@@ -123,8 +120,6 @@ type
     dbgProdutoTblColumn26: TcxGridDBBandedColumn;
     dbgProdutoTblColumn27: TcxGridDBBandedColumn;
     dbgProdutoTblColumn28: TcxGridDBBandedColumn;
-    CdsProdutoUNP_DESCRICAO: TStringField;
-    CdsProdutoUNP_SIGLA: TStringField;
     dbgProdutoTblColumn29: TcxGridDBBandedColumn;
     dbgProdutoTblColumn30: TcxGridDBBandedColumn;
     QryGrupo: TIBQuery;
@@ -132,7 +127,6 @@ type
     CdsGrupo: TClientDataSet;
     dsGrupo: TDataSource;
     CdsGrupoCODIGO: TSmallintField;
-    CdsGrupoDESCRICAO: TStringField;
     CdsGrupoITENS: TIntegerField;
     CdsGrupoDATA_ULTIMA_COMPRA: TDateField;
     CdsGrupoDATA_ULTIMA_VENDA: TDateField;
@@ -311,8 +305,6 @@ type
     svdArquivo: TSaveDialog;
     lblTipoFiltro: TLabel;
     edTipoFiltro: TComboBox;
-    CdsProdutoGRUPO: TStringField;
-    CdsProdutoFABRICANTE: TStringField;
     dbgProdutoTblColumn31: TcxGridDBBandedColumn;
     dbgProdutoTblColumn32: TcxGridDBBandedColumn;
     QryFabricante: TIBQuery;
@@ -370,7 +362,6 @@ type
     BCDField47: TBCDField;
     BCDField48: TBCDField;
     dsFabricante: TDataSource;
-    CdsFabricanteDESCRICAO: TStringField;
     dbgFab: TcxGrid;
     dbgFabTbl: TcxGridDBBandedTableView;
     cxGridDBBandedColumn59: TcxGridDBBandedColumn;
@@ -440,6 +431,15 @@ type
     btbtnIncluir: TcxButton;
     btBtnEnviarEmail: TcxButton;
     BtnPesquisar: TcxButton;
+    CdsProdutoCODIGO: TWideStringField;
+    CdsProdutoDESCRICAO: TWideStringField;
+    CdsProdutoGRUPO: TWideStringField;
+    CdsProdutoFABRICANTE: TWideStringField;
+    CdsProdutoUNP_DESCRICAO: TWideStringField;
+    CdsProdutoUNP_SIGLA: TWideStringField;
+    CdsProdutoPROCESSO_USUARIO: TWideStringField;
+    CdsGrupoDESCRICAO: TWideStringField;
+    CdsFabricanteDESCRICAO: TWideStringField;
     procedure NovaPesquisaKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure edTipoProcessoChange(Sender: TObject);
@@ -471,7 +471,7 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE, cxGridExportLink;
+  UDMBusiness, UConstantesDGE, cxGridExportLink, UDMRecursos;
 
 {$R *.dfm}
 

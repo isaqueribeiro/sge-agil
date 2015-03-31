@@ -1,25 +1,27 @@
 inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
   Left = 398
   Top = 213
-  Width = 1071
-  Height = 554
   Caption = 'Quitar Contas A Pagar (por Lote)'
+  ClientHeight = 515
+  ClientWidth = 1055
+  ExplicitWidth = 1071
+  ExplicitHeight = 554
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlPesquisa: TPanel
     Width = 1055
+    ExplicitWidth = 1055
     inherited GrpBxPesquisar: TGroupBox
       Width = 827
+      ExplicitWidth = 827
       DesignSize = (
         827
         73)
-      inherited BrnPesquisar: TSpeedButton
-        Left = 790
-      end
       inherited lblPesquisar: TLabel
         Left = 232
+        ExplicitLeft = 232
       end
-      object lblData: TLabel [2]
+      object lblData: TLabel [1]
         Left = 17
         Top = 24
         Width = 70
@@ -31,6 +33,13 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
         Left = 232
         Width = 551
         TabOrder = 2
+        ExplicitLeft = 232
+        ExplicitWidth = 551
+      end
+      inherited BrnPesquisar: TcxButton
+        Left = 790
+        TabOrder = 3
+        ExplicitLeft = 790
       end
       object e1Data: TJvDateEdit
         Left = 17
@@ -86,6 +95,7 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
         ImageKind = ikCustom
         NumGlyphs = 2
         PopupColor = clBtnFace
+        ShowNullDate = False
         TabOrder = 0
       end
       object e2Data: TJvDateEdit
@@ -142,16 +152,19 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
         ImageKind = ikCustom
         NumGlyphs = 2
         PopupColor = clBtnFace
+        ShowNullDate = False
         TabOrder = 1
       end
     end
   end
   inherited PnlTabela: TPanel
     Width = 1055
-    Height = 435
+    Height = 434
+    ExplicitWidth = 1055
+    ExplicitHeight = 434
     inherited dbgDados: TDBGrid
       Width = 1047
-      Height = 324
+      Height = 323
       Hint = 'Pressione "ESPA'#199'O" para'#13#10'Marcar/Desmarcar o Lan'#231'amento com "X".'
       Columns = <
         item
@@ -248,7 +261,7 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
     end
     object PnlControleQuitacao: TPanel
       Left = 4
-      Top = 328
+      Top = 327
       Width = 1047
       Height = 103
       Align = alBottom
@@ -350,11 +363,7 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
           Hint = 'Quitar lan'#231'amentos selecionados'
           Anchors = [akRight, akBottom]
           Caption = 'Quitar'
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
-          OnClick = BtnQuitarClick
-          Glyph.Data = {
+          OptionsImage.Glyph.Data = {
             36040000424D3604000000000000360000002800000010000000100000000100
             2000000000000004000000000000000000000000000000000000FF00FF00FF00
             FF00FF00FF00FF00FF00FF00FF00FF00FF00F0DDCD002078B0002078B0003068
@@ -389,6 +398,10 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
             E000F0D8C000C0A89000A078600090583000A058200080382000E0A08000E0A0
             8000E0A08000E0A08000E0988000E0987000D0907000D0887000C0806000C078
             6000B0785000B0705000B0684000A0604000A058400090503000}
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 3
+          OnClick = BtnQuitarClick
         end
         object dbDataPagto: TJvDBDateEdit
           Left = 16
@@ -451,6 +464,7 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
           NumGlyphs = 2
           ParentFont = False
           PopupColor = clBtnFace
+          ShowNullDate = False
           TabOrder = 0
         end
       end
@@ -462,8 +476,8 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
       '    c.anolanc'
       '  , c.numlanc'
       
-        '  , c.anolanc || '#39'/'#39' || right('#39'0000000'#39' || c.numlanc, 7) as lanc' +
-        'amento'
+        '  , cast(c.anolanc || '#39'/'#39' || right('#39'0000000'#39' || c.numlanc, 7) as' +
+        ' varchar(30)) as lancamento'
       '  , c.empresa'
       '  , c.parcela'
       '  , c.tippag'
@@ -477,14 +491,14 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
       '  , c.valorsaldo as valor_apagar'
       ''
       
-        '  , c.anocompra || '#39'/'#39' || right('#39'0000000'#39' || c.numcompra, 7) as ' +
-        'entrada'
+        '  , cast(c.anocompra || '#39'/'#39' || right('#39'0000000'#39' || c.numcompra, 7' +
+        ') as varchar(30)) as entrada'
       '  , c.anocompra     as entrada_ano'
       '  , c.numcompra     as entrada_numero'
       '  , d.tpd_descricao as entrada_doc_tipo'
       
-        '  , right('#39'0000000'#39' || e.nf, 7) || coalesce('#39'-'#39' || nullif(trim(e' +
-        '.nfserie), '#39#39'), '#39#39') as entrada_doc'
+        '  , cast(right('#39'0000000'#39' || e.nf, 7) || coalesce('#39'-'#39' || nullif(t' +
+        'rim(e.nfserie), '#39#39'), '#39#39') as varchar(30)) as entrada_doc'
       '  , e.nf            as entrada_doc_numero'
       '  , e.nfserie       as entrada_doc_serie'
       '  , f.nomeforn      as entrada_fornecedor'
@@ -498,8 +512,8 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
         '= e.codcontrol)'
       
         '  left join VW_TIPO_DOCUMENTO_ENTRADA d on (d.tpd_codigo = e.tip' +
-        'o_documento)'
-      '')
+        'o_documento)')
+    ParamData = <>
   end
   inherited DtsPesquisa: TDataSource
     DataSet = CdsPesquisa
@@ -518,6 +532,14 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
     ProviderName = 'DspPesquisa'
     Left = 360
     Top = 241
+    object CdsPesquisaLANCAMENTO: TWideStringField
+      FieldName = 'LANCAMENTO'
+      Size = 30
+    end
+    object CdsPesquisaEMPRESA: TWideStringField
+      FieldName = 'EMPRESA'
+      Size = 18
+    end
     object CdsPesquisaANOLANC: TSmallintField
       FieldName = 'ANOLANC'
       Required = True
@@ -526,20 +548,12 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
       FieldName = 'NUMLANC'
       Required = True
     end
-    object CdsPesquisaEMPRESA: TStringField
-      FieldName = 'EMPRESA'
-      Size = 18
-    end
-    object CdsPesquisaLANCAMENTO: TStringField
-      FieldName = 'LANCAMENTO'
-      Size = 25
-    end
     object CdsPesquisaPARCELA: TSmallintField
       Alignment = taCenter
       FieldName = 'PARCELA'
       DisplayFormat = '00'
     end
-    object CdsPesquisaTIPPAG: TStringField
+    object CdsPesquisaTIPPAG: TWideStringField
       FieldName = 'TIPPAG'
       Size = 35
     end
@@ -585,9 +599,9 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
       Precision = 18
       Size = 2
     end
-    object CdsPesquisaENTRADA: TStringField
+    object CdsPesquisaENTRADA: TWideStringField
       FieldName = 'ENTRADA'
-      Size = 25
+      Size = 30
     end
     object CdsPesquisaENTRADA_ANO: TSmallintField
       FieldName = 'ENTRADA_ANO'
@@ -595,28 +609,28 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
     object CdsPesquisaENTRADA_NUMERO: TIntegerField
       FieldName = 'ENTRADA_NUMERO'
     end
-    object CdsPesquisaENTRADA_DOC_TIPO: TStringField
+    object CdsPesquisaENTRADA_DOC_TIPO: TWideStringField
       FieldName = 'ENTRADA_DOC_TIPO'
       ReadOnly = True
       FixedChar = True
       Size = 12
     end
-    object CdsPesquisaENTRADA_DOC: TStringField
+    object CdsPesquisaENTRADA_DOC: TWideStringField
       FieldName = 'ENTRADA_DOC'
-      Size = 23
+      Size = 30
     end
     object CdsPesquisaENTRADA_DOC_NUMERO: TIntegerField
       FieldName = 'ENTRADA_DOC_NUMERO'
     end
-    object CdsPesquisaENTRADA_DOC_SERIE: TStringField
+    object CdsPesquisaENTRADA_DOC_SERIE: TWideStringField
       FieldName = 'ENTRADA_DOC_SERIE'
       Size = 4
     end
-    object CdsPesquisaENTRADA_FORNECEDOR: TStringField
+    object CdsPesquisaENTRADA_FORNECEDOR: TWideStringField
       FieldName = 'ENTRADA_FORNECEDOR'
       Size = 100
     end
-    object CdsPesquisaENTRADA_FORNECEDOR_CNPJ: TStringField
+    object CdsPesquisaENTRADA_FORNECEDOR_CNPJ: TWideStringField
       FieldName = 'ENTRADA_FORNECEDOR_CNPJ'
       Size = 18
     end
@@ -628,13 +642,17 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
     object CdsPesquisaSelecionados: TAggregateField
       FieldName = 'Selecionados'
       Active = True
+      DisplayName = ''
       Expression = 'SUM(SELECIONAR)'
     end
   end
   object tblFormaPagto: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'TBFORMPAGTO'
+    UniDirectional = False
     Left = 552
     Top = 264
   end
@@ -683,6 +701,7 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
   object cdsPagamentos: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -706,6 +725,8 @@ inherited frmGeContasAPagarQuitar: TfrmGeContasAPagarQuitar
       '  left join TBBANCO_BOLETO b on (b.Bco_cod = p.Banco)')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updPagamentos
     Left = 72
     Top = 296

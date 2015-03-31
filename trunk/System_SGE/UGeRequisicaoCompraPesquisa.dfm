@@ -1,15 +1,18 @@
 inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
   Left = 395
   Top = 218
-  Width = 1132
-  Height = 615
   ActiveControl = edTipoRequisicao
   Caption = 'Conrverter Requisi'#231#245'es em Autoriza'#231#245'es de Compras/Servi'#231'os'
+  ClientHeight = 576
+  ClientWidth = 1116
   OnKeyPress = FormKeyPress
+  ExplicitWidth = 1132
+  ExplicitHeight = 615
   PixelsPerInch = 96
   TextHeight = 13
   inherited pnlPesquisa: TPanel
     Width = 1116
+    ExplicitWidth = 1116
     inherited GrpBxTipoPesquisa: TGroupBox
       inherited edTipoPesquisa: TComboBox
         Text = 'Per'#237'odo, Autom'#225'tico'
@@ -19,12 +22,14 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
     end
     inherited GrpBxPesquisar: TGroupBox
       Width = 888
+      ExplicitWidth = 888
       DesignSize = (
         888
         73)
       inherited lblPesquisar: TLabel
         Left = 440
         Visible = False
+        ExplicitLeft = 440
       end
       object lblData: TLabel [1]
         Left = 216
@@ -125,10 +130,13 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Enabled = False
         TabOrder = 4
         Visible = False
+        ExplicitLeft = 440
+        ExplicitWidth = 321
       end
       inherited BrnPesquisar: TcxButton
         Left = 763
         TabOrder = 5
+        ExplicitLeft = 763
       end
       object edTipoRequisicao: TComboBox
         Left = 16
@@ -136,7 +144,6 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         Width = 193
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 0
       end
       object e1Data: TJvDateEdit
@@ -193,6 +200,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         ImageKind = ikCustom
         NumGlyphs = 2
         PopupColor = clBtnFace
+        ShowNullDate = False
         TabOrder = 1
       end
       object e2Data: TJvDateEdit
@@ -249,6 +257,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         ImageKind = ikCustom
         NumGlyphs = 2
         PopupColor = clBtnFace
+        ShowNullDate = False
         TabOrder = 2
       end
       object edFornecedor: TJvComboEdit
@@ -321,6 +330,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
         ParentShowHint = False
         ShowHint = True
         TabOrder = 3
+        Text = ''
         OnButtonClick = edFornecedorButtonClick
         OnKeyDown = edFornecedorKeyDown
       end
@@ -328,10 +338,12 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
   end
   inherited PnlTabela: TPanel
     Width = 1116
-    Height = 496
+    Height = 495
+    ExplicitWidth = 1116
+    ExplicitHeight = 495
     inherited dbgDados: TDBGrid
       Width = 1108
-      Height = 488
+      Height = 487
       OnDblClick = dbgDadosDblClick
       OnKeyDown = dbgDadosKeyDown
       Columns = <
@@ -580,12 +592,12 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       FieldName = 'CODIGO'
       Required = True
     end
-    object CdsPesquisaEMPRESA: TStringField
+    object CdsPesquisaEMPRESA: TWideStringField
       FieldName = 'EMPRESA'
       Required = True
       Size = 18
     end
-    object CdsPesquisaNUMERO: TStringField
+    object CdsPesquisaNUMERO: TWideStringField
       FieldName = 'NUMERO'
       Required = True
     end
@@ -593,7 +605,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       FieldName = 'FORNECEDOR'
       Required = True
     end
-    object CdsPesquisaNOME_CONTATO: TStringField
+    object CdsPesquisaNOME_CONTATO: TWideStringField
       FieldName = 'NOME_CONTATO'
       Size = 100
     end
@@ -607,7 +619,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       FieldName = 'EMISSAO_DATA'
       Required = True
     end
-    object CdsPesquisaEMISSAO_USUARIO: TStringField
+    object CdsPesquisaEMISSAO_USUARIO: TWideStringField
       FieldName = 'EMISSAO_USUARIO'
       Size = 12
     end
@@ -617,14 +629,14 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
     object CdsPesquisaCOMPETENCIA: TIntegerField
       FieldName = 'COMPETENCIA'
     end
-    object CdsPesquisaMOVITO: TMemoField
+    object CdsPesquisaMOVITO: TWideMemoField
       FieldName = 'MOVITO'
-      BlobType = ftMemo
+      BlobType = ftWideMemo
       Size = 8
     end
-    object CdsPesquisaOBSERVACAO: TMemoField
+    object CdsPesquisaOBSERVACAO: TWideMemoField
       FieldName = 'OBSERVACAO'
-      BlobType = ftMemo
+      BlobType = ftWideMemo
       Size = 8
     end
     object CdsPesquisaCLIENTE: TIntegerField
@@ -633,25 +645,23 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
     object CdsPesquisaCENTRO_CUSTO: TIntegerField
       FieldName = 'CENTRO_CUSTO'
     end
-    object CdsPesquisaENDERECO_ENTREGA: TMemoField
+    object CdsPesquisaENDERECO_ENTREGA: TWideMemoField
       FieldName = 'ENDERECO_ENTREGA'
-      BlobType = ftMemo
+      BlobType = ftWideMemo
       Size = 8
     end
     object CdsPesquisaSTATUS: TSmallintField
-      Alignment = taLeftJustify
       FieldName = 'STATUS'
-      OnGetText = CdsPesquisaSTATUSGetText
     end
-    object CdsPesquisaRECEBEDOR_NOME: TStringField
+    object CdsPesquisaRECEBEDOR_NOME: TWideStringField
       FieldName = 'RECEBEDOR_NOME'
       Size = 100
     end
-    object CdsPesquisaRECEBEDOR_CPF: TStringField
+    object CdsPesquisaRECEBEDOR_CPF: TWideStringField
       FieldName = 'RECEBEDOR_CPF'
       Size = 18
     end
-    object CdsPesquisaRECEBEDOR_FUNCAO: TStringField
+    object CdsPesquisaRECEBEDOR_FUNCAO: TWideStringField
       FieldName = 'RECEBEDOR_FUNCAO'
       Size = 50
     end
@@ -666,7 +676,6 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
     end
     object CdsPesquisaITENS: TIntegerField
       FieldName = 'ITENS'
-      DisplayFormat = ',0.###'
     end
     object CdsPesquisaVALOR_BRUTO: TBCDField
       FieldName = 'VALOR_BRUTO'
@@ -704,27 +713,27 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
     object CdsPesquisaDATA_FATURA: TDateField
       FieldName = 'DATA_FATURA'
     end
-    object CdsPesquisaREQUISITADO_USUARIO: TStringField
+    object CdsPesquisaREQUISITADO_USUARIO: TWideStringField
       FieldName = 'REQUISITADO_USUARIO'
       Size = 12
     end
     object CdsPesquisaCANCELADO_DATA: TDateField
       FieldName = 'CANCELADO_DATA'
     end
-    object CdsPesquisaCANCELADO_USUARIO: TStringField
+    object CdsPesquisaCANCELADO_USUARIO: TWideStringField
       FieldName = 'CANCELADO_USUARIO'
       Size = 12
     end
-    object CdsPesquisaCANCELADO_MOTIVO: TMemoField
+    object CdsPesquisaCANCELADO_MOTIVO: TWideMemoField
       FieldName = 'CANCELADO_MOTIVO'
-      BlobType = ftMemo
+      BlobType = ftWideMemo
       Size = 8
     end
-    object CdsPesquisaNOMEFORN: TStringField
+    object CdsPesquisaNOMEFORN: TWideStringField
       FieldName = 'NOMEFORN'
       Size = 100
     end
-    object CdsPesquisaCNPJ: TStringField
+    object CdsPesquisaCNPJ: TWideStringField
       FieldName = 'CNPJ'
       Size = 18
     end
@@ -736,15 +745,15 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       Precision = 18
       Size = 2
     end
-    object CdsPesquisaTRANSPORTADOR_NOME: TStringField
+    object CdsPesquisaTRANSPORTADOR_NOME: TWideStringField
       FieldName = 'TRANSPORTADOR_NOME'
       Size = 100
     end
-    object CdsPesquisaTRANSPORTADOR_CPF_CNPJ: TStringField
+    object CdsPesquisaTRANSPORTADOR_CPF_CNPJ: TWideStringField
       FieldName = 'TRANSPORTADOR_CPF_CNPJ'
       Size = 18
     end
-    object CdsPesquisaNOMECLIENTE: TStringField
+    object CdsPesquisaNOMECLIENTE: TWideStringField
       FieldName = 'NOMECLIENTE'
       Size = 100
     end
@@ -752,8 +761,11 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
   object tblTipoRequisicao: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'VW_TIPO_REQUISICAO'
     TableTypes = [ttView]
+    UniDirectional = False
     Left = 104
     Top = 208
   end
@@ -761,6 +773,7 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -807,6 +820,8 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       '  and a.empresa = :empresa')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     GeneratorField.Field = 'NUMERO'
     GeneratorField.Generator = 'GEN_REQUISICAO_2013'
     GeneratorField.ApplyEvent = gamOnPost

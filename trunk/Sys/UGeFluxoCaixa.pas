@@ -8,7 +8,15 @@ uses
   cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, StdCtrls,
   DBClient, Provider, ACBrBase, ACBrExtenso, frxClass, frxDBSet, IBQuery,
   IBTable, JvDBControls, DBCtrls, JvExMask, JvToolEdit, Mask, Buttons,
-  ExtCtrls, Grids, DBGrids, ComCtrls, cxButtons, ToolWin;
+  ExtCtrls, Grids, DBGrids, ComCtrls, cxButtons, ToolWin, dxSkinsCore,
+  dxSkinBlueprint, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle,
+  dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue,
+  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  dxSkinSevenClassic, dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010,
+  dxSkinWhiteprint;
 
 type
   TfrmGeFluxoCaixa = class(TfrmGrPadraoCadastro)
@@ -163,37 +171,6 @@ type
     QryRecibo: TIBQuery;
     DspRecibo: TDataSetProvider;
     CdsRecibo: TClientDataSet;
-    CdsReciboANO: TSmallintField;
-    CdsReciboNUMERO: TIntegerField;
-    CdsReciboTIPO: TStringField;
-    CdsReciboNUMERO_RECIBO: TStringField;
-    CdsReciboANOLANC: TSmallintField;
-    CdsReciboNUMLANC: TIntegerField;
-    CdsReciboPARCELA: TSmallintField;
-    CdsReciboNOMEEMP: TStringField;
-    CdsReciboCODFORN: TIntegerField;
-    CdsReciboNOMEFORN: TStringField;
-    CdsReciboPESSOA_FISICA: TSmallintField;
-    CdsReciboCNPJ: TStringField;
-    CdsReciboNOTFISC: TStringField;
-    CdsReciboTIPPAG: TStringField;
-    CdsReciboDTEMISS: TDateField;
-    CdsReciboDTVENC: TDateField;
-    CdsReciboDTPAG: TDateField;
-    CdsReciboVALORPAG: TBCDField;
-    CdsReciboBANCO: TIntegerField;
-    CdsReciboBCO_NOME: TStringField;
-    CdsReciboNUMCHQ: TStringField;
-    CdsReciboPAGO_: TStringField;
-    CdsReciboDOCBAIX: TStringField;
-    CdsReciboQUITADO: TIntegerField;
-    CdsReciboCODTPDESP: TSmallintField;
-    CdsReciboSEQ: TIntegerField;
-    CdsReciboDATA_PAGTO: TDateField;
-    CdsReciboFORMA_PAGTO: TSmallintField;
-    CdsReciboFORMA_PAGTO_DESC: TStringField;
-    CdsReciboHISTORICO: TStringField;
-    CdsReciboVALOR_BAIXA: TBCDField;
     CdsReciboVALOR_BAIXA_EXTENSO: TStringField;
     dbCliente: TJvDBComboEdit;
     dbFornecedor: TJvDBComboEdit;
@@ -201,6 +178,37 @@ type
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
     edContaCorrentePesq: TComboBox;
+    CdsReciboANO: TSmallintField;
+    CdsReciboNUMERO: TIntegerField;
+    CdsReciboTIPO: TWideStringField;
+    CdsReciboNUMERO_RECIBO: TWideStringField;
+    CdsReciboANOLANC: TSmallintField;
+    CdsReciboNUMLANC: TIntegerField;
+    CdsReciboPARCELA: TSmallintField;
+    CdsReciboNOMEEMP: TWideStringField;
+    CdsReciboCODFORN: TIntegerField;
+    CdsReciboNOMEFORN: TWideStringField;
+    CdsReciboPESSOA_FISICA: TSmallintField;
+    CdsReciboCNPJ: TWideStringField;
+    CdsReciboNOTFISC: TWideStringField;
+    CdsReciboTIPPAG: TWideStringField;
+    CdsReciboDTEMISS: TDateField;
+    CdsReciboDTVENC: TDateField;
+    CdsReciboDTPAG: TDateField;
+    CdsReciboVALORPAG: TBCDField;
+    CdsReciboBANCO: TIntegerField;
+    CdsReciboBCO_NOME: TWideStringField;
+    CdsReciboNUMCHQ: TWideStringField;
+    CdsReciboPAGO_: TWideStringField;
+    CdsReciboDOCBAIX: TWideStringField;
+    CdsReciboQUITADO: TIntegerField;
+    CdsReciboCODTPDESP: TSmallintField;
+    CdsReciboSEQ: TIntegerField;
+    CdsReciboDATA_PAGTO: TDateField;
+    CdsReciboFORMA_PAGTO: TSmallintField;
+    CdsReciboFORMA_PAGTO_DESC: TWideStringField;
+    CdsReciboHISTORICO: TWideStringField;
+    CdsReciboVALOR_BAIXA: TBCDField;
     procedure FormCreate(Sender: TObject);
     procedure edContaCorrentePesqChange(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);

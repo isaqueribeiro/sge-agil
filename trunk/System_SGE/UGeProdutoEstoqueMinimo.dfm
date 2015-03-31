@@ -148,7 +148,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     Top = 81
     Width = 1041
     Height = 523
-    ActivePage = TbsGrupo
+    ActivePage = TbsProduto
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -157,19 +157,14 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     Font.Style = []
     ParentFont = False
     TabOrder = 2
-    ExplicitHeight = 524
     object TbsGrupo: TTabSheet
       Caption = 'TbsGrupo'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object dbgGrupo: TcxGrid
         Left = 0
         Top = 0
         Width = 1033
-        Height = 496
+        Height = 495
         Hint = 
           'Para carregar os produtos do grupo, basta'#13#10'executar "dois clique' +
           's" no registro.'
@@ -261,6 +256,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
             Position.RowIndex = 0
           end
           object cxGridDBBandedColumn2: TcxGridDBBandedColumn
+            Caption = 'Descri'#231#227'o'
             DataBinding.FieldName = 'DESCRICAO'
             Options.Filtering = False
             Options.Moving = False
@@ -420,15 +416,11 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     object TbsFabricante: TTabSheet
       Caption = 'TbsFabricante'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object dbgFab: TcxGrid
         Left = 0
         Top = 0
         Width = 1033
-        Height = 496
+        Height = 495
         Hint = 
           'Para carregar os produtos do grupo, basta'#13#10'executar "dois clique' +
           's" no registro.'
@@ -520,6 +512,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
             Position.RowIndex = 0
           end
           object cxGridDBBandedColumn4: TcxGridDBBandedColumn
+            Caption = 'Descri'#231#227'o'
             DataBinding.FieldName = 'DESCRICAO'
             Options.Filtering = False
             Options.Moving = False
@@ -684,15 +677,11 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object dbgProduto: TcxGrid
         Left = 0
         Top = 0
         Width = 1033
-        Height = 496
+        Height = 495
         Align = alClient
         TabOrder = 0
         object dbgProdutoTbl: TcxGridDBBandedTableView
@@ -771,6 +760,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
               Width = 140
             end>
           object dbgProdutoTblColumn1: TcxGridDBBandedColumn
+            Caption = 'C'#243'digo'
             DataBinding.FieldName = 'COD'
             Options.Filtering = False
             Options.Moving = False
@@ -780,7 +770,8 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
             Position.RowIndex = 0
           end
           object dbgProdutoTblColumn2: TcxGridDBBandedColumn
-            DataBinding.FieldName = 'DESCRI'
+            Caption = 'Descri'#231#227'o + Apresenta'#231#227'o'
+            DataBinding.FieldName = 'DESCRI_APRESENTACAO'
             Options.Filtering = False
             Options.Moving = False
             Width = 247
@@ -858,6 +849,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
             Position.RowIndex = 0
           end
           object dbgProdutoTblColumn30: TcxGridDBBandedColumn
+            Caption = 'Und.'
             DataBinding.FieldName = 'UNIDADE'
             Options.Filtering = False
             Options.Moving = False
@@ -868,6 +860,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
             Position.RowIndex = 0
           end
           object dbgProdutoTblColumn31: TcxGridDBBandedColumn
+            Caption = 'Grupo'
             DataBinding.FieldName = 'GRUPO'
             MinWidth = 150
             Options.HorzSizing = False
@@ -878,6 +871,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
             Position.RowIndex = 0
           end
           object dbgProdutoTblColumn32: TcxGridDBBandedColumn
+            Caption = 'Fabricante'
             DataBinding.FieldName = 'FABRICANTE'
             MinWidth = 150
             Options.HorzSizing = False
@@ -913,7 +907,6 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
-    ExplicitTop = 609
     object Bevel2: TBevel
       Left = 0
       Top = 2
@@ -928,33 +921,8 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       Height = 31
       Hint = 'Exportar dados para planilha'
       Caption = 'Exportar'
-      OptionsImage.Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000C20E0000C20E00000000000000000000FFFFFFFFFFFF
-        FFFFFF6349356349356349356349356349356349356349356349356349356349
-        35634935634935634935FFFFFFFFFFFFFFFFFFB7A293FAE2D2DFB89EE0B699E2
-        B495E2B191E4AF8CE5AD88E6AB84E7A77FE8A57AEBA377634935FFFFFFFFFFFF
-        FFFFFFB9A495FBE6DAFBE7DAFBE6D9FAE5D8FBE4D6FBE2D3F9E0D0F8DDCCF9DB
-        C9F8DAC7E9A47B634935FFFFFFFFFFFFFFFFFFBBA696FBECE2D6AE90D6AE90D6
-        AE90D6AE90FAE7DAD6AE90D6AE90D6AE90F8DBCAE7A780634935FFFFFFFFFFFF
-        FFFFFFBEA899FDF0E8FDF0E9FDF0E8FCEFE7FCEDE5FBEBE1D6AE90FAE5D7D6AE
-        90F9DECEE6AC856349351876390C6F320D6C330E6832116333125D3314573316
-        5233184C33194834FCECE2FBE8DDD6AE90FAE1D2E4AE8A634935207C3EFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF174C34FCEFE8FCECE2FBE8
-        DCFAE4D6E3B18F6349352B8445FFFFFFFFFFFFFFFFFFFFFFFF85A9871D6F3819
-        5D345B7D5F165133D6AE90D6AE90D6AE90FBE6DAE2B395634935388E4E8BBD90
-        1E763B1D6E391A62358BBD903E92471D673A9FB3A1145733FDF4EFFDF1EAD6AE
-        90FBE9DDE0B699634935469857FFFFFF8BBD90519E5791C49657A25A21703A6C
-        9B6FDFE9DF135D33D6AE90D6AE90D6AE90FBEADFDEB89D63493553A260FFFFFF
-        CFDDCF96C69A57A25A267C39276731C0D1C0FFFFFF106233FEF8F3FDF4EFD6AE
-        90FCECE1DDBAA16349355EAA66E5ECE58DC49364AC693489416FA57357A0603A
-        8846D6E2D60E6832D6AE90D6AE90D6AE90DCBCA5DDBBA4644A3666B06C8EC293
-        5FA863479751FFFFFFCBDACC54985D54985D9BB09C0D6C32FDF8F4FDF5EFB7A2
-        93644A36644A36644A3666B06CFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFF0C6F32FEF7F4FDF4EFB9A495D4C5BA644A36FAFAFA66B06C61AD68
-        5AA76452A15E489A593F9352358C4C2C8546247F411D7A3DFEF7F3FDF4EDC0AB
-        9C644A36FAFAFAFFFFFFFFFFFFFFFFFFFFFFFFD8C2B2D7C1B1D6C0B0D4BEAED2
-        BDADD1BAABCFB9AACDB6A8CBB6A6CAB4A5FBFAFAFFFFFFFFFFFF}
+      OptionsImage.ImageIndex = 23
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
@@ -968,33 +936,8 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       Height = 31
       Hint = 'Enviar e-mail'
       Caption = 'E-mail'
-      OptionsImage.Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        180000000000000300000000000000000000000000000000000000FF00B29B96
-        604830604830605040A7908700FF0000FF0000FF0000FF0000FF0000FF0000FF
-        0000FF0000FF0000FF00B09A93705040B6A09BCEB9BAC2ACAA705040B0989300
-        FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00705840C0ACA7
-        B39C97605040BDAAA7C0AAA760483000FF0000FF0000FF0000FF0000FF0000FF
-        0000FF0000FF0000FF0070584000FF00705040AA9086604840AA978E604830AA
-        978E60483060483060483060483060483060483060483060483080605000FF00
-        705840D2BFBC705040E4D1CE604830DED1CEE0D0C0E0C8C0E0C0B0E0B8B0D0B0
-        A0D0A890D0A89060483080685000FF00706050D5C6C0705840ECE4E4605040EC
-        E1DEFFF0F0F0E8E0F0E0E0F0D8D0F0D0C0E0D0C0D0A89060483080706000FF00
-        806850D8CAC4705850D8CAC4705040D8C7BEB0A090B09890F0E8E0F0E0E0F0D8
-        D0F0D0C0D0B0A060483090786000FF00807060DBCFC8806050DBCFC8705840DB
-        CCC8C0A890B0A090B0A090F0E8E0F0E0E0F0D8D0E0B8B060483090807000FF00
-        907860DBCFC8806850F3ECEC806050F3ECECFFFFFFFFF8FFFFF8F0FFF0F02048
-        D02040A0E0C0B0604830A0807000FF00907870DCCFC9907060F3EDEC806850F3
-        EDECFFFFFFFFFFFFFFF8FFFFF8F04060F02048D0E0C8C060483000FF0000FF00
-        908070DCD1CAF4EEEEF4EEEE807060F4EEEEFFFFFFFFFFFFFFFFFFFFF8FFFFF8
-        F0FFF0F0F0E8E060483000FF0000FF00A08870C7B5A6F0E0DDD1BFB0908070F0
-        E0DDE0D8D0E0D0C0E0C8C0E0C0B0E0B8A0D0B0A0D0A890B0989000FF0000FF00
-        D2C3BAA08870A08870908070D2C9C4F6EEEAFFF0F0F0E8E0F0E8E0F0E0D0F0D8
-        D0F0D8D0B09890DCCECB00FF0000FF0000FF0000FF00EEE6E4E5D7D3F1ECEBFA
-        F7F6FFF8FFFFF8F0F0F0F0F0E8E0F0D8D0B0A090DDD0CD00FF0000FF0000FF00
-        00FF0000FF0000FF00EDE3E1D0B8B0F0F0F0FFFFFFFFFFFFFFF8F0F0F0F0B0A0
-        90DED0CE00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00EEE5E3C0
-        B0A0C0B0A0C0B0A0C0B0A0C0B0A0E8DDDB00FF0000FF0000FF00}
+      OptionsImage.ImageIndex = 25
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
@@ -1061,61 +1004,18 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     ProviderName = 'DspProduto'
     Left = 120
     Top = 352
-    object CdsProdutoCODEMP: TStringField
-      FieldName = 'CODEMP'
-      Origin = '"TBPRODUTO"."CODEMP"'
-      Size = 18
-    end
-    object CdsProdutoCOD: TStringField
-      DisplayLabel = 'C'#243'digo'
-      FieldName = 'COD'
-      Origin = '"TBPRODUTO"."COD"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-      Size = 10
-    end
     object CdsProdutoCODIGO: TIntegerField
       DisplayLabel = 'C'#243'digo'
       FieldName = 'CODIGO'
       Origin = '"TBPRODUTO"."CODIGO"'
     end
-    object CdsProdutoDESCRI: TStringField
-      DisplayLabel = 'Descri'#231#227'o'
-      FieldName = 'DESCRI'
-      Origin = '"TBPRODUTO"."DESCRI"'
-      Size = 50
-    end
-    object CdsProdutoAPRESENTACAO: TStringField
-      DisplayLabel = 'Apresenta'#231#227'o'
-      FieldName = 'APRESENTACAO'
-      Origin = '"TBPRODUTO"."APRESENTACAO"'
-      Size = 50
-    end
-    object CdsProdutoDESCRI_APRESENTACAO: TStringField
-      DisplayLabel = 'Descri'#231#227'o / Apresenta'#231#227'o'
-      FieldName = 'DESCRI_APRESENTACAO'
-      Origin = '"TBPRODUTO"."DESCRI_APRESENTACAO"'
-      Size = 100
-    end
     object CdsProdutoCODGRUPO: TSmallintField
       FieldName = 'CODGRUPO'
       Origin = '"TBPRODUTO"."CODGRUPO"'
     end
-    object CdsProdutoGRUPO: TStringField
-      DisplayLabel = 'Grupo'
-      FieldName = 'GRUPO'
-      Origin = '"TBGRUPOPROD"."DESCRI"'
-      Size = 30
-    end
     object CdsProdutoCODFABRICANTE: TIntegerField
       FieldName = 'CODFABRICANTE'
       Origin = '"TBPRODUTO"."CODFABRICANTE"'
-    end
-    object CdsProdutoFABRICANTE: TStringField
-      DisplayLabel = 'Fabricante'
-      FieldName = 'FABRICANTE'
-      Origin = '"TBFABRICANTE"."NOME"'
-      Size = 50
     end
     object CdsProdutoQTDE: TBCDField
       DisplayLabel = 'Atual'
@@ -1134,12 +1034,6 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     object CdsProdutoCODUNIDADE: TSmallintField
       FieldName = 'CODUNIDADE'
       Origin = '"TBPRODUTO"."CODUNIDADE"'
-    end
-    object CdsProdutoUNIDADE: TStringField
-      DisplayLabel = 'Und.'
-      FieldName = 'UNIDADE'
-      ProviderFlags = []
-      Size = 50
     end
     object CdsProdutoCOMPRA_QTDE_01: TBCDField
       DisplayLabel = 'Quant.'
@@ -1182,6 +1076,39 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       FieldName = 'DATA_ULTIMA_VENDA'
       Origin = '"TBPRODUTO_ROTATIVIDADE"."DATA_ULTIMA_VENDA"'
       DisplayFormat = 'dd/mm/yyyy'
+    end
+    object CdsProdutoCODEMP: TWideStringField
+      FieldName = 'CODEMP'
+      Size = 18
+    end
+    object CdsProdutoCOD: TWideStringField
+      FieldName = 'COD'
+      Required = True
+      Size = 10
+    end
+    object CdsProdutoDESCRI: TWideStringField
+      FieldName = 'DESCRI'
+      Size = 50
+    end
+    object CdsProdutoAPRESENTACAO: TWideStringField
+      FieldName = 'APRESENTACAO'
+      Size = 50
+    end
+    object CdsProdutoDESCRI_APRESENTACAO: TWideStringField
+      FieldName = 'DESCRI_APRESENTACAO'
+      Size = 100
+    end
+    object CdsProdutoGRUPO: TWideStringField
+      FieldName = 'GRUPO'
+      Size = 30
+    end
+    object CdsProdutoFABRICANTE: TWideStringField
+      FieldName = 'FABRICANTE'
+      Size = 50
+    end
+    object CdsProdutoUNIDADE: TWideStringField
+      FieldName = 'UNIDADE'
+      Size = 50
     end
   end
   object dsProduto: TDataSource
@@ -1243,8 +1170,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       FieldName = 'CODIGO'
       DisplayFormat = '##000'
     end
-    object CdsGrupoDESCRICAO: TStringField
-      DisplayLabel = 'Descri'#231#227'o'
+    object CdsGrupoDESCRICAO: TWideStringField
       FieldName = 'DESCRICAO'
       Size = 30
     end
@@ -1387,8 +1313,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       FieldName = 'CODIGO'
       DisplayFormat = '###0000'
     end
-    object CdsFabricanteDESCRICAO: TStringField
-      DisplayLabel = 'Descri'#231#227'o'
+    object CdsFabricanteDESCRICAO: TWideStringField
       FieldName = 'DESCRICAO'
       Size = 50
     end

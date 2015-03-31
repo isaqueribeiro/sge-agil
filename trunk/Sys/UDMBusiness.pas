@@ -871,6 +871,8 @@ end;
 
 procedure ExportarFR3_ToXSL(const FrrLayout: TfrxReport; var sFileName : String);
 begin
+  KillTask('EXCEL.EXE');
+
   with DMBusiness, FrrLayout, PrintOptions do
   begin
     if FileExists(sFileName) then
@@ -1885,7 +1887,10 @@ begin
       SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID:
         s := IfThen(NoPlural, 'Produtos/Serviços', 'Produto/Serviço')
       else
-        S := 'Produto' + IfThen(NoPlural, 's', EmptyStr);
+        if (gSistema.Codigo = SISTEMA_GESTAO_IND) then
+          s := IfThen(NoPlural, 'Produtos/Serviços', 'Produto/Serviço')
+        else
+          S := 'Produto' + IfThen(NoPlural, 's', EmptyStr);
     end;
 
   finally
@@ -3469,12 +3474,13 @@ begin
   with ACBrMail do
   begin
     From     := gContaEmail.Conta;
-    FromName := GetRazaoSocialEmpresa( sCNPJEmitente );
+    FromName := RemoveAcentos(GetRazaoSocialEmpresa(sCNPJEmitente));
     Host     := gContaEmail.Servidor_SMTP;
     Username := gContaEmail.Conta;
     Password := gContaEmail.Senha;
     Port     := IntToStr(gContaEmail.Porta_SMTP);
-    SetSSL   := gContaEmail.RequerAutenticacao;
+    SetSSL   := gContaEmail.ConexaoSeguraSSL;
+    SetTLS   := gContaEmail.RequerAutenticacao;
     IsHTML   := False;
     Subject  := Trim(sAssunto);
     AddAddress( AnsiLowerCase(Trim(sDestinatario)) );

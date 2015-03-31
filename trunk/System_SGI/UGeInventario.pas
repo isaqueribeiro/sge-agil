@@ -24,7 +24,12 @@ uses
   dxSkinLondonLiquidSky, dxSkinPumpkin, dxSkinSeven, dxSkinSharp,
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue,
-  JvToolEdit, JvDBControls, JvExMask;
+  JvToolEdit, JvDBControls, JvExMask, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint,
+  cxNavigator;
 
 type
   TfrmGeInventario = class(TfrmGrPadrao)
@@ -230,7 +235,7 @@ implementation
 
 uses
   UDMBusiness, UFuncoes, UGeProduto,  DateUtils, UDMNFe, SysConst,  UConstantesDGE,
-  UGrCampoRequisitado, UGeCentroCusto, UGrMemo;
+  UGrCampoRequisitado, UGeCentroCusto, UGrMemo, UDMRecursos;
 
 {$R *.dfm}
 
