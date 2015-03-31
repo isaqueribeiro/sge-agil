@@ -4448,6 +4448,7 @@ object frmPrinc: TfrmPrinc
     TabOrder = 6
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
+      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4509,7 +4510,6 @@ object frmPrinc: TfrmPrinc
       Index = 4
     end
     object RbnTabConsulta: TdxRibbonTab
-      Active = True
       Caption = 'Consulta'
       Groups = <
         item
@@ -4715,7 +4715,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 705
+      DockedLeft = 236
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -5879,6 +5879,7 @@ object frmPrinc: TfrmPrinc
     object BrBtnNotaFiscalDownload: TdxBarLargeButton
       Caption = 'Download de NF-e(s) Emitida(s)'
       Category = 10
+      Enabled = False
       Hint = 'Download de NF-e(s) Emitida(s)'
       Visible = ivAlways
       LargeImageIndex = 39

@@ -143,7 +143,9 @@ type
     procedure CdsTitulosCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
+    {$IFNDEF ACBR}
     CobreBemX : Variant;
+    {$ENDIF}
     procedure CarregarBancos;
     procedure DefinirNomeArquivo( iBanco : Integer );
     procedure CarregarTitulos( iBanco : Integer; DataInicial, DataFinal : TDate);
@@ -155,11 +157,11 @@ type
     function GetContaDigito : String;
     function GetNossoNumeroRepetido : Boolean;
 
-    function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
-    function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
     {$IFDEF ACBR}
+    function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
     function InserirBoletoACBr : Boolean;
     {$ELSE}
+    function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
     function InserirBoleto( var Objeto : Variant ) : Boolean;
     {$ENDIF}
   public
@@ -194,7 +196,7 @@ const
 
 implementation
 
-uses UDMBusiness, UConstantesDGE, UFuncoes;
+uses UDMBusiness, UConstantesDGE, UFuncoes, UDMRecursos;
 
 {$R *.dfm}
 
@@ -261,7 +263,9 @@ begin
   inherited;
   edInicio.Date := Date;
   edFinal.Date  := Date;
+  {$IFNDEF ACBR}
   CobreBemX := CreateOleObject('CobreBemX.ContaCorrente');
+  {$ENDIF}
 end;
 
 procedure TfrmGeRemessaBoleto.DefinirNomeArquivo(iBanco: Integer);
@@ -399,6 +403,7 @@ begin
   TDbGrid(Sender).DefaultDrawDataCell(Rect, TDbGrid(Sender).columns[datacol].field, State);
 end;
 
+{$IFNDEF ACBR}
 function TfrmGeRemessaBoleto.DefinirCedente(Banco, Carteira: Integer;
   var Objeto: Variant): Boolean;
 var
@@ -448,7 +453,6 @@ begin
   end;
 end;
 
-{$IFNDEF ACBR}
 function TfrmGeRemessaBoleto.InserirBoleto(var Objeto: Variant): Boolean;
 var
   sDocumento  : String;
@@ -568,7 +572,9 @@ end;
 
 procedure TfrmGeRemessaBoleto.FormDestroy(Sender: TObject);
 begin
+  {$IFNDEF ACBR}
   CobreBemX := Unassigned;
+  {$ENDIF}
 end;
 
 procedure TfrmGeRemessaBoleto.FormKeyDown(Sender: TObject; var Key: Word;

@@ -178,13 +178,16 @@ type
     procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
+    {$IFNDEF ACBR}
     CobreBemX : Variant;
+    {$ENDIF}
     FFecharAoGerar : Boolean;
     procedure CarregarBancos;
-    {$IFNDEF ACBR}
+    {$IFDEF ACBR}
+    procedure GravarBoletosGeradosACBr(const iProximoNossoNumero : Integer);
+    {$ELSE}
     procedure GravarBoletosGerados;
     {$ENDIF}
-    procedure GravarBoletosGeradosACBr(const iProximoNossoNumero : Integer);
     procedure UpdateTitulo( iAno : Smallint; iLancamento : Int64; iBanco : Integer; sNossoNumero : String; Data : TDateTime;
       const cJuros : Currency = 0.0; const cMulta : Currency = 0.0);
 
@@ -194,11 +197,11 @@ type
     function GetContaDigito : String;
 
     function CarregarTitulos(iCodigoCliente: Integer; iBanco : Integer) : Boolean;
-    function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
-    function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
     {$IFDEF ACBR}
+    function DefinirCedenteACBr(iBanco : Integer; sCarteira : String) : Boolean;
     function InserirBoletoACBr(var iProximoNossoNumero : Integer; const NovosBoletos : Boolean = TRUE) : Boolean;
     {$ELSE}
+    function DefinirCedente( Banco, Carteira : Integer; var Objeto : Variant ) : Boolean;
     function InserirBoleto( var Objeto : Variant) : Boolean;
     {$ENDIF}
   public
@@ -237,7 +240,8 @@ const
 
 implementation
 
-uses UDMBusiness, StrUtils, TypInfo, DateUtils, UConstantesDGE, UFuncoes;
+uses UDMBusiness, StrUtils, TypInfo, DateUtils, UConstantesDGE, UFuncoes,
+  UDMRecursos;
 
 {$R *.dfm}
 
@@ -461,7 +465,9 @@ procedure TfrmGeGerarBoleto.FormCreate(Sender: TObject);
 begin
   inherited;
   pgcGuias.ActivePageIndex := 0;
+  {$IFNDEF ACBR}
   CobreBemX      := CreateOleObject('CobreBemX.ContaCorrente');
+  {$ENDIF}
   FFecharAoGerar := False;
 end;
 
@@ -525,6 +531,7 @@ begin
     dbgTitulosDblClick(Sender);
 end;
 
+{$IFNDEF ACBR}
 function TfrmGeGerarBoleto.DefinirCedente(Banco, Carteira : Integer; var Objeto: Variant): Boolean;
 var
   sAppPath     ,
@@ -566,6 +573,7 @@ begin
     end;
   end;
 end;
+{$ENDIF}
 
 procedure TfrmGeGerarBoleto.btnGerarBoletoClick(Sender: TObject);
 var
@@ -855,7 +863,7 @@ begin
 
   cmbBancoChange(cmbBanco);
 
-  if ( IbQryBancosBCO_NOSSO_NUM_PROXIMO.AsString <> CobreBemX.ProximoNossoNumero ) then
+  if ( StrToIntDef(Trim(IbQryBancosBCO_NOSSO_NUM_PROXIMO.AsString), 0) < iProximoNossoNumero ) then
   begin
     IbQryBancos.Edit;
     IbQryBancosBCO_NOSSO_NUM_PROXIMO.AsString := RightStr( FormatFloat('0000000', iProximoNossoNumero), 6 );
@@ -930,7 +938,9 @@ end;
 
 procedure TfrmGeGerarBoleto.FormDestroy(Sender: TObject);
 begin
+  {$IFNDEF ACBR}
   CobreBemX := Unassigned;
+  {$ENDIF}
 end;
 
 function TfrmGeGerarBoleto.DefinirCedenteACBr(iBanco : Integer; sCarteira : String): Boolean;
