@@ -6,6 +6,8 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
   Caption = 'Exportar Chaves de NF-e Geradas'
   ClientHeight = 367
   ClientWidth = 531
+  ExplicitWidth = 545
+  ExplicitHeight = 404
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel8: TBevel
@@ -33,6 +35,7 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
     Caption = 'Diret'#243'rio ra'#237'z de Exporta'#231#227'o:'
     FocusControl = edDiretorioExportacao
     Transparent = True
+    ExplicitWidth = 138
   end
   object Bevel1: TBevel
     Left = 0
@@ -129,6 +132,7 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
       ImageKind = ikCustom
       NumGlyphs = 2
       PopupColor = clBtnFace
+      ShowNullDate = False
       TabOrder = 0
       OnChange = edDataInicialChange
     end
@@ -186,6 +190,7 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
       ImageKind = ikCustom
       NumGlyphs = 2
       PopupColor = clBtnFace
+      ShowNullDate = False
       TabOrder = 1
       OnChange = edDataInicialChange
     end
@@ -233,9 +238,7 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
       Height = 33
       Anchors = [akRight, akBottom]
       Caption = '&Exportar'
-      TabOrder = 0
-      OnClick = btnExportarClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF00C0A8A06048306048306048
@@ -286,7 +289,9 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
         C0B0A0C0B0A0C0B0A0C0A8A0C0A8A000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF00ACACACACACACACACACACACACACACACA8A8A8A8A8A800
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 0
+      OnClick = btnExportarClick
     end
     object btnCancelar: TcxButton
       Left = 439
@@ -296,9 +301,7 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
       Anchors = [akRight, akBottom]
       Cancel = True
       Caption = 'Cancelar'
-      TabOrder = 1
-      OnClick = btnCancelarClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -349,7 +352,9 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
         00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
         0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
         BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnCancelarClick
     end
   end
   object GrdExp: TcxGrid
@@ -360,7 +365,7 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
     Align = alClient
     TabOrder = 1
     object GrdExpTBL: TcxGridDBTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dtsChaveNFe
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <>
@@ -390,7 +395,6 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
         Caption = 'S'#233'rie'
         DataBinding.FieldName = 'SERIE'
         HeaderAlignmentHorz = taCenter
-        HeaderAlignmentVert = vaCenter
         MinWidth = 50
         Options.Editing = False
         Options.Filtering = False
@@ -494,10 +498,14 @@ inherited frmGeExportarChaveNFeGerada: TfrmGeExportarChaveNFeGerada
     ImageKind = ikCustom
     NumGlyphs = 2
     TabOrder = 2
+    Text = ''
   end
   object qryChaveNFe: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '      nf.numero      as NumeroNFe'

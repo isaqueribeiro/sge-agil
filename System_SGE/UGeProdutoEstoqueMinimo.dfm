@@ -1,27 +1,31 @@
 inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
   Left = 399
   Top = 215
-  Width = 1057
-  Height = 686
   Caption = 'Estoque M'#237'nimo de Produtos'
+  ClientHeight = 647
+  ClientWidth = 1041
   OldCreateOrder = True
+  ExplicitWidth = 1057
+  ExplicitHeight = 686
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
-    Top = 605
+    Top = 604
     Width = 1041
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 605
   end
   object Bevel3: TBevel
     Left = 0
-    Top = 644
+    Top = 643
     Width = 1041
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 644
   end
   object pnlPesquisa: TPanel
     Left = 0
@@ -80,7 +84,6 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         Width = 193
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 0
         OnChange = edTipoFiltroChange
         Items.Strings = (
@@ -95,11 +98,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         Height = 22
         Hint = 'Executar Pesquisa'
         Anchors = [akTop, akRight]
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 2
-        OnClick = BtnPesquisarClick
-        Glyph.Data = {
+        OptionsImage.Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           20000000000000040000C30E0000C30E00000000000000000000000000000000
           00000000000000000000000000000000000000000000AC6B2CBAAC6B2CCC0000
@@ -134,9 +133,13 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
           6EFF707070FF707070FF6E6E6EFF6E6E6EFF6E6E6E7D00000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
+        ParentShowHint = False
+        ShowHint = True
         SpeedButtonOptions.CanBeFocused = False
         SpeedButtonOptions.Flat = True
         SpeedButtonOptions.Transparent = True
+        TabOrder = 2
+        OnClick = BtnPesquisarClick
       end
     end
   end
@@ -144,7 +147,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     Left = 0
     Top = 81
     Width = 1041
-    Height = 524
+    Height = 523
     ActivePage = TbsGrupo
     Align = alClient
     Font.Charset = ANSI_CHARSET
@@ -154,9 +157,14 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     Font.Style = []
     ParentFont = False
     TabOrder = 2
+    ExplicitHeight = 524
     object TbsGrupo: TTabSheet
       Caption = 'TbsGrupo'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object dbgGrupo: TcxGrid
         Left = 0
         Top = 0
@@ -170,7 +178,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         object dbgGrupoTbl: TcxGridDBBandedTableView
           OnDblClick = dbgGrupoTblDblClick
           OnKeyPress = NovaPesquisaKeyPress
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsGrupo
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -412,6 +420,10 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     object TbsFabricante: TTabSheet
       Caption = 'TbsFabricante'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object dbgFab: TcxGrid
         Left = 0
         Top = 0
@@ -425,7 +437,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         object dbgFabTbl: TcxGridDBBandedTableView
           OnDblClick = dbgFabTblDblClick
           OnKeyPress = NovaPesquisaKeyPress
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsFabricante
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -672,6 +684,10 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object dbgProduto: TcxGrid
         Left = 0
         Top = 0
@@ -681,7 +697,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         TabOrder = 0
         object dbgProdutoTbl: TcxGridDBBandedTableView
           OnKeyPress = NovaPesquisaKeyPress
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsProduto
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -890,13 +906,14 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
   end
   object tlbBotoes: TPanel
     Left = 0
-    Top = 609
+    Top = 608
     Width = 1041
     Height = 35
     Align = alBottom
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
+    ExplicitTop = 609
     object Bevel2: TBevel
       Left = 0
       Top = 2
@@ -911,12 +928,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       Height = 31
       Hint = 'Exportar dados para planilha'
       Caption = 'Exportar'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-      TabStop = False
-      OnClick = btBtnExportarClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000C20E0000C20E00000000000000000000FFFFFFFFFFFF
         FFFFFF6349356349356349356349356349356349356349356349356349356349
@@ -943,6 +955,11 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         5AA76452A15E489A593F9352358C4C2C8546247F411D7A3DFEF7F3FDF4EDC0AB
         9C644A36FAFAFAFFFFFFFFFFFFFFFFFFFFFFFFD8C2B2D7C1B1D6C0B0D4BEAED2
         BDADD1BAABCFB9AACDB6A8CBB6A6CAB4A5FBFAFAFFFFFFFFFFFF}
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      TabStop = False
+      OnClick = btBtnExportarClick
     end
     object btBtnEnviarEmail: TcxButton
       Left = 79
@@ -951,12 +968,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
       Height = 31
       Hint = 'Enviar e-mail'
       Caption = 'E-mail'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
-      TabStop = False
-      OnClick = btBtnEnviarEmailClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         180000000000000300000000000000000000000000000000000000FF00B29B96
         604830604830605040A7908700FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -983,11 +995,19 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
         00FF0000FF0000FF00EDE3E1D0B8B0F0F0F0FFFFFFFFFFFFFFF8F0F0F0F0B0A0
         90DED0CE00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00EEE5E3C0
         B0A0C0B0A0C0B0A0C0B0A0C0B0A0E8DDDB00FF0000FF0000FF00}
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      TabStop = False
+      OnClick = btBtnEnviarEmailClick
     end
   end
   object QryProduto: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    p.codemp'
@@ -1172,6 +1192,9 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
   object QryGrupo: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'select'
       '    p.codgrupo as Codigo'
@@ -1313,6 +1336,9 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
   object QryFabricante: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'select'
       '    p.codfabricante as Codigo'
@@ -1494,9 +1520,7 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     Top = 200
   end
   object smtpEmail: TIdSMTP
-    MaxLineAction = maException
-    Port = 25
-    AuthenticationType = atNone
+    SASLMechanisms = <>
     Left = 312
     Top = 200
   end
@@ -1504,25 +1528,23 @@ inherited FrmGeProdutoEstoqueMinimo: TFrmGeProdutoEstoqueMinimo
     AttachmentEncoding = 'MIME'
     BccList = <>
     CCList = <>
-    DeleteTempFiles = False
     Encoding = meMIME
+    FromList = <
+      item
+      end>
     Priority = mpHigh
     Recipients = <>
     ReplyTo = <>
+    ConvertPreamble = True
     Left = 344
-    Top = 200
-  end
-  object IdSSLIOHandlerSocket: TIdSSLIOHandlerSocket
-    SSLOptions.Method = sslvSSLv2
-    SSLOptions.Mode = sslmClient
-    SSLOptions.VerifyMode = []
-    SSLOptions.VerifyDepth = 0
-    Left = 376
     Top = 200
   end
   object QryTotal: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'select'
       '    sum( coalesce(p.qtde, 0) ) as qtde'

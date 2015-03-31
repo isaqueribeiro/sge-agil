@@ -160,6 +160,7 @@ begin
 
   stbMain.Panels.Items[2].Text := 'Licenciado a empresa ' + GetEmpresaNomeDefault;
   BrBtnAlterarSenha.Caption    := Format('Alteração de Senha (%s)', [GetUserApp]);
+  BrBtnAlterarSenha.Hint       := Format('Alteração de Senha (%s)', [GetUserApp]);
 
   Self.WindowState := wsMaximized;
 

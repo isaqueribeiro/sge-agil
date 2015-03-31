@@ -36,8 +36,6 @@ object frmPrinc: TfrmPrinc
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 0
-    ExplicitTop = 126
-    ExplicitHeight = 515
     DesignSize = (
       1044
       514)
@@ -4420,12 +4418,12 @@ object frmPrinc: TfrmPrinc
           PanelStyle.ImageIndex = 67
           Text = 'Licenciado para Empresa ?'
         end>
+      PaintStyle = stpsUseLookAndFeel
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
-      ExplicitTop = 494
     end
   end
   object PnlDockReqAlmox: TPanel
@@ -4437,8 +4435,6 @@ object frmPrinc: TfrmPrinc
     BevelOuter = bvNone
     DockSite = True
     TabOrder = 1
-    ExplicitTop = 126
-    ExplicitHeight = 515
   end
   object Ribbon: TdxRibbon
     Left = 0
@@ -4719,7 +4715,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 705
+      DockedLeft = 236
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -5056,7 +5052,7 @@ object frmPrinc: TfrmPrinc
     object BrMngConsultaEstatistica: TdxBar
       Caption = 'Consultas Estat'#237'sticas'
       CaptionButtons = <>
-      DockedLeft = 190
+      DockedLeft = 192
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
@@ -5113,7 +5109,7 @@ object frmPrinc: TfrmPrinc
     object BrMngFinanceiroBoleto: TdxBar
       Caption = 'Boletos Banc'#225'rios / Quita'#231#245'es'
       CaptionButtons = <>
-      DockedLeft = 435
+      DockedLeft = 439
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
@@ -5174,7 +5170,7 @@ object frmPrinc: TfrmPrinc
     object BrMngRelatorioOperacional: TdxBar
       Caption = 'Relat'#243'rios Operacionais'
       CaptionButtons = <>
-      DockedLeft = 218
+      DockedLeft = 220
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
@@ -5207,7 +5203,7 @@ object frmPrinc: TfrmPrinc
     object BrMngRelatorioGerencial: TdxBar
       Caption = 'Relat'#243'rios Gerenciais'
       CaptionButtons = <>
-      DockedLeft = 560
+      DockedLeft = 564
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
