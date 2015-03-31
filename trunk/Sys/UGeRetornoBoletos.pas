@@ -119,7 +119,9 @@ type
     procedure edFormaPagtoChange(Sender: TObject);
   private
     { Private declarations }
+    {$IFNDEF ACBR}
     CobreBemX : Variant;
+    {$ENDIF}
     procedure CarregarBancos;
     procedure CarregarFormaPagto(const iBanco : Integer);
     procedure DefinirDiretorioArquivo( iBanco : Integer );
@@ -174,7 +176,7 @@ const
 
 implementation
 
-uses UDMBusiness, UConstantesDGE, UFuncoes, Contnrs, StrUtils;
+uses UDMBusiness, UConstantesDGE, UFuncoes, Contnrs, StrUtils, UDMRecursos;
 
 {$R *.dfm}
 
@@ -305,7 +307,9 @@ end;
 
 procedure TfrmGeRetornoBoleto.FormCreate(Sender: TObject);
 begin
+  {$IFNDEF ACBR}
   CobreBemX := CreateOleObject('CobreBemX.ContaCorrente');
+  {$ENDIF}
 end;
 
 procedure TfrmGeRetornoBoleto.dbgTitulosDrawColumnCell(Sender: TObject;
@@ -982,7 +986,9 @@ end;
 
 procedure TfrmGeRetornoBoleto.FormDestroy(Sender: TObject);
 begin
+  {$IFNDEF ACBR}
   CobreBemX := Unassigned;
+  {$ENDIF}
 end;
 
 procedure TfrmGeRetornoBoleto.FormKeyDown(Sender: TObject; var Key: Word;
