@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoPesquisa, DB, IBCustomDataSet, IBQuery, Grids, DBGrids,
   StdCtrls, Buttons, ExtCtrls, Mask, DBClient, Provider, IBTable, DBCtrls,
   IBUpdateSQL, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
-  JvDBControls, JvExMask, JvToolEdit;
+  JvDBControls, JvExMask, JvToolEdit, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeContasAPagarQuitar = class(TfrmGrPadraoPesquisa)
@@ -18,9 +25,7 @@ type
     CdsPesquisa: TClientDataSet;
     CdsPesquisaANOLANC: TSmallintField;
     CdsPesquisaNUMLANC: TIntegerField;
-    CdsPesquisaEMPRESA: TStringField;
     CdsPesquisaPARCELA: TSmallintField;
-    CdsPesquisaTIPPAG: TStringField;
     CdsPesquisaDTEMISS: TDateField;
     CdsPesquisaDTVENC: TDateField;
     CdsPesquisaDTPAG: TDateField;
@@ -29,18 +34,10 @@ type
     CdsPesquisaVALORPAGTOT: TBCDField;
     CdsPesquisaVALORSALDO: TBCDField;
     CdsPesquisaVALOR_APAGAR: TBCDField;
-    CdsPesquisaENTRADA: TStringField;
     CdsPesquisaENTRADA_ANO: TSmallintField;
     CdsPesquisaENTRADA_NUMERO: TIntegerField;
-    CdsPesquisaENTRADA_DOC_TIPO: TStringField;
-    CdsPesquisaENTRADA_DOC: TStringField;
-    CdsPesquisaENTRADA_DOC_NUMERO: TIntegerField;
-    CdsPesquisaENTRADA_DOC_SERIE: TStringField;
     CdsPesquisaSELECIONAR: TIntegerField;
     CdsPesquisaSelecionados: TAggregateField;
-    CdsPesquisaLANCAMENTO: TStringField;
-    CdsPesquisaENTRADA_FORNECEDOR: TStringField;
-    CdsPesquisaENTRADA_FORNECEDOR_CNPJ: TStringField;
     tblFormaPagto: TIBTable;
     dtsFormaPagto: TDataSource;
     cdsPagamentoLOTE: TClientDataSet;
@@ -72,6 +69,16 @@ type
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
     dbDataPagto: TJvDBDateEdit;
+    CdsPesquisaLANCAMENTO: TWideStringField;
+    CdsPesquisaEMPRESA: TWideStringField;
+    CdsPesquisaTIPPAG: TWideStringField;
+    CdsPesquisaENTRADA: TWideStringField;
+    CdsPesquisaENTRADA_DOC_TIPO: TWideStringField;
+    CdsPesquisaENTRADA_DOC: TWideStringField;
+    CdsPesquisaENTRADA_DOC_NUMERO: TIntegerField;
+    CdsPesquisaENTRADA_DOC_SERIE: TWideStringField;
+    CdsPesquisaENTRADA_FORNECEDOR: TWideStringField;
+    CdsPesquisaENTRADA_FORNECEDOR_CNPJ: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure CdsPesquisaSELECIONARGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);

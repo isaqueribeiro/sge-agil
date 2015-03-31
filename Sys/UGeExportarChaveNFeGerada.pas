@@ -44,10 +44,6 @@ type
     dspChaveNFe: TDataSetProvider;
     cdsChaveNFe: TClientDataSet;
     cdsChaveNFeNUMERONFE: TIntegerField;
-    cdsChaveNFeSERIE: TStringField;
-    cdsChaveNFeEMISSAO: TDateField;
-    cdsChaveNFeCHAVENFE: TStringField;
-    cdsChaveNFeXML: TMemoField;
     dtsChaveNFe: TDataSource;
     GrdExpTBLNUMERONFE: TcxGridDBColumn;
     GrdExpTBLSERIE: TcxGridDBColumn;
@@ -59,6 +55,10 @@ type
     edDataInicial: TJvDateEdit;
     edDataFinal: TJvDateEdit;
     edDiretorioExportacao: TJvDirectoryEdit;
+    cdsChaveNFeSERIE: TWideStringField;
+    cdsChaveNFeEMISSAO: TDateField;
+    cdsChaveNFeCHAVENFE: TWideStringField;
+    cdsChaveNFeXML: TWideMemoField;
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnExportarClick(Sender: TObject);
@@ -80,7 +80,7 @@ var
 implementation
 
 uses
-  UDMBusiness, DateUtils, IniFiles, cxGridExportLink;
+  UDMBusiness, DateUtils, IniFiles, cxGridExportLink, UDMRecursos;
 
 {$R *.dfm}
 

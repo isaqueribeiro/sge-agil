@@ -273,6 +273,7 @@ type
     procedure RegistrarRotinasMenu;
   public
     { Public declarations }
+    procedure ConfigurarRotuloBotoes;
   end;
 
 var
@@ -348,6 +349,16 @@ procedure TfrmPrinc.btnProdutoClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_CAD_PRODUTO_ID, True) then
     MostrarTabelaProdutos(Self, taICMS);
+end;
+
+procedure TfrmPrinc.ConfigurarRotuloBotoes;
+begin
+  BrBtnGrupoProduto.Caption      := 'Grupos de ' + StrDescricaoProduto;
+  BrBtnSecaoProduto.Caption      := 'Seções de ' + StrDescricaoProduto;
+  BrBtnTabelaProduto.Caption     := StrDescricaoProduto;
+  BrBtnProduto.Caption           := StrDescricaoProduto;
+  BrBtnRelatorioProduto.Caption  := StrDescricaoProduto;
+  BrBtnRelatorioEntrada.Caption  := 'Entradas de ' + StrDescricaoProduto;
 end;
 
 procedure TfrmPrinc.nmEntradaProdutoClick(Sender: TObject);
@@ -574,6 +585,9 @@ begin
   Self.Version.Caption     := 'Versão ' + GetExeVersion;
   Self.Copyright.Caption   := GetCopyright;
 
+  Ribbon.ActiveTab := RbnTabPrincipal;
+  ConfigurarRotuloBotoes;
+
   // Carregar Imagem de Fundo da Tele Principal
 
   sFileImage := ExtractFilePath(Application.ExeName) + FILE_WALLPAPER;
@@ -586,19 +600,6 @@ begin
 
   if not DataBaseOnLine then
     Exit;
-
-  // (INICIO) Configurar Legendas de acordo com o segmento
-
-  BrBtnGrupoProduto.Caption      := 'Grupos de ' + StrDescricaoProduto;
-  BrBtnSecaoProduto.Caption      := 'Seções de ' + StrDescricaoProduto;
-  BrBtnTabelaProduto.Caption     := StrDescricaoProduto;
-  BrBtnProduto.Caption           := StrDescricaoProduto;
-  BrBtnRelatorioProduto.Caption  := StrDescricaoProduto;
-  BrBtnRelatorioEntrada.Caption  := 'Entradas de ' + StrDescricaoProduto;
-
-  Ribbon.ActiveTab := RbnTabPrincipal;
-
-  // (FINAL) Configurar Legendas de acordo com o segmento
 
   FAcesso := False;
   SetSistema(gSistema.Codigo, gSistema.Nome, GetVersion);

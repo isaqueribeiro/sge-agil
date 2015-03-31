@@ -1,26 +1,26 @@
 inherited frmGeInventario: TfrmGeInventario
   Left = 522
   Top = 210
-  Width = 1132
-  Height = 687
   BorderWidth = 4
   Caption = 'Invent'#225'rio de Materiais/Produtos'
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
+  ClientHeight = 640
+  ClientWidth = 1108
+  ExplicitWidth = 1132
+  ExplicitHeight = 687
   DesignSize = (
     1108
-    641)
+    640)
   PixelsPerInch = 96
   TextHeight = 13
   object dbgMat: TcxGrid
     Left = 0
     Top = 169
     Width = 1108
-    Height = 437
+    Height = 436
     Align = alClient
     TabOrder = 4
     object dbgMatTbl: TcxGridDBBandedTableView
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dtsMaterial
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <
@@ -441,37 +441,12 @@ inherited frmGeInventario: TfrmGeInventario
       Width = 165
       Height = 31
       Caption = 'Abrir Invent'#225'rio                  '
+      OptionsImage.ImageIndex = 8
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
       OnClick = BtnAbrirInventarioClick
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000000000000000000000000000000000001DE6B51DE6B5
-        1DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6
-        B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5B0A09060483060483060483060
-        48306048306048306048306048306048306048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5B0A090FFFFFFB0A090B0A090B0A090B0A090B0A090B0A090B0A090B0A0
-        906048301DE6B51DE6B51DE6B51DE6B51DE6B5B0A090FFFFFFFFFFFFFFF8FFF0
-        F0F0F0E8E0F0E0D0E0D0D0E0C8C0B0A0906048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5B0A090FFFFFFFFFFFFFFFFFFFFF8F0F0F0F0F0E0E0F0D8D0E0D0C0B0A0
-        906048301DE6B51DE6B51DE6B51DE6B51DE6B5B0A090FFFFFFFFFFFFFFFFFFFF
-        FFFFFFF0F0F0E8E0F0E0E0E0D8D0B0A0906048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5C0A890FFFFFFFFFFFFFFFFFFFFFFFFFFF8F0F0F0F0F0E8E0F0D8D0B0A0
-        906048301DE6B51DE6B51DE6B51DE6B51DE6B5C0A8A0FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFF8F0F0E8E0F0E0E0B0A0906048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5C0B0A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8FFF0F0F0F0E8E0B0A0
-        906048301DE6B51DE6B51DE6B51DE6B51DE6B5D0B0A0FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFF8F0F0F0F0B0A0906048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5D0B8A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0A090B0A0
-        906048301DE6B51DE6B51DE6B51DE6B51DE6B5D0B8B0FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFB0A0906048306048306048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5D0C0B0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A890D0C8C06048
-        30DFC5B61DE6B51DE6B51DE6B51DE6B51DE6B5E0C0B0FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFC0A8A0604830E0C6B71DE6B51DE6B51DE6B51DE6B51DE6B5
-        1DE6B5E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0C7B91DE6
-        B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51D
-        E6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5}
     end
     object BtnEncerrarInventario: TcxButton
       Tag = 2
@@ -480,37 +455,12 @@ inherited frmGeInventario: TfrmGeInventario
       Width = 165
       Height = 31
       Caption = 'Encerrar Invent'#225'rio            '
+      OptionsImage.ImageIndex = 10
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
       OnClick = BtnEncerrarInventarioClick
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        180000000000000300000000000000000000000000000000000000FF0000FF00
-        00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
-        0000FF0000FF0000FF0000FF0000FF00D6D9D868513A60504060483070504070
-        6050705040604830604830604830604830604830A6A6A900FF0000FF0000FF00
-        C0A8A0F0F0F0E0D8D0E0D0C0E0C8C09090B0D0C0B0E0B8A0D0B0A0D0B0A0D0A8
-        90D0A09060483000FF0000FF0000FF00C0A8A0FFF0F0F0F0F0F0E8E03050C010
-        38B07078C0E0D0D0F0D0C0E0D0C0E0C8B0D0A89060483000FF0000FF0000FF00
-        C0A8A0FFF0F0D0D0E03050C03058F02048E01038B0A098C0F0D0C0F0D0C0E0C8
-        B0D0A89060483000FF0000FF0000FF00C0B0A0FFF8F02040C03058F06080FF50
-        78F04060F02040B0D0C0C0F0D8D0E0C8C0D0B0A060483000FF0000FF0000FF00
-        C0B0A0FFF8F080A0FF8098FF8090F0D0D0E08098F04060E04058B0F0D8D0F0D8
-        D0D0B8A060504000FF0000FF0000FF00D0B0A0FFF8FFE0E8FFC0C8F0F0F0F0F0
-        F0E0E0D8E08090F03058E05068B0F0E0D0E0C8B070584000FF0000FF0000FF00
-        D0B8A0FFFFFFFFF8FFFFF8F0FFF8F0FFF0F0F0F0E0F0E0E07088F02050D09090
-        C0E0D0C080706000FF0000FF0000FF00D0B8B0FFFFFFFFFFFFFFF8FFFFF8F0FF
-        F8F0F0F0F0F0E0E0F0E8E08090F02048D0A098C0A0908000FF0000FF0000FF00
-        D0C0B0FFFFFFFFFFFF80A0B060889060889060789060788070809090A0B090A0
-        F03050D0B0989000FF0000FF0000FF00D0C0B0FFFFFFFFFFFF80A8B090D8E090
-        E8F080D8F060C8E05098B0708090F0E8E0E0D8D0A0989000FF0000FF0000FF00
-        D1C2B3FFFFFFFFFFFFF0F8FF80A8B0A0A8A095867780C8D0507080F0F0F0F0E0
-        E0F0E0E080706000FF0000FF0000FF00E2E5E1D1C2B3D0C0B0D0C0B070A8B0A0
-        E8F0A0E8F090D0E0406870C0A8A0C0A8A0C0A890D6DAD600FF0000FF0000FF00
-        00FF0000FF0000FF0000FF00DCE3E180B0C080A0B07090A0D8DDD900FF0000FF
-        0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
-        FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
     end
     object BtnCancelarInventario: TcxButton
       Tag = 3
@@ -519,37 +469,12 @@ inherited frmGeInventario: TfrmGeInventario
       Width = 165
       Height = 31
       Caption = 'Cancelar Invent'#225'rio           '
+      OptionsImage.ImageIndex = 2
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       OnClick = BtnCancelarInventarioClick
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000000000000000000000000000000000001DE6B51DE6B5
-        1DE6B51DE6B51DE6B51DE6B5707070505850000000C7CECC1DE6B51DE6B51DE6
-        B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5B0A0907A6652A69A8CA0A0A0FF
-        FFFF5090B01010109494897A66526048306048301DE6B51DE6B51DE6B51DE6B5
-        1DE6B5D1BDB1FFFFFFF0E8E0A0A0A090B8C070D0E05098B0101010A09890B0A0
-        906048301DE6B51DE6B51DE6B5ADB7E60E2CE0B3AEC5FFFFFFFFFFFFE0E0E050
-        A0B060A8E060C0D05098B01010109090907A66521DE6B51DE6B51DE6B50028FF
-        0020F04050D0FFFFFFFFFFFFFFFFFF4050E00010B090E0F060C0D05098B01010
-        108A8A891DE6B51DE6B51DE6B52C51FD1038FF0028FFF0F8FFFFFFFF9098F000
-        18C06078E060A8B090E0F060C0D05098B0101010CAD1CF1DE6B51DE6B5DADDE9
-        3050FF2040FF90A0F0C0C8F00028F04058F0FFF8F0D0D8E070B0C090E0F070C8
-        E0808880303890B2B4C81DE6B51DE6B5D0D6ED4060FF3050FF2040FF3050FFFF
-        F8FFFFFFFFFFF8F0D0D8E080B0C0D0B8B07088D06070B03038901DE6B51DE6B5
-        1DE6B5B3B8D94068FF4060FFD0D8FFFFFFFFFFFFFFFFF8FFF0F0F0D0D8D06070
-        B07090E06078D06070B01DE6B51DE6B5BCC8EF6078FF6078FF6080FF5070FFF0
-        F0FFFFFFFFFFFFFFFFF8F0F0F0F0B0A0A06070B06070B01DE6B51DE6B5A8BAF2
-        5078FF5078FFC0D0FFFFFFFF7088FF6078FFD0E0FFFFFFFFFFFFFFB0A090B0A0
-        909485741DE6B51DE6B5809CF85078FF5078FFC1C1DAFFFFFFFFFFFFFFFFFFB0
-        C8FF8098FFFFFFFFB0A0908068508060506048301DE6B51DE6B5809CF86386FC
-        D0D7EDD5C8BAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A890D0C8C08068
-        50DDCABF1DE6B51DE6B51DE6B51DE6B51DE6B5D0C0B0FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFC0A8A0807060DDCABF1DE6B51DE6B51DE6B51DE6B51DE6B5
-        1DE6B5E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0DDCABF1DE6
-        B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51D
-        E6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5}
     end
     object dbCentroCusto: TJvDBComboEdit
       Left = 688
@@ -688,12 +613,13 @@ inherited frmGeInventario: TfrmGeInventario
       NumGlyphs = 2
       ParentFont = False
       PopupColor = clBtnFace
+      ShowNullDate = False
       TabOrder = 8
     end
   end
   object tlbBotoes: TToolBar
     Left = 0
-    Top = 606
+    Top = 605
     Width = 1108
     Height = 35
     Align = alBottom
@@ -703,7 +629,7 @@ inherited frmGeInventario: TfrmGeInventario
     TabOrder = 3
     object Bevel3: TBevel
       Left = 0
-      Top = 2
+      Top = 0
       Width = 4
       Height = 31
       Shape = bsSpacer
@@ -711,15 +637,13 @@ inherited frmGeInventario: TfrmGeInventario
     object BtnOpcao: TcxButton
       Tag = 4
       Left = 4
-      Top = 2
+      Top = 0
       Width = 87
       Height = 31
       Caption = 'Op'#231#245'es'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
       DropDownMenu = ppOpcoes
-      Glyph.Data = {
+      Kind = cxbkDropDownButton
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000C40E0000C40E00000000000000000000FFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -770,71 +694,49 @@ inherited frmGeInventario: TfrmGeInventario
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      Kind = cxbkDropDownButton
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 3
     end
     object Bevel4: TBevel
       Left = 91
-      Top = 2
+      Top = 0
       Width = 4
       Height = 31
       Shape = bsSpacer
     end
     object BtnCancelar: TcxButton
       Left = 95
-      Top = 2
+      Top = 0
       Width = 75
       Height = 31
       Hint = 'Cancelar Inser'#231#227'o/Edi'#231#227'o'
       Caption = '&Cancelar'
+      OptionsImage.ImageIndex = 13
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       OnClick = BtnCancelarClick
-      Glyph.Data = {
-        76010000424D7601000000000000760000002800000020000000100000000100
-        04000000000000010000120B0000120B00001000000000000000000000000000
-        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333000000
-        000033333377777777773333330FFFFFFFF03FF3FF7FF33F3FF700300000FF0F
-        00F077F777773F737737E00BFBFB0FFFFFF07773333F7F3333F7E0BFBF000FFF
-        F0F077F3337773F3F737E0FBFBFBF0F00FF077F3333FF7F77F37E0BFBF00000B
-        0FF077F3337777737337E0FBFBFBFBF0FFF077F33FFFFFF73337E0BF0000000F
-        FFF077FF777777733FF7000BFB00B0FF00F07773FF77373377373330000B0FFF
-        FFF03337777373333FF7333330B0FFFF00003333373733FF777733330B0FF00F
-        0FF03333737F37737F373330B00FFFFF0F033337F77F33337F733309030FFFFF
-        00333377737FFFFF773333303300000003333337337777777333}
-      NumGlyphs = 2
     end
     object BtnSalvar: TcxButton
       Left = 170
-      Top = 2
+      Top = 0
       Width = 75
       Height = 31
       Hint = 'Salvar Inser'#231#227'o/Edi'#231#227'o'
       Caption = '&Salvar'
+      OptionsImage.ImageIndex = 22
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
       OnClick = BtnSalvarClick
-      Glyph.Data = {
-        76010000424D7601000000000000760000002800000020000000100000000100
-        04000000000000010000120B0000120B00001000000000000000000000000000
-        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
-        55555FFFFFFF5F55FFF5777777757559995777777775755777F7555555555550
-        305555555555FF57F7F555555550055BB0555555555775F777F55555550FB000
-        005555555575577777F5555550FB0BF0F05555555755755757F555550FBFBF0F
-        B05555557F55557557F555550BFBF0FB005555557F55575577F555500FBFBFB0
-        B05555577F555557F7F5550E0BFBFB00B055557575F55577F7F550EEE0BFB0B0
-        B05557FF575F5757F7F5000EEE0BFBF0B055777FF575FFF7F7F50000EEE00000
-        B0557777FF577777F7F500000E055550805577777F7555575755500000555555
-        05555777775555557F5555000555555505555577755555557555}
-      NumGlyphs = 2
     end
     object Bevel2: TBevel
       Left = 245
-      Top = 2
+      Top = 0
       Width = 4
       Height = 31
       Shape = bsSpacer
@@ -842,34 +744,22 @@ inherited frmGeInventario: TfrmGeInventario
     object BtnImprimir: TcxButton
       Tag = 4
       Left = 249
-      Top = 2
+      Top = 0
       Width = 87
       Height = 31
       Hint = 'Imprimir Lista'
       Caption = 'Imprimir'
+      DropDownMenu = ppImpressao
+      Kind = cxbkDropDownButton
+      OptionsImage.ImageIndex = 20
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
-      DropDownMenu = ppImpressao
-      Glyph.Data = {
-        76010000424D7601000000000000760000002800000020000000100000000100
-        04000000000000010000120B0000120B00001000000000000000000000000000
-        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
-        0003377777777777777308888888888888807F33333333333337088888888888
-        88807FFFFFFFFFFFFFF7000000000000000077777777777777770F8F8F8F8F8F
-        8F807F333333333333F708F8F8F8F8F8F9F07F333333333337370F8F8F8F8F8F
-        8F807FFFFFFFFFFFFFF7000000000000000077777777777777773330FFFFFFFF
-        03333337F3FFFF3F7F333330F0000F0F03333337F77773737F333330FFFFFFFF
-        03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
-        33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
-        33333337FFFF7733333333300000033333333337777773333333}
-      Kind = cxbkDropDownButton
-      NumGlyphs = 2
     end
     object Bevel1: TBevel
       Left = 336
-      Top = 2
+      Top = 0
       Width = 4
       Height = 31
       Shape = bsSpacer
@@ -877,130 +767,30 @@ inherited frmGeInventario: TfrmGeInventario
     object BtnLancarProduto: TcxButton
       Tag = 5
       Left = 340
-      Top = 2
+      Top = 0
       Width = 189
       Height = 31
       Caption = 'Lan'#231'ar Material/Produto (Ins)'
+      OptionsImage.ImageIndex = 6
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
       OnClick = BtnLancarProdutoClick
-      Glyph.Data = {
-        36060000424D3606000000000000360000002800000020000000100000000100
-        18000000000000060000C40E0000C40E000000000000000000001DE6B51DE6B5
-        1DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6
-        B51DE6B51DE6B51DE6B5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5B0A0906048306048306048306048306048306048306048306048306048
-        306048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF8E9DAC33435733435733435733
-        4357334357334357334357334357334357334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5B0A090FFFFFFB0A090B0A090B0A090B0A090B0A090B0A090B0A090B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF8E9DACFFFFFF8E9DAC8E9DAC8E
-        9DAC8E9DAC8E9DAC8E9DAC8E9DAC8E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5B0A090FFFFFFFFFFFFFFF8FFF0F0F0F0E8E0F0E0D0E0D0D0E0C8C0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF8E9DACFFFFFFFFFFFFF9FAFAED
-        F0F2E1E6EAD6DDE3C8D1D9BEC8D18E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5B0A090FFFFFFFFFFFFFFFFFFFFF8F0F0F0F0F0E0E0F0D8D0E0D0C0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF8E9DACFFFFFFFFFFFFFFFFFFF4
-        F6F7EDF0F2DBE1E6D0D8DFC4CDD68E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5B0A090FFFFFFFFFFFFFFFFFFFFFFFFFFF0F0F0E8E0F0E0E0E0D8D0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF8E9DACFFFFFFFFFFFFFFFFFFFF
-        FFFFEEF1F3E1E6EADBE1E6CED6DD8E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5C0A890FFFFFFFFFFFFFFFFFFFFFFFFFFF8F0F0F0F0F0E8E0F0D8D0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF95A3B2FFFFFFFFFFFFFFFFFFFF
-        FFFFF4F6F7EDF0F2E1E6EAD0D8DF8E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5C0A8A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F0F0E8E0F0E0E0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFF9AA8B6FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFF4F6F7E1E6EADBE1E68E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5C0B0A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8FFF0F0F0F0E8E0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFFA0ADBAFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFF9FAFAEDF0F2E1E6EA8E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5D0B0A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8F0F0F0F0B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFFA1AEBBFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFF4F6F7EDF0F28E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5D0B8A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0A090B0A0
-        906048301DE6B51DE6B5FFFFFFFFFFFFFFFFFFA6B3C0FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFF8E9DAC8E9DAC334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5D0B8B0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0A0906048306048
-        306048301DE6B51DE6B5FFFFFFFFFFFFFFFFFFACB8C4FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFF8E9DAC334357334357334357FFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5D0C0B0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A890D0C8C06048
-        30DFC5B61DE6B51DE6B5FFFFFFFFFFFFFFFFFFB2BDC8FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFF95A3B2BCC6D0334357B8C3CDFFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5E0C0B0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A8A0604830E0C6
-        B71DE6B51DE6B51DE6B5FFFFFFFFFFFFFFFFFFB3BEC9FFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFF9AA8B6334357B9C4CEFFFFFFFFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B5E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0C7B91DE6
-        B51DE6B51DE6B51DE6B5FFFFFFFFFFFFFFFFFFB3BEC9B3BEC9B3BEC9B3BEC9B3
-        BEC9B2BDC8ACB8C4A1AEBBBBC5CFFFFFFFFFFFFFFFFFFFFFFFFF1DE6B51DE6B5
-        1DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6
-        B51DE6B51DE6B51DE6B5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      NumGlyphs = 2
     end
     object BtnEditarProduto: TcxButton
       Tag = 6
       Left = 529
-      Top = 2
+      Top = 0
       Width = 189
       Height = 31
-      Caption = 'Lan'#231'ar Material/Produto (F2)'
+      Caption = 'Editar Material/Produto (F2)'
+      OptionsImage.ImageIndex = 3
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
       TabOrder = 5
       OnClick = BtnEditarProdutoClick
-      Glyph.Data = {
-        36060000424D3606000000000000360000002800000020000000100000000100
-        18000000000000060000C40E0000C40E0000000000000000000000FF0000FF00
-        00FF0000FF0000FF00C0C0C02525252525252525252525252525252525252525
-        25252525C0C0C000FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB5C0CB19253619
-        2536192536192536192536192536192536192536B5C0CBFFFFFF00FF0000FF00
-        00FF0000FF0000FF00252525FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFF25252500FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFF00FF0000FF00
-        00FF0000FF0000FF00252525FFFFFF525252525252006699FFFFFFFFFFFFFFFF
-        FFFFFFFF25252500FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFF41
-        526641526657697DFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFF00FF0000FF00
-        00FF0000FF0000FF00252525FFFFFF525252C0C0C033CCFF2D2D2DFFFFFFFFFF
-        FFFFFFFF25252500FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFF41
-        5266B5C0CBBFC9D21F2D3FFFFFFFFFFFFFFFFFFF192536FFFFFF00FF0000FF00
-        00FF0000FF0000FF00252525FFFFFF00669900F2FF33CCFF0066992D2D2DFFFF
-        FFFFFFFF25252500FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFF57
-        697DD3DAE0BFC9D257697D1F2D3FFFFFFFFFFFFF192536FFFFFF00FF0000FF00
-        00FF0000FF0000FF00252525FFFFFFFFFFFF2D2D2D00F2FF33CCFF0066992D2D
-        2DFFFFFF25252500FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF192536FFFFFFFF
-        FFFF1F2D3FD3DAE0BFC9D257697D1F2D3FFFFFFF192536FFFFFF00FF000267FF
-        00FF0000FF0000FF00252525FFFFFFFFFFFFFFFFFF2D2D2D00F2FF33CCFF0066
-        992D2D2DC0C0C000FF00FFFFFF77889AFFFFFFFFFFFFFFFFFF192536FFFFFFFF
-        FFFFFFFFFF1F2D3FD3DAE0BFC9D257697D1F2D3FB5C0CBFFFFFF00FF0000FF00
-        0468FF00FF0000FF00252525FFFFFFFFFFFFFFFFFFFFFFFF2D2D2D00F2FF33CC
-        FF0066992D2D2D00FF00FFFFFFFFFFFF78899BFFFFFFFFFFFF192536FFFFFFFF
-        FFFFFFFFFFFFFFFF1F2D3FD3DAE0BFC9D257697D1F2D3FFFFFFF00FF0000FF00
-        00FF000436CD00FF00252525525252525252525252525252C0C0C02D2D2D00F2
-        FF33CCFF2D2D2D00007AFFFFFFFFFFFFFFFFFF4C5D71FFFFFF19253641526641
-        5266415266415266B5C0CB1F2D3FD3DAE0BFC9D21F2D3F18243500FF0000FF00
-        00FF0000FF000267FF0235CCC0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C02D2D
-        2D2D2D2D1E1EE200007AFFFFFFFFFFFFFFFFFFFFFFFF77889A4B5C70B5C0CBB5
-        C0CBB5C0CBB5C0CBB5C0CBB5C0CB1F2D3F1F2D3F47586C18243500FF000234CC
-        0235CC0235CC0033CC33CAFD0234CC252525252525252525252525252525C0C0
-        C000007A00007A00FF00FFFFFF4A5B6F4B5C704B5C70495A6EBEC8D14A5B6F19
-        2536192536192536192536192536B5C0CB182435182435FFFFFF00FF0000FF00
-        00FF0000FF000267FF0235CC0267FF00FF0000FF0000FF0000FF0000FF0000FF
-        0000FF0000FF0000FF00FFFFFFFFFFFFFFFFFFFFFFFF77889A4B5C7077889AFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00FF0000FF00
-        00FF000468FF00FF000235CC00FF000468FF00FF0000FF0000FF0000FF0000FF
-        0000FF0000FF0000FF00FFFFFFFFFFFFFFFFFF78899BFFFFFF4B5C70FFFFFF78
-        899BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00FF0000FF00
-        0436CD00FF0000FF000235CC00FF0000FF000436CD00FF0000FF0000FF0000FF
-        0000FF0000FF0000FF00FFFFFFFFFFFF4C5D71FFFFFFFFFFFF4B5C70FFFFFFFF
-        FFFF4C5D71FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00FF000267FF
-        00FF0000FF0000FF000235CC00FF0000FF0000FF000267FF00FF0000FF0000FF
-        0000FF0000FF0000FF00FFFFFF77889AFFFFFFFFFFFFFFFFFF4B5C70FFFFFFFF
-        FFFFFFFFFF77889AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00FF0000FF00
-        00FF0000FF0000FF000235CC00FF0000FF0000FF0000FF0000FF0000FF0000FF
-        0000FF0000FF0000FF00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF4B5C70FFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      NumGlyphs = 2
     end
   end
   object PnlMaterial: TPanel
@@ -1147,9 +937,7 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 31
       Anchors = [akRight, akBottom]
       Caption = 'Confirmar'
-      TabOrder = 7
-      OnClick = BtnConfirmarItemClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -1200,7 +988,9 @@ inherited frmGeInventario: TfrmGeInventario
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 7
+      OnClick = BtnConfirmarItemClick
     end
     object BtnCancelarItem: TcxButton
       Left = 508
@@ -1209,9 +999,7 @@ inherited frmGeInventario: TfrmGeInventario
       Height = 31
       Anchors = [akRight, akBottom]
       Caption = 'Cancelar'
-      TabOrder = 8
-      OnClick = BtnCancelarItemClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -1262,7 +1050,9 @@ inherited frmGeInventario: TfrmGeInventario
         00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
         0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
         BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 8
+      OnClick = BtnCancelarItemClick
     end
     object dbProdutoCodigo: TDBEdit
       Left = 24
@@ -1371,7 +1161,10 @@ inherited frmGeInventario: TfrmGeInventario
   object tblEmpresa: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'TBEMPRESA'
+    UniDirectional = False
     Left = 928
     Top = 352
   end
@@ -1383,8 +1176,11 @@ inherited frmGeInventario: TfrmGeInventario
   object tblTipoInventario: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'VW_TIPO_INVENTARIO_ALMOX'
     TableTypes = [ttView]
+    UniDirectional = False
     Left = 928
     Top = 384
   end
@@ -1543,6 +1339,7 @@ inherited frmGeInventario: TfrmGeInventario
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -1591,6 +1388,8 @@ inherited frmGeInventario: TfrmGeInventario
       '  and i.empresa  = :emp')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updInventario
     Left = 16
     Top = 408
@@ -1824,6 +1623,8 @@ inherited frmGeInventario: TfrmGeInventario
   object qryProduto: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     RefreshSQL.Strings = (
       '')
     SelectSQL.Strings = (
@@ -1846,6 +1647,8 @@ inherited frmGeInventario: TfrmGeInventario
       '  left join TBUNIDADEPROD u on (u.unp_cod = g.unidade)')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     Left = 928
     Top = 320
   end
@@ -2143,6 +1946,7 @@ inherited frmGeInventario: TfrmGeInventario
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -2173,6 +1977,8 @@ inherited frmGeInventario: TfrmGeInventario
       '  and i.controle = :cod')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updMaterial
     Left = 16
     Top = 440
@@ -2352,7 +2158,7 @@ inherited frmGeInventario: TfrmGeInventario
     Top = 440
   end
   object frRelacaoProduto: TfrxReport
-    Version = '4.9.72'
+    Version = '5.1.9'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -2411,6 +2217,7 @@ inherited frmGeInventario: TfrmGeInventario
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object BndPageHeader: TfrxPageHeader
+        FillType = ftBrush
         Height = 124.724490000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
@@ -2419,13 +2226,12 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 94.488250000000000000
           Width = 604.724800000000000000
           Height = 26.456710000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Titulo]')
           ParentFont = False
           VAlign = vaCenter
@@ -2435,7 +2241,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
-          ShowHint = False
           DataField = 'LOGO'
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -2448,7 +2253,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 464.882190000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -2456,7 +2260,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -13
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[frdEmpresa."RZSOC"]')
           ParentFont = False
           VAlign = vaCenter
@@ -2466,7 +2270,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 26.456710000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -2474,7 +2277,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
               '">)]')
@@ -2487,7 +2290,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 41.574830000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -2495,7 +2297,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
           ParentFont = False
           WordWrap = False
@@ -2506,7 +2308,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 56.692950000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -2514,7 +2315,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
               'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
@@ -2527,7 +2328,7 @@ inherited frmGeInventario: TfrmGeInventario
         object Line1: TfrxLineView
           Top = 94.488250000000000000
           Width = 718.110700000000000000
-          ShowHint = False
+          Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo44: TfrxMemoView
@@ -2535,7 +2336,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 71.811070000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -2543,7 +2343,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
           ParentFont = False
           WordWrap = False
@@ -2551,13 +2351,13 @@ inherited frmGeInventario: TfrmGeInventario
         end
       end
       object BndPageFooter: TfrxPageFooter
+        FillType = ftBrush
         Height = 30.236240000000000000
         Top = 419.527830000000000000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
           Width = 600.945270000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -2565,7 +2365,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [Sistema]')
           ParentFont = False
           WordWrap = False
@@ -2575,15 +2375,14 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 15.118120000000000000
           Width = 600.945270000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Impresso em [Date] '#195#160's [Time] por [Usuario]')
+          Memo.UTF8W = (
+            ' Impresso em [Date] '#224's [Time] por [Usuario]')
           ParentFont = False
           WordWrap = False
         end
@@ -2591,7 +2390,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 600.945270000000000000
           Width = 117.165430000000000000
           Height = 30.236240000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2600,14 +2398,15 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
-            'P'#195#161'gina [Page#] / [TotalPages#]')
+          Memo.UTF8W = (
+            'P'#225'gina [Page#] / [TotalPages#]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
       end
       object BndMasterData: TfrxMasterData
+        FillType = ftBrush
         Height = 22.677180000000000000
         Top = 264.567100000000000000
         Width = 718.110700000000000000
@@ -2618,7 +2417,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 600.945270000000000000
           Width = 83.149660000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2636,7 +2434,6 @@ inherited frmGeInventario: TfrmGeInventario
         object Memo9: TfrxMemoView
           Width = 75.590600000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2646,7 +2443,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProduto."COD"]')
           ParentFont = False
           WordWrap = False
@@ -2656,7 +2453,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 75.590600000000000000
           Width = 309.921460000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2666,7 +2462,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProduto."DESCRI_APRESENTACAO"]')
           ParentFont = False
           WordWrap = False
@@ -2676,7 +2472,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 498.897960000000000000
           Width = 102.047310000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2686,7 +2481,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProduto."REFERENCIA"]')
           ParentFont = False
           WordWrap = False
@@ -2696,7 +2491,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 385.512060000000000000
           Width = 113.385900000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2706,7 +2500,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProduto."FABRICANTE_NOME"]')
           ParentFont = False
           WordWrap = False
@@ -2716,7 +2510,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 684.094930000000000000
           Width = 34.015770000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2727,7 +2520,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[FrdsRelacaoProduto."UND_COMPRA"]')
           ParentFont = False
           WordWrap = False
@@ -2735,13 +2528,13 @@ inherited frmGeInventario: TfrmGeInventario
         end
       end
       object BndFooter: TfrxFooter
+        FillType = ftBrush
         Height = 18.897650000000000000
         Top = 340.157700000000000000
         Width = 718.110700000000000000
         object Memo19: TfrxMemoView
           Width = 718.110700000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -2749,12 +2542,13 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [COUNT(BndMasterData, 2)] produto(s) relacionado(s).')
           ParentFont = False
         end
       end
       object BndGrpHeaderGrupo: TfrxGroupHeader
+        FillType = ftBrush
         Height = 37.795300000000000000
         Top = 204.094620000000000000
         Width = 718.110700000000000000
@@ -2766,8 +2560,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2777,9 +2569,10 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haRight
-          Memo.UTF8 = (
-            'Confer'#195#170'ncia')
+          Memo.UTF8W = (
+            'Confer'#234'ncia')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2787,8 +2580,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 75.590600000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2798,8 +2589,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' C'#195#179'digo')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' C'#243'digo')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2808,8 +2600,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 309.921460000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2819,8 +2609,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Descri'#195#167#195#163'o / Apresenta'#195#167#195#163'o')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' Descri'#231#227'o / Apresenta'#231#227'o')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2829,8 +2620,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2840,8 +2629,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Refer'#195#170'ncia')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' Refer'#234'ncia')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -2850,8 +2640,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2861,7 +2649,8 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Fabricante')
           ParentFont = False
           VAlign = vaCenter
@@ -2871,8 +2660,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 34.015770000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2882,8 +2669,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UN')
           ParentFont = False
           VAlign = vaCenter
@@ -2892,7 +2680,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 75.590600000000000000
           Width = 642.520100000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           CharSpacing = 2.000000000000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -2903,7 +2690,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProduto."GRUPO_DESC"]')
           ParentFont = False
           WordWrap = False
@@ -2912,8 +2699,6 @@ inherited frmGeInventario: TfrmGeInventario
         object Memo25: TfrxMemoView
           Width = 75.590600000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -2923,13 +2708,15 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Grupo')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object BndGrpFooterGrupo: TfrxGroupFooter
+        FillType = ftBrush
         Height = 7.559060000000000000
         Top = 309.921460000000000000
         Width = 718.110700000000000000
@@ -2939,6 +2726,9 @@ inherited frmGeInventario: TfrmGeInventario
   object QryRelacaoProduto: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    p.codemp as empresa_cnpj'
@@ -3063,7 +2853,7 @@ inherited frmGeInventario: TfrmGeInventario
     Top = 464
   end
   object frRelacaoProdutoCC: TfrxReport
-    Version = '4.9.72'
+    Version = '5.1.9'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -3122,6 +2912,7 @@ inherited frmGeInventario: TfrmGeInventario
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object BndPageHeader: TfrxPageHeader
+        FillType = ftBrush
         Height = 124.724490000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
@@ -3130,13 +2921,12 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 94.488250000000000000
           Width = 604.724800000000000000
           Height = 26.456710000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Titulo]')
           ParentFont = False
           VAlign = vaCenter
@@ -3146,7 +2936,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
-          ShowHint = False
           DataField = 'LOGO'
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -3159,7 +2948,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 464.882190000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3167,7 +2955,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -13
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[frdEmpresa."RZSOC"]')
           ParentFont = False
           VAlign = vaCenter
@@ -3177,7 +2965,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 26.456710000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3185,7 +2972,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
               '">)]')
@@ -3198,7 +2985,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 41.574830000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3206,7 +2992,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
           ParentFont = False
           WordWrap = False
@@ -3217,7 +3003,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 56.692950000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3225,7 +3010,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
               'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
@@ -3238,7 +3023,7 @@ inherited frmGeInventario: TfrmGeInventario
         object Line1: TfrxLineView
           Top = 94.488250000000000000
           Width = 718.110700000000000000
-          ShowHint = False
+          Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo44: TfrxMemoView
@@ -3246,7 +3031,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 71.811070000000000000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3254,7 +3038,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
           ParentFont = False
           WordWrap = False
@@ -3262,13 +3046,13 @@ inherited frmGeInventario: TfrmGeInventario
         end
       end
       object BndPageFooter: TfrxPageFooter
+        FillType = ftBrush
         Height = 30.236240000000000000
         Top = 419.527830000000000000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
           Width = 600.945270000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -3276,7 +3060,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [Sistema]')
           ParentFont = False
           WordWrap = False
@@ -3286,15 +3070,14 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 15.118120000000000000
           Width = 600.945270000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Impresso em [Date] '#195#160's [Time] por [Usuario]')
+          Memo.UTF8W = (
+            ' Impresso em [Date] '#224's [Time] por [Usuario]')
           ParentFont = False
           WordWrap = False
         end
@@ -3302,7 +3085,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 600.945270000000000000
           Width = 117.165430000000000000
           Height = 30.236240000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3311,14 +3093,15 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
-            'P'#195#161'gina [Page#] / [TotalPages#]')
+          Memo.UTF8W = (
+            'P'#225'gina [Page#] / [TotalPages#]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
       end
       object BndMasterData: TfrxMasterData
+        FillType = ftBrush
         Height = 22.677180000000000000
         Top = 264.567100000000000000
         Width = 718.110700000000000000
@@ -3329,7 +3112,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 600.945270000000000000
           Width = 83.149660000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3347,7 +3129,6 @@ inherited frmGeInventario: TfrmGeInventario
         object Memo9: TfrxMemoView
           Width = 75.590600000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3357,7 +3138,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProdutoCC."COD"]')
           ParentFont = False
           WordWrap = False
@@ -3367,7 +3148,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 75.590600000000000000
           Width = 309.921460000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3377,7 +3157,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProdutoCC."DESCRI_APRESENTACAO"]')
           ParentFont = False
           WordWrap = False
@@ -3387,7 +3167,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 498.897960000000000000
           Width = 102.047310000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3397,7 +3176,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProdutoCC."REFERENCIA"]')
           ParentFont = False
           WordWrap = False
@@ -3407,7 +3186,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 385.512060000000000000
           Width = 113.385900000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3417,7 +3195,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProdutoCC."FABRICANTE_NOME"]')
           ParentFont = False
           WordWrap = False
@@ -3427,7 +3205,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 684.094930000000000000
           Width = 34.015770000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3438,7 +3215,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[FrdsRelacaoProdutoCC."UND_COMPRA"]')
           ParentFont = False
           WordWrap = False
@@ -3446,13 +3223,13 @@ inherited frmGeInventario: TfrmGeInventario
         end
       end
       object BndFooter: TfrxFooter
+        FillType = ftBrush
         Height = 18.897650000000000000
         Top = 340.157700000000000000
         Width = 718.110700000000000000
         object Memo19: TfrxMemoView
           Width = 718.110700000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -3460,12 +3237,13 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [COUNT(BndMasterData, 2)] produto(s) relacionado(s).')
           ParentFont = False
         end
       end
       object BndGrpHeaderGrupo: TfrxGroupHeader
+        FillType = ftBrush
         Height = 37.795300000000000000
         Top = 204.094620000000000000
         Width = 718.110700000000000000
@@ -3477,8 +3255,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3488,9 +3264,10 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haRight
-          Memo.UTF8 = (
-            'Confer'#195#170'ncia')
+          Memo.UTF8W = (
+            'Confer'#234'ncia')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3498,8 +3275,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 75.590600000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3509,8 +3284,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' C'#195#179'digo')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' C'#243'digo')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3519,8 +3295,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 309.921460000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3530,8 +3304,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Descri'#195#167#195#163'o / Apresenta'#195#167#195#163'o')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' Descri'#231#227'o / Apresenta'#231#227'o')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3540,8 +3315,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3551,8 +3324,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Refer'#195#170'ncia')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' Refer'#234'ncia')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -3561,8 +3335,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 113.385900000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3572,7 +3344,8 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Fabricante')
           ParentFont = False
           VAlign = vaCenter
@@ -3582,8 +3355,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 34.015770000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3593,8 +3364,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UN')
           ParentFont = False
           VAlign = vaCenter
@@ -3603,7 +3375,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 75.590600000000000000
           Width = 642.520100000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           CharSpacing = 2.000000000000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -3614,7 +3385,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoProdutoCC."GRUPO_DESC"]')
           ParentFont = False
           WordWrap = False
@@ -3623,8 +3394,6 @@ inherited frmGeInventario: TfrmGeInventario
         object Memo25: TfrxMemoView
           Width = 75.590600000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -3634,13 +3403,15 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Grupo')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object BndGrpFooterGrupo: TfrxGroupFooter
+        FillType = ftBrush
         Height = 7.559060000000000000
         Top = 309.921460000000000000
         Width = 718.110700000000000000
@@ -3650,6 +3421,9 @@ inherited frmGeInventario: TfrmGeInventario
   object QryRelacaoProdutoCC: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    p.codemp    as empresa_cnpj'
@@ -3815,7 +3589,7 @@ inherited frmGeInventario: TfrmGeInventario
     end
   end
   object frRelacaoInventarioCC: TfrxReport
-    Version = '4.9.72'
+    Version = '5.1.9'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -3880,6 +3654,7 @@ inherited frmGeInventario: TfrmGeInventario
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object BndPageHeader: TfrxPageHeader
+        FillType = ftBrush
         Height = 124.724490000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
@@ -3888,13 +3663,12 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 94.488250000000000000
           Width = 604.724800000000000000
           Height = 26.456710000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Titulo]')
           ParentFont = False
           VAlign = vaCenter
@@ -3904,7 +3678,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
-          ShowHint = False
           DataField = 'LOGO'
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -3917,7 +3690,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 445.984540000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3925,7 +3697,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -13
           Font.Name = 'Lucida Console'
           Font.Style = [fsBold]
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[frdEmpresa."RZSOC"]')
           ParentFont = False
           VAlign = vaCenter
@@ -3935,7 +3707,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 26.456710000000000000
           Width = 445.984540000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3943,7 +3714,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
               '">)]')
@@ -3956,7 +3727,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 41.574830000000000000
           Width = 445.984540000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3964,7 +3734,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
           ParentFont = False
           WordWrap = False
@@ -3975,7 +3745,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 56.692950000000000000
           Width = 445.984540000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -3983,7 +3752,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
               'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
@@ -3996,7 +3765,7 @@ inherited frmGeInventario: TfrmGeInventario
         object Line1: TfrxLineView
           Top = 94.488250000000000000
           Width = 718.110700000000000000
-          ShowHint = False
+          Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo44: TfrxMemoView
@@ -4004,7 +3773,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 71.811070000000000000
           Width = 445.984540000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdCliente
           DataSetName = 'frdCliente'
           Font.Charset = DEFAULT_CHARSET
@@ -4012,7 +3780,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
           ParentFont = False
           WordWrap = False
@@ -4023,7 +3791,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 26.456710000000000000
           Width = 158.740260000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdVenda
           DataSetName = 'frdVenda'
           Font.Charset = DEFAULT_CHARSET
@@ -4034,7 +3801,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight]
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[FrdsRelacaoInventarioCC."NUMERO"]')
           ParentFont = False
           WordWrap = False
@@ -4045,7 +3812,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 158.740260000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           CharSpacing = 2.000000000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -4055,8 +3821,8 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
-            'Controle Invent'#195#161'rio:')
+          Memo.UTF8W = (
+            'Controle Invent'#225'rio:')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -4066,7 +3832,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 45.354360000000000000
           Width = 158.740260000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdVenda
           DataSetName = 'frdVenda'
           Font.Charset = DEFAULT_CHARSET
@@ -4077,7 +3842,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Trim(<FrdsRelacaoInventarioCC."STATUS_DESC">)]')
           ParentFont = False
           WordWrap = False
@@ -4088,7 +3853,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 64.252010000000000000
           Width = 158.740260000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DataSet = DMNFe.frdVenda
           DataSetName = 'frdVenda'
           Font.Charset = DEFAULT_CHARSET
@@ -4099,20 +3863,20 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[Trim(<FrdsRelacaoInventarioCC."TIPO_DESC">)]')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object BndPageFooter: TfrxPageFooter
+        FillType = ftBrush
         Height = 30.236240000000000000
         Top = 544.252320000000000000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
           Width = 600.945270000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -4120,7 +3884,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = []
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [Sistema]')
           ParentFont = False
           WordWrap = False
@@ -4130,15 +3894,14 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 15.118120000000000000
           Width = 600.945270000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Impresso em [Date] '#195#160's [Time] por [Usuario]')
+          Memo.UTF8W = (
+            ' Impresso em [Date] '#224's [Time] por [Usuario]')
           ParentFont = False
           WordWrap = False
         end
@@ -4146,7 +3909,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 600.945270000000000000
           Width = 117.165430000000000000
           Height = 30.236240000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -4155,14 +3917,15 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftLeft, ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
-            'P'#195#161'gina [Page#] / [TotalPages#]')
+          Memo.UTF8W = (
+            'P'#225'gina [Page#] / [TotalPages#]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
       end
       object BndMasterData: TfrxMasterData
+        FillType = ftBrush
         Height = 18.897650000000000000
         Top = 264.567100000000000000
         Width = 718.110700000000000000
@@ -4172,7 +3935,6 @@ inherited frmGeInventario: TfrmGeInventario
         object Memo9: TfrxMemoView
           Width = 64.252010000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4188,7 +3950,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             ' [FrdsRelacaoInventarioCC."COD"]')
           ParentFont = False
           WordWrap = False
@@ -4198,7 +3961,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 64.252010000000000000
           Width = 309.921460000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4214,7 +3976,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             ' [FrdsRelacaoInventarioCC."DESCRI_APRESENTACAO"]')
           ParentFont = False
           WordWrap = False
@@ -4224,7 +3987,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 374.173470000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4241,7 +4003,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             
               '[FormatFloat('#39',0.###'#39',<FrdsRelacaoInventarioCC."ESTOQUE_ANTIGO">' +
               ')] ')
@@ -4253,7 +4016,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 544.252320000000000000
           Width = 26.456710000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4270,7 +4032,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FrdsRelacaoInventarioCC."UNP_SIGLA"]')
           ParentFont = False
           WordWrap = False
@@ -4280,7 +4043,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 430.866420000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4297,7 +4059,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FormatFloat('#39',0.###'#39',<FrdsRelacaoInventarioCC."LANCAMENTO">)] ')
           ParentFont = False
           WordWrap = False
@@ -4307,7 +4070,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 487.559370000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4324,7 +4086,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FormatFloat('#39',0.###'#39',<DiferencaQtde>)] ')
           ParentFont = False
           WordWrap = False
@@ -4334,7 +4097,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 570.709030000000000000
           Width = 68.031540000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4351,7 +4113,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             
               '[FormatFloat('#39',0.00##'#39',<FrdsRelacaoInventarioCC."CUSTO_UNITARIO"' +
               '>)] ')
@@ -4363,7 +4126,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 638.740570000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4380,7 +4142,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FormatFloat('#39',0.00'#39',<FrdsRelacaoInventarioCC."CUSTO_TOTAL">)] ')
           ParentFont = False
           WordWrap = False
@@ -4388,6 +4151,7 @@ inherited frmGeInventario: TfrmGeInventario
         end
       end
       object BndGrpHeaderGrupo: TfrxGroupHeader
+        FillType = ftBrush
         Height = 37.795300000000000000
         Top = 204.094620000000000000
         Width = 718.110700000000000000
@@ -4397,8 +4161,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 64.252010000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4408,8 +4170,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' C'#195#179'digo')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' C'#243'digo')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -4418,8 +4181,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 309.921460000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4429,8 +4190,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Descri'#195#167#195#163'o / Apresenta'#195#167#195#163'o')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' Descri'#231#227'o / Apresenta'#231#227'o')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -4439,8 +4201,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4450,7 +4210,8 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Estoque')
           ParentFont = False
           VAlign = vaCenter
@@ -4460,8 +4221,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 26.456710000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4471,8 +4230,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'UN')
           ParentFont = False
           VAlign = vaCenter
@@ -4481,7 +4241,6 @@ inherited frmGeInventario: TfrmGeInventario
           Left = 64.252010000000000000
           Width = 653.858690000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           CharSpacing = 2.000000000000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -4492,7 +4251,7 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoInventarioCC."GRUPO_DESC"]')
           ParentFont = False
           WordWrap = False
@@ -4501,8 +4260,6 @@ inherited frmGeInventario: TfrmGeInventario
         object Memo25: TfrxMemoView
           Width = 64.252010000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4512,7 +4269,8 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Grupo')
           ParentFont = False
           VAlign = vaCenter
@@ -4522,8 +4280,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4533,7 +4289,8 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Invent.')
           ParentFont = False
           VAlign = vaCenter
@@ -4543,8 +4300,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 56.692950000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4554,8 +4309,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' Diferen'#195#167'a')
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
+            ' Diferen'#231'a')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -4564,8 +4320,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 68.031540000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4575,8 +4329,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Custo Un. ')
           ParentFont = False
           VAlign = vaCenter
@@ -4586,8 +4341,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 18.897650000000000000
           Width = 79.370130000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4597,14 +4350,16 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Custo Total ')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object BndGrpFooterGrupo: TfrxGroupFooter
+        FillType = ftBrush
         Height = 26.456710000000000000
         Top = 306.141930000000000000
         Width = 718.110700000000000000
@@ -4613,8 +4368,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 3.779530000000000000
           Width = 147.401670000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -4623,7 +4376,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[FormatFloat('#39',0.00'#39',SUM(<FrdsRelacaoInventarioCC."CUSTO_TOTAL">' +
               ',BndMasterData))] ')
@@ -4636,8 +4389,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 3.779530000000000000
           Width = 196.535560000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4647,8 +4398,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             ' [FrdsRelacaoInventarioCC."GRUPO_DESC"]')
           ParentFont = False
           WordWrap = False
@@ -4656,6 +4408,7 @@ inherited frmGeInventario: TfrmGeInventario
         end
       end
       object BndReportSummary: TfrxReportSummary
+        FillType = ftBrush
         Height = 128.504020000000000000
         Top = 393.071120000000000000
         Width = 718.110700000000000000
@@ -4663,7 +4416,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 374.173470000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4672,8 +4424,8 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Name = 'Tahoma'
           Font.Style = []
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            ' * Material/Produto com lan'#195#167'amento zerado')
+          Memo.UTF8W = (
+            ' * Material/Produto com lan'#231'amento zerado')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -4683,8 +4435,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 147.401670000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = 14211288
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
@@ -4693,7 +4443,7 @@ inherited frmGeInventario: TfrmGeInventario
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             
               '[FormatFloat('#39',0.00'#39',SUM(<FrdsRelacaoInventarioCC."CUSTO_TOTAL">' +
               ',BndMasterData,2))] ')
@@ -4706,9 +4456,7 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 7.559060000000000000
           Width = 196.535560000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           CharSpacing = 2.000000000000000000
-          Color = 14211288
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4718,8 +4466,9 @@ inherited frmGeInventario: TfrmGeInventario
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = 14211288
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'TOTAL GERAL (R$)')
           ParentFont = False
           WordWrap = False
@@ -4730,7 +4479,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 83.149660000000000000
           Width = 343.937230000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4747,7 +4495,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FrdsRelacaoInventarioCC."EMPRESA_RAZAO"]')
           ParentFont = False
           WordWrap = False
@@ -4758,7 +4507,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 113.385900000000000000
           Width = 343.937230000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4774,7 +4522,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FrdsRelacaoInventarioCC."CENTRO_CUSTO"]')
           ParentFont = False
           WordWrap = False
@@ -4785,7 +4534,6 @@ inherited frmGeInventario: TfrmGeInventario
           Top = 98.267780000000000000
           Width = 343.937230000000000000
           Height = 15.118120000000000000
-          ShowHint = False
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
           Font.Charset = DEFAULT_CHARSET
@@ -4801,7 +4549,8 @@ inherited frmGeInventario: TfrmGeInventario
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<FrdsRelacaoInventarioCC."LANCAMENTO">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             'Finalizador por: [FrdsRelacaoInventarioCC."FECH_USUARIO_NOME"]')
           ParentFont = False
           WordWrap = False
@@ -4813,6 +4562,9 @@ inherited frmGeInventario: TfrmGeInventario
   object QryRelacaoInventarioCC: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    i.ano'

@@ -8,7 +8,14 @@ uses
   DBGrids, DB, IBCustomDataSet, IBQuery, Mask, DBCtrls, DBClient, Provider,
   ComObj, IBUpdateSQL, IBTable, IBSQL, UGrPadrao, ACBrBoleto,
   ACBrBoletoFCFR, ACBrBase, ACBrUtil, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons;
+  cxLookAndFeelPainters, Menus, cxButtons, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeGerarBoleto = class(TfrmGrPadrao)
@@ -70,9 +77,6 @@ type
     CdsTitulos: TClientDataSet;
     CdsTitulosPARCELA: TSmallintField;
     CdsTitulosCODBANCO: TIntegerField;
-    CdsTitulosNOSSONUMERO: TStringField;
-    CdsTitulosCNPJ: TStringField;
-    CdsTitulosTIPPAG: TStringField;
     CdsTitulosDTEMISS: TDateField;
     CdsTitulosDTVENC: TDateField;
     CdsTitulosVALORREC: TBCDField;
@@ -91,7 +95,6 @@ type
     edtDemonstrativo: TEdit;
     UpdateLanc: TIBSQL;
     IbUpdTitulos: TIBUpdateSQL;
-    CdsTitulosGERAR: TStringField;
     CdsTitulosANOLANC: TSmallintField;
     CdsTitulosNUMLANC: TIntegerField;
     CdsTitulosANOVENDA: TSmallintField;
@@ -135,8 +138,6 @@ type
     IbQryBancosBCO_PERCENTUAL_MORA: TIBBCDField;
     IbQryBancosBCO_DIA_PROTESTO: TSmallintField;
     IbQryBancosBCO_MSG_INSTRUCAO: TIBStringField;
-    CdsTitulosSERIE: TStringField;
-    CdsTitulosNFE: TLargeintField;
     IbQryBancosBCO_LAYOUT_REMESSA: TSmallintField;
     IbQryBancosBCO_LAYOUT_RETORNO: TSmallintField;
     CdsTitulosPARCELA_MAXIMA: TSmallintField;
@@ -146,6 +147,12 @@ type
     btnFechar: TcxButton;
     Bevel7: TBevel;
     btnGerarBoleto: TcxButton;
+    CdsTitulosNOSSONUMERO: TWideStringField;
+    CdsTitulosCNPJ: TWideStringField;
+    CdsTitulosTIPPAG: TWideStringField;
+    CdsTitulosSERIE: TWideStringField;
+    CdsTitulosNFE: TLargeintField;
+    CdsTitulosGERAR: TWideStringField;
     procedure edtFiltrarKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -174,7 +181,9 @@ type
     CobreBemX : Variant;
     FFecharAoGerar : Boolean;
     procedure CarregarBancos;
+    {$IFNDEF ACBR}
     procedure GravarBoletosGerados;
+    {$ENDIF}
     procedure GravarBoletosGeradosACBr(const iProximoNossoNumero : Integer);
     procedure UpdateTitulo( iAno : Smallint; iLancamento : Int64; iBanco : Integer; sNossoNumero : String; Data : TDateTime;
       const cJuros : Currency = 0.0; const cMulta : Currency = 0.0);
@@ -748,6 +757,7 @@ begin
 end;
 {$ENDIF}
 
+{$IFNDEF ACBR}
 procedure TfrmGeGerarBoleto.GravarBoletosGerados;
 var
   Ano  ,
@@ -790,6 +800,7 @@ begin
     CommitTransaction;
   end;
 end;
+{$ENDIF}
 
 procedure TfrmGeGerarBoleto.GravarBoletosGeradosACBr(const iProximoNossoNumero : Integer);
 var

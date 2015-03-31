@@ -149,7 +149,7 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE, cxGridExportLink, UGeCentroCusto;
+  UDMBusiness, UConstantesDGE, cxGridExportLink, UGeCentroCusto, UDMRecursos;
 
 {$R *.dfm}
 

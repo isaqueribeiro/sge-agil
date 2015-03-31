@@ -4448,7 +4448,6 @@ object frmPrinc: TfrmPrinc
     TabOrder = 6
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4510,6 +4509,7 @@ object frmPrinc: TfrmPrinc
       Index = 4
     end
     object RbnTabConsulta: TdxRibbonTab
+      Active = True
       Caption = 'Consulta'
       Groups = <
         item
@@ -4715,7 +4715,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 236
+      DockedLeft = 705
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213

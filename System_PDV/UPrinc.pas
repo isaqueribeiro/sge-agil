@@ -111,6 +111,7 @@ type
     procedure RegistrarRotinasMenu;
   public
     { Public declarations }
+    procedure ConfigurarRotuloBotoes;
   end;
 
 var
@@ -144,6 +145,11 @@ end;
 procedure TfrmPrinc.nmAboutClick(Sender: TObject);
 begin
   ShowAbout(Self);
+end;
+
+procedure TfrmPrinc.ConfigurarRotuloBotoes;
+begin
+  ;
 end;
 
 procedure TfrmPrinc.FormActivate(Sender: TObject);

@@ -1,10 +1,10 @@
 object frmGeRetornoBoleto: TfrmGeRetornoBoleto
   Left = 425
   Top = 253
-  Width = 928
-  Height = 480
   BorderIcons = [biSystemMenu]
   Caption = 'Retorno Boletos'
+  ClientHeight = 441
+  ClientWidth = 912
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,19 +23,21 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
-    Top = 399
+    Top = 398
     Width = 912
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 399
   end
   object Bevel5: TBevel
     Left = 0
-    Top = 438
+    Top = 437
     Width = 912
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 438
   end
   object pnlFiltro: TPanel
     Left = 0
@@ -128,7 +130,6 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         Width = 257
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         ItemIndex = 0
         TabOrder = 0
         Text = '000 - Configurar Boleto em Cadastro/Bancos'
@@ -189,7 +190,6 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         Width = 257
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         ItemIndex = 0
         TabOrder = 2
         Text = '000 - Configurar Forma de Pagamento'
@@ -203,7 +203,7 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
     Left = 0
     Top = 161
     Width = 912
-    Height = 238
+    Height = 237
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 4
@@ -245,7 +245,7 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
       Left = 4
       Top = 28
       Width = 904
-      Height = 206
+      Height = 205
       TabStop = False
       Align = alClient
       DataSource = DtsTitulos
@@ -277,6 +277,7 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         item
           Expanded = False
           FieldName = 'NossoNumero'
+          Title.Caption = 'Nosso Numero'
           Width = 100
           Visible = True
         end
@@ -331,6 +332,7 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         item
           Expanded = False
           FieldName = 'Cnpj'
+          Title.Caption = 'Cpf / Cnpj'
           Width = 120
           Visible = True
         end>
@@ -348,7 +350,7 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
   end
   object tlbBotoes: TPanel
     Left = 0
-    Top = 403
+    Top = 402
     Width = 912
     Height = 35
     Align = alBottom
@@ -384,12 +386,9 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
       Top = 0
       Width = 75
       Height = 35
-      Caption = '&Fechar'
-      TabOrder = 0
-      TabStop = False
-      OnClick = btnFecharClick
       Align = alLeft
-      Glyph.Data = {
+      Caption = '&Fechar'
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -440,18 +439,19 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 0
+      TabStop = False
+      OnClick = btnFecharClick
     end
     object btnCarregarRetorno: TcxButton
       Left = 83
       Top = 0
       Width = 118
       Height = 35
-      Caption = 'Carregar &Retorno'
-      TabOrder = 1
-      OnClick = btnCarregarRetornoClick
       Align = alLeft
-      Glyph.Data = {
+      Caption = 'Carregar &Retorno'
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -502,19 +502,19 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnCarregarRetornoClick
     end
     object btnConfirmarBaixa: TcxButton
       Left = 201
       Top = 0
       Width = 118
       Height = 35
+      Align = alLeft
       Caption = '&Confirmar Baixa'
       Enabled = False
-      TabOrder = 2
-      OnClick = btnConfirmarBaixaClick
-      Align = alLeft
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF00C0A8A06048306048306048
@@ -565,7 +565,9 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
         C0B0A0C0B0A0C0B0A0C0A8A0C0A8A000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF00ACACACACACACACACACACACACACACACA8A8A8A8A8A800
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 2
+      OnClick = btnConfirmarBaixaClick
     end
   end
   object UpdateLanc: TIBSQL
@@ -581,6 +583,21 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
     Top = 264
   end
   object CdsTitulos: TClientDataSet
+    PersistDataPacket.Data = {
+      870100009619E0BD01000000180000000F000000000003000000870106517569
+      74617201004900000001000557494454480200020001000B4E6F73736F4E756D
+      65726F01004900000001000557494454480200020014000D4461746150616761
+      6D656E746F04000600000000000956616C6F725061676F080004000000010007
+      535542545950450200490006004D6F6E6579000F4E756D65726F446F63756D65
+      6E746F0100490000000100055749445448020002001400074172717569766F01
+      0049000000010005574944544802000200FA0003416E6F02000100000000000A
+      4C616E63616D656E746F08000100000000000750617263656C61040001000000
+      00000542616E636F040001000000000006415061676172080004000000010007
+      535542545950450200490006004D6F6E6579000653616361646F010049000000
+      0100055749445448020002003C0004436E706A01004900000001000557494454
+      4802000200140008416E6F56656E64610400010000000000084E756D56656E64
+      6104000100000000000000}
+    Active = True
     Aggregates = <>
     AggregatesActive = True
     FieldDefs = <
@@ -661,7 +678,6 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
       Size = 1
     end
     object CdsTitulosNossoNumero: TStringField
-      DisplayLabel = 'Nosso N'#250'mero'
       FieldName = 'NossoNumero'
     end
     object CdsTitulosDataPagamento: TDateField
@@ -676,8 +692,6 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
       DisplayFormat = ',0.00'
     end
     object CdsTitulosNumeroDocumento: TStringField
-      Alignment = taCenter
-      DisplayLabel = 'Documento'
       FieldName = 'NumeroDocumento'
     end
     object CdsTitulosAno: TSmallintField
@@ -706,12 +720,10 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
       DisplayFormat = ',0.00'
     end
     object CdsTitulosSacado: TStringField
-      DisplayLabel = 'Cliente'
       FieldName = 'Sacado'
       Size = 60
     end
     object CdsTitulosCnpj: TStringField
-      DisplayLabel = 'CNPJ/CPF'
       FieldName = 'Cnpj'
     end
     object CdsTitulosAnoVenda: TIntegerField
@@ -728,6 +740,7 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
       FieldName = 'TotalAPagar'
       Active = True
       currency = True
+      DisplayName = ''
       Expression = 'SUM(APagar)'
     end
   end
@@ -739,12 +752,18 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
   object gFind: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     Left = 80
     Top = 265
   end
   object IbQryBancos: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    b.bco_cod'
@@ -1036,6 +1055,9 @@ object frmGeRetornoBoleto: TfrmGeRetornoBoleto
   object QryFormaPagto: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    fp.cod     as forma_pagto'

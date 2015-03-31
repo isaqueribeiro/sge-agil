@@ -143,6 +143,7 @@ begin
 
     ModalResult := mrOk;
 
+    frmPrinc.ConfigurarRotuloBotoes;
     if GetUserUpdatePassWord then
       frmPrinc.nmUsuarioAlterarSenhaClick( frmPrinc.BrBtnAlterarSenha );
   end

@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls, ToolWin, DBClient, 
   Provider, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
-  JvExMask, JvToolEdit, JvDBControls;
+  JvExMask, JvToolEdit, JvDBControls, dxSkinsCore, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
+  dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeCentroCusto = class(TfrmGrPadraoCadastro)
@@ -27,11 +34,11 @@ type
     dtsEmpresaLista: TDataSource;
     dbgEmpresaLista: TDBGrid;
     cdsEmpresaListaSELECIONAR: TIntegerField;
-    cdsEmpresaListaRZSOC: TStringField;
-    cdsEmpresaListaCENTRO_CUSTO: TIntegerField;
-    cdsEmpresaListaEMPRESA: TStringField;
-    cdsEmpresaListaCNPJ: TStringField;
     dbCliente: TJvDBComboEdit;
+    cdsEmpresaListaCNPJ: TWideStringField;
+    cdsEmpresaListaRZSOC: TWideStringField;
+    cdsEmpresaListaCENTRO_CUSTO: TIntegerField;
+    cdsEmpresaListaEMPRESA: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaCalcFields(DataSet: TDataSet);
     procedure dbClienteButtonClick(Sender: TObject);
@@ -115,6 +122,7 @@ begin
   NomeTabela     := 'TBCENTRO_CUSTO';
   CampoCodigo    := 'c.codigo';
   CampoDescricao := 'c.descricao';
+  CampoOrdenacao := CampoDescricao;
 
   fEmpresaDepartamento := EmptyStr;
 

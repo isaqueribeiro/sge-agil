@@ -712,7 +712,6 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
             Width = 257
             Height = 21
             Style = csDropDownList
-            ItemHeight = 13
             ItemIndex = 0
             TabOrder = 0
             Text = '001 - Banco do Brasil'
@@ -775,10 +774,7 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
       Width = 75
       Height = 31
       Caption = '&Fechar'
-      TabOrder = 0
-      TabStop = False
-      OnClick = btnFecharClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -829,7 +825,10 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 0
+      TabStop = False
+      OnClick = btnFecharClick
     end
     object btnGerarBoleto: TcxButton
       Left = 83
@@ -838,9 +837,7 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
       Height = 31
       Caption = 'Gerar Boletos'
       Enabled = False
-      TabOrder = 1
-      OnClick = btnGerarBoletoClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -891,14 +888,16 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnGerarBoletoClick
     end
   end
   object ImgList: TImageList
     Left = 16
     Top = 197
     Bitmap = {
-      494C010121002200040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010121002200080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000009000000001002000000000000090
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2096,6 +2095,9 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
   object IbQryClientes: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    c.cnpj'
@@ -2206,6 +2208,9 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
   object IbQryTitulos: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    r.anolanc'
@@ -2320,29 +2325,23 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
       Origin = 'TBCONTREC.CODBANCO'
       ProviderFlags = [pfInUpdate]
     end
-    object CdsTitulosNOSSONUMERO: TStringField
-      FieldName = 'NOSSONUMERO'
-      Origin = 'TBCONTREC.NOSSONUMERO'
-      ProviderFlags = [pfInUpdate]
-    end
-    object CdsTitulosCNPJ: TStringField
-      FieldName = 'CNPJ'
-      Origin = 'TBCONTREC.CNPJ'
-      ProviderFlags = [pfInUpdate]
-      Size = 18
-    end
-    object CdsTitulosTIPPAG: TStringField
-      FieldName = 'TIPPAG'
-      Origin = 'TBCONTREC.TIPPAG'
-      ProviderFlags = [pfInUpdate]
-      Size = 35
-    end
     object CdsTitulosDTEMISS: TDateField
       Alignment = taCenter
       FieldName = 'DTEMISS'
       Origin = 'TBCONTREC.DTEMISS'
       ProviderFlags = [pfInUpdate]
       DisplayFormat = 'dd/mm/yyyy'
+    end
+    object CdsTitulosNOSSONUMERO: TWideStringField
+      FieldName = 'NOSSONUMERO'
+    end
+    object CdsTitulosCNPJ: TWideStringField
+      FieldName = 'CNPJ'
+      Size = 18
+    end
+    object CdsTitulosTIPPAG: TWideStringField
+      FieldName = 'TIPPAG'
+      Size = 35
     end
     object CdsTitulosDTVENC: TDateField
       Alignment = taCenter
@@ -2410,20 +2409,16 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
     object CdsTitulosNUMVENDA: TIntegerField
       FieldName = 'NUMVENDA'
     end
-    object CdsTitulosSERIE: TStringField
+    object CdsTitulosSERIE: TWideStringField
       FieldName = 'SERIE'
-      ProviderFlags = []
       Size = 4
     end
     object CdsTitulosNFE: TLargeintField
       FieldName = 'NFE'
-      ProviderFlags = []
     end
-    object CdsTitulosGERAR: TStringField
+    object CdsTitulosGERAR: TWideStringField
       Alignment = taCenter
       FieldName = 'GERAR'
-      ProviderFlags = []
-      Required = True
       FixedChar = True
       Size = 1
     end
@@ -2535,6 +2530,9 @@ object frmGeGerarBoleto: TfrmGeGerarBoleto
   object IbQryBancos: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    b.bco_cod'

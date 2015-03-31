@@ -1,10 +1,10 @@
 object frmGeRemessaBoleto: TfrmGeRemessaBoleto
   Left = 394
   Top = 214
-  Width = 928
-  Height = 480
   BorderIcons = [biSystemMenu]
   Caption = 'Remessa Boletos'
+  ClientHeight = 441
+  ClientWidth = 912
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
@@ -23,19 +23,21 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
-    Top = 438
+    Top = 437
     Width = 912
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 438
   end
   object Bevel5: TBevel
     Left = 0
-    Top = 399
+    Top = 398
     Width = 912
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 399
   end
   object pnlFiltro: TPanel
     Left = 0
@@ -121,7 +123,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         Width = 257
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         ItemIndex = 0
         TabOrder = 0
         Text = '001 - Banco do Brasil'
@@ -198,6 +199,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         ImageKind = ikCustom
         NumGlyphs = 2
         PopupColor = clBtnFace
+        ShowNullDate = False
         TabOrder = 1
         OnChange = edInicioChange
       end
@@ -254,6 +256,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         ImageKind = ikCustom
         NumGlyphs = 2
         PopupColor = clBtnFace
+        ShowNullDate = False
         TabOrder = 2
         OnChange = edInicioChange
       end
@@ -263,7 +266,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
     Left = 0
     Top = 81
     Width = 912
-    Height = 318
+    Height = 317
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 4
@@ -303,7 +306,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       Left = 4
       Top = 28
       Width = 904
-      Height = 286
+      Height = 285
       TabStop = False
       Align = alClient
       DataSource = DtsTitulos
@@ -403,7 +406,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
   end
   object tlbBotoes: TPanel
     Left = 0
-    Top = 403
+    Top = 402
     Width = 912
     Height = 35
     Align = alBottom
@@ -447,12 +450,9 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       Top = 0
       Width = 75
       Height = 35
-      Caption = '&Fechar'
-      TabOrder = 0
-      TabStop = False
-      OnClick = btnFecharClick
       Align = alLeft
-      Glyph.Data = {
+      Caption = '&Fechar'
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -503,19 +503,20 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 0
+      TabStop = False
+      OnClick = btnFecharClick
     end
     object btnGerarRemessa: TcxButton
       Left = 83
       Top = 0
       Width = 118
       Height = 35
+      Align = alLeft
       Caption = '&Gerar Remessa'
       Enabled = False
-      TabOrder = 1
-      OnClick = btnGerarRemessaClick
-      Align = alLeft
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -566,7 +567,9 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      TabOrder = 1
+      OnClick = btnGerarRemessaClick
     end
     object chkEnviarCancelados: TCheckBox
       Left = 205
@@ -588,14 +591,10 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       Width = 75
       Height = 35
       Hint = 'Consultar hist'#243'rico de Remessas de Boletos'
+      Align = alRight
       Caption = '&Hist'#243'rico'
       Enabled = False
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-      TabStop = False
-      Align = alRight
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000C40E0000C40E0000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -646,12 +645,19 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         00FF0010151080808089C19888BF9686BD9283BA8E81B78A7EB4857BB08078AD
         7B76AA7773A77371A56F8595A58595A58595A50A121E6F8092A1AEBB9EACBA9B
         A9B798A6B495A3B2909FAE8C9BAB8998A88494A58191A27E8E9F}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 3
+      TabStop = False
     end
   end
   object IbQryTitulos: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    r.anolanc'
@@ -840,21 +846,15 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       Origin = 'TBCONTREC.CODBANCO'
       ProviderFlags = [pfInUpdate]
     end
-    object CdsTitulosNOSSONUMERO: TStringField
+    object CdsTitulosNOSSONUMERO: TWideStringField
       FieldName = 'NOSSONUMERO'
-      Origin = 'TBCONTREC.NOSSONUMERO'
-      ProviderFlags = [pfInUpdate]
     end
-    object CdsTitulosCNPJ: TStringField
+    object CdsTitulosCNPJ: TWideStringField
       FieldName = 'CNPJ'
-      Origin = 'TBCONTREC.CNPJ'
-      ProviderFlags = [pfInUpdate]
       Size = 18
     end
-    object CdsTitulosTIPPAG: TStringField
+    object CdsTitulosTIPPAG: TWideStringField
       FieldName = 'TIPPAG'
-      Origin = 'TBCONTREC.TIPPAG'
-      ProviderFlags = [pfInUpdate]
       Size = 35
     end
     object CdsTitulosDTEMISS: TDateField
@@ -924,15 +924,14 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       ProviderFlags = [pfInUpdate]
       DisplayFormat = 'dd/mm/yyyy'
     end
-    object CdsTitulosINSCEST: TStringField
+    object CdsTitulosINSCEST: TWideStringField
       FieldName = 'INSCEST'
     end
-    object CdsTitulosNOME: TStringField
+    object CdsTitulosNOME: TWideStringField
       FieldName = 'NOME'
-      Required = True
-      Size = 60
+      Size = 100
     end
-    object CdsTitulosFONE: TStringField
+    object CdsTitulosFONE: TWideStringField
       FieldName = 'FONE'
       Size = 11
     end
@@ -944,9 +943,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       FieldName = 'NUMVENDA'
       ProviderFlags = []
     end
-    object CdsTitulosSERIE: TStringField
+    object CdsTitulosSERIE: TWideStringField
       FieldName = 'SERIE'
-      ProviderFlags = []
       Size = 4
     end
     object CdsTitulosNFE: TLargeintField
@@ -959,48 +957,38 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
     object CdsTitulosNumeroDocumento: TStringField
       FieldKind = fkInternalCalc
       FieldName = 'NumeroDocumento'
-      ProviderFlags = []
-      Size = 15
     end
-    object CdsTitulosENDER: TStringField
+    object CdsTitulosENDER: TWideStringField
       FieldName = 'ENDER'
-      ProviderFlags = []
       Size = 262
     end
-    object CdsTitulosENDER_DESC: TStringField
+    object CdsTitulosENDER_DESC: TWideStringField
       FieldName = 'ENDER_DESC'
-      ProviderFlags = []
       Size = 250
     end
-    object CdsTitulosENDER_NUM: TStringField
+    object CdsTitulosENDER_NUM: TWideStringField
       FieldName = 'ENDER_NUM'
-      ProviderFlags = []
       Size = 10
     end
-    object CdsTitulosBAIRRO: TStringField
+    object CdsTitulosBAIRRO: TWideStringField
       FieldName = 'BAIRRO'
-      ProviderFlags = []
       Size = 25
     end
-    object CdsTitulosCIDADE: TStringField
+    object CdsTitulosCIDADE: TWideStringField
       FieldName = 'CIDADE'
-      ProviderFlags = []
       Size = 30
     end
-    object CdsTitulosUF: TStringField
+    object CdsTitulosUF: TWideStringField
       FieldName = 'UF'
-      ProviderFlags = []
       FixedChar = True
       Size = 2
     end
-    object CdsTitulosCEP: TStringField
+    object CdsTitulosCEP: TWideStringField
       FieldName = 'CEP'
-      ProviderFlags = []
       Size = 8
     end
-    object CdsTitulosEMAIL: TStringField
+    object CdsTitulosEMAIL: TWideStringField
       FieldName = 'EMAIL'
-      ProviderFlags = []
       Size = 60
     end
   end
@@ -1022,7 +1010,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
     Top = 264
   end
   object frrRemessa: TfrxReport
-    Version = '4.9.72'
+    Version = '5.1.9'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'
     PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
@@ -1077,6 +1065,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object bndReportTitle: TfrxReportTitle
+        FillType = ftBrush
         Height = 90.708720000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
@@ -1085,15 +1074,14 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 18.897650000000000000
           Width = 188.976500000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           HAlign = haRight
-          Memo.UTF8 = (
-            'P'#195#161'gina [Page#] / [TotalPages#]')
+          Memo.UTF8W = (
+            'P'#225'gina [Page#] / [TotalPages#]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1101,15 +1089,14 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         object Memo2: TfrxMemoView
           Width = 718.110700000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           HAlign = haRight
-          Memo.UTF8 = (
-            'Rela'#195#167#195#163'o de T'#195#173'tulos do Arquivos de Remessa')
+          Memo.UTF8W = (
+            'Rela'#231#227'o de T'#237'tulos do Arquivos de Remessa')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1117,14 +1104,13 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 37.795300000000000000
           Width = 718.110700000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Banco: [Banco]')
           ParentFont = False
           VAlign = vaCenter
@@ -1133,7 +1119,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 60.472480000000000000
           Width = 718.110700000000000000
           Height = 26.456710000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
@@ -1141,13 +1126,14 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftBottom]
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Arquivo: [Arquivo]')
           ParentFont = False
           VAlign = vaCenter
         end
       end
       object bndMasterData: TfrxMasterData
+        FillType = ftBrush
         Height = 18.897650000000000000
         Top = 215.433210000000000000
         Width = 718.110700000000000000
@@ -1157,7 +1143,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         object RemessaCNPJ: TfrxMemoView
           Width = 102.047310000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataField = 'CNPJ'
           DataSet = frdRemessa
           DataSetName = 'Remessa'
@@ -1172,7 +1157,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[Remessa."CNPJ"]')
           ParentFont = False
           WordWrap = False
@@ -1182,7 +1168,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Left = 102.047310000000000000
           Width = 287.244280000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1196,7 +1181,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[Remessa."Sacado"]')
           ParentFont = False
           WordWrap = False
@@ -1206,7 +1192,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Left = 389.291590000000000000
           Width = 90.708720000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1221,7 +1206,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[Remessa."Documento"]')
           ParentFont = False
           WordWrap = False
@@ -1231,7 +1217,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Left = 563.149970000000000000
           Width = 64.252010000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1246,7 +1231,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[Remessa."Data Vencimento"]')
           ParentFont = False
           WordWrap = False
@@ -1256,7 +1242,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Left = 627.401980000000000000
           Width = 90.708720000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1271,7 +1256,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[FormatFloat('#39'###,###,##0.00'#39',<Remessa."Valor Documento">)] ')
           ParentFont = False
           WordWrap = False
@@ -1281,7 +1267,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Left = 480.000310000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1296,7 +1281,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             '[Remessa."Nosso Numero"]')
           ParentFont = False
           WordWrap = False
@@ -1304,11 +1290,13 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
         end
       end
       object bndPageFooter: TfrxPageFooter
+        FillType = ftBrush
         Height = 7.559060000000000000
         Top = 362.834880000000000000
         Width = 718.110700000000000000
       end
       object bndHeader: TfrxHeader
+        FillType = ftBrush
         Height = 22.677180000000000000
         Top = 170.078850000000000000
         Width = 718.110700000000000000
@@ -1316,8 +1304,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 102.047310000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1327,7 +1313,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             'CNPJ')
           ParentFont = False
           WordWrap = False
@@ -1338,8 +1325,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 287.244280000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1349,7 +1334,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
+          Fill.BackColor = clBtnFace
+          Memo.UTF8W = (
             ' Sacado')
           ParentFont = False
           WordWrap = False
@@ -1360,8 +1346,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 90.708720000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1371,8 +1355,9 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Documento')
           ParentFont = False
           WordWrap = False
@@ -1383,8 +1368,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 64.252010000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1394,8 +1377,9 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haCenter
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Vencimento')
           ParentFont = False
           WordWrap = False
@@ -1406,8 +1390,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 90.708720000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1417,8 +1399,9 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             'Valor Documento')
           ParentFont = False
           WordWrap = False
@@ -1429,8 +1412,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 83.149660000000000000
           Height = 18.897650000000000000
-          ShowHint = False
-          Color = clBtnFace
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1440,15 +1421,17 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Fill.BackColor = clBtnFace
           HAlign = haCenter
-          Memo.UTF8 = (
-            'Nosso N'#195#186'mero')
+          Memo.UTF8W = (
+            'Nosso N'#250'mero')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
       end
       object bndReportSummary: TfrxReportSummary
+        FillType = ftBrush
         Height = 45.354360000000000000
         Top = 294.803340000000000000
         Width = 718.110700000000000000
@@ -1457,7 +1440,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 154.960730000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           DisplayFormat.FormatStr = '%2.2n'
           DisplayFormat.Kind = fkNumeric
           Font.Charset = DEFAULT_CHARSET
@@ -1468,7 +1450,7 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
-          Memo.UTF8 = (
+          Memo.UTF8W = (
             '[SUM(<Remessa."Valor Documento">,bndMasterData,2)]')
           ParentFont = False
           VAlign = vaCenter
@@ -1478,7 +1460,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 3.779530000000000000
           Width = 563.149970000000000000
           Height = 22.677180000000000000
-          ShowHint = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1486,8 +1467,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8 = (
-            '[COUNT(bndMasterData,2)] lan'#195#167'amento(s) presente(s) no arquivo')
+          Memo.UTF8W = (
+            '[COUNT(bndMasterData,2)] lan'#231'amento(s) presente(s) no arquivo')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -1495,7 +1476,6 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Top = 26.456710000000000000
           Width = 718.110700000000000000
           Height = 18.897650000000000000
-          ShowHint = False
           DataSet = frdRemessa
           DataSetName = 'Remessa'
           Font.Charset = DEFAULT_CHARSET
@@ -1509,7 +1489,8 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
           Highlight.Condition = '<Remessa."Situacao">=0'
-          Memo.UTF8 = (
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
             ' * Boleto(s) cancelado(s).')
           ParentFont = False
           WordWrap = False
@@ -1579,6 +1560,9 @@ object frmGeRemessaBoleto: TfrmGeRemessaBoleto
   object IbQryBancos: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    b.bco_cod'
