@@ -511,16 +511,13 @@ begin
   if not DataBaseOnLine then
     Exit;
 
-  stbMain.Panels.Items[2].Text  := Format('Licenciado a empresa %s, %s', [gLicencaSistema.Empresa, sCNPJ]);
-  BrBtnAlterarSenha.Caption := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
-  BrBtnAlterarSenha.Hint    := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
+  stbMain.Panels.Items[2].Text := Format('Licenciado a empresa %s, %s', [gLicencaSistema.Empresa, sCNPJ]);
+  BrBtnAlterarSenha.Caption    := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
+  BrBtnAlterarSenha.Hint       := Format('Alteração de Senha (%s)', [gUsuarioLogado.Login]);
 
   Self.WindowState := wsMaximized;
 
   BrBtnRequisicaoCliente.Enabled := GetEstoqueSateliteEmpresa( gUsuarioLogado.Empresa );
-
-  if GetUserUpdatePassWord then
-    nmUsuarioAlterarSenhaClick( BrBtnAlterarSenha );
 
   if not DMBusiness.LiberarUsoLicenca(GetDateDB, True) then
   begin
@@ -530,7 +527,7 @@ begin
     RbnTabFinanceiro.Visible := False;
   end;
 
-  if not SetAcessoEstacao(DMBusiness.IdIPWatch.LocalName) then
+  if not SetAcessoEstacao(GetHostNameLocal) then
   begin
     ShowError('Estação de trabalho não registrada no sistema!');
 
@@ -551,6 +548,14 @@ begin
     BrBtnTesouraria.Enabled    := False;
     BrBtnContaAPagar.Enabled   := False;
     BrBtnContaAReceber.Enabled := False;
+  end;
+
+  if not gLicencaSistema.UsarSGI then
+  begin
+    ShowWarning(
+      'A licença atual não permite que este sistema seja utilizado!' + #13 +
+      'Favor entrar em contato com o fornecedor do software.');
+    Application.Terminate;
   end;
 end;
 

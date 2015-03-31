@@ -12,7 +12,7 @@ uses
   FuncoesFormulario, UConstantesDGE, IBUpdateSQL, DBClient,
   Provider, Dialogs, Registry, frxChart, frxCross, frxRich, frxExportMail,
   frxExportImage, frxExportRTF, frxExportXLS, frxExportPDF, ACBrBase,
-  ACBrValidador;
+  ACBrValidador, ACBrMail;
 
 type
   TSistema = record
@@ -130,6 +130,7 @@ type
     ibdtstUsersVENDEDOR: TIntegerField;
     fastReport: TfrxReport;
     ACBrValidador: TACBrValidador;
+    ACBrMail: TACBrMail;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -3461,6 +3462,28 @@ begin
 
     Signature.Clear;
     Signature.Add(sAssinaturaTxt);
+  end;
+
+  // Configurar conta de e-mail no ACBrMail
+
+  with ACBrMail do
+  begin
+    From     := gContaEmail.Conta;
+    FromName := GetRazaoSocialEmpresa( sCNPJEmitente );
+    Host     := gContaEmail.Servidor_SMTP;
+    Username := gContaEmail.Conta;
+    Password := gContaEmail.Senha;
+    Port     := IntToStr(gContaEmail.Porta_SMTP);
+    SetSSL   := gContaEmail.RequerAutenticacao;
+    IsHTML   := False;
+    Subject  := Trim(sAssunto);
+    AddAddress( AnsiLowerCase(Trim(sDestinatario)) );
+
+    Body.BeginUpdate;
+    Body.Clear;
+    Body.Add( sMensagem );
+    Body.Add( sAssinaturaTxt );
+    Body.EndUpdate;
   end;
 end;
 

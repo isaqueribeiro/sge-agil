@@ -1,27 +1,31 @@
 inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   Left = 386
   Top = 208
-  Width = 1132
-  Height = 687
   ActiveControl = edPesquisar
   Caption = 'Consultar Apropria'#231#227'o de Estoque Atual'
+  ClientHeight = 648
+  ClientWidth = 1116
+  ExplicitWidth = 1132
+  ExplicitHeight = 687
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
-    Top = 645
+    Top = 644
     Width = 1116
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 645
   end
   object Bevel3: TBevel
     Left = 0
-    Top = 606
+    Top = 605
     Width = 1116
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 606
   end
   object pnlPesquisa: TPanel
     Left = 0
@@ -88,7 +92,6 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Width = 193
         Height = 21
         Style = csDropDownList
-        ItemHeight = 13
         TabOrder = 0
         OnChange = edTipoFiltroChange
         Items.Strings = (
@@ -176,11 +179,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Height = 22
         Hint = 'Executar Pesquisa'
         Anchors = [akTop, akRight]
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 4
-        OnClick = BtnPesquisarClick
-        Glyph.Data = {
+        OptionsImage.Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           20000000000000040000C30E0000C30E00000000000000000000000000000000
           00000000000000000000000000000000000000000000AC6B2CBAAC6B2CCC0000
@@ -215,9 +214,13 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
           6EFF707070FF707070FF6E6E6EFF6E6E6EFF6E6E6E7D00000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
+        ParentShowHint = False
+        ShowHint = True
         SpeedButtonOptions.CanBeFocused = False
         SpeedButtonOptions.Flat = True
         SpeedButtonOptions.Transparent = True
+        TabOrder = 4
+        OnClick = BtnPesquisarClick
       end
     end
   end
@@ -225,7 +228,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
     Left = 0
     Top = 81
     Width = 1116
-    Height = 525
+    Height = 524
     ActivePage = TbsProduto
     Align = alClient
     Font.Charset = ANSI_CHARSET
@@ -242,7 +245,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Left = 0
         Top = 0
         Width = 1108
-        Height = 534
+        Height = 496
         Hint = 
           'Para carregar os produtos do grupo, basta'#13#10'executar "dois clique' +
           's" no registro.'
@@ -250,7 +253,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         TabOrder = 0
         object dbgGrupoTbl: TcxGridDBBandedTableView
           OnDblClick = dbgGrupoTblDblClick
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsGrupo
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -435,7 +438,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Left = 0
         Top = 0
         Width = 1108
-        Height = 534
+        Height = 496
         Hint = 
           'Para carregar os produtos do grupo, basta'#13#10'executar "dois clique' +
           's" no registro.'
@@ -443,7 +446,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         TabOrder = 0
         object dbgFabTbl: TcxGridDBBandedTableView
           OnDblClick = dbgFabTblDblClick
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsFabricante
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -637,11 +640,11 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         Left = 0
         Top = 0
         Width = 1108
-        Height = 497
+        Height = 496
         Align = alClient
         TabOrder = 0
         object dbgProdutoTbl: TcxGridDBBandedTableView
-          NavigatorButtons.ConfirmDelete = False
+          Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dsProduto
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -840,7 +843,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   end
   object tlbBotoes: TPanel
     Left = 0
-    Top = 610
+    Top = 609
     Width = 1116
     Height = 35
     Align = alBottom
@@ -870,14 +873,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       Width = 75
       Height = 35
       Hint = 'Exportar dados para planilha'
-      Caption = 'Exportar'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-      TabStop = False
-      OnClick = btBtnExportarClick
       Align = alLeft
-      Glyph.Data = {
+      Caption = 'Exportar'
+      OptionsImage.Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000C20E0000C20E00000000000000000000FFFFFFFFFFFF
         FFFFFF6349356349356349356349356349356349356349356349356349356349
@@ -904,6 +902,11 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         5AA76452A15E489A593F9352358C4C2C8546247F411D7A3DFEF7F3FDF4EDC0AB
         9C644A36FAFAFAFFFFFFFFFFFFFFFFFFFFFFFFD8C2B2D7C1B1D6C0B0D4BEAED2
         BDADD1BAABCFB9AACDB6A8CBB6A6CAB4A5FBFAFAFFFFFFFFFFFF}
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      TabStop = False
+      OnClick = btBtnExportarClick
     end
     object btBtnEnviarEmail: TcxButton
       Tag = 2
@@ -912,14 +915,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       Width = 75
       Height = 35
       Hint = 'Exportar/Enviar e-mail'
-      Caption = 'E-mail'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
-      TabStop = False
-      OnClick = btBtnEnviarEmailClick
       Align = alLeft
-      Glyph.Data = {
+      Caption = 'E-mail'
+      OptionsImage.Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         180000000000000300000000000000000000000000000000000000FF00B29B96
         604830604830605040A7908700FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -946,6 +944,11 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         00FF0000FF0000FF00EDE3E1D0B8B0F0F0F0FFFFFFFFFFFFFFF8F0F0F0F0B0A0
         90DED0CE00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00EEE5E3C0
         B0A0C0B0A0C0B0A0C0B0A0C0B0A0E8DDDB00FF0000FF0000FF00}
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      TabStop = False
+      OnClick = btBtnEnviarEmailClick
     end
     object btBtnAtualizarCusto: TcxButton
       Tag = 3
@@ -954,14 +957,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       Width = 120
       Height = 35
       Hint = 'Atualizar Valor de Custo (R$)'
-      Caption = '&Atualizar Custo'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 3
-      TabStop = False
-      OnClick = btBtnAtualizarCustoClick
       Align = alRight
-      Glyph.Data = {
+      Caption = '&Atualizar Custo'
+      OptionsImage.Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         20000000000000040000C30E0000C30E00000000000000000000000000000000
         0000000000000000000000000000000000003249CCFF00000000000000000000
@@ -996,6 +994,11 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         CCFF334CCCFF334CCCFF334CCCFD334CCC5D334CCCE1334CCCFF000000000000
         0000000000000000000000000000000000000000000000000000000000003249
         CCFF334CCCFF334CCCFF334CCCFF334CCCFF334CCCFF334CCC92}
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 3
+      TabStop = False
+      OnClick = btBtnAtualizarCustoClick
     end
     object btbtnSelecionar: TcxButton
       Tag = 5
@@ -1004,14 +1007,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       Width = 120
       Height = 35
       Hint = 'Selecionar registro'
-      Caption = 'Selecionar (F2)'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-      Visible = False
-      OnClick = btbtnSelecionarClick
       Align = alRight
-      Glyph.Data = {
+      Caption = 'Selecionar (F2)'
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF002D2D2D2D2D2D2D2D2D2D2D
@@ -1062,7 +1060,12 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
         0000FF0000FF0000FF00D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4
         D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4D4}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      Visible = False
+      OnClick = btbtnSelecionarClick
     end
   end
   object svdArquivo: TSaveDialog
@@ -1073,9 +1076,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
     Top = 200
   end
   object smtpEmail: TIdSMTP
-    MaxLineAction = maException
-    Port = 25
-    AuthenticationType = atNone
+    SASLMechanisms = <>
     Left = 312
     Top = 200
   end
@@ -1083,20 +1084,15 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
     AttachmentEncoding = 'MIME'
     BccList = <>
     CCList = <>
-    DeleteTempFiles = False
     Encoding = meMIME
+    FromList = <
+      item
+      end>
     Priority = mpHigh
     Recipients = <>
     ReplyTo = <>
+    ConvertPreamble = True
     Left = 344
-    Top = 200
-  end
-  object IdSSLIOHandlerSocket: TIdSSLIOHandlerSocket
-    SSLOptions.Method = sslvSSLv2
-    SSLOptions.Mode = sslmClient
-    SSLOptions.VerifyMode = []
-    SSLOptions.VerifyDepth = 0
-    Left = 376
     Top = 200
   end
   object StyleRepository: TcxStyleRepository
@@ -1137,6 +1133,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   object QryGrupo: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    p.codgrupo as grupo_cod'
@@ -1180,6 +1179,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   object QryFabricante: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    p.codfabricante as fabricante_cod'
@@ -1223,6 +1225,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   object QryProduto: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    e.produto'
@@ -1300,6 +1305,9 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   object QryTotal: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    count(e.lote_id) as lotes'

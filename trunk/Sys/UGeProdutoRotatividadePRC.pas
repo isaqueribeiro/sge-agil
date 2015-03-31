@@ -6,7 +6,7 @@ uses
   UGrPadrao,
   
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, BarMenus, RxSpeedBar, RXCtrls, ExtCtrls, jpeg,
+  Dialogs, Menus, ComCtrls, ExtCtrls, jpeg,
   cxGraphics, dxGDIPlusClasses, cxLookAndFeelPainters,
   cxControls, cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData,
   cxDataStorage, cxEdit, DB, cxDBData, StdCtrls, IdIOHandler,
@@ -20,7 +20,12 @@ uses
   dxSkinsCore, dxSkinMcSkin, dxSkinMoneyTwins, dxSkinOffice2007Black,
   dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
   dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
-  dxSkinOffice2010Silver;
+  dxSkinOffice2010Silver, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, cxNavigator,
+  IdExplicitTLSClientServerBase, IdSMTPBase;
 
 type
   TFrmGeProdutoRotatividadePRC = class(TfrmGrPadrao)
@@ -426,7 +431,6 @@ type
     CdsFabricanteCODIGO: TIntegerField;
     smtpEmail: TIdSMTP;
     msgEmail: TIdMessage;
-    IdSSLIOHandlerSocket: TIdSSLIOHandlerSocket;
     CdsProdutoQTDE: TBCDField;
     CdsGrupoQTDE: TBCDField;
     CdsFabricanteQTDE: TBCDField;
@@ -1046,6 +1050,7 @@ begin
       sAssunto := FormatDateTime('dd/mm/yyyy', Date) + ' - Rotatividade de Produtos (' + edTipoProcesso.Text + ')';;
       CarregarConfiguracoesEmpresa(gUsuarioLogado.Empresa, sAssunto, sAssinaturaHtml, sAssinaturaTxt);
 
+      (* Bloco de código descontinuado por sua compilação integral ser possível apenas no Delpi 7
       smtpEmail.Username    := gContaEmail.Conta;
       smtpEmail.Password    := gContaEmail.Senha;
       smtpEmail.Host        := gContaEmail.Servidor_SMTP;
@@ -1076,6 +1081,15 @@ begin
       smtpEmail.Connect;
       smtpEmail.Authenticate;
       smtpEmail.Send(msgEmail);
+      *)
+
+      with DMBusiness, ACBrMail do
+      begin
+        ConfigurarEmail(gUsuarioLogado.Empresa, sEmailTo, sAssunto, gContaEmail.Mensagem_Padrao);
+        AddAttachment(sFileNameHtml);
+        AddAttachment(sFileNameXls);
+        Send;
+      end;
 
       ShowInformation('E-mail enviado com sucesso!' + #13 + 'Arquivo(s) anexo(s) : ' + #13 + sFileNameHtml + #13 + sFileNameXls);
     except
