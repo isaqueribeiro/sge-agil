@@ -16,7 +16,8 @@ uses
   ACBrBoleto, ACBrBoletoFCFR, frxExportImage, ACBrValidador, ACBrNFeDANFEFR,
   ACBrECF, ACBrRFD, ACBrAAC, ACBrEAD, ACBrECFVirtual,
   ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, ACBrSATExtratoClass,
-  ACBrSATExtratoESCPOS, ACBrNFeDANFeESCPOS, ACBrSAT;
+  ACBrSATExtratoESCPOS, ACBrNFeDANFeESCPOS, ACBrSAT, Xml.xmldom, Xml.XMLIntf,
+  Xml.XMLDoc;
 
 type
   TTipoDANFE = (tipoDANFEFast, tipoDANFE_ESCPOS); 
@@ -369,6 +370,7 @@ type
     qryDuplicatasDTREC: TDateField;
     frrNFeRetrato: TfrxReport;
     frrNFePaisagem: TfrxReport;
+    ValidarXML: TXMLDocument;
     procedure SelecionarCertificado(Sender : TObject);
     procedure TestarServico(Sender : TObject);
     procedure DataModuleCreate(Sender: TObject);
@@ -506,7 +508,7 @@ type
 var
   DMNFe: TDMNFe;
 
-  procedure CorrigirXML_NFe(sFileNameXML : String);
+  procedure CorrigirXML_NFe(aString : WideString; sFileNameXML : String);
 
   function GetDiretorioNFe : String;
 
@@ -556,20 +558,48 @@ uses
 
 {$R *.dfm}
 
-procedure CorrigirXML_NFe (sFileNameXML : String);
+procedure CorrigirXML_NFe (aString : WideString; sFileNameXML : String);
 var
-  ArquivoXML : TStringList;
+//  ArquivoXML  : TStringList;
+  S : WideString;
+  xmlFile ,
+  xmlNFe  : TStringStream;
 begin
+  xmlFile := TStringStream.Create;
+  xmlNFe  := TStringStream.Create(aString);
+  try
+    if Trim(aString) = EmptyWideStr then
+    begin
+      // Desenvolver rotina de correção de conteúdo no arquivo
+      xmlFile.LoadFromFile(sFileNameXML);
+      S := EmptyWideStr;
+      //...
+    end
+    else
+    begin
+      aString := StringReplace(aString, NFE_TAG_PROTNFE_ERROR, NFE_TAG_PROTNFE_FEET, [rfReplaceAll]);
+
+      xmlNFe.WriteString(aString);
+      xmlNFe.SaveToFile(sFileNameXML);
+    end;
+  finally
+    xmlNFe.Free;
+  end;
+
+  // Blodo de código descontinuado por não funcionar no Delphi XE7
+(*
   if ( FileExists(sFileNameXML) ) then
   begin
+
     ArquivoXML := TStringList.Create;
-    ArquivoXML.LoadFromFile( sFileNameXML );
+    ArquivoXML.LoadFromFile( sFileNameXML, TEncoding.UTF8 );
 
     ArquivoXML.Text := StringReplace(ArquivoXML.Text, NFE_TAG_PROTNFE_ERROR, NFE_TAG_PROTNFE_FEET, [rfReplaceAll]);
 
     ArquivoXML.SaveToFile(sFileNameXML);
     ArquivoXML.Free;
   end;
+*)
 end;
 
 procedure RemoverAcentos_ArquivoTexto (sFileName : String);
@@ -1521,7 +1551,7 @@ begin
 
       // Numero do Lote de Envio
       iNumeroLote := StrToInt(FormatDateTime('yymmddhhmm', GetDateTimeDB));
-      if not NotasFiscais.LoadFromFile( FileNameXML ) then
+      if not NotasFiscais.LoadFromString( qryCalculoImposto.FieldByName('XML_NFE').AsWideString ) then
         raise Exception.Create('Não foi possível carregar o XML da Nota Fiscal Eletrônica correspondente!' + #13 + FileNameXML);
 
       // Criar o Cancelamento
@@ -1635,7 +1665,7 @@ begin
 
   try
 
-    LerConfiguracao(sCNPJEmitente);
+    LerConfiguracao(sCNPJEmitente, tipoDANFEFast);
 
     AbrirEmitente( sCNPJEmitente );
     AbrirDestinatario( iCodigoCliente );
@@ -1651,7 +1681,7 @@ begin
 
     TMemoField(qryCalculoImposto.FieldByName('XML_NFE')).SaveToFile( FileNameXML );
 
-    CorrigirXML_NFe( FileNameXML );
+    CorrigirXML_NFe( qryCalculoImposto.FieldByName('XML_NFE').AsWideString, FileNameXML );
 
     if not FilesExists(FileNameXML) then
       raise Exception.Create(Format('Arquivo %s não encontrado.', [QuotedStr(FileNameXML)]));
@@ -1662,7 +1692,7 @@ begin
       Configuracoes.Geral.VersaoDF := TpcnVersaoDF(qryNFeEmitidaVERSAO.AsInteger);
 
       NotasFiscais.Clear;
-      NotasFiscais.LoadFromFile( FileNameXML );
+      NotasFiscais.LoadFromString(qryCalculoImposto.FieldByName('XML_NFE').AsWideString);
 
       if NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC then
       begin
@@ -2952,7 +2982,7 @@ begin
 
       TMemoField(qryCalculoImposto.FieldByName('XML_NFE')).SaveToFile( sFileNameXML );
 
-      CorrigirXML_NFe( sFileNameXML );
+      CorrigirXML_NFe( qryCalculoImposto.FieldByName('XML_NFE').AsWideString, sFileNameXML );
 
       if not FilesExists(sFileNameXML) then
         raise Exception.Create(Format('Arquivo %s não encontrado.', [QuotedStr(sFileNameXML)]));
@@ -2963,7 +2993,7 @@ begin
         Configuracoes.Geral.VersaoDF := TpcnVersaoDF(qryNFeEmitidaVERSAO.AsInteger);
 
         NotasFiscais.Clear;
-        NotasFiscais.LoadFromFile( sFileNameXML );
+        NotasFiscais.LoadFromString( qryCalculoImposto.FieldByName('XML_NFE').AsWideString );
 
         // Montar identificação do documento para título de e-mail
 
@@ -3867,7 +3897,7 @@ begin
       Configuracoes.Geral.VersaoDF := TpcnVersaoDF(qryNFeEmitidaEntradaVERSAO.AsInteger);
 
       NotasFiscais.Clear;
-      NotasFiscais.LoadFromFile( FileNameXML );
+      NotasFiscais.LoadFromString( qryEntradaCalculoImposto.FieldByName('XML_NFE').AsWideString );
 
       if NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC then
       begin
@@ -3982,7 +4012,7 @@ begin
 
       // Numero do Lote de Envio
       iNumeroLote := StrToInt(FormatDateTime('yymmddhhmm', GetDateTimeDB));
-      if not NotasFiscais.LoadFromFile( FileNameXML ) then
+      if not NotasFiscais.LoadFromString( qryEntradaCalculoImposto.FieldByName('XML_NFE').AsWideString ) then
         raise Exception.Create('Não foi possível carregar o XML da Nota Fiscal Eletrônica correspondente!' + #13 + FileNameXML);
 
       // Criar o Cancelamento
@@ -4720,7 +4750,7 @@ begin
         qryNFeEmitidaXML_FILE.SaveToFile( sFileNameXML );
 
         NotasFiscais.Clear;
-        if not NotasFiscais.LoadFromFile( sFileNameXML ) then
+        if not NotasFiscais.LoadFromString( qryNFeEmitidaXML_FILE.AsWideString ) then
           raise Exception.Create('Não foi possível carregar o XML da Nota Fiscal Eletrônica correspondente!' + #13 + sFileNameXML);
 
         // Numero do Lote de Envio
@@ -5676,7 +5706,7 @@ begin
 
     TMemoField(qryCalculoImposto.FieldByName('XML_NFE')).SaveToFile( FileNameXML );
 
-    CorrigirXML_NFe( FileNameXML );
+    CorrigirXML_NFe( qryCalculoImposto.FieldByName('XML_NFE').AsWideString, FileNameXML );
     RemoverAcentos_ArquivoTexto( FileNameXML );
 
     if not FilesExists(FileNameXML) then
@@ -5688,7 +5718,7 @@ begin
       Configuracoes.Geral.VersaoDF := TpcnVersaoDF(qryNFeEmitidaVERSAO.AsInteger);
 
       NotasFiscais.Clear;
-      NotasFiscais.LoadFromFile( FileNameXML );
+      NotasFiscais.LoadFromString( qryCalculoImposto.FieldByName('XML_NFE').AsWideString );
 
       if ACBrNFe.NotasFiscais.Count <= 0 then
         raise Exception.Create('Nenhuma Nota Fiscal de Consumidor foi selecionada!');
@@ -5812,7 +5842,7 @@ begin
     ForceDirectories( ExtractFilePath(sFileNameXML) );
     TMemoField(qryCalculoImposto.FieldByName('XML_NFE')).SaveToFile( sFileNameXML );
 
-    CorrigirXML_NFe( sFileNameXML );
+    CorrigirXML_NFe( qryCalculoImposto.FieldByName('XML_NFE').AsWideString, sFileNameXML );
     RemoverAcentos_ArquivoTexto( sFileNameXML );
 
     if FilesExists(sFileNameXML) then
@@ -5822,7 +5852,7 @@ begin
         Configuracoes.Geral.VersaoDF := TpcnVersaoDF(qryNFeEmitidaVERSAO.AsInteger);
 
         NotasFiscais.Clear;
-        NotasFiscais.LoadFromFile( sFileNameXML );
+        NotasFiscais.LoadFromString( qryCalculoImposto.FieldByName('XML_NFE').AsWideString );
       end;
   end;
 

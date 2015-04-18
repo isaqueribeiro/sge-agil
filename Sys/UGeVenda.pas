@@ -583,7 +583,6 @@ begin
       RotinaID := ROTINA_MOV_VENDA_ID;
   end;
 
-  pgcMaisDados.Height := 150;
   DisplayFormatCodigo := '###0000000';
 
   NomeTabela     := 'TBVENDAS';
@@ -864,12 +863,16 @@ begin
       Close;
       ParamByName('Codigo').AsInteger := Codigo;
       Open;
+
       if not IsEmpty then
       begin
         cdsTabelaItensCODPROD.AsString   := FieldByName('Cod').AsString;
         cdsTabelaItensDESCRI.AsString    := FieldByName('Descri').AsString;
         cdsTabelaItensDESCRI_APRESENTACAO.AsString := FieldByName('Descri_apresentacao').AsString;
         cdsTabelaItensUNP_SIGLA.AsString := FieldByName('Unp_sigla').AsString;
+
+        if not qryCFOP.Active then
+          CarregarDadosCFOP( FieldByName('Codcfop').AsInteger );
 
         if ( FieldByName('Codunidade').AsInteger > 0 ) then
           cdsTabelaItensUNID_COD.AsInteger   := FieldByName('Codunidade').AsInteger;
@@ -1863,7 +1866,7 @@ begin
 
         if ( FileExists(sFileNameXML) ) then
         begin
-          CorrigirXML_NFe(sFileNameXML);
+          CorrigirXML_NFe(EmptyWideStr, sFileNameXML);
 
           qryNFEXML_FILENAME.Value := ExtractFileName( sFileNameXML );
           qryNFEXML_FILE.LoadFromFile( sFileNameXML );

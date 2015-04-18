@@ -265,8 +265,10 @@ type
     procedure nmInventarioMaterialClick(Sender: TObject);
     procedure TmrMonitorarTimer(Sender: TObject);
     procedure mnRelatorioEstoqueProdutoClick(Sender: TObject);
-    procedure nmSolicitacaoCompraClick(Sender: TObject);
     procedure mnRelatorioEstoqueApropriacaoClick(Sender: TObject);
+    procedure mnRelatorioRequsicaoAlmoxClick(Sender: TObject);
+    procedure nmSolicitacaoCompraClick(Sender: TObject);
+    procedure BrBtnRelatorioEstoqueReqClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -319,6 +321,12 @@ begin
     ShowInformation('Usuário sem permissão de acesso para esta rotina.' + #13 + 'Favor entrar em contato com suporte.')
   else
     FormFunction.ShowModalForm(Self, 'frmGeEmpresa');
+end;
+
+procedure TfrmPrinc.BrBtnRelatorioEstoqueReqClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_REQ_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeRequisicaoAlmoxImpressao');
 end;
 
 procedure TfrmPrinc.btnClienteClick(Sender: TObject);
@@ -561,13 +569,14 @@ begin
     BrBtnContaAReceber.Enabled := False;
   end;
 
-  if not gLicencaSistema.UsarSGI then
-  begin
-    ShowWarning(
-      'A licença atual não permite que este sistema seja utilizado!' + #13 +
-      'Favor entrar em contato com o fornecedor do software.');
-    Application.Terminate;
-  end;
+  if ( not DelphiIsRunning ) then
+    if not gLicencaSistema.UsarSGI then
+    begin
+      ShowWarning(
+        'A licença atual não permite que este sistema seja utilizado!' + #13#13 +
+        'Favor entrar em contato com o fornecedor do software.');
+      Application.Terminate;
+    end;
 end;
 
 procedure TfrmPrinc.FormCreate(Sender: TObject);
@@ -1037,6 +1046,12 @@ procedure TfrmPrinc.mnRelatorioEstoqueProdutoClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_PROD_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeProdutoEstoqueImpressao');
+end;
+
+procedure TfrmPrinc.mnRelatorioRequsicaoAlmoxClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_REQ_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeRequisicaoAlmoxImpressao');
 end;
 
 procedure TfrmPrinc.nmSolicitacaoCompraClick(Sender: TObject);

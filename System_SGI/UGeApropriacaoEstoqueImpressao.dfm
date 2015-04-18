@@ -4,6 +4,8 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
   Caption = 'Relat'#243'rios de Apropria'#231#227'o de Estoque'
   ClientHeight = 328
   ClientWidth = 562
+  ExplicitWidth = 568
+  ExplicitHeight = 357
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel
@@ -1776,7 +1778,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object Picture1: TfrxPictureView
           Left = 3.779530000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
           DataField = 'LOGO'
@@ -1788,7 +1790,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object frdEmpresaRZSOC: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 464.882190000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdCliente
@@ -1843,7 +1845,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object Memo11: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
           DataSet = DMNFe.frdCliente
@@ -1913,7 +1915,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
           VAlign = vaBottom
         end
         object Memo3: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 604.724800000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2117,7 +2119,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         Top = 396.850650000000000000
         Width = 718.110700000000000000
         object Memo10: TfrxMemoView
-          Width = 604.724800000000000000
+          Width = 718.110700000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2340,7 +2342,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         Top = 351.496290000000000000
         Width = 718.110700000000000000
         object Memo37: TfrxMemoView
-          Width = 604.724800000000000000
+          Width = 718.110700000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -2587,7 +2589,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object Picture1: TfrxPictureView
           Left = 3.779530000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
           DataField = 'LOGO'
@@ -2599,7 +2601,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object frdEmpresaRZSOC: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 464.882190000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdCliente
@@ -2654,7 +2656,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object Memo11: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
           DataSet = DMNFe.frdCliente
@@ -2767,7 +2769,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
           VAlign = vaBottom
         end
         object Memo3: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 582.047620000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3171,7 +3173,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object Memo30: TfrxMemoView
           Left = 438.425480000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 113.385836540000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdEmpresa
@@ -3193,7 +3195,7 @@ inherited frmGeApropriacaoEstoqueImpressao: TfrmGeApropriacaoEstoqueImpressao
         end
         object SysMemo12: TfrxSysMemoView
           Left = 551.811380000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
