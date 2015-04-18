@@ -353,9 +353,7 @@ begin
       SQL.Clear;
       SQL.AddStrings( FSQL_RelacaoEstoqueApropA );
       SQL.Add('where p.aliquota_tipo = 0');
-
-      if ( edEmpresa.ItemIndex > 0 ) then
-        SQL.Add('  and coalesce(xx.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+      SQL.Add('  and coalesce(xx.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
 
       if ( edCentroCusto.ItemIndex > 0 ) then
         SQL.Add('  and xx.centro_custo = ' + IntToStr(ICentroCusto[edCentroCusto.ItemIndex]));
@@ -393,9 +391,7 @@ begin
       SQL.Clear;
       SQL.AddStrings( FSQL_RelacaoEstoqueApropS );
       SQL.Add('where p.aliquota_tipo = 0');
-
-      if ( edEmpresa.ItemIndex > 0 ) then
-        SQL.Add('  and coalesce(xx.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+      SQL.Add('  and coalesce(xx.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
 
       if ( edCentroCusto.ItemIndex > 0 ) then
         SQL.Add('  and xx.centro_custo = ' + IntToStr(ICentroCusto[edCentroCusto.ItemIndex]));

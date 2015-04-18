@@ -6,8 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, DBClient, Provider, IBQuery, cxGraphics, cxLookAndFeels,
-  cxLookAndFeelPainters, Menus, cxButtons, dxSkinsCore, dxSkinBlueprint,
+  ToolWin, DBClient, Provider, IBQuery, cxGraphics, cxLookAndFeels, Menus, cxButtons,
+
+  cxLookAndFeelPainters, dxSkinsCore, dxSkinBlueprint,
   dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
   dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
   dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,

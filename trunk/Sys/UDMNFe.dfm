@@ -2704,7 +2704,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40958.629806064810000000
-    ReportOptions.LastChange = 40960.806519317130000000
+    ReportOptions.LastChange = 42110.786857291660000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -7013,7 +7013,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40928.407150601900000000
-    ReportOptions.LastChange = 41856.560272638890000000
+    ReportOptions.LastChange = 42110.787804490740000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -7896,7 +7896,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40958.629806064810000000
-    ReportOptions.LastChange = 40960.806519317130000000
+    ReportOptions.LastChange = 42110.787573055550000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -13039,7 +13039,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40928.407150601900000000
-    ReportOptions.LastChange = 41856.560776539350000000
+    ReportOptions.LastChange = 42110.787176539350000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -14211,7 +14211,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40928.407150601900000000
-    ReportOptions.LastChange = 41856.558647511570000000
+    ReportOptions.LastChange = 42110.788138067130000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -31111,5 +31111,9 @@ object DMNFe: TDMNFe
         end
       end
     end
+  end
+  object ValidarXML: TXMLDocument
+    Left = 464
+    Top = 608
   end
 end

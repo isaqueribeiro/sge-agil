@@ -4448,7 +4448,6 @@ object frmPrinc: TfrmPrinc
     TabOrder = 6
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4535,6 +4534,7 @@ object frmPrinc: TfrmPrinc
       Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
+      Active = True
       Caption = 'Relat'#243'rios'
       Groups = <
         item
@@ -4715,7 +4715,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 236
+      DockedLeft = 705
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -6141,9 +6141,9 @@ object frmPrinc: TfrmPrinc
     object BrBtnRelatorioEstoqueReq: TdxBarLargeButton
       Caption = 'Requisi'#231#245'es ao Estoque'
       Category = 16
-      Enabled = False
       Hint = 'Requisi'#231#245'es ao Estoque'
       Visible = ivAlways
+      OnClick = BrBtnRelatorioEstoqueReqClick
     end
     object BrBtnRelatorioFaturamento: TdxBarLargeButton
       Caption = 'Faturamento'

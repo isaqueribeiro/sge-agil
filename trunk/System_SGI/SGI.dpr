@@ -1,6 +1,6 @@
 program SGI;
 
-{%ToDo 'SGI.todo'}
+
 
 uses
   Windows,
@@ -131,7 +131,8 @@ uses
   UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule},
   UGeSolicitacaoCompra in 'UGeSolicitacaoCompra.pas' {frmGeSolicitacaoCompra},
   UGeSolicitacaoCompraCancelar in 'UGeSolicitacaoCompraCancelar.pas' {frmGeSolicitacaoCompraCancelar},
-  UGeApropriacaoEstoqueImpressao in 'UGeApropriacaoEstoqueImpressao.pas' {frmGeApropriacaoEstoqueImpressao};
+  UGeApropriacaoEstoqueImpressao in 'UGeApropriacaoEstoqueImpressao.pas' {frmGeApropriacaoEstoqueImpressao},
+  UGeRequisicaoAlmoxImpressao in 'UGeRequisicaoAlmoxImpressao.pas' {frmGeRequisicaoAlmoxImpressao};
 
 {$R *.res}
 

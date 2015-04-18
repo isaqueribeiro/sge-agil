@@ -6,6 +6,7 @@ inherited frmGeVenda: TfrmGeVenda
   ClientHeight = 685
   ClientWidth = 1116
   OldCreateOrder = True
+  ExplicitTop = -57
   ExplicitWidth = 1132
   ExplicitHeight = 724
   PixelsPerInch = 96
@@ -406,7 +407,7 @@ inherited frmGeVenda: TfrmGeVenda
       end
       object Bevel6: TBevel [2]
         Left = 0
-        Top = 419
+        Top = 423
         Width = 1108
         Height = 4
         Align = alBottom
@@ -1793,23 +1794,25 @@ inherited frmGeVenda: TfrmGeVenda
       end
       object pgcMaisDados: TPageControl
         Left = 0
-        Top = 423
+        Top = 427
         Width = 1108
-        Height = 190
-        ActivePage = TbsInformeNFe
+        Height = 186
+        ActivePage = tbsRecebimento
         Align = alBottom
         TabOrder = 3
         object tbsRecebimento: TTabSheet
           BorderWidth = 4
           Caption = 'Recebimento'
+          ExplicitHeight = 162
           object pnlObservacao: TPanel
             Left = 0
             Top = 0
             Width = 520
-            Height = 154
+            Height = 150
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
+            ExplicitHeight = 154
             object lblObservacao: TLabel
               Left = 0
               Top = 0
@@ -1823,9 +1826,10 @@ inherited frmGeVenda: TfrmGeVenda
               Left = 516
               Top = 17
               Width = 4
-              Height = 137
+              Height = 133
               Align = alRight
               Shape = bsSpacer
+              ExplicitHeight = 137
             end
             object Bevel15: TBevel
               Left = 0
@@ -1839,19 +1843,20 @@ inherited frmGeVenda: TfrmGeVenda
               Left = 0
               Top = 17
               Width = 516
-              Height = 137
+              Height = 133
               Align = alClient
               DataField = 'OBS'
               DataSource = DtSrcTabela
               ScrollBars = ssBoth
               TabOrder = 0
+              ExplicitHeight = 137
             end
           end
           object pnlFormaPagto: TPanel
             Left = 520
             Top = 0
             Width = 572
-            Height = 154
+            Height = 150
             Align = alRight
             BevelOuter = bvNone
             Font.Charset = ANSI_CHARSET
@@ -1861,6 +1866,7 @@ inherited frmGeVenda: TfrmGeVenda
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 1
+            ExplicitHeight = 154
             object lblFormaPagto: TLabel
               Left = 0
               Top = 1
@@ -2216,7 +2222,7 @@ inherited frmGeVenda: TfrmGeVenda
               Left = 0
               Top = 16
               Width = 572
-              Height = 138
+              Height = 134
               Hint = 
                 'Para inserir nova Forma/Condi'#231#227'o de Pagamento CTRL + INSERT'#13#10#13#10'P' +
                 'ara editar Forma/Condi'#231#227'o de Pagamento selecionada CTRL + ENTER'#13 +
@@ -2273,27 +2279,30 @@ inherited frmGeVenda: TfrmGeVenda
         object tbsITitulos: TTabSheet
           Caption = 'T'#237'tulo(s) Gerado(s)'
           ImageIndex = 1
+          ExplicitHeight = 162
           object Bevel9: TBevel
             Left = 74
             Top = 0
             Width = 4
-            Height = 162
+            Height = 158
             Align = alLeft
             Shape = bsSpacer
+            ExplicitHeight = 162
           end
           object Bevel10: TBevel
             Left = 0
             Top = 0
             Width = 4
-            Height = 162
+            Height = 158
             Align = alLeft
             Shape = bsSpacer
+            ExplicitHeight = 162
           end
           object pnlBotoesTitulo: TPanel
             Left = 4
             Top = 0
             Width = 70
-            Height = 162
+            Height = 158
             Align = alLeft
             AutoSize = True
             BevelOuter = bvNone
@@ -2304,6 +2313,7 @@ inherited frmGeVenda: TfrmGeVenda
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
+            ExplicitHeight = 162
             object btnRegerarTitulo: TBitBtn
               Left = 0
               Top = 1
@@ -2383,7 +2393,7 @@ inherited frmGeVenda: TfrmGeVenda
             Left = 78
             Top = 0
             Width = 1022
-            Height = 162
+            Height = 158
             Hint = 
               'Para a exclus'#227'o de baixas basta pressionar CTRL + DELETE'#13#10#13#10'Obse' +
               'rva'#231#227'o:'#13#10'======================='#13#10'Apenas usu'#225'rios nas fun'#231#245'es Di' +
@@ -2481,30 +2491,33 @@ inherited frmGeVenda: TfrmGeVenda
         object tbsTransporte: TTabSheet
           Caption = 'Dados Transporte'
           ImageIndex = 2
+          ExplicitHeight = 162
           DesignSize = (
             1100
-            162)
+            158)
           object Bevel16: TBevel
             Left = 0
             Top = 0
             Width = 4
-            Height = 162
+            Height = 158
             Align = alLeft
             Shape = bsSpacer
+            ExplicitHeight = 162
           end
           object Bevel17: TBevel
             Left = 74
             Top = 0
             Width = 4
-            Height = 162
+            Height = 158
             Align = alLeft
             Shape = bsSpacer
+            ExplicitHeight = 162
           end
           object pnlBotoesTransp: TPanel
             Left = 4
             Top = 0
             Width = 70
-            Height = 162
+            Height = 158
             Align = alLeft
             AutoSize = True
             BevelOuter = bvNone
@@ -2515,6 +2528,7 @@ inherited frmGeVenda: TfrmGeVenda
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
+            ExplicitHeight = 162
             object BtnTransporteInforme: TBitBtn
               Left = 0
               Top = 1
@@ -2535,10 +2549,11 @@ inherited frmGeVenda: TfrmGeVenda
             Left = 78
             Top = 0
             Width = 505
-            Height = 162
+            Height = 158
             Align = alLeft
             Caption = 'Transportadora'
             TabOrder = 1
+            ExplicitHeight = 162
             object lblTranspNome: TLabel
               Left = 8
               Top = 64
@@ -2670,7 +2685,7 @@ inherited frmGeVenda: TfrmGeVenda
             Left = 583
             Top = 5
             Width = 517
-            Height = 157
+            Height = 153
             Anchors = [akLeft, akTop, akRight, akBottom]
             DataSource = dtsVendaVolume
             Font.Charset = ANSI_CHARSET
@@ -2724,6 +2739,7 @@ inherited frmGeVenda: TfrmGeVenda
         object TbsInformeNFe: TTabSheet
           Caption = 'Informa'#231#245'es de Envio NF-e'
           ImageIndex = 3
+          ExplicitHeight = 162
           object lblLogNFeLote: TLabel
             Left = 8
             Top = 0
@@ -3225,7 +3241,7 @@ inherited frmGeVenda: TfrmGeVenda
         Left = 0
         Top = 237
         Width = 1108
-        Height = 182
+        Height = 186
         TabStop = False
         Align = alClient
         DataSource = DtSrcTabelaItens
@@ -4247,7 +4263,7 @@ inherited frmGeVenda: TfrmGeVenda
     Left = 1192
     Top = 376
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
