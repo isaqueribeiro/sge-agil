@@ -7,7 +7,14 @@ uses
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
-  JvExMask, JvToolEdit;
+  JvExMask, JvToolEdit, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TDestinatarioNF = record
@@ -70,6 +77,8 @@ var
 begin
   AForm := TfrmGeNFEmitida.Create(AOnwer);
   try
+    AForm.tbsCadastro.TabVisible := False;
+    
     AForm.WhereAdditional := 'nf.empresa = ' + QuotedStr(pEmpresa) + ' and ' +
       'nf.dataemissao between ' +
         QuotedStr( FormatDateTime('yyyy-mm-dd', AForm.e1Data.Date) ) + ' and ' +

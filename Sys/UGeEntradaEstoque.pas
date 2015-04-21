@@ -438,6 +438,7 @@ var
   procedure MostrarControleCompraServicos(const AOwner : TComponent);
 
   function SelecionarEntrada(const AOwner : TComponent; var Ano, Controle : Integer; var Empresa : String) : Boolean;
+  function SelecionarNFParaDevolver(const AOwner : TComponent; var Ano, Controle : Integer; var Empresa : String) : Boolean;
 
 implementation
 
@@ -554,6 +555,18 @@ begin
     end;
   finally
     frm.Destroy;
+  end;
+end;
+
+function SelecionarNFParaDevolver(const AOwner : TComponent; var Ano, Controle : Integer; var Empresa : String) : Boolean;
+var
+  AForm : TfrmGeEntradaEstoque;
+begin
+  AForm := TfrmGeEntradaEstoque.Create(AOwner);
+  try
+    ;
+  finally
+    AForm.Free;
   end;
 end;
 
@@ -1000,8 +1013,8 @@ begin
       IbDtstTabelaNFSERIE.Value := TIPO_DOCUMENTO_SERIE_AVULSO;
     end;
 
-    IbDtstTabelaNF.Required      := (IbDtstTabelaTIPO_DOCUMENTO.AsInteger in [TIPO_DOCUMENTO_ENTRADA_NF, TIPO_DOCUMENTO_ENTRADA_CUPOM]);
-    IbDtstTabelaNFSERIE.Required := (IbDtstTabelaTIPO_DOCUMENTO.AsInteger in [TIPO_DOCUMENTO_ENTRADA_NF]) and (TTipoMovimentoEntrada(IbDtstTabelaTIPO_MOVIMENTO.AsInteger) = tmeProduto);
+    IbDtstTabelaNF.Required      := (IbDtstTabelaTIPO_DOCUMENTO.AsInteger in [TIPO_DOCUMENTO_ENTRADA_NOTA_FISCAL, TIPO_DOCUMENTO_ENTRADA_CUPOM, TIPO_DOCUMENTO_ENTRADA_NFE, TIPO_DOCUMENTO_ENTRADA_NFCE]);
+    IbDtstTabelaNFSERIE.Required := (IbDtstTabelaTIPO_DOCUMENTO.AsInteger in [TIPO_DOCUMENTO_ENTRADA_NOTA_FISCAL, TIPO_DOCUMENTO_ENTRADA_NFE, TIPO_DOCUMENTO_ENTRADA_NFCE]) and (TTipoMovimentoEntrada(IbDtstTabelaTIPO_MOVIMENTO.AsInteger) = tmeProduto);
 
     inherited;
 

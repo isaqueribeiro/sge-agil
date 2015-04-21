@@ -861,7 +861,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40928.407150601900000000
-    ReportOptions.LastChange = 41856.560478368050000000
+    ReportOptions.LastChange = 41856.560478368040000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -2672,6 +2672,22 @@ object DMNFe: TDMNFe
       '  , v.nfe_placa_veiculo'
       '  , v.nfe_placa_uf'
       '  , v.nfe_placa_rntc'
+      ''
+      '  , v.dnfe_compra_ano'
+      '  , v.dnfe_compra_cod'
+      '  , v.dnfe_forma'
+      '  , v.dnfe_chave'
+      '  , v.dnfe_uf'
+      '  , v.dnfe_cnpj_cpf'
+      '  , v.dnfe_ie'
+      '  , v.dnfe_competencia'
+      '  , v.dnfe_serie'
+      '  , v.dnfe_numero'
+      '  , v.dnfe_modelo'
+      '  , v.decf_modelo'
+      '  , v.decf_numero'
+      '  , v.decf_coo'
+      ''
       'from TBVENDAS v'
       '  inner join TBCFOP cf on (cf.Cfop_cod = v.Cfop)'
       '  inner join TBVENDEDOR vd on (vd.Cod = v.Vendedor_cod)'

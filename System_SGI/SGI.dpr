@@ -132,7 +132,8 @@ uses
   UGeSolicitacaoCompra in 'UGeSolicitacaoCompra.pas' {frmGeSolicitacaoCompra},
   UGeSolicitacaoCompraCancelar in 'UGeSolicitacaoCompraCancelar.pas' {frmGeSolicitacaoCompraCancelar},
   UGeApropriacaoEstoqueImpressao in 'UGeApropriacaoEstoqueImpressao.pas' {frmGeApropriacaoEstoqueImpressao},
-  UGeRequisicaoAlmoxImpressao in 'UGeRequisicaoAlmoxImpressao.pas' {frmGeRequisicaoAlmoxImpressao};
+  UGeRequisicaoAlmoxImpressao in 'UGeRequisicaoAlmoxImpressao.pas' {frmGeRequisicaoAlmoxImpressao},
+  UGeVendaDevolucaoNF in '..\Sys\UGeVendaDevolucaoNF.pas' {frmGeVendaDevolucaoNF};
 
 {$R *.res}
 
