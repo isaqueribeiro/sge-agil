@@ -4,24 +4,25 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
   BorderWidth = 4
   Caption = 'Devolu'#231#227'o - Dados de Documentos Referenciados'
   ClientHeight = 378
-  ClientWidth = 593
-  ExplicitWidth = 617
+  ClientWidth = 465
+  ExplicitWidth = 489
   ExplicitHeight = 425
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
     Top = 73
-    Width = 593
+    Width = 465
     Height = 4
     Align = alTop
     Shape = bsSpacer
     ExplicitTop = 121
+    ExplicitWidth = 593
   end
   object GrpBxControle: TGroupBox
     Left = 0
     Top = 0
-    Width = 593
+    Width = 465
     Height = 73
     Align = alTop
     Caption = 'Controle da Venda/Devolu'#231#227'o'
@@ -32,7 +33,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 0
-    ExplicitTop = -6
+    ExplicitWidth = 593
     object lblCodigo: TLabel
       Left = 16
       Top = 24
@@ -154,12 +155,14 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       ReadOnly = True
       ShowHint = True
       TabOrder = 1
+      OnButtonClick = dbCompraButtonClick
     end
     object dbFormaDevolucao: TDBLookupComboBox
       Left = 287
       Top = 40
-      Width = 143
+      Width = 162
       Height = 21
+      DataField = 'DNFE_FORMA'
       DataSource = dtsVenda
       DropDownRows = 10
       Font.Charset = DEFAULT_CHARSET
@@ -175,7 +178,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     end
   end
   object btnConfirmar: TcxButton
-    Left = 405
+    Left = 277
     Top = 345
     Width = 92
     Height = 33
@@ -234,10 +237,11 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
     OptionsImage.NumGlyphs = 2
     TabOrder = 2
-    ExplicitTop = 394
+    OnClick = btnConfirmarClick
+    ExplicitLeft = 405
   end
   object btFechar: TcxButton
-    Left = 500
+    Left = 372
     Top = 345
     Width = 92
     Height = 33
@@ -297,12 +301,13 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00}
     OptionsImage.NumGlyphs = 2
     TabOrder = 3
-    ExplicitTop = 394
+    OnClick = btFecharClick
+    ExplicitLeft = 500
   end
   object GrpBxDados: TGroupBox
     Left = 0
     Top = 77
-    Width = 593
+    Width = 465
     Height = 262
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -314,7 +319,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 1
-    ExplicitHeight = 306
+    ExplicitWidth = 593
     object lblNFeChave: TLabel
       Left = 16
       Top = 40
@@ -351,7 +356,6 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Height = 13
       Caption = 'Nota Fiscal Modelo 1/1A:'
       Enabled = False
-      FocusControl = dbNFSerie
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -395,7 +399,6 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Width = 122
       Height = 13
       Caption = 'Nota Fiscal Eletr'#244'nica:'
-      FocusControl = dbNFeChave
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -525,9 +528,10 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     object dbNFeChave: TDBEdit
       Left = 16
       Top = 56
-      Width = 414
+      Width = 433
       Height = 21
       Color = clWhite
+      DataField = 'DNFE_CHAVE'
       DataSource = dtsVenda
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -543,6 +547,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Width = 57
       Height = 21
       Color = clWhite
+      DataField = 'DNFE_SERIE'
       DataSource = dtsVenda
       Enabled = False
       Font.Charset = ANSI_CHARSET
@@ -559,6 +564,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Width = 137
       Height = 21
       Color = clWhite
+      DataField = 'DNFE_NUMERO'
       DataSource = dtsVenda
       Enabled = False
       Font.Charset = ANSI_CHARSET
@@ -575,6 +581,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Width = 57
       Height = 21
       Color = clWhite
+      DataField = 'DNFE_MODELO'
       DataSource = dtsVenda
       Enabled = False
       Font.Charset = ANSI_CHARSET
@@ -590,6 +597,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Top = 118
       Width = 60
       Height = 21
+      DataField = 'DNFE_UF'
       DataSource = dtsVenda
       DropDownRows = 10
       Enabled = False
@@ -607,8 +615,9 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     object dbNFCompetencia: TDBLookupComboBox
       Left = 351
       Top = 118
-      Width = 79
+      Width = 98
       Height = 21
+      DataField = 'DNFE_COMPETENCIA'
       DataSource = dtsVenda
       DropDownRows = 10
       Enabled = False
@@ -629,6 +638,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Width = 200
       Height = 21
       Color = clWhite
+      DataField = 'DNFE_CNPJ_CPF'
       DataSource = dtsVenda
       Enabled = False
       Font.Charset = ANSI_CHARSET
@@ -644,6 +654,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Top = 228
       Width = 200
       Height = 21
+      DataField = 'DECF_MODELO'
       DataSource = dtsVenda
       DropDownRows = 10
       Enabled = False
@@ -656,7 +667,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       ListField = 'DESCRICAO'
       ListSource = dtsModeloCupom
       ParentFont = False
-      TabOrder = 7
+      TabOrder = 8
     end
     object dbCPNumeroECF: TDBEdit
       Left = 222
@@ -664,22 +675,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Width = 57
       Height = 21
       Color = clWhite
-      DataSource = dtsVenda
-      Enabled = False
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 8
-    end
-    object dbCPNumeroCOO: TDBEdit
-      Left = 285
-      Top = 228
-      Width = 60
-      Height = 21
-      Color = clWhite
+      DataField = 'DECF_NUMERO'
       DataSource = dtsVenda
       Enabled = False
       Font.Charset = ANSI_CHARSET
@@ -690,12 +686,13 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       ParentFont = False
       TabOrder = 9
     end
-    object dbNFIE: TDBEdit
-      Left = 222
-      Top = 164
-      Width = 123
+    object dbCPNumeroCOO: TDBEdit
+      Left = 285
+      Top = 228
+      Width = 60
       Height = 21
       Color = clWhite
+      DataField = 'DECF_COO'
       DataSource = dtsVenda
       Enabled = False
       Font.Charset = ANSI_CHARSET
@@ -705,6 +702,23 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       Font.Style = []
       ParentFont = False
       TabOrder = 10
+    end
+    object dbNFIE: TDBEdit
+      Left = 222
+      Top = 164
+      Width = 123
+      Height = 21
+      Color = clWhite
+      DataField = 'DNFE_IE'
+      DataSource = dtsVenda
+      Enabled = False
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 7
     end
   end
   object cdsVenda: TIBDataSet
@@ -743,7 +757,7 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     UniDirectional = False
     GeneratorField.Field = 'CODCONTROL'
     UpdateObject = updVenda
-    Left = 432
+    Left = 288
     object cdsVendaANO: TSmallintField
       FieldName = 'ANO'
       Origin = '"TBVENDAS"."ANO"'
@@ -780,62 +794,74 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       ProviderFlags = [pfInUpdate]
     end
     object cdsVendaDNFE_CHAVE: TIBStringField
+      DisplayLabel = 'Chave de Acesso'
       FieldName = 'DNFE_CHAVE'
       Origin = '"TBVENDAS"."DNFE_CHAVE"'
       ProviderFlags = [pfInUpdate]
       Size = 250
     end
-    object cdsVendaDNFE_UF: TIBStringField
-      FieldName = 'DNFE_UF'
-      Origin = '"TBVENDAS"."DNFE_UF"'
-      ProviderFlags = [pfInUpdate]
-      FixedChar = True
-      Size = 2
-    end
-    object cdsVendaDNFE_CNPJ_CPF: TIBStringField
-      FieldName = 'DNFE_CNPJ_CPF'
-      Origin = '"TBVENDAS"."DNFE_CNPJ_CPF"'
-      ProviderFlags = [pfInUpdate]
-      Size = 18
-    end
-    object cdsVendaDNFE_IE: TIBStringField
-      FieldName = 'DNFE_IE'
-      Origin = '"TBVENDAS"."DNFE_IE"'
-      ProviderFlags = [pfInUpdate]
-    end
-    object cdsVendaDNFE_COMPETENCIA: TIBStringField
-      FieldName = 'DNFE_COMPETENCIA'
-      Origin = '"TBVENDAS"."DNFE_COMPETENCIA"'
-      ProviderFlags = [pfInUpdate]
-      Size = 4
-    end
     object cdsVendaDNFE_SERIE: TIBStringField
+      DisplayLabel = 'S'#233'rie'
       FieldName = 'DNFE_SERIE'
       Origin = '"TBVENDAS"."DNFE_SERIE"'
       ProviderFlags = [pfInUpdate]
       Size = 4
     end
     object cdsVendaDNFE_NUMERO: TIntegerField
+      DisplayLabel = 'N'#250'mero'
       FieldName = 'DNFE_NUMERO'
       Origin = '"TBVENDAS"."DNFE_NUMERO"'
       ProviderFlags = [pfInUpdate]
     end
     object cdsVendaDNFE_MODELO: TSmallintField
+      DisplayLabel = 'Modelo'
       FieldName = 'DNFE_MODELO'
       Origin = '"TBVENDAS"."DNFE_MODELO"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = '00'
+    end
+    object cdsVendaDNFE_UF: TIBStringField
+      DisplayLabel = 'UF'
+      FieldName = 'DNFE_UF'
+      Origin = '"TBVENDAS"."DNFE_UF"'
+      ProviderFlags = [pfInUpdate]
+      FixedChar = True
+      Size = 2
+    end
+    object cdsVendaDNFE_COMPETENCIA: TIBStringField
+      DisplayLabel = 'Compet'#234'ncia de emiss'#227'o'
+      FieldName = 'DNFE_COMPETENCIA'
+      Origin = '"TBVENDAS"."DNFE_COMPETENCIA"'
+      ProviderFlags = [pfInUpdate]
+      Size = 4
+    end
+    object cdsVendaDNFE_CNPJ_CPF: TIBStringField
+      DisplayLabel = 'CPF / CNPJ'
+      FieldName = 'DNFE_CNPJ_CPF'
+      Origin = '"TBVENDAS"."DNFE_CNPJ_CPF"'
+      ProviderFlags = [pfInUpdate]
+      Size = 18
+    end
+    object cdsVendaDNFE_IE: TIBStringField
+      DisplayLabel = 'Inscri'#231#227'o Estadual'
+      FieldName = 'DNFE_IE'
+      Origin = '"TBVENDAS"."DNFE_IE"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsVendaDECF_MODELO: TSmallintField
+      DisplayLabel = 'Modelo do Cupom'
       FieldName = 'DECF_MODELO'
       Origin = '"TBVENDAS"."DECF_MODELO"'
       ProviderFlags = [pfInUpdate]
     end
     object cdsVendaDECF_NUMERO: TIntegerField
+      DisplayLabel = 'N'#250'mero ECF'
       FieldName = 'DECF_NUMERO'
       Origin = '"TBVENDAS"."DECF_NUMERO"'
       ProviderFlags = [pfInUpdate]
     end
     object cdsVendaDECF_COO: TIntegerField
+      DisplayLabel = 'N'#250'mero COO'
       FieldName = 'DECF_COO'
       Origin = '"TBVENDAS"."DECF_COO"'
       ProviderFlags = [pfInUpdate]
@@ -959,13 +985,13 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       'where'
       '  ANO = :OLD_ANO and'
       '  CODCONTROL = :OLD_CODCONTROL')
-    Left = 464
+    Left = 320
   end
   object dtsVenda: TDataSource
     AutoEdit = False
     DataSet = cdsVenda
     OnDataChange = dtsVendaDataChange
-    Left = 496
+    Left = 352
   end
   object tblFormaDevolucao: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -975,12 +1001,12 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     TableName = 'VW_FORMA_DEVOLUCAO'
     TableTypes = [ttView]
     UniDirectional = False
-    Left = 461
+    Left = 317
     Top = 32
   end
   object dtsFormaDevolucao: TDataSource
     DataSet = tblFormaDevolucao
-    Left = 493
+    Left = 349
     Top = 32
   end
   object tblUF: TIBTable
@@ -991,12 +1017,12 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     TableName = 'TBESTADO'
     TableTypes = [ttView]
     UniDirectional = False
-    Left = 461
+    Left = 317
     Top = 64
   end
   object dtsUF: TDataSource
     DataSet = tblUF
-    Left = 493
+    Left = 349
     Top = 64
   end
   object qryCompetencia: TIBDataSet
@@ -1023,12 +1049,12 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
       '')
     ParamCheck = True
     UniDirectional = False
-    Left = 461
+    Left = 317
     Top = 98
   end
   object dtsCompetencia: TDataSource
     DataSet = qryCompetencia
-    Left = 493
+    Left = 349
     Top = 96
   end
   object tblModeloCupom: TIBTable
@@ -1039,12 +1065,12 @@ inherited frmGeVendaDevolucaoNF: TfrmGeVendaDevolucaoNF
     TableName = 'VW_MODELO_CUPOM_FISCAL'
     TableTypes = [ttView]
     UniDirectional = False
-    Left = 461
+    Left = 317
     Top = 128
   end
   object dtsModeloCupom: TDataSource
     DataSet = tblModeloCupom
-    Left = 493
+    Left = 349
     Top = 128
   end
 end
