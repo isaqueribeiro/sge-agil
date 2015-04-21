@@ -300,6 +300,10 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 1106
+      ExplicitHeight = 605
       inherited Bevel8: TBevel
         Top = 113
         Width = 1106
@@ -3467,6 +3471,10 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       Height = 31
       Shape = bsSpacer
     end
+    inherited btbtnExcluir: TcxButton
+      ExplicitLeft = 154
+      ExplicitTop = 0
+    end
     inherited btbtnLista: TcxButton
       Caption = 'Imprimir'
       Visible = True
@@ -4308,7 +4316,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

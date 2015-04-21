@@ -6,16 +6,17 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, UGrPadrao, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.Mask, Vcl.DBCtrls, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  Vcl.Menus, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  Vcl.Menus, cxButtons, Data.DB, IBX.IBCustomDataSet, IBX.IBUpdateSQL,
+  JvExMask, JvToolEdit, JvDBControls, IBX.IBTable,
+
+  dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
   dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
   dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
   dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
   dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
   dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
-  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, cxButtons, Data.DB,
-  IBX.IBCustomDataSet, IBX.IBUpdateSQL, JvExMask, JvToolEdit, JvDBControls,
-  IBX.IBTable;
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeVendaDevolucaoNF = class(TfrmGrPadrao)
@@ -89,6 +90,9 @@ type
     procedure cdsVendaDNFE_COMPRA_CODGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
     procedure dtsVendaDataChange(Sender: TObject; Field: TField);
+    procedure btFecharClick(Sender: TObject);
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure dbCompraButtonClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,7 +105,7 @@ type
 implementation
 
 uses
-  UDMBusiness, UDMNFe, UFuncoes;
+  UDMBusiness, UDMNFe, UFuncoes, UGrCampoRequisitado, UGeEntradaEstoque;
 
 {$R *.dfm}
 
@@ -132,6 +136,39 @@ begin
   end;
 end;
 
+procedure TfrmGeVendaDevolucaoNF.btFecharClick(Sender: TObject);
+begin
+  ModalResult := mrCancel;
+end;
+
+procedure TfrmGeVendaDevolucaoNF.btnConfirmarClick(Sender: TObject);
+begin
+  cdsVendaDNFE_CHAVE.Required := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeEletronica]);
+
+  cdsVendaDNFE_SERIE.Required  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+  cdsVendaDNFE_NUMERO.Required := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+  cdsVendaDNFE_MODELO.Required := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+  cdsVendaDNFE_UF.Required     := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+  cdsVendaDNFE_COMPETENCIA.Required := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+  cdsVendaDNFE_CNPJ_CPF.Required    := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+  cdsVendaDNFE_IE.Required          := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFProdutorRural]);
+
+  cdsVendaDECF_MODELO.Required := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+  cdsVendaDECF_NUMERO.Required := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+  cdsVendaDECF_COO.Required    := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+
+  if not CamposRequiridos(Self, cdsVenda, GrpBxDados.Caption) then
+    if ShowConfirmation('Confirmar', 'Confirma os dados do documento referenciado para devolução?') then
+      with cdsVenda do
+      begin
+        Post;
+        ApplyUpdates;
+        CommitTransaction;
+
+        ModalResult := mrOk;
+      end;
+end;
+
 procedure TfrmGeVendaDevolucaoNF.cdsVendaCODCONTROLGetText(Sender: TField;
   var Text: string; DisplayText: Boolean);
 begin
@@ -146,6 +183,33 @@ begin
     Text := cdsVendaDNFE_COMPRA_ANO.AsString + '/' + FormatFloat('0000000', Sender.AsInteger);
 end;
 
+procedure TfrmGeVendaDevolucaoNF.dbCompraButtonClick(Sender: TObject);
+var
+  iAno      ,
+  iControle : Integer;
+  sEmpresa,
+  sSerie  ,
+  sNumero ,
+  sUF  ,
+  sCnpj,
+  sIE  : String;
+  dEmissao  : TDateTime;
+begin
+  sEmpresa := cdsVendaCODEMP.AsString;
+  if ( cdsVenda.State = dsEdit ) then
+    if SelecionarNFParaDevolver(Self, iANo, iControle, sEmpresa, dEmissao, sSerie, sNumero, sUF, sCnpj, sIE) then
+    begin
+      cdsVendaDNFE_COMPRA_ANO.AsInteger := iAno;
+      cdsVendaDNFE_COMPRA_COD.AsInteger := iControle;
+      cdsVendaDNFE_COMPETENCIA.AsString := FormatDateTime('yymm', dEmissao);
+      cdsVendaDNFE_SERIE.AsString    := sSerie;
+      cdsVendaDNFE_NUMERO.AsInteger  := StrToInt(sNumero);
+      cdsVendaDNFE_UF.AsString       := sUF;
+      cdsVendaDNFE_CNPJ_CPF.AsString := sCnpj;
+      cdsVendaDNFE_IE.AsString       := sIE;
+    end;
+end;
+
 procedure TfrmGeVendaDevolucaoNF.dtsVendaDataChange(Sender: TObject;
   Field: TField);
 begin
@@ -155,7 +219,44 @@ begin
     lblNFe.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeEletronica]);
     lblNF.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
     lblCupomFiscal.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+
+    if TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) = fdNFProdutorRural then
+      lblNF.Caption := 'Nota Fiscal do Produtor Rural:'
+    else
+      lblNF.Caption := 'Nota Fiscal Modelo 1/1A:';
+
     // Campos
+    lblNFeChave.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeEletronica]);
+    dbNFeChave.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeEletronica]);
+
+    lblNFSerie.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    dbNFSerie.Enabled   := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    lblNFNumero.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    dbNFNumero.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    lblNFUF.Enabled     := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    dbNFUF.Enabled      := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    lblNFCompetencia.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    dbNFCompetencia.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    lblNFCnpjCpf.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    dbNFCnpjCpf.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFeModelo1_1A, fdNFProdutorRural]);
+    lblNFIE.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFProdutorRural]);
+    dbNFIE.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdNFProdutorRural]);
+
+    lblCPModelo.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+    dbCPModelo.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+    lblCPNumeroECF.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+    dbCPNumeroECF.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+    lblCPNumeroCOO.Enabled := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+    dbCPNumeroCOO.Enabled  := (TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) in [fdCupomFiscal]);
+
+    // Definir modelo de Nota Fiscal
+    if ( cdsVenda.State = dsEdit ) then
+      Case TFormaNFDevolucao(dbFormaDevolucao.Field.AsInteger) of
+        fdNFeModelo1_1A  : dbNFModelo.Field.AsInteger := 1;
+        fdNFProdutorRural: dbNFModelo.Field.AsInteger := 4;
+        else
+          dbNFModelo.Field.Clear;
+      end;
 
   end;
 end;

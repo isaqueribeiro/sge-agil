@@ -9,12 +9,12 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadraoCadastro, ImgList, IBCustomDataSet, IBUpdateSQL, DB,
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
-  ToolWin, IBTable, IBStoredProc, Menus, IBQuery,
-  cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, cxButtons,
-  JvDBControls, JvExMask, JvToolEdit, dxSkinsCore, dxSkinBlueprint,
-  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
-  dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
-  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  ToolWin, IBTable, IBStoredProc, Menus, IBQuery, cxGraphics, cxLookAndFeels,
+  cxLookAndFeelPainters, cxButtons, JvDBControls, JvExMask, JvToolEdit,
+
+  dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle,
+  dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis, dxSkinMetropolisDark,
+  dxSkinMoneyTwins, dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
   dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
   dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
@@ -402,6 +402,7 @@ type
     procedure nmPpArquivoNFeClick(Sender: TObject);
   private
     { Private declarations }
+    FEmpresa : String;
     FTipoMovimento : TTipoMovimentoEntrada;
     FApenasFinalizadas : Boolean;
     SQL_Itens   ,
@@ -438,7 +439,8 @@ var
   procedure MostrarControleCompraServicos(const AOwner : TComponent);
 
   function SelecionarEntrada(const AOwner : TComponent; var Ano, Controle : Integer; var Empresa : String) : Boolean;
-  function SelecionarNFParaDevolver(const AOwner : TComponent; var Ano, Controle : Integer; var Empresa : String) : Boolean;
+  function SelecionarNFParaDevolver(const AOwner : TComponent; var Ano, Controle : Integer;
+    var Empresa : String; var Emissao : TDateTime; var Serie, Numero, UF, Cnpj, IE : String) : Boolean;
 
 implementation
 
@@ -558,13 +560,56 @@ begin
   end;
 end;
 
-function SelecionarNFParaDevolver(const AOwner : TComponent; var Ano, Controle : Integer; var Empresa : String) : Boolean;
+function SelecionarNFParaDevolver(const AOwner : TComponent; var Ano, Controle : Integer;
+  var Empresa : String; var Emissao : TDateTime; var Serie, Numero, UF, Cnpj, IE : String) : Boolean;
 var
+  sWhr  : String;
   AForm : TfrmGeEntradaEstoque;
 begin
   AForm := TfrmGeEntradaEstoque.Create(AOwner);
   try
-    ;
+    with AForm do
+    begin
+      btbtnSelecionar.Visible := True;
+
+      TipoMovimento     := tmeProduto;
+      ApenasFinalizadas := True;
+      FEmpresa          := Trim(Empresa);
+      Caption           := 'Controle de Entradas de Produtos';
+      RotinaID          := ROTINA_ENT_PRODUTO_ID;
+
+      btbtnIncluir.Visible  := False;
+      btbtnAlterar.Visible  := False;
+      btbtnExcluir.Visible  := False;
+      btbtnFinalizar.Visible   := False;
+      btbtnCancelarENT.Visible := False;
+      btbtnGerarNFe.Visible    := False;
+
+      sWhr :=
+        '(c.status in (' + IntToStr(STATUS_CMP_FIN) + ', ' + IntToStr(STATUS_CMP_NFE) + ')) and ' +
+        '(c.tipo_movimento = ' + IntToStr(Ord(TipoMovimento)) + ') and cast(c.dtent as date) between ' +
+        QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
+        QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ' and ' +
+        '(c.codemp = ' + QuotedStr(FEmpresa) + ')';
+
+      WhereAdditional := sWhr;
+
+      Result := (ShowModal = mrOk);
+
+      if Result then
+      begin
+        Ano      := IbDtstTabelaANO.AsInteger;
+        Controle := IbDtstTabelaCODCONTROL.AsInteger;
+        Empresa  := IbDtstTabelaCODEMP.AsString;
+        Emissao  := IbDtstTabelaDTEMISS.AsDateTime;
+        Serie    := IbDtstTabelaNFSERIE.AsString;
+        Numero   := FormatFloat('###0000000', IbDtstTabelaNF.AsInteger);
+        UF       := EmptyStr;
+        Cnpj     := IbDtstTabelaCNPJ.AsString;
+        IE       := EmptyStr;
+      end;
+    end;
+
   finally
     AForm.Free;
   end;
@@ -597,6 +642,7 @@ begin
   inherited;
 
   AbrirTabelaAuto := True;
+  FEmpresa        := EmptyStr;
 
   SQL_Itens := TStringList.Create;
   SQL_Itens.Clear;
@@ -643,7 +689,10 @@ begin
     '(c.tipo_movimento = ' + IntToStr(Ord(TipoMovimento)) + ') and cast(c.dtent as date) between ' +
     QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
     QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
-    
+
+  if ( Trim(FEmpresa) <> EmptyStr ) then
+    WhereAdditional := WhereAdditional + ' and (c.codemp = ' + QuotedStr(FEmpresa) +')';
+
   inherited;
 end;
 

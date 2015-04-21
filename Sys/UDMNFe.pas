@@ -1876,27 +1876,27 @@ begin
         with Ide.NFref.Add, qryCalculoImposto do
           Case TFormaNFDevolucao(FieldByName('DNFE_FORMA').AsInteger) of
             fdNFeEletronica:
-              refNFe := FieldByName('DNFE_CHAVE').AsString; // NFe Eletronica
+              refNFe := FieldByName('DNFE_CHAVE').AsString; // Nota Fiscal Eletronica
 
             fdNFeModelo1_1A:
               begin
                 RefNF.cUF    := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString); // |
                 RefNF.AAMM   := FieldByName('DNFE_COMPETENCIA').AsString;          // |
                 RefNF.CNPJ   := FieldByName('DNFE_CNPJ_CPF').AsString;             // |
-                RefNF.modelo := FieldByName('DNFE_MODELO').AsInteger;              // |- NFe Modelo 1/1A
+                RefNF.modelo := FieldByName('DNFE_MODELO').AsInteger;              // |- NF Modelo 1/1A
                 RefNF.serie  := FieldByName('DNFE_SERIE').AsInteger;               // |  * O modelo padrão é 1
                 RefNF.nNF    := FieldByName('DNFE_NUMERO').AsInteger;              // |
               end;
 
             fdNFProdutorRural:
               begin
-                RefNFP.cUF     := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString); // |
-                RefNFP.AAMM    := FieldByName('DNFE_COMPETENCIA').AsString;          // |
-                RefNFP.CNPJCPF := FieldByName('DNFE_CNPJ_CPF').AsString;             // |
-                RefNFP.IE      := FieldByName('DNFE_IE').AsString;                   // |- NF produtor Rural
-                RefNFP.modelo  := FieldByName('DNFE_MODELO').AsString;               // | * O modelo padrão é 04
-                RefNFP.serie   := FieldByName('DNFE_SERIE').AsInteger;               // |
-                RefNFP.nNF     := FieldByName('DNFE_NUMERO').AsInteger;              // |
+                RefNFP.cUF     := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString);       // |
+                RefNFP.AAMM    := FieldByName('DNFE_COMPETENCIA').AsString;                // |
+                RefNFP.CNPJCPF := FieldByName('DNFE_CNPJ_CPF').AsString;                   // |
+                RefNFP.IE      := FieldByName('DNFE_IE').AsString;                         // |- NF produtor Rural
+                RefNFP.modelo  := FormatFloat('00', FieldByName('DNFE_MODELO').AsInteger); // | * O modelo padrão é 04
+                RefNFP.serie   := FieldByName('DNFE_SERIE').AsInteger;                     // |
+                RefNFP.nNF     := FieldByName('DNFE_NUMERO').AsInteger;                    // |
               end;
 
             fdCupomFiscal:
