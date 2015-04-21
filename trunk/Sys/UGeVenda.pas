@@ -502,9 +502,9 @@ implementation
 
 uses
   UDMBusiness, UFuncoes, UGeCliente, UGeCondicaoPagto, UGeProduto, UGeTabelaCFOP,
-  DateUtils, UDMNFe, UGeVendaGerarNFe, SysConst, UGeVendaCancelar,
-  UGeGerarBoletos, UGeEfetuarPagtoREC, UGeVendaFormaPagto, UConstantesDGE, UGeVendaTransporte, UGeVendaConfirmaTitulos,
-  UDMRecursos;
+  UConstantesDGE, DateUtils, SysConst, UDMNFe, UGeGerarBoletos, UGeEfetuarPagtoREC,
+  UGeVendaGerarNFe, UGeVendaCancelar, UGeVendaFormaPagto, UGeVendaTransporte,
+  UGeVendaConfirmaTitulos, UGeVendaDevolucaoNF, UDMRecursos;
 
 {$R *.dfm}
 
@@ -1802,6 +1802,13 @@ var
   sMensagem    : String;
   iNumeroLote  : Int64;
 begin
+(*
+  IMR - 20/04/2015 :
+    Inclusão do bloco de código para verificar se o CFOP da venda corresponde
+    a uma operação de devolução. Caso esta situação seja confirmada, a NF-e de
+    origem será solicitada.
+*)
+
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
 
@@ -1835,6 +1842,10 @@ begin
         IbDtstTabelaLOTE_NFE_RECIBO.AsString);
     Exit;
   end;
+
+  if GetCfopDevolucao( IbDtstTabelaCFOP.AsInteger ) then
+    if not InformarDocumentoReferenciado(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value) then
+      Exit;
 
   if ( GerarNFe(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value,
                 iSerieNFe, iNumeroNFe, sFileNameXML, sChaveNFE, sProtocoloNFE, sReciboNFE, iNumeroLote, sMensagem

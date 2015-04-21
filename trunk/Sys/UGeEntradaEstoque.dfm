@@ -29,19 +29,17 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
     ExplicitWidth = 1114
     ExplicitHeight = 634
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 1106
+      ExplicitHeight = 605
       inherited Bevel4: TBevel
-        Top = 540
+        Top = 539
         Width = 1106
         ExplicitTop = 540
         ExplicitWidth = 1106
       end
       inherited dbgDados: TDBGrid
         Width = 1106
-        Height = 540
+        Height = 539
         Columns = <
           item
             Expanded = False
@@ -105,9 +103,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 544
+        Top = 543
         Width = 1106
-        ExplicitTop = 544
+        ExplicitTop = 543
         ExplicitWidth = 1106
         object lblEntradaAberta: TLabel [0]
           Left = 2
@@ -1298,13 +1296,8 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         Align = alBottom
         HotTrack = True
         TabOrder = 4
-        ExplicitTop = 416
         object tbsPagamento: TTabSheet
           Caption = 'Pagamento'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           DesignSize = (
             1098
             162)
@@ -1838,10 +1831,6 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         object tbsDuplicatas: TTabSheet
           Caption = 'Duplicata(s) Gerada(s)'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Bevel6: TBevel
             Left = 89
             Top = 0
@@ -2002,10 +1991,6 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         object TbsInformeNFe: TTabSheet
           Caption = 'Informa'#231#245'es de Envio NF-e'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object lblLogNFeLote: TLabel
             Left = 8
             Top = 0
@@ -3465,7 +3450,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited tlbBotoes: TPanel
     Top = 638
     Width = 1114
-    ExplicitTop = 639
+    ExplicitTop = 638
     ExplicitWidth = 1114
     inherited bvlTool3: TBevel
       Left = 1031
@@ -4323,7 +4308,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

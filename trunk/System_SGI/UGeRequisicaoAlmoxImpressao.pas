@@ -286,6 +286,14 @@ end;
 procedure TfrmGeRequisicaoAlmoxImpressao.MontarRequisicaoEstoqueSintetico;
 begin
   try
+    SubTituloRelario := edSituacao.Text;
+
+    if ( edTipoRequsicao.ItemIndex = 0 ) then
+      PeriodoRelatorio := Format('Requisições realizadas no período de %s a %s.', [e1Data.Text, e2Data.Text])
+    else
+      PeriodoRelatorio := Format('Requisições realizadas no período de %s a %s, para o tipo %s.', [e1Data.Text, e2Data.Text,
+        Trim(Copy(edTipoRequsicao.Text, Pos('-', edTipoRequsicao.Text) + 1, Length(edTipoRequsicao.Text)))]);
+
     cdsRequsicaoAlmoxSintetico.Close;
 
     with qryRequsicaoAlmoxSintetico do

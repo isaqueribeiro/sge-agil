@@ -23,6 +23,7 @@ type
   TTipoDANFE = (tipoDANFEFast, tipoDANFE_ESCPOS); 
   TQrImage_ErrCorrLevel = (L, M, Q, H);
   TTamanhoQrCode = (tamQrCode150, tamQrCode160, tamQrCode175, tamQrCode180, tamQrCode200, tamQrCode300);
+  TFormaNFDevolucao = (fdNFeEletronica, fdNFeModelo1_1A, fdNFProdutorRural, fdCupomFiscal);
   TDMNFe = class(TDataModule)
     ACBrNFe: TACBrNFe;
     frDANFE: TACBrNFeDANFEFR;
@@ -1820,6 +1821,11 @@ begin
 
   IMR - 31/03/2015 :
     Inclusão da TAG "Ide.finNFe := fnDevolucao" quando a NF-e for de devolução
+
+  IMR - 20/04/2015 :
+    Inclusão do bloco de código para verificar se o CFOP da venda corresponde
+    a uma operação de devolução. Caso esta situação seja confirmada, a NF-e de
+    origem será solicitada.
 *)
 
   try
@@ -1865,6 +1871,41 @@ begin
         Ide.finNFe  := fnDevolucao
       else
         Ide.finNFe  := fnNormal;
+
+      if ( Ide.finNFe  = fnDevolucao ) then
+        with Ide.NFref.Add, qryCalculoImposto do
+          Case TFormaNFDevolucao(FieldByName('DNFE_FORMA').AsInteger) of
+            fdNFeEletronica:
+              refNFe := FieldByName('DNFE_CHAVE').AsString; // NFe Eletronica
+
+            fdNFeModelo1_1A:
+              begin
+                RefNF.cUF    := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString); // |
+                RefNF.AAMM   := FieldByName('DNFE_COMPETENCIA').AsString;          // |
+                RefNF.CNPJ   := FieldByName('DNFE_CNPJ_CPF').AsString;             // |
+                RefNF.modelo := FieldByName('DNFE_MODELO').AsInteger;              // |- NFe Modelo 1/1A
+                RefNF.serie  := FieldByName('DNFE_SERIE').AsInteger;               // |  * O modelo padrão é 1
+                RefNF.nNF    := FieldByName('DNFE_NUMERO').AsInteger;              // |
+              end;
+
+            fdNFProdutorRural:
+              begin
+                RefNFP.cUF     := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString); // |
+                RefNFP.AAMM    := FieldByName('DNFE_COMPETENCIA').AsString;          // |
+                RefNFP.CNPJCPF := FieldByName('DNFE_CNPJ_CPF').AsString;             // |
+                RefNFP.IE      := FieldByName('DNFE_IE').AsString;                   // |- NF produtor Rural
+                RefNFP.modelo  := FieldByName('DNFE_MODELO').AsString;               // | * O modelo padrão é 04
+                RefNFP.serie   := FieldByName('DNFE_SERIE').AsInteger;               // |
+                RefNFP.nNF     := FieldByName('DNFE_NUMERO').AsInteger;              // |
+              end;
+
+            fdCupomFiscal:
+              begin
+                RefECF.modelo  := TpcnECFModRef(FieldByName('DECF_MODELO').AsInteger); // | (ECFModRefVazio, ECFModRef2B, ECFModRef2C, ECFModRef2D)
+                RefECF.nECF    := FieldByName('DECF_NUMERO').AsString;                 // |- Cupom Fiscal
+                RefECF.nCOO    := FieldByName('DECF_COO').AsString;                    // |
+              end;
+          end;
 
       if GetSolicitaDHSaidaNFe(sCNPJEmitente) then
         if (Trim(sDataHoraSaida) <> EmptyStr) then
