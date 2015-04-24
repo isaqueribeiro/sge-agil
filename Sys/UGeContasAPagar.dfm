@@ -5,7 +5,6 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   ClientHeight = 561
   ClientWidth = 934
   OldCreateOrder = True
-  ExplicitTop = -136
   ExplicitWidth = 950
   ExplicitHeight = 600
   PixelsPerInch = 96
@@ -29,6 +28,8 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     ExplicitWidth = 934
     ExplicitHeight = 518
     inherited tbsTabela: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel4: TBevel
@@ -121,9 +122,9 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
         object lblLancamentoAberto: TLabel [0]
           Left = 2
           Top = 4
-          Width = 148
+          Width = 194
           Height = 13
-          Caption = '* Lan'#231'amentos em aberto'
+          Caption = '* Lan'#231'amentos a pagar em aberto'
           Font.Charset = ANSI_CHARSET
           Font.Color = clRed
           Font.Height = -11
@@ -131,19 +132,21 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object lblCaixaCancelado: TLabel [1]
+        object lblLancamentoVencido: TLabel [1]
           Left = 2
           Top = 24
-          Width = 16
+          Width = 185
           Height = 13
-          Caption = '* ?'
+          Caption = '* Lan'#231'amentos a pagar vencidos'
+          Color = clYellow
           Font.Charset = ANSI_CHARSET
           Font.Color = clRed
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
+          ParentColor = False
           ParentFont = False
-          Visible = False
+          Transparent = False
         end
         object Label1: TLabel [2]
           Left = 2
@@ -1370,7 +1373,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   inherited ImgList: TImageList
     Top = 72
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

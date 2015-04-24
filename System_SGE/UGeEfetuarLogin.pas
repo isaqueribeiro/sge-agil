@@ -122,6 +122,13 @@ begin
 
 //  inherited;
 
+  if Trim(edEmpresa.Text) = EmptyStr then
+  begin
+    ShowWarning('Favor selecionar a empresa!');
+    if edEmpresa.Visible and edEmpresa.Enabled then
+      edEmpresa.SetFocus;
+  end
+  else
   if EfetuarLogin then
   begin
     gUsuarioLogado.Login    := Usuario;

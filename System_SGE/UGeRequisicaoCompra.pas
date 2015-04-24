@@ -1050,17 +1050,18 @@ begin
   inherited;                            
   if ( Sender = dbgDados ) then
   begin
-    // Destacar autorização em edição
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_Requisicao_EDC ) then
-      dbgDados.Canvas.Brush.Color := lblRequisicaoEmEdicao.Color
-    else
-    // Destacar autorização aberta
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_Requisicao_ABR ) then
-      dbgDados.Canvas.Font.Color := lblRequisicaoAberta.Font.Color
-    else
-    // Destacar autorização cancelada
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_Requisicao_CAN ) then
-      dbgDados.Canvas.Font.Color := lblRequisicaoCancelada.Font.Color;
+    if (not IbDtstTabelaSTATUS.IsNull) then
+      // Destacar autorização em edição
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_Requisicao_EDC ) then
+        dbgDados.Canvas.Brush.Color := lblRequisicaoEmEdicao.Color
+      else
+      // Destacar autorização aberta
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_Requisicao_ABR ) then
+        dbgDados.Canvas.Font.Color := lblRequisicaoAberta.Font.Color
+      else
+      // Destacar autorização cancelada
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_Requisicao_CAN ) then
+        dbgDados.Canvas.Font.Color := lblRequisicaoCancelada.Font.Color;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end

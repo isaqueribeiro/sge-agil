@@ -2091,22 +2091,25 @@ begin
   inherited;
   if ( Sender = dbgDados ) then
   begin
-    // Destacar produtos em Promocao
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_VND_AND ) then
-      dbgDados.Canvas.Font.Color := lblVendaAberta.Font.Color
-    else
-    // Destacar produtos em Promocao
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_VND_CAN ) then
-      dbgDados.Canvas.Font.Color := lblVendaCancelada.Font.Color;
-
-    // Destacar alerta de lucros
-    if (not IbDtstTabelaLUCRO_CALCULADO.IsNull) then
+    if (not IbDtstTabelaSTATUS.IsNull) then
     begin
-      if ( IbDtstTabelaLUCRO_CALCULADO.AsInteger = 0 ) then
-        dbgDados.Canvas.Brush.Color := ShpLucroZerado.Brush.Color
+      // Destacar produtos em Promocao
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_VND_AND ) then
+        dbgDados.Canvas.Font.Color := lblVendaAberta.Font.Color
       else
-      if ( IbDtstTabelaLUCRO_CALCULADO.AsInteger < 0 ) then
-        dbgDados.Canvas.Brush.Color := ShpLucroNegativo.Brush.Color;
+      // Destacar produtos em Promocao
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_VND_CAN ) then
+        dbgDados.Canvas.Font.Color := lblVendaCancelada.Font.Color;
+
+      // Destacar alerta de lucros
+      if (not IbDtstTabelaLUCRO_CALCULADO.IsNull) then
+      begin
+        if ( IbDtstTabelaLUCRO_CALCULADO.AsInteger = 0 ) then
+          dbgDados.Canvas.Brush.Color := ShpLucroZerado.Brush.Color
+        else
+        if ( IbDtstTabelaLUCRO_CALCULADO.AsInteger < 0 ) then
+          dbgDados.Canvas.Brush.Color := ShpLucroNegativo.Brush.Color;
+      end;
     end;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);

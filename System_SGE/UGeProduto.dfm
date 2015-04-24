@@ -722,11 +722,11 @@ inherited frmGeProduto: TfrmGeProduto
         Top = 197
         Width = 953
         Height = 340
-        ActivePage = TbsEspecificacao
+        ActivePage = tbsValores
         Align = alClient
         TabOrder = 2
         object tbsValores: TTabSheet
-          Caption = 'Valores'
+          Caption = 'Valores / Par'#226'metros'
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1046,6 +1046,7 @@ inherited frmGeProduto: TfrmGeProduto
             TabOrder = 9
             ValueChecked = '1'
             ValueUnchecked = '0'
+            OnClick = dbMovimentaEstoqueClick
           end
           object dbComporFaturamento: TDBCheckBox
             Left = 16
@@ -1083,6 +1084,36 @@ inherited frmGeProduto: TfrmGeProduto
             TabOrder = 7
             ValueChecked = '1'
             ValueUnchecked = '0'
+          end
+          object dbProdutoLote: TDBCheckBox
+            Left = 16
+            Top = 247
+            Width = 181
+            Height = 17
+            Caption = 'Gerenciar Estoque por Lote'
+            DataSource = DtSrcTabela
+            Enabled = False
+            TabOrder = 12
+            ValueChecked = '1'
+            ValueUnchecked = '0'
+          end
+          object GrpBxParametroGeral: TGroupBox
+            Left = 225
+            Top = 127
+            Width = 236
+            Height = 73
+            Caption = 'Par'#226'metros Gerais'
+            TabOrder = 13
+            Visible = False
+          end
+          object GrpBxParametroProdudo: TGroupBox
+            Left = 467
+            Top = 127
+            Width = 278
+            Height = 73
+            Caption = 'Par'#226'metros p/ Produto'
+            TabOrder = 14
+            Visible = False
           end
         end
         object tbsCustoVeiculo: TTabSheet
@@ -2610,6 +2641,10 @@ inherited frmGeProduto: TfrmGeProduto
       Left = 957
       ExplicitLeft = 957
     end
+    inherited btbtnExcluir: TcxButton
+      ExplicitLeft = 154
+      ExplicitTop = 0
+    end
     inherited btbtnFechar: TcxButton
       Left = 882
       ExplicitLeft = 882
@@ -3513,7 +3548,7 @@ inherited frmGeProduto: TfrmGeProduto
   inherited ImgList: TImageList
     Left = 720
     Bitmap = {
-      494C01012B002C000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5281,8 +5316,8 @@ inherited frmGeProduto: TfrmGeProduto
     Top = 448
   end
   object popFerramentas: TPopupMenu
-    Left = 576
-    Top = 479
+    Left = 496
+    Top = 471
     object ppMnAtualizarMetafonema: TMenuItem
       Caption = 'Atualizar C'#243'digo Metaf'#244'nico'
       OnClick = ppMnAtualizarMetafonemaClick
@@ -5290,8 +5325,8 @@ inherited frmGeProduto: TfrmGeProduto
   end
   object ppImprimir: TPopupMenu
     Images = ImgList
-    Left = 24
-    Top = 496
+    Left = 464
+    Top = 472
     object nmProdutoLista: TMenuItem
       Bitmap.Data = {
         16050000424D160500000000000036040000280000000E0000000E0000000100
