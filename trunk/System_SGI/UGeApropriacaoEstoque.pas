@@ -971,17 +971,18 @@ begin
   inherited;
   if ( Sender = dbgDados ) then
   begin
-    // Destacar autorização em edição
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_APROPRIACAO_ESTOQUE_EDC ) then
-      dbgDados.Canvas.Brush.Color := lblApropriacaoEmEdicao.Color
-    else
-    // Destacar autorização aberta
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_APROPRIACAO_ESTOQUE_ABR ) then
-      dbgDados.Canvas.Font.Color := lblApropriacaoAberta.Font.Color
-    else
-    // Destacar autorização cancelada
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_APROPRIACAO_ESTOQUE_CAN ) then
-      dbgDados.Canvas.Font.Color := lblApropriacaoCancelada.Font.Color;
+    if (not IbDtstTabelaSTATUS.IsNull) then
+      // Destacar autorização em edição
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_APROPRIACAO_ESTOQUE_EDC ) then
+        dbgDados.Canvas.Brush.Color := lblApropriacaoEmEdicao.Color
+      else
+      // Destacar autorização aberta
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_APROPRIACAO_ESTOQUE_ABR ) then
+        dbgDados.Canvas.Font.Color := lblApropriacaoAberta.Font.Color
+      else
+      // Destacar autorização cancelada
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_APROPRIACAO_ESTOQUE_CAN ) then
+        dbgDados.Canvas.Font.Color := lblApropriacaoCancelada.Font.Color;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end

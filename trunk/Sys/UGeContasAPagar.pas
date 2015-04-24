@@ -93,7 +93,7 @@ type
     dtsTpDespesa: TDataSource;
     qryTpDespesa: TIBQuery;
     lblLancamentoAberto: TLabel;
-    lblCaixaCancelado: TLabel;
+    lblLancamentoVencido: TLabel;
     Label1: TLabel;
     lblData: TLabel;
     FrdRecibo: TfrxDBDataset;
@@ -168,6 +168,7 @@ type
     procedure btbtnIncluirClick(Sender: TObject);
   private
     { Private declarations }
+    FDataAtual : TDateTime;
     SQL_Pagamentos : TStringList;
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
@@ -181,6 +182,7 @@ type
     { Public declarations }
     property RotinaEfetuarPagtoID : String read GetRotinaEfetuarPagtoID;
     property RotinaCancelarPagtosID : String read GetRotinaCancelarPagtosID;
+    property DataAtual : TDateTime read FDataAtual;
   end;
 
 var
@@ -237,6 +239,7 @@ begin
   SQL_Pagamentos := TStringList.Create;
   SQL_Pagamentos.AddStrings( cdsPagamentos.SelectSQL );
 
+  FDataAtual      := GetDateTimeDB;
   e1Data.Date     := GetMenorVencimentoAPagar;
   e2Data.Date     := GetDateLastMonth;
   AbrirTabelaAuto  := True;
@@ -490,9 +493,16 @@ begin
   inherited;
   if ( Sender = dbgDados ) then
   begin
-    // Destacar Caixas Abertos
-    if ( IbDtstTabelaQUITADO.AsInteger = STATUS_APAGAR_PENDENTE ) then
-      dbgDados.Canvas.Font.Color := lblLancamentoAberto.Font.Color;
+    // Destacar Títulos A Pagar em aberto
+    if (not IbDtstTabelaQUITADO.IsNull) then
+      if ( IbDtstTabelaQUITADO.AsInteger = STATUS_APAGAR_PENDENTE ) then
+        if IbDtstTabelaDTVENC.AsDateTime >= DataAtual then
+          dbgDados.Canvas.Font.Color := lblLancamentoAberto.Font.Color
+        else
+        begin
+          dbgDados.Canvas.Font.Color  := lblLancamentoVencido.Font.Color;
+          dbgDados.Canvas.Brush.Color := lblLancamentoVencido.Color;
+        end;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end

@@ -27,19 +27,17 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     ExplicitWidth = 1116
     ExplicitHeight = 642
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 1108
+      ExplicitHeight = 613
       inherited Bevel4: TBevel
-        Top = 540
+        Top = 539
         Width = 1108
         ExplicitTop = 540
         ExplicitWidth = 1108
       end
       inherited dbgDados: TDBGrid
         Width = 1108
-        Height = 540
+        Height = 539
         Columns = <
           item
             Expanded = False
@@ -104,10 +102,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 544
+        Top = 543
         Width = 1108
         Height = 70
-        ExplicitTop = 544
+        ExplicitTop = 543
         ExplicitWidth = 1108
         ExplicitHeight = 70
         object lblApropriacaoAberta: TLabel [0]
@@ -152,6 +150,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+          Transparent = False
         end
         inherited grpBxFiltro: TGroupBox
           Left = 424
@@ -328,6 +327,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 1108
+      ExplicitHeight = 613
       inherited Bevel8: TBevel
         Top = 349
         Width = 1108
@@ -562,10 +565,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           TabOrder = 11
           object TbsApropriacaoMotivo: TTabSheet
             Caption = 'Motivo da apropria'#231#227'o'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbMotivo: TDBMemo
               Left = 0
               Top = 0
@@ -587,10 +586,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           object TbsApropriacaoCancelado: TTabSheet
             Caption = 'Motivo do cancelamento'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbMovitoCancelamento: TDBMemo
               Left = 0
               Top = 0
@@ -931,14 +926,9 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
         ActivePage = tbsObservacoes
         Align = alBottom
         TabOrder = 3
-        ExplicitTop = 448
         object tbsObservacoes: TTabSheet
           Caption = 'Observa'#231#245'es'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object PnlObservacoes: TPanel
             Left = 0
             Top = 0
@@ -1663,7 +1653,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
   inherited tlbBotoes: TPanel
     Top = 646
     Width = 1116
-    ExplicitTop = 647
+    ExplicitTop = 646
     ExplicitWidth = 1116
     inherited bvlTool3: TBevel
       Left = 1033
@@ -1679,6 +1669,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       Width = 4
       Height = 31
       Shape = bsSpacer
+    end
+    inherited btbtnExcluir: TcxButton
+      ExplicitLeft = 154
+      ExplicitTop = 0
     end
     inherited btbtnCancelar: TcxButton
       TabOrder = 3
@@ -2260,7 +2254,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

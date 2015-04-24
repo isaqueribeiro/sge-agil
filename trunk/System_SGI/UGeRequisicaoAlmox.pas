@@ -1012,21 +1012,22 @@ begin
   inherited;
   if ( Sender = dbgDados ) then
   begin
-    // Destacar requisição em edição
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_REQUISICAO_ALMOX_EDC ) then
-      dbgDados.Canvas.Brush.Color := lblRequisicaoEmEdicao.Color
-    else
-    // Destacar requisição aberta
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_REQUISICAO_ALMOX_ABR ) then
-      dbgDados.Canvas.Font.Color := lblRequisicaoAberta.Font.Color
-    else
-    // Destacar requisição enviada e/ou recebida
-    if ( IbDtstTabelaSTATUS.AsInteger in [STATUS_REQUISICAO_ALMOX_ENV, STATUS_REQUISICAO_ALMOX_REC] ) then
-      dbgDados.Canvas.Font.Color := lblRequisicaoRecebida.Font.Color
-    else
-    // Destacar requisição cancelada
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_REQUISICAO_ALMOX_CAN ) then
-      dbgDados.Canvas.Font.Color := lblRequisicaoCancelada.Font.Color;
+    if (not IbDtstTabelaSTATUS.IsNull) then
+      // Destacar requisição em edição
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_REQUISICAO_ALMOX_EDC ) then
+        dbgDados.Canvas.Brush.Color := lblRequisicaoEmEdicao.Color
+      else
+      // Destacar requisição aberta
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_REQUISICAO_ALMOX_ABR ) then
+        dbgDados.Canvas.Font.Color := lblRequisicaoAberta.Font.Color
+      else
+      // Destacar requisição enviada e/ou recebida
+      if ( IbDtstTabelaSTATUS.AsInteger in [STATUS_REQUISICAO_ALMOX_ENV, STATUS_REQUISICAO_ALMOX_REC] ) then
+        dbgDados.Canvas.Font.Color := lblRequisicaoRecebida.Font.Color
+      else
+      // Destacar requisição cancelada
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_REQUISICAO_ALMOX_CAN ) then
+        dbgDados.Canvas.Font.Color := lblRequisicaoCancelada.Font.Color;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end

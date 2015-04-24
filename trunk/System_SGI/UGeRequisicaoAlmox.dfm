@@ -27,19 +27,17 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
     ExplicitWidth = 1116
     ExplicitHeight = 642
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 1108
+      ExplicitHeight = 613
       inherited Bevel4: TBevel
-        Top = 540
+        Top = 539
         Width = 1108
         ExplicitTop = 540
         ExplicitWidth = 1108
       end
       inherited dbgDados: TDBGrid
         Width = 1108
-        Height = 540
+        Height = 539
         Columns = <
           item
             Expanded = False
@@ -110,10 +108,10 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 544
+        Top = 543
         Width = 1108
         Height = 70
-        ExplicitTop = 544
+        ExplicitTop = 543
         ExplicitWidth = 1108
         ExplicitHeight = 70
         object lblRequisicaoAberta: TLabel [0]
@@ -158,6 +156,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
           Font.Style = [fsBold]
           ParentColor = False
           ParentFont = False
+          Transparent = False
         end
         object lblRequisicaoRecebida: TLabel [3]
           Left = 2
@@ -350,6 +349,10 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 1108
+      ExplicitHeight = 613
       inherited Bevel8: TBevel
         Top = 373
         Width = 1108
@@ -633,10 +636,6 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
           object TbsRequisicaoCancelado: TTabSheet
             Caption = 'Motivo do cancelamento'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbMovitoCancelamento: TDBMemo
               Left = 0
               Top = 0
@@ -1955,6 +1954,10 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Height = 31
       Shape = bsSpacer
     end
+    inherited btbtnExcluir: TcxButton
+      ExplicitLeft = 154
+      ExplicitTop = 0
+    end
     inherited btbtnLista: TcxButton
       DropDownMenu = ppImprimir
       Kind = cxbkDropDown
@@ -2547,7 +2550,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

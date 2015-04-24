@@ -1487,13 +1487,14 @@ begin
   inherited;
   if ( Sender = dbgDados ) then
   begin
-    // Destacar Movimento de Entrada Aberto
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_ABR ) then
-      dbgDados.Canvas.Font.Color := lblEntradaAberta.Font.Color
-    else
-    // Destacar Movimento de Entrada Cancelado
-    if ( IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_CAN ) then
-      dbgDados.Canvas.Font.Color := lblEntradaCancelada.Font.Color;
+    if (not IbDtstTabelaSTATUS.IsNull) then
+      // Destacar Movimento de Entrada Aberto
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_ABR ) then
+        dbgDados.Canvas.Font.Color := lblEntradaAberta.Font.Color
+      else
+      // Destacar Movimento de Entrada Cancelado
+      if ( IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_CAN ) then
+        dbgDados.Canvas.Font.Color := lblEntradaCancelada.Font.Color;
 
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end;

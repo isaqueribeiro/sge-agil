@@ -49,6 +49,11 @@ type
     lblTipoRequsicao: TLabel;
     edTipoRequsicao: TComboBox;
     tblTipoRequisicaoAlmox: TIBTable;
+    frRequisicaoAlmoxAnalitico: TfrxReport;
+    QryRequisicaoAlmoxAnalitico: TIBQuery;
+    DspRequisicaoAlmoxAnalitico: TDataSetProvider;
+    CdsRequisicaoAlmoxAnalitico: TClientDataSet;
+    frdsRequisicaoAlmoxAnalitico: TfrxDBDataset;
     procedure FormCreate(Sender: TObject);
     procedure edEmpresaChange(Sender: TObject);
     procedure edRelatorioChange(Sender: TObject);

@@ -13,7 +13,9 @@ uses
   dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2010Black,
   dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
-  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver;
 
 type
   TAliquota = (taICMS, taISS);
@@ -288,6 +290,9 @@ type
     dbFinanciadora: TDBEdit;
     dbPorPlano: TDBEdit;
     dbValorRetornoVeiculo: TDBEdit;
+    dbProdutoLote: TDBCheckBox;
+    GrpBxParametroGeral: TGroupBox;
+    GrpBxParametroProdudo: TGroupBox;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
@@ -310,12 +315,17 @@ type
     procedure btbtnSalvarClick(Sender: TObject);
     procedure ppMnAtualizarMetafonemaClick(Sender: TObject);
     procedure btbtnListaClick(Sender: TObject);
+    procedure dbMovimentaEstoqueClick(Sender: TObject);
+    procedure btbtnAlterarClick(Sender: TObject);
+    procedure btbtnExcluirClick(Sender: TObject);
+    procedure btbtnCancelarClick(Sender: TObject);
   private
     { Private declarations }
     fOrdenado : Boolean;
     fAliquota : TAliquota;
     fApenasProdutos ,
     fApenasServicos : Boolean;
+    Procedure ControleCampos;
   public
     { Public declarations }
     procedure FiltarDados(const iTipoPesquisa : Integer); overload;
@@ -998,6 +1008,14 @@ begin
     end;
 end;
 
+procedure TfrmGeProduto.dbMovimentaEstoqueClick(Sender: TObject);
+begin
+  if (IbDtstTabela.State in [dsEdit, dsInsert]) then
+    if Assigned(dbProdutoLote.Field) then
+      if (dbMovimentaEstoque.Field.AsInteger = 0) then
+        dbProdutoLote.Field.AsInteger := 0;
+end;
+
 procedure TfrmGeProduto.dbSecaoButtonClick(Sender: TObject);
 var
   iCodigo    : Integer;
@@ -1387,6 +1405,11 @@ begin
     edtFiltrar.SetFocus;
 end;
 
+procedure TfrmGeProduto.ControleCampos;
+begin
+  GrpBxParametroProdudo.Enabled := (TAliquota(IbDtstTabelaALIQUOTA_TIPO.AsInteger) = taICMS);
+end;
+
 procedure TfrmGeProduto.btnFiltrarClick(Sender: TObject);
 begin
   if not GetEstoqueUnificadoEmpresa(gUsuarioLogado.Empresa) then
@@ -1414,10 +1437,19 @@ begin
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
   begin
     if ( Field = IbDtstTabelaALIQUOTA_TIPO ) then
+    begin
       if (TAliquota(IbDtstTabelaALIQUOTA_TIPO.AsInteger) = taISS) then
-        IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger := 0
+      begin
+        IbDtstTabelaPRODUTO_NOVO.AsInteger        := 0;
+        IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger   := 0;
+        IbDtstTabelaPRODUTO_IMOBILIZADO.AsInteger := 0;
+        //IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
+      end
       else
         IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger := 1;
+
+      GrpBxParametroProdudo.Enabled := (TAliquota(IbDtstTabelaALIQUOTA_TIPO.AsInteger) = taICMS);
+    end;
 
     if ( Field = IbDtstTabelaPERCENTUAL_MARCKUP ) then
       IbDtstTabelaPERCENTUAL_MARGEM.AsCurrency := IbDtstTabelaPERCENTUAL_MARCKUP.AsCurrency;
@@ -1425,6 +1457,9 @@ begin
     if ( Field = IbDtstTabelaPERCENTUAL_MARGEM ) then
       IbDtstTabelaPRECO_SUGERIDO.AsCurrency := IbDtstTabelaCUSTOMEDIO.AsCurrency +
         (IbDtstTabelaCUSTOMEDIO.AsCurrency * IbDtstTabelaPERCENTUAL_MARGEM.AsCurrency / 100);
+
+    if ( Field = IbDtstTabelaMOVIMENTA_ESTOQUE ) then
+      dbProdutoLote.Enabled := (IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger = 1);
   end;
 end;
 
@@ -1533,6 +1568,7 @@ begin
   // Validações de Dados
   
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
+  begin
     if ( Length(Trim(IbDtstTabelaNCM_SH.AsString)) < STR_TAMANHO_NCMSH ) then
     begin
       ShowWarning('Favor informar um código válido para o campo "NCM/SH"!');
@@ -1556,7 +1592,19 @@ begin
         Exit;
       end;
     end;
-      
+
+    if (TAliquota(IbDtstTabelaALIQUOTA_TIPO.AsInteger) = taISS) then
+    begin
+      IbDtstTabelaPRODUTO_NOVO.AsInteger        := 0;
+      IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger   := 0;
+      IbDtstTabelaPRODUTO_IMOBILIZADO.AsInteger := 0;
+      //IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
+    end
+    else
+    if (IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger = 0) then
+      ; //IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
+  end;
+
   inherited;
 end;
 
@@ -1588,6 +1636,27 @@ begin
 
     ShowInformation('Atualização', 'Código metafônico dos registros atualizados com sucesso!');
   end;
+end;
+
+procedure TfrmGeProduto.btbtnAlterarClick(Sender: TObject);
+begin
+  inherited;
+  if not OcorreuErro then
+    ControleCampos;
+end;
+
+procedure TfrmGeProduto.btbtnCancelarClick(Sender: TObject);
+begin
+  inherited;
+  if not OcorreuErro then
+    ControleCampos;
+end;
+
+procedure TfrmGeProduto.btbtnExcluirClick(Sender: TObject);
+begin
+  inherited;
+  if not OcorreuErro then
+    ControleCampos;
 end;
 
 procedure TfrmGeProduto.btbtnListaClick(Sender: TObject);

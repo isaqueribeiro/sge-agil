@@ -8,7 +8,14 @@ uses
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Menus, cxButtons, JvToolEdit, JvExMask,
-  JvDBControls;
+  JvDBControls, dxSkinsCore, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMcSkin, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeContasAReceber = class(TfrmGrPadraoCadastro)
@@ -124,6 +131,8 @@ type
     dbCliente: TJvDBComboEdit;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    lblLancamentoAberto: TLabel;
+    lblLancamentoVencido: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure dbClienteButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -144,8 +153,11 @@ type
     procedure btbtnCancelarClick(Sender: TObject);
     procedure btbtnIncluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
+    FDataAtual : TDateTime;
     SQL_Pagamentos : TStringList;
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
@@ -158,10 +170,15 @@ type
     { Public declarations }
     property RotinaEfetuarPagtoID : String read GetRotinaEfetuarPagtoID;
     property RotinaCancelarPagtosID : String read GetRotinaCancelarPagtosID;
+    property DataAtual : TDateTime read FDataAtual;
   end;
 
 var
   frmGeContasAReceber: TfrmGeContasAReceber;
+
+const
+  STATUS_ARECEBER_PENDENTE = 0;
+  STATUS_ARECEBER_PAGO     = 1;
 
   { DONE -oIsaque -cContas A Receber : 22/05/2014 - Correção de BUG porque a rotina estava permitindo a gravação de um lançamento sem CLIENTE, DATAS e VALOR }
 
@@ -210,8 +227,9 @@ begin
   SQL_Pagamentos := TStringList.Create;
   SQL_Pagamentos.AddStrings( cdsPagamentos.SelectSQL );
 
-  e1Data.Date     := Date;
-  e2Data.Date     := Date;
+  FDataAtual      := GetDateTimeDB;
+  e1Data.Date     := GetMenorVencimentoAReceber;
+  e2Data.Date     := GetDateLastMonth;
   AbrirTabelaAuto  := True;
   ControlFirstEdit := dbCliente;
 
@@ -459,6 +477,27 @@ begin
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
     if ( tblFormaPagto.Locate('cod', dbFormaPagto.Field.AsInteger, []) ) then
       IbDtstTabelaTIPPAG.AsString := tblFormaPagto.FieldByName('descri').AsString;
+end;
+
+procedure TfrmGeContasAReceber.dbgDadosDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  if ( Sender = dbgDados ) then
+  begin
+    // Destacar Títulos A Pagar em aberto
+    if ( not IbDtstTabelaBAIXADO.IsNull ) then
+      if ( IbDtstTabelaBAIXADO.AsInteger = STATUS_ARECEBER_PENDENTE ) then
+        if IbDtstTabelaDTVENC.AsDateTime >= DataAtual then
+          dbgDados.Canvas.Font.Color := lblLancamentoAberto.Font.Color
+        else
+        begin
+          dbgDados.Canvas.Font.Color  := lblLancamentoVencido.Font.Color;
+          dbgDados.Canvas.Brush.Color := lblLancamentoVencido.Color;
+        end;
+
+    dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
+  end
 end;
 
 procedure TfrmGeContasAReceber.dbgPagamentosKeyDown(Sender: TObject;

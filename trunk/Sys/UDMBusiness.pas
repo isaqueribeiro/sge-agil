@@ -340,6 +340,7 @@ var
   function GetExisteNumeroApropriacao(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetExisteNumeroRequisicaoAlmox(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetMenorVencimentoAPagar : TDateTime;
+  function GetMenorVencimentoAReceber : TDateTime;
   function GetMenorDataEmissaoReqAlmoxEnviada : TDateTime;
   function GetCarregarProdutoCodigoBarra(const sCNPJEmitente : String) : Boolean;
   function GetCarregarProdutoCodigoBarraLocal : Boolean;
@@ -2873,7 +2874,35 @@ begin
     Open;
 
     if not IsEmpty then
-      Result := FieldByName('vencimento').AsDateTime
+      if not FieldByName('vencimento').IsNull then
+        Result := FieldByName('vencimento').AsDateTime
+      else
+        Result := GetDateDB
+    else
+      Result := GetDateDB;
+
+    Close;
+  end;
+end;
+
+function GetMenorVencimentoAReceber : TDateTime;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select');
+    SQL.Add('  min(cr.dtvenc) as vencimento');
+    SQL.Add('from TBCONTREC cr');
+    SQL.Add('where cr.empresa = ' + QuotedStr(GetEmpresaIDDefault));
+    SQL.Add('  and cr.baixado = 0');
+    Open;
+
+    if not IsEmpty then
+      if not FieldByName('vencimento').IsNull then
+        Result := FieldByName('vencimento').AsDateTime
+      else
+        Result := GetDateDB
     else
       Result := GetDateDB;
 
