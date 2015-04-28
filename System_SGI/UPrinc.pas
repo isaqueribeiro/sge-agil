@@ -19,7 +19,8 @@ uses
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
   dxSkinSevenClassic, dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010,
   dxSkinWhiteprint, dxRibbonSkins, dxSkinsdxRibbonPainter,
-  dxRibbonCustomizationForm;
+  dxRibbonCustomizationForm, cxContainer, cxEdit, dxGallery, dxGalleryControl,
+  dxRibbonBackstageViewGalleryControl, cxLabel, dxRibbonBackstageView;
 
 
 type
@@ -183,6 +184,15 @@ type
     BrPpRelatorioEntradaSaida: TdxBarPopupMenu;
     BrBtnSenhaAutorizacao: TdxBarLargeButton;
     stbMain: TdxStatusBar;
+    BrMnQuickAccessToolbar: TdxBar;
+    RbnBackstageView: TdxRibbonBackstageView;
+    RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet;
+    LblBackstageViewConfig: TcxLabel;
+    RbnBackstageGalleryConfig: TdxRibbonBackstageViewGalleryControl;
+    dxRibbonBackstageViewGalleryGroup1: TdxRibbonBackstageViewGalleryGroup;
+    RbnBackstageGalleryConfigEmp: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageGalleryConfigNFe: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageGalleryConfigAmb: TdxRibbonBackstageViewGalleryItem;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -269,6 +279,8 @@ type
     procedure mnRelatorioRequsicaoAlmoxClick(Sender: TObject);
     procedure nmSolicitacaoCompraClick(Sender: TObject);
     procedure BrBtnRelatorioEstoqueReqClick(Sender: TObject);
+    procedure RbnBackstageGalleryConfigItemClick(Sender: TObject;
+      AItem: TdxRibbonBackstageViewGalleryItem);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -561,9 +573,11 @@ begin
     BrBtnEmpresa.Enabled := False;
     BrBtnCliente.Enabled := False;
     BrBtnProduto.Enabled := False;
-    BrBtnFornecedor.Enabled := False;
-    BrBtnEntrada.Enabled    := False;
-    BrBtnVenda.Enabled      := False;
+    BrBtnFornecedor.Enabled        := False;
+    BrBtnAutorizacaoCompra.Enabled := False;
+    BrBtnEntrada.Enabled           := False;
+    BrBtnRequisicaoAlmox.Enabled   := False;
+    BrBtnVenda.Enabled         := False;
     BrBtnTesouraria.Enabled    := False;
     BrBtnContaAPagar.Enabled   := False;
     BrBtnContaAReceber.Enabled := False;
@@ -598,13 +612,15 @@ begin
   ConfigurarRotuloBotoes;
 
   // Carregar Imagem de Fundo da Tele Principal
-
-  sFileImage := ExtractFilePath(Application.ExeName) + FILE_WALLPAPER;
-
-  if ( FileExists(sFileImage) ) then
+  if GetCarregarPapelDeParedeLocal then
   begin
-    imgFundo.Picture.LoadFromFile(sFileImage);
-    imgFundo.Center := True;
+    sFileImage := ExtractFilePath(Application.ExeName) + FILE_WALLPAPER;
+
+    if ( FileExists(sFileImage) ) then
+    begin
+      imgFundo.Picture.LoadFromFile(sFileImage);
+      imgFundo.Center := True;
+    end;
   end;
 
   if not DataBaseOnLine then
@@ -768,6 +784,22 @@ begin
   ;
 end;
 
+procedure TfrmPrinc.RbnBackstageGalleryConfigItemClick(Sender: TObject;
+  AItem: TdxRibbonBackstageViewGalleryItem);
+begin
+  Case AItem.Index of
+    0:
+      if BrBtnConfigurarEmpresa.Enabled then
+        BrBtnConfigurarEmpresa.Click;
+    1:
+      if BrBtnConfigurarNFe.Enabled then
+        BrBtnConfigurarNFe.Click;
+    2:
+      if BrBtnConfigurarAmbiente.Enabled then
+        BrBtnConfigurarAmbiente.Click;
+  end;
+end;
+
 procedure TfrmPrinc.RegistrarRotinasMenu;
 begin
   (*
@@ -776,8 +808,9 @@ begin
 
   // Menus
 
-  SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_CADASTRO_ID,   'Cadastro', EmptyStr);
-  SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_ENTRADA_ID,    'Entradas',  EmptyStr);
+  SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_RIBBON_ID,     '> Aplicação',   EmptyStr);
+  SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_CADASTRO_ID,   'Cadastro',      EmptyStr);
+  SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_ENTRADA_ID,    'Entradas',      EmptyStr);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_MOVIMENTO_ID,  'Movimentações', EmptyStr);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_NOTAFISCAL_ID, 'Notas Fiscais', EmptyStr);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_CONSULTA_ID,   'Consultas',  EmptyStr);
@@ -793,11 +826,14 @@ begin
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_REL_FATURAMENTO_ID, 'Relatórios de Faturamento', ROTINA_MENU_RELATORIO_ID);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_REL_FINANCEIRO_ID,  'Relatórios do Financeiro',  ROTINA_MENU_RELATORIO_ID);
 
+  // Menu Aplicação
+
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_EMP_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarEmpresa.Caption),  ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarNFe.Caption),      ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarAmbiente.Caption), ROTINA_MENU_RIBBON_ID);
+
   // Cadastros
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_EMP_ID, Trim(BrBtnConfigurarEmpresa.Caption),  ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(BrBtnConfigurarNFe.Caption),      ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(BrBtnConfigurarAmbiente.Caption), ROTINA_MENU_CADASTRO_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(BrBtnSenhaAutorizacao.Caption),   ROTINA_MENU_CADASTRO_ID);
 
   // Entradas

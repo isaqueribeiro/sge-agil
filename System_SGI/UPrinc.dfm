@@ -19,8 +19,8 @@ object frmPrinc: TfrmPrinc
   TextHeight = 13
   object SptDockReqAlmox: TSplitter
     Left = 1044
-    Top = 127
-    Height = 514
+    Top = 160
+    Height = 481
     Align = alRight
     Color = clBtnFace
     ParentColor = False
@@ -29,21 +29,21 @@ object frmPrinc: TfrmPrinc
   end
   object pnlMain: TPanel
     Left = 0
-    Top = 127
+    Top = 160
     Width = 1044
-    Height = 514
+    Height = 481
     Align = alClient
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 0
     DesignSize = (
       1044
-      514)
+      481)
     object imgFundo: TImage
       Left = 1
       Top = 1
       Width = 1042
-      Height = 492
+      Height = 459
       Align = alClient
       AutoSize = True
       Transparent = True
@@ -51,7 +51,7 @@ object frmPrinc: TfrmPrinc
     end
     object imgEmpresa: TImage
       Left = 8
-      Top = 378
+      Top = 345
       Width = 110
       Height = 110
       Anchors = [akLeft, akBottom]
@@ -4326,7 +4326,7 @@ object frmPrinc: TfrmPrinc
     end
     object ProductName: TLabel
       Left = 128
-      Top = 388
+      Top = 355
       Width = 138
       Height = 23
       Anchors = [akLeft, akBottom]
@@ -4343,7 +4343,7 @@ object frmPrinc: TfrmPrinc
     end
     object Copyright: TLabel
       Left = 128
-      Top = 425
+      Top = 392
       Width = 279
       Height = 26
       Anchors = [akLeft, akBottom]
@@ -4362,7 +4362,7 @@ object frmPrinc: TfrmPrinc
     end
     object FileDescription: TLabel
       Left = 128
-      Top = 410
+      Top = 377
       Width = 297
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -4379,7 +4379,7 @@ object frmPrinc: TfrmPrinc
     end
     object Version: TLabel
       Left = 129
-      Top = 456
+      Top = 423
       Width = 72
       Height = 13
       Anchors = [akLeft, akBottom]
@@ -4396,7 +4396,7 @@ object frmPrinc: TfrmPrinc
     end
     object stbMain: TdxStatusBar
       Left = 1
-      Top = 493
+      Top = 460
       Width = 1042
       Height = 20
       Images = DMRecursos.ImgPrincipal16x16
@@ -4425,12 +4425,86 @@ object frmPrinc: TfrmPrinc
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
     end
+    object RbnBackstageView: TdxRibbonBackstageView
+      Left = 472
+      Top = 159
+      Width = 489
+      Height = 266
+      Buttons = <>
+      Ribbon = Ribbon
+      object RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet
+        Left = 132
+        Top = 0
+        Active = True
+        Caption = 'Configura'#231#245'es Gerais'
+        DesignSize = (
+          357
+          264)
+        object LblBackstageViewConfig: TcxLabel
+          Left = 20
+          Top = 20
+          AutoSize = False
+          Caption = 'Configurar...'
+          ParentFont = False
+          Style.Font.Charset = DEFAULT_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -16
+          Style.Font.Name = 'Tahoma'
+          Style.Font.Style = []
+          Style.TransparentBorder = False
+          Style.IsFontAssigned = True
+          Properties.LineOptions.Alignment = cxllaBottom
+          Properties.LineOptions.Visible = True
+          Transparent = True
+          Height = 26
+          Width = 300
+        end
+        object RbnBackstageGalleryConfig: TdxRibbonBackstageViewGalleryControl
+          Left = 20
+          Top = 52
+          Width = 300
+          Height = 174
+          Anchors = [akLeft, akTop, akBottom]
+          BorderStyle = cxcbsNone
+          Images = DMRecursos.ImgPrincipal16x16
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.ColumnCount = 1
+          OptionsView.ContentOffset.All = 0
+          OptionsView.Item.Text.AlignHorz = taLeftJustify
+          OptionsView.Item.Text.AlignVert = vaCenter
+          OptionsView.Item.Text.Position = posRight
+          OptionsView.Item.PinMode = bgipmTag
+          Ribbon = Ribbon
+          OnItemClick = RbnBackstageGalleryConfigItemClick
+          ExplicitHeight = 208
+          object dxRibbonBackstageViewGalleryGroup1: TdxRibbonBackstageViewGalleryGroup
+            Caption = 'Configura'#231#245'es Gerais'
+            ShowCaption = False
+            object RbnBackstageGalleryConfigEmp: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Configurar Empresa'
+              Description = 'Configurar dados importantes da Empresa'
+              ImageIndex = 12
+            end
+            object RbnBackstageGalleryConfigNFe: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Configurar NF-e'
+              Description = 'Configurar dados importantes para emiss'#227'o de NF-e'
+              ImageIndex = 9
+            end
+            object RbnBackstageGalleryConfigAmb: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Configurar Ambiente'
+              Description = 'Configurar vari'#225'veis lociais do ambiente da aplica'#231#227'o'
+              ImageIndex = 10
+            end
+          end
+        end
+      end
+    end
   end
   object PnlDockReqAlmox: TPanel
     Left = 1047
-    Top = 127
+    Top = 160
     Width = 1
-    Height = 514
+    Height = 481
     Align = alRight
     BevelOuter = bvNone
     DockSite = True
@@ -4440,20 +4514,18 @@ object frmPrinc: TfrmPrinc
     Left = 0
     Top = 0
     Width = 1048
-    Height = 127
+    Height = 160
+    ApplicationButton.Menu = RbnBackstageView
     BarManager = BrManager
     Style = rs2010
     ColorSchemeName = 'Blue'
+    QuickAccessToolbar.Toolbar = BrMnQuickAccessToolbar
     Contexts = <>
     TabOrder = 6
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
-        item
-          ToolbarName = 'BrMngPrincipalAcc'
-        end
         item
           ToolbarName = 'BrMngPrincipalCad'
         end
@@ -4466,6 +4538,7 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbnTabCadastro: TdxRibbonTab
+      Active = True
       Caption = 'Cadastro'
       Groups = <
         item
@@ -4655,7 +4728,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalCad: TdxBar
       Caption = 'Cadastros'
       CaptionButtons = <>
-      DockedLeft = 146
+      DockedLeft = 0
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -4687,7 +4760,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalMov: TdxBar
       Caption = 'Movimentos'
       CaptionButtons = <>
-      DockedLeft = 409
+      DockedLeft = 263
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -4715,7 +4788,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 705
+      DockedLeft = 559
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -4904,12 +4977,14 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalAcc: TdxBar
       Caption = 'Autentica'#231#227'o Acesso'
       CaptionButtons = <>
+      DockedDockingStyle = dsNone
       DockedLeft = 0
       DockedTop = 0
-      FloatLeft = 478
-      FloatTop = 221
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      DockingStyle = dsNone
+      FloatLeft = 724
+      FloatTop = 403
+      FloatClientWidth = 143
+      FloatClientHeight = 108
       ItemLinks = <
         item
           Visible = True
@@ -4922,7 +4997,7 @@ object frmPrinc: TfrmPrinc
       OneOnRow = False
       Row = 0
       UseOwnFont = False
-      Visible = True
+      Visible = False
       WholeRow = False
     end
     object BrMngMovimentoCmp: TdxBar
@@ -5246,6 +5321,33 @@ object frmPrinc: TfrmPrinc
           BeginGroup = True
           Visible = True
           ItemName = 'BrBtnSobre'
+        end>
+      OneOnRow = True
+      Row = 0
+      UseOwnFont = False
+      Visible = True
+      WholeRow = False
+    end
+    object BrMnQuickAccessToolbar: TdxBar
+      AllowClose = False
+      AllowCustomizing = False
+      AllowQuickCustomizing = False
+      Caption = 'Quick Access Toolbar'
+      CaptionButtons = <>
+      DockedLeft = 0
+      DockedTop = 0
+      FloatLeft = 1082
+      FloatTop = 8
+      FloatClientWidth = 0
+      FloatClientHeight = 0
+      ItemLinks = <
+        item
+          Visible = True
+          ItemName = 'BrBtnAlterarSenha'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnEfetuarLogoff'
         end>
       OneOnRow = True
       Row = 0
