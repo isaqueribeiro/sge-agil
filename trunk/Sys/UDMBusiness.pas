@@ -177,7 +177,7 @@ var
   function IfThen(AValue: Boolean; const ATrue: TDateTime; AFalse: TDateTime = 0): TDateTime; overload;
   function IfThen(AValue: Boolean; const ATrue: Integer; AFalse: Integer = 0): Integer; overload;
   function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency = 0.0): Currency; overload;
-  function NetWorkActive(const Alertar : Boolean = FALSE) : Boolean;
+//  function NetWorkActive(const Alertar : Boolean = FALSE) : Boolean;
   function DataBaseOnLine : Boolean;
 
   function ShowConfirmation(sTitle, sMsg : String) : Boolean; overload;
@@ -344,6 +344,7 @@ var
   function GetMenorDataEmissaoReqAlmoxEnviada : TDateTime;
   function GetCarregarProdutoCodigoBarra(const sCNPJEmitente : String) : Boolean;
   function GetCarregarProdutoCodigoBarraLocal : Boolean;
+  function GetCarregarPapelDeParedeLocal : Boolean;
   function GetPermissaoRotinaSistema(sRotina : String; const Alertar : Boolean = FALSE) : Boolean;
   function GetRotinaPaiIDSistema(const RotinaID : String): String;
   function GetQuantidadeEmpresasEmiteNFe : Integer;
@@ -501,6 +502,7 @@ begin
     Result := AFalse;
 end;
 
+(*
 function NetWorkActive(const Alertar : Boolean = FALSE) : Boolean;
 var
   Enviar    ,
@@ -524,13 +526,6 @@ begin
   try
 
     try
-(*
-      if ( IdIP = nil ) then
-        IdIP  := TIdIPWatch.Create(Application);
-
-      if ( IdFTP = nil ) then
-        IdFTP := TIdFTP.Create(Application);
-*)
       sSistema  := StringReplace( ExtractFileName(ParamStr(0)), '.exe', '', [rfReplaceAll] );
       sFileName := ExtractFilePath(ParamStr(0)) + 'NetWorkActive' + sSistema + '.dll';
 
@@ -552,9 +547,6 @@ begin
       // --- Conectar ao servidor para registrar cliente (INICIO)
       if ( not Return ) then
       begin
-(*        sHostID   := IdIP.LocalIP;
-        sHostName := IdIP.LocalName;
-*)
         Registro.Clear;
         Registro.BeginUpdate;
         Registro.Add( FormatDateTime('dd/mm/yyyy', Date) );
@@ -639,6 +631,7 @@ begin
     Result := Return;
   end;
 end;
+*)
 
 function DataBaseOnLine : Boolean;
 begin
@@ -2950,6 +2943,11 @@ end;
 function GetCarregarProdutoCodigoBarraLocal : Boolean;
 begin
   Result := FileINI.ReadBool(INI_SECAO_VENDA, INI_KEY_CODIGO_EAN, GetCarregarProdutoCodigoBarra(GetEmpresaIDDefault));
+end;
+
+function GetCarregarPapelDeParedeLocal : Boolean;
+begin
+  Result := FileINI.ReadBool(INI_SECAO_VENDA, INI_KEY_PAPEL_PAREDE, True);
 end;
 
 function GetPermissaoRotinaSistema(sRotina : String; const Alertar : Boolean = FALSE) : Boolean;

@@ -996,7 +996,7 @@ begin
       {$ENDIF}
 
       cbFormaEmissao.ItemIndex := ReadInteger(sSecaoGeral, 'FormaEmissao', 0) ;
-      rgModoGerarNFe.ItemIndex := 1; NetWorkActive; // ReadInteger( 'Geral', 'ModoGerarNFe', 1) ;
+      rgModoGerarNFe.ItemIndex := 1; // ReadInteger( 'Geral', 'ModoGerarNFe', 1) ;
       edIdToken.Text       := ReadString( sSecaoGeral, 'IdToken',   GetTokenID_NFCe(sCNPJEmitente));
       edToken.Text         := ReadString( sSecaoGeral, 'Token'  ,   GetToken_NFCe(sCNPJEmitente));
       ckEmitirNFCe.Checked := ReadBool  ( sSecaoGeral, 'GerarNFCe', False);
@@ -1835,9 +1835,6 @@ begin
     AbrirEmitente( sCNPJEmitente );
     AbrirDestinatario( iCodigoCliente );
     AbrirVenda( iAnoVenda, iNumVenda );
-
-    if not NetWorkActive(True) then
-      Exit;
 
     iSerieNFe   := qryEmitenteSERIE_NFE.AsInteger;
     iNumeroNFe  := GetNextID('TBEMPRESA', 'NUMERO_NFE',   'where CNPJ = ' + QuotedStr(sCNPJEmitente) + ' and SERIE_NFE = '    + qryEmitenteSERIE_NFE.AsString);
@@ -3136,9 +3133,6 @@ begin
     AbrirEmitente( sCNPJEmitente );
     AbrirDestinatarioFornecedor( iCodFornecedor );
     AbrirCompra( iAnoCompra, iNumCompra );
-
-    if not NetWorkActive(True) then
-      Exit;
 
     iSerieNFe   := qryEmitenteSERIE_NFE.AsInteger;
     iNumeroNFe  := GetNextID('TBEMPRESA', 'NUMERO_NFE',   'where CNPJ = ' + QuotedStr(sCNPJEmitente) + ' and SERIE_NFE = '    + qryEmitenteSERIE_NFE.AsString);
@@ -5086,9 +5080,6 @@ begin
 
     if ( GetSegmentoID(qryEmitenteCNPJ.AsString) = SEGMENTO_MERCADO_CARRO_ID ) then
       raise Exception.Create('O segmento da empresa não permite a emissão de NFC-e!');
-
-    if not NetWorkActive(True) then
-      Exit;
 
     iSerieNFCe  := qryEmitenteSERIE_NFE.AsInteger;
     iNumeroNFCe := GetNextID('TBEMPRESA', 'NUMERO_NFCE', 'where CNPJ = ' + QuotedStr(sCNPJEmitente) + ' and SERIE_NFCE = ' + qryEmitenteSERIE_NFCE.AsString);
