@@ -36,6 +36,8 @@ object frmPrinc: TfrmPrinc
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 0
+    ExplicitTop = 127
+    ExplicitHeight = 514
     DesignSize = (
       1044
       481)
@@ -4426,10 +4428,10 @@ object frmPrinc: TfrmPrinc
       Font.Style = [fsBold]
     end
     object RbnBackstageView: TdxRibbonBackstageView
-      Left = 472
-      Top = 159
+      Left = 431
+      Top = 143
       Width = 489
-      Height = 266
+      Height = 298
       Buttons = <>
       Ribbon = Ribbon
       object RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet
@@ -4439,7 +4441,7 @@ object frmPrinc: TfrmPrinc
         Caption = 'Configura'#231#245'es Gerais'
         DesignSize = (
           357
-          264)
+          296)
         object LblBackstageViewConfig: TcxLabel
           Left = 20
           Top = 20
@@ -4463,10 +4465,10 @@ object frmPrinc: TfrmPrinc
           Left = 20
           Top = 52
           Width = 300
-          Height = 174
+          Height = 206
           Anchors = [akLeft, akTop, akBottom]
           BorderStyle = cxcbsNone
-          Images = DMRecursos.ImgPrincipal16x16
+          Images = DMRecursos.ImgPrincipalEnabled
           OptionsView.ColumnAutoWidth = True
           OptionsView.ColumnCount = 1
           OptionsView.ContentOffset.All = 0
@@ -4476,7 +4478,7 @@ object frmPrinc: TfrmPrinc
           OptionsView.Item.PinMode = bgipmTag
           Ribbon = Ribbon
           OnItemClick = RbnBackstageGalleryConfigItemClick
-          ExplicitHeight = 208
+          ExplicitHeight = 174
           object dxRibbonBackstageViewGalleryGroup1: TdxRibbonBackstageViewGalleryGroup
             Caption = 'Configura'#231#245'es Gerais'
             ShowCaption = False
