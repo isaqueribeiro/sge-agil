@@ -4478,7 +4478,6 @@ object frmPrinc: TfrmPrinc
           OptionsView.Item.PinMode = bgipmTag
           Ribbon = Ribbon
           OnItemClick = RbnBackstageGalleryConfigItemClick
-          ExplicitHeight = 174
           object dxRibbonBackstageViewGalleryGroup1: TdxRibbonBackstageViewGalleryGroup
             Caption = 'Configura'#231#245'es Gerais'
             ShowCaption = False
@@ -4496,6 +4495,70 @@ object frmPrinc: TfrmPrinc
               Caption = 'Configurar Ambiente'
               Description = 'Configurar vari'#225'veis lociais do ambiente da aplica'#231#227'o'
               ImageIndex = 10
+            end
+          end
+        end
+      end
+      object RbnBackstageViewAcesso: TdxRibbonBackstageViewTabSheet
+        Left = 132
+        Top = 0
+        Caption = 'Controle de Acesso'
+        DesignSize = (
+          357
+          296)
+        object LblBackstageViewAcesso: TcxLabel
+          Left = 20
+          Top = 20
+          AutoSize = False
+          Caption = 'Permiss'#245'es...'
+          ParentFont = False
+          Style.Font.Charset = DEFAULT_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -16
+          Style.Font.Name = 'Tahoma'
+          Style.Font.Style = []
+          Style.TransparentBorder = False
+          Style.IsFontAssigned = True
+          Properties.LineOptions.Alignment = cxllaBottom
+          Properties.LineOptions.Visible = True
+          Transparent = True
+          Height = 26
+          Width = 300
+        end
+        object dxRibbonBackstageViewGalleryControl1: TdxRibbonBackstageViewGalleryControl
+          Left = 20
+          Top = 52
+          Width = 300
+          Height = 206
+          Anchors = [akLeft, akTop, akBottom]
+          BorderStyle = cxcbsNone
+          Images = DMRecursos.ImgPrincipalEnabled
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.ColumnCount = 1
+          OptionsView.ContentOffset.All = 0
+          OptionsView.Item.Text.AlignHorz = taLeftJustify
+          OptionsView.Item.Text.AlignVert = vaCenter
+          OptionsView.Item.Text.Position = posRight
+          OptionsView.Item.PinMode = bgipmTag
+          Ribbon = Ribbon
+          OnItemClick = dxRibbonBackstageViewGalleryControl1ItemClick
+          object dxRibbonBackstageViewGalleryGroup2: TdxRibbonBackstageViewGalleryGroup
+            Caption = 'Controle de Acesso'
+            ShowCaption = False
+            object dxRibbonBackstageViewGalleryItem1: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Perfil de Acesso'
+              Description = 'Cadastro e pesquisa de perfis de acesso ao sistema'
+              ImageIndex = 13
+            end
+            object dxRibbonBackstageViewGalleryItem2: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Usu'#225'rio do Sistema'
+              Description = 'Cadastro e pesquisa de usu'#225'rios do sistema'
+              ImageIndex = 14
+            end
+            object dxRibbonBackstageViewGalleryItem3: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Senhas de Autoriza'#231#227'o'
+              Description = 'Controle para gera'#231#227'o de senhas de autoriza'#231#245'es diversas'
+              ImageIndex = 70
             end
           end
         end
@@ -4526,6 +4589,7 @@ object frmPrinc: TfrmPrinc
     TabOrder = 6
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
+      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4540,15 +4604,8 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbnTabCadastro: TdxRibbonTab
-      Active = True
       Caption = 'Cadastro'
       Groups = <
-        item
-          ToolbarName = 'BrMngCadastroCnf'
-        end
-        item
-          ToolbarName = 'BrMngCadastroAcc'
-        end
         item
           ToolbarName = 'BrMngCadastroCad'
         end>
@@ -4790,7 +4847,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 559
+      DockedLeft = 236
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -4818,12 +4875,14 @@ object frmPrinc: TfrmPrinc
     object BrMngCadastroCnf: TdxBar
       Caption = 'Configura'#231#245'es'
       CaptionButtons = <>
+      DockedDockingStyle = dsNone
       DockedLeft = 0
       DockedTop = 0
-      FloatLeft = 335
-      FloatTop = 213
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      DockingStyle = dsNone
+      FloatLeft = 407
+      FloatTop = 475
+      FloatClientWidth = 128
+      FloatClientHeight = 162
       ItemLinks = <
         item
           Visible = True
@@ -4840,18 +4899,20 @@ object frmPrinc: TfrmPrinc
       OneOnRow = False
       Row = 0
       UseOwnFont = False
-      Visible = True
+      Visible = False
       WholeRow = False
     end
     object BrMngCadastroAcc: TdxBar
       Caption = 'Permiss'#245'es'
       CaptionButtons = <>
-      DockedLeft = 230
+      DockedDockingStyle = dsNone
+      DockedLeft = 0
       DockedTop = 0
-      FloatLeft = 335
-      FloatTop = 213
-      FloatClientWidth = 0
-      FloatClientHeight = 0
+      DockingStyle = dsNone
+      FloatLeft = 296
+      FloatTop = 408
+      FloatClientWidth = 135
+      FloatClientHeight = 158
       ItemLinks = <
         item
           Visible = True
@@ -4869,13 +4930,13 @@ object frmPrinc: TfrmPrinc
       OneOnRow = False
       Row = 0
       UseOwnFont = False
-      Visible = True
+      Visible = False
       WholeRow = False
     end
     object BrMngCadastroCad: TdxBar
       Caption = 'Tabelas'
       CaptionButtons = <>
-      DockedLeft = 443
+      DockedLeft = 0
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -4912,7 +4973,7 @@ object frmPrinc: TfrmPrinc
           Visible = True
           ItemName = 'BrBtnTabelaProduto'
         end>
-      OneOnRow = False
+      OneOnRow = True
       Row = 0
       UseOwnFont = False
       Visible = True
@@ -5483,13 +5544,6 @@ object frmPrinc: TfrmPrinc
       SyncImageIndex = False
       ImageIndex = 10
     end
-    object BrBtnSenhaAutorizacao: TdxBarLargeButton
-      Caption = 'Senhas de Autoriza'#231#227'o'
-      Category = 3
-      Enabled = False
-      Hint = 'Senhas de Autoriza'#231#227'o'
-      Visible = ivAlways
-    end
     object BrBtnPerfilAcesso: TdxBarLargeButton
       Caption = 'Perfil de Acesso'
       Category = 3
@@ -5511,6 +5565,17 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 14
       SyncImageIndex = False
       ImageIndex = 14
+    end
+    object BrBtnSenhaAutorizacao: TdxBarLargeButton
+      Caption = 'Senhas de Autoriza'#231#227'o'
+      Category = 3
+      Enabled = False
+      Hint = 'Senhas de Autoriza'#231#227'o'
+      Visible = ivAlways
+      LargeImageIndex = 70
+      HotImageIndex = 70
+      SyncImageIndex = False
+      ImageIndex = 70
     end
     object BrBtnTabelaAuxiliar: TdxBarLargeButton
       Caption = 'Tabelas Auxiliares'
