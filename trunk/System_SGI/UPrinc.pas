@@ -193,6 +193,13 @@ type
     RbnBackstageGalleryConfigEmp: TdxRibbonBackstageViewGalleryItem;
     RbnBackstageGalleryConfigNFe: TdxRibbonBackstageViewGalleryItem;
     RbnBackstageGalleryConfigAmb: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageViewAcesso: TdxRibbonBackstageViewTabSheet;
+    LblBackstageViewAcesso: TcxLabel;
+    dxRibbonBackstageViewGalleryControl1: TdxRibbonBackstageViewGalleryControl;
+    dxRibbonBackstageViewGalleryGroup2: TdxRibbonBackstageViewGalleryGroup;
+    dxRibbonBackstageViewGalleryItem1: TdxRibbonBackstageViewGalleryItem;
+    dxRibbonBackstageViewGalleryItem2: TdxRibbonBackstageViewGalleryItem;
+    dxRibbonBackstageViewGalleryItem3: TdxRibbonBackstageViewGalleryItem;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -280,6 +287,8 @@ type
     procedure nmSolicitacaoCompraClick(Sender: TObject);
     procedure BrBtnRelatorioEstoqueReqClick(Sender: TObject);
     procedure RbnBackstageGalleryConfigItemClick(Sender: TObject;
+      AItem: TdxRibbonBackstageViewGalleryItem);
+    procedure dxRibbonBackstageViewGalleryControl1ItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
   private
     { Private declarations }
@@ -379,6 +388,22 @@ begin
   BrBtnProduto.Caption           := StrDescricaoProduto;
   BrBtnRelatorioProduto.Caption  := StrDescricaoProduto;
   BrBtnRelatorioEntrada.Caption  := 'Entradas de ' + StrDescricaoProduto;
+end;
+
+procedure TfrmPrinc.dxRibbonBackstageViewGalleryControl1ItemClick(
+  Sender: TObject; AItem: TdxRibbonBackstageViewGalleryItem);
+begin
+  Case AItem.Index of
+    0:
+      if BrBtnPerfilAcesso.Enabled then
+        BrBtnPerfilAcesso.Click;
+    1:
+      if BrBtnUsuario.Enabled then
+        BrBtnUsuario.Click;
+    2:
+      if BrBtnSenhaAutorizacao.Enabled then
+        BrBtnSenhaAutorizacao.Click;
+  end;
 end;
 
 procedure TfrmPrinc.nmEntradaProdutoClick(Sender: TObject);
@@ -819,7 +844,7 @@ begin
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_AJUDA_ID,      'Ajuda',      EmptyStr);
 
   // Sub-menus
-  
+
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_TAB_AUXILIAR_ID,    'Tabelas Auxiliares',        ROTINA_MENU_CADASTRO_ID);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_REL_ENTRADA_ID,     'Relatórios de Entradas',    ROTINA_MENU_RELATORIO_ID);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_REL_ESTOQUE_ID,     'Relatórios de Estoque',     ROTINA_MENU_RELATORIO_ID);
@@ -832,9 +857,13 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarNFe.Caption),      ROTINA_MENU_RIBBON_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarAmbiente.Caption), ROTINA_MENU_RIBBON_ID);
 
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_PERFIL_ID,     Trim(BrBtnPerfilAcesso.Caption),     ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_USUARIO_ID,    Trim(BrBtnUsuario.Caption),          ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(BrBtnSenhaAutorizacao.Caption), ROTINA_MENU_RIBBON_ID);
+
   // Cadastros
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(BrBtnSenhaAutorizacao.Caption),   ROTINA_MENU_CADASTRO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_EMPRESA_ID, Trim(BrBtnEmpresa.Caption), ROTINA_MENU_CADASTRO_ID);
 
   // Entradas
 
