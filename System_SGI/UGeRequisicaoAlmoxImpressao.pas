@@ -49,7 +49,7 @@ type
     lblTipoRequsicao: TLabel;
     edTipoRequsicao: TComboBox;
     tblTipoRequisicaoAlmox: TIBTable;
-    frRequisicaoAlmoxAnalitico: TfrxReport;
+    frRequsicaoAlmoxAnalitico: TfrxReport;
     QryRequisicaoAlmoxAnalitico: TIBQuery;
     DspRequisicaoAlmoxAnalitico: TDataSetProvider;
     CdsRequisicaoAlmoxAnalitico: TClientDataSet;
@@ -75,6 +75,7 @@ type
     procedure CarregarGrupo;
     procedure CarregarTipoRequisicaoAlmox;
     procedure MontarRequisicaoEstoqueSintetico;
+    procedure MontarRequisicaoEstoqueAnalitico;
   end;
 
 var
@@ -109,6 +110,13 @@ begin
       begin
         SubTituloRelario := EmptyStr;
         MontarRequisicaoEstoqueSintetico;
+        frReport := frRequsicaoAlmoxSintetico;
+      end;
+
+    REPORT_REQUSICAO_ESTOQUE_ANALITICO:
+      begin
+        SubTituloRelario := EmptyStr;
+        MontarRequisicaoEstoqueAnalitico;
         frReport := frRequsicaoAlmoxSintetico;
       end;
   end;
@@ -286,6 +294,11 @@ begin
 
   FSQL_RequisicaoEstoqueS := TStringList.Create;
   FSQL_RequisicaoEstoqueS.AddStrings( qryRequsicaoAlmoxSintetico.SQL );
+end;
+
+procedure TfrmGeRequisicaoAlmoxImpressao.MontarRequisicaoEstoqueAnalitico;
+begin
+  ;
 end;
 
 procedure TfrmGeRequisicaoAlmoxImpressao.MontarRequisicaoEstoqueSintetico;
