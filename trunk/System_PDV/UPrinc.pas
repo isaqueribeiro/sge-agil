@@ -24,7 +24,9 @@ uses
   dxSkinMetropolisDark, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
   dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, dxSkinsdxRibbonPainter,
-  dxRibbonCustomizationForm, dxSkinsdxStatusBarPainter, dxStatusBar;
+  dxRibbonCustomizationForm, dxSkinsdxStatusBarPainter, dxStatusBar,
+  cxContainer, cxEdit, dxGallery, dxGalleryControl,
+  dxRibbonBackstageViewGalleryControl, cxLabel, dxRibbonBackstageView;
 
 type
   TfrmPrinc = class(TForm)
@@ -35,7 +37,7 @@ type
     Copyright: TLabel;
     FileDescription: TLabel;
     Version: TLabel;
-    dxSkinController: TdxSkinController;
+    SknController: TdxSkinController;
     BrManager: TdxBarManager;
     BrMngPrincipalMov: TdxBar;
     BrMngPrincipalCad: TdxBar;
@@ -78,6 +80,22 @@ type
     BrBtnSobre: TdxBarLargeButton;
     BrBtnSenhaAutorizacao: TdxBarLargeButton;
     stbMain: TdxStatusBar;
+    RbnBackstageView: TdxRibbonBackstageView;
+    RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet;
+    LblBackstageViewConfig: TcxLabel;
+    RbnBackstageGalleryConfig: TdxRibbonBackstageViewGalleryControl;
+    dxRibbonBackstageViewGalleryGroup1: TdxRibbonBackstageViewGalleryGroup;
+    RbnBackstageGalleryConfigEmp: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageGalleryConfigNFe: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageGalleryConfigAmb: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageViewAcesso: TdxRibbonBackstageViewTabSheet;
+    LblBackstageViewAcesso: TcxLabel;
+    dxRibbonBackstageViewGalleryControl1: TdxRibbonBackstageViewGalleryControl;
+    dxRibbonBackstageViewGalleryGroup2: TdxRibbonBackstageViewGalleryGroup;
+    dxRibbonBackstageViewGalleryItem1: TdxRibbonBackstageViewGalleryItem;
+    dxRibbonBackstageViewGalleryItem2: TdxRibbonBackstageViewGalleryItem;
+    dxRibbonBackstageViewGalleryItem3: TdxRibbonBackstageViewGalleryItem;
+    BrManagerBar1: TdxBar;
     procedure btnSairClick(Sender: TObject);
     procedure nmAboutClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -105,6 +123,10 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure mnRegistroEstacaoClick(Sender: TObject);
     procedure nmEfetuarLogoffClick(Sender: TObject);
+    procedure RbnBackstageGalleryConfigItemClick(Sender: TObject;
+      AItem: TdxRibbonBackstageViewGalleryItem);
+    procedure dxRibbonBackstageViewGalleryControl1ItemClick(Sender: TObject;
+      AItem: TdxRibbonBackstageViewGalleryItem);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -152,6 +174,22 @@ begin
   ;
 end;
 
+procedure TfrmPrinc.dxRibbonBackstageViewGalleryControl1ItemClick(
+  Sender: TObject; AItem: TdxRibbonBackstageViewGalleryItem);
+begin
+  Case AItem.Index of
+    0:
+      if BrBtnPerfilAcesso.Enabled then
+        BrBtnPerfilAcesso.Click;
+    1:
+      if BrBtnUsuario.Enabled then
+        BrBtnUsuario.Click;
+    2:
+      if BrBtnSenhaAutorizacao.Enabled then
+        BrBtnSenhaAutorizacao.Click;
+  end;
+end;
+
 procedure TfrmPrinc.FormActivate(Sender: TObject);
 var
   sCNPJ : String;
@@ -193,13 +231,15 @@ begin
     BrBtnCliente.Enabled   := False;
   end;
 
-  if not gLicencaSistema.UsarSGE then
-  begin
-    ShowWarning(
-      'A licença atual não permite que este sistema seja utilizado!' + #13 +
-      'Favor entrar em contato com o fornecedor do software.');
-    Application.Terminate;
-  end;
+
+  if ( not DelphiIsRunning ) then
+    if not gLicencaSistema.UsarSGE then
+    begin
+      ShowWarning(
+        'A licença atual não permite que este sistema seja utilizado!' + #13#13 +
+        'Favor entrar em contato com o fornecedor do software.');
+      Application.Terminate;
+    end;
 end;
 
 procedure TfrmPrinc.FormCreate(Sender: TObject);
@@ -220,13 +260,15 @@ begin
   Ribbon.ActiveTab := RbbTabPrincipal;
 
   // Carregar Imagem de Fundo da Tele Principal
-
-  sFileImageWallPaper := ExtractFilePath(Application.ExeName) + FILE_WALLPAPER;
-
-  if ( FileExists(sFileImageWallPaper) ) then
+  if GetCarregarPapelDeParedeLocal then
   begin
-    imgFundo.Picture.LoadFromFile(sFileImageWallPaper);
-    imgFundo.Center := True;
+    sFileImageWallPaper := ExtractFilePath(Application.ExeName) + FILE_WALLPAPER;
+
+    if ( FileExists(sFileImageWallPaper) ) then
+    begin
+      imgFundo.Picture.LoadFromFile(sFileImageWallPaper);
+      imgFundo.Center := True;
+    end;
   end;
 
   if not DataBaseOnLine then
@@ -373,10 +415,27 @@ begin
     FormFunction.ShowModalForm(Self, 'frmGrUsuarioPerfil');
 end;
 
+procedure TfrmPrinc.RbnBackstageGalleryConfigItemClick(Sender: TObject;
+  AItem: TdxRibbonBackstageViewGalleryItem);
+begin
+  Case AItem.Index of
+    0:
+      if BrBtnConfigurarEmpresa.Enabled then
+        BrBtnConfigurarEmpresa.Click;
+    1:
+      if BrBtnConfigurarNFe.Enabled then
+        BrBtnConfigurarNFe.Click;
+    2:
+      if BrBtnConfigurarAmbiente.Enabled then
+        BrBtnConfigurarAmbiente.Click;
+  end;
+end;
+
 procedure TfrmPrinc.RegistrarRotinasMenu;
 begin
   // Menus
 
+  SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_RIBBON_ID,     '> Aplicação',   EmptyStr);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_CADASTRO_ID,  'Cadastro',      EmptyStr);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_MOVIMENTO_ID, 'Movimentações', EmptyStr);
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_CAIXA_PDV_ID, 'Caixa',         EmptyStr);
@@ -386,12 +445,19 @@ begin
   
   SetRotinaSistema(ROTINA_TIPO_MENU, ROTINA_MENU_TAB_AUXILIAR_ID, 'Tabelas Auxiliares', ROTINA_MENU_CADASTRO_ID);
 
+  // Menu Aplicação
+
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_EMP_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarEmpresa.Caption),  ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarNFe.Caption),      ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(RbnBackstageViewConfig.Caption + ' -> ' + BrBtnConfigurarAmbiente.Caption), ROTINA_MENU_RIBBON_ID);
+
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_PERFIL_ID,     Trim(BrBtnPerfilAcesso.Caption),     ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_USUARIO_ID,    Trim(BrBtnUsuario.Caption),          ROTINA_MENU_RIBBON_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(BrBtnSenhaAutorizacao.Caption), ROTINA_MENU_RIBBON_ID);
+
   // Cadastros
 
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_EMP_ID, Trim(BrBtnConfigurarEmpresa.Caption),  ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_NFE_ID, Trim(BrBtnConfigurarNFe.Caption),      ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_CONFIG_AMB_ID, Trim(BrBtnConfigurarAmbiente.Caption), ROTINA_MENU_CADASTRO_ID);
-  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_GERAR_SENH_ID, Trim(BrBtnSenhaAutorizacao.Caption),   ROTINA_MENU_CADASTRO_ID);
+  SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_CAD_EMPRESA_ID, Trim(BrBtnEmpresa.Caption), ROTINA_MENU_CADASTRO_ID);
 
   // Cadastros -> Tabelas Auxiliares
 

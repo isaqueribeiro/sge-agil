@@ -16509,6 +16509,7 @@ object DMNFe: TDMNFe
     ImprimeItens = True
     vTroco = 0.000000000000000000
     ViaConsumidor = True
+    TributosSeparadamente = False
     EspessuraBorda = 1
     ExibirTotalTributosItem = False
     ExibeCampoFatura = True
@@ -16517,6 +16518,7 @@ object DMNFe: TDMNFe
     Detalhado = False
     DescricaoViaEstabelec = 'Via do Consumidor'
     ExpandirDadosAdicionaisAuto = False
+    ImprimirDadosArma = True
     Left = 24
     Top = 72
   end
@@ -16576,15 +16578,12 @@ object DMNFe: TDMNFe
     Top = 216
     Datasets = <
       item
-        DataSet = dmACBrNFeFR.frxDestinatario
         DataSetName = 'Destinatario'
       end
       item
-        DataSet = dmACBrNFeFR.frxEmitente
         DataSetName = 'Emitente'
       end
       item
-        DataSet = dmACBrNFeFR.frxEventos
         DataSetName = 'Eventos'
       end>
     Variables = <
@@ -17193,7 +17192,6 @@ object DMNFe: TDMNFe
         Height = 222.992270000000000000
         Top = 684.094930000000000000
         Width = 718.110700000000000000
-        DataSet = dmACBrNFeFR.frxEventos
         DataSetName = 'Eventos'
         RowCount = 0
         Stretched = True
@@ -18161,12 +18159,6 @@ object DMNFe: TDMNFe
     MsgRelatorio = 'Imprimindo %s  %d'#170' Via '
     MsgPausaRelatorio = 'Destaque a %d'#170' via, <ENTER> proxima, %d seg.'
     PaginaDeCodigo = 0
-    FormMsgColor = clHighlight
-    FormMsgFonte.Charset = DEFAULT_CHARSET
-    FormMsgFonte.Color = clWindowText
-    FormMsgFonte.Height = -11
-    FormMsgFonte.Name = 'MS Sans Serif'
-    FormMsgFonte.Style = []
     MemoParams.Strings = (
       '[Cabecalho]'
       'LIN000=<center><b>Nome da Empresa</b></center>'
@@ -18316,13 +18308,16 @@ object DMNFe: TDMNFe
     LocalImpCanhoto = 0
     ImprimeItens = True
     ViaConsumidor = True
+    TributosSeparadamente = False
+    MarcaImpressora = iBematech
+    TimeOut = 3
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
-    MarcaImpressora = iBematech
     LinhasEntreCupons = 10
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
+    IntervaloBuffer = 0
     Left = 56
     Top = 72
   end
@@ -22997,63 +22992,48 @@ object DMNFe: TDMNFe
     Top = 352
     Datasets = <
       item
-        DataSet = dmACBrNFeFR.frxCalculoImposto
         DataSetName = 'CalculoImposto'
       end
       item
-        DataSet = dmACBrNFeFR.frxDadosProdutos
         DataSetName = 'DadosProdutos'
       end
       item
-        DataSet = dmACBrNFeFR.frxDestinatario
         DataSetName = 'Destinatario'
       end
       item
-        DataSet = dmACBrNFeFR.frxDuplicatas
         DataSetName = 'Duplicatas'
       end
       item
-        DataSet = dmACBrNFeFR.frxEmitente
         DataSetName = 'Emitente'
       end
       item
-        DataSet = dmACBrNFeFR.frxFatura
         DataSetName = 'Fatura'
       end
       item
-        DataSet = dmACBrNFeFR.frxIdentificacao
         DataSetName = 'Identificacao'
       end
       item
-        DataSet = dmACBrNFeFR.frxInformacoesAdicionais
         DataSetName = 'InformacoesAdicionais'
       end
       item
-        DataSet = dmACBrNFeFR.frxISSQN
         DataSetName = 'ISSQN'
       end
       item
-        DataSet = dmACBrNFeFR.frxLocalEntrega
         DataSetName = 'LocalEntrega'
       end
       item
-        DataSet = dmACBrNFeFR.frxLocalRetirada
         DataSetName = 'LocalRetirada'
       end
       item
-        DataSet = dmACBrNFeFR.frxParametros
         DataSetName = 'Parametros'
       end
       item
-        DataSet = dmACBrNFeFR.frxTransportador
         DataSetName = 'Transportador'
       end
       item
-        DataSet = dmACBrNFeFR.frxVeiculo
         DataSetName = 'Veiculo'
       end
       item
-        DataSet = dmACBrNFeFR.frxVolumes
         DataSetName = 'Volumes'
       end>
     Variables = <
@@ -23091,7 +23071,6 @@ object DMNFe: TDMNFe
         Top = 1058.268400000000000000
         Width = 744.567410000000000000
         OnAfterPrint = 'DadosProdutosOnAfterPrint'
-        DataSet = dmACBrNFeFR.frxDadosProdutos
         DataSetName = 'DadosProdutos'
         RowCount = 0
         Stretched = True
@@ -23491,7 +23470,6 @@ object DMNFe: TDMNFe
           Height = 34.015745590000000000
           BarType = bcCode128C
           DataField = 'Contingencia_ID'
-          DataSet = dmACBrNFeFR.frxParametros
           DataSetName = 'Parametros'
           Rotation = 0
           ShowText = False
@@ -23544,7 +23522,6 @@ object DMNFe: TDMNFe
           Height = 37.795275590000000000
           BarType = bcCode128C
           DataField = 'Id'
-          DataSet = dmACBrNFeFR.frxIdentificacao
           DataSetName = 'Identificacao'
           Rotation = 0
           ShowText = False
@@ -23888,7 +23865,6 @@ object DMNFe: TDMNFe
           Height = 81.259842520000000000
           Center = True
           DataField = 'LogoCarregado'
-          DataSet = dmACBrNFeFR.frxParametros
           DataSetName = 'Parametros'
           HightQuality = False
           Transparent = False
@@ -24004,7 +23980,6 @@ object DMNFe: TDMNFe
         Height = 96.267762910000000000
         Top = 355.275820000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxIdentificacao
         DataSetName = 'Identificacao'
         RowCount = 1
         object Memo29: TfrxMemoView
@@ -24449,7 +24424,6 @@ object DMNFe: TDMNFe
         Top = 612.283860000000000000
         Visible = False
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxFatura
         DataSetName = 'Fatura'
         RowCount = 0
         object Memo190: TfrxMemoView
@@ -24497,7 +24471,6 @@ object DMNFe: TDMNFe
         Width = 744.567410000000000000
         Columns = 5
         ColumnWidth = 151.181102362205000000
-        DataSet = dmACBrNFeFR.frxDuplicatas
         DataSetName = 'Duplicatas'
         RowCount = 0
         object Shape2: TfrxShapeView
@@ -24981,7 +24954,6 @@ object DMNFe: TDMNFe
         Top = 778.583180000000000000
         Width = 744.567410000000000000
         OnBeforePrint = 'ImpostoOnBeforePrint'
-        DataSet = dmACBrNFeFR.frxCalculoImposto
         DataSetName = 'CalculoImposto'
         RowCount = 1
         object Memo58: TfrxMemoView
@@ -25468,7 +25440,6 @@ object DMNFe: TDMNFe
         Height = 96.378045510000000000
         Top = 873.071430000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxTransportador
         DataSetName = 'Transportador'
         RowCount = 1
         object Memo82: TfrxMemoView
@@ -26369,7 +26340,6 @@ object DMNFe: TDMNFe
         Height = 43.354342910000000000
         Top = 476.220780000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxLocalRetirada
         DataSetName = 'LocalRetirada'
         RowCount = 0
         object Memo10: TfrxMemoView
@@ -26464,7 +26434,6 @@ object DMNFe: TDMNFe
         Height = 43.354342910000000000
         Top = 544.252320000000000000
         Width = 744.567410000000000000
-        DataSet = dmACBrNFeFR.frxLocalEntrega
         DataSetName = 'LocalEntrega'
         RowCount = 0
         object Memo54: TfrxMemoView
@@ -26580,7 +26549,6 @@ object DMNFe: TDMNFe
         Height = 43.354342910000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
-        DataSet = dmACBrNFeFR.frxISSQN
         DataSetName = 'ISSQN'
         RowCount = 0
         object Memo5: TfrxMemoView
@@ -26922,63 +26890,48 @@ object DMNFe: TDMNFe
     Top = 400
     Datasets = <
       item
-        DataSet = dmACBrNFeFR.frxCalculoImposto
         DataSetName = 'CalculoImposto'
       end
       item
-        DataSet = dmACBrNFeFR.frxDadosProdutos
         DataSetName = 'DadosProdutos'
       end
       item
-        DataSet = dmACBrNFeFR.frxDestinatario
         DataSetName = 'Destinatario'
       end
       item
-        DataSet = dmACBrNFeFR.frxDuplicatas
         DataSetName = 'Duplicatas'
       end
       item
-        DataSet = dmACBrNFeFR.frxEmitente
         DataSetName = 'Emitente'
       end
       item
-        DataSet = dmACBrNFeFR.frxFatura
         DataSetName = 'Fatura'
       end
       item
-        DataSet = dmACBrNFeFR.frxIdentificacao
         DataSetName = 'Identificacao'
       end
       item
-        DataSet = dmACBrNFeFR.frxInformacoesAdicionais
         DataSetName = 'InformacoesAdicionais'
       end
       item
-        DataSet = dmACBrNFeFR.frxISSQN
         DataSetName = 'ISSQN'
       end
       item
-        DataSet = dmACBrNFeFR.frxLocalEntrega
         DataSetName = 'LocalEntrega'
       end
       item
-        DataSet = dmACBrNFeFR.frxLocalRetirada
         DataSetName = 'LocalRetirada'
       end
       item
-        DataSet = dmACBrNFeFR.frxParametros
         DataSetName = 'Parametros'
       end
       item
-        DataSet = dmACBrNFeFR.frxTransportador
         DataSetName = 'Transportador'
       end
       item
-        DataSet = dmACBrNFeFR.frxVeiculo
         DataSetName = 'Veiculo'
       end
       item
-        DataSet = dmACBrNFeFR.frxVolumes
         DataSetName = 'Volumes'
       end>
     Variables = <>
@@ -27004,7 +26957,6 @@ object DMNFe: TDMNFe
         Height = 12.472440940000000000
         Top = 740.787880000000000000
         Width = 1084.725110000000000000
-        DataSet = dmACBrNFeFR.frxDadosProdutos
         DataSetName = 'DadosProdutos'
         RowCount = 0
         Stretched = True
@@ -28222,7 +28174,6 @@ object DMNFe: TDMNFe
         Top = 370.393940000000000000
         Width = 1084.725110000000000000
         Child = frrNFePaisagem.Child3
-        DataSet = dmACBrNFeFR.frxIdentificacao
         DataSetName = 'Identificacao'
         RowCount = 0
         object Memo29: TfrxMemoView
@@ -30708,7 +30659,6 @@ object DMNFe: TDMNFe
         Width = 1084.725110000000000000
         Columns = 6
         ColumnWidth = 181.417322834646000000
-        DataSet = dmACBrNFeFR.frxDuplicatas
         DataSetName = 'Duplicatas'
         RowCount = 0
         Stretched = True

@@ -38,15 +38,15 @@ SplashDescription=
 
 [SGE]
 CompanyName=Ágil Soluções em Softwares, ME
-FileDescription=Sistema Integrado de Gestão Empresarial/Industrial
+FileDescription=Sistema Integrado de Gestão Empresarial/Comercial
 FileVersion=1.0.1.0
-InternalName=SGI
+InternalName=SGE
 LegalCopyright=Copyright 2013 - 2015 © Ágil Soluções em Softwares - ME
 Todos os direitos reservados.
 LegalTrademarks=
-OriginalFilename=SGI.EXE
-ProductName=SGI - Sistema de Gestão Empresarial/Industrial
-ProductVersion=1.0.1
+OriginalFilename=SGE.EXE
+ProductName=SGI - Sistema de Gestão Empresarial/Comercial
+ProductVersion=1.0.2
 Comments=
 Systems Analyst=Isaque Marinho Ribeiro
 ReleaseDate=25/03/2015

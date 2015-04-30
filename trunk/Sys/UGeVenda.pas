@@ -504,7 +504,7 @@ uses
   UDMBusiness, UFuncoes, UGeCliente, UGeCondicaoPagto, UGeProduto, UGeTabelaCFOP,
   UConstantesDGE, DateUtils, SysConst, UDMNFe, UGeGerarBoletos, UGeEfetuarPagtoREC,
   UGeVendaGerarNFe, UGeVendaCancelar, UGeVendaFormaPagto, UGeVendaTransporte,
-  UGeVendaConfirmaTitulos, UGeVendaDevolucaoNF, UDMRecursos;
+  UGeVendaConfirmaTitulos, {$IFNDEF PDV}UGeVendaDevolucaoNF,{$ENDIF} UDMRecursos;
 
 {$R *.dfm}
 
@@ -1843,9 +1843,11 @@ begin
     Exit;
   end;
 
+  {$IFNDEF PDV}
   if GetCfopDevolucao( IbDtstTabelaCFOP.AsInteger ) then
     if not InformarDocumentoReferenciado(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value) then
       Exit;
+  {$ENDIF}
 
   if ( GerarNFe(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value,
                 iSerieNFe, iNumeroNFe, sFileNameXML, sChaveNFE, sProtocoloNFE, sReciboNFE, iNumeroLote, sMensagem

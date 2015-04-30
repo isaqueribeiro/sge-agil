@@ -1484,7 +1484,7 @@ begin
 
             if ( FileExists(sFileNameXML) ) then
             begin
-              CorrigirXML_NFe(sFileNameXML);
+              CorrigirXML_NFe(EmptyStr, sFileNameXML);
 
               DataSetNotaFiscal.FieldByName('XML_FILENAME').Value := ExtractFileName( sFileNameXML );
               TMemoField(DataSetNotaFiscal.FieldByName('XML_FILE')).LoadFromFile( sFileNameXML );

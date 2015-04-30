@@ -1,6 +1,6 @@
 program SGE;
 
-{%ToDo 'SGE.todo'}
+
 
 uses
   Windows,
@@ -124,7 +124,8 @@ uses
   UEcfBematechNaoFiscal in '..\Sys\lib\UEcfBematechNaoFiscal.pas',
   UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule},
   UGeInventario in '..\System_SGI\UGeInventario.pas' {frmGeInventario},
-  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo};
+  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo},
+  UGeVendaDevolucaoNF in '..\Sys\UGeVendaDevolucaoNF.pas' {frmGeVendaDevolucaoNF};
 
 {$R *.res}
 

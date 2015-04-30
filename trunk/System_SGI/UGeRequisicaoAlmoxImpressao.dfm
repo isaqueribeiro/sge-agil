@@ -1376,7 +1376,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
     Left = 457
     Top = 103
   end
-  object frRequisicaoAlmoxAnalitico: TfrxReport
+  object frRequsicaoAlmoxAnalitico: TfrxReport
     Version = '5.1.9'
     DotMatrixReport = False
     IniFile = '\Software\Fast Reports'

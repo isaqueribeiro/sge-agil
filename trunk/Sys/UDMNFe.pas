@@ -17,7 +17,7 @@ uses
   ACBrECF, ACBrRFD, ACBrAAC, ACBrEAD, ACBrECFVirtual,
   ACBrECFVirtualPrinter, ACBrECFVirtualNaoFiscal, ACBrSATExtratoClass,
   ACBrSATExtratoESCPOS, ACBrNFeDANFeESCPOS, ACBrSAT, Xml.xmldom, Xml.XMLIntf,
-  Xml.XMLDoc;
+  Xml.XMLDoc, ACBrNFeDANFEFRDM;
 
 type
   TTipoDANFE = (tipoDANFEFast, tipoDANFE_ESCPOS); 
