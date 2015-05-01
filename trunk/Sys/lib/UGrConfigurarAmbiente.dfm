@@ -721,11 +721,14 @@ inherited frmGrConfigurarAmbiente: TfrmGrConfigurarAmbiente
     LocalImpCanhoto = 0
     ImprimeItens = True
     ViaConsumidor = True
+    TributosSeparadamente = False
+    TimeOut = 3
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
+    IntervaloBuffer = 0
     Left = 436
     Top = 432
   end

@@ -1,9 +1,9 @@
 object frmGrPadrao: TfrmGrPadrao
   Left = 393
   Top = 219
-  Width = 555
-  Height = 332
   Caption = 'Form Padr'#227'o'
+  ClientHeight = 293
+  ClientWidth = 539
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
