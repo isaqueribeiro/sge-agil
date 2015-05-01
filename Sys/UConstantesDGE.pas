@@ -407,6 +407,7 @@ const
 
   FILE_WALLPAPER    = 'PapelDeParede.jpg';
   FILE_COMPANY_LOGO = 'LogotipoEmpresa.png';
+  FILE_AUTOBACKUP   = 'AutoBackupGA.exe';
 
   COND_PARCELA_MIN = 1;
   COND_PARCELA_MAX = 12;
@@ -479,7 +480,9 @@ const
 
   SYS_PATH_REGISTER = {$IFDEF DGE}'MasterDados\'{$ELSE}'Ágil Soluções em Softwares\'{$ENDIF};
   SYS_PASSWD_KEY    = 'TheLordIsGod';
-  
+  SYS_SYSDBA_LOGIN  = 'SYSDBA';
+  SYS_SYSDBA_PWD    = 'masterkey';
+
   KEY_REG_VERSAO    = 'Versão';
   KEY_REG_DATA      = 'Data acesso';
 

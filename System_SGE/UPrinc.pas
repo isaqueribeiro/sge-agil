@@ -181,12 +181,17 @@ type
     RbnBackstageGalleryConfigAmb: TdxRibbonBackstageViewGalleryItem;
     RbnBackstageViewAcesso: TdxRibbonBackstageViewTabSheet;
     LblBackstageViewAcesso: TcxLabel;
-    dxRibbonBackstageViewGalleryControl1: TdxRibbonBackstageViewGalleryControl;
+    RbnBackstageGalleryAcesso: TdxRibbonBackstageViewGalleryControl;
     dxRibbonBackstageViewGalleryGroup2: TdxRibbonBackstageViewGalleryGroup;
     dxRibbonBackstageViewGalleryItem1: TdxRibbonBackstageViewGalleryItem;
     dxRibbonBackstageViewGalleryItem2: TdxRibbonBackstageViewGalleryItem;
     dxRibbonBackstageViewGalleryItem3: TdxRibbonBackstageViewGalleryItem;
     TmrMonitorar: TTimer;
+    RbnBackstageViewBackup: TdxRibbonBackstageViewTabSheet;
+    LblBackstageViewBackup: TcxLabel;
+    RbnBackstageGalleryBackup: TdxRibbonBackstageViewGalleryControl;
+    dxRibbonBackstageViewGalleryGroup3: TdxRibbonBackstageViewGalleryGroup;
+    dxRibbonBackstageViewGalleryItem4: TdxRibbonBackstageViewGalleryItem;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -267,7 +272,9 @@ type
     procedure BrBtnRelatorioEstoqueReqClick(Sender: TObject);
     procedure RbnBackstageGalleryConfigItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
-    procedure dxRibbonBackstageViewGalleryControl1ItemClick(Sender: TObject;
+    procedure RbnBackstageGalleryAcessoItemClick(Sender: TObject;
+      AItem: TdxRibbonBackstageViewGalleryItem);
+    procedure RbnBackstageGalleryBackupItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
   private
     { Private declarations }
@@ -364,7 +371,7 @@ begin
   BrBtnRelatorioEntrada.Caption  := 'Entradas de ' + StrDescricaoProduto;
 end;
 
-procedure TfrmPrinc.dxRibbonBackstageViewGalleryControl1ItemClick(
+procedure TfrmPrinc.RbnBackstageGalleryAcessoItemClick(
   Sender: TObject; AItem: TdxRibbonBackstageViewGalleryItem);
 begin
   Case AItem.Index of
@@ -377,6 +384,14 @@ begin
     2:
       if BrBtnSenhaAutorizacao.Enabled then
         BrBtnSenhaAutorizacao.Click;
+  end;
+end;
+
+procedure TfrmPrinc.RbnBackstageGalleryBackupItemClick(Sender: TObject;
+  AItem: TdxRibbonBackstageViewGalleryItem);
+begin
+  Case AItem.Index of
+    0: FormFunction.ShowModalForm(Self, 'frmGrConfigurarBackup');
   end;
 end;
 
@@ -547,8 +562,6 @@ begin
 
   Self.WindowState := wsMaximized;
 
-  BrBtnRequisicaoCliente.Enabled := GetEstoqueSateliteEmpresa( gUsuarioLogado.Empresa );
-
   if not DMBusiness.LiberarUsoLicenca(GetDateDB, True) then
   begin
     RbnTabCadastro.Visible   := False;
@@ -610,6 +623,8 @@ begin
 
   Ribbon.ActiveTab := RbnTabPrincipal;
   ConfigurarRotuloBotoes;
+
+  RbnBackstageView.ActiveTab := RbnBackstageViewConfig;
 
   // Carregar Imagem de Fundo da Tele Principal
   if GetCarregarPapelDeParedeLocal then
@@ -769,8 +784,12 @@ end;
 
 procedure TfrmPrinc.nmRequisicaoClienteClick(Sender: TObject);
 begin
-  if GetPermissaoRotinaSistema(ROTINA_MOV_REQUISICAO_ID, True) then
-    MostrarControleRequisicaoCliente(Self);
+  if not GetEstoqueSateliteEmpresa(gUsuarioLogado.Empresa) then
+    ShowInformation('Empresa não habilitada para trabalhar com estoque satélide de clientes.' + #13 +
+      'Favor entrar em contato com suporte.')
+  else
+    if GetPermissaoRotinaSistema(ROTINA_MOV_REQUISICAO_ID, True) then
+      MostrarControleRequisicaoCliente(Self);
 end;
 
 procedure TfrmPrinc.nmExportarChaveNFeGeradaClick(Sender: TObject);

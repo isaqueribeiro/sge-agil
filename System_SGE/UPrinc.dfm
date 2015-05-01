@@ -4436,7 +4436,6 @@ object frmPrinc: TfrmPrinc
       object RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet
         Left = 132
         Top = 0
-        Active = True
         Caption = 'Configura'#231#245'es Gerais'
         DesignSize = (
           357
@@ -4524,7 +4523,7 @@ object frmPrinc: TfrmPrinc
           Height = 26
           Width = 300
         end
-        object dxRibbonBackstageViewGalleryControl1: TdxRibbonBackstageViewGalleryControl
+        object RbnBackstageGalleryAcesso: TdxRibbonBackstageViewGalleryControl
           Left = 20
           Top = 52
           Width = 300
@@ -4540,7 +4539,7 @@ object frmPrinc: TfrmPrinc
           OptionsView.Item.Text.Position = posRight
           OptionsView.Item.PinMode = bgipmTag
           Ribbon = Ribbon
-          OnItemClick = dxRibbonBackstageViewGalleryControl1ItemClick
+          OnItemClick = RbnBackstageGalleryAcessoItemClick
           object dxRibbonBackstageViewGalleryGroup2: TdxRibbonBackstageViewGalleryGroup
             Caption = 'Controle de Acesso'
             ShowCaption = False
@@ -4558,6 +4557,60 @@ object frmPrinc: TfrmPrinc
               Caption = 'Senhas de Autoriza'#231#227'o'
               Description = 'Controle para gera'#231#227'o de senhas de autoriza'#231#245'es diversas'
               ImageIndex = 70
+            end
+          end
+        end
+      end
+      object RbnBackstageViewBackup: TdxRibbonBackstageViewTabSheet
+        Left = 132
+        Top = 0
+        Active = True
+        Caption = 'Backup / Retore Database'
+        DesignSize = (
+          357
+          298)
+        object LblBackstageViewBackup: TcxLabel
+          Left = 20
+          Top = 20
+          AutoSize = False
+          Caption = 'Backup / Retore Database...'
+          ParentFont = False
+          Style.Font.Charset = DEFAULT_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -16
+          Style.Font.Name = 'Tahoma'
+          Style.Font.Style = []
+          Style.TransparentBorder = False
+          Style.IsFontAssigned = True
+          Properties.LineOptions.Alignment = cxllaBottom
+          Properties.LineOptions.Visible = True
+          Transparent = True
+          Height = 26
+          Width = 300
+        end
+        object RbnBackstageGalleryBackup: TdxRibbonBackstageViewGalleryControl
+          Left = 20
+          Top = 52
+          Width = 300
+          Height = 208
+          Anchors = [akLeft, akTop, akBottom]
+          BorderStyle = cxcbsNone
+          Images = DMRecursos.ImgPrincipalEnabled
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.ColumnCount = 1
+          OptionsView.ContentOffset.All = 0
+          OptionsView.Item.Text.AlignHorz = taLeftJustify
+          OptionsView.Item.Text.AlignVert = vaCenter
+          OptionsView.Item.Text.Position = posRight
+          OptionsView.Item.PinMode = bgipmTag
+          Ribbon = Ribbon
+          OnItemClick = RbnBackstageGalleryBackupItemClick
+          object dxRibbonBackstageViewGalleryGroup3: TdxRibbonBackstageViewGalleryGroup
+            Caption = 'Backup / Restore Database'
+            ShowCaption = False
+            object dxRibbonBackstageViewGalleryItem4: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Executar Backup'
+              Description = 'Configurar e executar backup da base de dados do sistema'
             end
           end
         end
@@ -4590,7 +4643,6 @@ object frmPrinc: TfrmPrinc
     TabOrder = 6
     TabStop = False
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4621,6 +4673,7 @@ object frmPrinc: TfrmPrinc
       Index = 2
     end
     object RbnTabMovimento: TdxRibbonTab
+      Active = True
       Caption = 'Movimenta'#231#227'o'
       Groups = <
         item
@@ -4965,6 +5018,10 @@ object frmPrinc: TfrmPrinc
         item
           Visible = True
           ItemName = 'BrBtnOrdemServico'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnRequisicaoCliente'
         end>
       OneOnRow = False
       Row = 0
@@ -4975,7 +5032,7 @@ object frmPrinc: TfrmPrinc
     object BrMngMovimentoCmp: TdxBar
       Caption = 'Compras'
       CaptionButtons = <>
-      DockedLeft = 135
+      DockedLeft = 211
       DockedTop = 0
       FloatLeft = 478
       FloatTop = 221
@@ -5189,7 +5246,7 @@ object frmPrinc: TfrmPrinc
     object BrMngRelatorioOperacional: TdxBar
       Caption = 'Relat'#243'rios Operacionais'
       CaptionButtons = <>
-      DockedLeft = 220
+      DockedLeft = 218
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
@@ -5222,7 +5279,7 @@ object frmPrinc: TfrmPrinc
     object BrMngRelatorioGerencial: TdxBar
       Caption = 'Relat'#243'rios Gerenciais'
       CaptionButtons = <>
-      DockedLeft = 564
+      DockedLeft = 560
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
