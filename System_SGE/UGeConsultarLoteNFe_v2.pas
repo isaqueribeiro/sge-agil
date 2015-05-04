@@ -107,15 +107,21 @@ type
   private
     { Private declarations }
     FTipoMovimento : TTipoMovimento;
+    FAguardandoRetorno : Boolean;
+    FSerieNFe  ,
+    FNumeroNFe : Integer;
+    FFileNameXML : String;
     procedure Auditar;
+    procedure CarregarEmpresa(const sCnpj : String);
+    procedure CarregarLotePendente(const sCnpjEmitente : String);
     function PesquisarLote(const iAno, iNumero : Integer; const sRecibo : String; var Ano, Controle : Integer; var Destinaratio : String) : Boolean;
   public
     { Public declarations }
     procedure RegistrarRotinaSistema; override;
   end;
 
-var
-  frmGeConsultarLoteNFe_v2: TfrmGeConsultarLoteNFe_v2;
+  function BuscarRetornoReciboNFe(const AOnwer : TComponent; const sEmpresa, sRecibo : String;
+    var SerieNFe, NumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE : String) : Boolean;
 
 implementation
 
@@ -123,30 +129,61 @@ uses UDMBusiness, UDMNFe, UConstantesDGE, UFuncoes, UDMRecursos;
 
 {$R *.dfm}
 
+function BuscarRetornoReciboNFe(const AOnwer : TComponent; const sEmpresa, sRecibo : String;
+  var SerieNFe, NumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE : String) : Boolean;
+var
+  AForm : TfrmGeConsultarLoteNFe_v2;
+begin
+  AForm := TfrmGeConsultarLoteNFe_v2.Create(AOnwer);
+  try
+    with AForm do
+    begin
+      FAguardandoRetorno := True;
+
+      CarregarEmpresa(sEmpresa);
+      CarregarLotePendente(sEmpresa);
+
+      edJustificativa.Lines.Clear;
+      edJustificativa.Lines.Text := 'Busca automática de retorno do recibo de envio da NF-e';
+      edNumeroRecibo.Text        := sRecibo;
+
+      Result := (ShowModal = mrOk);
+
+      if Result then
+      begin
+        SerieNFe     :=  FSerieNFe;
+        NumeroNFe    :=  FNumeroNFe;
+        ChaveNFE     := Trim(edChaveNFe.Text);
+        ProtocoloNFE := Trim(edProtocoloTMP.Text);
+        FileNameXML  := FFileNameXML;
+      end;
+    end;
+  finally
+    AForm.Free;
+  end;
+end;
+
 { TfrmGeConsultarLoteNFe }
 
 procedure TfrmGeConsultarLoteNFe_v2.Auditar;
 begin
-  dbUsuario.Text  := Trim(GetUserApp);
+  dbUsuario.Text  := Trim(gUsuarioLogado.Login);
   dbDataHora.Text := FormatDateTime('dd/mm/yyyy hh:mm:ss', Now);
 end;
 
 procedure TfrmGeConsultarLoteNFe_v2.FormCreate(Sender: TObject);
 begin
   inherited;
-
-  with qryEmpresa do
-  begin
-    Close;
-    ParamByName('cnpj').AsString := gUsuarioLogado.Empresa;
-    Open;
-  end;
-
-  qryLotesPendentesNFe.Open;
+  CarregarEmpresa(gUsuarioLogado.Empresa);
+  CarregarLotePendente(gUsuarioLogado.Empresa);
 
   Auditar;
-//  edAno.Text     := FormatDateTime('yyyy', Date);
-  FTipoMovimento := tmNull;
+
+  FTipoMovimento     := tmNull;
+  FAguardandoRetorno := False;
+  FSerieNFe     := 0;
+  FNumeroNFe    := 0;
+  FFileNameXML  := EmptyStr;
 end;
 
 procedure TfrmGeConsultarLoteNFe_v2.btFecharClick(Sender: TObject);
@@ -181,11 +218,22 @@ procedure TfrmGeConsultarLoteNFe_v2.FormShow(Sender: TObject);
 begin
   inherited;
   if not qryLotesPendentesNFe.IsEmpty then
+    if not FAguardandoRetorno then
+    begin
+      edAno.Text          := qryLotesPendentesNFeANO.AsString;
+      edNumeroLote.Text   := qryLotesPendentesNFeLOTE.AsString;
+      edNumeroRecibo.Text := qryLotesPendentesNFeRECIBO.AsString;
+      FTipoMovimento      := TTipoMovimento(qryLotesPendentesNFeTIPONFE.AsInteger);
+    end;
+
+  if FAguardandoRetorno then
   begin
-    edAno.Text          := qryLotesPendentesNFeANO.AsString;
-    edNumeroLote.Text   := qryLotesPendentesNFeLOTE.AsString;
-    edNumeroRecibo.Text := qryLotesPendentesNFeRECIBO.AsString;
-    FTipoMovimento      := TTipoMovimento(qryLotesPendentesNFeTIPONFE.AsInteger);
+    lblInforme.Caption := 'Iniciando busca junto a SEFA. Aguarde!';
+    lblInforme.Visible := True;
+    Application.ProcessMessages;
+    Sleep(500);
+
+    btnConfirmar.Click;
   end;
 end;
 
@@ -206,7 +254,7 @@ begin
       SQL.Add('  , v.lote_nfe_recibo as Recibo');
       SQL.Add('  , v.codcli          as Destinatario');
       SQL.Add('from TBVENDAS v');
-      SQL.Add('where v.codemp = ' + QuotedStr(gUsuarioLogado.Empresa));
+      SQL.Add('where v.codemp = ' + QuotedStr(dbCNPJ.Field.AsString));
 
       if (StrToIntDef(Trim(edAno.Text), 0) > 0) and (StrToIntDef(Trim(edNumeroLote.Text), 0) > 0) then
         SQL.Add('  and v.lote_nfe_ano = ' + Trim(edAno.Text) + ' and v.lote_nfe_numero = ' + Trim(edNumeroLote.Text));
@@ -227,7 +275,7 @@ begin
       SQL.Add('  , f.cnpj             as Destinatario');
       SQL.Add('from TBCOMPRAS c');
       SQL.Add('  left join TBFORNECEDOR f on (f.codforn = c.codforn)');
-      SQL.Add('where c.codemp = ' + QuotedStr(gUsuarioLogado.Empresa));
+      SQL.Add('where c.codemp = ' + QuotedStr(dbCNPJ.Field.AsString));
 
       if (StrToIntDef(Trim(edAno.Text), 0) > 0) and (StrToIntDef(Trim(edNumeroLote.Text), 0) > 0) then
         SQL.Add('  and c.lote_nfe_ano = ' + Trim(edAno.Text) + ' and c.lote_nfe_numero = ' + Trim(edNumeroLote.Text));
@@ -279,7 +327,7 @@ var
   dDataEnvio   ,
   dDataEmissao : TDateTime;
 const
-  NOME_ARQUIVO_XML = '%s-NFe.xml';
+  NOME_ARQUIVO_XML = '%s-nfe.xml';
 begin
   if not GetConectedInternet then
   begin
@@ -297,14 +345,14 @@ begin
 
     PesquisarLote(0, 0, Trim(edNumeroRecibo.Text), iAnoMov, iCodMov, sDestinatarioCNPJ);
 
-    if not DMNFe.GetValidadeCertificado(gUsuarioLogado.Empresa) then
+    if not DMNFe.GetValidadeCertificado(dbCNPJ.Field.AsString) then
       Exit;
 
     sRetorno := EmptyStr;
 
     // Executar Consulta por Recibo para obter a Chave NF-e
 
-    if DMNFe.ConsultarNumeroLoteNFeACBr(gUsuarioLogado.Empresa, Trim(edNumeroRecibo.Text), sChaveNFE, sProtocoloTMP, sRetorno, dDataEnvio ) then
+    if DMNFe.ConsultarNumeroLoteNFeACBr(dbCNPJ.Field.AsString, Trim(edNumeroRecibo.Text), sChaveNFE, sProtocoloTMP, sRetorno, dDataEnvio ) then
     begin
 
       edChaveNFe.Text     := Trim(sChaveNFE);
@@ -320,15 +368,23 @@ begin
 
       // Executar Consulta por Chave NF-e para obter o arquivo e o Protocolo
 
-      if ( DMNFe.ConsultarChaveNFeACBr(gUsuarioLogado.Empresa, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
+      if ( DMNFe.ConsultarChaveNFeACBr(dbCNPJ.Field.AsString, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
         sDestinatarioCNPJ, sFileNameXML, sChaveNFE, sProtocoloNFE, dDataEmissao) ) then
       begin
+        FSerieNFe  := iSerieNFe;
+        FNumeroNFe := iNumeroNFe;
+        edProtocoloTMP.Text := Trim(sProtocoloNFE);
+        FFileNameXML        := sFileNameXML;
         sMensagem := sMensagem + #13#13 + 'Arquivo a processar:' + #13#13 + sFileNameXML;
         ShowInformation( sMensagem );
 
+        if FAguardandoRetorno then
+          ModalResult := mrOk;
       end;
 
-    end;
+    end
+    else
+      ShowWarning('Consulta de recibo/lote NF-e sem o retorno esperado!' + #13 + sRetorno);
 
   end;
 (*
@@ -358,18 +414,18 @@ begin
       sRetorno := EmptyStr;
 
       // Executar Consulta Lote e Consulta Chave NF-e
-      
-      if DMNFe.ConsultarNumeroLoteNFeACBr(gUsuarioLogado.Empresa, Trim(edNumeroRecibo.Text), sChaveNFE, sRetorno ) then
+
+      if DMNFe.ConsultarNumeroLoteNFeACBr(dbCNPJ.Field.AsString, Trim(edNumeroRecibo.Text), sChaveNFE, sRetorno ) then
       begin
 
-        if ( DMNFe.ConsultarChaveNFeACBr(gUsuarioLogado.Empresa, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
+        if ( DMNFe.ConsultarChaveNFeACBr(dbCNPJ.Field.AsString, sChaveNFE, iSerieNFe, iNumeroNFe, iTipoNFe,
           sDestinatarioCNPJ, sFileNameXML, sChaveNFE, sProtocoloNFE, dDataEmissao) ) then
         begin
 
           with qryNFE do
           begin
             Close;
-            ParamByName('empresa').AsString      := gUsuarioLogado.Empresa;
+            ParamByName('empresa').AsString      := dbCNPJ.Field.AsString;
 
             ParamByName('tipo_compra').AsInteger := Ord(FTipoMovimento);
             ParamByName('anocompra').AsInteger   := iAnoMov;
@@ -384,7 +440,7 @@ begin
             begin
               Append;
 
-              qryNFEEMPRESA.Value := gUsuarioLogado.Empresa;
+              qryNFEEMPRESA.Value := dbCNPJ.Field.AsString;
               if ( FTipoMovimento = tmNFeEntrada ) then
               begin
                 qryNFEANOCOMPRA.AsInteger := iAnoMov;
@@ -496,7 +552,29 @@ begin
   else
     ShowInformation('Lote/Recibo não encontrado no sistema !');
 *)
-    
+
+end;
+
+procedure TfrmGeConsultarLoteNFe_v2.CarregarEmpresa(const sCnpj: String);
+begin
+  with qryEmpresa do
+  begin
+    Close;
+    ParamByName('cnpj').AsString := sCnpj;
+    Open;
+  end;
+end;
+
+procedure TfrmGeConsultarLoteNFe_v2.CarregarLotePendente(
+  const sCnpjEmitente: String);
+begin
+  with qryLotesPendentesNFe do
+  begin
+    Close;
+    ParamByName('empresa_vnd').AsString := sCnpjEmitente;
+    ParamByName('empresa_cmp').AsString := sCnpjEmitente;
+    Open;
+  end;
 end;
 
 procedure TfrmGeConsultarLoteNFe_v2.RegistrarRotinaSistema;
