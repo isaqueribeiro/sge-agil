@@ -23880,7 +23880,7 @@ object DMNFe: TDMNFe
         object memDataHora: TfrxMemoView
           Align = baLeft
           Top = 144.511781730000000000
-          Width = 461.102660000000000000
+          Width = 453.543600000000000000
           Height = 13.228346460000000000
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -27817,10 +27817,7 @@ object DMNFe: TDMNFe
           Frame.Width = 0.500000000000000000
           HAlign = haRight
           Memo.UTF8W = (
-            
-              'Solu'#231#245'es em NFe - <b>Focus Automa'#231#227'o</b> -<font color = blue> ww' +
-              'w.focusrj.com.br <font color = black> - (24) 2224-1632/ (24) 922' +
-              '6-0072')
+            '[Parametros."Sistema"]')
           ParentFont = False
         end
       end

@@ -504,7 +504,8 @@ uses
   UDMBusiness, UFuncoes, UGeCliente, UGeCondicaoPagto, UGeProduto, UGeTabelaCFOP,
   UConstantesDGE, DateUtils, SysConst, UDMNFe, UGeGerarBoletos, UGeEfetuarPagtoREC,
   UGeVendaGerarNFe, UGeVendaCancelar, UGeVendaFormaPagto, UGeVendaTransporte,
-  UGeVendaConfirmaTitulos, {$IFNDEF PDV}UGeVendaDevolucaoNF,{$ENDIF} UDMRecursos;
+  UGeVendaConfirmaTitulos, {$IFNDEF PDV}UGeVendaDevolucaoNF, UGeConsultarLoteNFe_v2, {$ENDIF}
+  UDMRecursos;
 
 {$R *.dfm}
 
@@ -1792,6 +1793,7 @@ end;
 
 procedure TfrmGeVenda.btbtnGerarNFeClick(Sender: TObject);
 var
+  iNumeroTmp ,
   iNumero    ,
   iSerieNFe  ,
   iNumeroNFe : Integer;
@@ -1801,14 +1803,18 @@ var
   sReciboNFE   ,
   sMensagem    : String;
   iNumeroLote  : Int64;
+  bNFeGerada   : Boolean;
 begin
 (*
   IMR - 20/04/2015 :
     Inclusão do bloco de código para verificar se o CFOP da venda corresponde
     a uma operação de devolução. Caso esta situação seja confirmada, a NF-e de
     origem será solicitada.
-*)
 
+  IMR - 04/05/2015 :
+    Inclusão do bloco de código para buscar o retorno NF-e quando esta já fora
+    solicitada, mas seu retorno ainda não fora processado pela aplicação.
+*)
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
 
@@ -1818,7 +1824,9 @@ begin
   RecarregarRegistro;
 
   pgcGuias.ActivePage := tbsCadastro;
-  
+
+  bNFeGerada := False;
+
   if (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) then
   begin
     ShowWarning('Movimento de Venda já com NF-e gerada!');
@@ -1835,23 +1843,45 @@ begin
     Exit;
   end;
 
-  if ( Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr ) then
-  begin
-    ShowWarning('O processo de geração de NF-e para esta venda já foi solicitado, mas não fora concluído.' + #13 +
-      'Favor consultar junto a SEFA e processar o Recibo de número ' +
-        IbDtstTabelaLOTE_NFE_RECIBO.AsString);
-    Exit;
-  end;
-
   {$IFNDEF PDV}
   if GetCfopDevolucao( IbDtstTabelaCFOP.AsInteger ) then
     if not InformarDocumentoReferenciado(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value) then
       Exit;
+
+  if not bNFeGerada then
+    if ( Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr ) then
+    begin
+      bNFeGerada := BuscarRetornoReciboNFe(Self
+        , IbDtstTabelaCODEMP.AsString
+        , IbDtstTabelaLOTE_NFE_RECIBO.AsString
+        , iSerieNFe
+        , iNumeroNFe
+        , sFileNameXML
+        , sChaveNFE
+        , sProtocoloNFE);
+
+      sReciboNFE  := Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString);
+      iNumeroLote := iNumeroNFe;
+
+      if not bNFeGerada then
+        Exit;
+    end;
   {$ENDIF}
 
-  if ( GerarNFe(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value,
-                iSerieNFe, iNumeroNFe, sFileNameXML, sChaveNFE, sProtocoloNFE, sReciboNFE, iNumeroLote, sMensagem
-  ) ) then
+  if not bNFeGerada then
+    bNFeGerada := GerarNFe(Self
+      , IbDtstTabelaANO.Value
+      , IbDtstTabelaCODCONTROL.Value
+      , iSerieNFe
+      , iNumeroNFe
+      , sFileNameXML
+      , sChaveNFE
+      , sProtocoloNFE
+      , sReciboNFE
+      , iNumeroLote
+      , sMensagem);
+
+  if bNFeGerada then
     with IbDtstTabela do
     begin
       iNumero := IbDtstTabelaCODCONTROL.AsInteger;
@@ -1871,11 +1901,11 @@ begin
         qryNFEVERSAO.Value      := DMNFe.GetVersaoDF;
         qryNFEDATAEMISSAO.Value := GetDateDB;
         qryNFEHORAEMISSAO.Value := GetTimeDB;
-        qryNFECHAVE.Value     := sChaveNFE;
-        qryNFEPROTOCOLO.Value := sProtocoloNFE;
-        qryNFERECIBO.Value    := sReciboNFE;
-        qryNFELOTE_ANO.Value  := IbDtstTabelaANO.Value;
-        qryNFELOTE_NUM.Value  := iNumeroLote;
+        qryNFECHAVE.Value       := sChaveNFE;
+        qryNFEPROTOCOLO.Value   := sProtocoloNFE;
+        qryNFERECIBO.Value      := sReciboNFE;
+        qryNFELOTE_ANO.Value    := IbDtstTabelaANO.Value;
+        qryNFELOTE_NUM.Value    := iNumeroLote;
 
         if ( FileExists(sFileNameXML) ) then
         begin

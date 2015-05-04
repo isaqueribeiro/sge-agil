@@ -4344,7 +4344,8 @@ function TDMNFe.ConsultarChaveNFeACBr(const sCNPJEmitente, sChave: String;
   var iSerieNFe, iNumeroNFe, iTipoNFe : Integer; var DestinatarioNFE, FileNameXML, ChaveNFE,
   ProtocoloNFE : String; var DataEmissao : TDateTime; const Imprimir: Boolean): Boolean;
 var
-  NomeArq : String;
+  NomeArq    : String;
+  iNumeroTmp : Integer;
 const
   TERMINATE_FILENAME     = '-nfe.xml';
   TERMINATE_FILENAME_NEW = '-procNfe.xml';
@@ -4365,12 +4366,20 @@ begin
         NotasFiscais.LoadFromFile(FileNameXML);
         Result := ACBrNFe.Consultar;
 
+        if (NotasFiscais.Count = 1) then
+        begin
+          iSerieNFe   := NotasFiscais.Items[0].NFe.Ide.Serie;
+          iNumeroNFe  := NotasFiscais.Items[0].NFe.Ide.nNF;
+          iTipoNFe    := Ord(NotasFiscais.Items[0].NFe.Ide.tpNF);
+          DataEmissao := NotasFiscais.Items[0].NFe.Ide.dEmi;
+        end;
+
         // (INICIO) Adicionando TAG de Protocolo no Arquivo
         if Result then
         begin
           NomeArq := FileNameXML;
 
-          if ( Pos(AnsiUpperCase(TERMINATE_FILENAME),UpperCase(NomeArq)) > 0 ) then
+          if ( Pos(AnsiLowerCase(TERMINATE_FILENAME), AnsiLowerCase(NomeArq)) > 0 ) then
              NomeArq := StringReplace(NomeArq, TERMINATE_FILENAME, TERMINATE_FILENAME_NEW, [rfIgnoreCase]);
 
           NotasFiscais.Items[0].SaveToFile(NomeArq);
@@ -4392,36 +4401,20 @@ begin
 
       if Result then
       begin
-
         ChaveNFE     := WebServices.Consulta.NFeChave;
-        ProtocoloNFE := WebServices.Consulta.Protocolo; 
-(*
-        if DownloadNFeACBr(sCNPJEmitente, DestinatarioNFE, ChaveNFE, FileNameXML) then
+        ProtocoloNFE := WebServices.Consulta.Protocolo;
+
+        // Atualizar contador do número da NF-e
+
+        iNumeroTmp := GetNextID('TBEMPRESA'
+          , 'NUMERO_NFE'
+          , 'where CNPJ = ' + QuotedStr(sCNPJEmitente) + ' and SERIE_NFE = ' + IntToStr(iSerieNFe));
+
+        if ( iNumeroNFe = iNumeroTmp ) then
         begin
-          NotasFiscais.Clear;
-          NotasFiscais.LoadFromFile( FileNameXML );
-
-          iSerieNFe   := NotasFiscais.Items[0].NFe.Ide.Serie;
-          iNumeroNFe  := NotasFiscais.Items[0].NFe.Ide.nNF;
-          iTipoNFe    := Ord(NotasFiscais.Items[0].NFe.Ide.tpNF);
-          DataEmissao := NotasFiscais.Items[0].NFe.Ide.dEmi;
+          UpdateNumeroNFe(sCNPJEmitente, iSerieNFe, iNumeroNFe);
+          UpdateLoteNFe(sCNPJEmitente, YearOf(DataEmissao), iNumeroNFe);
         end;
-
-        if Imprimir then
-        begin
-
-          if NotasFiscais.Items[0].NFe.Ide.tpEmis = teDPEC then
-          begin
-            WebServices.ConsultaDPEC.NFeChave := NotasFiscais.Items[0].NFe.infNFe.ID;
-            WebServices.ConsultaDPEC.Executar;
-
-            DANFE.ProtocoloNFe := WebServices.ConsultaDPEC.nRegDPEC + ' ' + DateTimeToStr(WebServices.ConsultaDPEC.dhRegDPEC);
-          end;
-
-          NotasFiscais.ImprimirPDF
-
-        end;
-*)
       end;
 
     end;

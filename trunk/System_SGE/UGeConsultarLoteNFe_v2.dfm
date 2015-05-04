@@ -714,7 +714,7 @@ inherited frmGeConsultarLoteNFe_v2: TfrmGeConsultarLoteNFe_v2
       '  , v.lote_nfe_numero as Lote'
       '  , v.lote_nfe_recibo as Recibo'
       'from TBVENDAS v'
-      'where v.codemp = :empresa'
+      'where v.codemp = :empresa_vnd'
       '  and v.lote_nfe_numero is not null'
       '  and v.nfe is null'
       '  and v.nfe_enviada = 0'
@@ -729,7 +729,7 @@ inherited frmGeConsultarLoteNFe_v2: TfrmGeConsultarLoteNFe_v2
       '  , c.lote_nfe_numero as Lote'
       '  , c.lote_nfe_recibo as Recibo'
       'from TBCOMPRAS c'
-      'where c.codemp = :empresa'
+      'where c.codemp = :empresa_cmp'
       '  and c.lote_nfe_numero is not null'
       '  and c.nf is null'
       '  and C.nfe_enviada = 0'
@@ -739,14 +739,16 @@ inherited frmGeConsultarLoteNFe_v2: TfrmGeConsultarLoteNFe_v2
     Top = 248
     ParamData = <
       item
-        DataType = ftUnknown
-        Name = 'empresa'
-        ParamType = ptUnknown
+        DataType = ftString
+        Name = 'empresa_vnd'
+        ParamType = ptInput
+        Value = ''
       end
       item
-        DataType = ftUnknown
-        Name = 'empresa'
-        ParamType = ptUnknown
+        DataType = ftString
+        Name = 'empresa_cmp'
+        ParamType = ptInput
+        Value = ''
       end>
     object qryLotesPendentesNFeANO: TSmallintField
       FieldName = 'ANO'

@@ -4316,7 +4316,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -6022,7 +6022,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       DisplayLabel = 'Valor Unit'#225'rio'
       FieldName = 'PRECOUNIT'
       Origin = 'TBCOMPRASITENS.PRECOUNIT'
-      DisplayFormat = ',0.00'
+      DisplayFormat = ',0.00##'
       Precision = 18
       Size = 2
     end
@@ -6073,7 +6073,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       DisplayLabel = 'Valor IPI'
       FieldName = 'VALOR_IPI'
       Origin = 'TBCOMPRASITENS.VALOR_IPI'
-      DisplayFormat = ',0.00'
+      DisplayFormat = ',0.00##'
       Precision = 18
       Size = 2
     end
