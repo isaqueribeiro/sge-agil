@@ -4585,6 +4585,7 @@ object frmPrinc: TfrmPrinc
     Style = rs2010
     ColorSchemeName = 'Blue'
     QuickAccessToolbar.Toolbar = BrMnQuickAccessToolbar
+    SupportNonClientDrawing = True
     Contexts = <>
     TabOrder = 6
     TabStop = False
@@ -4847,7 +4848,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 236
+      DockedLeft = 559
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213

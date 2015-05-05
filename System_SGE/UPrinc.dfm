@@ -4611,6 +4611,7 @@ object frmPrinc: TfrmPrinc
             object dxRibbonBackstageViewGalleryItem4: TdxRibbonBackstageViewGalleryItem
               Caption = 'Executar Backup'
               Description = 'Configurar e executar backup da base de dados do sistema'
+              ImageIndex = 71
             end
           end
         end

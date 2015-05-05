@@ -6,7 +6,7 @@ uses
   StdCtrls, Buttons,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, ExtCtrls, jpeg,
+  Dialogs, Menus, ComCtrls, ExtCtrls, jpeg, dxRibbonForm,
   
   dxSkinsCore, dxSkinBlack, dxSkinBlue, dxSkinCaramel, dxSkinCoffee,
   dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
@@ -29,7 +29,7 @@ uses
   dxRibbonBackstageViewGalleryControl, cxLabel, dxRibbonBackstageView;
 
 type
-  TfrmPrinc = class(TForm)
+  TfrmPrinc = class(TdxRibbonForm)
     pnlMain: TPanel;
     imgFundo: TImage;
     imgEmpresa: TImage;
@@ -256,6 +256,7 @@ begin
   Self.FileDescription.Caption := GetFileDescription;
   Self.Version.Caption     := 'Versão ' + GetExeVersion;
   Self.Copyright.Caption   := GetCopyright;
+  Self.DisableAero         := True;
 
   Ribbon.ActiveTab := RbbTabPrincipal;
 

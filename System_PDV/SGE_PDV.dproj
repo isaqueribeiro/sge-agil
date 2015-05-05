@@ -3,7 +3,7 @@
         <ProjectGuid>{7EDF5342-4C3C-4F4F-B68E-9DC4E4A409DD}</ProjectGuid>
         <MainSource>SGE_PDV.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -102,11 +102,11 @@ Todos os direitos reservados.;LegalTrademarks=;OriginalFilename=SGE_PDV.EXE;Prod
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <DCC_DebugDCUs>true</DCC_DebugDCUs>
-        <VerInfo_Build>5</VerInfo_Build>
+        <VerInfo_Build>6</VerInfo_Build>
         <VerInfo_Release>4</VerInfo_Release>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
-        <VerInfo_Keys>CompanyName=Ágil Soluções em Softwares, ME;FileDescription=Controle do Ponto de Venda do SGE/SGI;FileVersion=1.0.4.5;InternalName=PDV;LegalCopyright=Copyright 2013 - 2015 © Ágil Soluções em Softwares - ME
+        <VerInfo_Keys>CompanyName=Ágil Soluções em Softwares, ME;FileDescription=Controle do Ponto de Venda do SGE/SGI;FileVersion=1.0.4.6;InternalName=PDV;LegalCopyright=Copyright 2013 - 2015 © Ágil Soluções em Softwares - ME
 Todos os direitos reservados.;LegalTrademarks=;OriginalFilename=SGE_PDV.EXE;ProductName=PDV - Controle do Ponto de Venda do SGE/SGI;ProductVersion=1.0.4;Comments=;Systems Analyst=Isaque Marinho Ribeiro;ReleaseDate=25/03/2015;Contacts=(91) 9146.0444 / 3295.3390;Owner=Isaque Marinho Ribeiro;SplashName=;SplashDescription=</VerInfo_Keys>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
