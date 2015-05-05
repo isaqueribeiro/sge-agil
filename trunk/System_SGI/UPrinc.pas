@@ -6,7 +6,7 @@ uses
   StdCtrls, Buttons,
 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ComCtrls, ExtCtrls, jpeg,
+  Dialogs, Menus, ComCtrls, ExtCtrls, jpeg, dxRibbonForm,
   cxGraphics, dxGDIPlusClasses, cxLookAndFeelPainters, cxButtons, cxLookAndFeels,
   dxBar, dxSkinsForm, dxSkinsdxBarPainter, cxControls, cxClasses, dxRibbon,
 
@@ -24,7 +24,7 @@ uses
 
 
 type
-  TfrmPrinc = class(TForm)
+  TfrmPrinc = class(TdxRibbonForm)
     pnlMain: TPanel;
     imgFundo: TImage;
     imgEmpresa: TImage;
@@ -632,6 +632,7 @@ begin
   Self.FileDescription.Caption := GetFileDescription;
   Self.Version.Caption     := 'Versão ' + GetExeVersion;
   Self.Copyright.Caption   := GetCopyright;
+  Self.DisableAero         := True;
 
   Ribbon.ActiveTab := RbnTabPrincipal;
   ConfigurarRotuloBotoes;
