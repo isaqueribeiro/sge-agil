@@ -856,18 +856,6 @@ inherited frmGeProduto: TfrmGeProduto
             ReadOnly = True
             TabOrder = 1
           end
-          object dbProdutoNovo: TDBCheckBox
-            Left = 16
-            Top = 152
-            Width = 113
-            Height = 17
-            Caption = 'Produto Novo'
-            DataField = 'PRODUTO_NOVO'
-            DataSource = DtSrcTabela
-            TabOrder = 8
-            ValueChecked = '1'
-            ValueUnchecked = '0'
-          end
           object dbPercentualMarckup: TDBEdit
             Left = 392
             Top = 24
@@ -1033,87 +1021,97 @@ inherited frmGeProduto: TfrmGeProduto
               TabOrder = 3
               ValueChecked = '1'
               ValueUnchecked = '0'
+              Visible = False
             end
           end
-          object dbMovimentaEstoque: TDBCheckBox
-            Left = 16
-            Top = 176
-            Width = 209
-            Height = 17
-            Caption = 'Produto Movimenta Estoque'
-            DataField = 'MOVIMENTA_ESTOQUE'
-            DataSource = DtSrcTabela
-            TabOrder = 9
-            ValueChecked = '1'
-            ValueUnchecked = '0'
-            OnClick = dbMovimentaEstoqueClick
-          end
-          object dbComporFaturamento: TDBCheckBox
-            Left = 16
-            Top = 200
-            Width = 257
-            Height = 17
-            Caption = 'Produto/Servi'#231'o Comp'#245'e o Faturamento'
-            DataField = 'COMPOR_FATURAMENTO'
-            DataSource = DtSrcTabela
-            TabOrder = 10
-            ValueChecked = '1'
-            ValueUnchecked = '0'
-          end
-          object dbProdutoImobilizado: TDBCheckBox
-            Left = 16
-            Top = 224
-            Width = 153
-            Height = 17
-            Caption = 'Produto '#233' Imobilizado'
-            DataField = 'PRODUTO_IMOBILIZADO'
-            DataSource = DtSrcTabela
-            Enabled = False
-            TabOrder = 11
-            ValueChecked = '1'
-            ValueUnchecked = '0'
-          end
-          object dbCadastroAtivo: TDBCheckBox
-            Left = 16
-            Top = 128
-            Width = 153
-            Height = 17
-            Caption = 'Cadastro Ativo'
-            DataField = 'CADASTRO_ATIVO'
-            DataSource = DtSrcTabela
-            TabOrder = 7
-            ValueChecked = '1'
-            ValueUnchecked = '0'
-          end
-          object dbProdutoLote: TDBCheckBox
-            Left = 16
-            Top = 247
-            Width = 181
-            Height = 17
-            Caption = 'Gerenciar Estoque por Lote'
-            DataSource = DtSrcTabela
-            Enabled = False
-            TabOrder = 12
-            ValueChecked = '1'
-            ValueUnchecked = '0'
-          end
           object GrpBxParametroGeral: TGroupBox
-            Left = 225
+            Left = 15
             Top = 127
-            Width = 236
-            Height = 73
+            Width = 285
+            Height = 106
             Caption = 'Par'#226'metros Gerais'
-            TabOrder = 13
-            Visible = False
+            TabOrder = 7
+            object dbCadastroAtivo: TDBCheckBox
+              Left = 16
+              Top = 27
+              Width = 110
+              Height = 17
+              Caption = 'Cadastro Ativo'
+              DataField = 'CADASTRO_ATIVO'
+              DataSource = DtSrcTabela
+              TabOrder = 0
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+            end
+            object dbProdutoNovo: TDBCheckBox
+              Left = 16
+              Top = 50
+              Width = 110
+              Height = 17
+              Caption = 'Produto Novo'
+              DataField = 'PRODUTO_NOVO'
+              DataSource = DtSrcTabela
+              TabOrder = 1
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+            end
+            object dbComporFaturamento: TDBCheckBox
+              Left = 17
+              Top = 73
+              Width = 257
+              Height = 17
+              Caption = 'Produto/Servi'#231'o Comp'#245'e o Faturamento'
+              DataField = 'COMPOR_FATURAMENTO'
+              DataSource = DtSrcTabela
+              TabOrder = 2
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+            end
           end
           object GrpBxParametroProdudo: TGroupBox
-            Left = 467
+            Left = 306
             Top = 127
-            Width = 278
-            Height = 73
+            Width = 235
+            Height = 106
             Caption = 'Par'#226'metros p/ Produto'
-            TabOrder = 14
-            Visible = False
+            TabOrder = 8
+            object dbProdutoMovEstoque: TDBCheckBox
+              Left = 15
+              Top = 50
+              Width = 209
+              Height = 17
+              Caption = 'Produto Movimenta Estoque'
+              DataField = 'MOVIMENTA_ESTOQUE'
+              DataSource = DtSrcTabela
+              TabOrder = 1
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+              OnClick = dbProdutoMovEstoqueClick
+            end
+            object dbProdutoEhImobilizado: TDBCheckBox
+              Left = 15
+              Top = 27
+              Width = 153
+              Height = 17
+              Caption = 'Produto '#233' Imobilizado'
+              DataField = 'PRODUTO_IMOBILIZADO'
+              DataSource = DtSrcTabela
+              TabOrder = 0
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+            end
+            object dbProdutoPorLote: TDBCheckBox
+              Left = 15
+              Top = 73
+              Width = 181
+              Height = 17
+              Caption = 'Estoque Apropriado por Lote'
+              DataField = 'ESTOQUE_APROP_LOTE'
+              DataSource = DtSrcTabela
+              TabOrder = 2
+              ValueChecked = '1'
+              ValueUnchecked = '0'
+            end
           end
         end
         object tbsCustoVeiculo: TTabSheet
@@ -2723,6 +2721,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  , p.Produto_imobilizado'
       '  , p.Movimenta_estoque'
       '  , p.Compor_faturamento'
+      '  , p.Estoque_Aprop_lote'
       '  , case when coalesce(p.Reserva, 0) > 0'
       '      then coalesce(p.Qtde, 0) - coalesce(p.Reserva, 0)'
       '      else coalesce(p.Qtde, 0)'
@@ -2864,6 +2863,12 @@ inherited frmGeProduto: TfrmGeProduto
       Precision = 18
       Size = 3
     end
+    object IbDtstTabelaUNIDADE: TIBStringField
+      FieldName = 'UNIDADE'
+      Origin = '"TBPRODUTO"."UNIDADE"'
+      ProviderFlags = [pfInUpdate]
+      Size = 5
+    end
     object IbDtstTabelaESTOQMIN: TIBBCDField
       DisplayLabel = 'M'#237'nimo'
       FieldName = 'ESTOQMIN'
@@ -2898,12 +2903,6 @@ inherited frmGeProduto: TfrmGeProduto
       DisplayLabel = 'Unidade da Fra'#231#227'o'
       FieldName = 'CODUNIDADE_FRACIONADA'
       Origin = '"TBPRODUTO"."CODUNIDADE_FRACIONADA"'
-    end
-    object IbDtstTabelaUNIDADE: TIBStringField
-      DisplayLabel = 'Unidade'
-      FieldName = 'UNIDADE'
-      Origin = 'TBPRODUTO.UNIDADE'
-      Size = 5
     end
     object IbDtstTabelaCODGRUPO: TSmallintField
       DisplayLabel = 'Grupo'
@@ -3285,6 +3284,11 @@ inherited frmGeProduto: TfrmGeProduto
       Origin = '"TBPRODUTO"."COMPOR_FATURAMENTO"'
       ProviderFlags = [pfInUpdate]
     end
+    object IbDtstTabelaESTOQUE_APROP_LOTE: TSmallintField
+      FieldName = 'ESTOQUE_APROP_LOTE'
+      Origin = '"TBPRODUTO"."ESTOQUE_APROP_LOTE"'
+      ProviderFlags = [pfInUpdate]
+    end
     object IbDtstTabelaDISPONIVEL: TIBBCDField
       DisplayLabel = 'Dispon'#237'vel'
       FieldName = 'DISPONIVEL'
@@ -3386,6 +3390,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  MOVIMENTA_ESTOQUE,'
       '  COMPOR_FATURAMENTO,'
       '  PRODUTO_IMOBILIZADO,'
+      '  ESTOQUE_APROP_LOTE,'
       '  CUST_DESP_OFIC,'
       '  CUST_DESP_GERAIS,'
       '  CUST_DESP_ADM,'
@@ -3435,6 +3440,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  DESCRI_APRESENTACAO = :DESCRI_APRESENTACAO,'
       '  ESPECIFICACAO = :ESPECIFICACAO,'
       '  ESTOQMIN = :ESTOQMIN,'
+      '  ESTOQUE_APROP_LOTE = :ESTOQUE_APROP_LOTE,'
       '  FRACIONADOR = :FRACIONADOR,'
       '  KILOMETRAGEM_VEICULO = :KILOMETRAGEM_VEICULO,'
       '  METAFONEMA = :METAFONEMA,'
@@ -3486,11 +3492,11 @@ inherited frmGeProduto: TfrmGeProduto
         '   CSOSN, CST, CST_COFINS, CST_PIS, CUBAGEM, CUSTOMEDIO, DESCRI,' +
         ' DESCRI_APRESENTACAO, '
       
-        '   ESPECIFICACAO, ESTOQMIN, FRACIONADOR, KILOMETRAGEM_VEICULO, M' +
-        'ETAFONEMA, '
+        '   ESPECIFICACAO, ESTOQMIN, ESTOQUE_APROP_LOTE, FRACIONADOR, KIL' +
+        'OMETRAGEM_VEICULO, '
       
-        '   MODELO, MOVIMENTA_ESTOQUE, NCM_SH, PERCENTUAL_MARCKUP, PERCEN' +
-        'TUAL_MARGEM, '
+        '   METAFONEMA, MODELO, MOVIMENTA_ESTOQUE, NCM_SH, PERCENTUAL_MAR' +
+        'CKUP, PERCENTUAL_MARGEM, '
       
         '   PERCENTUAL_REDUCAO_BC, PESO_BRUTO, PESO_LIQUIDO, PRECO, PRECO' +
         '_PROMOCAO, '
@@ -3521,24 +3527,26 @@ inherited frmGeProduto: TfrmGeProduto
         '   :COR_VEICULO, :CSOSN, :CST, :CST_COFINS, :CST_PIS, :CUBAGEM, ' +
         ':CUSTOMEDIO, '
       
-        '   :DESCRI, :DESCRI_APRESENTACAO, :ESPECIFICACAO, :ESTOQMIN, :FR' +
-        'ACIONADOR, '
+        '   :DESCRI, :DESCRI_APRESENTACAO, :ESPECIFICACAO, :ESTOQMIN, :ES' +
+        'TOQUE_APROP_LOTE, '
       
-        '   :KILOMETRAGEM_VEICULO, :METAFONEMA, :MODELO, :MOVIMENTA_ESTOQ' +
-        'UE, :NCM_SH, '
+        '   :FRACIONADOR, :KILOMETRAGEM_VEICULO, :METAFONEMA, :MODELO, :M' +
+        'OVIMENTA_ESTOQUE, '
       
-        '   :PERCENTUAL_MARCKUP, :PERCENTUAL_MARGEM, :PERCENTUAL_REDUCAO_' +
-        'BC, :PESO_BRUTO, '
+        '   :NCM_SH, :PERCENTUAL_MARCKUP, :PERCENTUAL_MARGEM, :PERCENTUAL' +
+        '_REDUCAO_BC, '
       
-        '   :PESO_LIQUIDO, :PRECO, :PRECO_PROMOCAO, :PRECO_SUGERIDO, :PRO' +
-        'DUTO_IMOBILIZADO, '
+        '   :PESO_BRUTO, :PESO_LIQUIDO, :PRECO, :PRECO_PROMOCAO, :PRECO_S' +
+        'UGERIDO, '
       
-        '   :PRODUTO_NOVO, :QTDE, :REFERENCIA, :RENAVAM_VEICULO, :RESERVA' +
-        ', :SECAO, '
+        '   :PRODUTO_IMOBILIZADO, :PRODUTO_NOVO, :QTDE, :REFERENCIA, :REN' +
+        'AVAM_VEICULO, '
       
-        '   :SITUACAO_ATUAL_VEICULO, :SITUACAO_HISTORICO_VEICULO, :TIPO_V' +
-        'EICULO, '
-      '   :UNIDADE, :USUARIO, :VALOR_IPI, :VENDA_FRACIONADA)')
+        '   :RESERVA, :SECAO, :SITUACAO_ATUAL_VEICULO, :SITUACAO_HISTORIC' +
+        'O_VEICULO, '
+      
+        '   :TIPO_VEICULO, :UNIDADE, :USUARIO, :VALOR_IPI, :VENDA_FRACION' +
+        'ADA)')
     DeleteSQL.Strings = (
       'delete from TBPRODUTO'
       'where'
@@ -3548,7 +3556,7 @@ inherited frmGeProduto: TfrmGeProduto
   inherited ImgList: TImageList
     Left = 720
     Bitmap = {
-      494C01012B002C00100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

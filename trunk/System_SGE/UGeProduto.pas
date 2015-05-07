@@ -27,7 +27,6 @@ type
     IbDtstTabelaPRECO: TIBBCDField;
     IbDtstTabelaREFERENCIA: TIBStringField;
     IbDtstTabelaSECAO: TIBStringField;
-    IbDtstTabelaUNIDADE: TIBStringField;
     IbDtstTabelaCODGRUPO: TSmallintField;
     IbDtstTabelaCUSTOMEDIO: TIBBCDField;
     IbDtstTabelaCODEMP: TIBStringField;
@@ -102,7 +101,6 @@ type
     TbsEspecificacao: TTabSheet;
     lblApresentacao: TLabel;
     dbApresentacao: TDBEdit;
-    dbProdutoNovo: TDBCheckBox;
     IbDtstTabelaCOR_VEICULO: TIBStringField;
     IbDtstTabelaCOMBUSTIVEL_VEICULO: TIBStringField;
     IbDtstTabelaTIPO_VEICULO: TIBStringField;
@@ -238,7 +236,6 @@ type
     IbDtstTabelaRESERVA: TIBBCDField;
     IbDtstTabelaESTOQMIN: TIBBCDField;
     IbDtstTabelaMOVIMENTA_ESTOQUE: TSmallintField;
-    dbMovimentaEstoque: TDBCheckBox;
     IbDtstTabelaPRECO_FRAC: TFMTBCDField;
     IbDtstTabelaPRECO_PROMOCAO_FRAC: TFMTBCDField;
     IbDtstTabelaPRECO_SUGERIDO_FRAC: TFMTBCDField;
@@ -246,7 +243,6 @@ type
     lblTipoCadastro: TLabel;
     dbTipoCadastro: TDBLookupComboBox;
     IbDtstTabelaCOMPOR_FATURAMENTO: TSmallintField;
-    dbComporFaturamento: TDBCheckBox;
     IbDtstTabelaMETAFONEMA: TIBStringField;
     IbDtstTabelaESPECIFICACAO: TBlobField;
     pnlEspecificacao: TPanel;
@@ -259,8 +255,6 @@ type
     nmProdutoLista: TMenuItem;
     nmProdutoFicha: TMenuItem;
     nmProdutoEtiqueta: TMenuItem;
-    dbProdutoImobilizado: TDBCheckBox;
-    dbCadastroAtivo: TDBCheckBox;
     IbDtstTabelaCADASTRO_ATIVO: TSmallintField;
     IbDtstTabelaPRODUTO_IMOBILIZADO: TSmallintField;
     dbCFOP: TJvDBComboEdit;
@@ -290,9 +284,16 @@ type
     dbFinanciadora: TDBEdit;
     dbPorPlano: TDBEdit;
     dbValorRetornoVeiculo: TDBEdit;
-    dbProdutoLote: TDBCheckBox;
     GrpBxParametroGeral: TGroupBox;
     GrpBxParametroProdudo: TGroupBox;
+    IbDtstTabelaUNIDADE: TIBStringField;
+    dbCadastroAtivo: TDBCheckBox;
+    dbProdutoNovo: TDBCheckBox;
+    dbComporFaturamento: TDBCheckBox;
+    dbProdutoMovEstoque: TDBCheckBox;
+    dbProdutoEhImobilizado: TDBCheckBox;
+    dbProdutoPorLote: TDBCheckBox;
+    IbDtstTabelaESTOQUE_APROP_LOTE: TSmallintField;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
@@ -315,7 +316,7 @@ type
     procedure btbtnSalvarClick(Sender: TObject);
     procedure ppMnAtualizarMetafonemaClick(Sender: TObject);
     procedure btbtnListaClick(Sender: TObject);
-    procedure dbMovimentaEstoqueClick(Sender: TObject);
+    procedure dbProdutoMovEstoqueClick(Sender: TObject);
     procedure btbtnAlterarClick(Sender: TObject);
     procedure btbtnExcluirClick(Sender: TObject);
     procedure btbtnCancelarClick(Sender: TObject);
@@ -987,6 +988,7 @@ begin
   lblProdutoSemEstoque.Caption := Format('* %s sem Estoque', [StrDescricaoProduto]);
   lblProdutoDesativado.Caption := Format('* %s desativado', [StrDescricaoProduto]);
 
+  dbProdutoEhImobilizado.Enabled := (gSistema.Codigo = SISTEMA_GESTAO_IND);
 (*
   lblTipoTributacaoSN.Enabled := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
   dbTipoTributacaoSN.Enabled  := GetSimplesNacionalInsEmpresa(gUsuarioLogado.Empresa);
@@ -1008,12 +1010,12 @@ begin
     end;
 end;
 
-procedure TfrmGeProduto.dbMovimentaEstoqueClick(Sender: TObject);
+procedure TfrmGeProduto.dbProdutoMovEstoqueClick(Sender: TObject);
 begin
   if (IbDtstTabela.State in [dsEdit, dsInsert]) then
-    if Assigned(dbProdutoLote.Field) then
-      if (dbMovimentaEstoque.Field.AsInteger = 0) then
-        dbProdutoLote.Field.AsInteger := 0;
+    if Assigned(dbProdutoPorLote.Field) then
+      if (dbProdutoMovEstoque.Field.AsInteger = 0) then
+        dbProdutoPorLote.Field.AsInteger := 0;
 end;
 
 procedure TfrmGeProduto.dbSecaoButtonClick(Sender: TObject);
@@ -1105,7 +1107,7 @@ begin
     if ( SelecionarUnidade(Self, iCodigo, sDescricao, sSigla) ) then
     begin
       IbDtstTabelaCODUNIDADE.AsInteger       := iCodigo;
-      IbDtstTabelaUNIDADE.AsString           := sDescricao;
+      IbDtstTabelaUNIDADE.AsString           := AnsiUpperCase(Copy(sDescricao, 1, IbDtstTabelaUNIDADE.Size));
       IbDtstTabelaDESCRICAO_UNIDADE.AsString := sDescricao;
       IbDtstTabelaUNP_SIGLA.AsString         := sSigla;
 
@@ -1193,6 +1195,7 @@ begin
   IbDtstTabelaCADASTRO_ATIVO.Value         := 1;
   IbDtstTabelaPRODUTO_IMOBILIZADO.Value    := 0;
   IbDtstTabelaCOMPOR_FATURAMENTO.AsInteger := StrToInt(IfThen(GetSegmentoID(gUsuarioLogado.Empresa) in [SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_GERAL_ID], '0', '1'));
+  IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger := 0;
 end;
 
 procedure TfrmGeProduto.FormShow(Sender: TObject);
@@ -1357,14 +1360,38 @@ procedure TfrmGeProduto.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
-    if ( (ActiveControl = dbComporFaturamento) and tbsCustoVeiculo.TabVisible ) then
+    if ( (ActiveControl = dbComporFaturamento) and GrpBxParametroProdudo.Enabled ) then
+    begin
+      if dbProdutoEhImobilizado.Enabled then
+        dbProdutoEhImobilizado.SetFocus
+      else
+      if dbProdutoMovEstoque.Enabled then
+        dbProdutoMovEstoque.SetFocus;
+      Exit;
+    end
+    else
+    if ( ((ActiveControl = dbComporFaturamento) or (ActiveControl = dbProdutoPorLote)) and tbsCustoVeiculo.TabVisible ) then
     begin
       pgcMaisDados.ActivePage := tbsCustoVeiculo;
       dbValorCompraVeiculo.SetFocus;
       Exit;
     end
     else
-    if ( (ActiveControl = dbComporFaturamento) and tbsTributacao.TabVisible ) then
+    if ( ((ActiveControl = dbComporFaturamento) or (ActiveControl = dbProdutoPorLote)) and tbsTributacao.TabVisible ) then
+    begin
+      pgcMaisDados.ActivePage := tbsTributacao;
+      dbOrigem.SetFocus;
+      Exit;
+    end
+    else
+    if ( (ActiveControl = dbProdutoMovEstoque) and (dbProdutoMovEstoque.Checked and (not dbProdutoPorLote.Enabled)) ) then
+    begin
+      dbProdutoPorLote.Enabled := True;
+      dbProdutoPorLote.SetFocus;
+      Exit;
+    end
+    else
+    if ( (ActiveControl = dbProdutoMovEstoque) and ((not dbProdutoMovEstoque.Checked) or (not dbProdutoPorLote.Enabled)) and tbsTributacao.TabVisible ) then
     begin
       pgcMaisDados.ActivePage := tbsTributacao;
       dbOrigem.SetFocus;
@@ -1443,7 +1470,7 @@ begin
         IbDtstTabelaPRODUTO_NOVO.AsInteger        := 0;
         IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger   := 0;
         IbDtstTabelaPRODUTO_IMOBILIZADO.AsInteger := 0;
-        //IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
+        IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
       end
       else
         IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger := 1;
@@ -1459,7 +1486,7 @@ begin
         (IbDtstTabelaCUSTOMEDIO.AsCurrency * IbDtstTabelaPERCENTUAL_MARGEM.AsCurrency / 100);
 
     if ( Field = IbDtstTabelaMOVIMENTA_ESTOQUE ) then
-      dbProdutoLote.Enabled := (IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger = 1);
+      dbProdutoPorLote.Enabled := (IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger = 1);
   end;
 end;
 
@@ -1598,11 +1625,11 @@ begin
       IbDtstTabelaPRODUTO_NOVO.AsInteger        := 0;
       IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger   := 0;
       IbDtstTabelaPRODUTO_IMOBILIZADO.AsInteger := 0;
-      //IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
+      IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
     end
     else
     if (IbDtstTabelaMOVIMENTA_ESTOQUE.AsInteger = 0) then
-      ; //IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
+      IbDtstTabelaESTOQUE_APROP_LOTE.AsInteger  := 0;
   end;
 
   inherited;

@@ -119,7 +119,13 @@ begin
   if DataBaseOnLine then
     CarregarEmpresa;
 
-  Empresa := GetEmpresaIDDefault;
+  if ( Trim(GetEmpresaIDDefault) = EmptyStr ) then
+    Empresa := StrOnlyNumbers(gLicencaSistema.CNPJ)
+  else
+    Empresa := GetEmpresaIDDefault;
+
+  if (edEmpresa.ItemIndex = -1) then
+    SetEmpresa(StrOnlyNumbers(gLicencaSistema.CNPJ));
 
   if ( ImgLogo.Picture.Height = 0 ) then
     ImgLogo.Picture.Icon := Application.Icon;
@@ -216,7 +222,6 @@ begin
   inherited;
   if not DataBaseOnLine then
     Application.Terminate;
-
 end;
 
 end.

@@ -4436,6 +4436,7 @@ object frmPrinc: TfrmPrinc
       object RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet
         Left = 132
         Top = 0
+        Active = True
         Caption = 'Configura'#231#245'es Gerais'
         DesignSize = (
           357
@@ -4564,7 +4565,6 @@ object frmPrinc: TfrmPrinc
       object RbnBackstageViewBackup: TdxRibbonBackstageViewTabSheet
         Left = 132
         Top = 0
-        Active = True
         Caption = 'Backup / Retore Database'
         DesignSize = (
           357
@@ -4643,7 +4643,9 @@ object frmPrinc: TfrmPrinc
     Contexts = <>
     TabOrder = 6
     TabStop = False
+    OnApplicationMenuClick = RibbonApplicationMenuClick
     object RbnTabPrincipal: TdxRibbonTab
+      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4718,7 +4720,6 @@ object frmPrinc: TfrmPrinc
       Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
-      Active = True
       Caption = 'Relat'#243'rios'
       Groups = <
         item
@@ -4743,7 +4744,7 @@ object frmPrinc: TfrmPrinc
   end
   object SknController: TdxSkinController
     NativeStyle = False
-    SkinName = 'McSkin'
+    SkinName = 'Office2007Green'
     Left = 176
     Top = 208
   end

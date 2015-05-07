@@ -436,13 +436,10 @@ procedure TfrmGeCaixa.AbrirTabelaMovimento(const AnoCaixa: Smallint;
 begin
   qryMovimento.Close;
 
-  with qryMovimento, SelectSQL do
+  with qryMovimento do
   begin
-    Clear;
-    AddStrings( SQL_Movimento );
-    Add('where cm.Caixa_ano = ' + IntToStr(AnoCaixa));
-    Add('  and cm.Caixa_num = ' + IntToStr(NumeroCaixa));
-    Add('order by cm.Ano, cm.Numero');
+    ParamByName('Caixa_ano').AsInteger := AnoCaixa;
+    ParamByName('Caixa_num').AsInteger := NumeroCaixa;
   end;
 
   qryMovimento.Open;
@@ -727,7 +724,10 @@ end;
 procedure TfrmGeCaixa.qryMovimentoCalcFields(DataSet: TDataSet);
 begin
   inherited;
-  qryMovimentoControleMov.AsString := qryMovimentoANO.AsString  + FormatFloat('"/"###0000000', qryMovimentoNUMERO.AsInteger);
+  if qryMovimentoANO.IsNull then
+    qryMovimentoControleMov.AsString := EmptyStr
+  else
+    qryMovimentoControleMov.AsString := qryMovimentoANO.AsString  + FormatFloat('"/"###0000000', qryMovimentoNUMERO.AsInteger);
 
   if ( qryMovimentoVENDA_ANO.AsInteger > 0 ) then
     qryMovimentoControleVenda.AsString  := qryMovimentoVENDA_ANO.AsString  + FormatFloat('"/"###0000000', qryMovimentoVENDA_NUM.AsInteger)

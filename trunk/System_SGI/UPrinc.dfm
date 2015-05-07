@@ -4589,6 +4589,7 @@ object frmPrinc: TfrmPrinc
     Contexts = <>
     TabOrder = 6
     TabStop = False
+    OnApplicationMenuClick = RibbonApplicationMenuClick
     object RbnTabPrincipal: TdxRibbonTab
       Active = True
       Caption = 'Principal'

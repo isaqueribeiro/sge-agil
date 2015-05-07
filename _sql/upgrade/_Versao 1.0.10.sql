@@ -515,3 +515,30 @@ COMMENT ON COLUMN TBPRODUTO.ESTOQUE_APROP_LOTE IS
 0 - Nao
 1 - Sim';
 
+
+
+
+/*------ SYSDBA 06/05/2015 13:53:35 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_ibpt_cod for sys_ibpt
+active before insert position 0
+as
+begin
+  if (new.id_ibpt is null) then
+    new.id_ibpt = gen_id(GEN_IBPT_ID, 1);
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 06/05/2015 14:43:59 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_20'
+where (RDB$FIELD_NAME = 'UNIDADE') and
+(RDB$RELATION_NAME = 'TBPRODUTO');
+

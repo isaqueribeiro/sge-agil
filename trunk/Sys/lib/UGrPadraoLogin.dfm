@@ -7,8 +7,8 @@ inherited frmGrPadraoLogin: TfrmGrPadraoLogin
   ClientWidth = 475
   Font.Height = -16
   Font.Name = 'Calibri'
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 475
+  ExplicitHeight = 285
   DesignSize = (
     475
     285)
