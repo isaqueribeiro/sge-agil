@@ -290,6 +290,8 @@ type
       AItem: TdxRibbonBackstageViewGalleryItem);
     procedure dxRibbonBackstageViewGalleryControl1ItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
+    procedure RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
+      var AHandled: Boolean);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -935,6 +937,12 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_APAGAR_ID,      Trim(BrBtnRelatorioFinanceiro.Caption + ' -> ' + BrBtnRelatorioFinanceiroAP.Caption), ROTINA_MENU_REL_FINANCEIRO_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_ARECEBER_ID,    Trim(BrBtnRelatorioFinanceiro.Caption + ' -> ' + BrBtnRelatorioFinanceiroAR.Caption), ROTINA_MENU_REL_FINANCEIRO_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_REL_MOV_FINANCE_ID, Trim(BrBtnRelatorioFinanceiro.Caption + ' -> ' + BrBtnRelatorioFinanceiroMV.Caption), ROTINA_MENU_REL_FINANCEIRO_ID);
+end;
+
+procedure TfrmPrinc.RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
+  var AHandled: Boolean);
+begin
+  RbnBackstageView.ActiveTab := RbnBackstageViewConfig;
 end;
 
 procedure TfrmPrinc.nmGerarArquivoNFCClick(Sender: TObject);

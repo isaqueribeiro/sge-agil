@@ -4570,6 +4570,7 @@ object frmPrinc: TfrmPrinc
     Contexts = <>
     TabOrder = 5
     TabStop = False
+    OnApplicationMenuClick = RibbonApplicationMenuClick
     object RbbTabPrincipal: TdxRibbonTab
       Active = True
       Caption = 'Principal'
@@ -4617,7 +4618,7 @@ object frmPrinc: TfrmPrinc
   end
   object SknController: TdxSkinController
     NativeStyle = False
-    SkinName = 'McSkin'
+    SkinName = 'Office2007Green'
     Left = 344
     Top = 216
   end

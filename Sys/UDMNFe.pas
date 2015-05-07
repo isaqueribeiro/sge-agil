@@ -1020,13 +1020,14 @@ begin
 
       with ACBrNFe.Configuracoes do
       begin
-        Arquivos.PathNFe    := StringReplace(Geral.PathSalvar + '\NFe',         '\\', '\', [rfReplaceAll]);
-        Arquivos.PathCan    := StringReplace(Geral.PathSalvar + '\NFeCancelar', '\\', '\', [rfReplaceAll]);
-        Arquivos.PathInu    := StringReplace(Geral.PathSalvar + '\NFeInutiliz', '\\', '\', [rfReplaceAll]);
-        Arquivos.PathEvento := StringReplace(Geral.PathSalvar + '\NFeEvento',   '\\', '\', [rfReplaceAll]);
-        Arquivos.PathCCe    := StringReplace(Geral.PathSalvar + '\CCe',         '\\', '\', [rfReplaceAll]);
-        Arquivos.PathMDe    := StringReplace(Geral.PathSalvar + '\MDe',         '\\', '\', [rfReplaceAll]);
-        Arquivos.PathDPEC   := StringReplace(Geral.PathSalvar + '\DPEC',        '\\', '\', [rfReplaceAll]);
+        Arquivos.PathNFe      := StringReplace(Geral.PathSalvar + '\NFe',         '\\', '\', [rfReplaceAll]);
+        Arquivos.PathCan      := StringReplace(Geral.PathSalvar + '\NFeCancelar', '\\', '\', [rfReplaceAll]);
+        Arquivos.PathInu      := StringReplace(Geral.PathSalvar + '\NFeInutiliz', '\\', '\', [rfReplaceAll]);
+        Arquivos.PathEvento   := StringReplace(Geral.PathSalvar + '\NFeEvento',   '\\', '\', [rfReplaceAll]);
+        Arquivos.PathCCe      := StringReplace(Geral.PathSalvar + '\CCe',         '\\', '\', [rfReplaceAll]);
+        Arquivos.PathMDe      := StringReplace(Geral.PathSalvar + '\MDe',         '\\', '\', [rfReplaceAll]);
+        Arquivos.PathDPEC     := StringReplace(Geral.PathSalvar + '\DPEC',        '\\', '\', [rfReplaceAll]);
+        Arquivos.PathDownload := StringReplace(Geral.PathSalvar + '\NFeDownload', '\\', '\', [rfReplaceAll]);
       end;
 
       if ( tipoDANFE = tipoDANFEFast ) then
@@ -4437,7 +4438,7 @@ begin
 
     with ACBrNFe do
     begin
-                       
+
       DownloadNFe.Download.Chaves.Clear;
       DownloadNFe.Download.Chaves.Add.chNFe := sChaveNFe;
       DownloadNFe.Download.CNPJ             := sCNPJDestinatario;

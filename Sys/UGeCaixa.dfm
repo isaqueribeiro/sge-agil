@@ -288,6 +288,10 @@ inherited frmGeCaixa: TfrmGeCaixa
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 942
+      ExplicitHeight = 431
       inherited Bevel8: TBevel
         Top = 193
         Width = 942
@@ -949,6 +953,10 @@ inherited frmGeCaixa: TfrmGeCaixa
       Shape = bsSpacer
       Visible = False
     end
+    inherited btbtnExcluir: TcxButton
+      ExplicitLeft = 154
+      ExplicitTop = 0
+    end
     inherited btbtnLista: TcxButton
       PopupMenu = ppImprimir
       Visible = True
@@ -1293,7 +1301,7 @@ inherited frmGeCaixa: TfrmGeCaixa
   end
   inherited ImgList: TImageList
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2938,7 +2946,48 @@ inherited frmGeCaixa: TfrmGeCaixa
       '  , cm.Compra_num'
       '  , cm.Fornecedor'
       'from TBCAIXA_MOVIMENTO cm'
-      '  left join TBFORMPAGTO fp on (fp.Cod = cm.Forma_pagto)')
+      '  left join TBFORMPAGTO fp on (fp.Cod = cm.Forma_pagto)'
+      ''
+      'where cm.Caixa_ano = :Caixa_ano'
+      '  and cm.Caixa_num = :Caixa_num'
+      ''
+      'union'
+      ''
+      'Select'
+      '    null'
+      '  , null'
+      '  , vf.formapagto_cod'
+      '  , fp.descri'
+      '  , cast(vd.dtvenda as timestamp)'
+      '  , '#39'C'#39
+      
+        '  , substring('#39'VENDA EM '#39' || fp.descri || '#39' No. '#39' || vd.ano || '#39 +
+        '/'#39' || vd.codcontrol || '#39' - '#39' || vc.nome from 1 for 250)'
+      '  , vf.valor_fpagto'
+      '  , Case when vd.status = 5 then 0 else 1 end'
+      '  , vd.ano'
+      '  , vd.codcontrol'
+      '  , vd.codcli'
+      '  , null'
+      '  , null'
+      '  , null'
+      'from TBVENDAS vd'
+      
+        '  inner join TBVENDAS_FORMAPAGTO vf on (vf.ano_venda = vd.ano an' +
+        'd vf.controle_venda = vd.codcontrol)'
+      '  inner join TBFORMPAGTO fp on (fp.Cod = vf.formapagto_cod)'
+      
+        '  inner join TBCONDICAOPAGTO cp on (cp.cond_cod = vf.condicaopag' +
+        'to_cod and cp.cond_prazo = 1)'
+      '  inner join TBCLIENTE vc on (vc.codigo = vd.codcliente)'
+      ''
+      'where vd.caixa_pdv = 1'
+      '  and vd.caixa_ano = :Caixa_ano'
+      '  and vd.caixa_num = :Caixa_num'
+      ''
+      'Order by'
+      '    1'
+      '  , 2')
     ModifySQL.Strings = (
       '')
     ParamCheck = True

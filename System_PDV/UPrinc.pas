@@ -127,6 +127,8 @@ type
       AItem: TdxRibbonBackstageViewGalleryItem);
     procedure dxRibbonBackstageViewGalleryControl1ItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
+    procedure RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
+      var AHandled: Boolean);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -477,6 +479,12 @@ begin
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_ABRIR_CAIXA_PDV_ID,     Trim(BrBtnAbrirCaixa.Caption),     ROTINA_MENU_CAIXA_PDV_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_ENCERRAR_CAIXA_PDV_ID,  Trim(BrBtnEncerrarCaixa.Caption),  ROTINA_MENU_CAIXA_PDV_ID);
   SetRotinaSistema(ROTINA_TIPO_TELA, ROTINA_FIN_GERENCIAR_CAIXA_PDV_ID, Trim(BrBtnGerenciarCaixa.Caption), ROTINA_MENU_CAIXA_PDV_ID);
+end;
+
+procedure TfrmPrinc.RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
+  var AHandled: Boolean);
+begin
+  RbnBackstageView.ActiveTab := RbnBackstageViewConfig;
 end;
 
 procedure TfrmPrinc.FormCloseQuery(Sender: TObject; var CanClose: Boolean);

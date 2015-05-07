@@ -2862,8 +2862,9 @@ begin
     SQL.Add('Select');
     SQL.Add('  min(cp.dtvenc) as vencimento');
     SQL.Add('from TBCONTPAG cp');
-    SQL.Add('where cp.empresa = ' + QuotedStr(GetEmpresaIDDefault));
-    SQL.Add('  and cp.quitado = 0');
+    SQL.Add('where cp.empresa  = ' + QuotedStr(gUsuarioLogado.Empresa));
+    SQL.Add('  and cp.quitado  = 0');
+    SQL.Add('  and cp.situacao = 1');
     Open;
 
     if not IsEmpty then
@@ -2887,8 +2888,9 @@ begin
     SQL.Add('Select');
     SQL.Add('  min(cr.dtvenc) as vencimento');
     SQL.Add('from TBCONTREC cr');
-    SQL.Add('where cr.empresa = ' + QuotedStr(GetEmpresaIDDefault));
-    SQL.Add('  and cr.baixado = 0');
+    SQL.Add('where cr.empresa  = ' + QuotedStr(gUsuarioLogado.Empresa));
+    SQL.Add('  and cr.baixado  = 0');
+    SQL.Add('  and cr.situacao = 1');
     Open;
 
     if not IsEmpty then
@@ -2912,7 +2914,7 @@ begin
     SQL.Add('Select');
     SQL.Add('  min(r.data_emissao) as data_emissao');
     SQL.Add('from TBREQUISICAO_ALMOX r');
-    SQL.Add('where r.empresa = ' + QuotedStr(GetEmpresaIDDefault));
+    SQL.Add('where r.empresa = ' + QuotedStr(gUsuarioLogado.Empresa));
     SQL.Add('  and r.status in (' + IntToStr(STATUS_REQUISICAO_ALMOX_ENV) + ', ' + IntToStr(STATUS_REQUISICAO_ALMOX_REC) + ')');
     Open;
 
