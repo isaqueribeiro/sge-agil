@@ -9201,7 +9201,7 @@ object DMNFe: TDMNFe
         end
         object frdFone: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 34.015770000000000000
+          Top = 34.015770000000010000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -9219,7 +9219,7 @@ object DMNFe: TDMNFe
         end
         object Memo11: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 49.133890000000000000
+          Top = 49.133889999999990000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -9462,7 +9462,7 @@ object DMNFe: TDMNFe
           VAlign = vaBottom
         end
         object Memo19: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 589.606680000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9489,7 +9489,7 @@ object DMNFe: TDMNFe
         Top = 196.535560000000000000
         Width = 718.110700000000000000
         object frdVendaNOME: TfrxMemoView
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 415.748300000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -9506,7 +9506,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo2: TfrxMemoView
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 415.748300000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9521,7 +9521,7 @@ object DMNFe: TDMNFe
         end
         object Memo8: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 207.874150000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9536,7 +9536,7 @@ object DMNFe: TDMNFe
         end
         object Memo9: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 207.874150000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -9557,7 +9557,7 @@ object DMNFe: TDMNFe
         end
         object Memo12: TfrxMemoView
           Left = 623.622450000000000000
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 94.488250000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9574,7 +9574,7 @@ object DMNFe: TDMNFe
         end
         object Memo13: TfrxMemoView
           Left = 623.622450000000000000
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -9600,7 +9600,7 @@ object DMNFe: TDMNFe
           Frame.Typ = [ftTop]
         end
         object Memo23: TfrxMemoView
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 22.677180000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9618,7 +9618,7 @@ object DMNFe: TDMNFe
         end
         object Memo24: TfrxMemoView
           Left = 22.677180000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 52.913420000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9635,7 +9635,7 @@ object DMNFe: TDMNFe
         end
         object Memo25: TfrxMemoView
           Left = 75.590600000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 419.527659130000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9672,7 +9672,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo27: TfrxMemoView
-          Top = 60.472480000000000000
+          Top = 60.472479999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9687,7 +9687,7 @@ object DMNFe: TDMNFe
         end
         object Memo21: TfrxMemoView
           Left = 540.472790000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 37.795300000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9704,7 +9704,7 @@ object DMNFe: TDMNFe
         end
         object Memo20: TfrxMemoView
           Left = 578.268090000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9721,7 +9721,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo48: TfrxMemoView
-          Top = 11.338590000000000000
+          Top = 11.338590000000010000
           Width = 415.748300000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -9751,7 +9751,7 @@ object DMNFe: TDMNFe
         end
         object Memo17: TfrxMemoView
           Left = 642.520100000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 75.590600000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9769,7 +9769,7 @@ object DMNFe: TDMNFe
         end
         object Memo22: TfrxMemoView
           Left = 495.118430000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 45.354323390000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9829,7 +9829,7 @@ object DMNFe: TDMNFe
         end
         object Memo42: TfrxMemoView
           Left = 234.330860000000000000
-          Top = 249.448980000000000000
+          Top = 249.448979999999900000
           Width = 249.448980000000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9846,7 +9846,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo28: TfrxMemoView
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 302.362400000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -9863,7 +9863,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo29: TfrxMemoView
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 302.362400000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9877,7 +9877,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Line3: TfrxLineView
-          Top = 22.677180000000000000
+          Top = 22.677180000000020000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -9900,7 +9900,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo31: TfrxMemoView
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 302.362400000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9933,7 +9933,7 @@ object DMNFe: TDMNFe
         end
         object Memo33: TfrxMemoView
           Left = 302.362400000000000000
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 415.748300000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9948,7 +9948,7 @@ object DMNFe: TDMNFe
         end
         object Memo34: TfrxMemoView
           Left = 302.362400000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 102.047248980000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -9969,7 +9969,7 @@ object DMNFe: TDMNFe
         end
         object Memo35: TfrxMemoView
           Left = 302.362400000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 102.047248980000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -9985,7 +9985,7 @@ object DMNFe: TDMNFe
         end
         object Memo36: TfrxMemoView
           Left = 502.677490000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 98.267780000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -10006,7 +10006,7 @@ object DMNFe: TDMNFe
         end
         object Memo37: TfrxMemoView
           Left = 502.677490000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 98.267780000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -10022,7 +10022,7 @@ object DMNFe: TDMNFe
         end
         object Memo38: TfrxMemoView
           Left = 600.945270000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 117.165430000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -10044,7 +10044,7 @@ object DMNFe: TDMNFe
         end
         object Memo39: TfrxMemoView
           Left = 600.945270000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 117.165430000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -10080,7 +10080,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo41: TfrxMemoView
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -10141,7 +10141,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo16: TfrxMemoView
-          Top = 302.362400000000000000
+          Top = 302.362400000000100000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -10157,7 +10157,7 @@ object DMNFe: TDMNFe
         end
         object Memo46: TfrxMemoView
           Left = 404.409710000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 98.267718980000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -10176,7 +10176,7 @@ object DMNFe: TDMNFe
         end
         object Memo47: TfrxMemoView
           Left = 404.409710000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 98.267718980000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15440,7 +15440,7 @@ object DMNFe: TDMNFe
         end
         object frdFone: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 34.015770000000000000
+          Top = 34.015770000000010000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -15459,7 +15459,7 @@ object DMNFe: TDMNFe
         end
         object Memo11: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 49.133890000000000000
+          Top = 49.133889999999990000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -15596,6 +15596,11 @@ object DMNFe: TDMNFe
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo4: TfrxMemoView
           Left = 495.118430000000000000
@@ -15713,7 +15718,7 @@ object DMNFe: TDMNFe
           VAlign = vaBottom
         end
         object Memo19: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 589.606680000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15740,7 +15745,7 @@ object DMNFe: TDMNFe
         Top = 196.535560000000000000
         Width = 718.110700000000000000
         object frdVendaNOME: TfrxMemoView
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 415.748300000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -15758,7 +15763,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo2: TfrxMemoView
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 415.748300000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15774,7 +15779,7 @@ object DMNFe: TDMNFe
         end
         object Memo8: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 207.874150000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15790,7 +15795,7 @@ object DMNFe: TDMNFe
         end
         object Memo9: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 207.874150000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -15812,7 +15817,7 @@ object DMNFe: TDMNFe
         end
         object Memo12: TfrxMemoView
           Left = 623.622450000000000000
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 94.488250000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15830,7 +15835,7 @@ object DMNFe: TDMNFe
         end
         object Memo13: TfrxMemoView
           Left = 623.622450000000000000
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -15858,7 +15863,7 @@ object DMNFe: TDMNFe
           Frame.Width = 0.100000000000000000
         end
         object Memo23: TfrxMemoView
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 22.677180000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15877,7 +15882,7 @@ object DMNFe: TDMNFe
         end
         object Memo24: TfrxMemoView
           Left = 22.677180000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 52.913420000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15895,7 +15900,7 @@ object DMNFe: TDMNFe
         end
         object Memo25: TfrxMemoView
           Left = 75.590600000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 419.527659130000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15934,7 +15939,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo27: TfrxMemoView
-          Top = 60.472480000000000000
+          Top = 60.472479999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15950,7 +15955,7 @@ object DMNFe: TDMNFe
         end
         object Memo21: TfrxMemoView
           Left = 540.472790000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 37.795300000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15968,7 +15973,7 @@ object DMNFe: TDMNFe
         end
         object Memo20: TfrxMemoView
           Left = 578.268090000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -15986,7 +15991,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo48: TfrxMemoView
-          Top = 11.338590000000000000
+          Top = 11.338590000000010000
           Width = 415.748300000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -16018,7 +16023,7 @@ object DMNFe: TDMNFe
         end
         object Memo17: TfrxMemoView
           Left = 642.520100000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 75.590600000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16037,7 +16042,7 @@ object DMNFe: TDMNFe
         end
         object Memo22: TfrxMemoView
           Left = 495.118430000000000000
-          Top = 94.488250000000000000
+          Top = 94.488250000000030000
           Width = 45.354323390000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16100,7 +16105,7 @@ object DMNFe: TDMNFe
         end
         object Memo42: TfrxMemoView
           Left = 234.330860000000000000
-          Top = 249.448980000000000000
+          Top = 249.448979999999900000
           Width = 249.448980000000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16118,7 +16123,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo28: TfrxMemoView
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 302.362400000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -16136,7 +16141,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo29: TfrxMemoView
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 302.362400000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16151,7 +16156,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Line3: TfrxLineView
-          Top = 22.677180000000000000
+          Top = 22.677180000000020000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -16176,7 +16181,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo31: TfrxMemoView
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 302.362400000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16211,7 +16216,7 @@ object DMNFe: TDMNFe
         end
         object Memo33: TfrxMemoView
           Left = 302.362400000000000000
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 415.748300000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16227,7 +16232,7 @@ object DMNFe: TDMNFe
         end
         object Memo34: TfrxMemoView
           Left = 302.362400000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 102.047248980000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -16249,7 +16254,7 @@ object DMNFe: TDMNFe
         end
         object Memo35: TfrxMemoView
           Left = 302.362400000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 102.047248980000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16266,7 +16271,7 @@ object DMNFe: TDMNFe
         end
         object Memo36: TfrxMemoView
           Left = 502.677490000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 98.267780000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -16288,7 +16293,7 @@ object DMNFe: TDMNFe
         end
         object Memo37: TfrxMemoView
           Left = 502.677490000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 98.267780000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16305,7 +16310,7 @@ object DMNFe: TDMNFe
         end
         object Memo38: TfrxMemoView
           Left = 600.945270000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 117.165430000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -16328,7 +16333,7 @@ object DMNFe: TDMNFe
         end
         object Memo39: TfrxMemoView
           Left = 600.945270000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 117.165430000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16365,7 +16370,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo41: TfrxMemoView
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16429,7 +16434,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo16: TfrxMemoView
-          Top = 302.362400000000000000
+          Top = 302.362400000000100000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -16446,7 +16451,7 @@ object DMNFe: TDMNFe
         end
         object Memo46: TfrxMemoView
           Left = 404.409710000000000000
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 98.267718980000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -16466,7 +16471,7 @@ object DMNFe: TDMNFe
         end
         object Memo47: TfrxMemoView
           Left = 404.409710000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 98.267718980000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET

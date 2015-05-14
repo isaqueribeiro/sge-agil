@@ -290,6 +290,7 @@ var
   function GetEstadoUF(const iEstado : Integer) : String;
   function GetCidadeNomeDefault : String;
   function GetCidadeNome(const iCidade : Integer) : String;
+  function GetCidadeCEP(const iCidade : Integer) : String;
   function GetCidadeID(const iEstado : Integer; const sNome : String) : Integer; overload;
   function GetCidadeID(const sCEP : String) : Integer; overload;
   function GetBairroNome(const iBairro : Integer) : String;
@@ -2133,6 +2134,21 @@ begin
     Open;
 
     Result := FieldByName('cid_nome').AsString;
+
+    Close;
+  end;
+end;
+
+function GetCidadeCEP(const iCidade : Integer) : String;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select cid_cep_inicial from TBCIDADE where cid_cod = ' + IntToStr(iCidade));
+    Open;
+
+    Result := FieldByName('cid_cep_inicial').AsString;
 
     Close;
   end;

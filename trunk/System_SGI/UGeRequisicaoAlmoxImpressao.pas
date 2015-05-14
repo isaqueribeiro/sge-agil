@@ -117,7 +117,7 @@ begin
       begin
         SubTituloRelario := EmptyStr;
         MontarRequisicaoEstoqueAnalitico;
-        frReport := frRequsicaoAlmoxSintetico;
+        frReport := frRequsicaoAlmoxAnalitico;
       end;
   end;
 
@@ -294,11 +294,76 @@ begin
 
   FSQL_RequisicaoEstoqueS := TStringList.Create;
   FSQL_RequisicaoEstoqueS.AddStrings( qryRequsicaoAlmoxSintetico.SQL );
+
+  FSQL_RequisicaoEstoqueA := TStringList.Create;
+  FSQL_RequisicaoEstoqueA.AddStrings( QryRequisicaoAlmoxAnalitico.SQL );
 end;
 
 procedure TfrmGeRequisicaoAlmoxImpressao.MontarRequisicaoEstoqueAnalitico;
 begin
-  ;
+  try
+    SubTituloRelario := edSituacao.Text;
+
+    if ( edTipoRequsicao.ItemIndex = 0 ) then
+      PeriodoRelatorio := Format('Requisições realizadas no período de %s a %s.', [e1Data.Text, e2Data.Text])
+    else
+      PeriodoRelatorio := Format('Requisições realizadas no período de %s a %s, para o tipo %s.', [e1Data.Text, e2Data.Text,
+        Trim(Copy(edTipoRequsicao.Text, Pos('-', edTipoRequsicao.Text) + 1, Length(edTipoRequsicao.Text)))]);
+
+    CdsRequisicaoAlmoxAnalitico.Close;
+
+    with QryRequisicaoAlmoxAnalitico do
+    begin
+      SQL.Clear;
+      SQL.AddStrings( FSQL_RequisicaoEstoqueA );
+      SQL.Add('where r.empresa = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+
+      if ( edCentroCusto.ItemIndex > 0 ) then
+        SQL.Add('  and r.ccusto_destino = ' + IntToStr(ICentroCusto[edCentroCusto.ItemIndex]));
+
+      if StrIsDateTime(e1Data.Text) then
+        SQL.Add('  and r.data_emissao >= ' + QuotedStr(FormatDateTime('yyyy.mm.dd', e1Data.Date)));
+
+      if StrIsDateTime(e2Data.Text) then
+        SQL.Add('  and r.data_emissao <= ' + QuotedStr(FormatDateTime('yyyy.mm.dd', e2Data.Date)));
+
+      if ( edSituacao.ItemIndex > 0 ) then
+        Case edSituacao.ItemIndex of
+          1:
+            SQL.Add('  and r.status in (' +
+              IntToStr(STATUS_REQUISICAO_ALMOX_EDC) + ', ' +
+              IntToStr(STATUS_REQUISICAO_ALMOX_ABR) + ')');
+
+          2:
+            SQL.Add('  and r.status in (' +
+              IntToStr(STATUS_REQUISICAO_ALMOX_ENV) + ', ' +
+              IntToStr(STATUS_REQUISICAO_ALMOX_REC) + ', ' +
+              IntToStr(STATUS_REQUISICAO_ALMOX_ATD) + ')');
+
+          3:
+            SQL.Add('  and r.status = ' + IntToStr(STATUS_REQUISICAO_ALMOX_CAN));
+        end;
+
+      if ( edTipoRequsicao.ItemIndex > 0 ) then
+        SQL.Add('  and r.tipo = ' + Trim(Copy(edTipoRequsicao.Text, 1, Pos('-', edTipoRequsicao.Text) - 1)));
+
+      SQL.Add('order by');
+      SQL.Add('    e.rzsoc');
+      SQL.Add('  , r.tipo');
+      SQL.Add('  , cd.descricao     -- Atendente');
+      SQL.Add('  , r.ccusto_origem');
+      SQL.Add('  , co.descricao     -- Solicitante');
+      SQL.Add('  , r.ccusto_destino');
+    end;
+  except
+    On E : Exception do
+    begin
+      ShowError('Erro ao tentar montar o relatório analítico de Requisições ao Estoque.' + #13#13 + E.Message);
+
+      Screen.Cursor         := crDefault;
+      btnVisualizar.Enabled := True;
+    end;
+  end;
 end;
 
 procedure TfrmGeRequisicaoAlmoxImpressao.MontarRequisicaoEstoqueSintetico;

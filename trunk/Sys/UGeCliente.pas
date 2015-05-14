@@ -588,6 +588,7 @@ begin
       IbDtstTabelaCID_COD.AsInteger := iCidade;
       IbDtstTabelaCID_NOME.AsString := sCidade;
       IbDtstTabelaCIDADE.AsString   := sCidade + ' (' + IbDtstTabelaUF.AsString + ')';
+      IbDtstTabelaCEP.AsString      := GetCidadeCEP(iCidade);
     end;
 end;
 
@@ -666,6 +667,8 @@ begin
   IbDtstTabelaCID_COD.AsInteger          := GetCidadeIDDefault;
   IbDtstTabelaCID_NOME.AsString          := GetCidadeNomeDefault;
   IbDtstTabelaCIDADE.AsString            := GetCidadeNomeDefault + ' (' + IbDtstTabelaUF.AsString + ')';
+  IbDtstTabelaCEP.AsString               := GetCidadeCEP(GetCidadeIDDefault);
+  IbDtstTabelaNUMERO_END.AsString        := 'S/N';
   IbDtstTabelaDTCAD.AsDateTime           := GetDateDB;
   IbDtstTabelaBLOQUEADO.AsInteger             := 0; // Ord(False);
   IbDtstTabelaEMITIR_NFE_DEVOLUCAO.AsInteger  := 0; // Ord(False);
