@@ -1,12 +1,14 @@
 inherited frmGrPadraoPesquisa: TfrmGrPadraoPesquisa
   Left = 390
   Top = 217
-  Width = 793
-  Height = 469
   ActiveControl = edPesquisar
   BorderIcons = [biSystemMenu]
   Caption = 'Padr'#227'o Pesquisa!'
+  ClientHeight = 430
+  ClientWidth = 777
   OnClose = FormClose
+  ExplicitWidth = 793
+  ExplicitHeight = 469
   PixelsPerInch = 96
   TextHeight = 13
   object pnlPesquisa: TPanel
@@ -56,7 +58,6 @@ inherited frmGrPadraoPesquisa: TfrmGrPadraoPesquisa
         Height = 21
         Style = csDropDownList
         Enabled = False
-        ItemHeight = 13
         ItemIndex = 0
         TabOrder = 0
         Text = 'Autom'#225'tico'
@@ -106,11 +107,7 @@ inherited frmGrPadraoPesquisa: TfrmGrPadraoPesquisa
         Height = 22
         Hint = 'Executar Pesquisa'
         Anchors = [akTop, akRight]
-        ParentShowHint = False
-        ShowHint = True
-        TabOrder = 1
-        OnClick = BrnPesquisarClick
-        Glyph.Data = {
+        OptionsImage.Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           20000000000000040000C30E0000C30E00000000000000000000000000000000
           00000000000000000000000000000000000000000000AC6B2CBAAC6B2CCC0000
@@ -145,9 +142,13 @@ inherited frmGrPadraoPesquisa: TfrmGrPadraoPesquisa
           6EFF707070FF707070FF6E6E6EFF6E6E6EFF6E6E6E7D00000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000}
+        ParentShowHint = False
+        ShowHint = True
         SpeedButtonOptions.CanBeFocused = False
         SpeedButtonOptions.Flat = True
         SpeedButtonOptions.Transparent = True
+        TabOrder = 1
+        OnClick = BrnPesquisarClick
       end
     end
   end
@@ -155,11 +156,12 @@ inherited frmGrPadraoPesquisa: TfrmGrPadraoPesquisa
     Left = 0
     Top = 81
     Width = 777
-    Height = 350
+    Height = 349
     Align = alClient
     BevelOuter = bvNone
     BorderWidth = 4
     TabOrder = 1
+    ExplicitHeight = 350
     object dbgDados: TDBGrid
       Left = 4
       Top = 4
@@ -188,6 +190,9 @@ inherited frmGrPadraoPesquisa: TfrmGrPadraoPesquisa
   object QryPesquisa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    r.Anolanc'

@@ -1,55 +1,46 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEClass.pas',0,1,251,3,264,0,0,,
-File_1=TSourceModule,'C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas',0,1,1,1,67,0,0,,
-File_2=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGrUsuarioPerfil.pas',0,1,1,42,25,0,0,,
-File_3=TSourceModule,'c:\program files (x86)\embarcadero\studio\15.0\SOURCE\IBX\IBX.IB.pas',0,1,370,1,385,0,0,,
-File_4=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\lib\UGrConfigurarAmbiente.pas',0,1,174,1,194,0,0,,
-File_5=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeEntradaEstoque.pas',0,1,1483,1,1497,0,0,,
-File_6=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeVenda.pas',0,1,2087,118,2088,0,0,,{2
-File_7=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeRequisicaoCompra.pas',0,1,1046,1,1064,0,0,,
-File_8=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeAutorizacaoCompra.pas',0,1,1107,102,1109,0,0,,
-File_9=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeEfetuarLogin.pas',0,1,114,1,132,0,0,,
-File_10=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmox.pas',0,1,1008,1,1030,0,0,,
-File_11=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGI\UGeApropriacaoEstoque.pas',0,1,967,1,985,0,0,,
-File_12=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeContasAPagar.pas',0,1,480,44,499,0,0,,
-File_13=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeContasAReceber.pas',0,1,477,44,491,0,0,,
-File_14=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeVendaDevolucaoNF.pas',0,1,1,77,255,0,0,,
+File_0=TSourceModule,'c:\program files (x86)\embarcadero\studio\15.0\source\data\dsnap\Datasnap.DBClient.pas',0,1,5164,1,5179,0,0,,
+File_1=TSourceModule,'c:\program files (x86)\embarcadero\studio\15.0\SOURCE\IBX\IBX.IB.pas',0,1,431,1,446,0,0,,
+File_2=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeProduto.pas',0,1,1575,38,1580,0,0,,
+File_3=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeCliente.pas',0,1,574,112,576,0,0,,
+File_4=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeFornecedor.pas',0,1,346,1,364,0,0,,
+File_5=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeRequisicaoCompraPesquisa.pas',0,1,199,1,1,0,0,,
+File_6=TSourceModule,'C:\Delphi\ACBr\Fontes\PCN2\pcnConversao.pas',0,1,144,3,164,0,0,,
+File_7=TSourceModule,'C:\Delphi\ACBr\Fontes\PCN2\pcnNFe.pas',0,1,332,86,339,0,0,,
+File_8=TSourceModule,'C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEClass.pas',0,1,251,3,264,0,0,,
+File_9=TSourceModule,'C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeDANFEFRDM.pas',0,1,1,1,67,0,0,,
+File_10=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGrUsuarioPerfil.pas',0,1,1,42,25,0,0,,
+File_11=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\lib\UGrConfigurarAmbiente.pas',0,1,174,1,194,0,0,,
+File_12=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeEntradaEstoque.pas',0,1,1483,1,1497,0,0,,
+File_13=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeVenda.pas',0,1,2087,118,2088,0,0,,{2
+File_14=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeRequisicaoCompra.pas',0,1,1046,1,1064,0,0,,
 
 [Modules]
-Module0=D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas
-Module1=default.htm
-Module2=D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj
-Module3=D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas
-Module4=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
-Module5=D:\Projetos\ASS\SGE\trunk\Sys\UDMNFe.pas
-Module6=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeNotasFiscais.pas
-Module7=C:\Delphi\ACBr\Fontes\PCN2\pcnNFeR.pas
-Module8=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
-Module9=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxImpressao.pas
-Module10=D:\Projetos\ASS\SGE\trunk\System_SGE\UGeProduto.pas
-Module11=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeApropriacaoEstoqueImpressao.pas
-Module12=D:\Projetos\ASS\SGE\trunk\Sys\UConstantesDGE.pas
-Module13=C:\Delphi\ACBr\Fontes\PCN2\pcnNFe.pas
-Module14=C:\Delphi\ACBr\Fontes\PCN2\pcnConversao.pas
-Module15=D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas
-Module16=C:\Program Files (x86)\Embarcadero\Studio\15.0\source\vcl\Vcl.Consts.pas
-Count=17
+Module0=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxImpressao.pas
+Module1=D:\Projetos\ASS\SGE\trunk\Sys\UConstantesDGE.pas
+Module2=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
+Module3=D:\Projetos\ASS\SGE\trunk\Sys\UDMNFe.pas
+Module4=D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas
+Module5=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeNotasFiscais.pas
+Module6=C:\Delphi\ACBr\Fontes\PCN2\pcnNFeR.pas
+Module7=D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas
+Module8=D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas
+Module9=default.htm
+Module10=D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj
+Module11=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
+Module12=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeApropriacaoEstoqueImpressao.pas
+Module13=C:\Program Files (x86)\Embarcadero\Studio\15.0\source\vcl\Vcl.Consts.pas
+Count=14
 EditWindowCount=1
 
-[D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas]
+[D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxImpressao.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=1
 
-[default.htm]
-ModuleType=TURLModule
-
-[D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj]
-ModuleType=TBaseProject
-
-[D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas]
+[D:\Projetos\ASS\SGE\trunk\Sys\UConstantesDGE.pas]
 ModuleType=TSourceModule
-FormState=1
+FormState=0
 FormOnTop=0
 
 [D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas]
@@ -58,6 +49,11 @@ FormState=1
 FormOnTop=0
 
 [D:\Projetos\ASS\SGE\trunk\Sys\UDMNFe.pas]
+ModuleType=TSourceModule
+FormState=1
+FormOnTop=1
+
+[D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=0
@@ -72,42 +68,28 @@ ModuleType=TSourceModule
 FormState=0
 FormOnTop=0
 
+[D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas]
+ModuleType=TSourceModule
+FormState=1
+FormOnTop=1
+
+[D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas]
+ModuleType=TSourceModule
+FormState=1
+FormOnTop=1
+
+[default.htm]
+ModuleType=TURLModule
+
+[D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj]
+ModuleType=TBaseProject
+
 [C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=0
 
-[D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxImpressao.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=0
-
-[D:\Projetos\ASS\SGE\trunk\System_SGE\UGeProduto.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=0
-
 [D:\Projetos\ASS\SGE\trunk\System_SGI\UGeApropriacaoEstoqueImpressao.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=0
-
-[D:\Projetos\ASS\SGE\trunk\Sys\UConstantesDGE.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Delphi\ACBr\Fontes\PCN2\pcnNFe.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[C:\Delphi\ACBr\Fontes\PCN2\pcnConversao.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
-
-[D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=0
@@ -129,9 +111,13 @@ FormOnTop=0
 FormState=1
 FormOnTop=0
 
+[D:\Projetos\ASS\SGE\trunk\Sys\lib\UGrPadraoPesquisa.pas]
+FormState=1
+FormOnTop=0
+
 [EditWindow0]
-ViewCount=17
-CurrentEditView=D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas
+ViewCount=14
+CurrentEditView=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxImpressao.pas
 View0=0
 View1=1
 View2=2
@@ -146,9 +132,6 @@ View10=10
 View11=11
 View12=12
 View13=13
-View14=14
-View15=15
-View16=16
 PercentageSizes=1
 Create=1
 Visible=1
@@ -167,13 +150,13 @@ BorlandEditorCodeExplorer=BorlandEditorCodeExplorer@EditWindow0
 TopPanelSize=0
 LeftPanelSize=1341
 LeftPanelClients=PropertyInspector,DockSite3
-LeftPanelData=000008000101000000000C13000000000000013D050000000000000100000000550E000009000000446F636B53697465330100000000DD2100001100000050726F7065727479496E73706563746F72FFFFFFFF
+LeftPanelData=000008000101000000001E11000000000000013D050000000000000100000000550E000009000000446F636B536974653301000000006D1E00001100000050726F7065727479496E73706563746F72FFFFFFFF
 RightPanelSize=1309
 RightPanelClients=DockSite2,DockSite4
-RightPanelData=000008000101000000000C13000000000000011D0500000000000001000000004412000009000000446F636B53697465320100000000DD21000009000000446F636B5369746534FFFFFFFF
-BottomPanelSize=0
+RightPanelData=000008000101000000001E11000000000000011D0500000000000001000000004412000009000000446F636B536974653201000000006D1E000009000000446F636B5369746534FFFFFFFF
+BottomPanelSize=810
 BottomPanelClients=DockSite1,MessageView
-BottomPanelData=0000080001020200000009000000446F636B53697465310F0000004D65737361676556696577466F726D7245000000000000022A030000000000000100000000724500000F0000004D65737361676556696577466F726DFFFFFFFF
+BottomPanelData=0000080001020100000009000000446F636B53697465317245000000000000022A030000000000000100000000724500000F0000004D65737361676556696577466F726DFFFFFFFF
 BottomMiddlePanelSize=0
 BottomMiddlePanelClients=DockSite0,GraphDrawingModel
 BottomMiddelPanelData=0000080001020200000009000000446F636B536974653010000000477261706844726177696E67566965779D1D00000000000002F606000000000000FFFFFFFF
@@ -196,9 +179,9 @@ EditViewName=D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dpr
 [View2]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\Sys\UConstantesDGE.pas
-CursorX=34
-CursorY=189
-TopLine=54
+CursorX=96
+CursorY=428
+TopLine=420
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -218,13 +201,13 @@ EditViewName=C:\Program Files (x86)\Embarcadero\Studio\15.0\source\vcl\Vcl.Const
 [View4]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
-CursorX=1
-CursorY=1205
-TopLine=1185
+CursorX=22
+CursorY=2142
+TopLine=2136
 LeftCol=1
 Elisions=
-Bookmarks={1,3533,27}
-EditViewName=Borland.FormDesignerView
+Bookmarks={1,3549,22}
+EditViewName=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
 
 [View5]
 CustomEditViewType=TEditView
@@ -234,32 +217,10 @@ CursorY=5084
 TopLine=5072
 LeftCol=1
 Elisions=
-Bookmarks={1,1872,10}
+Bookmarks={1,1872,1}
 EditViewName=Borland.FormDesignerView
 
 [View6]
-CustomEditViewType=TEditView
-Module=C:\Delphi\ACBr\Fontes\PCN2\pcnNFe.pas
-CursorX=61
-CursorY=355
-TopLine=338
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Delphi\ACBr\Fontes\PCN2\pcnNFe.pas
-
-[View7]
-CustomEditViewType=TEditView
-Module=C:\Delphi\ACBr\Fontes\PCN2\pcnConversao.pas
-CursorX=3
-CursorY=164
-TopLine=144
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Delphi\ACBr\Fontes\PCN2\pcnConversao.pas
-
-[View8]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas
 CursorX=19
@@ -270,7 +231,7 @@ Elisions=
 Bookmarks=
 EditViewName=D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas
 
-[View9]
+[View7]
 CustomEditViewType=TEditView
 Module=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeNotasFiscais.pas
 CursorX=90
@@ -281,18 +242,18 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Delphi\ACBr\Fontes\ACBrNFe2\ACBrNFeNotasFiscais.pas
 
-[View10]
+[View8]
 CustomEditViewType=TEditView
 Module=C:\Delphi\ACBr\Fontes\PCN2\pcnNFeR.pas
-CursorX=3
-CursorY=126
-TopLine=361
+CursorX=83
+CursorY=338
+TopLine=331
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Delphi\ACBr\Fontes\PCN2\pcnNFeR.pas
 
-[View11]
+[View9]
 CustomEditViewType=TEditView
 Module=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
 CursorX=1
@@ -303,7 +264,7 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View12]
+[View10]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas
 CursorX=1
@@ -314,18 +275,18 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View13]
+[View11]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas
-CursorX=56
-CursorY=945
-TopLine=942
+CursorX=1
+CursorY=1
+TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View14]
+[View12]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeApropriacaoEstoqueImpressao.pas
 CursorX=1
@@ -336,23 +297,12 @@ Elisions=
 Bookmarks=
 EditViewName=Borland.FormDesignerView
 
-[View15]
+[View13]
 CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxImpressao.pas
-CursorX=37
-CursorY=120
-TopLine=99
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=Borland.FormDesignerView
-
-[View16]
-CustomEditViewType=TEditView
-Module=D:\Projetos\ASS\SGE\trunk\System_SGE\UGeProduto.pas
-CursorX=38
-CursorY=1580
-TopLine=1575
+CursorX=1
+CursorY=304
+TopLine=335
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -449,7 +399,7 @@ StayOnTop=0
 [MessageView]
 PercentageSizes=1
 Create=1
-Visible=0
+Visible=1
 Docked=1
 State=0
 Left=0
@@ -474,11 +424,11 @@ State=0
 Left=0
 Top=0
 Width=1309
-Height=3898
+Height=2978
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1309
-ClientHeight=3898
+ClientHeight=2978
 TBDockHeight=7155
 LRDockWidth=1999
 Dockable=1
@@ -493,21 +443,21 @@ State=0
 Left=0
 Top=340
 Width=1341
-Height=4952
+Height=4031
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1341
-ClientHeight=4952
+ClientHeight=4031
 TBDockHeight=6707
 LRDockWidth=1341
 Dockable=1
 StayOnTop=0
-SplitPos=79
+SplitPos=108
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=Name,CustomHint
-ExpandedItems=Fonts=0,HelpButton=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,OptionsFading=0,BarManager=0
+SelectedItem=SQL,AfterCancel
+ExpandedItems=EngineOptions=0,"LiveBindings Designer=0",PreviewOptions=1,PrintOptions=0,ReportOptions=0,PreviewOptions.Buttons=0,ExecuteOptions=0,Connection=0,DataSet=0,Database=0,FieldOptions=0,Transaction=0,DataSource=0,LiveBindings=0,Anchors=0,BevelEdges=0,Constraints=0,Font=0,Margins=0,StyleElements=0,Touch=0,ProviderFlags=0,UpdateObject=0,ActiveControl=0,FilterOptions=0
 
 [ModelViewTool]
 PercentageSizes=1
@@ -983,11 +933,11 @@ State=0
 Left=0
 Top=427
 Width=1309
-Height=3898
+Height=2978
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1309
-ClientHeight=3898
+ClientHeight=2978
 TBDockHeight=6707
 LRDockWidth=1309
 Dockable=1

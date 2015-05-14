@@ -469,10 +469,23 @@ inherited frmGeRequisicaoCompraPesquisa: TfrmGeRequisicaoCompraPesquisa
       '  , t.cnpj     as transportador_cpf_cnpj'
       '  , c.nome     as nomecliente'
       'from TBREQUISITA_COMPRA r'
+      '  left join ('
+      '    Select'
+      '        ar.autorizacao_ano'
+      '      , ar.autorizacao_cod'
+      '      , ar.autorizacao_emp'
+      '      , ar.requisicao_ano'
+      '      , ar.requisicao_cod'
+      '      , ar.requisicao_emp'
+      '    from TBAUTORIZA_REQUISITA ar'
       
-        '  left join TBAUTORIZA_REQUISITA a on (a.requisicao_ano = r.ano ' +
-        'and a.requisicao_cod = r.codigo and a.requisicao_emp = r.empresa' +
-        ')'
+        '      inner join TBAUTORIZA_COMPRA ac on (ac.ano = ar.autorizaca' +
+        'o_ano and ac.codigo = ar.autorizacao_cod and ac.empresa = ar.aut' +
+        'orizacao_emp)'
+      '    where ac.status <> 4 -- Cancelada'
+      
+        '  ) a on (a.requisicao_ano = r.ano and a.requisicao_cod = r.codi' +
+        'go and a.requisicao_emp = r.empresa)'
       '  left join TBFORNECEDOR f on (f.codforn = r.fornecedor)'
       '  left join TBFORNECEDOR t on (t.codforn = r.transportador)'
       '  left join TBCLIENTE c on (c.codigo = r.cliente)'

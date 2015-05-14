@@ -1432,12 +1432,12 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
       item
         Name = 'ValorLiquidoReal'
         Value = 
-          'IIF(<FrdsRelacaoEntradaGeralAnalitico."STATUS">=<StatusEntradaCa' +
-          'ncelada>,0.0,<FrdsRelacaoEntradaGeralAnalitico."TOTAL_NOTA">)'
+          'IIF(<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusEntradaCancel' +
+          'ada>,0.0,<frdsRequisicaoAlmoxAnalitico."VALOR_TOTAL">)'
       end
       item
         Name = 'StatusCancelada'
-        Value = '3'
+        Value = '5'
       end
       item
         Name = 'Filtros'
@@ -1479,7 +1479,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         end
         object Picture1: TfrxPictureView
           Left = 3.779530000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
           DataField = 'LOGO'
@@ -1491,7 +1491,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         end
         object frdEmpresaRZSOC: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 464.882190000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdCliente
@@ -1546,7 +1546,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         end
         object Memo11: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
           DataSet = DMNFe.frdCliente
@@ -1659,7 +1659,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           VAlign = vaBottom
         end
         object Memo3: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 910.866730000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1697,7 +1697,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         Height = 22.677165350000000000
         Top = 234.330860000000000000
         Width = 1046.929810000000000000
-        Condition = 'FrdsRelacaoApropriacaoAnalitico."TIPO"'
+        Condition = 'frdsRequisicaoAlmoxAnalitico."TIPO"'
         ReprintOnNewPage = True
         object frdEmpresaPESSOA_FISICA: TfrxMemoView
           Left = 98.267780000000000000
@@ -1713,7 +1713,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."TIPO_DESCRICAO"]')
+            ' [frdsRequisicaoAlmoxAnalitico."TIPO_DESCRICAO"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1758,15 +1758,16 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."CENTRO_CUSTO_DESCRICAO"]')
+            ' [frdsRequisicaoAlmoxAnalitico."CC_SOLICITANTE_DESCRICAO"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1785,17 +1786,18 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           HAlign = haRight
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
             
-              '[FormatFloat('#39',0.00'#39',<FrdsRelacaoApropriacaoAnalitico."VALOR_TOT' +
-              'AL">)] ')
+              '[FormatFloat('#39',0.00'#39',<frdsRequisicaoAlmoxAnalitico."VALOR_TOTAL"' +
+              '>)] ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1812,15 +1814,16 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."APROPRIACAO"]')
+            ' [frdsRequisicaoAlmoxAnalitico."REQUISICAO"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1838,50 +1841,25 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
             
-              ' [FormatDateTime('#39'dd/mm/yyyy'#39', <FrdsRelacaoApropriacaoAnalitico.' +
-              '"DATA_APROPRIACAO">)]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo26: TfrxMemoView
-          Left = 275.905690000000000000
-          Width = 94.488186540000000000
-          Height = 18.897650000000000000
-          DataSet = DMNFe.frdEmpresa
-          DataSetName = 'frdEmpresa'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Frame.Width = 0.100000000000000000
-          Highlight.Font.Charset = DEFAULT_CHARSET
-          Highlight.Font.Color = clRed
-          Highlight.Font.Height = -11
-          Highlight.Font.Name = 'Tahoma'
-          Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
-          Highlight.FillType = ftBrush
-          Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."DOCUMENTO"]')
+              ' [FormatDateTime('#39'dd/mm/yyyy'#39', <frdsRequisicaoAlmoxAnalitico."DA' +
+              'TA_EMISSAO">)]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
         object Memo7: TfrxMemoView
           Left = 181.417440000000000000
-          Width = 94.488186540000000000
+          Width = 283.464686540000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -1892,47 +1870,22 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."COMPRA"]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo29: TfrxMemoView
-          Left = 370.393940000000000000
-          Width = 94.488186540000000000
-          Height = 18.897650000000000000
-          DataSet = DMNFe.frdEmpresa
-          DataSetName = 'frdEmpresa'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Frame.Width = 0.100000000000000000
-          Highlight.Font.Charset = DEFAULT_CHARSET
-          Highlight.Font.Color = clRed
-          Highlight.Font.Height = -11
-          Highlight.Font.Name = 'Tahoma'
-          Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
-          Highlight.FillType = ftBrush
-          Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."AUTORIZACAO"]')
+            ' [frdsRequisicaoAlmoxAnalitico."REQUISITANTE"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
         object Memo10: TfrxMemoView
-          Left = 548.031850000000000000
+          Left = 548.031849999999900000
           Width = 98.267716540000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdEmpresa
@@ -1944,15 +1897,16 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."STATUS_DESC"]')
+            ' [frdsRequisicaoAlmoxAnalitico."STATUS_DESC"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -1970,15 +1924,16 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
           Highlight.Font.Charset = DEFAULT_CHARSET
           Highlight.Font.Color = clRed
           Highlight.Font.Height = -11
           Highlight.Font.Name = 'Tahoma'
           Highlight.Font.Style = []
-          Highlight.Condition = '<FrdsRelacaoApropriacaoAnalitico."STATUS">=<StatusCancelada>'
+          Highlight.Condition = '<frdsRequisicaoAlmoxAnalitico."STATUS">=<StatusCancelada>'
           Highlight.FillType = ftBrush
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."COMPETENCIA_DESC"]')
+            ' [frdsRequisicaoAlmoxAnalitico."COMPETENCIA_DESC"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2005,7 +1960,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Fill.BackColor = clBtnFace
           HAlign = haRight
           Memo.UTF8W = (
-            '[FrdsRelacaoApropriacaoAnalitico."TIPO_DESCRICAO"] ')
+            '[frdsRequisicaoAlmoxAnalitico."TIPO_DESCRICAO"] ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2024,8 +1979,8 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[FormatFloat('#39',0.00'#39',SUM(<FrdsRelacaoApropriacaoAnalitico."VALOR' +
-              '_TOTAL">,BndMasterData))] ')
+              '[FormatFloat('#39',0.00'#39',SUM(<frdsRequisicaoAlmoxAnalitico."VALOR_TO' +
+              'TAL">,BndMasterData))] ')
           ParentFont = False
           VAlign = vaCenter
           WordWrap = False
@@ -2034,7 +1989,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
       object bndReportSummary: TfrxReportSummary
         FillType = ftBrush
         Height = 79.370130000000000000
-        Top = 529.134200000000000000
+        Top = 529.134199999999900000
         Width = 1046.929810000000000000
         Stretched = True
         object Memo18: TfrxMemoView
@@ -2066,8 +2021,8 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[FormatFloat('#39',0.00'#39', SUM(<FrdsRelacaoApropriacaoAnalitico."VALO' +
-              'R_TOTAL">,BndMasterData, 2))] ')
+              '[FormatFloat('#39',0.00'#39', SUM(<frdsRequisicaoAlmoxAnalitico."VALOR_T' +
+              'OTAL">,BndMasterData, 2))] ')
           ParentFont = False
           VAlign = vaCenter
           WordWrap = False
@@ -2117,7 +2072,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         end
         object Memo34: TfrxMemoView
           Left = 767.244590000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 113.385836540000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdEmpresa
@@ -2139,7 +2094,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         end
         object SysMemo1: TfrxSysMemoView
           Left = 880.630490000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 166.299320000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2152,8 +2107,8 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[FormatFloat('#39',0.00'#39', SUM(<FrdsRelacaoApropriacaoAnalitico."VALO' +
-              'R_TOTAL_REAL">,BndMasterData, 2))] ')
+              '[FormatFloat('#39',0.00'#39', SUM(<frdsRequisicaoAlmoxAnalitico."VALOR_T' +
+              'OTAL_REAL">,BndMasterData, 2))] ')
           ParentFont = False
           VAlign = vaCenter
           WordWrap = False
@@ -2195,9 +2150,9 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[FormatFloat('#39',0.00'#39', SUM(<FrdsRelacaoApropriacaoAnalitico."VALO' +
-              'R_TOTAL">-<FrdsRelacaoApropriacaoAnalitico."VALOR_TOTAL_REAL">,B' +
-              'ndMasterData, 2))] ')
+              '[FormatFloat('#39',0.00'#39', SUM(<frdsRequisicaoAlmoxAnalitico."VALOR_T' +
+              'OTAL">-<frdsRequisicaoAlmoxAnalitico."VALOR_TOTAL_REAL">,BndMast' +
+              'erData, 2))] ')
           ParentFont = False
           VAlign = vaCenter
           WordWrap = False
@@ -2205,10 +2160,10 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
       end
       object BndGrpHeaderForn: TfrxGroupHeader
         FillType = ftBrush
-        Height = 56.692950000000000000
+        Height = 56.692950000000010000
         Top = 279.685220000000000000
         Width = 1046.929810000000000000
-        Condition = 'FrdsRelacaoApropriacaoAnalitico."FORN_COD"'
+        Condition = 'frdsRequisicaoAlmoxAnalitico."CC_ATENDENTE"'
         KeepTogether = True
         ReprintOnNewPage = True
         object Memo28: TfrxMemoView
@@ -2224,12 +2179,6 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Font.Style = []
           Frame.Typ = [ftRight, ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
-          Memo.UTF8W = (
-            
-              ' [IIF(<FrdsRelacaoApropriacaoAnalitico."FORN_PF">=1,FormatMaskTe' +
-              'xt('#39'###.###.###-##;0;'#39',<FrdsRelacaoApropriacaoAnalitico."FORN_CN' +
-              'PJ">),FormatMaskText('#39'##.###.###/####-##;0;'#39',<FrdsRelacaoApropri' +
-              'acaoAnalitico."FORN_CNPJ">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2271,7 +2220,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Width = 0.100000000000000000
           Fill.BackColor = clBtnFace
           Memo.UTF8W = (
-            ' No. Apropria'#231#227'o')
+            ' No. Requisi'#231#227'o')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2313,12 +2262,12 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Fill.BackColor = clBtnFace
           HAlign = haCenter
           Memo.UTF8W = (
-            'Dados da Aproria'#231#227'o')
+            'Dados da Requisi'#231#227'o')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo43: TfrxMemoView
-          Width = 98.267780000000000000
+          Width = 181.417440000000000000
           Height = 18.897637800000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -2331,13 +2280,13 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Width = 0.100000000000000000
           Fill.BackColor = clBtnFace
           Memo.UTF8W = (
-            ' Fornecedor:')
+            ' Centro de Custo Atendente:')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo45: TfrxMemoView
-          Left = 98.267780000000000000
-          Width = 563.149970000000000000
+          Left = 181.417440000000000000
+          Width = 480.000310000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -2349,28 +2298,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Typ = [ftTop, ftBottom]
           Frame.Width = 0.100000000000000000
           Memo.UTF8W = (
-            ' [FrdsRelacaoApropriacaoAnalitico."FORN_RAZAO"]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo46: TfrxMemoView
-          Left = 275.905690000000000000
-          Top = 37.795300000000000000
-          Width = 94.488186540000000000
-          Height = 18.897650000000000000
-          DataSet = DMNFe.frdEmpresa
-          DataSetName = 'frdEmpresa'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Frame.Width = 0.100000000000000000
-          Fill.BackColor = clBtnFace
-          Memo.UTF8W = (
-            ' No. Documento')
+            ' [frdsRequisicaoAlmoxAnalitico."CC_ATENDENTE_DESCRICAO"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2378,7 +2306,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         object Memo6: TfrxMemoView
           Left = 181.417440000000000000
           Top = 37.795300000000000000
-          Width = 94.488188980000000000
+          Width = 283.464688980000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdEmpresa
           DataSetName = 'frdEmpresa'
@@ -2391,28 +2319,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Width = 0.100000000000000000
           Fill.BackColor = clBtnFace
           Memo.UTF8W = (
-            ' No. Entrada')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo8: TfrxMemoView
-          Left = 370.393940000000000000
-          Top = 37.795300000000000000
-          Width = 94.488186540000000000
-          Height = 18.897650000000000000
-          DataSet = DMNFe.frdEmpresa
-          DataSetName = 'frdEmpresa'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
-          Frame.Width = 0.100000000000000000
-          Fill.BackColor = clBtnFace
-          Memo.UTF8W = (
-            ' No. Autoriza'#231#227'o')
+            ' Requisitante')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2497,7 +2404,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Width = 0.100000000000000000
           Fill.BackColor = clBtnFace
           Memo.UTF8W = (
-            ' Centro de Custo')
+            ' Centro de Custo Solicitante')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2523,11 +2430,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           Frame.Width = 0.100000000000000000
           HAlign = haRight
           Memo.UTF8W = (
-            
-              '[IIF(<FrdsRelacaoApropriacaoAnalitico."FORN_PF">=1,FormatMaskTex' +
-              't('#39'###.###.###-##;0;'#39',<FrdsRelacaoApropriacaoAnalitico."FORN_CNP' +
-              'J">),FormatMaskText('#39'##.###.###/####-##;0;'#39',<FrdsRelacaoApropria' +
-              'caoAnalitico."FORN_CNPJ">))] ')
+            '[frdsRequisicaoAlmoxAnalitico."CC_ATENDENTE_DESCRICAO"] ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2546,8 +2449,8 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
           HAlign = haRight
           Memo.UTF8W = (
             
-              '[FormatFloat('#39',0.00'#39',SUM(<FrdsRelacaoApropriacaoAnalitico."VALOR' +
-              '_TOTAL">,BndMasterData))] ')
+              '[FormatFloat('#39',0.00'#39',SUM(<frdsRequisicaoAlmoxAnalitico."VALOR_TO' +
+              'TAL">,BndMasterData))] ')
           ParentFont = False
           VAlign = vaCenter
           WordWrap = False
@@ -2647,7 +2550,7 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
         '-- Cliente Solicitante'
       '  left join TBCOMPETENCIA c on (c.cmp_num = r.competencia)'
       ''
-      ''
+      '/*'
       'where r.empresa = '#39'03041377000187'#39
       '  and r.status > 1 -- 1. Aberto'
       ''
@@ -2657,7 +2560,8 @@ inherited frmGeRequisicaoAlmoxImpressao: TfrmGeRequisicaoAlmoxImpressao
       '  , cd.descricao     -- Atendente'
       '  , r.ccusto_origem'
       '  , co.descricao     -- Solicitante'
-      '  , r.ccusto_destino')
+      '  , r.ccusto_destino'
+      '*/')
     Left = 40
     Top = 40
   end
