@@ -194,7 +194,8 @@ end;
 
 procedure TfrmPrinc.FormActivate(Sender: TObject);
 var
-  sCNPJ : String;
+  sCNPJ     ,
+  sHostName : String;
 begin
   if not DataBaseOnLine then
     Exit;
@@ -219,9 +220,10 @@ begin
     BrBtnVenda.Enabled      := False;
   end;
 
-  if not SetAcessoEstacao(GetHostNameLocal) then
+  sHostName := GetHostNameLocal;
+  if not SetAcessoEstacao(sHostName) then
   begin
-    ShowError('Estação de trabalho não registrada no sistema!');
+    ShowError('Host -> ' + sHostName + #13 + 'Estação de trabalho não registrada no sistema!');
 
     RbbTabCadastro.Visible  := False;
     RbbTabMovimento.Visible := False;
