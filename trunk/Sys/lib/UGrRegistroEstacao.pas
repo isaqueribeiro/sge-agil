@@ -12,7 +12,9 @@ uses
   dxSkinMoneyTwins, dxSkinOffice2010Black, dxSkinOffice2010Blue,
   dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
-  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, cxControls, cxContainer, cxEdit, cxLabel;
 
 type
   TFrmGrRegistroEstacao = class(TfrmGrPadrao)
@@ -26,15 +28,18 @@ type
     updRegistro: TIBUpdateSQL;
     dtsRegistro: TDataSource;
     cdsRegistroEST_LOCAL: TIBStringField;
-    cdsRegistroEST_NOME: TIBStringField;
     cdsRegistroEST_IP: TIBStringField;
-    cdsRegistroEST_REGISTRO: TIBStringField;
     cdsRegistroEST_ULTIMO_ACESSO: TDateTimeField;
     cdsRegistroSEQ: TIntegerField;
     tlbBotoes: TPanel;
     Bevel2: TBevel;
     btbtnIncluir: TcxButton;
     btbtnExcluir: TcxButton;
+    cdsRegistroEST_NOME: TIBStringField;
+    cdsRegistroEST_REGISTRO: TIBStringField;
+    Bevel4: TBevel;
+    Bevel5: TBevel;
+    lblHostName: TcxLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btbtnIncluirClick(Sender: TObject);
@@ -66,7 +71,8 @@ uses
 procedure TFrmGrRegistroEstacao.FormCreate(Sender: TObject);
 begin
   inherited;
-  pgcGuia.ActivePage   := TbsLista;
+  pgcGuia.ActivePage  := TbsLista;
+  lblHostName.Caption := Trim(GetHostNameLocal);
 end;
 
 procedure TFrmGrRegistroEstacao.RegistrarRotinaSistema;
@@ -92,7 +98,7 @@ begin
     if not cdsRegistro.Active then
       cdsRegistro.Open;
 
-    if cdsRegistro.Locate('EST_NOME', GetHostNameLocal, []) then
+    if cdsRegistro.Locate('EST_NOME', lblHostName.Caption, []) then
     begin
       sLocal := Trim(cdsRegistroEST_LOCAL.AsString);
       cdsRegistro.Edit;
@@ -106,7 +112,7 @@ begin
     if InputQuery('Local', 'Favor informar o Local da Estação de Trabalho:', sLocal) then
     begin
       cdsRegistroEST_LOCAL.AsString    := Trim(sLocal);
-      cdsRegistroEST_NOME.AsString     := GetHostNameLocal;
+      cdsRegistroEST_NOME.AsString     := lblHostName.Caption;
       cdsRegistroEST_IP.AsString       := DMBusiness.IdIPWatch.LocalIP;
       cdsRegistroEST_REGISTRO.AsString := EncriptSenha(gUsuarioLogado.Login + DateTimeToStr(Now), USER_PASSWD_KEY);
       cdsRegistroEST_ULTIMO_ACESSO.AsDateTime := Now;

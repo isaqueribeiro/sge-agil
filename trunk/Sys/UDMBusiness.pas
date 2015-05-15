@@ -3387,17 +3387,20 @@ begin
     begin
       CarregarLicenca(EmptyStr);
     end;
-    
-    with RegistroSistema do
-    begin
-      RootKey := HKEY_CURRENT_USER;
-      OpenKey(SYS_PATH_REGISTER + GetInternalName, True);
 
-      WriteString(KEY_REG_VERSAO, GetExeVersion);
-      WriteString(KEY_REG_DATA,   DateToStr(Date));
-      CloseKey;
+    try
+      with RegistroSistema do
+      begin
+        RootKey := HKEY_CURRENT_USER;
+        OpenKey(SYS_PATH_REGISTER + GetInternalName, True);
+
+        WriteString(KEY_REG_VERSAO, GetExeVersion);
+        WriteString(KEY_REG_DATA,   DateToStr(Date));
+        CloseKey;
+      end;
+    except
     end;
-    
+
   except
     On E : Exception do
       ShowError('Erro ao tentar conectar no Servidor/Base.' + #13#13 + E.Message);

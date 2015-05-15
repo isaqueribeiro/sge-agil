@@ -7,8 +7,8 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
   Caption = 'Registros de Esta'#231#245'es de Trabalho'
   ClientHeight = 340
   ClientWidth = 637
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 643
+  ExplicitHeight = 369
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel3: TBevel
@@ -39,10 +39,6 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
     object TbsLista: TTabSheet
       Caption = '&Lista'
       ImageIndex = 37
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object dbgRegistro: TDBGrid
         Left = 0
         Top = 0
@@ -78,21 +74,21 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
             Expanded = False
             FieldName = 'EST_NOME'
             Title.Caption = 'Host'
-            Width = 150
+            Width = 220
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'EST_IP'
             Title.Caption = 'IP'
-            Width = 120
+            Width = 110
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'EST_LOCAL'
             Title.Caption = 'Local'
-            Width = 280
+            Width = 230
             Visible = True
           end
           item
@@ -115,18 +111,41 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
     TabOrder = 1
     object Bevel2: TBevel
       Left = 0
-      Top = 2
+      Top = 0
       Width = 4
-      Height = 31
+      Height = 35
+      Align = alLeft
       Shape = bsSpacer
+      ExplicitTop = 2
+      ExplicitHeight = 31
+    end
+    object Bevel4: TBevel
+      Left = 89
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+      ExplicitLeft = 16
+    end
+    object Bevel5: TBevel
+      Left = 178
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+      ExplicitLeft = 217
+      ExplicitTop = 2
     end
     object btbtnIncluir: TcxButton
       Tag = 1
       Left = 4
-      Top = 2
+      Top = 0
       Width = 85
-      Height = 31
+      Height = 35
       Hint = 'Registrar esta'#231#227'o'
+      Align = alLeft
       Caption = '&Registrar'
       OptionsImage.Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
@@ -146,14 +165,17 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
       ShowHint = True
       TabOrder = 0
       OnClick = btbtnIncluirClick
+      ExplicitTop = 2
+      ExplicitHeight = 31
     end
     object btbtnExcluir: TcxButton
       Tag = 3
-      Left = 89
-      Top = 2
+      Left = 93
+      Top = 0
       Width = 85
-      Height = 31
+      Height = 35
       Hint = 'Excluir registro de esta'#231#227'o'
+      Align = alLeft
       Caption = '&Excluir'
       OptionsImage.Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
@@ -173,13 +195,32 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
       ShowHint = True
       TabOrder = 1
       OnClick = btbtnExcluirClick
+      ExplicitLeft = 89
+      ExplicitTop = 2
+      ExplicitHeight = 31
+    end
+    object lblHostName: TcxLabel
+      Left = 182
+      Top = 0
+      Align = alLeft
+      Caption = 'HostName'
+      ParentFont = False
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clBlue
+      Style.Font.Height = -11
+      Style.Font.Name = 'Tahoma'
+      Style.Font.Style = [fsBold]
+      Style.IsFontAssigned = True
+      Properties.Alignment.Vert = taVCenter
+      Transparent = True
+      AnchorY = 18
     end
   end
   object ImgList: TImageList
     Left = 136
     Top = 80
     Bitmap = {
-      494C01012F003100080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012F003100100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000C0000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000004A5B
       6F004A5B6F004A5B6F004354680043546800435468003A4B5F003A4B5F003A4B
@@ -1806,16 +1847,18 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
       OnGetText = cdsRegistroSEQGetText
       Calculated = True
     end
+    object cdsRegistroEST_NOME: TIBStringField
+      FieldName = 'EST_NOME'
+      Origin = '"SYS_ESTACAO"."EST_NOME"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 60
+    end
     object cdsRegistroEST_LOCAL: TIBStringField
       FieldName = 'EST_LOCAL'
       Origin = '"SYS_ESTACAO"."EST_LOCAL"'
       ProviderFlags = [pfInUpdate]
       Size = 100
-    end
-    object cdsRegistroEST_NOME: TIBStringField
-      FieldName = 'EST_NOME'
-      Origin = '"SYS_ESTACAO"."EST_NOME"'
-      Size = 30
     end
     object cdsRegistroEST_IP: TIBStringField
       FieldName = 'EST_IP'
@@ -1827,7 +1870,7 @@ inherited FrmGrRegistroEstacao: TFrmGrRegistroEstacao
       FieldName = 'EST_REGISTRO'
       Origin = '"SYS_ESTACAO"."EST_REGISTRO"'
       ProviderFlags = [pfInUpdate]
-      Size = 100
+      Size = 250
     end
     object cdsRegistroEST_ULTIMO_ACESSO: TDateTimeField
       FieldName = 'EST_ULTIMO_ACESSO'

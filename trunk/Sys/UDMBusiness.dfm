@@ -4,7 +4,6 @@ object DMBusiness: TDMBusiness
   Height = 617
   Width = 812
   object ibdtbsBusiness: TIBDatabase
-    Connected = True
     DatabaseName = 'localhost:AGIL_COMERCIO'
     Params.Strings = (
       'user_name=SYSDBA'
@@ -595,8 +594,8 @@ object DMBusiness: TDMBusiness
     ParamCheck = True
     SQL.Strings = (
       'select CNPJ, NMFANT from TBEMPRESA')
-    Left = 312
-    Top = 160
+    Left = 504
+    Top = 96
     object ibqryEmpresaCNPJ: TIBStringField
       FieldName = 'CNPJ'
       Origin = 'TBEMPRESA.CNPJ'

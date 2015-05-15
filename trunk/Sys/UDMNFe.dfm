@@ -1189,7 +1189,7 @@ object DMNFe: TDMNFe
           Font.Style = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[FormatFloat('#39'###,###,##0'#39',<frdItens."QTDE">)] ')
+            '[FormatFloat('#39',0.###'#39',<frdItens."QTDE">)] ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -2959,7 +2959,7 @@ object DMNFe: TDMNFe
           Font.Style = []
           HAlign = haRight
           Memo.UTF8W = (
-            '[FormatFloat('#39',0.##'#39',<frdItens."QTDE">)]   x ')
+            '[FormatFloat('#39',0.###'#39',<frdItens."QTDE">)]   x ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
