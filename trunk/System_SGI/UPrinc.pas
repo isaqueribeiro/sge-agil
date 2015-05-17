@@ -200,6 +200,11 @@ type
     dxRibbonBackstageViewGalleryItem1: TdxRibbonBackstageViewGalleryItem;
     dxRibbonBackstageViewGalleryItem2: TdxRibbonBackstageViewGalleryItem;
     dxRibbonBackstageViewGalleryItem3: TdxRibbonBackstageViewGalleryItem;
+    RbnBackstageViewBackup: TdxRibbonBackstageViewTabSheet;
+    LblBackstageViewBackup: TcxLabel;
+    RbnBackstageGalleryBackup: TdxRibbonBackstageViewGalleryControl;
+    dxRibbonBackstageViewGalleryGroup3: TdxRibbonBackstageViewGalleryGroup;
+    dxRibbonBackstageViewGalleryItem4: TdxRibbonBackstageViewGalleryItem;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
@@ -292,6 +297,8 @@ type
       AItem: TdxRibbonBackstageViewGalleryItem);
     procedure RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
+    procedure RbnBackstageGalleryBackupItemClick(Sender: TObject;
+      AItem: TdxRibbonBackstageViewGalleryItem);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -812,6 +819,14 @@ end;
 procedure TfrmPrinc.nmDownloadNFeGeradaClick(Sender: TObject);
 begin
   ;
+end;
+
+procedure TfrmPrinc.RbnBackstageGalleryBackupItemClick(Sender: TObject;
+  AItem: TdxRibbonBackstageViewGalleryItem);
+begin
+  Case AItem.Index of
+    0: FormFunction.ShowModalForm(Self, 'frmGrConfigurarBackup');
+  end;
 end;
 
 procedure TfrmPrinc.RbnBackstageGalleryConfigItemClick(Sender: TObject;
