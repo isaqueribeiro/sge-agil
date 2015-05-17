@@ -177,7 +177,6 @@ var
   function IfThen(AValue: Boolean; const ATrue: TDateTime; AFalse: TDateTime = 0): TDateTime; overload;
   function IfThen(AValue: Boolean; const ATrue: Integer; AFalse: Integer = 0): Integer; overload;
   function IfThen(AValue: Boolean; const ATrue: Currency; AFalse: Currency = 0.0): Currency; overload;
-//  function NetWorkActive(const Alertar : Boolean = FALSE) : Boolean;
   function DataBaseOnLine : Boolean;
 
   function ShowConfirmation(sTitle, sMsg : String) : Boolean; overload;
@@ -203,6 +202,7 @@ var
   procedure BloquearClientes;
   procedure DesbloquearCliente(iCodigoCliente : Integer; const Motivo : String = '');
   procedure BloquearCliente(iCodigoCliente : Integer; const Motivo : String = '');
+  procedure RegistrarEmpresa;
   procedure RegistrarSegmentos(Codigo : Integer; Descricao : String);
   procedure RegistrarCaixaNaVenda(const AnoVenda, NumVenda, AnoCaixa, NumCaixa : Integer; const IsPDV : Boolean);
   {$IFDEF DGE}
@@ -991,6 +991,60 @@ begin
     ExecSQL;
 
     CommitTransaction;
+  end;
+end;
+
+procedure RegistrarEmpresa;
+var
+  bRegistrada : Boolean;
+begin
+  try
+    with DMBusiness, qryBusca do
+    begin
+      Close;
+      SQL.Clear;
+      SQL.Add('Select');
+      SQL.Add('  e.codigo');
+      SQL.Add('from TBEMPRESA e');
+      SQL.Add('where e.cnpj = ' + QuotedStr(StrOnlyNumbers(gLicencaSistema.CNPJ)));
+      Open;
+
+      bRegistrada := (FieldByName('codigo').AsInteger = 1);
+
+      Close;
+
+      SQL.Clear;
+
+      if not bRegistrada then
+      begin
+        SQL.Add('Insert Into TBEMPRESA (');
+        SQL.Add('    codigo');
+        SQL.Add('  , cnpj');
+        SQL.Add('  , pessoa_fisica');
+        SQL.Add('  , rzsoc');
+        SQL.Add('  , segmento');
+        SQL.Add(') values (');
+        SQL.Add('    1');
+        SQL.Add('  , ' + QuotedStr(StrOnlyNumbers(gLicencaSistema.CNPJ)));
+        SQL.Add('  , 0');
+        SQL.Add('  , ' + QuotedStr(gLicencaSistema.Empresa));
+        SQL.Add('  , ' + IntToStr(SEGMENTO_PADRAO_ID));
+        SQL.Add(')');
+      end
+      else
+      begin
+        SQL.Add('Update TBEMPRESA e Set');
+        SQL.Add('    codigo = 1');
+        SQL.Add('  , rzsoc  = ' + QuotedStr(gLicencaSistema.Empresa));
+        SQL.Add('where e.cnpj = ' + QuotedStr(StrOnlyNumbers(gLicencaSistema.CNPJ)));
+      end;
+
+      ExecSQL;
+      CommitTransaction;
+    end;
+  except
+    On E : Exception do
+      ShowError('Erro na inserção/atualização do registro da empresa.' + #13#13 + E.Message);
   end;
 end;
 
@@ -3337,6 +3391,8 @@ begin
     SetSegmento(SEGMENTO_VAREJO_SERVICOS_ID, SEGMENTO_VAREJO_SERVICOS_DS);
     SetSegmento(SEGMENTO_INDUSTRIA_METAL_ID, SEGMENTO_INDUSTRIA_METAL_DS);
     SetSegmento(SEGMENTO_INDUSTRIA_GERAL_ID, SEGMENTO_INDUSTRIA_GERAL_DS);
+
+    RegistrarEmpresa;
   finally
     ini.Free;
     Arquivo.Free;

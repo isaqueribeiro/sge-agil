@@ -36,6 +36,8 @@ object frmPrinc: TfrmPrinc
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 0
+    ExplicitTop = 127
+    ExplicitHeight = 514
     DesignSize = (
       1044
       481)
@@ -4435,7 +4437,6 @@ object frmPrinc: TfrmPrinc
       object RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet
         Left = 132
         Top = 0
-        Active = True
         Caption = 'Configura'#231#245'es Gerais'
         DesignSize = (
           357
@@ -4557,6 +4558,61 @@ object frmPrinc: TfrmPrinc
               Caption = 'Senhas de Autoriza'#231#227'o'
               Description = 'Controle para gera'#231#227'o de senhas de autoriza'#231#245'es diversas'
               ImageIndex = 70
+            end
+          end
+        end
+      end
+      object RbnBackstageViewBackup: TdxRibbonBackstageViewTabSheet
+        Left = 132
+        Top = 0
+        Active = True
+        Caption = 'Backup / Retore Database'
+        DesignSize = (
+          357
+          296)
+        object LblBackstageViewBackup: TcxLabel
+          Left = 20
+          Top = 20
+          AutoSize = False
+          Caption = 'Backup / Retore Database...'
+          ParentFont = False
+          Style.Font.Charset = DEFAULT_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -16
+          Style.Font.Name = 'Tahoma'
+          Style.Font.Style = []
+          Style.TransparentBorder = False
+          Style.IsFontAssigned = True
+          Properties.LineOptions.Alignment = cxllaBottom
+          Properties.LineOptions.Visible = True
+          Transparent = True
+          Height = 26
+          Width = 300
+        end
+        object RbnBackstageGalleryBackup: TdxRibbonBackstageViewGalleryControl
+          Left = 20
+          Top = 52
+          Width = 300
+          Height = 208
+          Anchors = [akLeft, akTop, akBottom]
+          BorderStyle = cxcbsNone
+          Images = DMRecursos.ImgPrincipalEnabled
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.ColumnCount = 1
+          OptionsView.ContentOffset.All = 0
+          OptionsView.Item.Text.AlignHorz = taLeftJustify
+          OptionsView.Item.Text.AlignVert = vaCenter
+          OptionsView.Item.Text.Position = posRight
+          OptionsView.Item.PinMode = bgipmTag
+          Ribbon = Ribbon
+          OnItemClick = RbnBackstageGalleryBackupItemClick
+          object dxRibbonBackstageViewGalleryGroup3: TdxRibbonBackstageViewGalleryGroup
+            Caption = 'Backup / Restore Database'
+            ShowCaption = False
+            object dxRibbonBackstageViewGalleryItem4: TdxRibbonBackstageViewGalleryItem
+              Caption = 'Executar Backup'
+              Description = 'Configurar e executar backup da base de dados do sistema'
+              ImageIndex = 71
             end
           end
         end
@@ -4847,7 +4903,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 559
+      DockedLeft = 236
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
