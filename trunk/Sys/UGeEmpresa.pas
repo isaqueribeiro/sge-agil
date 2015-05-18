@@ -8,7 +8,8 @@ uses
   Mask, DBCtrls, StdCtrls, Buttons, ExtCtrls, Grids, DBGrids, ComCtrls,
   ToolWin, IBTable, Menus, ExtDlgs, cxGraphics,
   cxLookAndFeels, cxLookAndFeelPainters, cxButtons, JvExMask, JvToolEdit,
-  JvDBControls;
+  JvDBControls, dxSkinsCore, dxSkinMcSkin, dxSkinOffice2007Green,
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
 
 type
   TfrmGeEmpresa = class(TfrmGrPadraoCadastro)
@@ -373,6 +374,12 @@ begin
       ShowWarning('Favor informar uma Inscrição Estadual válida.');
       Abort;
     end;
+  end;
+
+  if IbDtstTabelaPAIS_ID.IsNull then
+  begin
+    IbDtstTabelaPAIS_ID.AsString   := GetPaisIDDefault;
+    IbDtstTabelaPAIS_NOME.AsString := GetPaisNomeDefault;
   end;
 
   inherited;

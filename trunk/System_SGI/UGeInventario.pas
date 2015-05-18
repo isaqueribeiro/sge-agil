@@ -639,10 +639,10 @@ begin
         qryMaterialUNIDADE.AsInteger            := FieldByName('unidade').AsInteger;
 
         if (gSistema.Codigo = SISTEMA_GESTAO_COM) then
-          qryMaterialCUSTO.AsCurrency           := FieldByName('preco').AsCurrency
+          qryMaterialCUSTO.AsCurrency           := FieldByName('preco').AsCurrency        // Custo médio inteiro
         else
         if ( FieldByName('custo_medio').AsCurrency > 0.0 ) then
-          qryMaterialCUSTO.AsCurrency           := FieldByName('custo_medio').AsCurrency
+          qryMaterialCUSTO.AsCurrency           := FieldByName('custo_medio').AsCurrency  // Custo médio fracionado
         else
           qryMaterialCUSTO.AsCurrency           := FieldByName('preco').AsCurrency;
 

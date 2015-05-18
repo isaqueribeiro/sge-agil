@@ -61,6 +61,8 @@ type
     fEmpresaDepartamento : String;
     procedure CarregarEmpresa;
     procedure GravarRelacaoCentroCustoEmpresa;
+
+    function EmpresaSelecionada : Boolean;
   public
     { Public declarations }
   end;
@@ -230,6 +232,13 @@ begin
   IMR - 19/11/2014 :
     Rotina que permite a gravação de várias Empresas para o mesmo Centro de Custo.
 *)
+  if (IbDtstTabelaCODCLIENTE.AsInteger = 0) then
+    if not EmpresaSelecionada then
+    begin
+      ShowWarning('Favor selecionar a empresa, caso o Departamento/Centro de Custo seja interno.');
+      Exit;
+    end;
+
   IbDtstTabela.AfterScroll := nil;
   inherited;
   IbDtstTabela.AfterScroll := IbDtstTabelaAfterScroll;
@@ -256,6 +265,32 @@ procedure TfrmGeCentroCusto.DtSrcTabelaStateChange(Sender: TObject);
 begin
   inherited;
   dtsEmpresaLista.AutoEdit := (IbDtstTabela.State in [dsEdit, dsInsert]);
+end;
+
+function TfrmGeCentroCusto.EmpresaSelecionada: Boolean;
+var
+  bRetorno : Boolean;
+begin
+  bRetorno := False;
+  try
+    if cdsEmpresaLista.Active then
+    begin
+      cdsEmpresaLista.First;
+      while not cdsEmpresaLista.Eof do
+      begin
+        bRetorno := (cdsEmpresaListaSELECIONAR.AsInteger = 1);
+        if bRetorno then
+          Break;
+
+        cdsEmpresaLista.Next;
+      end;
+    end;
+  finally
+    if cdsEmpresaLista.Active then
+      cdsEmpresaLista.First;
+
+    Result := bRetorno;
+  end;
 end;
 
 procedure TfrmGeCentroCusto.cdsEmpresaListaSELECIONARGetText(
