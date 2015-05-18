@@ -634,6 +634,9 @@ begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
 
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Abort;
+
   RecarregarRegistro;
 
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger);
@@ -976,6 +979,9 @@ begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
 
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Abort;
+
   RecarregarRegistro;
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCODIGO.AsInteger);
 
@@ -1013,6 +1019,9 @@ procedure TfrmGeSolicitacaoCompra.btnFinalizarSolicitacaoClick(
 begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
+
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Abort;
 
   RecarregarRegistro;
 

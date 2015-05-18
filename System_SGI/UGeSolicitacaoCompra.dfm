@@ -27,19 +27,17 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     ExplicitWidth = 1116
     ExplicitHeight = 642
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 1108
+      ExplicitHeight = 613
       inherited Bevel4: TBevel
-        Top = 540
+        Top = 539
         Width = 1108
         ExplicitTop = 540
         ExplicitWidth = 1108
       end
       inherited dbgDados: TDBGrid
         Width = 1108
-        Height = 540
+        Height = 539
         Columns = <
           item
             Expanded = False
@@ -94,10 +92,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 544
+        Top = 543
         Width = 1108
         Height = 70
-        ExplicitTop = 544
+        ExplicitTop = 543
         ExplicitWidth = 1108
         ExplicitHeight = 70
         object lblSolicitacaoAberta: TLabel [0]
@@ -618,10 +616,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           TabOrder = 12
           object TbsSolicitacaoObjeto: TTabSheet
             Caption = 'Objeto da Solicita'#231#227'o'
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbObjeto: TDBMemo
               Left = 0
               Top = 0
@@ -643,10 +637,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           object TbsSolicitacaoMotivo: TTabSheet
             Caption = 'Motivo da Solicita'#231#227'o'
             ImageIndex = 3
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbMotivo: TDBMemo
               Left = 0
               Top = 0
@@ -668,10 +658,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           object TbsSolicitacaoObservacao: TTabSheet
             Caption = 'Observa'#231#245'es Gerais'
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbObservacao: TDBMemo
               Left = 0
               Top = 0
@@ -693,10 +679,6 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
           object TbsSolicitacaoCancelado: TTabSheet
             Caption = 'Motivo do Cancelamento'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbMovitoCancelamento: TDBMemo
               Left = 0
               Top = 0
@@ -949,14 +931,9 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
         ActivePage = tbsEventoLOG
         Align = alBottom
         TabOrder = 3
-        ExplicitTop = 496
         object tbsEventoLOG: TTabSheet
           Caption = 'LOG de Eventos'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object dbEventoLOG: TDBMemo
             Left = 0
             Top = 0
@@ -1615,7 +1592,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
   inherited tlbBotoes: TPanel
     Top = 646
     Width = 1116
-    ExplicitTop = 647
+    ExplicitTop = 646
     ExplicitWidth = 1116
     inherited bvlTool3: TBevel
       Left = 1033
@@ -2142,7 +2119,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     Left = 896
     Top = 352
     Bitmap = {
-      494C01012F003100080010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012F0031000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000C0000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000004A5B
       6F004A5B6F004A5B6F004354680043546800435468003A4B5F003A4B5F003A4B
