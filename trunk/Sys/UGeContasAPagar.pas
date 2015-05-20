@@ -38,7 +38,6 @@ type
     IbDtstTabelaNUMCHQ: TIBStringField;
     IbDtstTabelaPAGO_: TIBStringField;
     IbDtstTabelaDOCBAIX: TIBStringField;
-    IbDtstTabelaNOMEEMP: TIBStringField;
     Bevel5: TBevel;
     GrpBxDadosValores: TGroupBox;
     lblNotaFiscal: TLabel;
@@ -142,6 +141,7 @@ type
     CdsReciboFORMA_PAGTO_DESC: TWideStringField;
     CdsReciboHISTORICO: TWideMemoField;
     CdsReciboVALOR_BAIXA: TBCDField;
+    IbDtstTabelaNOMEEMP: TIBStringField;
     procedure FormCreate(Sender: TObject);
     procedure dbFornecedorButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -312,7 +312,7 @@ begin
   inherited;
   IbDtstTabelaANOLANC.Value := YearOf(Date);
   IbDtstTabelaEMPRESA.Value := gUsuarioLogado.Empresa;
-  IbDtstTabelaNOMEEMP.Value := GetEmpresaNome(gUsuarioLogado.Empresa);
+  IbDtstTabelaNOMEEMP.Value := Copy(GetEmpresaNome(gUsuarioLogado.Empresa), 1, IbDtstTabelaNOMEEMP.Size);
   IbDtstTabelaPARCELA.Value := 0;
   IbDtstTabelaDTEMISS.Value := Date;
   IbDtstTabelaQUITADO.Value := STATUS_APAGAR_PENDENTE;
@@ -435,7 +435,7 @@ begin
     if ( not OcorreuErro ) then
     begin
       if ( Trim(IbDtstTabelaNOMEEMP.AsString) = EmptyStr ) then
-        IbDtstTabelaNOMEEMP.Value := GetEmpresaNomeDefault;
+        IbDtstTabelaNOMEEMP.Value := Copy(GetEmpresaNome(gUsuarioLogado.Empresa), 1, IbDtstTabelaNOMEEMP.Size);
         
       AbrirPagamentos( IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger );
     end;

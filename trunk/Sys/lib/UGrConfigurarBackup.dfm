@@ -4,6 +4,8 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
   Caption = 'Configurar / Gerar Backup'
   ClientHeight = 295
   ClientWidth = 541
+  ExplicitWidth = 555
+  ExplicitHeight = 332
   PixelsPerInch = 96
   TextHeight = 13
   object PnlBotoes: TPanel
@@ -162,15 +164,13 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
     TabOrder = 1
     Properties.ActivePage = TbsConfigurar
     Properties.CustomButtons.Buttons = <>
-    ClientRectBottom = 245
-    ClientRectLeft = 4
-    ClientRectRight = 537
-    ClientRectTop = 28
+    ClientRectBottom = 247
+    ClientRectLeft = 2
+    ClientRectRight = 539
+    ClientRectTop = 26
     object TbsConfigurar: TcxTabSheet
       Caption = 'Configurar'
       ImageIndex = 0
-      ExplicitLeft = 3
-      ExplicitTop = 29
       object lblServidorBase: TLabel
         Left = 43
         Top = 19
@@ -276,12 +276,8 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
         Style.TransparentBorder = True
         Style.IsFontAssigned = True
         TabOrder = 0
-        ExplicitLeft = 144
-        ExplicitTop = 56
-        ExplicitWidth = 185
-        ExplicitHeight = 89
-        Height = 211
-        Width = 527
+        Height = 215
+        Width = 531
       end
     end
   end
@@ -293,7 +289,7 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
     OnTextNotify = bkpBaseTextNotify
     BlockingFactor = 0
     Options = [NoGarbageCollection]
-    Left = 272
-    Top = 56
+    Left = 16
+    Top = 152
   end
 end

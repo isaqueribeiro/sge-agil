@@ -996,3 +996,1942 @@ end^
 /*------ 18/05/2015 14:29:27 --------*/
 
 SET TERM ; ^
+
+
+/*------ SYSDBA 19/05/2015 18:42:29 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_NOME'
+where (RDB$FIELD_NAME = 'NOMEEMP') and
+(RDB$RELATION_NAME = 'TBCONTPAG')
+;
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:01:29 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_USUARIO;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = replace(:login, ' ',     '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|xxx'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:05:35 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_USUARIO;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = replace(:login, ' ',     '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|QUJDMTIz'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:06:20 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_USUARIO;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = replace(:login, ' ',     '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|QUJDMTIz...'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:06:30 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_USUARIO;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = replace(:login, ' ',     '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|QUJDMTIz'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:10:54 --------*/
+
+ALTER TABLE TBFORNECEDOR
+    ADD FORNECEDOR_FUNCIONARIO DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBFORNECEDOR.FORNECEDOR_FUNCIONARIO IS
+'Fornecedor/Colaborador (Funcionario):
+0 - Nao
+1 - Sim
+
+(Os registros de flag 1 serao mantidos pelo Cadastro de Funcionarios)';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:11:39 --------*/
+
+COMMENT ON COLUMN TBFORNECEDOR.PESSOA_FISICA IS
+'Pessoa Fisica:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:11:47 --------*/
+
+COMMENT ON COLUMN TBFORNECEDOR.TIPO IS
+'Tipo:
+0 - Nao se aplica
+1 - Matriz
+2 - Filial';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:11:58 --------*/
+
+COMMENT ON COLUMN TBFORNECEDOR.CODFORN IS
+'Codigo';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:12:11 --------*/
+
+COMMENT ON COLUMN TBFORNECEDOR.CNPJ IS
+'CPF/CNPJ.';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:12:23 --------*/
+
+COMMENT ON COLUMN TBFORNECEDOR.INSCEST IS
+'RG/Insc. Estadual';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:12:32 --------*/
+
+COMMENT ON COLUMN TBFORNECEDOR.INSCMUN IS
+'Insc. Municipal.';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column NOME_COMPLETO position 2;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column METAFONEMA position 3;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column SEXO position 4;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FOTO_3X4 position 5;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FLAG_VENDEDOR position 6;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FLAG_FORNECEDOR position 7;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column ATIVO position 8;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column USUARIO position 9;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column VENDEDOR position 10;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FORNECEDOR position 11;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column ENDER position 12;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column COMPLEMENTO position 13;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column NUMERO_END position 14;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column BAIRRO position 15;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column CEP position 16;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column CIDADE position 17;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column UF position 18;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column TLG_TIPO position 19;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column LOG_COD position 20;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column BAI_COD position 21;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column CID_COD position 22;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column EST_COD position 23;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column PAIS_ID position 24;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_FIXO position 25;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_CELULAR position 26;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_COMERCIAL position 27;
+
+
+/*------ SYSDBA 19/05/2015 19:13:12 --------*/
+
+alter table TBFUNCIONARIO
+alter column EMAIL position 28;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column NOME_COMPLETO position 2;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column METAFONEMA position 3;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column SEXO position 4;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FOTO_3X4 position 5;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FLAG_VENDEDOR position 6;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FLAG_FORNECEDOR position 7;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column ATIVO position 8;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column USUARIO position 9;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column VENDEDOR position 10;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FORNECEDOR position 11;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column ENDER position 12;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column NUMERO_END position 13;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column COMPLEMENTO position 14;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column BAIRRO position 15;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column CEP position 16;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column CIDADE position 17;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column UF position 18;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column TLG_TIPO position 19;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column LOG_COD position 20;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column BAI_COD position 21;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column CID_COD position 22;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column EST_COD position 23;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column PAIS_ID position 24;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_FIXO position 25;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_CELULAR position 26;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_COMERCIAL position 27;
+
+
+/*------ SYSDBA 19/05/2015 19:13:36 --------*/
+
+alter table TBFUNCIONARIO
+alter column EMAIL position 28;
+
+
+/*------ SYSDBA 19/05/2015 19:13:58 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_50'
+where (RDB$FIELD_NAME = 'COMPLEMENTO') and
+(RDB$RELATION_NAME = 'TBFORNECEDOR')
+;
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:14:11 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_10'
+where (RDB$FIELD_NAME = 'NUMERO_END') and
+(RDB$RELATION_NAME = 'TBFORNECEDOR')
+;
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:15:02 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_CEP'
+where (RDB$FIELD_NAME = 'CEP') and
+(RDB$RELATION_NAME = 'TBFORNECEDOR')
+;
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:19:47 --------*/
+
+CREATE DOMAIN DMN_RG_GERAL AS
+VARCHAR(20);COMMENT ON DOMAIN DMN_RG_GERAL IS 'Registro Geral:
+Numero e/ou Orgao emissor';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:20:13 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD CPF DMN_CPF,
+    ADD RG_NUMERO DMN_RG_GERAL,
+    ADD RG_ORGAO_EMISSOR DMN_RG_GERAL;
+
+COMMENT ON COLUMN TBFUNCIONARIO.RG_NUMERO IS
+'Registro Geral:
+Numero e/ou Orgao emissor';
+
+COMMENT ON COLUMN TBFUNCIONARIO.RG_ORGAO_EMISSOR IS
+'Registro Geral:
+Numero e/ou Orgao emissor';
+
+alter table TBFUNCIONARIO
+alter CODIGO position 1;
+
+alter table TBFUNCIONARIO
+alter NOME_COMPLETO position 2;
+
+alter table TBFUNCIONARIO
+alter METAFONEMA position 3;
+
+alter table TBFUNCIONARIO
+alter SEXO position 4;
+
+alter table TBFUNCIONARIO
+alter FOTO_3X4 position 5;
+
+alter table TBFUNCIONARIO
+alter CPF position 6;
+
+alter table TBFUNCIONARIO
+alter RG_NUMERO position 7;
+
+alter table TBFUNCIONARIO
+alter RG_ORGAO_EMISSOR position 8;
+
+alter table TBFUNCIONARIO
+alter FLAG_VENDEDOR position 9;
+
+alter table TBFUNCIONARIO
+alter FLAG_FORNECEDOR position 10;
+
+alter table TBFUNCIONARIO
+alter ATIVO position 11;
+
+alter table TBFUNCIONARIO
+alter USUARIO position 12;
+
+alter table TBFUNCIONARIO
+alter VENDEDOR position 13;
+
+alter table TBFUNCIONARIO
+alter FORNECEDOR position 14;
+
+alter table TBFUNCIONARIO
+alter ENDER position 15;
+
+alter table TBFUNCIONARIO
+alter NUMERO_END position 16;
+
+alter table TBFUNCIONARIO
+alter COMPLEMENTO position 17;
+
+alter table TBFUNCIONARIO
+alter BAIRRO position 18;
+
+alter table TBFUNCIONARIO
+alter CEP position 19;
+
+alter table TBFUNCIONARIO
+alter CIDADE position 20;
+
+alter table TBFUNCIONARIO
+alter UF position 21;
+
+alter table TBFUNCIONARIO
+alter TLG_TIPO position 22;
+
+alter table TBFUNCIONARIO
+alter LOG_COD position 23;
+
+alter table TBFUNCIONARIO
+alter BAI_COD position 24;
+
+alter table TBFUNCIONARIO
+alter CID_COD position 25;
+
+alter table TBFUNCIONARIO
+alter EST_COD position 26;
+
+alter table TBFUNCIONARIO
+alter PAIS_ID position 27;
+
+alter table TBFUNCIONARIO
+alter FONE_FIXO position 28;
+
+alter table TBFUNCIONARIO
+alter FONE_CELULAR position 29;
+
+alter table TBFUNCIONARIO
+alter FONE_COMERCIAL position 30;
+
+alter table TBFUNCIONARIO
+alter EMAIL position 31;
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:21:04 --------*/
+
+CREATE INDEX IDX_TBFUNCIONARIO_RG
+ON TBFUNCIONARIO (RG_NUMERO,RG_ORGAO_EMISSOR);
+
+CREATE INDEX IDX_TBFUNCIONARIO_CPF
+ON TBFUNCIONARIO (CPF);
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:21:57 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_fornecedor_cod for tbfornecedor
+active before insert position 0
+As
+Begin
+  new.fornecedor_funcionario = coalesce(new.fornecedor_funcionario, 0);
+  If (New.CODFORN Is Null) Then
+    New.CODFORN = Gen_id(GEN_FORNECEDOR_ID, 1);
+End^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column NOME_COMPLETO position 2;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column METAFONEMA position 3;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column SEXO position 4;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column FOTO_3X4 position 5;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column CPF position 6;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column FLAG_VENDEDOR position 7;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column FLAG_FORNECEDOR position 8;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column ATIVO position 9;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column USUARIO position 10;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column VENDEDOR position 11;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column FORNECEDOR position 12;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column ENDER position 13;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column NUMERO_END position 14;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column COMPLEMENTO position 15;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column BAIRRO position 16;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column CEP position 17;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column CIDADE position 18;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column UF position 19;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column TLG_TIPO position 20;
+
+
+/*------ SYSDBA 19/05/2015 19:25:06 --------*/
+
+alter table TBFUNCIONARIO
+alter column LOG_COD position 21;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column BAI_COD position 22;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column CID_COD position 23;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column EST_COD position 24;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column PAIS_ID position 25;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_FIXO position 26;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_CELULAR position 27;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column FONE_COMERCIAL position 28;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column EMAIL position 29;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column RG_NUMERO position 30;
+
+
+/*------ SYSDBA 19/05/2015 19:25:07 --------*/
+
+alter table TBFUNCIONARIO
+alter column RG_ORGAO_EMISSOR position 31;
+
+
+/*------ SYSDBA 19/05/2015 19:25:21 --------*/
+
+COMMENT ON COLUMN TBFUNCIONARIO.RG_NUMERO IS
+'Documentacao -> Registro Geral:
+Numero e/ou Orgao emissor';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:25:28 --------*/
+
+COMMENT ON COLUMN TBFUNCIONARIO.RG_ORGAO_EMISSOR IS
+'Documentacao -> Registro Geral: Orgao emissor';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:25:36 --------*/
+
+COMMENT ON COLUMN TBFUNCIONARIO.RG_NUMERO IS
+'Documentacao -> Registro Geral: Numero';
+
+
+
+
+/*------ SYSDBA 19/05/2015 19:54:14 --------*/
+
+update RDB$RELATION_FIELDS set
+RDB$FIELD_SOURCE = 'DMN_VCHAR_50'
+where (RDB$FIELD_NAME = 'GRF_DESCRICAO') and
+(RDB$RELATION_NAME = 'TBFORNECEDOR_GRUPO')
+;
+
+
+
+
+/*------ SYSDBA 19/05/2015 20:13:15 --------*/
+
+COMMENT ON COLUMN TBFUNCIONARIO.SEXO IS
+'Sexo:
+M - Masculino
+F - Feminino';
+
+
+
+
+/*------ SYSDBA 19/05/2015 21:04:46 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD OBSERVACAO DMN_TEXTO;
+
+COMMENT ON COLUMN TBFUNCIONARIO.OBSERVACAO IS
+'Observacoes gerais';
+
+alter table TBFUNCIONARIO
+alter CODIGO position 1;
+
+alter table TBFUNCIONARIO
+alter NOME_COMPLETO position 2;
+
+alter table TBFUNCIONARIO
+alter METAFONEMA position 3;
+
+alter table TBFUNCIONARIO
+alter SEXO position 4;
+
+alter table TBFUNCIONARIO
+alter FOTO_3X4 position 5;
+
+alter table TBFUNCIONARIO
+alter CPF position 6;
+
+alter table TBFUNCIONARIO
+alter FLAG_VENDEDOR position 7;
+
+alter table TBFUNCIONARIO
+alter FLAG_FORNECEDOR position 8;
+
+alter table TBFUNCIONARIO
+alter ATIVO position 9;
+
+alter table TBFUNCIONARIO
+alter USUARIO position 10;
+
+alter table TBFUNCIONARIO
+alter VENDEDOR position 11;
+
+alter table TBFUNCIONARIO
+alter FORNECEDOR position 12;
+
+alter table TBFUNCIONARIO
+alter ENDER position 13;
+
+alter table TBFUNCIONARIO
+alter NUMERO_END position 14;
+
+alter table TBFUNCIONARIO
+alter COMPLEMENTO position 15;
+
+alter table TBFUNCIONARIO
+alter BAIRRO position 16;
+
+alter table TBFUNCIONARIO
+alter CEP position 17;
+
+alter table TBFUNCIONARIO
+alter CIDADE position 18;
+
+alter table TBFUNCIONARIO
+alter UF position 19;
+
+alter table TBFUNCIONARIO
+alter TLG_TIPO position 20;
+
+alter table TBFUNCIONARIO
+alter LOG_COD position 21;
+
+alter table TBFUNCIONARIO
+alter BAI_COD position 22;
+
+alter table TBFUNCIONARIO
+alter CID_COD position 23;
+
+alter table TBFUNCIONARIO
+alter EST_COD position 24;
+
+alter table TBFUNCIONARIO
+alter PAIS_ID position 25;
+
+alter table TBFUNCIONARIO
+alter FONE_FIXO position 26;
+
+alter table TBFUNCIONARIO
+alter FONE_CELULAR position 27;
+
+alter table TBFUNCIONARIO
+alter FONE_COMERCIAL position 28;
+
+alter table TBFUNCIONARIO
+alter EMAIL position 29;
+
+alter table TBFUNCIONARIO
+alter OBSERVACAO position 30;
+
+alter table TBFUNCIONARIO
+alter RG_NUMERO position 31;
+
+alter table TBFUNCIONARIO
+alter RG_ORGAO_EMISSOR position 32;
+
+
+
+
+/*------ SYSDBA 19/05/2015 21:05:38 --------*/
+
+CREATE INDEX IDX_TBFORNECEDOR_FUNC
+ON TBFORNECEDOR (PESSOA_FISICA,CNPJ,GRF_COD);
+
+
+
+
+/*------ SYSDBA 19/05/2015 21:12:25 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_funcionario_gerar_fornecedor for tbfuncionario
+active before insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.flag_fornecedor = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cnpj = trim(new.cpf)            -- Cpf informado
+      and trim(coalesce(new.cpf, '')) <> '' -- "nao vazio"
+    Into
+      codigo_forn;
+
+    -- Padronizador grupo "Colaboradores" para os Fornecedores
+    grupo_forn = 5;
+
+    if (exists(
+      Select
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      where g.grf_cod = :grupo_forn
+    )) then
+      Update TBFORNECEDOR_GRUPO g Set
+        g.grf_descricao = 'COLABORADORES'
+      where g.grf_cod = :grupo_forn;
+    else
+      Insert Into TBFORNECEDOR_GRUPO (
+          grf_cod
+        , grf_descricao
+      ) values (
+          :grupo_forn
+        , 'COLABORADORES'
+      );
+
+    if ( :codigo_forn is null ) then
+    begin
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , OBSERVACAO
+        , DTCAD
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+        , FATURAMENTO_MINIMO
+      ) values (
+          :codigo_forn
+        , 1
+        , new.nome_completo
+        , new.nome_completo
+        , new.cpf
+        , substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , null
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone_fixo
+        , new.fone_celular
+        , substring(new.email from 1 for 40)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , null
+        , null
+        , null
+        , null
+        , new.observacao
+        , current_date
+        , null
+        , null
+        , 0.0
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = 1
+        , f.nomeforn = new.nome_completo
+        , f.nomefant = new.nome_completo
+        , f.cnpj     = new.cpf
+        , f.inscest = substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , f.inscmun = null
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone     = new.fone_fixo
+        , f.fonecel  = new.fone_celular
+        , f.email    = substring(new.email from 1 for 40)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.banco   = null
+        , f.agencia = null
+        , f.cc      = null
+        , f.praca   = null
+        , f.observacao = new.observacao
+        , f.cliente_origem     = null
+        , f.cliente_origem_cod = null
+      where f.codforn = :codigo_forn;
+    end
+
+    if (new.fornecedor is null) then
+      new.fornecedor = :codigo_forn;
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 19/05/2015 21:13:52 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_funcionario_gerar_fornecedor for tbfuncionario
+active before insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.flag_fornecedor = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cnpj = trim(new.cpf)            -- Cpf informado
+      and trim(coalesce(new.cpf, '')) <> '' -- "nao vazio"
+    Into
+      codigo_forn;
+
+    -- Padronizador grupo "Colaboradores" para os Fornecedores
+    grupo_forn = 5;
+
+    if (exists(
+      Select
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      where g.grf_cod = :grupo_forn
+    )) then
+      Update TBFORNECEDOR_GRUPO g Set
+        g.grf_descricao = 'COLABORADORES'
+      where g.grf_cod = :grupo_forn;
+    else
+      Insert Into TBFORNECEDOR_GRUPO (
+          grf_cod
+        , grf_descricao
+      ) values (
+          :grupo_forn
+        , 'COLABORADORES'
+      );
+
+    if ( :codigo_forn is null ) then
+    begin
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , OBSERVACAO
+        , DTCAD
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+        , FATURAMENTO_MINIMO
+      ) values (
+          :codigo_forn
+        , 1
+        , new.nome_completo
+        , new.nome_completo
+        , new.cpf
+        , substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , null
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone_fixo
+        , new.fone_celular
+        , substring(new.email from 1 for 40)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , null
+        , null
+        , null
+        , null
+        , new.observacao
+        , current_date
+        , null
+        , null
+        , 0.0
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = 1
+        , f.nomeforn = new.nome_completo
+        , f.nomefant = new.nome_completo
+        , f.cnpj     = new.cpf
+        , f.inscest = substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , f.inscmun = null
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone     = new.fone_fixo
+        , f.fonecel  = new.fone_celular
+        , f.email    = substring(new.email from 1 for 40)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.banco   = null
+        , f.agencia = null
+        , f.cc      = null
+        , f.praca   = null
+        , f.observacao = new.observacao
+        , f.cliente_origem     = null
+        , f.cliente_origem_cod = null
+      where f.codforn = :codigo_forn;
+    end
+
+    if (new.fornecedor is null) then
+      new.fornecedor = :codigo_forn;
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_FUNCIONARIO_GERAR_FORNECEDOR IS 'Trigger Gerar Fornecedor do Colaborador.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/05/2015
+
+Trigger responsavel por inserir/atualizar um registro de fornecedor corrrespondente
+ao registro do colaborador quando for marcado como "fornecedor".';
+
+
+
+
+/*------ SYSDBA 19/05/2015 21:15:03 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_funcionario_gerar_fornecedor for tbfuncionario
+active before insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.flag_fornecedor = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cnpj = trim(new.cpf)            -- Cpf informado
+      and trim(coalesce(new.cpf, '')) <> '' -- "nao vazio"
+    Into
+      codigo_forn;
+
+    -- Padronizador grupo "Colaboradores" para os Fornecedores
+    grupo_forn = 5;
+
+    if (exists(
+      Select
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      where g.grf_cod = :grupo_forn
+    )) then
+      Update TBFORNECEDOR_GRUPO g Set
+        g.grf_descricao = 'COLABORADORES'
+      where g.grf_cod = :grupo_forn;
+    else
+      Insert Into TBFORNECEDOR_GRUPO (
+          grf_cod
+        , grf_descricao
+      ) values (
+          :grupo_forn
+        , 'COLABORADORES'
+      );
+
+    if ( :codigo_forn is null ) then
+    begin
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , OBSERVACAO
+        , DTCAD
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+        , FATURAMENTO_MINIMO
+      ) values (
+          :codigo_forn
+        , 1
+        , new.nome_completo
+        , new.nome_completo
+        , new.cpf
+        , substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , null
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone_fixo
+        , new.fone_celular
+        , substring(new.email from 1 for 40)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , null
+        , null
+        , null
+        , null
+        , new.observacao
+        , current_date
+        , null
+        , null
+        , 0.0
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = 1
+        , f.nomeforn = new.nome_completo
+        , f.nomefant = new.nome_completo
+        , f.cnpj     = new.cpf
+        , f.inscest = substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , f.inscmun = null
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone     = new.fone_fixo
+        , f.fonecel  = new.fone_celular
+        , f.email    = substring(new.email from 1 for 40)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.banco   = null
+        , f.agencia = null
+        , f.cc      = null
+        , f.praca   = null
+        , f.observacao = new.observacao
+        , f.cliente_origem     = null
+        , f.cliente_origem_cod = null
+      where f.codforn = :codigo_forn;
+    end
+
+    if (new.fornecedor is null) then
+      new.fornecedor = :codigo_forn;
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_FUNCIONARIO_GERAR_FORNECEDOR IS 'Trigger Gerar Fornecedor do Colaborador.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   19/05/2015
+
+Trigger responsavel por inserir/atualizar um registro de fornecedor corrrespondente
+ao registro do colaborador quando for marcado como "fornecedor".
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    19/05/2015 - IMR :
+        * Documentacao da trigger.';
+
+
+
+
+/*------ SYSDBA 19/05/2015 21:18:53 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_funcionario_gerar_fornecedor for tbfuncionario
+active before insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.flag_fornecedor = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cnpj = trim(new.cpf)            -- Cpf informado
+      and trim(coalesce(new.cpf, '')) <> '' -- "nao vazio"
+    Into
+      codigo_forn;
+
+    -- Padronizador grupo "Colaboradores" para os Fornecedores
+    grupo_forn = 5;
+
+    if (exists(
+      Select
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      where g.grf_cod = :grupo_forn
+    )) then
+      Update TBFORNECEDOR_GRUPO g Set
+        g.grf_descricao = 'COLABORADORES'
+      where g.grf_cod = :grupo_forn;
+    else
+      Insert Into TBFORNECEDOR_GRUPO (
+          grf_cod
+        , grf_descricao
+      ) values (
+          :grupo_forn
+        , 'COLABORADORES'
+      );
+
+    if ( :codigo_forn is null ) then
+    begin
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , OBSERVACAO
+        , DTCAD
+        , FATURAMENTO_MINIMO
+        , FORNECEDOR_FUNCIONARIO
+      ) values (
+          :codigo_forn
+        , 1
+        , new.nome_completo
+        , new.nome_completo
+        , new.cpf
+        , substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , null
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone_fixo
+        , new.fone_celular
+        , substring(new.email from 1 for 40)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , null
+        , null
+        , null
+        , null
+        , new.observacao
+        , current_date
+        , 0.0
+        , 1
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = 1
+        , f.nomeforn = new.nome_completo
+        , f.nomefant = new.nome_completo
+        , f.cnpj     = new.cpf
+        , f.inscest = substring(trim(trim(coalesce(new.rg_numero, '')) || ' ' || trim(coalesce(new.rg_orgao_emissor, ''))) from 1 for 20) -- RG/Orgao Emissor
+        , f.inscmun = null
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone     = new.fone_fixo
+        , f.fonecel  = new.fone_celular
+        , f.email    = substring(new.email from 1 for 40)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.banco   = null
+        , f.agencia = null
+        , f.cc      = null
+        , f.praca   = null
+        , f.observacao = new.observacao
+        , f.fornecedor_funcionario = 1
+      where f.codforn = :codigo_forn;
+    end
+
+    if (new.fornecedor is null) then
+      new.fornecedor = :codigo_forn;
+  end 
+end^
+
+SET TERM ; ^
+

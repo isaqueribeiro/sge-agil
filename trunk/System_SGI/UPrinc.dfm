@@ -4645,7 +4645,6 @@ object frmPrinc: TfrmPrinc
     TabStop = False
     OnApplicationMenuClick = RibbonApplicationMenuClick
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4660,6 +4659,7 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbnTabCadastro: TdxRibbonTab
+      Active = True
       Caption = 'Cadastro'
       Groups = <
         item
@@ -4903,7 +4903,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 236
+      DockedLeft = 559
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -5007,6 +5007,10 @@ object frmPrinc: TfrmPrinc
           BeginGroup = True
           Visible = True
           ItemName = 'BrBtnEmpresa'
+        end
+        item
+          Visible = True
+          ItemName = 'BrBtnFuncionario'
         end
         item
           Visible = True
@@ -5655,6 +5659,17 @@ object frmPrinc: TfrmPrinc
       HotImageIndex = 1
       SyncImageIndex = False
       ImageIndex = 1
+    end
+    object BrBtnFuncionario: TdxBarLargeButton
+      Caption = 'Funcion'#225'rio'
+      Category = 4
+      Enabled = False
+      Hint = 'Cadastro simplificado e pesquisa de Funcion'#225'rios'
+      Visible = ivAlways
+      LargeImageIndex = 73
+      HotImageIndex = 73
+      SyncImageIndex = False
+      ImageIndex = 73
     end
     object BrBtnCliente: TdxBarLargeButton
       Caption = 'Cliente'

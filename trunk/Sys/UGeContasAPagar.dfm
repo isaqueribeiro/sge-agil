@@ -28,8 +28,6 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     ExplicitWidth = 934
     ExplicitHeight = 518
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel4: TBevel
@@ -1131,7 +1129,16 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       FieldName = 'EMPRESA'
       Origin = '"TBCONTPAG"."EMPRESA"'
       ProviderFlags = [pfInUpdate]
+      Required = True
       Size = 18
+    end
+    object IbDtstTabelaNOMEEMP: TIBStringField
+      DisplayLabel = 'Empresa'
+      FieldName = 'NOMEEMP'
+      Origin = '"TBCONTPAG"."NOMEEMP"'
+      ProviderFlags = [pfInUpdate]
+      Required = True
+      Size = 60
     end
     object IbDtstTabelaPARCELA: TSmallintField
       Alignment = taCenter
@@ -1139,13 +1146,6 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       FieldName = 'PARCELA'
       Origin = 'TBCONTPAG.PARCELA'
       DisplayFormat = '00'
-    end
-    object IbDtstTabelaNOMEEMP: TIBStringField
-      DisplayLabel = 'Empresa'
-      FieldName = 'NOMEEMP'
-      Origin = 'TBCONTPAG.NOMEEMP'
-      Required = True
-      Size = 40
     end
     object IbDtstTabelaCODFORN: TSmallintField
       DisplayLabel = 'Fornecedor'
@@ -1373,7 +1373,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   inherited ImgList: TImageList
     Top = 72
     Bitmap = {
-      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
