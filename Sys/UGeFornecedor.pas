@@ -359,7 +359,7 @@ begin
     begin
       IbDtstTabelaCID_COD.AsInteger := iCidade;
       IbDtstTabelaCID_NOME.AsString := sCidade;
-      IbDtstTabelaCIDADE.AsString   := sCidade + ' (' + IbDtstTabelaUF.AsString + ')';
+      IbDtstTabelaCIDADE.AsString   := Copy(sCidade + ' (' + IbDtstTabelaUF.AsString + ')', 1, IbDtstTabelaCIDADE.Size);
       IbDtstTabelaCEP.AsString      := GetCidadeCEP(iCidade);
     end;
 end;
@@ -417,7 +417,7 @@ begin
   IbDtstTabelaUF.AsString              := GetEstadoUF(GetEstadoIDDefault);
   IbDtstTabelaCID_COD.AsInteger        := GetCidadeIDDefault;
   IbDtstTabelaCID_NOME.AsString        := GetCidadeNomeDefault;
-  IbDtstTabelaCIDADE.AsString          := IbDtstTabelaCID_NOME.AsString + ' (' + Trim(IbDtstTabelaUF.AsString) + ')';
+  IbDtstTabelaCIDADE.AsString          := Copy(IbDtstTabelaCID_NOME.AsString + ' (' + Trim(IbDtstTabelaUF.AsString) + ')', 1, IbDtstTabelaCIDADE.Size);
   IbDtstTabelaCEP.AsString             := GetCidadeCEP(GetCidadeIDDefault);
   IbDtstTabelaNUMERO_END.AsString      := 'S/N';
   IbDtstTabelaTRANSPORTADORA.AsInteger := 0;
@@ -666,7 +666,7 @@ begin
         IbDtstTabelaCID_NOME.AsString  := GetCidadeNome(IbDtstTabelaCID_COD.AsInteger);
       end;
 
-      IbDtstTabelaCIDADE.AsString   := IbDtstTabelaCID_NOME.AsString + ' (' + Trim(EditUF.Text) + ')';
+      IbDtstTabelaCIDADE.AsString   := Copy(IbDtstTabelaCID_NOME.AsString + ' (' + Trim(EditUF.Text) + ')', 1, IbDtstTabelaCIDADE.Size);
 
       IbDtstTabelaBAI_COD.AsInteger := SetBairro(IbDtstTabelaCID_COD.AsInteger, Copy(Trim(EditBairro.Text), 1, IbDtstTabelaBAI_NOME.Size));
       IbDtstTabelaBAI_NOME.AsString := Trim(EditBairro.Text);
