@@ -127,7 +127,8 @@ uses
   UGeVendaDevolucaoNF in '..\Sys\UGeVendaDevolucaoNF.pas' {frmGeVendaDevolucaoNF},
   UGrConfigurarBackup in '..\Sys\lib\UGrConfigurarBackup.pas' {frmGrConfigurarBackup},
   UGeProdutoImpressao in 'UGeProdutoImpressao.pas' {frmGeProdutoImpressao},
-  UGeProdutoEstoqueImpressao in 'UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao};
+  UGeProdutoEstoqueImpressao in 'UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao},
+  UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF};
 
 {$R *.res}
 

@@ -230,6 +230,10 @@ begin
   FDataAtual      := GetDateTimeDB;
   e1Data.Date     := GetMenorVencimentoAReceber;
   e2Data.Date     := GetDateLastMonth;
+
+  if (e1Data.Date > GetDateDB) then
+    e1Data.Date   := GetDateDB;
+
   AbrirTabelaAuto  := True;
   ControlFirstEdit := dbCliente;
 

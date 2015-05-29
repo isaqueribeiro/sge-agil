@@ -669,6 +669,7 @@ begin
   IbDtstTabelaCIDADE.AsString            := Copy(GetCidadeNomeDefault + ' (' + IbDtstTabelaUF.AsString + ')', 1, IbDtstTabelaCIDADE.Size);
   IbDtstTabelaCEP.AsString               := GetCidadeCEP(GetCidadeIDDefault);
   IbDtstTabelaNUMERO_END.AsString        := 'S/N';
+  IbDtstTabelaCOMPLEMENTO.AsString       := EmptyStr;
   IbDtstTabelaDTCAD.AsDateTime           := GetDateDB;
   IbDtstTabelaBLOQUEADO.AsInteger             := 0; // Ord(False);
   IbDtstTabelaEMITIR_NFE_DEVOLUCAO.AsInteger  := 0; // Ord(False);

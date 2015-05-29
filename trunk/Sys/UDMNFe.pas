@@ -555,7 +555,7 @@ uses
   UDMBusiness, Forms, FileCtrl, ACBrNFeConfiguracoes,
   ACBrNFeNotasFiscais, ACBrNFeWebServices, StdCtrls, pcnNFe, UFuncoes,
   UConstantesDGE, DateUtils, pcnRetConsReciNFe, pcnDownloadNFe, UEcfFactory,
-  pcnEnvEventoNFe, pcnEventoNFe, ACBrSATClass, IniFiles;
+  pcnEnvEventoNFe, pcnEventoNFe, ACBrSATClass, ACBrDFeUtil, IniFiles;
 
 {$R *.dfm}
 
@@ -661,7 +661,8 @@ begin
       if ( not ConfigACBr.Showing ) then
         I := ConfigACBr.ShowModal;
 
-      ConfigACBr.pgcGuias.ActivePageIndex := 0;
+      ConfigACBr.pgcGuiasGerais.ActivePage        := ConfigACBr.TbsConfiguracoes;
+      ConfigACBr.pgcGuiasConfiguracoes.ActivePage := ConfigACBr.TbsGeral;
 
       if ( I = ID_OK ) then
       begin
@@ -862,22 +863,44 @@ begin
       WriteString( sSecaoCertificado, 'Senha'   , edtSenha.Text) ;
       WriteString( sSecaoCertificado, 'NumSerie', edtNumSerie.Text) ;
 
-      WriteInteger( sSecaoGeral, 'DANFE'       , rgTipoDanfe.ItemIndex) ;
-      WriteInteger( sSecaoGeral, 'FormaEmissao', cbFormaEmissao.ItemIndex) ;
-      WriteString ( sSecaoGeral, 'IdToken'     , edIdToken.Text) ;
-      WriteString ( sSecaoGeral, 'Token'       , edToken.Text) ;
-      WriteBool   ( sSecaoGeral, 'GerarNFCe'   , ckEmitirNFCe.Checked);
-      WriteString ( sSecaoGeral, 'LogoMarca'   , edtLogoMarca.Text) ;
-      WriteBool   ( sSecaoGeral, 'RetirarAcentos', ckRetirarAcentos.Checked) ;
-      WriteBool   ( sSecaoGeral, 'Salvar'      ,   ckSalvar.Checked) ;
-      WriteString ( sSecaoGeral, 'PathSalvar'  , edPathLogs.Text) ;
-      WriteString ( sSecaoGeral, 'PathSchemas' , edPathSchemas.Text) ;
-      WriteInteger( sSecaoGeral, 'ModoGerarNFe', rgModoGerarNFe.ItemIndex) ;
+      WriteBool   (sSecaoGeral, 'AtualizarXML',     ckAtualizarXML.Checked);
+      WriteBool   (sSecaoGeral, 'ExibirErroSchema', ckExibirErroSchema.Checked);
+      WriteString (sSecaoGeral, 'FormatoAlerta',    edFormatoAlerta.Text) ;
+      WriteInteger(sSecaoGeral, 'FormaEmissao', cbFormaEmissao.ItemIndex) ;
+      WriteString (sSecaoGeral, 'IdToken'     , edIdToken.Text) ;
+      WriteString (sSecaoGeral, 'Token'       , edToken.Text) ;
+      WriteBool   (sSecaoGeral, 'GerarNFCe'   , ckEmitirNFCe.Checked);
+      WriteInteger(sSecaoGeral, 'DANFE'       , rgTipoDanfe.ItemIndex) ;
+      WriteString (sSecaoGeral, 'LogoMarca'   , edtLogoMarca.Text) ;
+      WriteBool   (sSecaoGeral, 'RetirarAcentos', ckRetirarAcentos.Checked) ;
+      WriteBool   (sSecaoGeral, 'Salvar'      ,   ckSalvar.Checked) ;
+      WriteString (sSecaoGeral, 'PathSalvar'  , edPathLogs.Text) ;
+      WriteString (sSecaoGeral, 'PathSchemas' , edPathSchemas.Text) ;
+      WriteInteger(sSecaoGeral, 'ModoGerarNFe', rgModoGerarNFe.ItemIndex) ;
 
-      WriteString ( sSecaoWebService, 'UF'        , cbUF.Text) ;
-      WriteInteger( sSecaoWebService, 'Ambiente'  , rgTipoAmb.ItemIndex) ;
-      WriteInteger( sSecaoWebService, 'VersaoNFe' , cbVersaoDF.ItemIndex) ;
-      WriteBool   ( sSecaoWebService, 'Visualizar', ckVisualizar.Checked) ;
+      WriteBool  ('Arquivos', 'Salvar'        , ckSalvarArqs.Checked) ;
+      WriteBool  ('Arquivos', 'PastaMensal'   , ckPastaMensal.Checked) ;
+      WriteBool  ('Arquivos', 'AddLiteral'    , ckAdicionaLiteral.Checked) ;
+      WriteBool  ('Arquivos', 'EmissaoPathNFe', ckEmissaoPathNFe.Checked) ;
+      WriteBool  ('Arquivos', 'SalvarCCeCanPathEvento', ckSalvaCCeCancelamentoPathEvento.Checked) ;
+      WriteBool  ('Arquivos', 'SepararPorCNPJ'        , ckSepararPorCNPJ.Checked) ;
+      WriteBool  ('Arquivos', 'SepararPorModelo'      , ckSepararPorModelo.Checked) ;
+      WriteString('Arquivos', 'PathNFe'    , edPathNFe.Text) ;
+      WriteString('Arquivos', 'PathCan'    , edPathCan.Text) ;
+      WriteString('Arquivos', 'PathInu'    , edPathInu.Text) ;
+      WriteString('Arquivos', 'PathDPEC'   , edPathDPEC.Text) ;
+      WriteString('Arquivos', 'PathCCe'    , edPathCCe.Text) ;
+      WriteString('Arquivos', 'PathEvento' , edPathEvento.Text) ;
+
+      WriteString (sSecaoWebService, 'UF'        , cbUF.Text) ;
+      WriteInteger(sSecaoWebService, 'Ambiente'  , rgTipoAmb.ItemIndex) ;
+      WriteInteger(sSecaoWebService, 'VersaoNFe' , cbVersaoDF.ItemIndex) ;
+      WriteBool   (sSecaoWebService, 'Visualizar', ckVisualizar.Checked) ;
+      WriteBool   (sSecaoWebService, 'SalvarSOAP', ckSalvarSOAP.Checked) ;
+      WriteBool   (sSecaoWebService, 'AjustarAut', ckAjustarAut.Checked) ;
+      WriteString (sSecaoWebService, 'Aguardar'  , edAguardar.Text) ;
+      WriteString (sSecaoWebService, 'Tentativas', edTentativas.Text) ;
+      WriteString (sSecaoWebService, 'Intervalo' , edIntervalo.Text) ;
 
       WriteString( 'Proxy', 'Host'   , edtProxyHost.Text) ;
       WriteString( 'Proxy', 'Porta'  , edtProxyPorta.Text) ;
@@ -937,12 +960,8 @@ Var
   sSecaoWebService : String;
 begin
 (*
-  IMR - 30/09/2014 :
-    Retorno a versão 2.0 da NF-e por a versão 3.10 ainda apresentar inconsistências segundo a SEFA em determinados processos. A reativação
-    da versão 3.10 e sua liberação para uso está agora para 30/10/2014.
-
-    Atenção: Prazo final de uso da Versão 2.00, até 30/11/2014. Sendo, até esta data, recepcionado as duas versões. A desativação da versão
-    "2.00" será no dia 01/12/2014. (Fonte: http://portalnfe.fazenda.mg.gov.br/)
+  IMR - 29/05/2015 :
+    Inserção de novos controles WebService para controle do envio e recebimento das NFs.
 
   IMR - 28/10/2014 :
     Inserção do campo "Versão NF-e:" para definir na tela de configurações a versão de emissão da NF-e
@@ -950,6 +969,13 @@ begin
   IMR - 05/12/2014 :
     Definir configurações do RFD   - Registro do Fisco CAT 52/07. Configuração importante para emissão de CUPOM
     Definir configurações do NFC-e - Inserção/configuração dos componentes necessários a Emissão de Cupons de NFC-e
+
+  IMR - 30/09/2014 :
+    Retorno a versão 2.0 da NF-e por a versão 3.10 ainda apresentar inconsistências segundo a SEFA em determinados processos. A reativação
+    da versão 3.10 e sua liberação para uso está agora para 30/10/2014.
+
+    Atenção: Prazo final de uso da Versão 2.00, até 30/11/2014. Sendo, até esta data, recepcionado as duas versões. A desativação da versão
+    "2.00" será no dia 01/12/2014. (Fonte: http://portalnfe.fazenda.mg.gov.br/)
 *)
   if not DataBaseOnLine then
     Exit;
@@ -995,17 +1021,61 @@ begin
          ACBrNFe.Configuracoes.Certificados.NumeroSerie := Trim(edtNumSerie.Text);
       {$ENDIF}
 
-      cbFormaEmissao.ItemIndex := ReadInteger(sSecaoGeral, 'FormaEmissao', 0) ;
-      rgModoGerarNFe.ItemIndex := 1; // ReadInteger( 'Geral', 'ModoGerarNFe', 1) ;
-      edIdToken.Text       := ReadString( sSecaoGeral, 'IdToken',   GetTokenID_NFCe(sCNPJEmitente));
-      edToken.Text         := ReadString( sSecaoGeral, 'Token'  ,   GetToken_NFCe(sCNPJEmitente));
-      ckEmitirNFCe.Checked := ReadBool  ( sSecaoGeral, 'GerarNFCe', False);
+      ckAtualizarXML.Checked     := ReadBool   (sSecaoGeral, 'AtualizarXML',     ACBrNFe.Configuracoes.Geral.AtualizarXMLCancelado);
+      ckExibirErroSchema.Checked := ReadBool   (sSecaoGeral, 'ExibirErroSchema', ACBrNFe.Configuracoes.Geral.ExibirErroSchema);
+      edFormatoAlerta.Text       := ReadString (sSecaoGeral, 'FormatoAlerta',    'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.') ;
+      cbFormaEmissao.ItemIndex   := ReadInteger(sSecaoGeral, 'FormaEmissao',     0) ;
+      rgModoGerarNFe.ItemIndex   := 1; // ReadInteger( 'Geral', 'ModoGerarNFe', 1) ;
+      edIdToken.Text       := ReadString(sSecaoGeral, 'IdToken',   GetTokenID_NFCe(sCNPJEmitente));
+      edToken.Text         := ReadString(sSecaoGeral, 'Token'  ,   GetToken_NFCe(sCNPJEmitente));
+      ckEmitirNFCe.Checked := ReadBool  (sSecaoGeral, 'GerarNFCe', False);
 
-      ckRetirarAcentos.Checked := ReadBool( sSecaoGeral, 'RetirarAcentos', True) ;
-      ckSalvar.Checked         := ReadBool( sSecaoGeral, 'Salvar'        , True) ;
-      edPathLogs.Text    := ReadString( sSecaoGeral, 'PathSalvar'  , '') ;
-      edPathSchemas.Text := ReadString( sSecaoGeral, 'PathSchemas' , PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Schemas\' + GetEnumName(TypeInfo(TpcnVersaoDF), Integer(cbVersaoDF.ItemIndex))) ;
+      ckRetirarAcentos.Checked := ReadBool  (sSecaoGeral, 'RetirarAcentos', True) ;
+      ckSalvar.Checked         := ReadBool  (sSecaoGeral, 'Salvar'        , True) ;
+      edPathLogs.Text          := ReadString(sSecaoGeral, 'PathSalvar'  , '') ;
+      edPathSchemas.Text       := ReadString(sSecaoGeral, 'PathSchemas' , PathWithDelim(ExtractFilePath(Application.ExeName)) + 'Schemas\' + GetEnumName(TypeInfo(TpcnVersaoDF), Integer(cbVersaoDF.ItemIndex))) ;
 
+      frDANFE.PathPDF := ExtractFilePath( ParamStr(0) ) + DIRECTORY_PRINT;
+
+      with ACBrNFe.Configuracoes do
+      begin
+        Arquivos.PathNFe    := StringReplace(Geral.PathSalvar + '\NFe',         '\\', '\', [rfReplaceAll]);
+        Arquivos.PathCan    := StringReplace(Geral.PathSalvar + '\NFeCancelar', '\\', '\', [rfReplaceAll]);
+        Arquivos.PathInu    := StringReplace(Geral.PathSalvar + '\NFeInutiliz', '\\', '\', [rfReplaceAll]);
+        Arquivos.PathEvento := StringReplace(Geral.PathSalvar + '\NFeEvento',   '\\', '\', [rfReplaceAll]);
+        Arquivos.PathCCe    := StringReplace(Geral.PathSalvar + '\CCe',         '\\', '\', [rfReplaceAll]);
+        Arquivos.PathMDe    := StringReplace(Geral.PathSalvar + '\MDe',         '\\', '\', [rfReplaceAll]);
+        Arquivos.PathDPEC   := StringReplace(Geral.PathSalvar + '\DPEC',        '\\', '\', [rfReplaceAll]);
+      end;
+
+      ckSalvarArqs.Checked                     := ReadBool('Arquivos', 'Salvar'        , False);
+      ckPastaMensal.Checked                    := ReadBool('Arquivos', 'PastaMensal'   , False);
+      ckAdicionaLiteral.Checked                := ReadBool('Arquivos', 'AddLiteral'    , False);
+      ckEmissaoPathNFe.Checked                 := ReadBool('Arquivos', 'EmissaoPathNFe', False);
+      ckSalvaCCeCancelamentoPathEvento.Checked := ReadBool('Arquivos', 'SalvarCCeCanPathEvento', False);
+      ckSepararPorCNPJ.Checked                 := ReadBool('Arquivos', 'SepararPorCNPJ'        , False);
+      ckSepararPorModelo.Checked               := ReadBool('Arquivos', 'SepararPorModelo'      , False);
+      edPathNFe.Text    := ReadString('Arquivos', 'PathNFe'   , ACBrNFe.Configuracoes.Arquivos.PathNFe) ;
+      edPathCan.Text    := ReadString('Arquivos', 'PathCan'   , ACBrNFe.Configuracoes.Arquivos.PathCan) ;
+      edPathInu.Text    := ReadString('Arquivos', 'PathInu'   , ACBrNFe.Configuracoes.Arquivos.PathInu) ;
+      edPathDPEC.Text   := ReadString('Arquivos', 'PathDPEC'  , ACBrNFe.Configuracoes.Arquivos.PathDPEC) ;
+      edPathCCe.Text    := ReadString('Arquivos', 'PathCCe'   , ACBrNFe.Configuracoes.Arquivos.PathCCe) ;
+      edPathEvento.Text := ReadString('Arquivos', 'PathEvento', ACBrNFe.Configuracoes.Arquivos.PathEvento) ;
+
+      with ACBrNFe.Configuracoes.Arquivos do
+      begin
+        Salvar             := ckSalvarArqs.Checked;
+        PastaMensal        := ckPastaMensal.Checked;
+        AdicionarLiteral   := ckAdicionaLiteral.Checked;
+        EmissaoPathNFe     := ckEmissaoPathNFe.Checked;
+        SalvarCCeCanEvento := ckSalvaCCeCancelamentoPathEvento.Checked;
+        SepararPorCNPJ     := ckSepararPorCNPJ.Checked;
+        SepararPorModelo   := ckSepararPorModelo.Checked;
+      end;
+
+      ACBrNFe.Configuracoes.Geral.AtualizarXMLCancelado := ckAtualizarXML.Checked;
+      ACBrNFe.Configuracoes.Geral.ExibirErroSchema      := ckExibirErroSchema.Checked;
+      ACBrNFe.Configuracoes.Geral.FormatoAlerta         := edFormatoAlerta.Text;
       ACBrNFe.Configuracoes.Geral.FormaEmissao   := StrToTpEmis(OK, IntToStr(cbFormaEmissao.ItemIndex + 1));
       ACBrNFe.Configuracoes.Geral.IdToken        := edIdToken.Text;
       ACBrNFe.Configuracoes.Geral.Token          := edToken.Text;
@@ -1016,20 +1086,6 @@ begin
       ACBrNFe.Configuracoes.Geral.ModeloDF := moNFe;
       ACBrNFe.Configuracoes.Geral.VersaoDF := TpcnVersaoDF(cbVersaoDF.ItemIndex); // ve310;
 
-      frDANFE.PathPDF := ExtractFilePath( ParamStr(0) ) + DIRECTORY_PRINT;
-
-      with ACBrNFe.Configuracoes do
-      begin
-        Arquivos.PathNFe      := StringReplace(Geral.PathSalvar + '\NFe',         '\\', '\', [rfReplaceAll]);
-        Arquivos.PathCan      := StringReplace(Geral.PathSalvar + '\NFeCancelar', '\\', '\', [rfReplaceAll]);
-        Arquivos.PathInu      := StringReplace(Geral.PathSalvar + '\NFeInutiliz', '\\', '\', [rfReplaceAll]);
-        Arquivos.PathEvento   := StringReplace(Geral.PathSalvar + '\NFeEvento',   '\\', '\', [rfReplaceAll]);
-        Arquivos.PathCCe      := StringReplace(Geral.PathSalvar + '\CCe',         '\\', '\', [rfReplaceAll]);
-        Arquivos.PathMDe      := StringReplace(Geral.PathSalvar + '\MDe',         '\\', '\', [rfReplaceAll]);
-        Arquivos.PathDPEC     := StringReplace(Geral.PathSalvar + '\DPEC',        '\\', '\', [rfReplaceAll]);
-        Arquivos.PathDownload := StringReplace(Geral.PathSalvar + '\NFeDownload', '\\', '\', [rfReplaceAll]);
-      end;
-
       if ( tipoDANFE = tipoDANFEFast ) then
         ACBrNFe.DANFE := frDANFE
       else
@@ -1037,13 +1093,35 @@ begin
         ACBrNFe.DANFE := nfcDANFE;
 
       cbUF.ItemIndex       := cbUF.Items.IndexOf(ReadString( sSecaoWebService, 'UF', 'PA')) ;
-      rgTipoAmb.ItemIndex  := ReadInteger( sSecaoWebService, 'Ambiente'  , 0) ;
-      cbVersaoDF.ItemIndex := ReadInteger( sSecaoWebService, 'VersaoNFe' , 0) ;
-      ckVisualizar.Checked := ReadBool   ( sSecaoWebService, 'Visualizar', False) ;
+      rgTipoAmb.ItemIndex  := ReadInteger(sSecaoWebService, 'Ambiente'  , 0) ;
+      cbVersaoDF.ItemIndex := ReadInteger(sSecaoWebService, 'VersaoNFe' , 0) ;
+      ckVisualizar.Checked := ReadBool   (sSecaoWebService, 'Visualizar', ACBrNFe.Configuracoes.WebServices.Visualizar) ;
+      ckSalvarSOAP.Checked := ReadBool   (sSecaoWebService, 'SalvarSOAP', ACBrNFe.Configuracoes.WebServices.Salvar) ;
+      ckAjustarAut.Checked := ReadBool   (sSecaoWebService, 'AjustarAut', False) ;
+      edAguardar.Text      := ReadString (sSecaoWebService, 'Aguardar'  , '0') ;
+      edTentativas.Text    := ReadString (sSecaoWebService, 'Tentativas', '5') ;
+      edIntervalo.Text     := ReadString (sSecaoWebService, 'Intervalo' , '0') ;
 
       ACBrNFe.Configuracoes.WebServices.UF         := cbUF.Text;
       ACBrNFe.Configuracoes.WebServices.Ambiente   := StrToTpAmb(Ok, IntToStr(rgTipoAmb.ItemIndex + 1));
       ACBrNFe.Configuracoes.WebServices.Visualizar := ckVisualizar.Checked;
+      ACBrNFe.Configuracoes.WebServices.Salvar     := ckSalvarSOAP.Checked;
+
+      ACBrNFe.Configuracoes.WebServices.AjustaAguardaConsultaRet := ckAjustarAut.Checked;
+      if DFeUtil.NaoEstaVazio(edAguardar.Text)then
+        ACBrNFe.Configuracoes.WebServices.AguardarConsultaRet := DFeUtil.SeSenao(StrToInt(edAguardar.Text) < 1000, StrToInt(edAguardar.Text) * 1000, StrToInt(edAguardar.Text))
+      else
+        edAguardar.Text := IntToStr(ACBrNFe.Configuracoes.WebServices.AguardarConsultaRet);
+
+      if DFeUtil.NaoEstaVazio(edTentativas.Text) then
+        ACBrNFe.Configuracoes.WebServices.Tentativas := StrToInt(edTentativas.Text)
+      else
+        edTentativas.Text := IntToStr(ACBrNFe.Configuracoes.WebServices.Tentativas);
+
+      if DFeUtil.NaoEstaVazio(edIntervalo.Text) then
+        ACBrNFe.Configuracoes.WebServices.IntervaloTentativas := DFeUtil.SeSenao(StrToInt(edIntervalo.Text) < 1000, StrToInt(edIntervalo.Text) * 1000, StrToInt(edIntervalo.Text))
+      else
+        edIntervalo.Text := IntToStr(ACBrNFe.Configuracoes.WebServices.IntervaloTentativas);
 
       edtProxyHost.Text  := ReadString( 'Proxy', 'Host'  , '') ;
       edtProxyPorta.Text := ReadString( 'Proxy', 'Porta' , '') ;
@@ -3125,6 +3203,11 @@ begin
 
   IMR - 31/03/2015 :
     Inclusão da TAG "Ide.finNFe := fnDevolucao" quando a NF-e for de devolução
+
+  IMR - 23/05/2015 :
+    Inclusão do bloco de código para verificar se o CFOP da venda corresponde
+    a uma operação de devolução. Caso esta situação seja confirmada, a NF-e de
+    origem será solicitada.
 *)
 
   try
@@ -3168,6 +3251,40 @@ begin
       else
         Ide.finNFe  := fnNormal;
 
+      if ( Ide.finNFe  = fnDevolucao ) then
+        with Ide.NFref.Add, qryEntradaCalculoImposto do
+          Case TFormaNFDevolucao(FieldByName('DNFE_FORMA').AsInteger) of
+            fdNFeEletronica:
+              refNFe := FieldByName('DNFE_CHAVE').AsString; // Nota Fiscal Eletronica
+
+            fdNFeModelo1_1A:
+              begin
+                RefNF.cUF    := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString); // |
+                RefNF.AAMM   := FieldByName('DNFE_COMPETENCIA').AsString;          // |
+                RefNF.CNPJ   := FieldByName('DNFE_CNPJ_CPF').AsString;             // |
+                RefNF.modelo := FieldByName('DNFE_MODELO').AsInteger;              // |- NF Modelo 1/1A
+                RefNF.serie  := FieldByName('DNFE_SERIE').AsInteger;               // |  * O modelo padrão é 1
+                RefNF.nNF    := FieldByName('DNFE_NUMERO').AsInteger;              // |
+              end;
+
+            fdNFProdutorRural:
+              begin
+                RefNFP.cUF     := NotaUtil.UFtoCUF(FieldByName('DNFE_UF').AsString);       // |
+                RefNFP.AAMM    := FieldByName('DNFE_COMPETENCIA').AsString;                // |
+                RefNFP.CNPJCPF := FieldByName('DNFE_CNPJ_CPF').AsString;                   // |
+                RefNFP.IE      := FieldByName('DNFE_IE').AsString;                         // |- NF produtor Rural
+                RefNFP.modelo  := FormatFloat('00', FieldByName('DNFE_MODELO').AsInteger); // | * O modelo padrão é 04
+                RefNFP.serie   := FieldByName('DNFE_SERIE').AsInteger;                     // |
+                RefNFP.nNF     := FieldByName('DNFE_NUMERO').AsInteger;                    // |
+              end;
+
+            fdCupomFiscal:
+              begin
+                RefECF.modelo  := TpcnECFModRef(FieldByName('DECF_MODELO').AsInteger); // | (ECFModRefVazio, ECFModRef2B, ECFModRef2C, ECFModRef2D)
+                RefECF.nECF    := FieldByName('DECF_NUMERO').AsString;                 // |- Cupom Fiscal
+                RefECF.nCOO    := FieldByName('DECF_COO').AsString;                    // |
+              end;
+          end;
 
   //     Ide.dhCont := date;
   //     Ide.xJust  := 'Justificativa Contingencia';

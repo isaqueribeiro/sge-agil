@@ -4,6 +4,8 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
   Caption = 'Controle de Apropria'#231#245'es de Estoque'
   ClientHeight = 685
   ClientWidth = 1116
+  ExplicitLeft = -50
+  ExplicitTop = -57
   ExplicitWidth = 1132
   ExplicitHeight = 724
   PixelsPerInch = 96
@@ -1610,27 +1612,27 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             Expanded = False
             FieldName = 'PRODUTO'
             Title.Caption = 'Codigo'
-            Width = 80
+            Width = 70
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'DESCRI_APRESENTACAO'
             Title.Caption = 'Descri'#231#227'o + Apresenta'#231#227'o'
-            Width = 450
+            Width = 400
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'QTDE'
-            Width = 80
+            Width = 70
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'UNP_SIGLA'
-            Title.Caption = 'Und.'
-            Width = 40
+            FieldName = 'UNP_DESCRICAO'
+            Title.Caption = 'Unidade'
+            Width = 100
             Visible = True
           end
           item
@@ -1644,6 +1646,27 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             Expanded = False
             FieldName = 'CUSTO_TOTAL'
             Title.Caption = 'Custo Total (R$)'
+            Width = 100
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'FRACIONADOR'
+            Title.Caption = 'Fracionador'
+            Width = 80
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'QTDE_FRACIONADA'
+            Title.Caption = 'Qtde. Frac.'
+            Width = 80
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'UNIDADE_FRACIONADA'
+            Title.Caption = 'Und. Fracionada'
             Width = 100
             Visible = True
           end>
@@ -1669,10 +1692,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       Width = 4
       Height = 31
       Shape = bsSpacer
-    end
-    inherited btbtnExcluir: TcxButton
-      ExplicitLeft = 154
-      ExplicitTop = 0
     end
     inherited btbtnCancelar: TcxButton
       TabOrder = 3
@@ -1982,6 +2001,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       FieldName = 'CENTRO_CUSTO'
       Origin = '"TBAPROPRIACAO_ALMOX"."CENTRO_CUSTO"'
       ProviderFlags = [pfInUpdate]
+      Required = True
     end
     object IbDtstTabelaTIPO: TSmallintField
       Alignment = taLeftJustify
@@ -2254,7 +2274,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3731,6 +3751,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
   object cdsTabelaItens: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    OnCalcFields = cdsTabelaItensCalcFields
     OnNewRecord = cdsTabelaItensNewRecord
     BufferChunks = 1000
     CachedUpdates = True
@@ -3743,24 +3764,28 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  , i.item'
       '  , i.produto'
       '  , i.qtde'
+      '  , i.fracionador'
       '  , i.unidade'
+      '  , i.unidade_fracao'
       '  , i.custo_unitario'
       '  , i.custo_total'
       ''
       '  , p.descri'
       '  , p.apresentacao'
       '  , p.descri_apresentacao'
-      '  , u.unp_descricao'
-      '  , u.unp_sigla'
+      '  , uc.unp_descricao'
+      '  , uc.unp_sigla'
       
-        '  , substring(coalesce(nullif(trim(u.unp_sigla), '#39#39'), u.unp_desc' +
-        'ricao) from 1 for 3) unidade_sigla'
+        '  , substring(coalesce(nullif(trim(uc.unp_sigla), '#39#39'), uc.unp_de' +
+        'scricao) from 1 for 3) unidade_sigla'
       '  , coalesce(p.qtde, 0.0) as estoque'
       '  , coalesce(p.reserva, 0.0) as reserva'
       '  , p.movimenta_estoque'
+      '  , uf.unp_descricao as unidade_fracionada'
       'from TBAPROPRIACAO_ALMOX_ITEM i'
       '  left join TBPRODUTO p on (p.cod = i.produto)'
-      '  left join TBUNIDADEPROD u on (u.unp_cod = i.unidade)')
+      '  left join TBUNIDADEPROD uc on (uc.unp_cod = i.unidade)'
+      '  left join TBUNIDADEPROD uf on (uf.unp_cod = i.unidade_fracao)')
     ModifySQL.Strings = (
       '')
     ParamCheck = True
@@ -3805,10 +3830,23 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       Precision = 18
       Size = 3
     end
+    object cdsTabelaItensFRACIONADOR: TIBBCDField
+      FieldName = 'FRACIONADOR'
+      Origin = '"TBAPROPRIACAO_ALMOX_ITEM"."FRACIONADOR"'
+      ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.###'
+      Precision = 18
+      Size = 3
+    end
     object cdsTabelaItensUNIDADE: TSmallintField
       DisplayLabel = 'Unidade'
       FieldName = 'UNIDADE'
       Origin = '"TBAPROPRIACAO_ALMOX_ITEM"."UNIDADE"'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cdsTabelaItensUNIDADE_FRACAO: TSmallintField
+      FieldName = 'UNIDADE_FRACAO'
+      Origin = '"TBAPROPRIACAO_ALMOX_ITEM"."UNIDADE_FRACAO"'
       ProviderFlags = [pfInUpdate]
     end
     object cdsTabelaItensCUSTO_UNITARIO: TIBBCDField
@@ -3881,6 +3919,19 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       Origin = '"TBPRODUTO"."MOVIMENTA_ESTOQUE"'
       ProviderFlags = []
     end
+    object cdsTabelaItensUNIDADE_FRACIONADA: TIBStringField
+      FieldName = 'UNIDADE_FRACIONADA'
+      Origin = '"TBUNIDADEPROD"."UNP_DESCRICAO"'
+      ProviderFlags = []
+      Size = 50
+    end
+    object cdsTabelaItensQTDE_FRACIONADA: TCurrencyField
+      FieldKind = fkCalculated
+      FieldName = 'QTDE_FRACIONADA'
+      ProviderFlags = []
+      DisplayFormat = ',0.###'
+      Calculated = True
+    end
   end
   object IbUpdTabelaItens: TIBUpdateSQL
     RefreshSQL.Strings = (
@@ -3890,7 +3941,9 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  ITEM,'
       '  PRODUTO,'
       '  QTDE,'
+      '  FRACIONADOR,'
       '  UNIDADE,'
+      '  UNIDADE_FRACAO,'
       '  CUSTO_UNITARIO,'
       '  CUSTO_TOTAL'
       'from TBAPROPRIACAO_ALMOX_ITEM '
@@ -3905,10 +3958,12 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  CONTROLE = :CONTROLE,'
       '  CUSTO_TOTAL = :CUSTO_TOTAL,'
       '  CUSTO_UNITARIO = :CUSTO_UNITARIO,'
+      '  FRACIONADOR = :FRACIONADOR,'
       '  ITEM = :ITEM,'
       '  PRODUTO = :PRODUTO,'
       '  QTDE = :QTDE,'
-      '  UNIDADE = :UNIDADE'
+      '  UNIDADE = :UNIDADE,'
+      '  UNIDADE_FRACAO = :UNIDADE_FRACAO'
       'where'
       '  ANO = :OLD_ANO and'
       '  CONTROLE = :OLD_CONTROLE and'
@@ -3916,13 +3971,14 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     InsertSQL.Strings = (
       'insert into TBAPROPRIACAO_ALMOX_ITEM'
       
-        '  (ANO, CONTROLE, CUSTO_TOTAL, CUSTO_UNITARIO, ITEM, PRODUTO, QT' +
-        'DE, UNIDADE)'
+        '  (ANO, CONTROLE, CUSTO_TOTAL, CUSTO_UNITARIO, FRACIONADOR, ITEM' +
+        ', PRODUTO, '
+      '   QTDE, UNIDADE, UNIDADE_FRACAO)'
       'values'
       
-        '  (:ANO, :CONTROLE, :CUSTO_TOTAL, :CUSTO_UNITARIO, :ITEM, :PRODU' +
-        'TO, :QTDE, '
-      '   :UNIDADE)')
+        '  (:ANO, :CONTROLE, :CUSTO_TOTAL, :CUSTO_UNITARIO, :FRACIONADOR,' +
+        ' :ITEM, '
+      '   :PRODUTO, :QTDE, :UNIDADE, :UNIDADE_FRACAO)')
     DeleteSQL.Strings = (
       'delete from TBAPROPRIACAO_ALMOX_ITEM'
       'where'
@@ -3963,10 +4019,15 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  , p.descri'
       '  , p.descri_apresentacao'
       '  , p.codunidade'
-      '  , u.unp_descricao'
-      '  , u.unp_sigla'
+      '  , p.codunidade_fracionada'
+      '  , uc.unp_descricao'
+      '  , uc.unp_sigla'
+      '  , uf.unp_descricao as unidade_fracionada'
       'from TBPRODUTO p'
-      '  left join TBUNIDADEPROD u on (u.unp_cod = p.codunidade)'
+      '  left join TBUNIDADEPROD uc on (uc.unp_cod = p.codunidade)'
+      
+        '  left join TBUNIDADEPROD uf on (uf.unp_cod = p.codunidade_fraci' +
+        'onada)'
       'where p.codigo = :produto')
     ModifySQL.Strings = (
       '')
@@ -4002,6 +4063,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       'Select'
       '    i.codprod    as produto'
       '  , i.unid_cod   as unidade'
+      '  , p.codunidade_fracionada as unidade_fracao'
       '  , p.customedio as custo_medio'
       '  , p.descri'
       '  , p.apresentacao'
@@ -4011,8 +4073,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       
         '  , substring(coalesce(nullif(trim(u.unp_sigla), '#39#39'), u.unp_desc' +
         'ricao) from 1 for 3) unidade_sigla'
+      '  , uf.unp_descricao as unidade_fracionada'
       '  , coalesce(p.qtde, 0.0) as estoque'
       '  , coalesce(p.reserva, 0.0) as reserva'
+      '  , coalesce(p.fracionador, 1.0) as fracionador'
       '  , p.movimenta_estoque'
       ''
       '  , sum(i.qtde) - sum(coalesce(ai.qtde, 0.0)) as quantidade'
@@ -4030,6 +4094,9 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
         '  left join TBAPROPRIACAO_ALMOX_ITEM ai on (ai.ano = a.ano and a' +
         'i.controle = a.controle and ai.produto = i.codprod)'
       '  left join TBUNIDADEPROD u on (u.unp_cod = ai.unidade)'
+      
+        '  left join TBUNIDADEPROD uf on (uf.unp_cod = p.codunidade_fraci' +
+        'onada)'
       ''
       'where c.ano        = :ano'
       '  and c.codcontrol = :cod'
@@ -4038,6 +4105,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       'group by'
       '    i.codprod'
       '  , i.unid_cod'
+      '  , p.codunidade_fracionada'
       '  , p.customedio'
       '  , p.descri'
       '  , p.apresentacao'
@@ -4047,8 +4115,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       
         '  , substring(coalesce(nullif(trim(u.unp_sigla), '#39#39'), u.unp_desc' +
         'ricao) from 1 for 3)'
+      '  , uf.unp_descricao'
       '  , coalesce(p.qtde, 0.0)'
       '  , coalesce(p.reserva, 0.0)'
+      '  , coalesce(p.fracionador, 1.0)'
       '  , p.movimenta_estoque')
     ModifySQL.Strings = (
       '')
@@ -4068,6 +4138,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       'Select'
       '    i.produto'
       '  , i.unidade'
+      '  , p.codunidade_fracionada as unidade_fracao'
       
         '  , coalesce(nullif(p.customedio, 0), i.valor_unitario) as custo' +
         '_medio'
@@ -4079,8 +4150,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       
         '  , substring(coalesce(nullif(trim(u.unp_sigla), '#39#39'), u.unp_desc' +
         'ricao) from 1 for 3) unidade_sigla'
+      '  , uf.unp_descricao as unidade_fracionada'
       '  , coalesce(p.qtde, 0.0) as estoque'
       '  , coalesce(p.reserva, 0.0) as reserva'
+      '  , coalesce(p.fracionador, 1.0) as fracionador'
       '  , p.movimenta_estoque'
       ''
       
@@ -4102,6 +4175,9 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
         '  left join TBAPROPRIACAO_ALMOX_ITEM ai on (ai.ano = a.ano and a' +
         'i.controle = a.controle and ai.produto = i.produto)'
       '  left join TBUNIDADEPROD u on (u.unp_cod = i.unidade)'
+      
+        '  left join TBUNIDADEPROD uf on (uf.unp_cod = p.codunidade_fraci' +
+        'onada)'
       ''
       'where c.ano     = :ano'
       '  and c.codigo  = :cod'
@@ -4110,6 +4186,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       'group by'
       '    i.produto'
       '  , i.unidade'
+      '  , p.codunidade_fracionada'
       '  , ai.unidade'
       '  , coalesce(nullif(p.customedio, 0), i.valor_unitario)'
       '  , p.descri'
@@ -4120,9 +4197,12 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       
         '  , substring(coalesce(nullif(trim(u.unp_sigla), '#39#39'), u.unp_desc' +
         'ricao) from 1 for 3)'
+      '  , uf.unp_descricao'
       '  , coalesce(p.qtde, 0.0)'
       '  , coalesce(p.reserva, 0.0)'
-      '  , p.movimenta_estoque')
+      '  , coalesce(p.fracionador, 1.0)'
+      '  , p.movimenta_estoque'
+      '')
     ModifySQL.Strings = (
       '')
     ParamCheck = True

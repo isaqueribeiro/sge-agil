@@ -145,6 +145,10 @@ type
     dbDataApropriacao: TJvDBDateEdit;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    cdsTabelaItensFRACIONADOR: TIBBCDField;
+    cdsTabelaItensUNIDADE_FRACAO: TSmallintField;
+    cdsTabelaItensUNIDADE_FRACIONADA: TIBStringField;
+    cdsTabelaItensQTDE_FRACIONADA: TCurrencyField;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
@@ -186,6 +190,7 @@ type
     procedure DtSrcTabelaDataChange(Sender: TObject; Field: TField);
     procedure dbEntradaButtonClick(Sender: TObject);
     procedure dbAutorizacaoButtonClick(Sender: TObject);
+    procedure cdsTabelaItensCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -661,19 +666,27 @@ begin
   end;
 end;
 
+procedure TfrmGeApropriacaoEstoque.cdsTabelaItensCalcFields(DataSet: TDataSet);
+begin
+  cdsTabelaItensQTDE_FRACIONADA.AsCurrency := cdsTabelaItensQTDE.AsCurrency * cdsTabelaItensFRACIONADOR.AsCurrency;
+end;
+
 procedure TfrmGeApropriacaoEstoque.cdsTabelaItensNewRecord(
   DataSet: TDataSet);
 begin
   inherited;
-  cdsTabelaItensANO.Value      := IbDtstTabelaANO.Value;
-  cdsTabelaItensCONTROLE.Value := IbDtstTabelaCONTROLE.Value;
-  cdsTabelaItensQTDE.Value     := 1;
+  cdsTabelaItensANO.Value         := IbDtstTabelaANO.Value;
+  cdsTabelaItensCONTROLE.Value    := IbDtstTabelaCONTROLE.Value;
+  cdsTabelaItensQTDE.Value        := 1;
+  cdsTabelaItensFRACIONADOR.Value := 1;
   cdsTabelaItensCUSTO_UNITARIO.AsCurrency := 0.0;
   cdsTabelaItensCUSTO_TOTAL.AsCurrency    := 0.0;
   cdsTabelaItensPRODUTO.Clear;
   cdsTabelaItensDESCRI_APRESENTACAO.Clear;
   cdsTabelaItensUNIDADE.Clear;
+  cdsTabelaItensUNIDADE_FRACAO.Clear;
   cdsTabelaItensUNP_SIGLA.Clear;
+  cdsTabelaItensUNIDADE_FRACIONADA.Clear;
 end;
 
 procedure TfrmGeApropriacaoEstoque.btnEncerrarApropriacaoClick(
@@ -840,10 +853,15 @@ begin
       begin
         cdsTabelaItensPRODUTO.AsString             := FieldByName('cod').AsString;
         cdsTabelaItensDESCRI_APRESENTACAO.AsString := FieldByName('descri_apresentacao').AsString;
+        cdsTabelaItensFRACIONADOR.AsCurrency       := FieldByName('fracionador').AsCurrency;
         cdsTabelaItensUNP_SIGLA.AsString           := FieldByName('Unp_sigla').AsString;
+        cdsTabelaItensUNIDADE_FRACIONADA.AsString  := FieldByName('Unidade_fracionada').AsString;
 
         if ( FieldByName('Codunidade').AsInteger > 0 ) then
           cdsTabelaItensUNIDADE.AsInteger := FieldByName('Codunidade').AsInteger;
+
+        if ( FieldByName('Codunidade_fracionada').AsInteger > 0 ) then
+          cdsTabelaItensUNIDADE_FRACIONADA.AsInteger := FieldByName('Codunidade_fracionada').AsInteger;
       end
       else
       begin
@@ -1060,8 +1078,7 @@ begin
       cdsTabelaItensUNP_SIGLA.AsString           := sUnidade;
       cdsTabelaItensCUSTO_UNITARIO.AsCurrency    := cValorCusto;
 
-      if ( iUnidade > 0 ) then
-        cdsTabelaItensUNIDADE.AsInteger := iUnidade;
+      CarregarDadosProduto( iCodigo );
     end;
 
   end;
@@ -1439,18 +1456,21 @@ begin
         cdsTabelaItensITEM.AsInteger := I;
         cdsTabelaItensPRODUTO.Assign       ( FieldByName('produto') );
         cdsTabelaItensQTDE.Assign          ( FieldByName('quantidade') );
+        cdsTabelaItensFRACIONADOR.Assign   ( FieldByName('fracionador') );
         cdsTabelaItensUNIDADE.Assign       ( FieldByName('unidade') );
+        cdsTabelaItensUNIDADE_FRACAO.Assign( FieldByName('unidade_fracao') );
         cdsTabelaItensCUSTO_UNITARIO.Assign( FieldByName('custo_medio') );
 
         cdsTabelaItensDESCRI.Assign             ( FieldByName('DESCRI') );
         cdsTabelaItensAPRESENTACAO.Assign       ( FieldByName('apresentacao') );
         cdsTabelaItensDESCRI_APRESENTACAO.Assign( FieldByName('DESCRI_APRESENTACAO') );
         cdsTabelaItensUNP_DESCRICAO.Assign      ( FieldByName('UNP_DESCRICAO') );
-        cdsTabelaItensUNP_SIGLA.Assign        ( FieldByName('UNP_SIGLA') );
-        cdsTabelaItensUNIDADE_SIGLA.Assign    ( FieldByName('UNIDADE_SIGLA') );
-        cdsTabelaItensESTOQUE.Assign          ( FieldByName('ESTOQUE') );
-        cdsTabelaItensRESERVA.Assign          ( FieldByName('RESERVA') );
-        cdsTabelaItensMOVIMENTA_ESTOQUE.Assign( FieldByName('MOVIMENTA_ESTOQUE') );
+        cdsTabelaItensUNP_SIGLA.Assign          ( FieldByName('UNP_SIGLA') );
+        cdsTabelaItensUNIDADE_SIGLA.Assign      ( FieldByName('UNIDADE_SIGLA') );
+        cdsTabelaItensUNIDADE_FRACIONADA.Assign ( FieldByName('unidade_fracionada') );
+        cdsTabelaItensESTOQUE.Assign            ( FieldByName('ESTOQUE') );
+        cdsTabelaItensRESERVA.Assign            ( FieldByName('RESERVA') );
+        cdsTabelaItensMOVIMENTA_ESTOQUE.Assign  ( FieldByName('MOVIMENTA_ESTOQUE') );
 
         cdsTabelaItensCUSTO_TOTAL.AsCurrency := cdsTabelaItensQTDE.AsCurrency * cdsTabelaItensCUSTO_UNITARIO.AsCurrency;
 
@@ -1530,18 +1550,21 @@ begin
         cdsTabelaItensITEM.AsInteger := I;
         cdsTabelaItensPRODUTO.Assign       ( FieldByName('produto') );
         cdsTabelaItensQTDE.Assign          ( FieldByName('quantidade') );
+        cdsTabelaItensFRACIONADOR.Assign   ( FieldByName('fracionador') );
         cdsTabelaItensUNIDADE.Assign       ( FieldByName('unidade') );
+        cdsTabelaItensUNIDADE_FRACAO.Assign( FieldByName('unidade_fracao') );
         cdsTabelaItensCUSTO_UNITARIO.Assign( FieldByName('custo_medio') );
 
         cdsTabelaItensDESCRI.Assign             ( FieldByName('DESCRI') );
         cdsTabelaItensAPRESENTACAO.Assign       ( FieldByName('apresentacao') );
         cdsTabelaItensDESCRI_APRESENTACAO.Assign( FieldByName('DESCRI_APRESENTACAO') );
         cdsTabelaItensUNP_DESCRICAO.Assign      ( FieldByName('UNP_DESCRICAO') );
-        cdsTabelaItensUNP_SIGLA.Assign        ( FieldByName('UNP_SIGLA') );
-        cdsTabelaItensUNIDADE_SIGLA.Assign    ( FieldByName('UNIDADE_SIGLA') );
-        cdsTabelaItensESTOQUE.Assign          ( FieldByName('ESTOQUE') );
-        cdsTabelaItensRESERVA.Assign          ( FieldByName('RESERVA') );
-        cdsTabelaItensMOVIMENTA_ESTOQUE.Assign( FieldByName('MOVIMENTA_ESTOQUE') );
+        cdsTabelaItensUNP_SIGLA.Assign          ( FieldByName('UNP_SIGLA') );
+        cdsTabelaItensUNIDADE_SIGLA.Assign      ( FieldByName('UNIDADE_SIGLA') );
+        cdsTabelaItensUNIDADE_FRACIONADA.Assign ( FieldByName('unidade_fracionada') );
+        cdsTabelaItensESTOQUE.Assign            ( FieldByName('ESTOQUE') );
+        cdsTabelaItensRESERVA.Assign            ( FieldByName('RESERVA') );
+        cdsTabelaItensMOVIMENTA_ESTOQUE.Assign  ( FieldByName('MOVIMENTA_ESTOQUE') );
 
         cdsTabelaItensCUSTO_TOTAL.AsCurrency := cdsTabelaItensQTDE.AsCurrency * cdsTabelaItensCUSTO_UNITARIO.AsCurrency;
 
