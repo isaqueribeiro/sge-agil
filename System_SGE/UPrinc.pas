@@ -393,7 +393,11 @@ procedure TfrmPrinc.RbnBackstageGalleryBackupItemClick(Sender: TObject;
   AItem: TdxRibbonBackstageViewGalleryItem);
 begin
   Case AItem.Index of
-    0: FormFunction.ShowModalForm(Self, 'frmGrConfigurarBackup');
+    0 :
+      begin
+        RbnBackstageView.ClosePopup;
+        FormFunction.ShowModalForm(Self, 'frmGrConfigurarBackup');
+      end;
   end;
 end;
 

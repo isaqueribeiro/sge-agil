@@ -420,6 +420,7 @@ begin
   IbDtstTabelaCIDADE.AsString          := Copy(IbDtstTabelaCID_NOME.AsString + ' (' + Trim(IbDtstTabelaUF.AsString) + ')', 1, IbDtstTabelaCIDADE.Size);
   IbDtstTabelaCEP.AsString             := GetCidadeCEP(GetCidadeIDDefault);
   IbDtstTabelaNUMERO_END.AsString      := 'S/N';
+  IbDtstTabelaCOMPLEMENTO.AsString     := EmptyStr;
   IbDtstTabelaTRANSPORTADORA.AsInteger := 0;
   IbDtstTabelaDTCAD.AsDateTime         := GetDateTimeDB;
   IbDtstTabelaFATURAMENTO_MINIMO.Value := 0.0;

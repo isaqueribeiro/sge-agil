@@ -446,7 +446,8 @@ implementation
 
 uses
   UConstantesDGE, DateUtils, UGeCondicaoPagto, UGeProduto, UGeTabelaCFOP, {$IFNDEF DGE}UGeAutorizacaoCompra,{$ENDIF}
-  UGeFornecedor, UGeEntradaEstoqueCancelar, UGeEntradaConfirmaDuplicatas, UGeEntradaEstoqueGerarNFe, UDMNFe;
+  UGeFornecedor, UGeEntradaEstoqueCancelar, UGeEntradaConfirmaDuplicatas, UGeEntradaEstoqueGerarNFe, UDMNFe,
+  UGeEntradaEstoqueDevolucaoNF;
 
 {$R *.dfm}
 
@@ -1510,20 +1511,25 @@ var
   sProtocoloNFE,
   sReciboNFE   : String;
   iNumeroLote  : Int64;
+  bNFeGerada   : Boolean;
 begin
+{
+  IMR - 23/05/2015 :
+    Inclusão do bloco de código para verificar se o CFOP da entrada corresponde
+    a uma operação de devolução. Caso esta situação seja confirmada, a NF-e de
+    origem será solicitada.
+}
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
 
   if not GetPermissaoRotinaInterna(Sender, True) then
     Abort;
 
-  if ( not DelphiIsRunning ) then
-    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCODEMP.AsString) then
-      Exit;
-
   RecarregarRegistro;
 
   pgcGuias.ActivePage := tbsCadastro;
+
+  bNFeGerada := (IbDtstTabelaNF.AsCurrency > 0) and (IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_NFE);
 
   if (IbDtstTabelaSTATUS.AsInteger = STATUS_CMP_NFE) then
   begin
@@ -1537,18 +1543,36 @@ begin
     Exit;
   end;
 
+  if ( not DelphiIsRunning ) then
+    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCODEMP.AsString) then
+      Exit;
+
+  if GetCfopDevolucao( IbDtstTabelaNFCFOP.AsInteger ) then
+    if not InformarDocumentoReferenciado(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value) then
+      Exit;
+
   if ( IbDtstTabelaLOTE_NFE_NUMERO.AsInteger > 0 ) then
   begin
     ShowWarning('O processo de geração de NF-e para esta venda já foi solicitado, mas não fora concluído.' + #13 +
       'Favor consultar junto a SEFA e processar o Recibo/Lote de número ' +
         IbDtstTabelaLOTE_NFE_RECIBO.AsString + '/' +
         FormatFloat('#########0', IbDtstTabelaLOTE_NFE_NUMERO.AsInteger));
-    Exit;  
+    Exit;
   end;
 
-  if ( GerarNFeEntrada(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value,
-                iSerieNFe, iNumeroNFe, sFileNameXML, sChaveNFE, sProtocoloNFE, sReciboNFE, iNumeroLote
-  ) ) then
+  if not bNFeGerada then
+    bNFeGerada := GerarNFeEntrada(Self
+      , IbDtstTabelaANO.Value
+      , IbDtstTabelaCODCONTROL.Value
+      , iSerieNFe
+      , iNumeroNFe
+      , sFileNameXML
+      , sChaveNFE
+      , sProtocoloNFE
+      , sReciboNFE
+      , iNumeroLote);
+
+  if bNFeGerada then
     with IbDtstTabela do
     begin
       iNumero := IbDtstTabelaCODCONTROL.AsInteger;

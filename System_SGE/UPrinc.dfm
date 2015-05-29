@@ -4436,7 +4436,6 @@ object frmPrinc: TfrmPrinc
       object RbnBackstageViewConfig: TdxRibbonBackstageViewTabSheet
         Left = 132
         Top = 0
-        Active = True
         Caption = 'Configura'#231#245'es Gerais'
         DesignSize = (
           357
@@ -4565,6 +4564,7 @@ object frmPrinc: TfrmPrinc
       object RbnBackstageViewBackup: TdxRibbonBackstageViewTabSheet
         Left = 132
         Top = 0
+        Active = True
         Caption = 'Backup / Retore Database'
         DesignSize = (
           357
@@ -4645,7 +4645,6 @@ object frmPrinc: TfrmPrinc
     TabStop = False
     OnApplicationMenuClick = RibbonApplicationMenuClick
     object RbnTabPrincipal: TdxRibbonTab
-      Active = True
       Caption = 'Principal'
       Groups = <
         item
@@ -4720,6 +4719,7 @@ object frmPrinc: TfrmPrinc
       Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
+      Active = True
       Caption = 'Relat'#243'rios'
       Groups = <
         item

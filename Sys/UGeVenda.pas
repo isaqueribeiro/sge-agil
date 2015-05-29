@@ -1797,13 +1797,14 @@ var
   iNumero    ,
   iSerieNFe  ,
   iNumeroNFe : Integer;
-  sFileNameXML ,
-  sChaveNFE    ,
-  sProtocoloNFE,
-  sReciboNFE   ,
-  sMensagem    : String;
-  iNumeroLote  : Int64;
-  bNFeGerada   : Boolean;
+  sFileNameXML  ,
+  sChaveNFE     ,
+  sProtocoloNFE ,
+  sReciboNFE    ,
+  sMensagem     : String;
+  iNumeroLote   : Int64;
+  TipoMovimento : TTipoMovimento;
+  bNFeGerada    : Boolean;
 begin
 (*
   IMR - 20/04/2015 :
@@ -1825,7 +1826,7 @@ begin
 
   pgcGuias.ActivePage := tbsCadastro;
 
-  bNFeGerada := False;
+  bNFeGerada := (IbDtstTabelaNFE.AsCurrency > 0) and (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
 
   if (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) then
   begin
@@ -1833,15 +1834,15 @@ begin
     Abort;
   end;
 
-  if ( not DelphiIsRunning ) then
-    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCODEMP.AsString) then
-      Exit;
-
   if not GetPermititEmissaoNFe( IbDtstTabelaCODEMP.AsString ) then
   begin
     ShowInformation('Empresa selecionada não habilitada para emissão de NF-e.' + #13 + 'Favor entrar em contato com suporte.');
     Exit;
   end;
+
+  if ( not DelphiIsRunning ) then
+    if not DMNFe.GetValidadeCertificado(IbDtstTabelaCODEMP.AsString) then
+      Exit;
 
   {$IFNDEF PDV}
   if GetCfopDevolucao( IbDtstTabelaCFOP.AsInteger ) then
@@ -1858,7 +1859,14 @@ begin
         , iNumeroNFe
         , sFileNameXML
         , sChaveNFE
-        , sProtocoloNFE);
+        , sProtocoloNFE
+        , TipoMovimento);
+
+      if ( TipoMovimento <> tmNFeSaida ) then
+      begin
+        ShowWarning('Tipo do movimento do recibo incompatível!');
+        Exit;
+      end;
 
       sReciboNFE  := Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString);
       iNumeroLote := iNumeroNFe;

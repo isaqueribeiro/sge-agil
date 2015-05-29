@@ -121,7 +121,8 @@ type
   end;
 
   function BuscarRetornoReciboNFe(const AOnwer : TComponent; const sEmpresa, sRecibo : String;
-    var SerieNFe, NumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE : String) : Boolean;
+    var SerieNFe, NumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE : String;
+    var TipoMovimento : TTipoMovimento) : Boolean;
 
 implementation
 
@@ -130,7 +131,8 @@ uses UDMBusiness, UDMNFe, UConstantesDGE, UFuncoes, UDMRecursos;
 {$R *.dfm}
 
 function BuscarRetornoReciboNFe(const AOnwer : TComponent; const sEmpresa, sRecibo : String;
-  var SerieNFe, NumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE : String) : Boolean;
+  var SerieNFe, NumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE : String;
+  var TipoMovimento : TTipoMovimento) : Boolean;
 var
   AForm : TfrmGeConsultarLoteNFe_v2;
 begin
@@ -151,11 +153,12 @@ begin
 
       if Result then
       begin
-        SerieNFe     :=  FSerieNFe;
-        NumeroNFe    :=  FNumeroNFe;
-        ChaveNFE     := Trim(edChaveNFe.Text);
-        ProtocoloNFE := Trim(edProtocoloTMP.Text);
-        FileNameXML  := FFileNameXML;
+        SerieNFe      :=  FSerieNFe;
+        NumeroNFe     :=  FNumeroNFe;
+        ChaveNFE      := Trim(edChaveNFe.Text);
+        ProtocoloNFE  := Trim(edProtocoloTMP.Text);
+        FileNameXML   := FFileNameXML;
+        TipoMovimento := FTipoMovimento;
       end;
     end;
   finally

@@ -192,10 +192,6 @@ object frmGrPadraoCadastro: TfrmGrPadraoCadastro
     object tbsCadastro: TTabSheet
       Caption = '&Dados'
       ImageIndex = 39
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Bevel8: TBevel
         Left = 0
         Top = 121
@@ -340,8 +336,6 @@ object frmGrPadraoCadastro: TfrmGrPadraoCadastro
       ShowHint = True
       TabOrder = 2
       OnClick = btbtnExcluirClick
-      ExplicitLeft = 152
-      ExplicitTop = -2
     end
     object btbtnCancelar: TcxButton
       Left = 233
@@ -537,7 +531,7 @@ object frmGrPadraoCadastro: TfrmGrPadraoCadastro
     Left = 592
     Top = 8
     Bitmap = {
-      494C01012B002C00100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

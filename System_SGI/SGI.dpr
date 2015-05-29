@@ -134,7 +134,9 @@ uses
   UGeApropriacaoEstoqueImpressao in 'UGeApropriacaoEstoqueImpressao.pas' {frmGeApropriacaoEstoqueImpressao},
   UGeRequisicaoAlmoxImpressao in 'UGeRequisicaoAlmoxImpressao.pas' {frmGeRequisicaoAlmoxImpressao},
   UGeVendaDevolucaoNF in '..\Sys\UGeVendaDevolucaoNF.pas' {frmGeVendaDevolucaoNF},
-  UGrConfigurarBackup in '..\Sys\lib\UGrConfigurarBackup.pas' {frmGrConfigurarBackup};
+  UGrConfigurarBackup in '..\Sys\lib\UGrConfigurarBackup.pas' {frmGrConfigurarBackup},
+  UGeFuncionario in '..\Sys\UGeFuncionario.pas' {frmGeFuncionario},
+  UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF};
 
 {$R *.res}
 

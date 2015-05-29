@@ -3858,6 +3858,21 @@ object DMNFe: TDMNFe
       '  , c.outroscustos as Nfe_valor_outros'
       '  , c.totalnf      as Nfe_valor_total_nota'
       ''
+      '  , c.dnfe_entrada_ano'
+      '  , c.dnfe_entrada_cod'
+      '  , c.dnfe_forma'
+      '  , c.dnfe_chave'
+      '  , c.dnfe_uf'
+      '  , c.dnfe_cnpj_cpf'
+      '  , c.dnfe_ie'
+      '  , c.dnfe_competencia'
+      '  , c.dnfe_serie'
+      '  , c.dnfe_numero'
+      '  , c.dnfe_modelo'
+      '  , c.decf_modelo'
+      '  , c.decf_numero'
+      '  , c.decf_coo'
+      ''
       'from TBCOMPRAS c'
       '  inner join TBCFOP cf on (cf.Cfop_cod = c.nfcfop)'
       '  inner join TBFORMPAGTO fp on (fp.cod = c.formapagto_cod)'
@@ -23000,6 +23015,7 @@ object DMNFe: TDMNFe
         DataSetName = 'CalculoImposto'
       end
       item
+        DataSet = frxDadosProdutos.Owner
         DataSetName = 'DadosProdutos'
       end
       item
@@ -23076,6 +23092,7 @@ object DMNFe: TDMNFe
         Top = 1058.268400000000000000
         Width = 744.567410000000000000
         OnAfterPrint = 'DadosProdutosOnAfterPrint'
+        DataSet = frxDadosProdutos.Owner
         DataSetName = 'DadosProdutos'
         RowCount = 0
         Stretched = True
@@ -26898,6 +26915,7 @@ object DMNFe: TDMNFe
         DataSetName = 'CalculoImposto'
       end
       item
+        DataSet = frxDadosProdutos.Owner
         DataSetName = 'DadosProdutos'
       end
       item
@@ -26962,6 +26980,7 @@ object DMNFe: TDMNFe
         Height = 12.472440940000000000
         Top = 740.787880000000000000
         Width = 1084.725110000000000000
+        DataSet = frxDadosProdutos.Owner
         DataSetName = 'DadosProdutos'
         RowCount = 0
         Stretched = True
