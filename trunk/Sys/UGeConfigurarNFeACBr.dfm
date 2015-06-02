@@ -84,7 +84,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
     OptionsImage.NumGlyphs = 2
     TabOrder = 2
-    ExplicitTop = 550
   end
   object btnSalvar: TcxButton
     Left = 212
@@ -147,8 +146,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
     OptionsImage.NumGlyphs = 2
     TabOrder = 0
     OnClick = btnSalvarClick
-    ExplicitLeft = 115
-    ExplicitTop = 550
   end
   object btnCancelar: TcxButton
     Left = 300
@@ -212,8 +209,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
     OptionsImage.NumGlyphs = 2
     TabOrder = 1
     OnClick = btnCancelarClick
-    ExplicitLeft = 203
-    ExplicitTop = 550
   end
   object pgcGuiasGerais: TPageControl
     Left = 0
@@ -223,42 +218,37 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
     ActivePage = TbsConfiguracoes
     Align = alClient
     TabOrder = 3
-    ExplicitHeight = 545
     object TbsConfiguracoes: TTabSheet
       Caption = 'Configura'#231#245'es'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 281
-      ExplicitHeight = 165
       object pgcGuiasConfiguracoes: TPageControl
         Left = 0
         Top = 0
         Width = 375
         Height = 514
-        ActivePage = TbsGeral
+        ActivePage = TbsCertificado
         Align = alClient
         MultiLine = True
         TabOrder = 0
         object TbsGeral: TTabSheet
+          BorderWidth = 4
           Caption = 'Geral'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 26
-          ExplicitHeight = 524
           object GrpBxGeral: TGroupBox
             Left = 0
             Top = 0
-            Width = 367
-            Height = 433
-            Align = alTop
+            Width = 359
+            Height = 436
+            Align = alClient
             Caption = 'Geral'
             TabOrder = 0
+            ExplicitWidth = 367
+            ExplicitHeight = 433
             DesignSize = (
-              367
-              433)
+              359
+              436)
             object sbtnPathSalvar: TSpeedButton
-              Left = 335
-              Top = 357
+              Left = 327
+              Top = 360
               Width = 23
               Height = 24
               Anchors = [akLeft, akBottom]
@@ -277,20 +267,21 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
                 3BB33773333773333773B333333B3333333B7333333733333337}
               NumGlyphs = 2
               OnClick = sbtnPathSalvarClick
-              ExplicitTop = 373
+              ExplicitTop = 357
             end
             object lblPathSchemas: TLabel
               Left = 8
-              Top = 387
+              Top = 390
               Width = 201
               Height = 13
               Anchors = [akLeft, akBottom]
               Caption = 'Diret'#243'rios com os arquivos XSD (Schemas)'
               FocusControl = edPathSchemas
+              ExplicitTop = 387
             end
             object spPathSchemas: TSpeedButton
-              Left = 335
-              Top = 403
+              Left = 327
+              Top = 406
               Width = 23
               Height = 24
               Anchors = [akLeft, akBottom]
@@ -309,7 +300,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
                 3BB33773333773333773B333333B3333333B7333333733333337}
               NumGlyphs = 2
               OnClick = spPathSchemasClick
-              ExplicitTop = 419
+              ExplicitTop = 403
             end
             object lblFormaEmissao: TLabel
               Left = 8
@@ -355,16 +346,16 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
             end
             object edPathLogs: TEdit
               Left = 8
-              Top = 360
-              Width = 321
+              Top = 363
+              Width = 313
               Height = 21
               Anchors = [akLeft, akBottom]
               TabOrder = 10
-              ExplicitTop = 376
+              ExplicitTop = 360
             end
             object ckSalvar: TCheckBox
               Left = 8
-              Top = 339
+              Top = 342
               Width = 249
               Height = 15
               Anchors = [akLeft, akBottom]
@@ -376,21 +367,21 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
               Font.Style = []
               ParentFont = False
               TabOrder = 9
-              ExplicitTop = 355
+              ExplicitTop = 339
             end
             object edPathSchemas: TEdit
               Left = 8
-              Top = 406
-              Width = 321
+              Top = 409
+              Width = 313
               Height = 21
               Anchors = [akLeft, akBottom]
               TabOrder = 11
-              ExplicitTop = 422
+              ExplicitTop = 406
             end
             object cbFormaEmissao: TComboBox
               Left = 8
               Top = 128
-              Width = 350
+              Width = 342
               Height = 21
               Style = csDropDownList
               TabOrder = 3
@@ -398,26 +389,25 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
             object cbVersaoDF: TComboBox
               Left = 8
               Top = 173
-              Width = 350
+              Width = 342
               Height = 21
               Style = csDropDownList
               TabOrder = 4
             end
             object ckRetirarAcentos: TCheckBox
               Left = 8
-              Top = 315
-              Width = 193
+              Top = 318
+              Width = 249
               Height = 17
               Anchors = [akLeft, akBottom]
               Caption = 'Retirar Acentos dos XMLs enviados'
               Enabled = False
               TabOrder = 8
-              ExplicitTop = 331
             end
             object edIdToken: TEdit
               Left = 8
               Top = 219
-              Width = 350
+              Width = 342
               Height = 21
               Enabled = False
               TabOrder = 5
@@ -425,18 +415,18 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
             object edToken: TEdit
               Left = 8
               Top = 263
-              Width = 350
+              Width = 342
               Height = 21
               Enabled = False
               TabOrder = 6
             end
             object ckEmitirNFCe: TCheckBox
               Left = 8
-              Top = 292
-              Width = 233
+              Top = 295
+              Width = 249
               Height = 17
               Anchors = [akLeft, akBottom]
-              Caption = 'Esta esta'#231#227'o emite e imprime NFC-e '
+              Caption = 'Esta esta'#231#227'o emite e imprime NFC-e  pelo PDV'
               Enabled = False
               Font.Charset = ANSI_CHARSET
               Font.Color = clWindowText
@@ -445,7 +435,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
               Font.Style = []
               ParentFont = False
               TabOrder = 7
-              ExplicitTop = 308
             end
             object ckAtualizarXML: TCheckBox
               Left = 8
@@ -466,18 +455,19 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
             object edFormatoAlerta: TEdit
               Left = 8
               Top = 85
-              Width = 350
+              Width = 342
               Height = 21
               Anchors = [akLeft, akTop, akRight]
               TabOrder = 2
+              ExplicitWidth = 350
             end
           end
           object rgModoGerarNFe: TRadioGroup
             Left = 0
-            Top = 433
-            Width = 367
-            Height = 49
-            Align = alTop
+            Top = 436
+            Width = 359
+            Height = 42
+            Align = alBottom
             Caption = 'Modo de Gerar a NF-e'
             Columns = 2
             Enabled = False
@@ -486,8 +476,7 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
               'Off Line'
               'On Line')
             TabOrder = 1
-            ExplicitTop = 449
-            ExplicitWidth = 363
+            ExplicitTop = 433
           end
         end
         object TbsCertificado: TTabSheet
@@ -763,8 +752,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
             Align = alTop
             Caption = 'Proxy'
             TabOrder = 2
-            ExplicitTop = 153
-            ExplicitWidth = 367
             object lbltProxyHost: TLabel
               Left = 8
               Top = 16
@@ -911,7 +898,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
         object TbsEmitente: TTabSheet
           Caption = 'Emitente'
           ImageIndex = 3
-          ExplicitHeight = 472
           object lbltEmitCNPJ: TLabel
             Left = 8
             Top = 4
@@ -1407,7 +1393,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
       BorderWidth = 4
       Caption = 'Danfe'
       ImageIndex = 1
-      ExplicitHeight = 9
       DesignSize = (
         367
         506)
@@ -1467,7 +1452,6 @@ inherited frmGeConfigurarNFeACBr: TfrmGeConfigurarNFeACBr
       BorderWidth = 4
       Caption = 'E-mail'
       ImageIndex = 2
-      ExplicitHeight = 9
       object GrpBxEmail: TGroupBox
         Left = 0
         Top = 0

@@ -6610,3 +6610,1612 @@ alter CUSTO_MEDIO position 11;
 alter table TBESTOQUE_ALMOX
 alter ID position 12;
 
+
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+CREATE GENERATOR GEN_COMPLEMENTAR;
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+CREATE TABLE TBNFE_COMPLEMENTAR (
+    NFC_NUMERO   DMN_BIGINT_NN NOT NULL /* DMN_BIGINT_NN = INTEGER NOT NULL */,
+    NFC_EMPRESA  DMN_CNPJ_NN /* DMN_CNPJ_NN = VARCHAR(18) NOT NULL */,
+    NFC_DATA     DMN_DATE /* DMN_DATE = DATE */,
+    NFC_HORA     DMN_TIME /* DMN_TIME = TIME */,
+    NFC_ENVIADA  DMN_LOGICO DEFAULT 0 /* DMN_LOGICO = SMALLINT DEFAULT 0 NOT NULL CHECK (value between 0 and 1) */,
+    NFC_TEXTO    DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */,
+    NFE_SERIE    DMN_VCHAR_03_NN /* DMN_VCHAR_03_NN = VARCHAR(3) NOT NULL */,
+    NFE_NUMERO   DMN_BIGINT_NN /* DMN_BIGINT_NN = INTEGER NOT NULL */,
+    NFE_MODELO   DMN_SMALLINT_NN DEFAULT 0 NOT NULL /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    NUMERO       DMN_BIGINT_N /* DMN_BIGINT_N = INTEGER */,
+    PROTOCOLO    DMN_VCHAR_250 /* DMN_VCHAR_250 = VARCHAR(250) */,
+    XML          DMN_TEXTO /* DMN_TEXTO = BLOB SUB_TYPE 1 SEGMENT SIZE 80 */
+);
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ADD CONSTRAINT PK_TBNFE_COMPLEMENTAR PRIMARY KEY (NFC_NUMERO);
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_EMP FOREIGN KEY (NFC_EMPRESA) REFERENCES TBEMPRESA (CNPJ) ON UPDATE CASCADE;
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_NFE FOREIGN KEY (NFC_EMPRESA, NFE_SERIE, NFE_NUMERO, NFE_MODELO) REFERENCES TBNFE_ENVIADA (EMPRESA, SERIE, NUMERO, MODELO);
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER TRIGGER TG_COMPLEMENTAR_COD FOR TBNFE_COMPLEMENTAR
+ACTIVE BEFORE INSERT POSITION 0
+AS
+begin
+  if ( coalesce(new.NFC_numero, 0) = 0 ) then
+    new.NFC_numero = GEN_ID(GEN_COMPLEMENTAR, 1);
+end^
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+SET TERM ; ^
+
+COMMENT ON TABLE TBNFE_COMPLEMENTAR IS 
+'Tabela de NF Complementar (CC-e).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/06/2015
+
+Tabela responsavel por armazenar os registros de notas fiscais complementares
+das NF-e emitidas no sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    01/06/2015 - IMR :
+        + Documentacao da tabela.';
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_NUMERO IS 
+'Numero/Codigo.';
+
+/*------ 01/06/2015 19:30:03 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_EMPRESA IS 
+'Empresa.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_DATA IS 
+'Data.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_HORA IS 
+'Hora.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_ENVIADA IS 
+'NF complementar enviada:
+0 - Nao
+1 - Sim';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_TEXTO IS 
+'Texto geral.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFE_SERIE IS 
+'Serie da Nota Fiscal.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFE_NUMERO IS 
+'Numero da Nota Fiscal.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFE_MODELO IS 
+'Modelo da Nota Fiscal.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NUMERO IS 
+'Retorno NF-e: Sequencial do Evento.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.PROTOCOLO IS 
+'Retorno NF-e: Protocolo do Evento.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.XML IS 
+'Retorno NF-e: XML de Resposta.';
+
+/*------ 01/06/2015 19:30:04 --------*/
+
+GRANT ALL ON TBNFE_COMPLEMENTAR TO PUBLIC;
+
+
+/*------ SYSDBA 01/06/2015 19:41:43 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+    ADD TIPO DMN_SMALLINT_NN,
+    ADD FORNECEDOR DMN_INTEGER_N,
+    ADD CLIENTE DMN_INTEGER_N;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.TIPO IS
+'Tipo:
+0 - Entrada
+1 - Saida';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.FORNECEDOR IS
+'Fornecedor';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.CLIENTE IS
+'Cliente';
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:42:11 --------*/
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_TIPO
+ON TBNFE_COMPLEMENTAR (TIPO);
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:42:59 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_FRN
+FOREIGN KEY (FORNECEDOR)
+REFERENCES TBFORNECEDOR(CODFORN);
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_CLI
+FOREIGN KEY (CLIENTE)
+REFERENCES TBCLIENTE(CODIGO);
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:43:16 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN TIPO
+SET DEFAULT 1
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:46:55 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+    ADD SERIE DMN_VCHAR_03,
+    ADD RECIBO DMN_VCHAR_250;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.SERIE IS
+'Envio NF-e: Serie.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NUMERO IS
+'Envio NF-e: Sequencial.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.RECIBO IS
+'Envio NF-e: Recibo.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.PROTOCOLO IS
+'Retorno NF-e: Protocolo.';
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMPRESA position 2;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_DATA position 3;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_HORA position 4;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_ENVIADA position 5;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TEXTO position 6;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_SERIE position 7;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_NUMERO position 8;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_MODELO position 9;
+
+alter table TBNFE_COMPLEMENTAR
+alter SERIE position 10;
+
+alter table TBNFE_COMPLEMENTAR
+alter NUMERO position 11;
+
+alter table TBNFE_COMPLEMENTAR
+alter RECIBO position 12;
+
+alter table TBNFE_COMPLEMENTAR
+alter PROTOCOLO position 13;
+
+alter table TBNFE_COMPLEMENTAR
+alter XML position 14;
+
+alter table TBNFE_COMPLEMENTAR
+alter TIPO position 15;
+
+alter table TBNFE_COMPLEMENTAR
+alter FORNECEDOR position 16;
+
+alter table TBNFE_COMPLEMENTAR
+alter CLIENTE position 17;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:51:19 --------*/
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_REC
+ON TBNFE_COMPLEMENTAR (RECIBO,PROTOCOLO);
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_NRO
+ON TBNFE_COMPLEMENTAR (SERIE,NUMERO);
+
+
+
+/*------ 01/06/2015 19:53:35 --------*/
+
+Alter Table TBNFE_COMPLEMENTAR
+    add NFC_MODALIDADE_FRETE       DMN_SMALLINT_NN DEFAULT 3 /* DMN_SMALLINT_NN = SMALLINT DEFAULT 0 */,
+    add NFE_TRANSPORTADORA         DMN_INTEGER_N /* DMN_INTEGER_N = INTEGER */,
+    add NFE_PLACA_VEICULO          DMN_VCHAR_10 /* DMN_VCHAR_10 = VARCHAR(10) */,
+    add NFE_PLACA_UF               DMN_VCHAR_02 /* DMN_VCHAR_02 = VARCHAR(2) */,
+    add NFE_PLACA_RNTC             DMN_VCHAR_10 /* DMN_VCHAR_10 = VARCHAR(10) */,
+    add NFE_VALOR_BASE_ICMS        DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_ICMS             DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_BASE_ICMS_SUBST  DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_ICMS_SUBST       DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_TOTAL_PRODUTO    DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_FRETE            DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_SEGURO           DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_DESCONTO         DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_TOTAL_II         DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_TOTAL_IPI        DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_PIS              DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_COFINS           DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_OUTROS           DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */,
+    add NFE_VALOR_TOTAL_NOTA       DMN_MONEY /* DMN_MONEY = NUMERIC(15,2) */;
+
+
+/*------ SYSDBA 01/06/2015 19:54:04 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_TRANSPORTADORA TO NFC_TRANSPORTADORA;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:11 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_PLACA_VEICULO TO NFC_PLACA_VEICULO;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:16 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_PLACA_UF TO NFC_PLACA_UF;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:19 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_PLACA_RNTC TO NFC_PLACA_RNTC;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:23 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_BASE_ICMS TO NFC_VALOR_BASE_ICMS;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:27 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_ICMS TO NFC_VALOR_ICMS;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:30 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_BASE_ICMS_SUBST TO NFC_VALOR_BASE_ICMS_SUBST;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:33 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_ICMS_SUBST TO NFC_VALOR_ICMS_SUBST;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:37 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_TOTAL_PRODUTO TO NFC_VALOR_TOTAL_PRODUTO;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:40 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_FRETE TO NFC_VALOR_FRETE;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:43 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_SEGURO TO NFC_VALOR_SEGURO;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:46 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_DESCONTO TO NFC_VALOR_DESCONTO;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:50 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_TOTAL_II TO NFC_VALOR_TOTAL_II;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:54 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_TOTAL_IPI TO NFC_VALOR_TOTAL_IPI;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:54:57 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_PIS TO NFC_VALOR_PIS;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:00 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_COFINS TO NFC_VALOR_COFINS;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:03 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_OUTROS TO NFC_VALOR_OUTROS;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:07 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER NFE_VALOR_TOTAL_NOTA TO NFC_VALOR_TOTAL_NOTA;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:24 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_BASE_ICMS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:29 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_ICMS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:34 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_BASE_ICMS_SUBST
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:40 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_ICMS_SUBST
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:44 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_TOTAL_PRODUTO
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:50 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_FRETE
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:55:56 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_SEGURO
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:02 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_DESCONTO
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:08 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_TOTAL_II
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:16 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_TOTAL_IPI
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:24 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_PIS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:29 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_COFINS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:36 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_OUTROS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:56:41 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER COLUMN NFC_VALOR_TOTAL_NOTA
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:58:13 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_MODALIDADE_FRETE IS
+'Modalidade Frete:
+0 -  (0) Por conta do Emitente               [CIF - (Cost, Insurance and Freight - “Custo, Seguros e Frete”)]
+1 -  (1) Por conta do Destinatario/Remetente [FOB - (Free on Board - “Livre a bordo”)]
+2 -  (2) Por conta de Terceiros
+3 -  (9) Sem Frete';
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:58:56 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_TRN
+FOREIGN KEY (NFC_TRANSPORTADORA)
+REFERENCES TBFORNECEDOR(CODFORN);
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:59:19 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_TRANSPORTADORA IS
+'Transportadora (Fornecedor de servico de transporte).';
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:59:28 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_TRANSPORTADORA IS
+'Transportadora (Fornecedor do servico de transporte).';
+
+
+
+
+/*------ SYSDBA 01/06/2015 19:59:58 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_PLACA_RNTC IS
+'RNCT do Veiculo.
+
+RNTC - Registros Nacional de Transportes de Carga (Identificacao do vagao quando o transporte for Trem)';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:06:31 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+    ADD NFC_EMISSAO DMN_DATE;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_EMISSAO IS
+'Data de emissao.';
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMPRESA position 2;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_DATA position 3;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_HORA position 4;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMISSAO position 5;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_ENVIADA position 6;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TEXTO position 7;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_SERIE position 8;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_NUMERO position 9;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_MODELO position 10;
+
+alter table TBNFE_COMPLEMENTAR
+alter SERIE position 11;
+
+alter table TBNFE_COMPLEMENTAR
+alter NUMERO position 12;
+
+alter table TBNFE_COMPLEMENTAR
+alter RECIBO position 13;
+
+alter table TBNFE_COMPLEMENTAR
+alter PROTOCOLO position 14;
+
+alter table TBNFE_COMPLEMENTAR
+alter XML position 15;
+
+alter table TBNFE_COMPLEMENTAR
+alter TIPO position 16;
+
+alter table TBNFE_COMPLEMENTAR
+alter FORNECEDOR position 17;
+
+alter table TBNFE_COMPLEMENTAR
+alter CLIENTE position 18;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_MODALIDADE_FRETE position 19;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TRANSPORTADORA position 20;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_VEICULO position 21;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_UF position 22;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_RNTC position 23;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_BASE_ICMS position 24;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_ICMS position 25;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_BASE_ICMS_SUBST position 26;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_ICMS_SUBST position 27;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_PRODUTO position 28;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_FRETE position 29;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_SEGURO position 30;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_DESCONTO position 31;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_II position 32;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_IPI position 33;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_PIS position 34;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_COFINS position 35;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_OUTROS position 36;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_NOTA position 37;
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:13:09 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR DROP CONSTRAINT FK_TBNFE_COMPLEMENTAR_TRN;
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:13:45 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_TRN
+FOREIGN KEY (NFC_TRANSPORTADORA)
+REFERENCES TBFORNECEDOR(CODFORN);
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:22:53 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFE_SERIE IS
+'NF-e de origem: Serie da Nota Fiscal.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:22:56 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFE_NUMERO IS
+'NF-e de origem: Numero da Nota Fiscal.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:23:00 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFE_MODELO IS
+'NF-e de origem: Modelo da Nota Fiscal.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:28:29 --------*/
+
+CREATE INDEX IDX_TVENDASITENS_ITENS
+ON TVENDASITENS (ANO,CODCONTROL,SEQ);
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column ANO position 1;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CODCONTROL position 2;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CODEMP position 3;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column SEQ position 4;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CODPROD position 5;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CODCLIENTE position 6;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CODCLI position 7;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column DTVENDA position 8;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column QTDE position 9;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column PUNIT position 10;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column PUNIT_PROMOCAO position 11;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column DESCONTO position 12;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column DESCONTO_VALOR position 13;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column PFINAL position 14;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column QTDEFINAL position 15;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column UNID_COD position 16;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CFOP_COD position 17;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CST position 18;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column CSOSN position 19;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column ALIQUOTA position 20;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column ALIQUOTA_CSOSN position 21;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column ALIQUOTA_PIS position 22;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column ALIQUOTA_COFINS position 23;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column VALOR_IPI position 24;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column PERCENTUAL_REDUCAO_BC position 25;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column TOTAL_BRUTO position 26;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column TOTAL_DESCONTO position 27;
+
+
+/*------ SYSDBA 01/06/2015 20:29:33 --------*/
+
+alter table TVENDASITENS
+alter column TOTAL_LIQUIDO position 28;
+
+
+/*------ SYSDBA 01/06/2015 20:29:49 --------*/
+
+DROP INDEX IDX_TVENDASITENS_ITENS;
+
+CREATE INDEX IDX_TVENDASITENS_ITENS
+ON TVENDASITENS (ANO,CODCONTROL,CODEMP,SEQ);
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:39:58 --------*/
+
+CREATE TABLE TBNFE_COMPLEMENTAR_ITEM (
+    NFC_NUMERO DMN_BIGINT_NN NOT NULL,
+    NFC_ITEM DMN_SMALLINT_NN NOT NULL,
+    MOV_ANO DMN_SMALLINT_N,
+    MOV_CONTROLE DMN_BIGINT_N,
+    MOV_EMPRESA DMN_CNPJ,
+    MOV_SEQ DMN_SMALLINT_N,
+    QUANTIDADE DMN_QUANTIDADE_D3,
+    VALOR_UNITARIO DMN_MONEY,
+    DESCONTO DMN_PERCENTUAL_3,
+    DESCONTO_VALOR DMN_MONEY_DESCONTO_4,
+    VALOR_FINAL DMN_MONEY_4,
+    TOTAL_BRUTO DMN_MONEY,
+    TOTAL_DESCONTO DMN_MONEY,
+    TOTAL_LIQUIDO DMN_MONEY);
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+ADD CONSTRAINT PK_TBNFE_COMPLEMENTAR_ITEM
+PRIMARY KEY (NFC_NUMERO,NFC_ITEM);
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.QUANTIDADE IS
+'Quantidade
+
+(Aceita valores decimais)';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.DESCONTO IS
+'Percentual c/ 3 casas decimais.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.DESCONTO_VALOR IS
+'Valor Desconto c/ 4 cadas decimais.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_FINAL IS
+'Valor Desconto c/ 4 cadas decimais.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:40:25 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_ITEM
+FOREIGN KEY (NFC_NUMERO)
+REFERENCES TBNFE_COMPLEMENTAR(NFC_NUMERO)
+ON DELETE CASCADE
+ON UPDATE CASCADE;
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:41:02 --------*/
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_ITEM
+ON TBNFE_COMPLEMENTAR_ITEM (MOV_ANO,MOV_CONTROLE,MOV_EMPRESA,MOV_SEQ);
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:42:24 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.NFC_NUMERO IS
+'Numero da NF complementar.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:42:30 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.NFC_ITEM IS
+'Item.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:42:48 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.MOV_ANO IS
+'Movimento de origem: Ano.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:42:59 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.MOV_CONTROLE IS
+'Movimento de origem: Controle.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:43:07 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.MOV_EMPRESA IS
+'Movimento de origem: Empresa.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:43:22 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.MOV_SEQ IS
+'Movimento de origem: Sequencial item.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:43:37 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_UNITARIO IS
+'Valor Unitario';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:43:47 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.DESCONTO IS
+'Percentual do desconto.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:43:56 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.DESCONTO_VALOR IS
+'Valor de desconto.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:44:18 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_FINAL IS
+'Valor unitario final = (Valor Unitario - Valor Desconto)';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:44:26 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.TOTAL_BRUTO IS
+'Total Bruto.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:44:40 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.TOTAL_DESCONTO IS
+'Total Desconto.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:45:01 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.TOTAL_LIQUIDO IS
+'Total Liquido = (Total Bruto - Total Desconto)';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:45:26 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.TOTAL_LIQUIDO IS
+'Total Liquido.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:50:11 --------*/
+
+COMMENT ON TABLE TBNFE_COMPLEMENTAR IS 'Tabela de NF Complementar (CC-e).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/06/2015
+
+Tabela responsavel por armazenar os registros de notas fiscais complementares
+das NF-e emitidas no sistema.
+Obs.: Uma nota fiscal complementar para uma nota fiscal emitida.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    01/06/2015 - IMR :
+        + Documentacao da tabela.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 20:50:50 --------*/
+
+COMMENT ON TABLE TBNFE_COMPLEMENTAR_ITEM IS 'Tabela de Itens da NF Complementar (CC-e).
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/06/2015
+
+Tabela responsavel por armazenar os registros de itens das notas fiscais
+complementares das NF-e emitidas no sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    01/06/2015 - IMR :
+        + Documentacao da tabela.';
+
+GRANT ALL ON TBNFE_COMPLEMENTAR_ITEM TO "PUBLIC";
+
+
+
+/*------ SYSDBA 01/06/2015 21:02:20 --------*/
+
+CREATE INDEX IDX_TBNFE_ENVIADA_VENDA
+ON TBNFE_ENVIADA (ANOVENDA,NUMVENDA);
+
+CREATE INDEX IDX_TBNFE_ENVIADA_COMPRA
+ON TBNFE_ENVIADA (ANOCOMPRA,NUMCOMPRA);
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:03:19 --------*/
+
+ALTER TABLE TBNFE_ENVIADA
+    ADD NFC_NUMERO DMN_BIGINT_N;
+
+COMMENT ON COLUMN TBNFE_ENVIADA.NFC_NUMERO IS
+'Nota fiscal complementar.';
+
+alter table TBNFE_ENVIADA
+alter EMPRESA position 1;
+
+alter table TBNFE_ENVIADA
+alter SERIE position 2;
+
+alter table TBNFE_ENVIADA
+alter NUMERO position 3;
+
+alter table TBNFE_ENVIADA
+alter MODELO position 4;
+
+alter table TBNFE_ENVIADA
+alter VERSAO position 5;
+
+alter table TBNFE_ENVIADA
+alter ANOVENDA position 6;
+
+alter table TBNFE_ENVIADA
+alter NUMVENDA position 7;
+
+alter table TBNFE_ENVIADA
+alter ANOCOMPRA position 8;
+
+alter table TBNFE_ENVIADA
+alter NUMCOMPRA position 9;
+
+alter table TBNFE_ENVIADA
+alter NFC_NUMERO position 10;
+
+alter table TBNFE_ENVIADA
+alter DATAEMISSAO position 11;
+
+alter table TBNFE_ENVIADA
+alter HORAEMISSAO position 12;
+
+alter table TBNFE_ENVIADA
+alter CHAVE position 13;
+
+alter table TBNFE_ENVIADA
+alter PROTOCOLO position 14;
+
+alter table TBNFE_ENVIADA
+alter RECIBO position 15;
+
+alter table TBNFE_ENVIADA
+alter XML_FILENAME position 16;
+
+alter table TBNFE_ENVIADA
+alter XML_FILE position 17;
+
+alter table TBNFE_ENVIADA
+alter LOTE_ANO position 18;
+
+alter table TBNFE_ENVIADA
+alter LOTE_NUM position 19;
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:03:46 --------*/
+
+CREATE INDEX IDX_TBNFE_ENVIADA_NFC
+ON TBNFE_ENVIADA (NFC_NUMERO);
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_NUMERO position 1;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_EMPRESA position 2;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column TIPO position 3;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_DATA position 4;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_HORA position 5;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_EMISSAO position 6;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_ENVIADA position 7;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_TEXTO position 8;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFE_SERIE position 9;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFE_NUMERO position 10;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFE_MODELO position 11;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column SERIE position 12;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NUMERO position 13;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column RECIBO position 14;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column PROTOCOLO position 15;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column XML position 16;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column FORNECEDOR position 17;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column CLIENTE position 18;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_MODALIDADE_FRETE position 19;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_TRANSPORTADORA position 20;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_PLACA_VEICULO position 21;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_PLACA_UF position 22;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_PLACA_RNTC position 23;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_BASE_ICMS position 24;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_ICMS position 25;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_BASE_ICMS_SUBST position 26;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_ICMS_SUBST position 27;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_PRODUTO position 28;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_FRETE position 29;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_SEGURO position 30;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_DESCONTO position 31;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_II position 32;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_IPI position 33;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_PIS position 34;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_COFINS position 35;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_OUTROS position 36;
+
+
+/*------ SYSDBA 01/06/2015 21:14:55 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_NOTA position 37;
+
+
+/*------ SYSDBA 01/06/2015 21:15:10 --------*/
+
+DROP INDEX IDX_TBNFE_COMPLEMENTAR_TIPO;
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:15:21 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR ALTER TIPO TO NFC_TIPO;
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:15:47 --------*/
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_TIPO
+ON TBNFE_COMPLEMENTAR (NFC_TIPO);
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:16:35 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN QUANTIDADE
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:16:43 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN VALOR_UNITARIO
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:21:36 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+    ADD CANCELADA DMN_LOGICO DEFAULT 0,
+    ADD CANCELADA_USUARIO DMN_VCHAR_50,
+    ADD CANCELADA_DATAHORA DMN_DATETIME,
+    ADD CANCELADA_MOTIVO DMN_TEXTO;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.CANCELADA IS
+'NF complementar cancelada:
+0 - Nao
+1 - Sim';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.CANCELADA_USUARIO IS
+'Usuario do cancelamento.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.CANCELADA_DATAHORA IS
+'Data/hora do cancelamento.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.CANCELADA_MOTIVO IS
+'Motivo do cancelamento.';
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:22:50 --------*/
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_CAN
+ON TBNFE_COMPLEMENTAR (CANCELADA);
+
+
+
+
+/*------ SYSDBA 01/06/2015 21:46:17 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+    ADD ALIQUOTA_ICMS DMN_PERCENTUAL,
+    ADD ALIQUOTA_ICMS_ST DMN_PERCENTUAL;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.ALIQUOTA_ICMS IS
+'Aliquota de ICMS.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.ALIQUOTA_ICMS_ST IS
+'Aliquota de ICMS p/ Substituicao Tributaria.';
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_ITEM position 2;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_ANO position 3;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_CONTROLE position 4;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_EMPRESA position 5;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_SEQ position 6;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter QUANTIDADE position 7;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_UNITARIO position 8;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO position 9;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO_VALOR position 10;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_FINAL position 11;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS position 12;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS_ST position 13;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_BRUTO position 14;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_DESCONTO position 15;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_LIQUIDO position 16;
+

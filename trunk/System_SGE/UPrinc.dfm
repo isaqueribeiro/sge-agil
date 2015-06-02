@@ -4686,6 +4686,7 @@ object frmPrinc: TfrmPrinc
       Index = 3
     end
     object RbnTabNota: TdxRibbonTab
+      Active = True
       Caption = 'Notas Fiscais (NF-e)'
       Groups = <
         item
@@ -4719,7 +4720,6 @@ object frmPrinc: TfrmPrinc
       Index = 6
     end
     object RbnTabRelatorio: TdxRibbonTab
-      Active = True
       Caption = 'Relat'#243'rios'
       Groups = <
         item
@@ -4898,7 +4898,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 536
+      DockedLeft = 234
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -5134,7 +5134,7 @@ object frmPrinc: TfrmPrinc
     object BrMngConsultaEstatistica: TdxBar
       Caption = 'Consultas Estat'#237'sticas'
       CaptionButtons = <>
-      DockedLeft = 192
+      DockedLeft = 190
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
@@ -5187,7 +5187,7 @@ object frmPrinc: TfrmPrinc
     object BrMngFinanceiroBoleto: TdxBar
       Caption = 'Boletos Banc'#225'rios / Quita'#231#245'es'
       CaptionButtons = <>
-      DockedLeft = 439
+      DockedLeft = 435
       DockedTop = 0
       FloatLeft = 379
       FloatTop = 206
