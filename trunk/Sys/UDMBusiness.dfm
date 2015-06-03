@@ -1024,6 +1024,7 @@ object DMBusiness: TDMBusiness
         DataSetName = 'CalculoImposto'
       end
       item
+        DataSet = frxDadosProdutos.Owner
         DataSetName = 'DadosProdutos'
       end
       item
@@ -1100,6 +1101,7 @@ object DMBusiness: TDMBusiness
         Top = 1058.268400000000000000
         Width = 744.567410000000000000
         OnAfterPrint = 'DadosProdutosOnAfterPrint'
+        DataSet = frxDadosProdutos.Owner
         DataSetName = 'DadosProdutos'
         RowCount = 0
         Stretched = True

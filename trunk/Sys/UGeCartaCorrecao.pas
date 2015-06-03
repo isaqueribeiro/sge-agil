@@ -119,6 +119,7 @@ var
   iModelo : Integer;
   aDestinatario : TDestinatarioNF;
 begin
+  sEmpresa := IbDtstTabelaCCE_EMPRESA.AsString;
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
     if ( SelecionarNFe(Self, sEmpresa, sSerie, iNumero, iModelo, aDestinatario) ) then
     begin

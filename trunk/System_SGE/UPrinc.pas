@@ -278,6 +278,7 @@ type
       AItem: TdxRibbonBackstageViewGalleryItem);
     procedure RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
+    procedure BrBtnNotaFiscalComplementarClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -325,6 +326,15 @@ begin
     ShowInformation('Usuário sem permissão de acesso para esta rotina.' + #13 + 'Favor entrar em contato com suporte.')
   else
     FormFunction.ShowModalForm(Self, 'frmGeEmpresa');
+end;
+
+procedure TfrmPrinc.BrBtnNotaFiscalComplementarClick(Sender: TObject);
+begin
+  if not GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) then
+    ShowWarning('Certificado não configurado nesta estação de trabalho para que esta rotina seja executada!')
+  else
+  if GetPermissaoRotinaSistema(ROTINA_NFE_COMPLEMENTAR_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeNFComplementar');
 end;
 
 procedure TfrmPrinc.BrBtnRelatorioEstoqueReqClick(Sender: TObject);

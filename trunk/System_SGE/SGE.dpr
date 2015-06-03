@@ -128,7 +128,8 @@ uses
   UGrConfigurarBackup in '..\Sys\lib\UGrConfigurarBackup.pas' {frmGrConfigurarBackup},
   UGeProdutoImpressao in 'UGeProdutoImpressao.pas' {frmGeProdutoImpressao},
   UGeProdutoEstoqueImpressao in 'UGeProdutoEstoqueImpressao.pas' {frmGeProdutoEstoqueImpressao},
-  UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF};
+  UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF},
+  UGeNFComplementar in '..\Sys\UGeNFComplementar.pas' {frmGeNFComplementar};
 
 {$R *.res}
 

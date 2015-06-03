@@ -8219,3 +8219,158 @@ alter TOTAL_DESCONTO position 15;
 alter table TBNFE_COMPLEMENTAR_ITEM
 alter TOTAL_LIQUIDO position 16;
 
+
+
+
+/*------ SYSDBA 02/06/2015 22:59:14 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR DROP XML;
+
+
+
+
+/*------ SYSDBA 02/06/2015 22:59:49 --------*/
+
+DROP INDEX IDX_TBNFE_COMPLEMENTAR_REC;
+
+CREATE INDEX IDX_TBNFE_COMPLEMENTAR_REC
+ON TBNFE_COMPLEMENTAR (RECIBO);
+
+
+
+
+/*------ SYSDBA 02/06/2015 22:59:57 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR DROP PROTOCOLO;
+
+
+
+
+/*------ SYSDBA 02/06/2015 23:01:58 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+    ADD NFC_EMISSOR DMN_VCHAR_50;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_EMISSOR IS
+'Usuario emissor.';
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMPRESA position 2;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TIPO position 3;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_DATA position 4;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_HORA position 5;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMISSAO position 6;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMISSOR position 7;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_ENVIADA position 8;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TEXTO position 9;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_SERIE position 10;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_NUMERO position 11;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_MODELO position 12;
+
+alter table TBNFE_COMPLEMENTAR
+alter SERIE position 13;
+
+alter table TBNFE_COMPLEMENTAR
+alter NUMERO position 14;
+
+alter table TBNFE_COMPLEMENTAR
+alter RECIBO position 15;
+
+alter table TBNFE_COMPLEMENTAR
+alter FORNECEDOR position 16;
+
+alter table TBNFE_COMPLEMENTAR
+alter CLIENTE position 17;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_MODALIDADE_FRETE position 18;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TRANSPORTADORA position 19;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_VEICULO position 20;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_UF position 21;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_RNTC position 22;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_BASE_ICMS position 23;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_ICMS position 24;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_BASE_ICMS_SUBST position 25;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_ICMS_SUBST position 26;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_PRODUTO position 27;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_FRETE position 28;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_SEGURO position 29;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_DESCONTO position 30;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_II position 31;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_IPI position 32;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_PIS position 33;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_COFINS position 34;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_OUTROS position 35;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_NOTA position 36;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA position 37;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA_USUARIO position 38;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA_DATAHORA position 39;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA_MOTIVO position 40;
+
