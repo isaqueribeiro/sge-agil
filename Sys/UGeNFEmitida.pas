@@ -17,9 +17,13 @@ uses
   dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
+  TDestinatarioTipo = (dtNull = -1, dtFornecedor = 0, dtCliente = 1);
+
   TDestinatarioNF = record
+    Codigo      : Integer;
     RazaoSocial : String;
     CpfCnpj     : String;
+    Tipo        : TDestinatarioTipo;
   end;
 
   TfrmGeNFEmitida = class(TfrmGrPadraoCadastro)
@@ -46,12 +50,15 @@ type
     IbDtstTabelaNFE_VALOR_TOTAL: TIBBCDField;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    IbDtstTabelaNFE_DESTINATARIO_CODIGO: TIntegerField;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFE_DESTINATARIO_CNPJGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
     procedure btnFiltrarClick(Sender: TObject);
   private
     { Private declarations }
+    fSemNFComplementar : Boolean;
+    fEmpresa : String;
   public
     { Public declarations }
   end;
@@ -64,7 +71,8 @@ var
 
 implementation
 
-uses UDMBusiness, UConstantesDGE;
+uses
+  UDMBusiness, UConstantesDGE;
 
 {$R *.dfm}
 
@@ -78,11 +86,17 @@ begin
   AForm := TfrmGeNFEmitida.Create(AOnwer);
   try
     AForm.tbsCadastro.TabVisible := False;
-    
+    AForm.fEmpresa               := pEmpresa;
+    AForm.fSemNFComplementar     := True;
+
     AForm.WhereAdditional := 'nf.empresa = ' + QuotedStr(pEmpresa) + ' and ' +
       'nf.dataemissao between ' +
         QuotedStr( FormatDateTime('yyyy-mm-dd', AForm.e1Data.Date) ) + ' and ' +
         QuotedStr( FormatDateTime('yyyy-mm-dd', AForm.e2Data.Date) );
+
+    if AForm.fSemNFComplementar then
+      AForm.WhereAdditional := AForm.WhereAdditional +
+        ' and (coalesce(nf.anovenda, nf.anocompra, 0) > 0)';
 
     Result := AForm.SelecionarRegistro(iCodigo, sDescricao, pEmpresa);
 
@@ -92,8 +106,17 @@ begin
       pNumero := AForm.IbDtstTabelaNUMERO.Value;
       pModelo := AForm.IbDtstTabelaMODELO.Value;
 
+      pDestinatario.Codigo      := AForm.IbDtstTabelaNFE_DESTINATARIO_CODIGO.Value;
       pDestinatario.RazaoSocial := AForm.IbDtstTabelaNFE_DESTINATARIO_RAZAO.Value;
       pDestinatario.CpfCnpj     := AForm.IbDtstTabelaNFE_DESTINATARIO_CNPJ.Value;
+
+      if (AForm.IbDtstTabelaANOVENDA.AsInteger > 0) then
+        pDestinatario.Tipo := dtCliente
+      else
+      if (AForm.IbDtstTabelaANOCOMPRA.AsInteger > 0) then
+        pDestinatario.Tipo := dtFornecedor
+      else
+        pDestinatario.Tipo := dtNull;
     end;
   finally
     AForm.Free;
@@ -103,15 +126,17 @@ end;
 procedure TfrmGeNFEmitida.FormCreate(Sender: TObject);
 begin
   inherited;
-  RotinaID         := EmptyStr;
-  ControlFirstEdit := dbCodigo;
+  RotinaID           := EmptyStr;
+  ControlFirstEdit   := dbCodigo;
+  fEmpresa           := gUsuarioLogado.Empresa;
+  fSemNFComplementar := False;
 
   DisplayFormatCodigo := '###0000000';
   NomeTabela      := 'TBNFE_ENVIADA';
   CampoCodigo     := 'nf.numero';
   CampoDescricao  := 'nf.chave';
   CampoOrdenacao  := 'nf.empresa, nf.serie, nf.numero';
-  WhereAdditional := 'nf.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ' and ' +
+  WhereAdditional := 'nf.empresa = ' + QuotedStr(fEmpresa) + ' and ' +
     'nf.dataemissao between ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
@@ -135,10 +160,13 @@ end;
 
 procedure TfrmGeNFEmitida.btnFiltrarClick(Sender: TObject);
 begin
-  WhereAdditional := 'nf.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ' and ' +
+  WhereAdditional := 'nf.empresa = ' + QuotedStr(fEmpresa) + ' and ' +
     'nf.dataemissao between ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
       QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
+
+  if fSemNFComplementar then
+    WhereAdditional := WhereAdditional + ' and (coalesce(nf.anovenda, nf.anocompra, 0) > 0)';
 
   inherited;
 end;

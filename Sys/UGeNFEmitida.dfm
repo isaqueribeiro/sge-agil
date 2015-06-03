@@ -1,10 +1,10 @@
 inherited frmGeNFEmitida: TfrmGeNFEmitida
   Left = 399
   Top = 207
-  ActiveControl = dbgDados
   Caption = 'Notas Fiscais Emitidas'
   ClientHeight = 471
   OldCreateOrder = True
+  ExplicitWidth = 751
   ExplicitHeight = 510
   PixelsPerInch = 96
   TextHeight = 13
@@ -18,7 +18,6 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
   end
   inherited pgcGuias: TPageControl
     Height = 428
-    ActivePage = tbsTabela
     ExplicitHeight = 428
     inherited tbsTabela: TTabSheet
       ExplicitHeight = 399
@@ -220,13 +219,17 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 727
+      ExplicitHeight = 399
       inherited Bevel8: TBevel
-        Top = 89
+        Top = 73
         ExplicitTop = 89
       end
       inherited GrpBxDadosNominais: TGroupBox
-        Height = 89
-        ExplicitHeight = 89
+        Height = 73
+        ExplicitHeight = 73
         inherited lblCodigo: TLabel
           Width = 47
           Caption = 'N'#250'mero:'
@@ -269,6 +272,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       
         '    coalesce(lpad(nf.numero, 7, '#39'0'#39') || '#39'-'#39' || nf.serie, '#39#39') as ' +
         'nfe_destinatario'
+      '  , coalesce(cl.codigo, fn.codforn) as nfe_destinatario_codigo'
       '  , coalesce(cl.nome, fn.nomeforn)  as nfe_destinatario_razao'
       '  , coalesce(cl.cnpj, fn.cnpj) as nfe_destinatario_cnpj'
       
@@ -307,6 +311,10 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       FieldName = 'NFE_DESTINATARIO'
       ProviderFlags = []
       Size = 12
+    end
+    object IbDtstTabelaNFE_DESTINATARIO_CODIGO: TIntegerField
+      FieldName = 'NFE_DESTINATARIO_CODIGO'
+      ProviderFlags = []
     end
     object IbDtstTabelaNFE_DESTINATARIO_RAZAO: TIBStringField
       FieldName = 'NFE_DESTINATARIO_RAZAO'
@@ -424,7 +432,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
     Left = 288
     Top = 208
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

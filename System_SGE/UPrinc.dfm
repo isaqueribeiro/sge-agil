@@ -5887,10 +5887,10 @@ object frmPrinc: TfrmPrinc
     object BrBtnNotaFiscalComplementar: TdxBarLargeButton
       Caption = 'Nota Fiscal Complementar'
       Category = 10
-      Enabled = False
       Hint = 'Nota Fiscal Complementar'
       Visible = ivAlways
       LargeImageIndex = 69
+      OnClick = BrBtnNotaFiscalComplementarClick
       HotImageIndex = 69
       SyncImageIndex = False
       ImageIndex = 69
