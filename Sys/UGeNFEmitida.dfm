@@ -1,6 +1,7 @@
 inherited frmGeNFEmitida: TfrmGeNFEmitida
   Left = 399
   Top = 207
+  ActiveControl = dbgDados
   Caption = 'Notas Fiscais Emitidas'
   ClientHeight = 471
   OldCreateOrder = True
@@ -18,6 +19,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
   end
   inherited pgcGuias: TPageControl
     Height = 428
+    ActivePage = tbsTabela
     ExplicitHeight = 428
     inherited tbsTabela: TTabSheet
       ExplicitHeight = 399
@@ -66,6 +68,19 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       inherited pnlFiltros: TPanel
         Top = 337
         ExplicitTop = 337
+        object lblNotaCancelada: TLabel [0]
+          Left = 2
+          Top = 4
+          Width = 109
+          Height = 13
+          Caption = '* Notas Canceladas'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
         inherited grpBxFiltro: TGroupBox
           Left = 152
           Width = 571
@@ -294,6 +309,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       '  , nf.numcompra'
       '  , nf.xml_filename'
       '  , nf.xml_file'
+      '  , nf.cancelada'
       'from TBNFE_ENVIADA nf'
       ''
       
@@ -414,6 +430,10 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       BlobType = ftMemo
       Size = 8
     end
+    object IbDtstTabelaCANCELADA: TSmallintField
+      FieldName = 'CANCELADA'
+      Origin = '"TBNFE_ENVIADA"."CANCELADA"'
+    end
   end
   inherited DtSrcTabela: TDataSource
     Left = 384
@@ -432,7 +452,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
     Left = 288
     Top = 208
     Bitmap = {
-      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

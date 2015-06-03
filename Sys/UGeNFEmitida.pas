@@ -51,10 +51,14 @@ type
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
     IbDtstTabelaNFE_DESTINATARIO_CODIGO: TIntegerField;
+    IbDtstTabelaCANCELADA: TSmallintField;
+    lblNotaCancelada: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFE_DESTINATARIO_CNPJGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
     procedure btnFiltrarClick(Sender: TObject);
+    procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
     fSemNFComplementar : Boolean;
@@ -96,7 +100,8 @@ begin
 
     if AForm.fSemNFComplementar then
       AForm.WhereAdditional := AForm.WhereAdditional +
-        ' and (coalesce(nf.anovenda, nf.anocompra, 0) > 0)';
+        ' and (coalesce(nf.anovenda, nf.anocompra, 0) > 0)' +
+        ' and (coalesce(nf.cancelada, 0) = 0)';
 
     Result := AForm.SelecionarRegistro(iCodigo, sDescricao, pEmpresa);
 
@@ -121,6 +126,20 @@ begin
   finally
     AForm.Free;
   end;
+end;
+
+procedure TfrmGeNFEmitida.dbgDadosDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  if ( Sender = dbgDados ) then
+  begin
+    // Destacar Notas Fiscais Canceladas
+    if ( IbDtstTabelaCANCELADA.AsInteger = 1 ) then
+      dbgDados.Canvas.Font.Color := lblNotaCancelada.Font.Color;
+
+    dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
+  end
 end;
 
 procedure TfrmGeNFEmitida.FormCreate(Sender: TObject);
@@ -166,7 +185,9 @@ begin
       QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
 
   if fSemNFComplementar then
-    WhereAdditional := WhereAdditional + ' and (coalesce(nf.anovenda, nf.anocompra, 0) > 0)';
+    WhereAdditional := WhereAdditional +
+      ' and (coalesce(nf.anovenda, nf.anocompra, 0) > 0)' +
+      ' and (coalesce(nf.cancelada, 0) = 0)';
 
   inherited;
 end;

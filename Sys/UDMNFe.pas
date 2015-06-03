@@ -2641,29 +2641,34 @@ begin
         
       end;
 
-      // Dados da Fatura
-
-      Cobr.Fat.nFat  := FormatFloat('0000', qryCalculoImposto.FieldByName('ANO').AsInteger) + '/' + FormatFloat('0000000', qryCalculoImposto.FieldByName('CODCONTROL').AsInteger);
-      Cobr.Fat.vOrig := qryCalculoImposto.FieldByName('TOTALVENDABRUTA').AsCurrency;
-      Cobr.Fat.vDesc := qryCalculoImposto.FieldByName('DESCONTO').AsCurrency ;
-      Cobr.Fat.vLiq  := qryCalculoImposto.FieldByName('TOTALVENDA').AsCurrency ;
-
-      // Dados da(s) Duplicata(s)
-
-      if ( qryCalculoImposto.FieldByName('VENDA_PRAZO').AsInteger = 1 ) then
+      if ( Ide.finNFe = fnNormal ) then
       begin
-        qryDuplicatas.First;
-        while not qryDuplicatas.Eof do
-        begin
-          with Cobr.Dup.Add do
-          begin
-            nDup  := FormatFloat('0000', qryDuplicatasANOLANC.AsInteger) + '/' + FormatFloat('0000000', qryDuplicatasNUMLANC.AsInteger);
-            dVenc := qryDuplicatasDTVENC.AsDateTime;
-            vDup  := qryDuplicatasVALORREC.AsCurrency;
-          end;
 
-          qryDuplicatas.Next;
+        // Dados da Fatura
+
+        Cobr.Fat.nFat  := FormatFloat('0000', qryCalculoImposto.FieldByName('ANO').AsInteger) + '/' + FormatFloat('0000000', qryCalculoImposto.FieldByName('CODCONTROL').AsInteger);
+        Cobr.Fat.vOrig := qryCalculoImposto.FieldByName('TOTALVENDABRUTA').AsCurrency;
+        Cobr.Fat.vDesc := qryCalculoImposto.FieldByName('DESCONTO').AsCurrency ;
+        Cobr.Fat.vLiq  := qryCalculoImposto.FieldByName('TOTALVENDA').AsCurrency ;
+
+        // Dados da(s) Duplicata(s)
+
+        if ( qryCalculoImposto.FieldByName('VENDA_PRAZO').AsInteger = 1 ) then
+        begin
+          qryDuplicatas.First;
+          while not qryDuplicatas.Eof do
+          begin
+            with Cobr.Dup.Add do
+            begin
+              nDup  := FormatFloat('0000', qryDuplicatasANOLANC.AsInteger) + '/' + FormatFloat('0000000', qryDuplicatasNUMLANC.AsInteger);
+              dVenc := qryDuplicatasDTVENC.AsDateTime;
+              vDup  := qryDuplicatasVALORREC.AsCurrency;
+            end;
+
+            qryDuplicatas.Next;
+          end;
         end;
+
       end;
 
       InfAdic.infCpl     := ' * * * ' + #13 +
@@ -3913,29 +3918,34 @@ begin
           //Lacres.Add.nLacre := '';
         end;
 
-//      // Dados da Fatura
-//
-//      Cobr.Fat.nFat  := FormatFloat('0000', qryCalculoImportoANO.AsInteger) + '/' + FormatFloat('0000000', qryCalculoImportoCODCONTROL.AsInteger);
-//      Cobr.Fat.vOrig := qryCalculoImportoTOTALVENDABRUTA.AsCurrency;
-//      Cobr.Fat.vDesc := qryCalculoImportoDESCONTO.AsCurrency ;
-//      Cobr.Fat.vLiq  := qryCalculoImportoTOTALVENDA.AsCurrency ;
-
-      // Dados da(s) Duplicata(s)
-      
-      if ( qryEntradaCalculoImposto.FieldByName('COMPRA_PRAZO').AsInteger = 1 ) then
+      if ( Ide.finNFe = fnNormal ) then
       begin
-        qryEntradaDuplicatas.First;
-        while not qryEntradaDuplicatas.Eof do
-        begin
-          with Cobr.Dup.Add do
-          begin
-            nDup  := FormatFloat('0000', qryEntradaDuplicatasANOLANC.AsInteger) + '/' + FormatFloat('0000000', qryEntradaDuplicatasNUMLANC.AsInteger);
-            dVenc := qryEntradaDuplicatasDTVENC.AsDateTime;
-            vDup  := qryEntradaDuplicatasVALORPAG.AsCurrency;
-          end;
 
-          qryEntradaDuplicatas.Next;
+        // Dados da Fatura
+
+        Cobr.Fat.nFat  := FormatFloat('0000', qryEntradaCalculoImposto.FieldByName('ANO').AsInteger) + '/' + FormatFloat('0000000', qryEntradaCalculoImposto.FieldByName('CODCONTROL').AsInteger);
+        Cobr.Fat.vOrig := qryEntradaCalculoImposto.FieldByName('NFE_VALOR_DESCONTO').AsCurrency + qryEntradaCalculoImposto.FieldByName('NFE_VALOR_TOTAL_NOTA').AsCurrency;
+        Cobr.Fat.vDesc := qryEntradaCalculoImposto.FieldByName('NFE_VALOR_DESCONTO').AsCurrency ;
+        Cobr.Fat.vLiq  := qryEntradaCalculoImposto.FieldByName('NFE_VALOR_TOTAL_NOTA').AsCurrency ;
+
+        // Dados da(s) Duplicata(s)
+
+        if ( qryEntradaCalculoImposto.FieldByName('COMPRA_PRAZO').AsInteger = 1 ) then
+        begin
+          qryEntradaDuplicatas.First;
+          while not qryEntradaDuplicatas.Eof do
+          begin
+            with Cobr.Dup.Add do
+            begin
+              nDup  := FormatFloat('0000', qryEntradaDuplicatasANOLANC.AsInteger) + '/' + FormatFloat('0000000', qryEntradaDuplicatasNUMLANC.AsInteger);
+              dVenc := qryEntradaDuplicatasDTVENC.AsDateTime;
+              vDup  := qryEntradaDuplicatasVALORPAG.AsCurrency;
+            end;
+
+            qryEntradaDuplicatas.Next;
+          end;
         end;
+
       end;
 
       InfAdic.infCpl     := ' * * * ' + #13 +
