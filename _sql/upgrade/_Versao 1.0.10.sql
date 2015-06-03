@@ -8374,3 +8374,1026 @@ alter CANCELADA_DATAHORA position 39;
 alter table TBNFE_COMPLEMENTAR
 alter CANCELADA_MOTIVO position 40;
 
+
+
+
+/*------ SYSDBA 03/06/2015 09:15:11 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+    ADD PRODUTO DMN_VCHAR_10_KEY;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.PRODUTO IS
+'Produto.';
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_ITEM position 2;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_ANO position 3;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_CONTROLE position 4;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_EMPRESA position 5;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_SEQ position 6;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter PRODUTO position 7;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter QUANTIDADE position 8;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_UNITARIO position 9;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO position 10;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO_VALOR position 11;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_FINAL position 12;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS position 13;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS_ST position 14;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_BRUTO position 15;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_DESCONTO position 16;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_LIQUIDO position 17;
+
+
+
+
+/*------ SYSDBA 03/06/2015 09:15:36 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+ADD CONSTRAINT FK_TBNFE_COMPLEMENTAR_ITEM_PRD
+FOREIGN KEY (PRODUTO)
+REFERENCES TBPRODUTO(COD);
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:34:40 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN ALIQUOTA_ICMS
+SET DEFAULT 100.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:34:46 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN ALIQUOTA_ICMS_ST
+SET DEFAULT 100.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:35:52 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN ALIQUOTA_ICMS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:36:00 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN ALIQUOTA_ICMS_ST
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:44:15 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+    ADD VALOR_ICMS DMN_MONEY,
+    ADD VALOR_ICMS_ST DMN_MONEY;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_ICMS IS
+'Valor de ICMS.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_ICMS_ST IS
+'Valor de ICMS p/ Substituicao Tributaria.';
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_ITEM position 2;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_ANO position 3;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_CONTROLE position 4;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_EMPRESA position 5;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_SEQ position 6;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter PRODUTO position 7;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter QUANTIDADE position 8;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_UNITARIO position 9;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO position 10;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO_VALOR position 11;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_FINAL position 12;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS position 13;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS_ST position 14;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_ICMS position 15;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_ICMS_ST position 16;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_BRUTO position 17;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_DESCONTO position 18;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_LIQUIDO position 19;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:49:11 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+    ADD BC_ICMS DMN_MONEY,
+    ADD BC_ICMS_ST DMN_MONEY;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.BC_ICMS IS
+'Base de Calculo do ICMS.';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.BC_ICMS_ST IS
+'Base de Calculo do ICMS p/ Substituicao Tributaria.';
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_ITEM position 2;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_ANO position 3;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_CONTROLE position 4;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_EMPRESA position 5;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_SEQ position 6;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter PRODUTO position 7;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter QUANTIDADE position 8;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_UNITARIO position 9;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO position 10;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter DESCONTO_VALOR position 11;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_FINAL position 12;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS position 13;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS_ST position 14;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter BC_ICMS position 15;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_ICMS position 16;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter BC_ICMS_ST position 17;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_ICMS_ST position 18;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_BRUTO position 19;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_DESCONTO position 20;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_LIQUIDO position 21;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column NFC_NUMERO position 1;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column NFC_ITEM position 2;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_ANO position 3;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_CONTROLE position 4;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_EMPRESA position 5;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_SEQ position 6;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column PRODUTO position 7;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column QUANTIDADE position 8;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_UNITARIO position 9;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column DESCONTO position 10;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column DESCONTO_VALOR position 11;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_FINAL position 12;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column ALIQUOTA_ICMS position 13;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column BC_ICMS position 14;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_ICMS position 15;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column ALIQUOTA_ICMS_ST position 16;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column BC_ICMS_ST position 17;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_ICMS_ST position 18;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column TOTAL_BRUTO position 19;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column TOTAL_DESCONTO position 20;
+
+
+/*------ SYSDBA 03/06/2015 10:49:21 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column TOTAL_LIQUIDO position 21;
+
+
+/*------ SYSDBA 03/06/2015 10:53:33 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM DROP DESCONTO;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:53:38 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM DROP DESCONTO_VALOR;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:54:09 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER VALOR_UNITARIO TO VALOR_UNITARIO_DF;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:54:48 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN BC_ICMS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:54:53 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN VALOR_ICMS
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:55:00 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN BC_ICMS_ST
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 10:55:05 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER COLUMN VALOR_ICMS_ST
+SET DEFAULT 0.0
+;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:04:07 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_UNITARIO_DF IS
+'Valor Unitario (Diferenca de acrescimo).
+
+Obs.: O valor unitario real sera a Valor Unitario da origem mais este valor da
+diferenca.';
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:04:29 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER VALOR_UNITARIO_DF TO VALOR_DIFERENCA;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:05:39 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM
+    ADD VALOR_UNITARIO DMN_MONEY;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter NFC_ITEM position 2;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_ANO position 3;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_CONTROLE position 4;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_EMPRESA position 5;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter MOV_SEQ position 6;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter PRODUTO position 7;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter QUANTIDADE position 8;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_UNITARIO position 9;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_DIFERENCA position 10;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_FINAL position 11;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS position 12;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter BC_ICMS position 13;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_ICMS position 14;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter ALIQUOTA_ICMS_ST position 15;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter BC_ICMS_ST position 16;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter VALOR_ICMS_ST position 17;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_BRUTO position 18;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_DESCONTO position 19;
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter TOTAL_LIQUIDO position 20;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:05:45 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM DROP VALOR_FINAL;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:05:51 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM DROP TOTAL_BRUTO;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:05:56 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM DROP TOTAL_DESCONTO;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:06:44 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.TOTAL_LIQUIDO IS
+'Total Liquido = (Quantidade * Valor da Diferenca).';
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:08:23 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_UNITARIO IS
+'Valor Unitario.
+
+Obs.: Devera ser:
+- Igual ao valor unitario na nota de origem, caso nao exista acrestimo de valor
+- Maior ao valor unitario na nota de origem, caso exista acrestimo de valor';
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column NFC_NUMERO position 1;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column NFC_ITEM position 2;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_ANO position 3;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_CONTROLE position 4;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_EMPRESA position 5;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column MOV_SEQ position 6;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column PRODUTO position 7;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column QUANTIDADE position 8;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_UNITARIO position 9;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_DIFERENCA position 10;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column TOTAL_LIQUIDO position 11;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column ALIQUOTA_ICMS position 12;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column BC_ICMS position 13;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_ICMS position 14;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column ALIQUOTA_ICMS_ST position 15;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column BC_ICMS_ST position 16;
+
+
+/*------ SYSDBA 03/06/2015 11:08:43 --------*/
+
+alter table TBNFE_COMPLEMENTAR_ITEM
+alter column VALOR_ICMS_ST position 17;
+
+
+/*------ SYSDBA 03/06/2015 11:08:59 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM ALTER TOTAL_LIQUIDO TO VALOR_TOTAL;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:13:24 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_TOTAL IS
+'Valor Total a complementar.
+
+Obs.: Sera igual a:
+- Quantidade * Valor Unitario da origem, caso seja apenas acrescimo de quantidade
+- Quantidade da origem * Valor de diferenca, caso seja apenas acrescimo de valor unitario
+-';
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:13:32 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR_ITEM DROP VALOR_UNITARIO;
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:49:32 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.VALOR_TOTAL IS
+'Valor Total a complementar.
+
+Obs.: Sera igual a:
+- Quantidade * Valor Unitario da origem, caso seja apenas acrescimo de quantidade
+- Quantidade da origem * Valor de diferenca, caso seja apenas acrescimo de valor unitario
+- [(Quant. Origem + Quant. dif.) * (Valor Un. Origem + Valor Dif.)] - [Total Liquido Origem]';
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:52:21 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.ALIQUOTA_ICMS IS
+'Aliquota de ICMS.
+
+Obs.: O campo sera preenchido com 100 somente para permitir a validacao da NF-e;
+ou 0 (zero) caso nao seja complemento de ICMS.';
+
+
+
+
+/*------ SYSDBA 03/06/2015 11:52:30 --------*/
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR_ITEM.ALIQUOTA_ICMS_ST IS
+'Aliquota de ICMS p/ Substituicao Tributaria.
+
+Obs.: O campo sera preenchido com 100 somente para permitir a validacao da NF-e;
+ou 0 (zero) caso nao seja complemento de ICMS.';
+
+
+
+
+/*------ SYSDBA 03/06/2015 18:46:00 --------*/
+
+ALTER TABLE TBNFE_ENVIADA
+    ADD CANCELADA DMN_LOGICO DEFAULT 0;
+
+COMMENT ON COLUMN TBNFE_ENVIADA.CANCELADA IS
+'Nota cancelada:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 03/06/2015 18:49:29 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_vendas_cancelar for tbvendas
+active after update position 3
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable valor_produto numeric(15,2);
+  declare variable Movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 5)) then /* 5. Cancelada */
+  begin
+
+    -- Retornar produto do Estoque
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(p.Preco, 0)
+        , coalesce(p.movimenta_estoque, 1)
+      from TVENDASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          produto
+        , empresa
+        , quantidade
+        , estoque
+        , valor_produto
+        , Movimentar
+    do
+    begin
+      estoque = Case when :Movimentar = 1 then (:Estoque + :Quantidade) else :Estoque end;
+
+      -- Retornar estoque
+      Update TBPRODUTO p Set
+        p.Qtde = :Estoque
+      where p.Cod = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('ENTRADA - VENDA CANCELADA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque - :Quantidade
+        , :Quantidade
+        , :Estoque
+        , new.Cancel_usuario
+        , replace('Venda no valor de R$ ' || :Valor_produto, '.', ',')
+      );
+
+    end
+
+    -- Cancelar Contas A Receber (Apenas parcelas nao pagas)
+    Update TBCONTREC r Set
+        r.status   = 'CANCELADA'
+      , r.Situacao = 0 -- Cancelado
+      , r.enviado  = 0 -- Enviar boleto novamente para o banco
+    where r.anovenda = new.ano
+      and r.numvenda = new.codcontrol
+      and coalesce(r.Valorrectot, 0) = 0;
+
+    -- Cancelar Movimento Caixa
+    Update TBCAIXA_MOVIMENTO m Set
+      m.Situacao = 0 -- Cancelado
+    where m.Empresa = new.Codemp
+      and m.Cliente = new.Codcli
+      and m.Venda_ano = new.Ano
+      and m.Venda_num = new.Codcontrol;
+
+    -- Cancelar Registro de Nota Fiscal Eletronica
+    Update TBNFE_ENVIADA nfe Set
+      nfe.cancelada = 1
+    where nfe.empresa  = new.codemp
+      and nfe.serie    = new.serie
+      and nfe.numero   = new.nfe
+      and nfe.anovenda = new.ano
+      and nfe.numvenda = new.codcontrol;
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 03/06/2015 18:50:54 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_compras_cancelar for tbcompras
+active after update position 2
+AS
+  declare variable produto varchar(10);
+  declare variable empresa varchar(18);
+  declare variable estoque    DMN_QUANTIDADE_D3;
+  declare variable quantidade DMN_QUANTIDADE_D3;
+  declare variable custo_compra numeric(15,2);
+  declare variable Movimentar Smallint;
+begin
+  if ( (coalesce(old.Status, 0) <> coalesce(new.Status, 0)) and (new.Status = 3)) then
+  begin
+
+    -- Marcar como AUTORIZADA a Autorizacao de Compra associada a Entrada que ja esta como FATURADA
+    Update TBAUTORIZA_COMPRA ac Set
+        ac.status      = 2  -- 2. Autorizada
+      , ac.data_fatura = null
+    where ac.ano     = coalesce(new.autorizacao_ano, 0)
+      and ac.codigo  = coalesce(new.autorizacao_codigo, 0)
+      and ac.empresa = coalesce(new.autorizacao_empresa, '0')
+      and ac.status  = 3; -- 3. Faturada
+
+    -- Decrementar Estoque do produto
+    for
+      Select
+          i.Codprod
+        , i.Codemp
+        , i.Qtde
+        , coalesce(p.Qtde, 0)
+        , coalesce(i.Customedio, 0)
+        , coalesce(p.movimenta_estoque, 1)
+      from TBCOMPRASITENS i
+        inner join TBPRODUTO p on (p.Cod = i.Codprod)
+      where i.Ano = new.Ano
+        and i.Codcontrol = new.Codcontrol
+      into
+          Produto
+        , Empresa
+        , Quantidade
+        , Estoque
+        , Custo_compra
+        , Movimentar
+    do
+    begin
+      -- Remover a confirmacao de recebimento dos produtos autorizados na Autorizacao de Compras
+      Update TBAUTORIZA_COMPRAITEM aci Set
+        aci.confirmado_recebimento = 0
+      where aci.ano     = coalesce(new.autorizacao_ano, 0)
+        and aci.codigo  = coalesce(new.autorizacao_codigo, 0)
+        and aci.empresa = coalesce(new.autorizacao_empresa, '0')
+        and aci.produto = :Produto
+        and aci.confirmado_recebimento = 1;
+
+      -- Decrementar estoque
+      Update TBPRODUTO p Set
+        p.Qtde       = Case when :Movimentar = 1 then (:Estoque - :Quantidade) else :Estoque end
+      where p.Cod    = :Produto;
+
+      -- Gerar historico
+      Insert Into TBPRODHIST (
+          Codempresa
+        , Codprod
+        , Doc
+        , Historico
+        , Dthist
+        , Qtdeatual
+        , Qtdenova
+        , Qtdefinal
+        , Resp
+        , Motivo
+      ) values (
+          :Empresa
+        , :Produto
+        , new.Ano || '/' || new.Codcontrol
+        , Trim('SAIDA - COMPRA CANCELADA ' || Case when :Movimentar = 1 then '' else '*' end)
+        , Current_time
+        , :Estoque
+        , :Quantidade
+        , :Estoque - :Quantidade
+        , new.Cancel_usuario
+        , replace('Custo Final no valor de R$ ' || :Custo_compra, '.', ',')
+      );
+    end
+     
+    -- Cancelar Movimento Caixa
+    Update TBCAIXA_MOVIMENTO m Set
+      m.Situacao = 0 -- Cancelado
+    where m.Empresa = new.Codemp
+      and m.Fornecedor = new.Codforn
+      and m.Compra_ano = new.Ano
+      and m.Compra_num = new.Codcontrol;
+
+    -- Cancelar Duplicata (Contas A Pagar)
+    Update TBCONTPAG cp Set
+      cp.Situacao = 0 -- Cancelado
+    where cp.Empresa   = new.Codemp
+      and cp.codforn   = new.Codforn
+      and cp.anocompra = new.Ano
+      and cp.numcompra = new.Codcontrol
+      and cp.quitado   = 0;
+
+    -- Cancelar Registro de Nota Fiscal Eletronica
+    Update TBNFE_ENVIADA nfe Set
+      nfe.cancelada = 1
+    where nfe.empresa   = new.codemp
+      and nfe.serie     = new.nfserie
+      and nfe.numero    = new.nf
+      and nfe.anocompra = new.ano
+      and nfe.numcompra = new.codcontrol;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 03/06/2015 18:58:41 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_nfe_enviada_empresa for tbnfe_enviada
+active before insert or update position 10
+AS
+begin
+  new.cancelada = coalesce(new.cancelada, 0);
+  if (new.empresa is null) then
+  begin
+
+    /* Identificando a Empresa da Venda (Saida) */
+
+    if (new.anovenda is not null) then
+    begin
+      Select
+        v.codemp
+      from TBVENDAS v
+      where v.ano        = new.anovenda
+        and v.codcontrol = new.numvenda
+      Into
+        new.empresa;
+
+    end
+
+    else
+
+    /* Identificando a Empresa da Compra (Entrada) */
+
+    if (new.anovenda is not null) then
+    begin
+
+      Select
+        v.codemp
+      from TBVENDAS v
+      where v.ano        = new.anovenda
+        and v.codcontrol = new.numvenda
+      Into
+        new.empresa;
+
+    end
+
+  end
+end^
+
+SET TERM ; ^
+
