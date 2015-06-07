@@ -209,6 +209,7 @@ var
   procedure RegistrarControleAcesso(const AOnwer : TComponent; const EvUserAcesso : TEvUserAccess);
   {$ENDIF}
   procedure CarregarConfiguracoesEmpresa(CNPJ : String; Mensagem : String; var AssinaturaHtml, AssinaturaTXT : String);
+  procedure AliquotaIcms(const UF_Origem, UF_Destino : String; var aAliquotaNormal, aAliquotaST : Currency);
   procedure SetEmpresaIDDefault(CNPJ : String);
   procedure SetSegmento(const iCodigo : Integer; const sDescricao : String);
   procedure SetSistema(iCodigo : Smallint; sNome, sVersao : String);
@@ -303,12 +304,15 @@ var
   function GetEmpresaNome(const sCNPJEmpresa : String) : String;
   function GetEmpresaEnderecoDefault : String;
   function GetEmpresaEndereco(const sCNPJEmitente : String) : String;
+  function GetEmpresaUF(const sCNPJEmitente : String) : String;
   function GetClienteNomeDefault : String;
   function GetClienteNome(const iCodigo : Integer) : String;
   function GetClienteEmail(const iCodigo : Integer) : String;
+  function GetClienteUF(const iCodigo : Integer) : String;
   function GetFornecedorEmail(const iCodigo : Integer) : String;
   function GetFornecedorRazao(const iCodigo : Integer) : String;
   function GetFornecedorContato(const iCodigo : Integer) : String;
+  function GetFornecedorUF(const iCodigo : Integer) : String;
   function GetVendedorNomeDefault : String;
   function GetVendedorNome(const iCodigo : Integer) : String;
   function GetFormaPagtoNomeDefault : String;
@@ -1209,6 +1213,25 @@ begin
       FieldByName('empresa_homepage').AsString;
 
     gContaEmail.Assinatura_Padrao := AssinaturaTXT;
+  end;
+end;
+
+procedure AliquotaIcms(const UF_Origem, UF_Destino : String; var aAliquotaNormal, aAliquotaST : Currency);
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select first 1');
+    SQL.Add('    icms.aliquota_normal');
+    SQL.Add('  , icms.aliquota_st');
+    SQL.Add('from GET_ALIQUOTA_ICMS(' + QuotedStr(UF_Origem) + ', ' + QuotedStr(UF_Destino) + ') icms');
+    Open;
+
+    aAliquotaNormal := FieldByName('aliquota_normal').AsCurrency;
+    aAliquotaST     := FieldByName('aliquota_st').AsCurrency;
+
+    Close;
   end;
 end;
 
@@ -2377,6 +2400,26 @@ begin
   end;
 end;
 
+function GetEmpresaUF(const sCNPJEmitente : String) : String;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select e.uf');
+    SQL.Add('from TBEMPRESA e');
+    if Trim(sCNPJEmitente) = EmptyStr then
+      SQL.Add('where e.cnpj = ' + QuotedStr(GetEmpresaIDDefault))
+    else
+      SQL.Add('where e.cnpj = ' + QuotedStr(sCNPJEmitente));
+    Open;
+
+    Result := Trim(FieldByName('uf').AsString);
+
+    Close;
+  end;
+end;
+
 function GetClienteNomeDefault : String;
 begin
   Result := GetClienteNome( GetClienteIDDefault );
@@ -2407,6 +2450,21 @@ begin
     Open;
 
     Result := AnsiLowerCase(Trim(FieldByName('email').AsString));
+
+    Close;
+  end;
+end;
+
+function GetClienteUF(const iCodigo : Integer) : String;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select uf from TBCLIENTE where Codigo = ' + IntToStr(iCodigo));
+    Open;
+
+    Result := AnsiLowerCase(Trim(FieldByName('uf').AsString));
 
     Close;
   end;
@@ -2452,6 +2510,21 @@ begin
     Open;
 
     Result := AnsiLowerCase(Trim(FieldByName('contato').AsString));
+
+    Close;
+  end;
+end;
+
+function GetFornecedorUF(const iCodigo : Integer) : String;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select uf from TBFORNECEDOR where Codforn = ' + IntToStr(iCodigo));
+    Open;
+
+    Result := AnsiLowerCase(Trim(FieldByName('uf').AsString));
 
     Close;
   end;

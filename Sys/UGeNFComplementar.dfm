@@ -22,11 +22,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
   inherited pgcGuias: TPageControl
     Width = 1036
     Height = 574
-    ExplicitWidth = 1043
-    ExplicitHeight = 523
+    ExplicitWidth = 1036
+    ExplicitHeight = 574
     inherited tbsTabela: TTabSheet
-      ExplicitWidth = 1035
-      ExplicitHeight = 494
+      ExplicitWidth = 1028
+      ExplicitHeight = 545
       inherited Bevel4: TBevel
         Top = 479
         Width = 1028
@@ -121,12 +121,12 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       inherited pnlFiltros: TPanel
         Top = 483
         Width = 1028
-        ExplicitTop = 432
-        ExplicitWidth = 1035
+        ExplicitTop = 483
+        ExplicitWidth = 1028
         inherited grpBxFiltro: TGroupBox
           Left = 352
           Width = 672
-          ExplicitLeft = 359
+          ExplicitLeft = 352
           ExplicitWidth = 672
           inherited lbltFiltrar: TLabel
             Left = 286
@@ -275,8 +275,8 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     inherited tbsCadastro: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 25
-      ExplicitWidth = 1035
-      ExplicitHeight = 494
+      ExplicitWidth = 1028
+      ExplicitHeight = 545
       inherited Bevel8: TBevel
         Top = 113
         Width = 1028
@@ -305,7 +305,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       inherited GrpBxDadosNominais: TGroupBox
         Width = 1028
         Height = 113
-        ExplicitWidth = 1035
+        ExplicitWidth = 1028
         ExplicitHeight = 113
         object lblDataHora: TLabel [1]
           Left = 112
@@ -594,7 +594,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           ShowHint = True
           TabOrder = 3
           OnButtonClick = dbNFeOrigemButtonClick
-          ExplicitWidth = 128
         end
         object dbDestintario: TJvDBComboEdit
           Left = 247
@@ -736,7 +735,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         Align = alTop
         Caption = 'Dados do produto'
         TabOrder = 1
-        ExplicitWidth = 1108
         object lblProduto: TLabel
           Left = 88
           Top = 24
@@ -748,9 +746,9 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         object lblQuantidade: TLabel
           Left = 88
           Top = 64
-          Width = 60
+          Width = 38
           Height = 13
-          Caption = 'Quantidade:'
+          Caption = 'Quant.:'
           FocusControl = dbQuantidade
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -760,11 +758,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           ParentFont = False
         end
         object lblValorDiferenca: TLabel
-          Left = 286
+          Left = 252
           Top = 64
-          Width = 101
+          Width = 72
           Height = 13
-          Caption = 'Valor Diferen'#231'a (R$):'
+          Caption = 'Valor Dif. (R$):'
           FocusControl = dbValorDiferenca
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -774,11 +772,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           ParentFont = False
         end
         object lblValorUn: TLabel
-          Left = 167
+          Left = 156
           Top = 64
-          Width = 92
+          Width = 72
           Height = 13
-          Caption = 'Valor Unit'#225'rio (R$):'
+          Caption = 'Valor Un. (R$):'
           FocusControl = dbValorUn
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -915,8 +913,22 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Font.Style = []
           ParentFont = False
         end
+        object lblValorTotalGeral: TLabel
+          Left = 444
+          Top = 64
+          Width = 80
+          Height = 13
+          Caption = 'Total Geral (R$):'
+          FocusControl = dbValorTotalGeral
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
         object lblValorTotal: TLabel
-          Left = 405
+          Left = 348
           Top = 64
           Width = 79
           Height = 13
@@ -950,10 +962,10 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         object dbQuantidade: TDBEdit
           Left = 88
           Top = 80
-          Width = 73
+          Width = 62
           Height = 21
           Color = clWhite
-          DataField = 'QTDE'
+          DataField = 'QUANTIDADE'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -962,14 +974,15 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Font.Style = []
           ParentFont = False
           TabOrder = 8
+          OnExit = ControlEditExit
         end
         object dbValorDiferenca: TDBEdit
-          Left = 286
+          Left = 252
           Top = 80
-          Width = 113
+          Width = 90
           Height = 21
           Color = clMoneyGreen
-          DataField = 'PUNIT'
+          DataField = 'VALOR_DIFERENCA'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -981,12 +994,12 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           TabOrder = 10
         end
         object dbValorUn: TDBEdit
-          Left = 167
+          Left = 156
           Top = 80
-          Width = 113
+          Width = 90
           Height = 21
           Color = clWhite
-          DataField = 'DESCONTO'
+          DataField = 'MOV_VALOR_UN_NOVO'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -995,6 +1008,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Font.Style = []
           ParentFont = False
           TabOrder = 9
+          OnExit = ControlEditExit
         end
         object dbUnidade: TDBEdit
           Left = 676
@@ -1003,7 +1017,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Height = 21
           TabStop = False
           Color = clMoneyGreen
-          DataField = 'UNP_SIGLA'
+          DataField = 'MOV_UNIDADE_SIGLA'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1021,7 +1035,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Height = 21
           TabStop = False
           Color = clMoneyGreen
-          DataField = 'ALIQUOTA'
+          DataField = 'ALIQUOTA_ICMS'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1037,8 +1051,9 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Top = 40
           Width = 33
           Height = 21
+          TabStop = False
           Color = clMoneyGreen
-          DataField = 'CST'
+          DataField = 'MOV_CST'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1127,6 +1142,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             ParentShowHint = False
             ShowHint = True
             TabOrder = 0
+            OnClick = btnProdutoEditarClick
           end
           object btnProdutoSalvar: TBitBtn
             Left = 0
@@ -1190,7 +1206,72 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             NumGlyphs = 2
             ParentShowHint = False
             ShowHint = True
+            TabOrder = 2
+          end
+          object btnProdutoCancelar: TBitBtn
+            Left = 0
+            Top = 49
+            Width = 70
+            Height = 25
+            Hint = 'Cancelar Edi'#231#227'o'
+            Caption = 'Cancel'
+            Enabled = False
+            Glyph.Data = {
+              36060000424D3606000000000000360000002800000020000000100000000100
+              180000000000000600000000000000000000000000000000000000FF0000FF00
+              00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
+              FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF0000FF0000FF0000FF00707070505850000000D0C0AE00FF0000FF0000FF
+              0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0070707054
+              5454000000BCBCBC00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
+              00FF00B0A0907C644DAD957FA0A0A0FFFFFF5090B0101010988A767B61496048
+              3060483000FF0000FF0000FF0000FF0000FF009C9C9C5F5F5F909090A0A0A0FF
+              FFFF9393931010108585855C5C5C43434343434300FF0000FF0000FF0000FF00
+              00FF00D6BAA8FFFFFFF0E8E0A0A0A090B8C070D0E05098B0101010A09890B0A0
+              9060483000FF0000FF0000FF0000FF0000FF00B7B7B7FFFFFFE6E6E6A0A0A0B6
+              B6B6CBCBCB9898981010109696969C9C9C43434300FF0000FF0000FF00B7B3DA
+              0E2BDFB8ABBDFFFFFFFFFFFFE0E0E050A0B060A8E060C0D05098B01010109090
+              907A5F4600FF0000FF0000FF00BFBFBF5E5E5EB1B1B1FFFFFFFFFFFFE0E0E09C
+              9C9CB1B1B1BBBBBB9898981010109090905A5A5A00FF0000FF0000FF000028FF
+              0020F04050D0FFFFFFFFFFFFFFFFFF4050E00010B090E0F060C0D05098B01010
+              108B7D7200FF0000FF0000FF006464645B5B5B747474FFFFFFFFFFFFFFFFFF79
+              79793E3E3EDCDCDCBBBBBB9898981010107B7B7B00FF0000FF0000FF002D51FC
+              1038FF0028FFF0F8FFFFFFFF9098F00018C06078E060A8B090E0F060C0D05098
+              B0101010CBAF9800FF0000FF008080806F6F6F646464F9F9F9FFFFFFB1B1B148
+              4848949494A3A3A3DCDCDCBBBBBB989898101010AAAAAA00FF0000FF00E7D7DB
+              3050FF2040FF90A0F0C0C8F00028F04058F0FFF8F0D0D8E070B0C090E0F070C8
+              E0808880303890B1959500FF00D9D9D9818181767676B6B6B6D3D3D360606083
+              8383F6F6F6D9D9D9AEAEAEDCDCDCC6C6C684848451515197979700FF0000FF00
+              DCD0DC4060FF3050FF2040FF3050FFFFF8FFFFFFFFFFF8F0D0D8E080B0C0D0B8
+              B07088D06070B030389000FF0000FF00D4D4D48C8C8C818181767676818181FA
+              FAFAFFFFFFF6F6F6D9D9D9B0B0B0B8B8B89B9B9B81818151515100FF0000FF00
+              00FF00B8B5D14068FF4060FFD0D8FFFFFFFFFFFFFFFFF8FFF0F0F0D0D8D06070
+              B07090E06078D06070B000FF0000FF0000FF00BDBDBD9191918C8C8CE2E2E2FF
+              FFFFFFFFFFFAFAFAF0F0F0D4D4D4818181A4A4A490909081818100FF0000FF00
+              C6C4E26078FF6078FF6080FF5070FFF0F0FFFFFFFFFFFFFFFFF8F0F0F0F0B0A0
+              A06070B06070B0D1B2A500FF0000FF00CDCDCD9E9E9E9E9E9EA2A2A2979797F4
+              F4F4FFFFFFFFFFFFF6F6F6F0F0F0A1A1A1818181818181B1B1B100FF00B1B6E9
+              5078FF5078FFC0D0FFFFFFFF7088FF6078FFD0E0FFFFFFFFFFFFFFB0A090B0A0
+              9096785E00FF0000FF0000FF00C4C4C49C9C9C9C9C9CDCDCDCFFFFFFA9A9A99E
+              9E9EE7E7E7FFFFFFFFFFFF9C9C9C9C9C9C73737300FF0000FF00859BF35078FF
+              5078FFC8BED1FFFFFFFFFFFFFFFFFFB0C8FF8098FFFFFFFFB0A0908068508060
+              5060483000FF0000FF00B3B3B39C9C9C9C9C9CC4C4C4FFFFFFFFFFFFFFFFFFD6
+              D6D6B4B4B4FFFFFF9C9C9C6363635E5E5E43434300FF0000FF00859BF36585FA
+              DCD2DCD8C7B6FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A890D0C8C08068
+              50DEBAA500FF0000FF00B3B3B3A4A4A4D6D6D6C3C3C3FFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFA3A3A3C6C6C6636363B7B7B700FF0000FF0000FF0000FF00
+              00FF00D0C0B0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A8A0807060DFBD
+              A700FF0000FF0000FF0000FF0000FF0000FF00BCBCBCFFFFFFFFFFFFFFFFFFFF
+              FFFFFFFFFFFFFFFFA8A8A86C6C6CB9B9B900FF0000FF0000FF0000FF0000FF00
+              00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
+              0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
+              BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
+            NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
             TabOrder = 1
+            OnClick = btnProdutoCancelarClick
           end
         end
         object dbAliquotaST: TDBEdit
@@ -1198,8 +1279,9 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Top = 40
           Width = 91
           Height = 21
+          TabStop = False
           Color = clMoneyGreen
-          DataField = 'PERCENTUAL_REDUCAO_BC'
+          DataField = 'ALIQUOTA_ICMS_ST'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1207,7 +1289,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          ReadOnly = True
           TabOrder = 7
         end
         object dbProduto: TJvDBComboEdit
@@ -1220,9 +1301,8 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           CharCase = ecUpperCase
           ClickKey = 16464
           Color = clMoneyGreen
-          DataField = 'CODPROD'
+          DataField = 'PRODUTO'
           DataSource = DtSrcTabelaItens
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -11
@@ -1283,7 +1363,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           ParentFont = False
           ParentShowHint = False
           ReadOnly = True
-          ShowHint = True
+          ShowHint = False
           TabOrder = 1
         end
         object dbCFOP: TJvDBComboEdit
@@ -1291,14 +1371,14 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Top = 40
           Width = 78
           Height = 21
+          TabStop = False
           ButtonFlat = True
           ButtonHint = 'Pesquisar CFOP (Ctrl+P)'
           CharCase = ecUpperCase
           ClickKey = 16464
           Color = clMoneyGreen
-          DataField = 'CFOP_COD'
+          DataField = 'MOV_CFOP'
           DataSource = DtSrcTabelaItens
-          Enabled = False
           Flat = False
           ParentFlat = False
           Font.Charset = DEFAULT_CHARSET
@@ -1361,7 +1441,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           ParentFont = False
           ParentShowHint = False
           ReadOnly = True
-          ShowHint = True
+          ShowHint = False
           TabOrder = 4
         end
         object dbValorBcIcms: TDBEdit
@@ -1370,23 +1450,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Width = 110
           Height = 21
           Color = clWhite
-          DataField = 'DESCONTO'
-          DataSource = DtSrcTabelaItens
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = []
-          ParentFont = False
-          TabOrder = 12
-        end
-        object dbValorIcms: TDBEdit
-          Left = 676
-          Top = 80
-          Width = 110
-          Height = 21
-          Color = clWhite
-          DataField = 'DESCONTO'
+          DataField = 'BC_ICMS'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1395,14 +1459,15 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Font.Style = []
           ParentFont = False
           TabOrder = 13
+          OnExit = ControlEditExit
         end
-        object dbValorBcIcmsST: TDBEdit
-          Left = 792
+        object dbValorIcms: TDBEdit
+          Left = 676
           Top = 80
-          Width = 109
+          Width = 110
           Height = 21
           Color = clWhite
-          DataField = 'DESCONTO'
+          DataField = 'VALOR_ICMS'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1412,13 +1477,13 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           ParentFont = False
           TabOrder = 14
         end
-        object dbValorIcmsST: TDBEdit
-          Left = 907
+        object dbValorBcIcmsST: TDBEdit
+          Left = 792
           Top = 80
-          Width = 110
+          Width = 109
           Height = 21
           Color = clWhite
-          DataField = 'DESCONTO'
+          DataField = 'BC_ICMS_ST'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1427,14 +1492,49 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           Font.Style = []
           ParentFont = False
           TabOrder = 15
+          OnExit = ControlEditExit
         end
-        object dbValorTotal: TDBEdit
-          Left = 405
+        object dbValorIcmsST: TDBEdit
+          Left = 907
           Top = 80
-          Width = 113
+          Width = 110
+          Height = 21
+          Color = clWhite
+          DataField = 'VALOR_ICMS_ST'
+          DataSource = DtSrcTabelaItens
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 16
+          OnExit = ControlEditExit
+        end
+        object dbValorTotalGeral: TDBEdit
+          Left = 444
+          Top = 80
+          Width = 110
           Height = 21
           Color = clMoneyGreen
-          DataField = 'PUNIT'
+          DataField = 'MOV_TOTAL_GERAL'
+          DataSource = DtSrcTabelaItens
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 12
+        end
+        object dbValorTotal: TDBEdit
+          Left = 348
+          Top = 80
+          Width = 90
+          Height = 21
+          Color = clMoneyGreen
+          DataField = 'VALOR_TOTAL'
           DataSource = DtSrcTabelaItens
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -1451,16 +1551,12 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         Top = 392
         Width = 1028
         Height = 153
-        ActivePage = TbsInformeNFe
+        ActivePage = tbsValores
         Align = alBottom
         TabOrder = 2
         object tbsValores: TTabSheet
           BorderWidth = 4
           Caption = 'Valores'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object GrpBxDadosValores: TGroupBox
             Left = 0
             Top = 0
@@ -1475,9 +1571,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
-            ExplicitTop = 8
-            ExplicitWidth = 1019
-            ExplicitHeight = 76
             object lblValorFrete: TLabel
               Left = 238
               Top = 64
@@ -1579,9 +1672,9 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             object lblValorIPI: TLabel
               Left = 436
               Top = 64
-              Width = 18
+              Width = 45
               Height = 13
-              Caption = 'IPI:'
+              Caption = 'Total IPI:'
               FocusControl = dbValorIPI
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1624,7 +1717,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Width = 97
               Height = 21
               Color = clWhite
-              DataField = 'FRETE'
+              DataField = 'NFC_VALOR_FRETE'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1639,7 +1732,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 97
               Height = 21
-              DataField = 'ICMSBASE'
+              DataField = 'NFC_VALOR_BASE_ICMS'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1654,7 +1747,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 113
               Height = 21
-              DataField = 'ICMSSUBSTBASE'
+              DataField = 'NFC_VALOR_BASE_ICMS_SUBST'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1669,7 +1762,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 97
               Height = 21
-              DataField = 'TOTALPROD'
+              DataField = 'NFC_VALOR_TOTAL_PRODUTO'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1684,7 +1777,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 89
               Height = 21
-              DataField = 'OUTROSCUSTOS'
+              DataField = 'NFC_VALOR_OUTROS'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1699,7 +1792,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 124
               Height = 21
-              DataField = 'TOTALNF'
+              DataField = 'NFC_VALOR_TOTAL_NOTA'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1714,7 +1807,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 89
               Height = 21
-              DataField = 'DESCONTO'
+              DataField = 'NFC_VALOR_DESCONTO'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1729,7 +1822,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 80
               Width = 89
               Height = 21
-              DataField = 'IPI'
+              DataField = 'NFC_VALOR_TOTAL_IPI'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1744,7 +1837,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 80
               Width = 113
               Height = 21
-              DataField = 'ICMSSUBSTVALOR'
+              DataField = 'NFC_VALOR_ICMS_SUBST'
               DataSource = DtSrcTabela
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1759,7 +1852,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 80
               Width = 97
               Height = 21
-              DataField = 'ICMSVALOR'
+              DataField = 'NFC_VALOR_ICMS'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
               Font.Color = clBlack
@@ -1774,8 +1867,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         object tbsObservacoes: TTabSheet
           Caption = 'Informa'#231#245'es adicionais'
           ImageIndex = 1
-          ExplicitWidth = 1027
-          ExplicitHeight = 158
           object pnlObservacao: TPanel
             Left = 0
             Top = 0
@@ -1784,8 +1875,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 520
-            ExplicitHeight = 150
             object lblObservacao: TLabel
               Left = 0
               Top = 0
@@ -1820,7 +1909,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Width = 1016
               Height = 108
               Align = alClient
-              DataField = 'OBS'
+              DataField = 'NFC_TEXTO'
               DataSource = DtSrcTabela
               ScrollBars = ssBoth
               TabOrder = 0
@@ -1830,16 +1919,10 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         object tbsTransporte: TTabSheet
           Caption = 'Dados Transporte'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TbsInformeNFe: TTabSheet
           Caption = 'Informa'#231#245'es de Envio NF-e'
           ImageIndex = 3
-          ExplicitWidth = 1027
-          ExplicitHeight = 158
           object lblLogNFeLote: TLabel
             Left = 8
             Top = 0
@@ -2305,6 +2388,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           end
           item
             Expanded = False
+            FieldName = 'MOV_CFOP'
             Title.Alignment = taCenter
             Title.Caption = 'CFOP'
             Width = 40
@@ -2312,53 +2396,61 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           end
           item
             Expanded = False
+            FieldName = 'ALIQUOTA_ICMS'
             Title.Caption = '% Al'#237'q.'
             Width = 45
             Visible = True
           end
           item
             Expanded = False
+            FieldName = 'QUANTIDADE'
             Title.Caption = 'Qtde.'
             Width = 40
             Visible = True
           end
           item
             Expanded = False
+            FieldName = 'MOV_UNIDADE_SIGLA'
             Title.Caption = 'Und.'
             Visible = True
           end
           item
             Expanded = False
-            Title.Caption = 'Valor Un.'
+            FieldName = 'MOV_VALOR_UN_NOVO'
+            Title.Caption = 'Valor Un. (R$)'
             Width = 85
             Visible = True
           end
           item
             Expanded = False
-            Title.Caption = '% Desc.'
-            Width = 50
-            Visible = True
-          end
-          item
-            Expanded = False
-            Title.Caption = 'Valor L'#237'q.'
+            FieldName = 'VALOR_DIFERENCA'
+            Title.Caption = 'Dif. (R$)'
             Width = 85
             Visible = True
           end
           item
             Expanded = False
-            Title.Caption = 'Total Bruto'
+            FieldName = 'VALOR_TOTAL'
+            Title.Caption = 'Valor Total'
             Width = 85
             Visible = True
           end
           item
             Expanded = False
+            FieldName = 'BC_ICMS'
+            Title.Caption = 'BC ICMS (R$)'
+            Width = 85
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'VALOR_ICMS'
             Font.Charset = ANSI_CHARSET
             Font.Color = clBlack
             Font.Height = -11
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
-            Title.Caption = 'Total L'#237'quido'
+            Title.Caption = 'Valor ICMS'
             Width = 85
             Visible = True
           end>
@@ -2368,8 +2460,8 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
   inherited tlbBotoes: TPanel
     Top = 578
     Width = 1036
-    ExplicitTop = 527
-    ExplicitWidth = 1043
+    ExplicitTop = 578
+    ExplicitWidth = 1036
     inherited bvlTool3: TBevel
       Left = 953
       ExplicitLeft = 960
@@ -2380,11 +2472,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     end
     inherited btbtnFechar: TcxButton
       Left = 957
-      ExplicitLeft = 964
+      ExplicitLeft = 957
     end
     inherited btbtnSelecionar: TcxButton
       Left = 833
-      ExplicitLeft = 840
+      ExplicitLeft = 833
     end
     object btbtnGerarNFe: TcxButton
       Tag = 11
@@ -2450,7 +2542,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       ParentShowHint = False
       ShowHint = True
       TabOrder = 8
-      ExplicitLeft = 600
     end
     object btbtnCancelarNFC: TcxButton
       Tag = 12
@@ -2517,7 +2608,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       ParentShowHint = False
       ShowHint = True
       TabOrder = 9
-      ExplicitLeft = 720
     end
   end
   inherited IbDtstTabela: TIBDataSet
@@ -2587,6 +2677,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       DisplayFormat = '###0000000'
     end
     object IbDtstTabelaNFC_EMPRESA: TIBStringField
+      DisplayLabel = 'NF-e: Empresa'
       FieldName = 'NFC_EMPRESA'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_EMPRESA"'
       ProviderFlags = [pfInUpdate]
@@ -2634,6 +2725,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       Size = 8
     end
     object IbDtstTabelaNFE_SERIE: TIBStringField
+      DisplayLabel = 'NF-e: S'#233'rie'
       FieldName = 'NFE_SERIE'
       Origin = '"TBNFE_COMPLEMENTAR"."NFE_SERIE"'
       ProviderFlags = [pfInUpdate]
@@ -2641,12 +2733,14 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       Size = 3
     end
     object IbDtstTabelaNFE_NUMERO: TIntegerField
+      DisplayLabel = 'NF-e: N'#250'mero'
       FieldName = 'NFE_NUMERO'
       Origin = '"TBNFE_COMPLEMENTAR"."NFE_NUMERO"'
       ProviderFlags = [pfInUpdate]
       Required = True
     end
     object IbDtstTabelaNFE_MODELO: TSmallintField
+      DisplayLabel = 'NF-e: Modelo'
       FieldName = 'NFE_MODELO'
       Origin = '"TBNFE_COMPLEMENTAR"."NFE_MODELO"'
       ProviderFlags = [pfInUpdate]
@@ -2708,100 +2802,142 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       Size = 10
     end
     object IbDtstTabelaNFC_VALOR_BASE_ICMS: TIBBCDField
+      DisplayLabel = 'Base ICMS'
       FieldName = 'NFC_VALOR_BASE_ICMS'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_BASE_ICMS"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_ICMS: TIBBCDField
+      DisplayLabel = 'Valor ICMS'
       FieldName = 'NFC_VALOR_ICMS'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_ICMS"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_BASE_ICMS_SUBST: TIBBCDField
+      DisplayLabel = 'Base ICMS ST'
       FieldName = 'NFC_VALOR_BASE_ICMS_SUBST'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_BASE_ICMS_SUBST"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_ICMS_SUBST: TIBBCDField
+      DisplayLabel = 'Valor ICMS ST'
       FieldName = 'NFC_VALOR_ICMS_SUBST'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_ICMS_SUBST"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_TOTAL_PRODUTO: TIBBCDField
+      DisplayLabel = 'Total Produto'
       FieldName = 'NFC_VALOR_TOTAL_PRODUTO'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_TOTAL_PRODUTO"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_FRETE: TIBBCDField
+      DisplayLabel = 'Frete'
       FieldName = 'NFC_VALOR_FRETE'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_FRETE"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_SEGURO: TIBBCDField
+      DisplayLabel = 'Seguros'
       FieldName = 'NFC_VALOR_SEGURO'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_SEGURO"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_DESCONTO: TIBBCDField
+      DisplayLabel = 'Descontos'
       FieldName = 'NFC_VALOR_DESCONTO'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_DESCONTO"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_TOTAL_II: TIBBCDField
+      DisplayLabel = 'Total II'
       FieldName = 'NFC_VALOR_TOTAL_II'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_TOTAL_II"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_TOTAL_IPI: TIBBCDField
+      DisplayLabel = 'Total IPI'
       FieldName = 'NFC_VALOR_TOTAL_IPI'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_TOTAL_IPI"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_PIS: TIBBCDField
+      DisplayLabel = 'Total PIS'
       FieldName = 'NFC_VALOR_PIS'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_PIS"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_COFINS: TIBBCDField
+      DisplayLabel = 'Total COFINS'
       FieldName = 'NFC_VALOR_COFINS'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_COFINS"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_OUTROS: TIBBCDField
+      DisplayLabel = 'Outros'
       FieldName = 'NFC_VALOR_OUTROS'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_OUTROS"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object IbDtstTabelaNFC_VALOR_TOTAL_NOTA: TIBBCDField
+      DisplayLabel = 'Total Nota Fiscal (R$)'
       FieldName = 'NFC_VALOR_TOTAL_NOTA'
       Origin = '"TBNFE_COMPLEMENTAR"."NFC_VALOR_TOTAL_NOTA"'
       ProviderFlags = [pfInUpdate]
+      Required = True
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -3010,7 +3146,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     Left = 424
     Top = 64
     Bitmap = {
-      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4595,9 +4731,14 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       '  , up.unp_descricao           as mov_unidade'
       '  , up.unp_sigla               as mov_unidade_sigla'
       '  , coalesce(vi.punit, ci.precounit) as mov_valor_un'
+      '  , coalesce(vi.punit, ci.precounit) +'
+      '    coalesce(i.valor_diferenca, 0.0) as mov_valor_un_novo'
       
         '  , coalesce(vi.total_bruto, (ci.qtde * ci.precounit)) as mov_va' +
         'lor_total'
+      
+        '  , cast(coalesce(i.valor_total, 0.0) + coalesce(vi.total_bruto,' +
+        ' (ci.qtde * ci.precounit)) as DMN_MONEY) as mov_total_geral'
       '  , coalesce(vi.cfop_cod, ci.cfop)   as mov_cfop'
       '  , cf.cfop_descricao                as mov_cfop_descricao'
       '  , coalesce(vi.cst, ci.cst)         as mov_cst'
@@ -4606,6 +4747,8 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       
         '  , coalesce(vi.aliquota_csosn, ci.aliquota_csosn) as mov_aliquo' +
         'ta_csosn'
+      '  , 12.0 as mov_aliquota_st'
+      '  , 56.93 as mov_aliquota_mva'
       'from TBNFE_COMPLEMENTAR_ITEM i'
       '  inner join TBPRODUTO pd on (pd.cod = i.produto)'
       ''
@@ -4636,9 +4779,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
     end
     object cdsTabelaItensNFC_ITEM: TSmallintField
+      Alignment = taCenter
       FieldName = 'NFC_ITEM'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."NFC_ITEM"'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      DisplayFormat = '00'
     end
     object cdsTabelaItensMOV_ANO: TSmallintField
       FieldName = 'MOV_ANO'
@@ -4671,6 +4816,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'QUANTIDADE'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."QUANTIDADE"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.###'
       Precision = 18
       Size = 3
     end
@@ -4678,6 +4824,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'VALOR_DIFERENCA'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."VALOR_DIFERENCA"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -4685,6 +4832,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'VALOR_TOTAL'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."VALOR_TOTAL"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -4692,6 +4840,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'ALIQUOTA_ICMS'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."ALIQUOTA_ICMS"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.##'
       Precision = 18
       Size = 2
     end
@@ -4699,6 +4848,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'BC_ICMS'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."BC_ICMS"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -4706,6 +4856,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'VALOR_ICMS'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."VALOR_ICMS"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -4713,6 +4864,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'ALIQUOTA_ICMS_ST'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."ALIQUOTA_ICMS_ST"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.##'
       Precision = 18
       Size = 2
     end
@@ -4720,6 +4872,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'BC_ICMS_ST'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."BC_ICMS_ST"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -4727,6 +4880,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       FieldName = 'VALOR_ICMS_ST'
       Origin = '"TBNFE_COMPLEMENTAR_ITEM"."VALOR_ICMS_ST"'
       ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
@@ -4739,6 +4893,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     object cdsTabelaItensMOV_QUANTIDADE: TIBBCDField
       FieldName = 'MOV_QUANTIDADE'
       ProviderFlags = []
+      DisplayFormat = ',0.###'
       Precision = 18
       Size = 3
     end
@@ -4757,14 +4912,30 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     object cdsTabelaItensMOV_VALOR_UN: TIBBCDField
       FieldName = 'MOV_VALOR_UN'
       ProviderFlags = []
+      DisplayFormat = ',0.00#'
+      Precision = 18
+      Size = 2
+    end
+    object cdsTabelaItensMOV_VALOR_UN_NOVO: TIBBCDField
+      FieldName = 'MOV_VALOR_UN_NOVO'
+      ProviderFlags = []
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 2
     end
     object cdsTabelaItensMOV_VALOR_TOTAL: TFMTBCDField
       FieldName = 'MOV_VALOR_TOTAL'
       ProviderFlags = []
+      DisplayFormat = ',0.00#'
       Precision = 18
       Size = 5
+    end
+    object cdsTabelaItensMOV_TOTAL_GERAL: TIBBCDField
+      FieldName = 'MOV_TOTAL_GERAL'
+      ProviderFlags = []
+      DisplayFormat = ',0.00#'
+      Precision = 18
+      Size = 2
     end
     object cdsTabelaItensMOV_CFOP: TIntegerField
       FieldName = 'MOV_CFOP'
@@ -4789,12 +4960,28 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     object cdsTabelaItensMOV_ALIQUOTA: TIBBCDField
       FieldName = 'MOV_ALIQUOTA'
       ProviderFlags = []
+      DisplayFormat = ',0.##'
       Precision = 18
       Size = 2
     end
     object cdsTabelaItensMOV_ALIQUOTA_CSOSN: TIBBCDField
       FieldName = 'MOV_ALIQUOTA_CSOSN'
       ProviderFlags = []
+      DisplayFormat = ',0.##'
+      Precision = 18
+      Size = 2
+    end
+    object cdsTabelaItensMOV_ALIQUOTA_ST: TIBBCDField
+      FieldName = 'MOV_ALIQUOTA_ST'
+      ProviderFlags = []
+      DisplayFormat = ',0.##'
+      Precision = 18
+      Size = 1
+    end
+    object cdsTabelaItensMOV_ALIQUOTA_MVA: TIBBCDField
+      FieldName = 'MOV_ALIQUOTA_MVA'
+      ProviderFlags = []
+      DisplayFormat = ',0.##'
       Precision = 18
       Size = 2
     end
@@ -4914,6 +5101,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
   object DtSrcTabelaItens: TDataSource
     AutoEdit = False
     DataSet = cdsTabelaItens
+    OnStateChange = DtSrcTabelaItensStateChange
     Left = 519
     Top = 96
   end
@@ -5127,5 +5315,69 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     DataSet = qryNFE
     Left = 520
     Top = 128
+  end
+  object qryProdutos: TIBDataSet
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    RefreshSQL.Strings = (
+      '')
+    SelectSQL.Strings = (
+      'Select'
+      '    nf.serie'
+      '  , nf.numero'
+      '  , nf.modelo'
+      '  , Case when nf.anocompra is not null then 0 else 1 end tipo'
+      '  , coalesce(nf.anovenda, nf.anocompra) as mov_ano'
+      '  , coalesce(nf.numvenda, nf.numcompra) as mov_controle'
+      '  , nf.empresa as mov_empresa'
+      '  , coalesce(vi.seq, ci.seq) as mov_seq'
+      '  , coalesce(vi.codprod, ci.codprod) as mov_produto'
+      '  , pd.descri_apresentacao           as mov_produto_descricao'
+      '  , coalesce(vi.qtde, ci.qtde) as mov_quantidade'
+      '  , coalesce(vi.unid_cod, ci.unid_cod) as mov_unidade_cod'
+      '  , up.unp_descricao           as mov_unidade'
+      '  , up.unp_sigla               as mov_unidade_sigla'
+      '  , coalesce(vi.punit, ci.precounit) as mov_valor_un'
+      
+        '  , coalesce(vi.total_bruto, (ci.qtde * ci.precounit)) as mov_va' +
+        'lor_total'
+      '  , coalesce(vi.cfop_cod, ci.cfop)   as mov_cfop'
+      '  , cf.cfop_descricao                as mov_cfop_descricao'
+      '  , coalesce(vi.cst, ci.cst)         as mov_cst'
+      '  , coalesce(vi.csosn, pd.csosn)     as mov_csosn'
+      '  , coalesce(vi.aliquota, ci.aliquota) as mov_aliquota'
+      
+        '  , coalesce(vi.aliquota_csosn, ci.aliquota_csosn) as mov_aliquo' +
+        'ta_csosn'
+      'from TBNFE_ENVIADA nf'
+      
+        '  left join TVENDASITENS   vi on (vi.ano = nf.anovenda  and vi.c' +
+        'odcontrol = nf.numvenda  and vi.codemp = nf.empresa)'
+      
+        '  left join TBCOMPRASITENS ci on (ci.ano = nf.anocompra and ci.c' +
+        'odcontrol = nf.numcompra and ci.codemp = nf.empresa)'
+      ''
+      
+        '  left join TBPRODUTO      pd on (pd.cod      = coalesce(vi.codp' +
+        'rod,  ci.codprod))'
+      
+        '  left join TBUNIDADEPROD  up on (up.unp_cod  = coalesce(vi.unid' +
+        '_cod, ci.unid_cod))'
+      
+        '  left join TBCFOP         cf on (cf.cfop_cod = coalesce(vi.cfop' +
+        '_cod, ci.cfop))'
+      ''
+      'where nf.empresa = :empresa'
+      '  and nf.serie   = :serie'
+      '  and nf.numero  = :numero'
+      '  and nf.modelo  = :modelo')
+    ModifySQL.Strings = (
+      '')
+    ParamCheck = True
+    UniDirectional = False
+    Left = 784
+    Top = 408
   end
 end

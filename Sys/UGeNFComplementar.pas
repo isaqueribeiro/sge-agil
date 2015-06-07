@@ -123,8 +123,8 @@ type
     dbValorBcIcmsST: TDBEdit;
     dbValorIcmsST: TDBEdit;
     lblValorIcmsST: TLabel;
-    lblValorTotal: TLabel;
-    dbValorTotal: TDBEdit;
+    lblValorTotalGeral: TLabel;
+    dbValorTotalGeral: TDBEdit;
     cdsTabelaItens: TIBDataSet;
     IbUpdTabelaItens: TIBUpdateSQL;
     DtSrcTabelaItens: TDataSource;
@@ -233,6 +233,14 @@ type
     qryNFELOTE_NUM: TIntegerField;
     updNFE: TIBUpdateSQL;
     dtsNFE: TDataSource;
+    cdsTabelaItensMOV_VALOR_UN_NOVO: TIBBCDField;
+    cdsTabelaItensMOV_TOTAL_GERAL: TIBBCDField;
+    lblValorTotal: TLabel;
+    dbValorTotal: TDBEdit;
+    cdsTabelaItensMOV_ALIQUOTA_ST: TIBBCDField;
+    cdsTabelaItensMOV_ALIQUOTA_MVA: TIBBCDField;
+    qryProdutos: TIBDataSet;
+    btnProdutoCancelar: TBitBtn;
     procedure pgcGuiasChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFC_DATAGetText(Sender: TField; var Text: string;
@@ -246,14 +254,21 @@ type
     procedure btbtnExcluirClick(Sender: TObject);
     procedure btbtnIncluirClick(Sender: TObject);
     procedure btbtnAlterarClick(Sender: TObject);
+    procedure DtSrcTabelaStateChange(Sender: TObject);
+    procedure DtSrcTabelaItensStateChange(Sender: TObject);
+    procedure ControlEditExit(Sender: TObject);
+    procedure btbtnSalvarClick(Sender: TObject);
+    procedure btnProdutoEditarClick(Sender: TObject);
+    procedure btnProdutoCancelarClick(Sender: TObject);
   private
     { Private declarations }
     SQL_Itens : TStringList;
-    procedure RecarregarRegistro; virtual; abstract;
+    procedure RecarregarRegistro;
     procedure AbrirTabelaItens(const Controle : Integer);
     procedure AbrirNotaFiscal(const Empresa : String; const Controle : Integer);
 
-    procedure HabilitarDesabilitar_Btns; virtual; abstract;
+    procedure HabilitarDesabilitar_Btns;
+    procedure CarregarProdutos(const aEmpresa, aSerie : String;const aNumero, aModelo : Integer);
 
     function GetRotinaGerarNFeID : String;
     function GetRotinaCancelarNFCID : String;
@@ -272,7 +287,7 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE, UGeNFEmitida;
+  UDMBusiness, UConstantesDGE, UGeNFEmitida, UDMNFe;
 
 {$R *.dfm}
 
@@ -370,6 +385,175 @@ begin
   end;
 end;
 
+procedure TfrmGeNFComplementar.btbtnSalvarClick(Sender: TObject);
+begin
+  if ( cdsTabelaItens.IsEmpty ) then
+    ShowWarning('Favor informar o(s) produto(s) da venda.')
+  else
+  if ( btnProdutoSalvar.Enabled ) then
+  begin
+    ShowWarning('Favor salvar ou cancelar alteração em andamento no produto da nota complementar!');
+    btnProdutoSalvar.SetFocus;
+  end
+  else
+  begin
+
+    if ( IbDtstTabelaNFC_VALOR_TOTAL_NOTA.AsCurrency <= 0 ) then
+      IbDtstTabelaNFC_VALOR_TOTAL_NOTA.Clear;
+
+    inherited;
+
+  end;
+end;
+
+procedure TfrmGeNFComplementar.btnProdutoCancelarClick(Sender: TObject);
+begin
+  if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+  begin
+    cdsTabelaItens.Cancel;
+    btnProdutoEditar.SetFocus;
+  end;
+end;
+
+procedure TfrmGeNFComplementar.btnProdutoEditarClick(Sender: TObject);
+begin
+  if ( not cdsTabelaItens.IsEmpty ) then
+  begin
+    cdsTabelaItens.Edit;
+    dbProduto.SetFocus;
+  end;
+end;
+
+procedure TfrmGeNFComplementar.CarregarProdutos(const aEmpresa, aSerie : String;const aNumero, aModelo : Integer);
+var
+  cAliquotaNormal,
+  cAliquotaST    : Currency;
+begin
+  AbrirTabelaItens( IbDtstTabelaNFC_NUMERO.AsInteger );
+
+  with qryProdutos do
+  begin
+    Close;
+    ParamByName('empresa').AsString := aEmpresa;
+    ParamByName('serie').AsString   := aSerie;
+    ParamByName('numero').AsInteger := aNumero;
+    ParamByName('modelo').AsInteger := aModelo;
+    Open;
+
+    AliquotaIcms(GetEmpresaUF(IbDtstTabelaNFC_EMPRESA.AsString)
+      , IfThen(TTipoNF(IbDtstTabelaNFC_TIPO.AsInteger) = tnfEntrada,
+          GetFornecedorUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger),
+          GetClienteUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger))
+      , cAliquotaNormal
+      , cAliquotaST);
+
+    First;
+    while not Eof do
+    begin
+      cdsTabelaItens.Append;
+      cdsTabelaItensNFC_NUMERO.Assign( IbDtstTabelaNFC_NUMERO );
+      cdsTabelaItensNFC_ITEM.Value := RecNo;
+      cdsTabelaItensMOV_ANO.Value         := FieldByName('mov_ano').AsInteger;
+      cdsTabelaItensMOV_CONTROLE.Value    := FieldByName('mov_controle').AsInteger;
+      cdsTabelaItensMOV_EMPRESA.Value     := FieldByName('mov_empresa').AsString;
+      cdsTabelaItensMOV_SEQ.Value         := FieldByName('mov_seq').AsInteger;
+      cdsTabelaItensPRODUTO.Value         := FieldByName('mov_produto').AsString;
+      cdsTabelaItensQUANTIDADE.Value      := 0.0;
+      cdsTabelaItensVALOR_DIFERENCA.Value := 0.0;
+      cdsTabelaItensVALOR_TOTAL.Value     := 0.0;
+      cdsTabelaItensALIQUOTA_ICMS.Value   := 0.0;
+      cdsTabelaItensBC_ICMS.Value         := 0.0;
+      cdsTabelaItensVALOR_ICMS.Value      := 0.0;
+      cdsTabelaItensALIQUOTA_ICMS_ST.Value    := 0.0;
+      cdsTabelaItensBC_ICMS_ST.Value          := 0.0;
+      cdsTabelaItensVALOR_ICMS_ST.Value       := 0.0;
+      cdsTabelaItensDESCRI_APRESENTACAO.Value := FieldByName('mov_produto_descricao').AsString;
+      cdsTabelaItensMOV_QUANTIDADE.Value      := FieldByName('mov_quantidade').AsCurrency;
+      cdsTabelaItensMOV_UNIDADE.Value         := FieldByName('mov_unidade').AsString;
+      cdsTabelaItensMOV_UNIDADE_SIGLA.Value   := FieldByName('mov_unidade_sigla').AsString;
+      cdsTabelaItensMOV_VALOR_UN.Value        := FieldByName('mov_valor_un').AsCurrency;
+      cdsTabelaItensMOV_CFOP.Value            := FieldByName('mov_cfop').AsInteger;
+      cdsTabelaItensMOV_CFOP_DESCRICAO.Value  := FieldByName('mov_cfop_descricao').AsString;
+      cdsTabelaItensMOV_CST.Value             := FieldByName('mov_cst').AsString;
+      cdsTabelaItensMOV_CSOSN.Value           := FieldByName('mov_csosn').AsString;
+      cdsTabelaItensMOV_ALIQUOTA.Value        := FieldByName('mov_aliquota').AsCurrency;
+      cdsTabelaItensMOV_ALIQUOTA_CSOSN.Value  := FieldByName('mov_aliquota_csosn').AsCurrency;
+      cdsTabelaItensMOV_VALOR_UN_NOVO.Value   := FieldByName('mov_valor_un').AsCurrency;
+      cdsTabelaItensMOV_VALOR_TOTAL.Value     := FieldByName('mov_valor_total').AsCurrency;
+      cdsTabelaItensMOV_TOTAL_GERAL.Value     := FieldByName('mov_valor_total').AsCurrency + cdsTabelaItensVALOR_TOTAL.AsCurrency;
+      cdsTabelaItensMOV_ALIQUOTA_ST.Value     := cAliquotaST;
+      cdsTabelaItensMOV_ALIQUOTA_MVA.Value    := 0.0;
+      cdsTabelaItens.Post;
+
+      Next;
+    end;
+
+    cdsTabelaItens.First;
+  end;
+end;
+
+procedure TfrmGeNFComplementar.ControlEditExit(Sender: TObject);
+var
+  cAliquotaNormal,
+  cAliquotaST    : Currency;
+begin
+  inherited;
+  if ( (Sender = dbQuantidade) or (Sender = dbValorUn) ) then
+    if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+    begin
+      cdsTabelaItensVALOR_DIFERENCA.AsCurrency := (cdsTabelaItensMOV_VALOR_UN_NOVO.AsCurrency - cdsTabelaItensMOV_VALOR_UN.AsCurrency);
+      cdsTabelaItensVALOR_TOTAL.AsCurrency     :=
+        ( (cdsTabelaItensMOV_QUANTIDADE.AsCurrency + cdsTabelaItensQUANTIDADE.AsCurrency) *
+          (cdsTabelaItensMOV_VALOR_UN.AsCurrency + cdsTabelaItensVALOR_DIFERENCA.AsCurrency) ) -
+        cdsTabelaItensMOV_VALOR_TOTAL.AsCurrency;
+      cdsTabelaItensMOV_TOTAL_GERAL.AsCurrency := (cdsTabelaItensMOV_VALOR_TOTAL.AsCurrency + cdsTabelaItensVALOR_TOTAL.AsCurrency);
+    end;
+
+  // Buscar os percentuais de Aliquota ICMS
+  if ( (Sender = dbValorBcIcms) or (Sender = dbValorBcIcmsST) ) then
+    if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+    begin
+      AliquotaIcms(GetEmpresaUF(IbDtstTabelaNFC_EMPRESA.AsString)
+        , IfThen(TTipoNF(IbDtstTabelaNFC_TIPO.AsInteger) = tnfEntrada,
+            GetFornecedorUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger),
+            GetClienteUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger))
+        , cAliquotaNormal
+        , cAliquotaST);
+    end;
+
+  // Calcular o valor da Aliquota ICMS de acordo o percentual do ICMS Normal
+  if ( Sender = dbValorBcIcms ) then
+    if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+      if ( cdsTabelaItensBC_ICMS.AsCurrency > 0 ) then
+      begin
+        cdsTabelaItensALIQUOTA_ICMS.AsCurrency := 100.0;
+        cdsTabelaItensVALOR_ICMS.AsCurrency    := cdsTabelaItensBC_ICMS.AsCurrency * cAliquotaNormal / 100;
+      end
+      else
+      begin
+        cdsTabelaItensALIQUOTA_ICMS.AsCurrency := 0.0;
+        cdsTabelaItensVALOR_ICMS.AsCurrency    := 0.0;
+      end;
+
+  // Calcular o valor da Aliquota ICMS de acordo o percentual do ICMS ST
+  if ( Sender = dbValorBcIcmsST ) then
+    if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+      if ( cdsTabelaItensBC_ICMS_ST.AsCurrency > 0 ) then
+      begin
+        cdsTabelaItensALIQUOTA_ICMS_ST.AsCurrency := 100.0;
+        cdsTabelaItensVALOR_ICMS_ST.AsCurrency    := cdsTabelaItensBC_ICMS_ST.AsCurrency * cAliquotaST / 100;
+      end
+      else
+      begin
+        cdsTabelaItensALIQUOTA_ICMS_ST.AsCurrency := 0.0;
+        cdsTabelaItensVALOR_ICMS_ST.AsCurrency    := 0.0;
+      end;
+
+  if ( Sender = dbValorIcmsST ) then
+    if ( btnProdutoSalvar.Visible and btnProdutoSalvar.Enabled ) then
+      btnProdutoSalvar.SetFocus;
+end;
+
 procedure TfrmGeNFComplementar.dbNFeOrigemButtonClick(Sender: TObject);
 var
   sEmpresa,
@@ -379,7 +563,7 @@ var
   aDestinatario : TDestinatarioNF;
 begin
   sEmpresa := IbDtstTabelaNFC_EMPRESA.AsString;
-  if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
+  if ( IbDtstTabela.State in [dsInsert] ) then
     if ( SelecionarNFe(Self, sEmpresa, sSerie, iNumero, iModelo, aDestinatario) ) then
     begin
       IbDtstTabelaNFE_SERIE.Value  := sSerie;
@@ -399,7 +583,31 @@ begin
         dtFornecedor : IbDtstTabelaFORNECEDOR.AsInteger := aDestinatario.Codigo;
         dtCliente    : IbDtstTabelaCLIENTE.AsInteger    := aDestinatario.Codigo;
       end;
+
+      CarregarProdutos(sEmpresa, sSerie, iNumero, iModelo);
+      HabilitarDesabilitar_Btns;
     end;
+end;
+
+procedure TfrmGeNFComplementar.DtSrcTabelaItensStateChange(Sender: TObject);
+begin
+  btnProdutoEditar.Enabled   := ( DtSrcTabelaItens.AutoEdit and (cdsTabelaItens.State = dsBrowse) and (not cdsTabelaItens.IsEmpty) );
+  btnProdutoCancelar.Enabled := ( cdsTabelaItens.State in [dsEdit, dsInsert] );
+  btnProdutoSalvar.Enabled   := ( cdsTabelaItens.State in [dsEdit, dsInsert] );
+
+  if ( cdsTabelaItens.State in [dsEdit] ) then
+    if ( dbQuantidade.Visible and dbQuantidade.Enabled ) then
+      dbQuantidade.SetFocus;
+end;
+
+procedure TfrmGeNFComplementar.DtSrcTabelaStateChange(Sender: TObject);
+begin
+  inherited;
+  pgcMaisDados.ActivePageIndex := 0;
+  dbNFeOrigem.Button.Enabled   := (IbDtstTabela.State = dsInsert);
+
+  DtSrcTabelaItens.AutoEdit   := DtSrcTabela.AutoEdit and (IbDtstTabelaRECIBO.AsString = EmptyStr);
+  DtSrcTabelaItensStateChange( DtSrcTabelaItens );
 end;
 
 procedure TfrmGeNFComplementar.FormCreate(Sender: TObject);
@@ -426,9 +634,9 @@ begin
   NomeTabela     := 'TBNFE_COMPLEMENTAR';
   CampoCodigo    := 'nf.nfc_numero';
   CampoDescricao := 'coalesce(f.nomeforn, c.nome)';
-  CampoOrdenacao := 'nf.nfc_emissao, coalesce(f.nomeforn, c.nome)';
+  CampoOrdenacao := 'coalesce(nf.nfc_emissao, nf.nfc_data), coalesce(f.nomeforn, c.nome)';
 
-  WhereAdditional := 'nf.nfc_emissao between ' +
+  WhereAdditional := 'coalesce(nf.nfc_emissao, nf.nfc_data) between ' +
     QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) + ' and ' +
     QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) );
 
@@ -449,6 +657,24 @@ end;
 function TfrmGeNFComplementar.GetRotinaGerarNFeID: String;
 begin
   Result := GetRotinaInternaID(btbtnGerarNFe);
+end;
+
+procedure TfrmGeNFComplementar.HabilitarDesabilitar_Btns;
+begin
+  if ( pgcGuias.ActivePage = tbsCadastro ) then
+  begin
+    btbtnLista.Enabled       := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1) and
+      GetPermissaoRotinaInterna(btbtnLista, False);
+    btbtnGerarNFe.Enabled    := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaRECIBO.AsString <> EmptyStr);
+    btbtnCancelarNFC.Enabled := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1);
+  end
+  else
+  begin
+    btbtnLista.Enabled       := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1) and
+      GetPermissaoRotinaInterna(btbtnLista, False);
+    btbtnGerarNFe.Enabled    := False;
+    btbtnCancelarNFC.Enabled := False;
+  end;
 end;
 
 procedure TfrmGeNFComplementar.IbDtstTabelaAfterCancel(DataSet: TDataSet);
@@ -478,11 +704,26 @@ begin
   IbDtstTabelaNFC_EMISSOR.Value := gUsuarioLogado.Login;
   IbDtstTabelaNFC_ENVIADA.Value := 0;
   IbDtstTabelaNFC_MODALIDADE_FRETE.Value := 0;
+
+  IbDtstTabelaNFC_VALOR_BASE_ICMS.Value       := 0.0;
+  IbDtstTabelaNFC_VALOR_BASE_ICMS_SUBST.Value := 0.0;
+  IbDtstTabelaNFC_VALOR_ICMS.Value            := 0.0;
+  IbDtstTabelaNFC_VALOR_ICMS_SUBST.Value      := 0.0;
+  IbDtstTabelaNFC_VALOR_TOTAL_PRODUTO.Value   := 0.0;
+  IbDtstTabelaNFC_VALOR_FRETE.Value           := 0.0;
+  IbDtstTabelaNFC_VALOR_DESCONTO.Value   := 0.0;
+  IbDtstTabelaNFC_VALOR_SEGURO.Value     := 0.0;
+  IbDtstTabelaNFC_VALOR_OUTROS.Value     := 0.0;
+  IbDtstTabelaNFC_VALOR_TOTAL_II.Value   := 0.0;
+  IbDtstTabelaNFC_VALOR_TOTAL_IPI.Value  := 0.0;
+  IbDtstTabelaNFC_VALOR_PIS.Value        := 0.0;
+  IbDtstTabelaNFC_VALOR_COFINS.Value     := 0.0;
+  IbDtstTabelaNFC_VALOR_TOTAL_NOTA.Value := 0.0;
+
   IbDtstTabelaCANCELADA.Value            := 0;
   IbDtstTabelaCANCELADA_USUARIO.Clear;
   IbDtstTabelaCANCELADA_DATAHORA.Clear;
   IbDtstTabelaCANCELADA_MOTIVO.Clear;
-  IbDtstTabelaNFC_EMISSAO.Clear;
   IbDtstTabelaNFC_TEXTO.Clear;
   IbDtstTabelaNFE_SERIE.Clear;
   IbDtstTabelaNFE_NUMERO.Clear;
@@ -510,6 +751,27 @@ end;
 procedure TfrmGeNFComplementar.pgcGuiasOnChange;
 begin
   HabilitarDesabilitar_Btns;
+end;
+
+procedure TfrmGeNFComplementar.RecarregarRegistro;
+var
+  sID : String;
+begin
+  if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
+    Exit;
+
+  if IbDtstTabela.IsEmpty then
+    sID := EmptyStr
+  else
+    sID := IbDtstTabelaNFC_NUMERO.AsString;
+
+  if ( sID <> EmptyStr ) then
+  begin
+    IbDtstTabela.Close;
+    IbDtstTabela.Open;
+    if not IbDtstTabela.Locate('NFC_NUMERO', sID, []) then
+      raise Exception.Create('Registro não sincronizado com a base.' + #13 + 'Favor executar pesquisa para localizá-lo!');
+  end;
 end;
 
 procedure TfrmGeNFComplementar.RegistrarNovaRotinaSistema;
