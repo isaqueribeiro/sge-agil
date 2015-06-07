@@ -9397,3 +9397,1028 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column COD position 2;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column DESCRI position 3;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column APRESENTACAO position 4;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column DESCRI_APRESENTACAO position 5;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column METAFONEMA position 6;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column MODELO position 7;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PRECO position 8;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PRECO_PROMOCAO position 9;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column REFERENCIA position 10;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ESPECIFICACAO position 11;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column SECAO position 12;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column QTDE position 13;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column FRACIONADOR position 14;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PESO_BRUTO position 15;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PESO_LIQUIDO position 16;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUBAGEM position 17;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column VENDA_FRACIONADA position 18;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column UNIDADE position 19;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ESTOQMIN position 20;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODGRUPO position 21;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODFABRICANTE position 22;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUSTOMEDIO position 23;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PERCENTUAL_MARCKUP position 24;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PERCENTUAL_MARGEM position 25;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PRECO_SUGERIDO position 26;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODEMP position 27;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODSECAO position 28;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODORIGEM position 29;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODTRIBUTACAO position 30;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CST position 31;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CSOSN position 32;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CST_PIS position 33;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CST_COFINS position 34;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column NCM_SH position 35;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODIGO_NVE position 36;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODCFOP position 37;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODBARRA_EAN position 38;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODUNIDADE position 39;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CODUNIDADE_FRACIONADA position 40;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ALIQUOTA_TIPO position 41;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ALIQUOTA position 42;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ALIQUOTA_CSOSN position 43;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ALIQUOTA_PIS position 44;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ALIQUOTA_COFINS position 45;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column VALOR_IPI position 46;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PERCENTUAL_REDUCAO_BC position 47;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column RESERVA position 48;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PRODUTO_NOVO position 49;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column COR_VEICULO position 50;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column COMBUSTIVEL_VEICULO position 51;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column TIPO_VEICULO position 52;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ANO_MODELO_VEICULO position 53;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ANO_FABRICACAO_VEICULO position 54;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column RENAVAM_VEICULO position 55;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CHASSI_VEICULO position 56;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column KILOMETRAGEM_VEICULO position 57;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column SITUACAO_ATUAL_VEICULO position 58;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column SITUACAO_HISTORICO_VEICULO position 59;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column USUARIO position 60;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CADASTRO_ATIVO position 61;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column MOVIMENTA_ESTOQUE position 62;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column COMPOR_FATURAMENTO position 63;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column PRODUTO_IMOBILIZADO position 64;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column ESTOQUE_APROP_LOTE position 65;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUST_DESP_OFIC position 66;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUST_DESP_GERAIS position 67;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUST_DESP_ADM position 68;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUST_COMISSAO position 69;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column CUST_IMPOSTO position 70;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column FI_RET_FINANC position 71;
+
+
+/*------ SYSDBA 04/06/2015 13:00:49 --------*/
+
+alter table TBPRODUTO
+alter column FI_RET_PLANO position 72;
+
+
+/*------ SYSDBA 04/06/2015 13:01:25 --------*/
+
+COMMENT ON COLUMN TBPRODUTO.ALIQUOTA IS
+'Percencial da Aliquota (ICMS ou ISS).';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:01:48 --------*/
+
+COMMENT ON COLUMN TBPRODUTO.ALIQUOTA_CSOSN IS
+'Percencial da Aliquota no Simples Nacional (ICMS ou ISS).';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:41:29 --------*/
+
+ALTER TABLE TBESTADO
+    ADD ALIQUOTA_ICMS DMN_PERCENTUAL;
+
+COMMENT ON COLUMN TBESTADO.ALIQUOTA_ICMS IS
+'Percentual de 0 a 100';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:41:55 --------*/
+
+COMMENT ON COLUMN TBESTADO.ALIQUOTA_ICMS IS
+'Aliquota ICMS.';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:44:10 --------*/
+
+ALTER TABLE TBESTADO
+ADD CONSTRAINT UNQ_TBESTADO_UF
+UNIQUE (EST_SIGLA);
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:46:40 --------*/
+
+ALTER TABLE TBCIDADE
+    ADD ALIQUOTA_ISS DMN_PERCENTUAL DEFAULT 5.0;
+
+COMMENT ON COLUMN TBCIDADE.ALIQUOTA_ISS IS
+'Percentual de 0 a 100';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:46:47 --------*/
+
+COMMENT ON COLUMN TBCIDADE.ALIQUOTA_ISS IS
+'Aliquota ISS.';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:47:02 --------*/
+
+ALTER TABLE TBESTADO ALTER COLUMN ALIQUOTA_ICMS
+SET DEFAULT 17.0
+;
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:49:12 --------*/
+
+CREATE DOMAIN DMN_VCHAR_02_NN AS
+VARCHAR(2);
+
+
+/*------ SYSDBA 04/06/2015 13:53:07 --------*/
+
+CREATE TABLE SYS_ALIQUOTA_ICMS (
+    UF_ORIGEM DMN_VCHAR_02_NN NOT NULL,
+    UF_DESTINO DMN_VCHAR_02_NN NOT NULL,
+    ALIQUOTA DMN_PERCENTUAL);
+
+ALTER TABLE SYS_ALIQUOTA_ICMS
+ADD CONSTRAINT PK_SYS_ALIQUOTA_ICMS
+PRIMARY KEY (UF_ORIGEM,UF_DESTINO);
+
+COMMENT ON COLUMN SYS_ALIQUOTA_ICMS.UF_ORIGEM IS
+'Estado de Origem.';
+
+COMMENT ON COLUMN SYS_ALIQUOTA_ICMS.UF_DESTINO IS
+'Estado de Destino.';
+
+COMMENT ON COLUMN SYS_ALIQUOTA_ICMS.ALIQUOTA IS
+'Aliquota ICMS.';
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:53:08 --------*/
+
+COMMENT ON TABLE SYS_ALIQUOTA_ICMS IS 'Tabela de Aliquotas ICMS.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   04/06/2015
+
+Tabela responsavel por armazenar os percentuais de aliquotas de ICMS para os
+operacoes tributarias estaduais e interestaduais.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/06/2015 - IMR :
+        * Documentacao da tabela.';
+
+GRANT ALL ON SYS_ALIQUOTA_ICMS TO "PUBLIC";
+
+
+
+/*------ SYSDBA 04/06/2015 13:56:46 --------*/
+
+SET TERM ^ ;
+
+CREATE trigger tg_tbestado_aliquota for tbestado
+active after insert or update position 0
+AS
+begin
+  if (exists(
+    Select
+      a.aliquota
+    from SYS_ALIQUOTA_ICMS a
+    where a.uf_origem  = new.est_sigla
+      and a.uf_destino = new.est_sigla
+  )) then
+    Update SYS_ALIQUOTA_ICMS a Set
+      a.aliquota = coalesce(new.aliquota_icms, 0.0)
+    where a.uf_origem  = new.est_sigla
+      and a.uf_destino = new.est_sigla;
+  else
+    Insert Into SYS_ALIQUOTA_ICMS (
+        uf_origem
+      , uf_destino
+      , aliquota
+    ) values (
+        new.est_sigla
+      , new.est_sigla
+      , coalesce(new.aliquota_icms, 0.0)
+    );
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 04/06/2015 13:59:11 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_tbestado_aliquota for tbestado
+active after insert or update position 0
+AS
+begin
+  if (exists(
+    Select
+      a.aliquota
+    from SYS_ALIQUOTA_ICMS a
+    where a.uf_origem  = new.est_sigla
+      and a.uf_destino = new.est_sigla
+  )) then
+    Update SYS_ALIQUOTA_ICMS a Set
+      a.aliquota = coalesce(new.aliquota_icms, 0.0)
+    where a.uf_origem  = new.est_sigla
+      and a.uf_destino = new.est_sigla;
+  else
+    Insert Into SYS_ALIQUOTA_ICMS (
+        uf_origem
+      , uf_destino
+      , aliquota
+    ) values (
+        new.est_sigla
+      , new.est_sigla
+      , coalesce(new.aliquota_icms, 0.0)
+    );
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_TBESTADO_ALIQUOTA IS 'Trigger SET Aliquotas ICMS.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   04/06/2015
+
+Trigger responsavel por armazenar gerar/atualizar a aliquota de ICMS de operacoes
+tributarias dentro do estoque.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    04/06/2015 - IMR :
+        * Documentacao da trigger.';
+
+
+
+
+/*------ SYSDBA 04/06/2015 14:11:36 --------*/
+
+SET TERM ^ ;
+
+create or alter procedure GET_ALIQUOTA_ICMS (
+    UF_ORIGEM DMN_VCHAR_02,
+    UF_DESTINO DMN_VCHAR_02)
+returns (
+    ALIQUOTA_NORMAL DMN_PERCENTUAL,
+    ALIQUOTA_ST DMN_PERCENTUAL)
+as
+begin
+  Select first 1
+    a.aliquota
+  from SYS_ALIQUOTA_ICMS a
+  where a.uf_origem  = :uf_origem
+    and a.uf_destino = :uf_origem
+  Into
+    aliquota_normal;
+
+  Select first 1
+    a.aliquota
+  from SYS_ALIQUOTA_ICMS a
+  where a.uf_origem  = :uf_origem
+    and a.uf_destino = :uf_destino
+  Into
+    aliquota_st;
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+GRANT EXECUTE ON PROCEDURE GET_ALIQUOTA_ICMS TO "PUBLIC";
+
+
+
+/*------ SYSDBA 04/06/2015 14:18:55 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ALIQUOTA_ICMS (
+    UF_ORIGEM DMN_VCHAR_02,
+    UF_DESTINO DMN_VCHAR_02)
+returns (
+    ALIQUOTA_NORMAL DMN_PERCENTUAL,
+    ALIQUOTA_ST DMN_PERCENTUAL)
+as
+begin
+  Select first 1
+    a.aliquota
+  from SYS_ALIQUOTA_ICMS a
+  where a.uf_origem  = :uf_origem
+    and a.uf_destino = :uf_origem
+  Into
+    aliquota_normal;
+
+  Select first 1
+    a.aliquota
+  from SYS_ALIQUOTA_ICMS a
+  where a.uf_origem  = :uf_origem
+    and a.uf_destino = :uf_destino
+  Into
+    aliquota_st;
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 04/06/2015 14:19:05 --------*/
+
+COMMENT ON PROCEDURE GET_ALIQUOTA_ICMS IS '';
+
+
+
+
+/*------ SYSDBA 04/06/2015 14:19:56 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ALIQUOTA_ICMS (
+    UF_ORIGEM DMN_VCHAR_02,
+    UF_DESTINO DMN_VCHAR_02)
+returns (
+    ALIQUOTA_NORMAL DMN_PERCENTUAL,
+    ALIQUOTA_ST DMN_PERCENTUAL)
+as
+begin
+  -- Buscando o Icms normal
+  Select first 1
+    a.aliquota
+  from SYS_ALIQUOTA_ICMS a
+  where a.uf_origem  = :uf_origem
+    and a.uf_destino = :uf_origem
+  Into
+    aliquota_normal;
+
+  -- Buscando o Icms ST (Substituicao Tributaria)
+  Select first 1
+    a.aliquota
+  from SYS_ALIQUOTA_ICMS a
+  where a.uf_origem  = :uf_origem
+    and a.uf_destino = :uf_destino
+  Into
+    aliquota_st;
+
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+/*------ SYSDBA 06/06/2015 21:08:19 --------*/
+
+execute block
+as
+  declare variable uf varchar(2);
+begin
+  Update TBESTADO e Set
+    e.aliquota_icms = 17.0
+  where e.est_cod = 15;
+
+  for
+    Select
+      e.est_sigla
+    from TBESTADO e
+    where e.est_sigla <> 15
+    Into
+      uf;
+  do
+  begin
+    if (not exists(
+      Select
+        a.aliquota
+      from SYS_ALIQUOTA_ICMS a
+      where a.uf_origem = 'PA'
+       and a.uf_destino = :uf
+    )) then
+    begin
+
+      Insert Into SYS_ALIQUOTA_ICMS values ('PA', :uf, 12.0);
+
+    end 
+  end 
+end
+
+/*------ SYSDBA 06/06/2015 21:08:19 --------*/
+
+/*!!! Error occured !!!
+Invalid token.
+Dynamic SQL Error.
+SQL error code = -104.
+Token unknown - line 15, column 9.
+;.
+
+*/
+
+/*------ SYSDBA 06/06/2015 21:08:35 --------*/
+
+execute block
+as
+  declare variable uf varchar(2);
+begin
+  Update TBESTADO e Set
+    e.aliquota_icms = 17.0
+  where e.est_cod = 15;
+
+  for
+    Select
+      e.est_sigla
+    from TBESTADO e
+    where e.est_sigla <> 15
+    Into
+      uf
+  do
+  begin
+    if (not exists(
+      Select
+        a.aliquota
+      from SYS_ALIQUOTA_ICMS a
+      where a.uf_origem = 'PA'
+       and a.uf_destino = :uf
+    )) then
+    begin
+
+      Insert Into SYS_ALIQUOTA_ICMS values ('PA', :uf, 12.0);
+
+    end 
+  end 
+end
+
+/*------ SYSDBA 06/06/2015 21:08:35 --------*/
+
+/*!!! Error occured !!!
+Overflow occurred during data type conversion.
+conversion error from string "RO".
+
+*/
+
+/*------ SYSDBA 06/06/2015 21:08:45 --------*/
+
+ROLLBACK WORK;
+
+/*------ SYSDBA 06/06/2015 21:09:11 --------*/
+
+execute block
+as
+  declare variable uf DMN_UF;
+begin
+  Update TBESTADO e Set
+    e.aliquota_icms = 17.0
+  where e.est_cod = 15;
+
+  for
+    Select
+      e.est_sigla
+    from TBESTADO e
+    where e.est_sigla <> 15
+    Into
+      uf
+  do
+  begin
+    if (not exists(
+      Select
+        a.aliquota
+      from SYS_ALIQUOTA_ICMS a
+      where a.uf_origem = 'PA'
+       and a.uf_destino = :uf
+    )) then
+    begin
+
+      Insert Into SYS_ALIQUOTA_ICMS values ('PA', :uf, 12.0);
+
+    end 
+  end 
+end
+
+/*------ SYSDBA 06/06/2015 21:09:11 --------*/
+
+/*!!! Error occured !!!
+Overflow occurred during data type conversion.
+conversion error from string "RO".
+
+*/
+
+/*------ SYSDBA 06/06/2015 21:09:18 --------*/
+
+ROLLBACK WORK;
+
+/*------ SYSDBA 06/06/2015 21:09:26 --------*/
+
+execute block
+as
+  declare variable uf VARCHAR(4);
+begin
+  Update TBESTADO e Set
+    e.aliquota_icms = 17.0
+  where e.est_cod = 15;
+
+  for
+    Select
+      e.est_sigla
+    from TBESTADO e
+    where e.est_sigla <> 15
+    Into
+      uf
+  do
+  begin
+    if (not exists(
+      Select
+        a.aliquota
+      from SYS_ALIQUOTA_ICMS a
+      where a.uf_origem = 'PA'
+       and a.uf_destino = :uf
+    )) then
+    begin
+
+      Insert Into SYS_ALIQUOTA_ICMS values ('PA', :uf, 12.0);
+
+    end 
+  end 
+end
+
+/*------ SYSDBA 06/06/2015 21:09:26 --------*/
+
+/*!!! Error occured !!!
+Overflow occurred during data type conversion.
+conversion error from string "RO".
+
+*/
+
+/*------ SYSDBA 06/06/2015 21:09:32 --------*/
+
+ROLLBACK WORK;
+
+/*------ SYSDBA 06/06/2015 21:10:17 --------*/
+
+execute block
+as
+  declare variable uf DMN_UF;
+begin
+  Update TBESTADO e Set
+    e.aliquota_icms = 17.0
+  where e.est_cod = 15;
+
+  for
+    Select
+      e.est_sigla
+    from TBESTADO e
+    where e.est_cod <> 15
+    Into
+      uf
+  do
+  begin
+    if (not exists(
+      Select
+        a.aliquota
+      from SYS_ALIQUOTA_ICMS a
+      where a.uf_origem = 'PA'
+       and a.uf_destino = :uf
+    )) then
+    begin
+
+      Insert Into SYS_ALIQUOTA_ICMS values ('PA', :uf, 12.0);
+
+    end 
+  end 
+end;
+
+/*------ SYSDBA 06/06/2015 21:10:26 --------*/
+
+COMMIT WORK;
+
+/*------ SYSDBA 06/06/2015 21:11:08 --------*/
+
+execute block
+as
+  declare variable uf DMN_UF;
+begin
+  Update TBESTADO e Set e.aliquota_icms = 17.0;
+
+  for
+    Select
+      e.est_sigla
+    from TBESTADO e
+    where e.est_cod <> 15
+    Into
+      uf
+  do
+  begin
+    if (not exists(
+      Select
+        a.aliquota
+      from SYS_ALIQUOTA_ICMS a
+      where a.uf_origem = 'PA'
+       and a.uf_destino = :uf
+    )) then
+    begin
+
+      Insert Into SYS_ALIQUOTA_ICMS values ('PA', :uf, 12.0);
+
+    end 
+  end 
+end;
+
+/*------ SYSDBA 06/06/2015 21:11:16 --------*/
+
+COMMIT WORK;
