@@ -70,7 +70,8 @@ type
 var
   frmGeNFEmitida: TfrmGeNFEmitida;
 
-  function SelecionarNFe(const AOnwer : TComponent; var pEmpresa, pSerie : String; var pNumero, pModelo : Integer;
+  function SelecionarNFe(const AOnwer : TComponent; var pEmpresa, pSerie, pChave : String;
+    var pNumero, pModelo : Integer;
     var pDestinatario : TDestinatarioNF) : Boolean;
 
 implementation
@@ -80,7 +81,8 @@ uses
 
 {$R *.dfm}
 
-function SelecionarNFe(const AOnwer : TComponent; var pEmpresa, pSerie : String; var pNumero, pModelo : Integer;
+function SelecionarNFe(const AOnwer : TComponent; var pEmpresa, pSerie, pChave : String;
+  var pNumero, pModelo : Integer;
   var pDestinatario : TDestinatarioNF) : Boolean;
 var
   AForm : TfrmGeNFEmitida;
@@ -108,6 +110,7 @@ begin
     if Result then
     begin
       pSerie  := AForm.IbDtstTabelaSERIE.Value;
+      pChave  := AForm.IbDtstTabelaCHAVE.AsString;
       pNumero := AForm.IbDtstTabelaNUMERO.Value;
       pModelo := AForm.IbDtstTabelaMODELO.Value;
 

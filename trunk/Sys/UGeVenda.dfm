@@ -1272,7 +1272,7 @@ inherited frmGeVenda: TfrmGeVenda
         object pnlBotoesProduto: TPanel
           Left = 6
           Top = 15
-          Width = 70
+          Width = 76
           Height = 99
           Align = alLeft
           AutoSize = True
@@ -1480,8 +1480,8 @@ inherited frmGeVenda: TfrmGeVenda
             OnClick = btnProdutoExcluirClick
           end
           object btnProdutoSalvar: TBitBtn
-            Left = 0
-            Top = 73
+            Left = 6
+            Top = 74
             Width = 70
             Height = 25
             Hint = 'Salvar Produto'
@@ -4248,7 +4248,7 @@ inherited frmGeVenda: TfrmGeVenda
     Left = 1192
     Top = 376
     Bitmap = {
-      494C01012B002C00480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

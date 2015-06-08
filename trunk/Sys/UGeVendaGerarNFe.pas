@@ -7,7 +7,8 @@ uses
   Dialogs, UGrPadrao, DB, IBCustomDataSet, IBUpdateSQL, StdCtrls, Mask,
   DBCtrls, ExtCtrls, Buttons, cxGraphics, cxLookAndFeels,
   cxLookAndFeelPainters, Menus, cxButtons, dxSkinsCore, dxSkinMcSkin,
-  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White;
+  dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
+  dxSkinOffice2007Green;
 
 type
   TfrmGeVendaGerarNFe = class(TfrmGrPadrao)

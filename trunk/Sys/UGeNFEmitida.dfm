@@ -5,7 +5,6 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
   Caption = 'Notas Fiscais Emitidas'
   ClientHeight = 471
   OldCreateOrder = True
-  ExplicitWidth = 751
   ExplicitHeight = 510
   PixelsPerInch = 96
   TextHeight = 13
@@ -22,6 +21,9 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
     ActivePage = tbsTabela
     ExplicitHeight = 428
     inherited tbsTabela: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 399
       inherited Bevel4: TBevel
         Top = 333
@@ -452,7 +454,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
     Left = 288
     Top = 208
     Bitmap = {
-      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

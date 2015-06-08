@@ -241,6 +241,8 @@ type
     cdsTabelaItensMOV_ALIQUOTA_MVA: TIBBCDField;
     qryProdutos: TIBDataSet;
     btnProdutoCancelar: TBitBtn;
+    lblValorSeguro: TLabel;
+    dbValorSeguro: TDBEdit;
     procedure pgcGuiasChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFC_DATAGetText(Sender: TField; var Text: string;
@@ -260,6 +262,9 @@ type
     procedure btbtnSalvarClick(Sender: TObject);
     procedure btnProdutoEditarClick(Sender: TObject);
     procedure btnProdutoCancelarClick(Sender: TObject);
+    procedure btnProdutoSalvarClick(Sender: TObject);
+    procedure DtSrcTabelaDataChange(Sender: TObject; Field: TField);
+    procedure btbtnGerarNFeClick(Sender: TObject);
   private
     { Private declarations }
     SQL_Itens : TStringList;
@@ -269,6 +274,7 @@ type
 
     procedure HabilitarDesabilitar_Btns;
     procedure CarregarProdutos(const aEmpresa, aSerie : String;const aNumero, aModelo : Integer);
+    procedure TotalValor(var aProduto, aBaseICMS, aValorICMS, aBaseICMS_ST, aValorICMS_ST : Currency);
 
     function GetRotinaGerarNFeID : String;
     function GetRotinaCancelarNFCID : String;
@@ -287,7 +293,7 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE, UGeNFEmitida, UDMNFe;
+  UDMBusiness, UConstantesDGE, UGeNFEmitida, UDMNFe, UGeConsultarLoteNFe_v2;
 
 {$R *.dfm}
 
@@ -375,6 +381,80 @@ begin
   end;
 end;
 
+procedure TfrmGeNFComplementar.btbtnGerarNFeClick(Sender: TObject);
+var
+  iNumeroTmp ,
+  iNumero    ,
+  iSerieNFe  ,
+  iNumeroNFe : Integer;
+  sFileNameXML  ,
+  sChaveNFE     ,
+  sProtocoloNFE ,
+  sReciboNFE    ,
+  sMensagem     : String;
+  iNumeroLote   : Int64;
+  TipoMovimento : TTipoMovimento;
+  bNFeGerada    : Boolean;
+begin
+  if ( IbDtstTabela.IsEmpty ) then
+    Exit;
+
+  if not GetPermissaoRotinaInterna(Sender, True) then
+    Abort;
+
+  RecarregarRegistro;
+
+  pgcGuias.ActivePage := tbsCadastro;
+
+  bNFeGerada := (IbDtstTabelaNUMERO.AsCurrency > 0);
+
+  if bNFeGerada then
+  begin
+    ShowWarning('Movimento complementar já com NF-e gerada!');
+    Abort;
+  end;
+
+  if not GetPermititEmissaoNFe( IbDtstTabelaNFC_EMPRESA.AsString ) then
+  begin
+    ShowInformation('Empresa selecionada não habilitada para emissão de NF-e.' + #13 + 'Favor entrar em contato com suporte.');
+    Exit;
+  end;
+
+  if ( not DelphiIsRunning ) then
+    if not DMNFe.GetValidadeCertificado(IbDtstTabelaNFC_EMPRESA.AsString) then
+      Exit;
+
+  // Buscar retorno do envio pendente, caso ele tenha ocorrido
+  if not bNFeGerada then
+    if ( Trim(IbDtstTabelaRECIBO.AsString) <> EmptyStr ) then
+    begin
+      bNFeGerada := BuscarRetornoReciboNFe(Self
+        , IbDtstTabelaNFC_EMPRESA.AsString
+        , IbDtstTabelaRECIBO.AsString
+        , iSerieNFe
+        , iNumeroNFe
+        , sFileNameXML
+        , sChaveNFE
+        , sProtocoloNFE
+        , TipoMovimento);
+
+      if ( Ord(TipoMovimento) <> dbTipo.Field.AsInteger ) then
+      begin
+        ShowWarning('Tipo do movimento do recibo incompatível!');
+        Exit;
+      end;
+
+      sReciboNFE  := Trim(IbDtstTabelaRECIBO.AsString);
+      iNumeroLote := iNumeroNFe;
+
+      if not bNFeGerada then
+        Exit;
+    end;
+
+  // Gerar XML da NF e Enviar para a SEFA
+
+end;
+
 procedure TfrmGeNFComplementar.btbtnIncluirClick(Sender: TObject);
 begin
   inherited;
@@ -386,6 +466,12 @@ begin
 end;
 
 procedure TfrmGeNFComplementar.btbtnSalvarClick(Sender: TObject);
+var
+  cProduto      ,
+  cBaseICMS     ,
+  cValorICMS    ,
+  cBaseICMS_ST  ,
+  cValorICMS_ST : Currency;
 begin
   if ( cdsTabelaItens.IsEmpty ) then
     ShowWarning('Favor informar o(s) produto(s) da venda.')
@@ -398,10 +484,71 @@ begin
   else
   begin
 
-    if ( IbDtstTabelaNFC_VALOR_TOTAL_NOTA.AsCurrency <= 0 ) then
-      IbDtstTabelaNFC_VALOR_TOTAL_NOTA.Clear;
+    TotalValor(
+        cProduto
+      , cBaseICMS
+      , cValorICMS
+      , cBaseICMS_ST
+      , cValorICMS_ST);
 
-    inherited;
+    if ( cProduto <> IbDtstTabelaNFC_VALOR_TOTAL_PRODUTO.AsCurrency ) then
+    begin
+      ShowWarning('O Valor Total dos produtos não coinside com o informado!');
+      pgcMaisDados.ActivePage := tbsValores;
+      dbTotalProduto.SetFocus;
+    end
+    else
+    if ( cBaseICMS <> IbDtstTabelaNFC_VALOR_BASE_ICMS.AsCurrency ) then
+    begin
+      ShowWarning('O Valor Total Base de ICMS dos produtos não coinside com o informado!');
+      pgcMaisDados.ActivePage := tbsValores;
+      dbBaseICMS.SetFocus;
+    end
+    else
+    if ( cValorICMS <> IbDtstTabelaNFC_VALOR_ICMS.AsCurrency ) then
+    begin
+      ShowWarning('O Valor Total de ICMS dos produtos não coinside com o informado!');
+      pgcMaisDados.ActivePage := tbsValores;
+      dbValorIcmsNF.SetFocus;
+    end
+    else
+    if ( cBaseICMS_ST <> IbDtstTabelaNFC_VALOR_BASE_ICMS_SUBST.AsCurrency ) then
+    begin
+      ShowWarning('O Valor Total Base de ICMS ST dos produtos não coinside com o informado!');
+      pgcMaisDados.ActivePage := tbsValores;
+      dbBaseICMSSubs.SetFocus;
+    end
+    else
+    if ( cValorICMS_ST <> IbDtstTabelaNFC_VALOR_ICMS_SUBST.AsCurrency ) then
+    begin
+      ShowWarning('O Valor Total de ICMS ST dos produtos não coinside com o informado!');
+      pgcMaisDados.ActivePage := tbsValores;
+      dbValorICMSSubs.SetFocus;
+    end
+    else
+    begin
+
+      if ( IbDtstTabelaNFC_VALOR_TOTAL_NOTA.AsCurrency <= 0 ) then
+        IbDtstTabelaNFC_VALOR_TOTAL_NOTA.Clear;
+
+      inherited;
+
+      if (not OcorreuErro) then
+      begin
+        if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+          cdsTabelaItens.Post;
+
+        cdsTabelaItens.ApplyUpdates;
+        CommitTransaction;
+
+        RecarregarRegistro;
+        AbrirTabelaItens( IbDtstTabelaNFC_NUMERO.AsInteger );
+        AbrirNotaFiscal( IbDtstTabelaNFC_EMPRESA.AsString, IbDtstTabelaNFC_NUMERO.AsInteger );
+      end;
+
+      HabilitarDesabilitar_Btns;
+
+    end;
 
   end;
 end;
@@ -421,6 +568,104 @@ begin
   begin
     cdsTabelaItens.Edit;
     dbProduto.SetFocus;
+  end;
+end;
+
+procedure TfrmGeNFComplementar.btnProdutoSalvarClick(Sender: TObject);
+
+  procedure GetToTais(var aTotalProduto, aTotalBaseIcms, aTotalIcms,
+    aTotalBaseIcmsST, aTotalIcmsST, aTotalNota : Currency);
+  var
+    Item : Integer;
+  begin
+    try
+      Item := cdsTabelaItensNFC_ITEM.AsInteger;
+
+      aTotalProduto    := 0.0;
+      aTotalBaseIcms   := 0.0;
+      aTotalIcms       := 0.0;
+      aTotalBaseIcmsST := 0.0;
+      aTotalIcmsST     := 0.0;
+      aTotalNota       := 0.0;
+
+      cdsTabelaItens.DisableControls;
+      cdsTabelaItens.First;
+
+      while not cdsTabelaItens.Eof do
+      begin
+        aTotalProduto    := aTotalProduto    + cdsTabelaItensVALOR_TOTAL.AsCurrency;
+        aTotalBaseIcms   := aTotalBaseIcms   + cdsTabelaItensBC_ICMS.AsCurrency;
+        aTotalIcms       := aTotalIcms       + cdsTabelaItensVALOR_ICMS.AsCurrency;
+        aTotalBaseIcmsST := aTotalBaseIcmsST + cdsTabelaItensBC_ICMS_ST.AsCurrency;
+        aTotalIcmsST     := aTotalIcmsST     + cdsTabelaItensVALOR_ICMS_ST.AsCurrency;
+
+        cdsTabelaItens.Next;
+      end;
+
+      aTotalNota  := aTotalProduto
+        + dbValorICMSSubs.Field.AsCurrency
+        + dbValorFrete.Field.AsCurrency
+        + dbValorSeguro.Field.AsCurrency
+        + dbValorOutros.Field.AsCurrency
+        - dbValorDesconto.Field.AsCurrency;
+    finally
+      cdsTabelaItens.Locate('NFC_ITEM', Item, []);
+      cdsTabelaItens.EnableControls;
+    end;
+  end;
+
+var
+  cTotalProduto   ,
+  cTotalBaseIcms  ,
+  cTotalIcms      ,
+  cTotalBaseIcmsST,
+  cTotalIcmsST,
+  cTotalNota  : Currency;
+begin
+  if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
+  begin
+    if ( Trim(cdsTabelaItensPRODUTO.AsString) = EmptyStr ) then
+    begin
+      ShowWarning('Favor informar o código do produto.');
+      dbProduto.SetFocus;
+    end
+    else
+    if ( cdsTabelaItensQUANTIDADE.Value < 0 ) then
+    begin
+      ShowWarning('Quantidade inválida.');
+      dbQuantidade.SetFocus;
+    end
+    else
+    if ( cdsTabelaItensMOV_VALOR_UN_NOVO.Value < cdsTabelaItensMOV_VALOR_UN.Value ) then
+    begin
+      ShowWarning('Valor unitário inválido como "Valor complementar".');
+      dbValorUn.SetFocus;
+    end
+    else
+    begin
+
+      cdsTabelaItens.Post;
+
+      GetToTais(cTotalProduto
+        , cTotalBaseIcms
+        , cTotalIcms
+        , cTotalBaseIcmsST
+        , cTotalIcmsST
+        , cTotalNota);
+
+      IbDtstTabelaNFC_VALOR_TOTAL_PRODUTO.AsCurrency := cTotalProduto;
+      IbDtstTabelaNFC_VALOR_BASE_ICMS.AsCurrency     := cTotalBaseIcms;
+      IbDtstTabelaNFC_VALOR_ICMS.AsCurrency          := cTotalIcms;
+      IbDtstTabelaNFC_VALOR_BASE_ICMS_SUBST.AsCurrency := cTotalBaseIcmsST;
+      IbDtstTabelaNFC_VALOR_ICMS_SUBST.AsCurrency      := cTotalIcmsST;
+      IbDtstTabelaNFC_VALOR_TOTAL_NOTA.AsCurrency      := cTotalNota;
+
+      if ( btnProdutoEditar.Visible and btnProdutoEditar.Enabled ) then
+      begin
+        cdsTabelaItens.Next;
+        btnProdutoEditar.SetFocus;
+      end;
+    end;
   end;
 end;
 
@@ -557,14 +802,15 @@ end;
 procedure TfrmGeNFComplementar.dbNFeOrigemButtonClick(Sender: TObject);
 var
   sEmpresa,
-  sSerie  : String;
+  sSerie  ,
+  sChave  : String;
   iNumero ,
   iModelo : Integer;
   aDestinatario : TDestinatarioNF;
 begin
   sEmpresa := IbDtstTabelaNFC_EMPRESA.AsString;
   if ( IbDtstTabela.State in [dsInsert] ) then
-    if ( SelecionarNFe(Self, sEmpresa, sSerie, iNumero, iModelo, aDestinatario) ) then
+    if ( SelecionarNFe(Self, sEmpresa, sSerie, sChave, iNumero, iModelo, aDestinatario) ) then
     begin
       IbDtstTabelaNFE_SERIE.Value  := sSerie;
       IbDtstTabelaNFE_NUMERO.Value := iNumero;
@@ -578,6 +824,8 @@ begin
       IbDtstTabelaCLIENTE.Clear;
 
       IbDtstTabelaNFC_TIPO.AsInteger := Ord(aDestinatario.Tipo);
+      IbDtstTabelaNFC_TEXTO.AsString := 'NOTA COMPLEMENTAR REF. A NF. ' + FormatFloat('0000000', iNumero) + '-' + sSerie + ' ' +
+        '[' + FormatarChaveNFe(sChave) + ']';
 
       Case aDestinatario.Tipo of
         dtFornecedor : IbDtstTabelaFORNECEDOR.AsInteger := aDestinatario.Codigo;
@@ -587,6 +835,29 @@ begin
       CarregarProdutos(sEmpresa, sSerie, iNumero, iModelo);
       HabilitarDesabilitar_Btns;
     end;
+end;
+
+procedure TfrmGeNFComplementar.DtSrcTabelaDataChange(Sender: TObject;
+  Field: TField);
+var
+  aTotalNota : Currency;
+begin
+  inherited;
+  if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
+  begin
+    if ((Field = dbValorFrete.Field)  or (Field = dbValorDesconto.Field) or
+        (Field = dbValorOutros.Field) or (Field = dbValorIPI.Field)) then
+    begin
+      aTotalNota  := dbTotalProduto.Field.AsCurrency
+        + dbValorICMSSubs.Field.AsCurrency
+        + dbValorFrete.Field.AsCurrency
+        + dbValorSeguro.Field.AsCurrency
+        + dbValorOutros.Field.AsCurrency
+        - dbValorDesconto.Field.AsCurrency;
+
+      dbTotalNotaFiscal.Field.AsCurrency := aTotalNota;
+    end;
+  end;
 end;
 
 procedure TfrmGeNFComplementar.DtSrcTabelaItensStateChange(Sender: TObject);
@@ -660,13 +931,17 @@ begin
 end;
 
 procedure TfrmGeNFComplementar.HabilitarDesabilitar_Btns;
+var
+  EmEdicao : Boolean;
 begin
+  EmEdicao := (IbDtstTabela.State in [dsEdit, dsInsert]);
+
   if ( pgcGuias.ActivePage = tbsCadastro ) then
   begin
-    btbtnLista.Enabled       := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1) and
+    btbtnLista.Enabled       := (not EmEdicao) and (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1) and
       GetPermissaoRotinaInterna(btbtnLista, False);
-    btbtnGerarNFe.Enabled    := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaRECIBO.AsString <> EmptyStr);
-    btbtnCancelarNFC.Enabled := (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1);
+    btbtnGerarNFe.Enabled    := (not EmEdicao) and (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaRECIBO.AsString = EmptyStr);
+    btbtnCancelarNFC.Enabled := (not EmEdicao) and (IbDtstTabelaCANCELADA.AsInteger = 0) and (IbDtstTabelaNUMERO.AsInteger > 0) and (IbDtstTabelaNFC_ENVIADA.AsInteger = 1);
   end
   else
   begin
@@ -769,7 +1044,7 @@ begin
   begin
     IbDtstTabela.Close;
     IbDtstTabela.Open;
-    if not IbDtstTabela.Locate('NFC_NUMERO', sID, []) then
+    if not IbDtstTabela.Locate(GetCampoCodigoLimpo, sID, []) then
       raise Exception.Create('Registro não sincronizado com a base.' + #13 + 'Favor executar pesquisa para localizá-lo!');
   end;
 end;
@@ -783,6 +1058,39 @@ begin
 
     if btbtnCancelarNFC.Visible then
       SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaCancelarNFCID, btbtnCancelarNFC.Caption, RotinaID);
+  end;
+end;
+
+procedure TfrmGeNFComplementar.TotalValor(var aProduto, aBaseICMS, aValorICMS,
+  aBaseICMS_ST, aValorICMS_ST: Currency);
+begin
+  aProduto      := 0.0;
+  aBaseICMS     := 0.0;
+  aValorICMS    := 0.0;
+  aBaseICMS_ST  := 0.0;
+  aValorICMS_ST := 0.0;
+
+  with cdsTabelaItens do
+  begin
+    DisableControls;
+
+    if (State in [dsEdit, dsInsert]) then
+      Post;
+
+    First;
+    while not Eof do
+    begin
+      aProduto      := aProduto      + cdsTabelaItensVALOR_TOTAL.AsCurrency;
+      aBaseICMS     := aBaseICMS     + cdsTabelaItensBC_ICMS.AsCurrency;
+      aValorICMS    := aValorICMS    + cdsTabelaItensVALOR_ICMS.AsCurrency;
+      aBaseICMS_ST  := aBaseICMS_ST  + cdsTabelaItensBC_ICMS_ST.AsCurrency;
+      aValorICMS_ST := aValorICMS_ST + cdsTabelaItensVALOR_ICMS_ST.AsCurrency;
+
+      Next;
+    end;
+    First;
+
+    EnableControls;
   end;
 end;
 

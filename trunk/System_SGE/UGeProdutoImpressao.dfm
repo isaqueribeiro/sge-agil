@@ -123,6 +123,14 @@ inherited frmGeProdutoImpressao: TfrmGeProdutoImpressao
         Style = csDropDownList
         TabOrder = 0
       end
+      object ckSemEstoqueVenda: TCheckBox
+        Left = 104
+        Top = 147
+        Width = 313
+        Height = 17
+        Caption = 'Apenas produtos sem estoque de venda'
+        TabOrder = 5
+      end
     end
   end
   object frRelacaoProduto: TfrxReport
