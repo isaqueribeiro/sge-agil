@@ -48,6 +48,7 @@ type
     DspAno: TDataSetProvider;
     CdsAno: TClientDataSet;
     FrDemandaEstoqueProduto: TfrxReport;
+    ckSemEstoqueVenda: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnVisualizarClick(Sender: TObject);
@@ -228,6 +229,9 @@ begin
       if ( edEmpresa.ItemIndex > 0 ) then
         SQL.Add('  and coalesce(xx.empresa, yy.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
 
+      if ckSemEstoqueVenda.Checked then
+        SQL.Add('  and p.qtde <= 0');
+
       SQL.Add('order by');
       SQL.Add('    e.rzsoc');
       SQL.Add('  , coalesce(g.descri, ''* Indefinido'')');
@@ -265,6 +269,9 @@ begin
 
       if ( edEmpresa.ItemIndex > 0 ) then
         SQL.Add('  and coalesce(xx.empresa, p.codemp) = ' + QuotedStr(IEmpresa[edEmpresa.ItemIndex]));
+
+      if ckSemEstoqueVenda.Checked then
+        SQL.Add('  and p.qtde <= 0');
 
       SQL.Add('order by');
       SQL.Add('    e.rzsoc');

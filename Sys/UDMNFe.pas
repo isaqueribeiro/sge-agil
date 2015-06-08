@@ -60,14 +60,6 @@ type
     qryDestinatarioPAIS_ID: TIBStringField;
     qryDestinatarioPAIS_NOME: TIBStringField;
     qryDuplicatas: TIBQuery;
-    qryDuplicatasANOLANC: TSmallintField;
-    qryDuplicatasNUMLANC: TIntegerField;
-    qryDuplicatasPARCELA: TSmallintField;
-    qryDuplicatasDTEMISS: TDateField;
-    qryDuplicatasDTVENC: TDateField;
-    qryDuplicatasVALORREC: TIBBCDField;
-    qryDuplicatasVALORMULTA: TIBBCDField;
-    qryDuplicatasPERCENTDESCONTO: TIBBCDField;
     qryDadosProduto: TIBQuery;
     frdEmpresa: TfrxDBDataset;
     frdCliente: TfrxDBDataset;
@@ -120,26 +112,6 @@ type
     FrECFPooler: TfrxReport;
     qryFormaPagtos: TIBQuery;
     frdFormaPagtos: TfrxDBDataset;
-    qryFormaPagtosFORMAPAGTO_COD: TSmallintField;
-    qryFormaPagtosDESCRI: TIBStringField;
-    qryFormaPagtosACRESCIMO: TFloatField;
-    qryFormaPagtosCONDICAOPAGTO_COD: TSmallintField;
-    qryFormaPagtosCOND_DESCRICAO: TIBStringField;
-    qryFormaPagtosCOND_DESCRICAO_FULL: TIBStringField;
-    qryFormaPagtosVENDA_PRAZO: TSmallintField;
-    qryFormaPagtosVALOR_FPAGTO: TIBBCDField;
-    qryFormaPagtosPRAZO_01: TSmallintField;
-    qryFormaPagtosPRAZO_02: TSmallintField;
-    qryFormaPagtosPRAZO_03: TSmallintField;
-    qryFormaPagtosPRAZO_04: TSmallintField;
-    qryFormaPagtosPRAZO_05: TSmallintField;
-    qryFormaPagtosPRAZO_06: TSmallintField;
-    qryFormaPagtosPRAZO_07: TSmallintField;
-    qryFormaPagtosPRAZO_08: TSmallintField;
-    qryFormaPagtosPRAZO_09: TSmallintField;
-    qryFormaPagtosPRAZO_10: TSmallintField;
-    qryFormaPagtosPRAZO_11: TSmallintField;
-    qryFormaPagtosPRAZO_12: TSmallintField;
     qryFornecedorDestinatario: TIBQuery;
     frdFornecedor: TfrxDBDataset;
     frdEntrada: TfrxDBDataset;
@@ -148,14 +120,6 @@ type
     frdEntradaItens: TfrxDBDataset;
     qryEntradaDuplicatas: TIBQuery;
     frdEntradaDuplicata: TfrxDBDataset;
-    qryEntradaDuplicatasANOLANC: TSmallintField;
-    qryEntradaDuplicatasNUMLANC: TIntegerField;
-    qryEntradaDuplicatasPARCELA: TSmallintField;
-    qryEntradaDuplicatasDTEMISS: TDateField;
-    qryEntradaDuplicatasDTVENC: TDateField;
-    qryEntradaDuplicatasVALORPAG: TIBBCDField;
-    qryEntradaDuplicatasVALORMULTA: TIBBCDField;
-    qryEntradaDuplicatasPERCENTDESCONTO: TIBBCDField;
     qryDadosProdutoANO: TSmallintField;
     qryDadosProdutoCODCONTROL: TIntegerField;
     qryDadosProdutoSEQ: TSmallintField;
@@ -304,10 +268,6 @@ type
     qryRequisicaoCompra: TIBQuery;
     frdRequisicaoCompra: TfrxDBDataset;
     frrRequisicaoCompra: TfrxReport;
-    qryFormaPagtosFORMAPAGTO_NFCE: TIBStringField;
-    qryFormaPagtosFORMAPAGTO_PDV: TSmallintField;
-    qryFormaPagtosFORMAPAGTO_PDV_CUPOM_EXTRA: TSmallintField;
-    qryFormaPagtosCOND_DESCRICAO_PDV: TIBStringField;
     frrCartaCorrecaoE: TfrxReport;
     qryNFe: TIBQuery;
     qryNFeANOVENDA: TSmallintField;
@@ -345,7 +305,6 @@ type
     ACBrAAC: TACBrAAC;
     ACBrEAD: TACBrEAD;
     ACBrECFVirtualNaoFiscal: TACBrECFVirtualNaoFiscal;
-    qryFormaPagtosVALOR_RECEBIDO: TIBBCDField;
     nfcDANFE: TACBrNFeDANFeESCPOS;
     ACBrSATExtratoESCPOS: TACBrSATExtratoESCPOS;
     ACBrSAT: TACBrSAT;
@@ -364,12 +323,6 @@ type
     qryVendasCaixaDetalhe: TIBQuery;
     qryVendasCaixaFormaPagto: TIBQuery;
     qryVendasCaixaSoma: TIBQuery;
-    qryDuplicatasVALORRECTOT: TIBBCDField;
-    qryDuplicatasVALORSALDO: TIBBCDField;
-    qryDuplicatasHISTORIC: TMemoField;
-    qryDuplicatasTIPPAG: TIBStringField;
-    qryDuplicatasBAIXADO: TSmallintField;
-    qryDuplicatasDTREC: TDateField;
     frrNFeRetrato: TfrxReport;
     frrNFePaisagem: TfrxReport;
     ValidarXML: TXMLDocument;
@@ -397,12 +350,14 @@ type
     procedure GuardarLoteNFeVenda(const sCNPJEmitente : String; const Ano, Numero, NumeroLote : Integer; const Recibo : String);
     procedure GuardarLoteNFeEntrada(const sCNPJEmitente : String; const Ano, Numero, NumeroLote : Integer; const Recibo : String);
 
-    procedure GerarNFEACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
+    procedure GerarNFeACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
       var DtHoraEmiss : TDateTime; var iSerieNFe, iNumeroNFe : Integer; var FileNameXML : String);
-    procedure GerarNFEEntradaACBr(const sCNPJEmitente : String; const iCodFornecedor : Integer; const iAnoCompra, iNumCompra : Integer;
+    procedure GerarNFeEntradaACBr(const sCNPJEmitente : String; const iCodFornecedor : Integer; const iAnoCompra, iNumCompra : Integer;
       var DtHoraEmiss : TDateTime; var iSerieNFe, iNumeroNFe : Integer; var FileNameXML : String);
-    procedure GerarNFCEACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
+    procedure GerarNFCeACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
       var DtHoraEmiss : TDateTime; var iSerieNFCe, iNumeroNFCe : Integer; var FileNameXML : String);
+    procedure GerarNFeComplementarACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
+      var DtHoraEmiss : TDateTime; var iSerieNFe, iNumeroNFe : Integer; var FileNameXML : String); virtual; abstract;
 
     function ImprimirCupomNaoFiscal_PORTA(const sCNPJEmitente : String; iCodigoCliente : Integer;
       const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer) : Boolean;
@@ -454,6 +409,11 @@ type
     function GerarNFeOffLineACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
       var iSerieNFe, iNumeroNFe  : Integer; var FileNameXML, ChaveNFE : String;
       const Imprimir : Boolean = TRUE) : Boolean;
+
+    function GerarNFComplementarOnLineACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String; const iAnoVenda, iNumVenda : Integer;
+      var iSerieNFe, iNumeroNFe  : Integer; var FileNameXML, ChaveNFE, ProtocoloNFE, ReciboNFE : String; var iNumeroLote  : Int64;
+      var Denegada : Boolean; var DenegadaMotivo : String;
+      const Imprimir : Boolean = TRUE) : Boolean; virtual; abstract;
 
     function CancelarNFeACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const iAnoVenda, iNumVenda : Integer; const Motivo : String) : Boolean;
 
@@ -513,6 +473,7 @@ var
   procedure CorrigirXML_NFe(aString : WideString; sFileNameXML : String);
 
   function GetDiretorioNFe : String;
+  function FormatarChaveNFe(const aChave : String) : String;
 
 const
   UrlGoogleQrCode = 'http://chart.apis.google.com/chart?chs=%dx%d&cht=qr&chld=%s&chl=%s'; // Exemplo: http://chart.apis.google.com/chart?chs=150x150&cht=qr&chl=Isaque%20Marinho%20Ribeiro
@@ -623,6 +584,11 @@ end;
 function GetDiretorioNFe : String;
 begin
   Result := StringReplace(DMNFe.ACBrNFe.Configuracoes.Geral.PathSalvar + '\', '\\', '\', [rfReplaceAll]);
+end;
+
+function FormatarChaveNFe(const aChave : String) : String;
+begin
+  Result := Trim(NotaUtil.FormatarChaveAcesso(aChave));
 end;
 
 procedure ConfigurarNFeACBr(const sCNPJEmitente : String);
@@ -1883,7 +1849,7 @@ begin
   end;
 end;
 
-procedure TDMNFe.GerarNFEACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String;
+procedure TDMNFe.GerarNFeACBr(const sCNPJEmitente : String; iCodigoCliente : Integer; const sDataHoraSaida : String;
   const iAnoVenda, iNumVenda : Integer;
   var DtHoraEmiss : TDateTime; var iSerieNFe, iNumeroNFe : Integer; var FileNameXML : String);
 var
@@ -2660,9 +2626,10 @@ begin
           begin
             with Cobr.Dup.Add do
             begin
-              nDup  := FormatFloat('0000', qryDuplicatasANOLANC.AsInteger) + '/' + FormatFloat('0000000', qryDuplicatasNUMLANC.AsInteger);
-              dVenc := qryDuplicatasDTVENC.AsDateTime;
-              vDup  := qryDuplicatasVALORREC.AsCurrency;
+              nDup  := FormatFloat('0000', qryDuplicatas.FieldByName('ANOLANC').AsInteger) + '/' +
+                FormatFloat('0000000', qryDuplicatas.FieldByName('NUMLANC').AsInteger);
+              dVenc := qryDuplicatas.FieldByName('DTVENC').AsDateTime;
+              vDup  := qryDuplicatas.FieldByName('VALORREC').AsCurrency;
             end;
 
             qryDuplicatas.Next;
@@ -3192,7 +3159,7 @@ begin
 
 end;
 
-procedure TDMNFe.GerarNFEEntradaACBr(const sCNPJEmitente : String; const iCodFornecedor : Integer; const iAnoCompra, iNumCompra : Integer;
+procedure TDMNFe.GerarNFeEntradaACBr(const sCNPJEmitente : String; const iCodFornecedor : Integer; const iAnoCompra, iNumCompra : Integer;
   var DtHoraEmiss : TDateTime; var iSerieNFe, iNumeroNFe : Integer; var FileNameXML : String);
 var
   cPercentualTributoAprox,
@@ -3937,9 +3904,10 @@ begin
           begin
             with Cobr.Dup.Add do
             begin
-              nDup  := FormatFloat('0000', qryEntradaDuplicatasANOLANC.AsInteger) + '/' + FormatFloat('0000000', qryEntradaDuplicatasNUMLANC.AsInteger);
-              dVenc := qryEntradaDuplicatasDTVENC.AsDateTime;
-              vDup  := qryEntradaDuplicatasVALORPAG.AsCurrency;
+              nDup  := FormatFloat('0000', qryEntradaDuplicatas.FieldByName('ANOLANC').AsInteger) + '/' +
+                FormatFloat('0000000', qryEntradaDuplicatas.FieldByName('NUMLANC').AsInteger);
+              dVenc := qryEntradaDuplicatas.FieldByName('DTVENC').AsDateTime;
+              vDup  := qryEntradaDuplicatas.FieldByName('VALORPAG').AsCurrency;
             end;
 
             qryEntradaDuplicatas.Next;
@@ -4849,7 +4817,8 @@ begin
 
       while not qryFormaPagtos.Eof do
       begin
-        Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
+        Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtos.FieldByName('DESCRI').AsString),
+          FormatFloat(',0.00',  qryFormaPagtos.FieldByName('VALOR_FPAGTO').AsCurrency));
         qryFormaPagtos.Next;
       end;
 
@@ -5175,7 +5144,7 @@ begin
 
 end;
 
-procedure TDMNFe.GerarNFCEACBr(const sCNPJEmitente: String;
+procedure TDMNFe.GerarNFCeACBr(const sCNPJEmitente: String;
   iCodigoCliente: Integer; const sDataHoraSaida: String; const iAnoVenda,
   iNumVenda: Integer; var DtHoraEmiss: TDateTime; var iSerieNFCe,
   iNumeroNFCe: Integer; var FileNameXML: String);
@@ -5285,7 +5254,7 @@ begin
       Emit.IEST  := EmptyStr;
       Emit.IM    := EmptyStr; // Preencher no caso de existir serviços na nota
       Emit.CNAE  := EmptyStr; // Verifique na cidade do emissor da NFe se é permitido
-                              // a inclusão de serviços na NFCe 
+                              // a inclusão de serviços na NFCe
 
   //Para NFe Avulsa preencha os campos abaixo
   {      Avulsa.CNPJ    := '';
@@ -5776,7 +5745,7 @@ begin
         begin
           with pag.Add do // Formas de Pagamentos apenas para NFC-e
            begin
-             Case qryFormaPagtosFORMAPAGTO_NFCE.AsInteger of
+             Case qryFormaPagtos.FieldByName('FORMAPAGTO_NFCE').AsInteger of
                01 : tPag := fpDinheiro;
                02 : tPag := fpCheque;
                03 : tPag := fpCartaoCredito;
@@ -5789,7 +5758,7 @@ begin
                else
                 tPag := fpOutro
              end;
-             vPag := qryFormaPagtosVALOR_FPAGTO.AsCurrency;
+             vPag := qryFormaPagtos.FieldByName('VALOR_FPAGTO').AsCurrency;
            end;
 
           qryFormaPagtos.Next;
@@ -6098,23 +6067,26 @@ begin
       while not qryFormaPagtos.Eof do
       begin
         if not bEmitirCumpoExtraParcelas then
-          bEmitirCumpoExtraParcelas := (qryFormaPagtosFORMAPAGTO_PDV_CUPOM_EXTRA.AsInteger = 1) and (qryCalculoImposto.FieldByName('VENDA_PRAZO').AsInteger = 1);
+          bEmitirCumpoExtraParcelas := (qryFormaPagtos.FieldByName('FORMAPAGTO_PDV_CUPOM_EXTRA').AsInteger = 1) and (qryCalculoImposto.FieldByName('VENDA_PRAZO').AsInteger = 1);
 
-        cValorTroco := qryFormaPagtosVALOR_RECEBIDO.AsCurrency - qryFormaPagtosVALOR_FPAGTO.AsCurrency;
+        cValorTroco := qryFormaPagtos.FieldByName('VALOR_RECEBIDO').AsCurrency -
+          qryFormaPagtos.FieldByName('VALOR_FPAGTO').AsCurrency;
 
         if ( cValorTroco > 0.0 ) then
         begin
-          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_RECEBIDO.AsCurrency));
+          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtos.FieldByName('DESCRI').AsString),
+            FormatFloat(',0.00',  qryFormaPagtos.FieldByName('VALOR_RECEBIDO').AsCurrency));
           Ecf.Incluir_Texto_Valor('* Troco', FormatFloat(',0.00',  cValorTroco));
         end
         else
-          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
+          Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtos.FieldByName('DESCRI').AsString),
+            FormatFloat(',0.00',  qryFormaPagtos.FieldByName('VALOR_FPAGTO').AsCurrency));
 
-        if ( qryFormaPagtosVENDA_PRAZO.AsInteger = 1 ) then
+        if ( qryFormaPagtos.FieldByName('VENDA_PRAZO').AsInteger = 1 ) then
           Ecf.Texto_Livre('* ' + RemoveAcentos(
-            IfThen(Trim(qryFormaPagtosCOND_DESCRICAO_PDV.AsString) = EmptyStr
-              , qryFormaPagtosCOND_DESCRICAO_FULL.Text
-              , qryFormaPagtosCOND_DESCRICAO_PDV.AsString)));
+            IfThen(Trim(qryFormaPagtos.FieldByName('COND_DESCRICAO_PDV').AsString) = EmptyStr
+              , qryFormaPagtos.FieldByName('COND_DESCRICAO_FULL').Text
+              , qryFormaPagtos.FieldByName('COND_DESCRICAO_PDV').AsString)));
 
         qryFormaPagtos.Next;
       end;
@@ -6263,17 +6235,19 @@ begin
 
         while not qryFormaPagtos.Eof do
         begin
-          cValorTroco := qryFormaPagtosVALOR_RECEBIDO.AsCurrency - qryFormaPagtosVALOR_FPAGTO.AsCurrency;
+          cValorTroco := qryFormaPagtos.FieldByName('VALOR_RECEBIDO').AsCurrency - qryFormaPagtos.FieldByName('VALOR_FPAGTO').AsCurrency;
 
           if ( cValorTroco > 0.0  ) then
-            Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_RECEBIDO.AsCurrency))
+            Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtos.FieldByName('DESCRI').AsString),
+              FormatFloat(',0.00',  qryFormaPagtos.FieldByName('VALOR_RECEBIDO').AsCurrency))
           else
-            Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtosDESCRI.AsString), FormatFloat(',0.00',  qryFormaPagtosVALOR_FPAGTO.AsCurrency));
+            Ecf.Incluir_Forma_Pgto(RemoveAcentos(qryFormaPagtos.FieldByName('DESCRI').AsString),
+              FormatFloat(',0.00',  qryFormaPagtos.FieldByName('VALOR_FPAGTO').AsCurrency));
 
           Ecf.Texto_Livre('* ' + RemoveAcentos(
-            IfThen(Trim(qryFormaPagtosCOND_DESCRICAO_PDV.AsString) = EmptyStr
-              , qryFormaPagtosCOND_DESCRICAO_FULL.Text
-              , qryFormaPagtosCOND_DESCRICAO_PDV.AsString)));
+            IfThen(Trim(qryFormaPagtos.FieldByName('COND_DESCRICAO_PDV').AsString) = EmptyStr
+              , qryFormaPagtos.FieldByName('COND_DESCRICAO_FULL').Text
+              , qryFormaPagtos.FieldByName('COND_DESCRICAO_PDV').AsString)));
 
           if ( cValorTroco > 0.0 ) then
             Ecf.Incluir_Texto_Valor('* Troco', FormatFloat(',0.00',  cValorTroco));
@@ -6288,11 +6262,11 @@ begin
 
         while not qryDuplicatas.Eof do
         begin
-          sDuplicata := qryDuplicatasANOLANC.AsString + '/' +
-            FormatFloat('###00000"."', qryDuplicatasNUMLANC.AsInteger) +
-            FormatFloat('00', qryDuplicatasPARCELA.AsInteger) + ' ' +
-            FormatDateTime('dd/mm/yyyy', qryDuplicatasDTVENC.AsDateTime);
-          Ecf.Incluir_Texto_Valor(Trim(sDuplicata), FormatFloat(',0.00',  qryDuplicatasVALORREC.AsCurrency));
+          sDuplicata := qryDuplicatas.FieldByName('ANOLANC').AsString + '/' +
+            FormatFloat('###00000"."', qryDuplicatas.FieldByName('NUMLANC').AsInteger) +
+            FormatFloat('00', qryDuplicatas.FieldByName('PARCELA').AsInteger) + ' ' +
+            FormatDateTime('dd/mm/yyyy', qryDuplicatas.FieldByName('DTVENC').AsDateTime);
+          Ecf.Incluir_Texto_Valor(Trim(sDuplicata), FormatFloat(',0.00',  qryDuplicatas.FieldByName('VALORREC').AsCurrency));
 
           qryDuplicatas.Next;
         end;

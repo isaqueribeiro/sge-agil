@@ -102,6 +102,14 @@ inherited frmGeProdutoEstoqueImpressao: TfrmGeProdutoEstoqueImpressao
         Items.Strings = (
           '2014')
       end
+      object ckSemEstoqueVenda: TCheckBox
+        Left = 104
+        Top = 123
+        Width = 313
+        Height = 17
+        Caption = 'Apenas produtos sem estoque de venda'
+        TabOrder = 4
+      end
     end
   end
   object QryGrupo: TIBQuery

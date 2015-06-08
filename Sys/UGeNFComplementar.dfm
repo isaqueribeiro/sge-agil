@@ -22,6 +22,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
   inherited pgcGuias: TPageControl
     Width = 1036
     Height = 574
+    OnChange = pgcGuiasChange
     ExplicitWidth = 1036
     ExplicitHeight = 574
     inherited tbsTabela: TTabSheet
@@ -1081,10 +1082,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
           TabOrder = 0
           object btnProdutoEditar: TBitBtn
             Left = 0
-            Top = 1
+            Top = 0
             Width = 70
             Height = 25
             Hint = 'Editar Produto'
+            Align = alTop
             Caption = 'Editar'
             Enabled = False
             Glyph.Data = {
@@ -1143,13 +1145,15 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             ShowHint = True
             TabOrder = 0
             OnClick = btnProdutoEditarClick
+            ExplicitTop = 1
           end
           object btnProdutoSalvar: TBitBtn
             Left = 0
-            Top = 73
+            Top = 74
             Width = 70
             Height = 25
             Hint = 'Salvar Produto'
+            Align = alBottom
             Caption = 'Salvar'
             Enabled = False
             Glyph.Data = {
@@ -1207,6 +1211,8 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             ParentShowHint = False
             ShowHint = True
             TabOrder = 2
+            OnClick = btnProdutoSalvarClick
+            ExplicitLeft = 6
           end
           object btnProdutoCancelar: TBitBtn
             Left = 0
@@ -1214,6 +1220,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             Width = 70
             Height = 25
             Hint = 'Cancelar Edi'#231#227'o'
+            Align = alBottom
             Caption = 'Cancel'
             Enabled = False
             Glyph.Data = {
@@ -1711,6 +1718,20 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Font.Style = []
               ParentFont = False
             end
+            object lblValorSeguro: TLabel
+              Left = 341
+              Top = 64
+              Width = 43
+              Height = 13
+              Caption = 'Seguros:'
+              FocusControl = dbValorSeguro
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+            end
             object dbValorFrete: TDBEdit
               Left = 238
               Top = 80
@@ -1762,6 +1783,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Top = 40
               Width = 97
               Height = 21
+              Color = clMoneyGreen
               DataField = 'NFC_VALOR_TOTAL_PRODUTO'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
@@ -1770,6 +1792,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
               ParentFont = False
+              ReadOnly = True
               TabOrder = 4
             end
             object dbValorOutros: TDBEdit
@@ -1785,13 +1808,14 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 7
+              TabOrder = 8
             end
             object dbTotalNotaFiscal: TDBEdit
               Left = 531
               Top = 40
               Width = 124
               Height = 21
+              Color = clMoneyGreen
               DataField = 'NFC_VALOR_TOTAL_NOTA'
               DataSource = DtSrcTabela
               Font.Charset = ANSI_CHARSET
@@ -1800,7 +1824,8 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Font.Name = 'Tahoma'
               Font.Style = [fsBold]
               ParentFont = False
-              TabOrder = 9
+              ReadOnly = True
+              TabOrder = 10
             end
             object dbValorDesconto: TDBEdit
               Left = 341
@@ -1830,7 +1855,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Font.Name = 'Tahoma'
               Font.Style = []
               ParentFont = False
-              TabOrder = 8
+              TabOrder = 9
             end
             object dbValorICMSSubs: TDBEdit
               Left = 119
@@ -1861,6 +1886,21 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
               Font.Style = []
               ParentFont = False
               TabOrder = 1
+            end
+            object dbValorSeguro: TDBEdit
+              Left = 341
+              Top = 80
+              Width = 89
+              Height = 21
+              DataField = 'NFC_VALOR_SEGURO'
+              DataSource = DtSrcTabela
+              Font.Charset = ANSI_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'Tahoma'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 7
             end
           end
         end
@@ -2542,6 +2582,9 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
       ParentShowHint = False
       ShowHint = True
       TabOrder = 8
+      OnClick = btbtnGerarNFeClick
+      ExplicitLeft = 587
+      ExplicitTop = -2
     end
     object btbtnCancelarNFC: TcxButton
       Tag = 12
@@ -2986,6 +3029,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     end
   end
   inherited DtSrcTabela: TDataSource
+    OnDataChange = DtSrcTabelaDataChange
     Left = 520
     Top = 64
   end
@@ -3146,7 +3190,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     Left = 424
     Top = 64
     Bitmap = {
-      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4989,112 +5033,72 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
   object IbUpdTabelaItens: TIBUpdateSQL
     RefreshSQL.Strings = (
       'Select '
-      '  ANO,'
-      '  CODCONTROL,'
-      '  SEQ,'
-      '  CODPROD,'
-      '  CODEMP,'
-      '  CODCLIENTE,'
-      '  CODCLI,'
-      '  DTVENDA,'
-      '  QTDE,'
-      '  PUNIT,'
-      '  PUNIT_PROMOCAO,'
-      '  DESCONTO,'
-      '  DESCONTO_VALOR,'
-      '  PFINAL,'
-      '  QTDEFINAL,'
-      '  UNID_COD,'
-      '  CFOP_COD,'
-      '  CST,'
-      '  CSOSN,'
-      '  ALIQUOTA,'
-      '  ALIQUOTA_CSOSN,'
-      '  ALIQUOTA_PIS,'
-      '  ALIQUOTA_COFINS,'
-      '  VALOR_IPI,'
-      '  PERCENTUAL_REDUCAO_BC,'
-      '  TOTAL_BRUTO,'
-      '  TOTAL_DESCONTO,'
-      '  TOTAL_LIQUIDO'
-      'from TVENDASITENS '
+      '  NFC_NUMERO,'
+      '  NFC_ITEM,'
+      '  MOV_ANO,'
+      '  MOV_CONTROLE,'
+      '  MOV_EMPRESA,'
+      '  MOV_SEQ,'
+      '  PRODUTO,'
+      '  QUANTIDADE,'
+      '  VALOR_DIFERENCA,'
+      '  VALOR_TOTAL,'
+      '  ALIQUOTA_ICMS,'
+      '  BC_ICMS,'
+      '  VALOR_ICMS,'
+      '  ALIQUOTA_ICMS_ST,'
+      '  BC_ICMS_ST,'
+      '  VALOR_ICMS_ST'
+      'from TBNFE_COMPLEMENTAR_ITEM '
       'where'
-      '  ANO = :ANO and'
-      '  CODCONTROL = :CODCONTROL and'
-      '  CODPROD = :CODPROD and'
-      '  SEQ = :SEQ')
+      '  NFC_ITEM = :NFC_ITEM and'
+      '  NFC_NUMERO = :NFC_NUMERO')
     ModifySQL.Strings = (
-      'update TVENDASITENS'
+      'update TBNFE_COMPLEMENTAR_ITEM'
       'set'
-      '  ALIQUOTA = :ALIQUOTA,'
-      '  ALIQUOTA_COFINS = :ALIQUOTA_COFINS,'
-      '  ALIQUOTA_CSOSN = :ALIQUOTA_CSOSN,'
-      '  ALIQUOTA_PIS = :ALIQUOTA_PIS,'
-      '  ANO = :ANO,'
-      '  CFOP_COD = :CFOP_COD,'
-      '  CODCLI = :CODCLI,'
-      '  CODCLIENTE = :CODCLIENTE,'
-      '  CODCONTROL = :CODCONTROL,'
-      '  CODEMP = :CODEMP,'
-      '  CODPROD = :CODPROD,'
-      '  CST = :CST,'
-      '  CSOSN = :CSOSN,'
-      '  DESCONTO = :DESCONTO,'
-      '  DESCONTO_VALOR = :DESCONTO_VALOR,'
-      '  DTVENDA = :DTVENDA,'
-      '  PERCENTUAL_REDUCAO_BC = :PERCENTUAL_REDUCAO_BC,'
-      '  PFINAL = :PFINAL,'
-      '  PUNIT = :PUNIT,'
-      '  PUNIT_PROMOCAO = :PUNIT_PROMOCAO,'
-      '  QTDE = :QTDE,'
-      '  QTDEFINAL = :QTDEFINAL,'
-      '  SEQ = :SEQ,'
-      '  TOTAL_BRUTO = :TOTAL_BRUTO,'
-      '  TOTAL_DESCONTO = :TOTAL_DESCONTO,'
-      '  TOTAL_LIQUIDO = :TOTAL_LIQUIDO,'
-      '  UNID_COD = :UNID_COD,'
-      '  VALOR_IPI = :VALOR_IPI'
+      '  ALIQUOTA_ICMS = :ALIQUOTA_ICMS,'
+      '  ALIQUOTA_ICMS_ST = :ALIQUOTA_ICMS_ST,'
+      '  BC_ICMS = :BC_ICMS,'
+      '  BC_ICMS_ST = :BC_ICMS_ST,'
+      '  MOV_ANO = :MOV_ANO,'
+      '  MOV_CONTROLE = :MOV_CONTROLE,'
+      '  MOV_EMPRESA = :MOV_EMPRESA,'
+      '  MOV_SEQ = :MOV_SEQ,'
+      '  NFC_ITEM = :NFC_ITEM,'
+      '  NFC_NUMERO = :NFC_NUMERO,'
+      '  PRODUTO = :PRODUTO,'
+      '  QUANTIDADE = :QUANTIDADE,'
+      '  VALOR_DIFERENCA = :VALOR_DIFERENCA,'
+      '  VALOR_ICMS = :VALOR_ICMS,'
+      '  VALOR_ICMS_ST = :VALOR_ICMS_ST,'
+      '  VALOR_TOTAL = :VALOR_TOTAL'
       'where'
-      '  ANO = :OLD_ANO and'
-      '  CODCONTROL = :OLD_CODCONTROL and'
-      '  CODPROD = :OLD_CODPROD and'
-      '  SEQ = :OLD_SEQ')
+      '  NFC_ITEM = :OLD_NFC_ITEM and'
+      '  NFC_NUMERO = :OLD_NFC_NUMERO')
     InsertSQL.Strings = (
-      'insert into TVENDASITENS'
+      'insert into TBNFE_COMPLEMENTAR_ITEM'
       
-        '  (ALIQUOTA, ALIQUOTA_COFINS, ALIQUOTA_CSOSN, ALIQUOTA_PIS, ANO,' +
-        ' CFOP_COD, '
+        '  (ALIQUOTA_ICMS, ALIQUOTA_ICMS_ST, BC_ICMS, BC_ICMS_ST, MOV_ANO' +
+        ', MOV_CONTROLE, '
       
-        '   CODCLI, CODCLIENTE, CODCONTROL, CODEMP, CODPROD, CST, CSOSN, ' +
-        'DESCONTO, DESCONTO_VALOR, '
-      
-        '   DTVENDA, PERCENTUAL_REDUCAO_BC, PFINAL, PUNIT, PUNIT_PROMOCAO' +
-        ', QTDE, '
-      
-        '   QTDEFINAL, SEQ, TOTAL_BRUTO, TOTAL_DESCONTO, TOTAL_LIQUIDO, U' +
-        'NID_COD, '
-      '   VALOR_IPI)'
+        '   MOV_EMPRESA, MOV_SEQ, NFC_ITEM, NFC_NUMERO, PRODUTO, QUANTIDA' +
+        'DE, VALOR_DIFERENCA, '
+      '   VALOR_ICMS, VALOR_ICMS_ST, VALOR_TOTAL)'
       'values'
       
-        '  (:ALIQUOTA, :ALIQUOTA_COFINS, :ALIQUOTA_CSOSN, :ALIQUOTA_PIS, ' +
-        ':ANO, :CFOP_COD, '
+        '  (:ALIQUOTA_ICMS, :ALIQUOTA_ICMS_ST, :BC_ICMS, :BC_ICMS_ST, :MO' +
+        'V_ANO, '
       
-        '   :CODCLI, :CODCLIENTE, :CODCONTROL, :CODEMP, :CODPROD, :CST, :' +
-        'CSOSN, :DESCONTO, '
+        '   :MOV_CONTROLE, :MOV_EMPRESA, :MOV_SEQ, :NFC_ITEM, :NFC_NUMERO' +
+        ', :PRODUTO, '
       
-        '   :DESCONTO_VALOR, :DTVENDA, :PERCENTUAL_REDUCAO_BC, :PFINAL, :' +
-        'PUNIT, '
-      
-        '   :PUNIT_PROMOCAO, :QTDE, :QTDEFINAL, :SEQ, :TOTAL_BRUTO, :TOTA' +
-        'L_DESCONTO, '
-      '   :TOTAL_LIQUIDO, :UNID_COD, :VALOR_IPI)')
+        '   :QUANTIDADE, :VALOR_DIFERENCA, :VALOR_ICMS, :VALOR_ICMS_ST, :' +
+        'VALOR_TOTAL)')
     DeleteSQL.Strings = (
-      'delete from TVENDASITENS'
+      'delete from TBNFE_COMPLEMENTAR_ITEM'
       'where'
-      '  ANO = :OLD_ANO and'
-      '  CODCONTROL = :OLD_CODCONTROL and'
-      '  CODPROD = :OLD_CODPROD and'
-      '  SEQ = :OLD_SEQ')
+      '  NFC_ITEM = :OLD_NFC_ITEM and'
+      '  NFC_NUMERO = :OLD_NFC_NUMERO')
     Left = 487
     Top = 96
   end

@@ -114,14 +114,15 @@ end;
 procedure TfrmGeCartaCorrecao.dbNFeButtonClick(Sender: TObject);
 var
   sEmpresa,
-  sSerie  : String;
+  sSerie  ,
+  sChave  : String;
   iNumero ,
   iModelo : Integer;
   aDestinatario : TDestinatarioNF;
 begin
   sEmpresa := IbDtstTabelaCCE_EMPRESA.AsString;
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
-    if ( SelecionarNFe(Self, sEmpresa, sSerie, iNumero, iModelo, aDestinatario) ) then
+    if ( SelecionarNFe(Self, sEmpresa, sSerie, sChave, iNumero, iModelo, aDestinatario) ) then
     begin
       IbDtstTabelaNFE_SERIE.Value  := sSerie;
       IbDtstTabelaNFE_NUMERO.Value := iNumero;

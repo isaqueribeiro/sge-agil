@@ -8,6 +8,8 @@ inherited frmGeVendaGerarNFe: TfrmGeVendaGerarNFe
   ClientHeight = 410
   ClientWidth = 596
   OldCreateOrder = True
+  ExplicitWidth = 610
+  ExplicitHeight = 447
   DesignSize = (
     596
     410)

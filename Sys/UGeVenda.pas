@@ -1849,6 +1849,7 @@ begin
     if not InformarDocumentoReferenciado(Self, IbDtstTabelaANO.Value, IbDtstTabelaCODCONTROL.Value) then
       Exit;
 
+  // Buscar retorno do envio pendente, caso ele tenha ocorrido
   if not bNFeGerada then
     if ( Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr ) then
     begin
