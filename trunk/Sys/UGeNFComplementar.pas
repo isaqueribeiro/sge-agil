@@ -243,6 +243,14 @@ type
     btnProdutoCancelar: TBitBtn;
     lblValorSeguro: TLabel;
     dbValorSeguro: TDBEdit;
+    IbDtstTabelaNFC_DENEGADA: TSmallintField;
+    IbDtstTabelaNFC_DENEGADA_MOTIVO: TIBStringField;
+    qryNFENFC_NUMERO: TIntegerField;
+    ppImprimir: TPopupMenu;
+    nmImprimirEspelho: TMenuItem;
+    nmImprimirDANFE: TMenuItem;
+    nmGerarDANFEXML: TMenuItem;
+    nmEnviarEmailCliente: TMenuItem;
     procedure pgcGuiasChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFC_DATAGetText(Sender: TField; var Text: string;
@@ -265,6 +273,7 @@ type
     procedure btnProdutoSalvarClick(Sender: TObject);
     procedure DtSrcTabelaDataChange(Sender: TObject; Field: TField);
     procedure btbtnGerarNFeClick(Sender: TObject);
+    procedure IbDtstTabelaAfterScroll(DataSet: TDataSet);
   private
     { Private declarations }
     SQL_Itens : TStringList;
@@ -391,10 +400,13 @@ var
   sChaveNFE     ,
   sProtocoloNFE ,
   sReciboNFE    ,
-  sMensagem     : String;
+  sMensagem     ,
+  sDenegadaMotivo,
+  sDataHoraSaida : String;
   iNumeroLote   : Int64;
   TipoMovimento : TTipoMovimento;
-  bNFeGerada    : Boolean;
+  bNFeGerada,
+  bDenegada : Boolean;
 begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
@@ -428,7 +440,7 @@ begin
   if not bNFeGerada then
     if ( Trim(IbDtstTabelaRECIBO.AsString) <> EmptyStr ) then
     begin
-      bNFeGerada := BuscarRetornoReciboNFe(Self
+      bNFeGerada := BuscarRetornoReciboNFe( Self
         , IbDtstTabelaNFC_EMPRESA.AsString
         , IbDtstTabelaRECIBO.AsString
         , iSerieNFe
@@ -436,7 +448,7 @@ begin
         , sFileNameXML
         , sChaveNFE
         , sProtocoloNFE
-        , TipoMovimento);
+        , TipoMovimento );
 
       if ( Ord(TipoMovimento) <> dbTipo.Field.AsInteger ) then
       begin
@@ -451,8 +463,95 @@ begin
         Exit;
     end;
 
-  // Gerar XML da NF e Enviar para a SEFA
+  sDataHoraSaida := FormatDateTime('dd/mm/yyyy', GetDateDB) + ' 23:59:59';
 
+  // Gerar XML da NF e Enviar para a SEFA
+  if not bNFeGerada then
+    bNFeGerada := DMNFe.GerarNFeComplementarOnLineACBr( IbDtstTabelaNFC_EMPRESA.Value
+      , IbDtstTabelaDESTINATARIO_CODIGO.AsInteger
+      , sDataHoraSaida
+      , TTipoNF(IbDtstTabelaNFC_TIPO.AsInteger)
+      , IbDtstTabelaNFC_NUMERO.AsInteger
+      , iSerieNFe
+      , iNumeroNFe
+      , sFileNameXML
+      , sChaveNFE
+      , sProtocoloNFE
+      , sReciboNFE
+      , iNumeroLote
+      , bDenegada
+      , sDenegadaMotivo
+      , False);
+
+  if bDenegada then
+    try
+      IbDtstTabela.DisableControls;
+      IbDtstTabela.Edit;
+
+      IbDtstTabelaNFC_DENEGADA.AsInteger       := 1;
+      IbDtstTabelaNFC_DENEGADA_MOTIVO.AsString := AnsiUpperCase(Trim(sDenegadaMotivo));
+
+      IbDtstTabela.Post;
+      IbDtstTabela.ApplyUpdates;
+      CommitTransaction;
+    finally
+      IbDtstTabela.EnableControls;
+    end;
+
+  if bNFeGerada then
+    with IbDtstTabela do
+    begin
+      iNumero := IbDtstTabelaNFC_NUMERO.AsInteger;
+
+      with qryNFE do
+      begin
+        AbrirNotaFiscal( IbDtstTabelaNFC_EMPRESA.AsString, IbDtstTabelaNFC_NUMERO.AsInteger );
+
+        Append;
+
+        qryNFEEMPRESA.Value     := IbDtstTabelaNFC_EMPRESA.AsString;
+        qryNFENFC_NUMERO.Value  := IbDtstTabelaNFC_NUMERO.Value;
+        qryNFESERIE.Value       := FormatFloat('#00', iSerieNFe);
+        qryNFENUMERO.Value      := iNumeroNFe;
+        qryNFEMODELO.Value      := DMNFe.GetModeloDF;
+        qryNFEVERSAO.Value      := DMNFe.GetVersaoDF;
+        qryNFEDATAEMISSAO.Value := GetDateDB;
+        qryNFEHORAEMISSAO.Value := GetTimeDB;
+        qryNFECHAVE.Value       := sChaveNFE;
+        qryNFEPROTOCOLO.Value   := sProtocoloNFE;
+        qryNFERECIBO.Value      := sReciboNFE;
+        qryNFELOTE_NUM.Value    := iNumeroLote;
+
+        if ( FileExists(sFileNameXML) ) then
+        begin
+          CorrigirXML_NFe(EmptyWideStr, sFileNameXML);
+
+          qryNFEXML_FILENAME.Value := ExtractFileName( sFileNameXML );
+          qryNFEXML_FILE.LoadFromFile( sFileNameXML );
+        end;
+
+        qryNFELOTE_ANO.Clear;
+        qryNFEANOVENDA.Clear;
+        qryNFENUMVENDA.Clear;
+        qryNFEANOCOMPRA.Clear;
+        qryNFENUMCOMPRA.Clear;
+
+        Post;
+        ApplyUpdates;
+
+        CommitTransaction;
+      end;
+
+      RecarregarRegistro;
+
+      ShowInformation('Nota Fiscal gerada com sucesso.' + #13#13 +
+        'Série/Número: ' + IbDtstTabelaSERIE.AsString + '/' + FormatFloat('##0000000', IbDtstTabelaNUMERO.Value) +
+        IfThen(Trim(sMensagem) = EmptyStr, EmptyStr, #13#13 + 'Alerta:' + #13 + sMensagem));
+
+      HabilitarDesabilitar_Btns;
+
+      nmImprimirDANFE.Click;
+    end;
 end;
 
 procedure TfrmGeNFComplementar.btbtnIncluirClick(Sender: TObject);
@@ -484,12 +583,11 @@ begin
   else
   begin
 
-    TotalValor(
-        cProduto
+    TotalValor( cProduto
       , cBaseICMS
       , cValorICMS
       , cBaseICMS_ST
-      , cValorICMS_ST);
+      , cValorICMS_ST );
 
     if ( cProduto <> IbDtstTabelaNFC_VALOR_TOTAL_PRODUTO.AsCurrency ) then
     begin
@@ -646,12 +744,12 @@ begin
 
       cdsTabelaItens.Post;
 
-      GetToTais(cTotalProduto
+      GetToTais( cTotalProduto
         , cTotalBaseIcms
         , cTotalIcms
         , cTotalBaseIcmsST
         , cTotalIcmsST
-        , cTotalNota);
+        , cTotalNota );
 
       IbDtstTabelaNFC_VALOR_TOTAL_PRODUTO.AsCurrency := cTotalProduto;
       IbDtstTabelaNFC_VALOR_BASE_ICMS.AsCurrency     := cTotalBaseIcms;
@@ -685,12 +783,12 @@ begin
     ParamByName('modelo').AsInteger := aModelo;
     Open;
 
-    AliquotaIcms(GetEmpresaUF(IbDtstTabelaNFC_EMPRESA.AsString)
+    AliquotaIcms( GetEmpresaUF(IbDtstTabelaNFC_EMPRESA.AsString)
       , IfThen(TTipoNF(IbDtstTabelaNFC_TIPO.AsInteger) = tnfEntrada,
           GetFornecedorUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger),
           GetClienteUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger))
       , cAliquotaNormal
-      , cAliquotaST);
+      , cAliquotaST );
 
     First;
     while not Eof do
@@ -758,12 +856,12 @@ begin
   if ( (Sender = dbValorBcIcms) or (Sender = dbValorBcIcmsST) ) then
     if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
     begin
-      AliquotaIcms(GetEmpresaUF(IbDtstTabelaNFC_EMPRESA.AsString)
+      AliquotaIcms( GetEmpresaUF(IbDtstTabelaNFC_EMPRESA.AsString)
         , IfThen(TTipoNF(IbDtstTabelaNFC_TIPO.AsInteger) = tnfEntrada,
             GetFornecedorUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger),
             GetClienteUF(IbDtstTabelaDESTINATARIO_CODIGO.AsInteger))
         , cAliquotaNormal
-        , cAliquotaST);
+        , cAliquotaST );
     end;
 
   // Calcular o valor da Aliquota ICMS de acordo o percentual do ICMS Normal
@@ -959,6 +1057,11 @@ begin
   AbrirNotaFiscal( IbDtstTabelaNFC_EMPRESA.AsString, IbDtstTabelaNFC_NUMERO.AsInteger );
 end;
 
+procedure TfrmGeNFComplementar.IbDtstTabelaAfterScroll(DataSet: TDataSet);
+begin
+  HabilitarDesabilitar_Btns;
+end;
+
 procedure TfrmGeNFComplementar.IbDtstTabelaDESTINATARIO_CNPJGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
@@ -972,12 +1075,13 @@ end;
 
 procedure TfrmGeNFComplementar.IbDtstTabelaNewRecord(DataSet: TDataSet);
 begin
-  IbDtstTabelaNFC_EMPRESA.Value := gUsuarioLogado.Empresa;
-  IbDtstTabelaNFC_DATA.Value    := GetDateDB;
-  IbDtstTabelaNFC_HORA.Value    := GetTimeDB;
-  IbDtstTabelaNFC_EMISSAO.Value := GetDateDB;
-  IbDtstTabelaNFC_EMISSOR.Value := gUsuarioLogado.Login;
-  IbDtstTabelaNFC_ENVIADA.Value := 0;
+  IbDtstTabelaNFC_EMPRESA.Value  := gUsuarioLogado.Empresa;
+  IbDtstTabelaNFC_DATA.Value     := GetDateDB;
+  IbDtstTabelaNFC_HORA.Value     := GetTimeDB;
+  IbDtstTabelaNFC_EMISSAO.Value  := GetDateDB;
+  IbDtstTabelaNFC_EMISSOR.Value  := gUsuarioLogado.Login;
+  IbDtstTabelaNFC_ENVIADA.Value  := 0;
+  IbDtstTabelaNFC_DENEGADA.Value := 0;
   IbDtstTabelaNFC_MODALIDADE_FRETE.Value := 0;
 
   IbDtstTabelaNFC_VALOR_BASE_ICMS.Value       := 0.0;
@@ -999,6 +1103,7 @@ begin
   IbDtstTabelaCANCELADA_USUARIO.Clear;
   IbDtstTabelaCANCELADA_DATAHORA.Clear;
   IbDtstTabelaCANCELADA_MOTIVO.Clear;
+  IbDtstTabelaNFC_DENEGADA_MOTIVO.Clear;
   IbDtstTabelaNFC_TEXTO.Clear;
   IbDtstTabelaNFE_SERIE.Clear;
   IbDtstTabelaNFE_NUMERO.Clear;

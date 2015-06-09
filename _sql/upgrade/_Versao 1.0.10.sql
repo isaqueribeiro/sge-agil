@@ -10422,3 +10422,398 @@ end;
 /*------ SYSDBA 06/06/2015 21:11:16 --------*/
 
 COMMIT WORK;
+
+
+/*------ SYSDBA 08/06/2015 21:40:14 --------*/
+
+ALTER TABLE TBNFE_COMPLEMENTAR
+    ADD NFC_DENEGADA DMN_LOGICO DEFAULT 0,
+    ADD NFC_DENEGADA_MOTIVO DMN_VCHAR_100;
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_DENEGADA IS
+'Nota fiscal denegada:
+0 - Nao
+1 - Sim';
+
+COMMENT ON COLUMN TBNFE_COMPLEMENTAR.NFC_DENEGADA_MOTIVO IS
+'Motivo da nota fiscal ter sido denegada.';
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_NUMERO position 1;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMPRESA position 2;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TIPO position 3;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_DATA position 4;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_HORA position 5;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMISSAO position 6;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_EMISSOR position 7;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_ENVIADA position 8;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TEXTO position 9;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_SERIE position 10;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_NUMERO position 11;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFE_MODELO position 12;
+
+alter table TBNFE_COMPLEMENTAR
+alter SERIE position 13;
+
+alter table TBNFE_COMPLEMENTAR
+alter NUMERO position 14;
+
+alter table TBNFE_COMPLEMENTAR
+alter RECIBO position 15;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_DENEGADA position 16;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_DENEGADA_MOTIVO position 17;
+
+alter table TBNFE_COMPLEMENTAR
+alter FORNECEDOR position 18;
+
+alter table TBNFE_COMPLEMENTAR
+alter CLIENTE position 19;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_MODALIDADE_FRETE position 20;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_TRANSPORTADORA position 21;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_VEICULO position 22;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_UF position 23;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_PLACA_RNTC position 24;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_BASE_ICMS position 25;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_ICMS position 26;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_BASE_ICMS_SUBST position 27;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_ICMS_SUBST position 28;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_PRODUTO position 29;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_FRETE position 30;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_SEGURO position 31;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_DESCONTO position 32;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_II position 33;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_IPI position 34;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_PIS position 35;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_COFINS position 36;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_OUTROS position 37;
+
+alter table TBNFE_COMPLEMENTAR
+alter NFC_VALOR_TOTAL_NOTA position 38;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA position 39;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA_USUARIO position 40;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA_DATAHORA position 41;
+
+alter table TBNFE_COMPLEMENTAR
+alter CANCELADA_MOTIVO position 42;
+
+
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_NUMERO position 1;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_EMPRESA position 2;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_TIPO position 3;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_DATA position 4;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_HORA position 5;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_EMISSAO position 6;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_EMISSOR position 7;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_ENVIADA position 8;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_TEXTO position 9;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFE_SERIE position 10;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFE_NUMERO position 11;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFE_MODELO position 12;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column SERIE position 13;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NUMERO position 14;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column RECIBO position 15;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column FORNECEDOR position 16;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column CLIENTE position 17;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_DENEGADA position 18;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_DENEGADA_MOTIVO position 19;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_MODALIDADE_FRETE position 20;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_TRANSPORTADORA position 21;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_PLACA_VEICULO position 22;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_PLACA_UF position 23;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_PLACA_RNTC position 24;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_BASE_ICMS position 25;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_ICMS position 26;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_BASE_ICMS_SUBST position 27;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_ICMS_SUBST position 28;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_PRODUTO position 29;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_FRETE position 30;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_SEGURO position 31;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_DESCONTO position 32;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_II position 33;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_IPI position 34;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_PIS position 35;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_COFINS position 36;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_OUTROS position 37;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column NFC_VALOR_TOTAL_NOTA position 38;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column CANCELADA position 39;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column CANCELADA_USUARIO position 40;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column CANCELADA_DATAHORA position 41;
+
+
+/*------ SYSDBA 08/06/2015 21:40:32 --------*/
+
+alter table TBNFE_COMPLEMENTAR
+alter column CANCELADA_MOTIVO position 42;

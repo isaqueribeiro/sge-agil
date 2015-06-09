@@ -56,6 +56,9 @@ begin
 
   try
 
+    DMBusiness.ibdtstUsers.Close;
+    DMBusiness.ibdtstUsers.Open;
+
     if not DMBusiness.ibdtstUsers.Locate('NOME', Usuario, []) then
     begin
       pnlMensagem.Caption := 'Entrada recusada ... USUÁRIO DESCONHECIDO!';
