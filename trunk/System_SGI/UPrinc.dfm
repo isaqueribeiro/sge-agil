@@ -4659,7 +4659,6 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbnTabCadastro: TdxRibbonTab
-      Active = True
       Caption = 'Cadastro'
       Groups = <
         item
@@ -4709,6 +4708,7 @@ object frmPrinc: TfrmPrinc
       Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
+      Active = True
       Caption = 'Financeiro'
       Groups = <
         item
@@ -4903,7 +4903,7 @@ object frmPrinc: TfrmPrinc
     object BrMngPrincipalFin: TdxBar
       Caption = 'Movimento Financeiro'
       CaptionButtons = <>
-      DockedLeft = 559
+      DockedLeft = 236
       DockedTop = 0
       FloatLeft = 335
       FloatTop = 213
@@ -6304,9 +6304,9 @@ object frmPrinc: TfrmPrinc
     object BrBtnQuitarAReceberLote: TdxBarLargeButton
       Caption = 'Quitar Contas A Receber (Por Lote)'
       Category = 14
-      Enabled = False
       Hint = 'Quitar Contas A Receber (Por Lote)'
       Visible = ivAlways
+      OnClick = BrBtnQuitarAReceberLoteClick
     end
     object BrBtnRelatorioCliente: TdxBarLargeButton
       Caption = 'Clientes'

@@ -93,6 +93,7 @@ end;
 
 procedure TfrmGrConfigurarBackup.btnSalvarClick(Sender: TObject);
 var
+  bSucesso : Boolean;
   sFileNameLOG : String;
 begin
   if ShowConfirmation('Confirma a geranção do backup?') then
@@ -111,8 +112,12 @@ begin
 
     ExecutarBackup;
 
-    if Pos('gbak:closing file, committing, and finishing', mmVerbose.Lines.Text) > 0 then
-      mmVerbose.Lines.Add(GetTime + ' - Backup finalizado com sucesso.');
+    bSucesso := (Pos('gbak:closing file, committing, and finishing', mmVerbose.Lines.Text) > 0);
+
+    if bSucesso then
+      mmVerbose.Lines.Add(GetTime + ' - Backup finalizado com sucesso.')
+    else
+      mmVerbose.Lines.Add(GetTime + ' - Erro(s) na execução do backup.');
 
     sFileNameLOG := ChangeFileExt(edLocalBackup.Hint, '.log');
     mmVerbose.Lines.SaveToFile(sFileNameLOG);
@@ -120,9 +125,11 @@ begin
     if FileExists(AppZip7) then
       CompactarECopiar;
 
-    ShowInformation('Backup realizado com sucesso!');
-
-    ModalResult := mrOk;
+    if bSucesso then
+    begin
+      ShowInformation('Backup realizado com sucesso!');
+      ModalResult := mrOk;
+    end;
   end;
 end;
 

@@ -4312,7 +4312,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5937,12 +5937,12 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  , i.aliquota_pis'
       '  , i.aliquota_cofins'
       '  , i.percentual_reducao_bc'
+      '  , i.total_bruto'
+      '  , i.total_liquido'
       ''
       '  , p.Descri'
       '  , p.Qtde as Estoque'
       '  , u.Unp_sigla'
-      '  , i.Qtde * i.Precounit  as total_bruto'
-      '  , i.Qtde * i.Customedio as total_liquido'
       'from TBCOMPRASITENS i'
       '  inner join TBPRODUTO p on (p.Cod = i.Codprod)'
       '  left join TBUNIDADEPROD u on (u.Unp_cod = p.Codunidade)')
@@ -6122,6 +6122,24 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       Precision = 18
       Size = 2
     end
+    object cdsTabelaItensTOTAL_BRUTO: TIBBCDField
+      DisplayLabel = 'Total Bruto (R$)'
+      FieldName = 'TOTAL_BRUTO'
+      Origin = '"TBCOMPRASITENS"."TOTAL_BRUTO"'
+      ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00'
+      Precision = 18
+      Size = 2
+    end
+    object cdsTabelaItensTOTAL_LIQUIDO: TIBBCDField
+      DisplayLabel = 'Total Liquido (R$)'
+      FieldName = 'TOTAL_LIQUIDO'
+      Origin = '"TBCOMPRASITENS"."TOTAL_LIQUIDO"'
+      ProviderFlags = [pfInUpdate]
+      DisplayFormat = ',0.00'
+      Precision = 18
+      Size = 2
+    end
     object cdsTabelaItensDESCRI: TIBStringField
       DisplayLabel = 'Descri'#231#227'o do produto'
       FieldName = 'DESCRI'
@@ -6142,22 +6160,6 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       DisplayFormat = ',0.###'
       Precision = 18
       Size = 3
-    end
-    object cdsTabelaItensTOTAL_BRUTO: TFMTBCDField
-      DisplayLabel = 'Total Bruto (R$)'
-      FieldName = 'TOTAL_BRUTO'
-      ProviderFlags = []
-      DisplayFormat = ',0.00'
-      Precision = 18
-      Size = 5
-    end
-    object cdsTabelaItensTOTAL_LIQUIDO: TFMTBCDField
-      DisplayLabel = 'Total L'#237'quido (R$)'
-      FieldName = 'TOTAL_LIQUIDO'
-      ProviderFlags = []
-      DisplayFormat = ',0.00'
-      Precision = 18
-      Size = 5
     end
   end
   object IbUpdTabelaItens: TIBUpdateSQL
@@ -6189,7 +6191,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  ALIQUOTA_CSOSN,'
       '  ALIQUOTA_PIS,'
       '  ALIQUOTA_COFINS,'
-      '  PERCENTUAL_REDUCAO_BC'
+      '  PERCENTUAL_REDUCAO_BC,'
+      '  TOTAL_BRUTO,'
+      '  TOTAL_LIQUIDO'
       'from TBCOMPRASITENS '
       'where'
       '  ANO = :ANO and'
@@ -6221,6 +6225,8 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  QTDEANTES = :QTDEANTES,'
       '  QTDEFINAL = :QTDEFINAL,'
       '  SEQ = :SEQ,'
+      '  TOTAL_BRUTO = :TOTAL_BRUTO,'
+      '  TOTAL_LIQUIDO = :TOTAL_LIQUIDO,'
       '  UNID_COD = :UNID_COD,'
       '  VALOR_DESCONTO = :VALOR_DESCONTO,'
       '  VALOR_FRETE = :VALOR_FRETE,'
@@ -6243,8 +6249,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         '   NF, PERC_PARTICIPACAO, PERCENTUAL_REDUCAO_BC, PRECOUNIT, QTDE' +
         ', QTDEANTES, '
       
-        '   QTDEFINAL, SEQ, UNID_COD, VALOR_DESCONTO, VALOR_FRETE, VALOR_' +
-        'IPI, VALOR_OUTROS)'
+        '   QTDEFINAL, SEQ, TOTAL_BRUTO, TOTAL_LIQUIDO, UNID_COD, VALOR_D' +
+        'ESCONTO, '
+      '   VALOR_FRETE, VALOR_IPI, VALOR_OUTROS)'
       'values'
       
         '  (:ALIQUOTA, :ALIQUOTA_COFINS, :ALIQUOTA_CSOSN, :ALIQUOTA_PIS, ' +
@@ -6256,9 +6263,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         '   :NCM_SH, :NF, :PERC_PARTICIPACAO, :PERCENTUAL_REDUCAO_BC, :PR' +
         'ECOUNIT, '
       
-        '   :QTDE, :QTDEANTES, :QTDEFINAL, :SEQ, :UNID_COD, :VALOR_DESCON' +
-        'TO, :VALOR_FRETE, '
-      '   :VALOR_IPI, :VALOR_OUTROS)')
+        '   :QTDE, :QTDEANTES, :QTDEFINAL, :SEQ, :TOTAL_BRUTO, :TOTAL_LIQ' +
+        'UIDO, :UNID_COD, '
+      '   :VALOR_DESCONTO, :VALOR_FRETE, :VALOR_IPI, :VALOR_OUTROS)')
     DeleteSQL.Strings = (
       'delete from TBCOMPRASITENS'
       'where'

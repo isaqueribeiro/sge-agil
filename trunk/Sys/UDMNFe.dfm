@@ -3774,12 +3774,9 @@ object DMNFe: TDMNFe
       
         '  , coalesce(i.customedio, 0) * coalesce(i.Percentual_reducao_bc' +
         ', 0.0) / 100 as valor_reducao_bc'
-      
-        '--  , (i.Qtde * coalesce(i.precounit, 0)) + i.valor_desconto as ' +
-        'Total_bruto'
-      '  , i.Qtde * i.precounit as Total_Bruto'
-      '  , i.Qtde * i.customedio as Total_liquido'
+      '  , i.Total_Bruto'
       '  , i.valor_desconto as Total_desconto'
+      '  , i.Total_liquido'
       '  , p.Qtde as Estoque'
       '  , p.Reserva'
       '  , p.Produto_novo'
@@ -3822,7 +3819,7 @@ object DMNFe: TDMNFe
       '    i.Ano'
       '  , i.Codcontrol'
       '  , i.Seq')
-    Left = 224
+    Left = 232
     Top = 168
     ParamData = <
       item
@@ -4111,42 +4108,6 @@ object DMNFe: TDMNFe
         ParamType = ptInput
         Value = 0
       end>
-    object qryDadosVolumeSEQUENCIAL: TSmallintField
-      FieldName = 'SEQUENCIAL'
-      Origin = '"TBVENDAS_VOLUME"."SEQUENCIAL"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-    end
-    object qryDadosVolumeNUMERO: TIBStringField
-      FieldName = 'NUMERO'
-      Origin = '"TBVENDAS_VOLUME"."NUMERO"'
-      Size = 50
-    end
-    object qryDadosVolumeQUANTIDADE: TSmallintField
-      FieldName = 'QUANTIDADE'
-      Origin = '"TBVENDAS_VOLUME"."QUANTIDADE"'
-    end
-    object qryDadosVolumeESPECIE: TIBStringField
-      FieldName = 'ESPECIE'
-      Origin = '"TBVENDAS_VOLUME"."ESPECIE"'
-      Size = 50
-    end
-    object qryDadosVolumeMARCA: TIBStringField
-      FieldName = 'MARCA'
-      Origin = '"TBVENDAS_VOLUME"."MARCA"'
-      Size = 50
-    end
-    object qryDadosVolumePESO_BRUTO: TIBBCDField
-      FieldName = 'PESO_BRUTO'
-      Origin = '"TBVENDAS_VOLUME"."PESO_BRUTO"'
-      Precision = 18
-      Size = 3
-    end
-    object qryDadosVolumePESO_LIQUIDO: TIBBCDField
-      FieldName = 'PESO_LIQUIDO'
-      Origin = '"TBVENDAS_VOLUME"."PESO_LIQUIDO"'
-      Precision = 18
-      Size = 3
-    end
   end
   object qryLoteNFePendente: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
@@ -8474,7 +8435,7 @@ object DMNFe: TDMNFe
     GeneratorField.Field = 'CODCONTROL'
     UpdateObject = updLOG
     Left = 336
-    Top = 24
+    Top = 8
     object cdsLOGUSUARIO: TIBStringField
       FieldName = 'USUARIO'
       Origin = '"TBLOG_TRANSACAO"."USUARIO"'
@@ -8541,7 +8502,7 @@ object DMNFe: TDMNFe
       '  DATA_HORA = :OLD_DATA_HORA and'
       '  USUARIO = :OLD_USUARIO')
     Left = 368
-    Top = 24
+    Top = 8
   end
   object qryNFeEmitidaEntrada: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
@@ -13014,7 +12975,7 @@ object DMNFe: TDMNFe
         end
         object frdFone: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 34.015770000000000000
+          Top = 34.015770000000010000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -13032,7 +12993,7 @@ object DMNFe: TDMNFe
         end
         object Memo11: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 49.133890000000000000
+          Top = 49.133889999999990000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -13297,7 +13258,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo2: TfrxMemoView
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 415.748300000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13312,7 +13273,7 @@ object DMNFe: TDMNFe
         end
         object Memo8: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 207.874150000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13348,7 +13309,7 @@ object DMNFe: TDMNFe
         end
         object Memo12: TfrxMemoView
           Left = 623.622450000000000000
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 94.488250000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13389,7 +13350,7 @@ object DMNFe: TDMNFe
           Frame.Typ = [ftTop]
         end
         object Memo23: TfrxMemoView
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 22.677180000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13407,7 +13368,7 @@ object DMNFe: TDMNFe
         end
         object Memo24: TfrxMemoView
           Left = 22.677180000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 52.913420000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13424,7 +13385,7 @@ object DMNFe: TDMNFe
         end
         object Memo25: TfrxMemoView
           Left = 75.590600000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 291.023639130000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13440,7 +13401,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo26: TfrxMemoView
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 718.110700000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -13460,7 +13421,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo27: TfrxMemoView
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13475,7 +13436,7 @@ object DMNFe: TDMNFe
         end
         object Memo21: TfrxMemoView
           Left = 411.968770000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 37.795300000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13492,7 +13453,7 @@ object DMNFe: TDMNFe
         end
         object Memo20: TfrxMemoView
           Left = 449.764070000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13510,7 +13471,7 @@ object DMNFe: TDMNFe
         end
         object Memo19: TfrxMemoView
           Left = 514.016080000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13528,7 +13489,7 @@ object DMNFe: TDMNFe
         end
         object Memo16: TfrxMemoView
           Left = 578.268090000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13563,7 +13524,7 @@ object DMNFe: TDMNFe
         end
         object Memo22: TfrxMemoView
           Left = 366.614410000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 45.354323390000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13581,7 +13542,7 @@ object DMNFe: TDMNFe
         end
         object Memo17: TfrxMemoView
           Left = 642.520100000000000000
-          Top = 90.708720000000000000
+          Top = 90.708720000000030000
           Width = 75.590600000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13640,7 +13601,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo28: TfrxMemoView
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 366.614410000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -13670,7 +13631,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Line3: TfrxLineView
-          Top = 22.677180000000000000
+          Top = 22.677180000000020000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -13692,7 +13653,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo31: TfrxMemoView
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13706,7 +13667,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo32: TfrxMemoView
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 718.110700000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -13722,7 +13683,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo33: TfrxMemoView
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -13737,7 +13698,7 @@ object DMNFe: TDMNFe
         end
         object Memo34: TfrxMemoView
           Left = 366.614410000000000000
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 128.504020000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -13772,7 +13733,7 @@ object DMNFe: TDMNFe
         end
         object Memo36: TfrxMemoView
           Left = 495.118430000000000000
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -13807,7 +13768,7 @@ object DMNFe: TDMNFe
         end
         object Memo38: TfrxMemoView
           Left = 589.606680000000000000
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 128.504020000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -18337,6 +18298,7 @@ object DMNFe: TDMNFe
         Height = 116.858380000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
+        Stretched = True
         object frdVendaCODCONTROL: TfrxMemoView
           Left = 559.370440000000000000
           Top = 18.897650000000000000
@@ -18522,6 +18484,7 @@ object DMNFe: TDMNFe
           Top = 90.708720000000000000
           Width = 721.890230000000000000
           Height = 18.897650000000000000
+          StretchMode = smMaxHeight
           CharSpacing = 4.000000000000000000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
@@ -19514,7 +19477,7 @@ object DMNFe: TDMNFe
       BottomMargin = 10.000000000000000000
       object bndReportTitle: TfrxReportTitle
         FillType = ftBrush
-        Height = 116.858380000000000000
+        Height = 124.417440000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
         object frdVendaCODCONTROL: TfrxMemoView
@@ -19699,9 +19662,9 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo45: TfrxMemoView
-          Top = 90.708720000000000000
-          Width = 721.890230000000000000
-          Height = 18.897650000000000000
+          Top = 85.149660000000000000
+          Width = 718.110700000000000000
+          Height = 37.795300000000000000
           CharSpacing = 4.000000000000000000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
@@ -19717,14 +19680,13 @@ object DMNFe: TDMNFe
               'REQUISI'#199#195'O DE MATERIAIS ([Trim(<frdRequisicaoAlmox."TIPO_DESC">)' +
               '])')
           ParentFont = False
-          WordWrap = False
           VAlign = vaCenter
         end
       end
       object bndMasterData: TfrxMasterData
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 332.598640000000000000
+        Top = 340.157700000000000000
         Width = 718.110700000000000000
         DataSet = frdRequisicaoAlmox
         DataSetName = 'frdRequisicaoAlmox'
@@ -19863,7 +19825,7 @@ object DMNFe: TDMNFe
       object bndPageFooter: TfrxPageFooter
         FillType = ftBrush
         Height = 30.236240000000000000
-        Top = 725.669760000000000000
+        Top = 733.228820000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           Left = 589.606680000000000000
@@ -19924,7 +19886,7 @@ object DMNFe: TDMNFe
         Font.Style = []
         Height = 113.385900000000000000
         ParentFont = False
-        Top = 196.535560000000000000
+        Top = 204.094620000000000000
         Width = 718.110700000000000000
         object frdVendaNOME: TfrxMemoView
           Top = 41.574830000000000000
@@ -20274,7 +20236,7 @@ object DMNFe: TDMNFe
       object bndReportSummary: TfrxReportSummary
         FillType = ftBrush
         Height = 291.023810000000000000
-        Top = 411.968770000000000000
+        Top = 419.527830000000000000
         Width = 718.110700000000000000
         Stretched = True
         object Memo14: TfrxMemoView
@@ -20528,7 +20490,7 @@ object DMNFe: TDMNFe
           Left = 559.370440000000000000
           Top = 37.795300000000000000
           Width = 158.740260000000000000
-          Height = 15.118120000000000000
+          Height = 26.456710000000000000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
           Font.Charset = DEFAULT_CHARSET
@@ -20542,7 +20504,6 @@ object DMNFe: TDMNFe
           Memo.UTF8W = (
             '[Trim(<frdRequisicaoAlmox."TIPO_DESC">)]')
           ParentFont = False
-          WordWrap = False
           VAlign = vaCenter
         end
         object Picture1: TfrxPictureView
@@ -20830,7 +20791,7 @@ object DMNFe: TDMNFe
       object bndPageFooter: TfrxPageFooter
         FillType = ftBrush
         Height = 30.236240000000000000
-        Top = 725.669760000000000000
+        Top = 748.346940000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           Left = 589.606680000000000000
@@ -21241,13 +21202,13 @@ object DMNFe: TDMNFe
       end
       object bndReportSummary: TfrxReportSummary
         FillType = ftBrush
-        Height = 291.023810000000000000
+        Height = 313.700990000000000000
         Top = 411.968770000000000000
         Width = 718.110700000000000000
         Stretched = True
         object Memo42: TfrxMemoView
           Left = 234.330860000000000000
-          Top = 249.448980000000000000
+          Top = 275.905690000000000000
           Width = 249.448980000000000000
           Height = 37.795300000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -21305,7 +21266,7 @@ object DMNFe: TDMNFe
           Frame.Width = 0.100000000000000000
         end
         object Memo40: TfrxMemoView
-          Top = 75.590600000000000000
+          Top = 132.283550000000000000
           Width = 718.110700000000000000
           Height = 117.165430000000000000
           DataSet = frdVenda
@@ -21322,7 +21283,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo41: TfrxMemoView
-          Top = 60.472480000000000000
+          Top = 117.165430000000000000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -21410,6 +21371,41 @@ object DMNFe: TDMNFe
           HAlign = haRight
           Memo.UTF8W = (
             'T O T A L    G E R A L :')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo15: TfrxMemoView
+          Top = 71.811070000000000000
+          Width = 718.110700000000000000
+          Height = 45.354360000000000000
+          DataSet = frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '[frdRequisicaoAlmox."MOTIVO"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          Top = 56.692950000000000000
+          Width = 718.110700000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftTop]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8W = (
+            ' Motivo:')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -30872,5 +30868,540 @@ object DMNFe: TDMNFe
   object ValidarXML: TXMLDocument
     Left = 464
     Top = 608
+  end
+  object qryNFCDestinatario: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select'
+      '    coalesce(f.codforn, c.codigo) as Codigo'
+      '  , coalesce(f.pessoa_fisica, c.pessoa_fisica) as pessoa_fisica'
+      '  , coalesce(f.cnpj, c.cnpj) as cnpj'
+      '  , coalesce(f.nomeforn, c.nome) as Nome'
+      '  , coalesce(f.inscest, c.inscest) as inscest'
+      '  , coalesce(f.inscmun, c.inscmun) as inscmun'
+      ''
+      '  , coalesce(f.fone, c.fone) as fone'
+      '  , coalesce(f.email, c.email) as email'
+      '  , coalesce(f.site, c.site) as site'
+      ''
+      '  , coalesce(f.tlg_tipo, c.tlg_tipo) as tlg_tipo'
+      '  , tl.Tlg_descricao'
+      '  , tl.Tlg_sigla'
+      '  , coalesce(f.log_cod, c.log_cod) as log_cod'
+      '  , lg.Log_nome'
+      '  , coalesce(f.complemento, c.complemento) as complemento'
+      '  , coalesce(f.numero_end, c.numero_end) as numero_end'
+      '  , coalesce(f.cep, c.cep) as cep'
+      ''
+      '  , coalesce(f.bai_cod, c.bai_cod) as bai_cod'
+      '  , br.Bai_nome'
+      ''
+      '  , coalesce(f.cid_cod, c.cid_cod) as cid_cod'
+      '  , cd.Cid_nome'
+      '  , cd.Cid_siafi'
+      '  , cd.Cid_ibge'
+      '  , cd.Cid_ddd'
+      ''
+      '  , coalesce(f.est_cod, c.est_cod) as est_cod'
+      '  , uf.Est_nome'
+      '  , uf.Est_sigla'
+      '  , uf.Est_siafi'
+      ''
+      '  , coalesce(f.pais_id, c.pais_id) as pais_id'
+      '  , pa.Pais_nome'
+      'from TBNFE_COMPLEMENTAR n'
+      '  left join TBFORNECEDOR f on (f.codforn = n.fornecedor)'
+      '  left join TBCLIENTE c on (c.codigo = n.cliente)'
+      ''
+      
+        '  left join TBESTADO uf on (uf.Est_cod = coalesce(f.Est_cod, c.e' +
+        'st_cod))'
+      
+        '  left join TBCIDADE cd on (cd.Cid_cod = coalesce(f.Cid_cod, c.c' +
+        'id_cod))'
+      
+        '  left join TBBAIRRO br on (br.Bai_cod = coalesce(f.Bai_cod, c.b' +
+        'ai_cod))'
+      
+        '  left join TBLOGRADOURO lg on (lg.Log_cod = coalesce(f.Log_cod,' +
+        ' c.log_cod))'
+      
+        '  left join TBTIPO_LoGRADOURO tl on (tl.Tlg_cod = coalesce(f.Tlg' +
+        '_tipo, c.tlg_tipo))'
+      
+        '  left join TBPAIS pa on (pa.Pais_id = coalesce(f.Pais_id, c.pai' +
+        's_id))'
+      ''
+      'where n.nfc_numero  = :numero'
+      '  and n.nfc_empresa = :empresa')
+    Left = 304
+    Top = 72
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'numero'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftString
+        Name = 'empresa'
+        ParamType = ptInput
+        Value = ''
+      end>
+  end
+  object frdNFCDestinatario: TfrxDBDataset
+    UserName = 'frdNFCDestinatario'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'CODIGO=CODIGO'
+      'PESSOA_FISICA=PESSOA_FISICA'
+      'CNPJ=CNPJ'
+      'NOME=NOME'
+      'INSCEST=INSCEST'
+      'INSCMUN=INSCMUN'
+      'FONE=FONE'
+      'EMAIL=EMAIL'
+      'SITE=SITE'
+      'TLG_TIPO=TLG_TIPO'
+      'TLG_DESCRICAO=TLG_DESCRICAO'
+      'TLG_SIGLA=TLG_SIGLA'
+      'LOG_COD=LOG_COD'
+      'LOG_NOME=LOG_NOME'
+      'COMPLEMENTO=COMPLEMENTO'
+      'NUMERO_END=NUMERO_END'
+      'CEP=CEP'
+      'BAI_COD=BAI_COD'
+      'BAI_NOME=BAI_NOME'
+      'CID_COD=CID_COD'
+      'CID_NOME=CID_NOME'
+      'CID_SIAFI=CID_SIAFI'
+      'CID_IBGE=CID_IBGE'
+      'CID_DDD=CID_DDD'
+      'EST_COD=EST_COD'
+      'EST_NOME=EST_NOME'
+      'EST_SIGLA=EST_SIGLA'
+      'EST_SIAFI=EST_SIAFI'
+      'PAIS_ID=PAIS_ID'
+      'PAIS_NOME=PAIS_NOME')
+    DataSet = qryNFCDestinatario
+    BCDToCurrency = False
+    Left = 344
+    Top = 72
+  end
+  object frdNFCCalculoImposto: TfrxDBDataset
+    UserName = 'frdNFCCalculoImposto'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'NFC_NUMERO=NFC_NUMERO'
+      'NFC_EMPRESA=NFC_EMPRESA'
+      'NFC_TIPO=NFC_TIPO'
+      'ANO=ANO'
+      'CODCONTROL=CODCONTROL'
+      'CODEMP=CODEMP'
+      'DESTINATARIO_CODIGO=DESTINATARIO_CODIGO'
+      'NFC_DATA=NFC_DATA'
+      'NFC_HORA=NFC_HORA'
+      'NFC_EMISSAO=NFC_EMISSAO'
+      'NFC_EMISSOR=NFC_EMISSOR'
+      'OBS=OBS'
+      'SERIE=SERIE'
+      'NUMERO=NUMERO'
+      'RECIBO=RECIBO'
+      'NFC_ENVIADA=NFC_ENVIADA'
+      'CANCELADA=CANCELADA'
+      'CANCELADA_USUARIO=CANCELADA_USUARIO'
+      'CANCELADA_DATAHORA=CANCELADA_DATAHORA'
+      'CANCELADA_MOTIVO=CANCELADA_MOTIVO'
+      'CFOP=CFOP'
+      'CFOP_DESCRICAO=CFOP_DESCRICAO'
+      'CFOP_INFORMACAO_FISCO=CFOP_INFORMACAO_FISCO'
+      'CFOP_DEVOLUCAO=CFOP_DEVOLUCAO'
+      'VERIFICADOR_NFE=VERIFICADOR_NFE'
+      'PROTOCOLO_NFE=PROTOCOLO_NFE'
+      'XML_NFE_FILENAME=XML_NFE_FILENAME'
+      'XML_NFE=XML_NFE'
+      'USUARIO=USUARIO'
+      'USUARIO_NOME_COMPLETO=USUARIO_NOME_COMPLETO'
+      'LISTA_FORMA_PAGO=LISTA_FORMA_PAGO'
+      'LISTA_COND_PAGO=LISTA_COND_PAGO'
+      'LISTA_COND_PAGO_FULL=LISTA_COND_PAGO_FULL'
+      'VENDA_PRAZO=VENDA_PRAZO'
+      'NFC_VALOR_BASE_ICMS=NFC_VALOR_BASE_ICMS'
+      'NFC_VALOR_ICMS=NFC_VALOR_ICMS'
+      'NFC_VALOR_BASE_ICMS_SUBST=NFC_VALOR_BASE_ICMS_SUBST'
+      'NFC_VALOR_ICMS_SUBST=NFC_VALOR_ICMS_SUBST'
+      'NFC_VALOR_TOTAL_PRODUTO=NFC_VALOR_TOTAL_PRODUTO'
+      'NFC_VALOR_FRETE=NFC_VALOR_FRETE'
+      'NFC_VALOR_SEGURO=NFC_VALOR_SEGURO'
+      'NFC_VALOR_DESCONTO=NFC_VALOR_DESCONTO'
+      'NFC_VALOR_TOTAL_II=NFC_VALOR_TOTAL_II'
+      'NFC_VALOR_TOTAL_IPI=NFC_VALOR_TOTAL_IPI'
+      'NFC_VALOR_PIS=NFC_VALOR_PIS'
+      'NFC_VALOR_COFINS=NFC_VALOR_COFINS'
+      'NFC_VALOR_OUTROS=NFC_VALOR_OUTROS'
+      'NFC_VALOR_TOTAL_NOTA=NFC_VALOR_TOTAL_NOTA'
+      'NFE_MODALIDADE_FRETE=NFE_MODALIDADE_FRETE'
+      'NFE_TRANSPORTADORA=NFE_TRANSPORTADORA'
+      'NFE_TRANSPORTADORA_NOME=NFE_TRANSPORTADORA_NOME'
+      'NFE_TRANSPORTADORA_CNPJ=NFE_TRANSPORTADORA_CNPJ'
+      'NFE_TRANSPORTADORA_IEST=NFE_TRANSPORTADORA_IEST'
+      'NFE_TRANSPORTADORA_ENDER=NFE_TRANSPORTADORA_ENDER'
+      'NFE_TRANSPORTADORA_CIDADE=NFE_TRANSPORTADORA_CIDADE'
+      'NFE_TRANSPORTADORA_UF=NFE_TRANSPORTADORA_UF'
+      'NFE_PLACA_VEICULO=NFE_PLACA_VEICULO'
+      'NFE_PLACA_UF=NFE_PLACA_UF'
+      'NFE_PLACA_RNTC=NFE_PLACA_RNTC'
+      'DNFE_FORMA=DNFE_FORMA'
+      'DNFE_CHAVE=DNFE_CHAVE'
+      'DNFE_UF=DNFE_UF'
+      'DNFE_SERIE=DNFE_SERIE'
+      'DNFE_NUMERO=DNFE_NUMERO'
+      'DNFE_MODELO=DNFE_MODELO')
+    DataSet = qryNFCCalculoImposto
+    BCDToCurrency = False
+    Left = 344
+    Top = 120
+  end
+  object qryNFCCalculoImposto: TIBDataSet
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = True
+    RefreshSQL.Strings = (
+      '')
+    SelectSQL.Strings = (
+      'Select'
+      '    n.nfc_numero'
+      '  , n.nfc_empresa'
+      '  , n.nfc_tipo'
+      '  , coalesce(v.Ano, c.ano) as ano'
+      '  , coalesce(v.Codcontrol, c.Codcontrol) as Codcontrol'
+      '  , coalesce(v.Codemp, c.Codemp) as Codemp'
+      '  , coalesce(n.cliente, n.fornecedor) as Destinatario_Codigo'
+      '  , n.nfc_data'
+      '  , n.nfc_hora'
+      '  , n.nfc_emissao'
+      '  , n.nfc_emissor'
+      '  , n.nfc_texto as Obs'
+      '  , n.serie'
+      '  , n.numero'
+      '  , n.recibo'
+      '  , n.nfc_enviada'
+      '  , n.cancelada'
+      '  , n.cancelada_usuario'
+      '  , n.cancelada_datahora'
+      '  , n.cancelada_motivo'
+      '  , coalesce(v.Cfop, c.nfcfop) as Cfop'
+      '  , cf.Cfop_descricao'
+      '  , cf.cfop_informacao_fisco'
+      '  , cf.Cfop_devolucao'
+      '  , ne.chave        as Verificador_nfe'
+      '  , nc.protocolo    as protocolo_nfe'
+      '  , nc.xml_filename as xml_nfe_filename'
+      '  , nc.xml_file     as xml_nfe'
+      '  , n.nfc_emissor   as Usuario'
+      '  , un.nomecompleto as Usuario_nome_completo'
+      ''
+      '  , ('
+      '    Select list(fp.descri)'
+      '    from TBVENDAS_FORMAPAGTO x'
+      '      inner join TBFORMPAGTO fp on (fp.cod = x.formapagto_cod)'
+      '    where x.ano_venda = v.ano'
+      '      and x.controle_venda = v.codcontrol'
+      '    ) as lista_forma_pago'
+      ''
+      '  , ('
+      '    Select list(cp.cond_descricao)'
+      '    from TBVENDAS_FORMAPAGTO y'
+      
+        '      inner join VW_CONDICAOPAGTO cp on (cp.cond_cod = y.condica' +
+        'opagto_cod)'
+      '    where y.ano_venda = v.ano'
+      '      and y.controle_venda = v.codcontrol'
+      '    ) as lista_cond_pago'
+      ''
+      '  , ('
+      
+        '    Select list(case when y.venda_prazo = 1 then cp.cond_descric' +
+        'ao_full else cp.cond_descricao end)'
+      '    from TBVENDAS_FORMAPAGTO y'
+      
+        '      inner join VW_CONDICAOPAGTO cp on (cp.cond_cod = y.condica' +
+        'opagto_cod)'
+      '    where y.ano_venda = v.ano'
+      '      and y.controle_venda = v.codcontrol'
+      '    ) as lista_cond_pago_full'
+      ''
+      '  , 0 as Venda_prazo'
+      '  , n.Nfc_valor_base_icms'
+      '  , n.Nfc_valor_icms'
+      '  , n.Nfc_valor_base_icms_subst'
+      '  , n.Nfc_valor_icms_subst'
+      '  , n.Nfc_valor_total_produto'
+      '  , n.Nfc_valor_frete'
+      '  , n.Nfc_valor_seguro'
+      '  , n.Nfc_valor_desconto'
+      '  , n.Nfc_valor_total_ii'
+      '  , n.Nfc_valor_total_ipi'
+      '  , n.Nfc_valor_pis'
+      '  , n.Nfc_valor_cofins'
+      '  , n.Nfc_valor_outros'
+      '  , n.Nfc_valor_total_nota'
+      ''
+      '  , v.nfe_modalidade_frete'
+      '  , v.nfe_transportadora'
+      '  , tr.nomeforn as nfe_transportadora_nome'
+      '  , tr.cnpj     as nfe_transportadora_cnpj'
+      '  , tr.inscest  as nfe_transportadora_iest'
+      '  , tr.ender    as nfe_transportadora_ender'
+      '  , tc.cid_nome as nfe_transportadora_cidade'
+      '  , tr.uf       as nfe_transportadora_uf'
+      '  , v.nfe_placa_veiculo'
+      '  , v.nfe_placa_uf'
+      '  , v.nfe_placa_rntc'
+      ''
+      '  -- Nota Referenciada'
+      '  , 0 as dnfe_forma'
+      '  , ne.chave     as dnfe_chave'
+      '  , ne.protocolo as dnfe_uf'
+      '  , ne.serie     as dnfe_serie'
+      '  , ne.numero    as dnfe_numero'
+      '  , ne.modelo    as dnfe_modelo'
+      ''
+      'from TBNFE_COMPLEMENTAR n'
+      
+        '  inner join TBNFE_ENVIADA ne on (ne.empresa = n.nfc_empresa and' +
+        ' ne.serie = n.nfe_serie and ne.numero = n.nfe_numero and ne.mode' +
+        'lo = n.nfe_modelo)'
+      ''
+      
+        '  left join TBVENDAS v on (v.ano = ne.anovenda and v.codcontrol ' +
+        '= ne.numvenda and v.codemp = ne.empresa)'
+      
+        '  left join TBCOMPRAS c on (c.ano = ne.anocompra and c.codcontro' +
+        'l = ne.numcompra and c.codemp = ne.empresa)'
+      ''
+      
+        '  left join TBCFOP cf on (cf.Cfop_cod = coalesce(v.Cfop, c.nfcfo' +
+        'p))'
+      '  left join TBUSERS un on (un.nome = n.nfc_emissor)'
+      
+        '  left join TBFORNECEDOR tr on (tr.codforn = v.nfe_transportador' +
+        'a)'
+      '  left join TBCIDADE tc on (tc.cid_cod = tr.cid_cod)'
+      ''
+      '  left join TBNFE_ENVIADA nc on (nc.nfc_numero = n.nfc_numero)'
+      ''
+      'where n.nfc_numero  = :numero'
+      '  and n.nfc_empresa = :empresa')
+    ModifySQL.Strings = (
+      '')
+    ParamCheck = True
+    UniDirectional = False
+    GeneratorField.ApplyEvent = gamOnPost
+    Left = 304
+    Top = 120
+  end
+  object qryNFCDadosProduto: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select'
+      '    i.Ano'
+      '  , i.Codcontrol'
+      '  , i.Seq'
+      '  , i.Codprod'
+      '  , p.Codbarra_ean'
+      '  , p.Descri'
+      '  , p.Apresentacao'
+      
+        '  , coalesce(p.Descri_apresentacao, p.Descri) as Descri_apresent' +
+        'acao'
+      '  , p.Modelo'
+      '  , p.Referencia'
+      '  , p.Ncm_sh'
+      '  , ib.ncm_aliquota_nac as Ncm_aliquota_nac'
+      '  , ib.ncm_aliquota_imp as Ncm_aliquota_imp'
+      '  , p.Codorigem'
+      '  , p.Codtributacao'
+      '  , p.Cst'
+      '  , p.Csosn'
+      '  , p.Cst_pis'
+      '  , p.Cst_cofins'
+      '  , coalesce(ps.Indice_acbr, 32) as Cst_pis_indice_ACBr'
+      '  , coalesce(cs.Indice_acbr, 32) as Cst_cofins_indice_ACBr'
+      '  , i.Codemp'
+      '  , i.codforn'
+      '  , f.cnpj as codforn_cnpj'
+      '  , i.dtent'
+      '  , i.Qtde'
+      
+        '--  , ( coalesce(i.precounit, 0) + (coalesce(i.valor_desconto, 0' +
+        ') / coalesce(i.Qtde, 1)) ) as PUNIT'
+      '  , i.precounit as PUNIT'
+      
+        '  , ( (coalesce(i.valor_desconto, 0) / coalesce(i.Qtde, 1)) / (c' +
+        'oalesce(i.precounit, 0) + (coalesce(i.valor_desconto, 0) / coale' +
+        'sce(i.Qtde, 1))) * 100 ) as Desconto'
+      
+        '  , ( coalesce(i.valor_desconto, 0) / coalesce(i.Qtde, 1) ) as d' +
+        'esconto_valor'
+      '  , i.customedio as PFINAL'
+      '  , i.Qtdefinal'
+      '  , i.Unid_cod'
+      '  , u.Unp_descricao'
+      '  , u.Unp_sigla'
+      '  , i.Cfop as Cfop_cod'
+      '  , i.Aliquota'
+      '  , i.Aliquota_csosn'
+      '  , coalesce(i.Aliquota_pis, 0.0) as Aliquota_pis'
+      '  , coalesce(i.Aliquota_cofins, 0.0) as Aliquota_cofins'
+      '  , i.Valor_ipi'
+      
+        '  , coalesce(i.Percentual_reducao_bc, 0.0) as Percentual_reducao' +
+        '_bc'
+      
+        '  , coalesce(i.customedio, 0) * coalesce(i.Percentual_reducao_bc' +
+        ', 0.0) / 100 as valor_reducao_bc'
+      
+        '--  , (i.Qtde * coalesce(i.precounit, 0)) + i.valor_desconto as ' +
+        'Total_bruto'
+      '  , i.Qtde * i.precounit as Total_Bruto'
+      '  , i.Qtde * i.customedio as Total_liquido'
+      '  , i.valor_desconto as Total_desconto'
+      '  , p.Qtde as Estoque'
+      '  , p.Reserva'
+      '  , p.Produto_novo'
+      '  , p.Cor_veiculo'
+      '  , cr.Descricao as Cor_veiculo_descricao'
+      '  , p.Combustivel_veiculo'
+      '  , cb.Descricao as Combustivel_veiculo_descricao'
+      '  , p.Ano_fabricacao_veiculo'
+      '  , p.Ano_modelo_veiculo'
+      
+        '  , p.Ano_fabricacao_veiculo || '#39'/'#39' || p.Ano_modelo_veiculo as a' +
+        'no_fab_modelo_veiculo'
+      '  , p.Tipo_veiculo'
+      '  , tv.Descricao as Tipo_veiculo_descricao'
+      '  , p.Renavam_veiculo'
+      '  , p.Chassi_veiculo'
+      '  , p.Kilometragem_veiculo'
+      '  , coalesce(p.Qtde, 0) - coalesce(p.Reserva, 0) as Disponivel'
+      'from TBCOMPRASITENS i'
+      '  inner join TBPRODUTO p on (p.Cod = i.codprod)'
+      '  inner join TBUNIDADEPROD u on (u.Unp_cod = i.unid_cod)'
+      '  inner join TBFORNECEDOR f on (f.codforn = i.codforn)'
+      '  left join RENAVAM_COR cr on (cr.Codigo = p.Cor_veiculo)'
+      
+        '  left join RENAVAM_COBUSTIVEL cb on (cb.Codigo = p.Combustivel_' +
+        'veiculo)'
+      
+        '  left join RENAVAM_TIPOVEICULO tv on (tv.Codigo = p.Tipo_veicul' +
+        'o)'
+      '  left join TBCST_PIS ps on (ps.Codigo = p.Cst_pis)'
+      '  left join TBCST_COFINS cs on (cs.Codigo = p.Cst_cofins)'
+      
+        '  left join VW_TABELA_IBPT ib on (ib.ncm_sh = coalesce(nullif(tr' +
+        'im(p.ncm_sh), '#39'00000000'#39'), '#39'10203000'#39'))'
+      ''
+      'where i.Ano = :anoCompra'
+      '  and i.Codcontrol = :numCompra'
+      ''
+      'order by '
+      '    i.Ano'
+      '  , i.Codcontrol'
+      '  , i.Seq')
+    Left = 304
+    Top = 168
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'anoCompra'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'numCompra'
+        ParamType = ptUnknown
+      end>
+  end
+  object frdNFCDadosProduto: TfrxDBDataset
+    UserName = 'frdNFCDadosProduto'
+    CloseDataSource = False
+    FieldAliases.Strings = (
+      'ANO=ANO'
+      'CODCONTROL=CODCONTROL'
+      'SEQ=SEQ'
+      'CODPROD=CODPROD'
+      'CODBARRA_EAN=CODBARRA_EAN'
+      'DESCRI=DESCRI'
+      'APRESENTACAO=APRESENTACAO'
+      'DESCRI_APRESENTACAO=DESCRI_APRESENTACAO'
+      'MODELO=MODELO'
+      'REFERENCIA=REFERENCIA'
+      'NCM_SH=NCM_SH'
+      'NCM_ALIQUOTA_NAC=NCM_ALIQUOTA_NAC'
+      'NCM_ALIQUOTA_IMP=NCM_ALIQUOTA_IMP'
+      'CODORIGEM=CODORIGEM'
+      'CODTRIBUTACAO=CODTRIBUTACAO'
+      'CST=CST'
+      'CSOSN=CSOSN'
+      'CST_PIS=CST_PIS'
+      'CST_COFINS=CST_COFINS'
+      'CST_PIS_INDICE_ACBR=CST_PIS_INDICE_ACBR'
+      'CST_COFINS_INDICE_ACBR=CST_COFINS_INDICE_ACBR'
+      'CODEMP=CODEMP'
+      'CODFORN=CODFORN'
+      'CODFORN_CNPJ=CODFORN_CNPJ'
+      'DTENT=DTENT'
+      'QTDE=QTDE'
+      'PUNIT=PUNIT'
+      'DESCONTO=DESCONTO'
+      'DESCONTO_VALOR=DESCONTO_VALOR'
+      'PFINAL=PFINAL'
+      'QTDEFINAL=QTDEFINAL'
+      'UNID_COD=UNID_COD'
+      'UNP_DESCRICAO=UNP_DESCRICAO'
+      'UNP_SIGLA=UNP_SIGLA'
+      'CFOP_COD=CFOP_COD'
+      'ALIQUOTA=ALIQUOTA'
+      'ALIQUOTA_CSOSN=ALIQUOTA_CSOSN'
+      'ALIQUOTA_PIS=ALIQUOTA_PIS'
+      'ALIQUOTA_COFINS=ALIQUOTA_COFINS'
+      'VALOR_IPI=VALOR_IPI'
+      'PERCENTUAL_REDUCAO_BC=PERCENTUAL_REDUCAO_BC'
+      'VALOR_REDUCAO_BC=VALOR_REDUCAO_BC'
+      'TOTAL_BRUTO=TOTAL_BRUTO'
+      'TOTAL_LIQUIDO=TOTAL_LIQUIDO'
+      'TOTAL_DESCONTO=TOTAL_DESCONTO'
+      'ESTOQUE=ESTOQUE'
+      'RESERVA=RESERVA'
+      'PRODUTO_NOVO=PRODUTO_NOVO'
+      'COR_VEICULO=COR_VEICULO'
+      'COR_VEICULO_DESCRICAO=COR_VEICULO_DESCRICAO'
+      'COMBUSTIVEL_VEICULO=COMBUSTIVEL_VEICULO'
+      'COMBUSTIVEL_VEICULO_DESCRICAO=COMBUSTIVEL_VEICULO_DESCRICAO'
+      'ANO_FABRICACAO_VEICULO=ANO_FABRICACAO_VEICULO'
+      'ANO_MODELO_VEICULO=ANO_MODELO_VEICULO'
+      'ANO_FAB_MODELO_VEICULO=ANO_FAB_MODELO_VEICULO'
+      'TIPO_VEICULO=TIPO_VEICULO'
+      'TIPO_VEICULO_DESCRICAO=TIPO_VEICULO_DESCRICAO'
+      'RENAVAM_VEICULO=RENAVAM_VEICULO'
+      'CHASSI_VEICULO=CHASSI_VEICULO'
+      'KILOMETRAGEM_VEICULO=KILOMETRAGEM_VEICULO'
+      'DISPONIVEL=DISPONIVEL')
+    DataSet = qryNFCDadosProduto
+    BCDToCurrency = False
+    Left = 340
+    Top = 169
   end
 end

@@ -279,6 +279,7 @@ type
     procedure RibbonApplicationMenuClick(Sender: TdxCustomRibbon;
       var AHandled: Boolean);
     procedure BrBtnNotaFiscalComplementarClick(Sender: TObject);
+    procedure BrBtnQuitarAReceberLoteClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -335,6 +336,12 @@ begin
   else
   if GetPermissaoRotinaSistema(ROTINA_NFE_COMPLEMENTAR_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeNFComplementar');
+end;
+
+procedure TfrmPrinc.BrBtnQuitarAReceberLoteClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_FIN_QUITAR_ARECEBER_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeContasAReceberQuitar');
 end;
 
 procedure TfrmPrinc.BrBtnRelatorioEstoqueReqClick(Sender: TObject);

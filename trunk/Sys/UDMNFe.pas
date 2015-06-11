@@ -189,13 +189,6 @@ type
     qryNFeEmitidaLOTE_ANO: TSmallintField;
     qryNFeEmitidaLOTE_NUM: TIntegerField;
     qryDadosVolume: TIBQuery;
-    qryDadosVolumeSEQUENCIAL: TSmallintField;
-    qryDadosVolumeNUMERO: TIBStringField;
-    qryDadosVolumeQUANTIDADE: TSmallintField;
-    qryDadosVolumeESPECIE: TIBStringField;
-    qryDadosVolumeMARCA: TIBStringField;
-    qryDadosVolumePESO_BRUTO: TIBBCDField;
-    qryDadosVolumePESO_LIQUIDO: TIBBCDField;
     qryLoteNFePendente: TIBQuery;
     SmallintField1: TSmallintField;
     IntegerField1: TIntegerField;
@@ -326,6 +319,12 @@ type
     frrNFeRetrato: TfrxReport;
     frrNFePaisagem: TfrxReport;
     ValidarXML: TXMLDocument;
+    qryNFCDestinatario: TIBQuery;
+    frdNFCDestinatario: TfrxDBDataset;
+    frdNFCCalculoImposto: TfrxDBDataset;
+    qryNFCCalculoImposto: TIBDataSet;
+    qryNFCDadosProduto: TIBQuery;
+    frdNFCDadosProduto: TfrxDBDataset;
     procedure SelecionarCertificado(Sender : TObject);
     procedure TestarServico(Sender : TObject);
     procedure DataModuleCreate(Sender: TObject);
@@ -389,6 +388,8 @@ type
     procedure AbrirNFeEmitidaEntrada(AnoCompra, NumeroCompra : Integer);
     procedure AbrirNFe(const sCNPJEmitente : String; const Modelo : Smallint; Serie : String; Numero : Integer);
     procedure AbrirCartaCorrecao(const sCNPJEmitente : String; const ControleCCe : Integer);
+    procedure AbrirDestinatarioNFC(const aCNPJEmitente : String; const aCodigoNFC : Integer);
+    procedure AbrirNFC(const aCNPJEmitente : String; const aCodigoNFC : Integer);
 
     function ReciboNaoExisteNaVenda(const sRecibo : String) : Boolean;
     function ReciboNaoExisteNaEntrada(const sRecibo : String) : Boolean;
@@ -2591,12 +2592,12 @@ begin
         begin
           with Transp.Vol.Add do
           begin
-            qVol  := qryDadosVolumeQUANTIDADE.AsInteger;
-            esp   := qryDadosVolumeESPECIE.AsString;
-            marca := qryDadosVolumeMARCA.AsString;
-            nVol  := qryDadosVolumeNUMERO.AsString;
-            pesoB := qryDadosVolumePESO_BRUTO.AsCurrency;
-            pesoL := qryDadosVolumePESO_LIQUIDO.AsCurrency;
+            qVol  := qryDadosVolume.FieldByName('QUANTIDADE').AsInteger;
+            esp   := qryDadosVolume.FieldByName('ESPECIE').AsString;
+            marca := qryDadosVolume.FieldByName('MARCA').AsString;
+            nVol  := qryDadosVolume.FieldByName('NUMERO').AsString;
+            pesoB := qryDadosVolume.FieldByName('PESO_BRUTO').AsCurrency;
+            pesoL := qryDadosVolume.FieldByName('PESO_LIQUIDO').AsCurrency;
 
             //Lacres do volume. Pode ser adicionado vários
             //Lacres.Add.nLacre := '';
@@ -3417,7 +3418,7 @@ begin
 
           Prod.vProd    := qryEntradaDadosProduto.FieldByName('TOTAL_BRUTO').AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
 
-          if EAN13Valido(qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+          if EAN13Valido(qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramente implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
             Prod.cEANTrib := qryEntradaDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEANTrib := EmptyStr;
@@ -4066,6 +4067,17 @@ begin
   begin
     Close;
     ParamByName('Codigo').AsInteger := iCodigo;
+    Open;
+  end;
+end;
+
+procedure TDMNFe.AbrirDestinatarioNFC(const aCNPJEmitente : String; const aCodigoNFC : Integer);
+begin
+  with qryNFCDestinatario do
+  begin
+    Close;
+    ParamByName('numero').AsInteger := aCodigoNFC;
+    ParamByName('empresa').AsString := aCNPJEmitente;
     Open;
   end;
 end;
@@ -4998,6 +5010,26 @@ begin
 
     sLOG.Free;
     Result := bRetorno;
+  end;
+end;
+
+procedure TDMNFe.AbrirNFC(const aCNPJEmitente: String;
+  const aCodigoNFC: Integer);
+begin
+  with qryNFCCalculoImposto do
+  begin
+    Close;
+    ParamByName('numero').AsInteger := aCodigoNFC;
+    ParamByName('empresa').AsString := aCNPJEmitente;
+    Open;
+  end;
+
+  with qryNFCDadosProduto do
+  begin
+    Close;
+    ParamByName('numero').AsInteger := aCodigoNFC;
+    ParamByName('empresa').AsString := aCNPJEmitente;
+    Open;
   end;
 end;
 
