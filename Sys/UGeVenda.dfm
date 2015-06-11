@@ -391,7 +391,7 @@ inherited frmGeVenda: TfrmGeVenda
       ExplicitWidth = 1108
       ExplicitHeight = 613
       inherited Bevel8: TBevel
-        Top = 233
+        Top = 234
         Width = 1108
         ExplicitTop = 233
         ExplicitWidth = 1108
@@ -913,13 +913,13 @@ inherited frmGeVenda: TfrmGeVenda
         Left = 0
         Top = 117
         Width = 1108
-        Height = 116
+        Height = 117
         Align = alTop
         Caption = 'Dados do produto'
         TabOrder = 1
         DesignSize = (
           1108
-          116)
+          117)
         object lblProduto: TLabel
           Left = 88
           Top = 24
@@ -1053,9 +1053,10 @@ inherited frmGeVenda: TfrmGeVenda
           Left = 2
           Top = 15
           Width = 4
-          Height = 99
+          Height = 100
           Align = alLeft
           Shape = bsSpacer
+          ExplicitHeight = 99
         end
         object lblTotalDesconto: TLabel
           Left = 584
@@ -1067,7 +1068,7 @@ inherited frmGeVenda: TfrmGeVenda
         end
         object lblProdutoPromocao: TLabel
           Left = 961
-          Top = 98
+          Top = 99
           Width = 142
           Height = 13
           Anchors = [akRight, akBottom]
@@ -1078,6 +1079,7 @@ inherited frmGeVenda: TfrmGeVenda
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
+          ExplicitTop = 98
         end
         object lblPercRedBC: TLabel
           Left = 168
@@ -1272,8 +1274,8 @@ inherited frmGeVenda: TfrmGeVenda
         object pnlBotoesProduto: TPanel
           Left = 6
           Top = 15
-          Width = 76
-          Height = 99
+          Width = 70
+          Height = 100
           Align = alLeft
           AutoSize = True
           BevelOuter = bvNone
@@ -1284,12 +1286,14 @@ inherited frmGeVenda: TfrmGeVenda
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
+          ExplicitHeight = 99
           object btnProdutoInserir: TBitBtn
             Left = 0
-            Top = 1
+            Top = 0
             Width = 70
             Height = 25
             Hint = 'Inserir Produto'
+            Align = alTop
             Caption = 'Inserir'
             Enabled = False
             Glyph.Data = {
@@ -1348,6 +1352,7 @@ inherited frmGeVenda: TfrmGeVenda
             ShowHint = True
             TabOrder = 0
             OnClick = btnProdutoInserirClick
+            ExplicitTop = 1
           end
           object btnProdutoEditar: TBitBtn
             Left = 0
@@ -1355,6 +1360,7 @@ inherited frmGeVenda: TfrmGeVenda
             Width = 70
             Height = 25
             Hint = 'Editar Produto'
+            Align = alTop
             Caption = 'Editar'
             Enabled = False
             Glyph.Data = {
@@ -1416,10 +1422,11 @@ inherited frmGeVenda: TfrmGeVenda
           end
           object btnProdutoExcluir: TBitBtn
             Left = 0
-            Top = 49
+            Top = 50
             Width = 70
             Height = 25
             Hint = 'Excluir Produto'
+            Align = alTop
             Caption = 'Excluir'
             Enabled = False
             Glyph.Data = {
@@ -1478,13 +1485,15 @@ inherited frmGeVenda: TfrmGeVenda
             ShowHint = True
             TabOrder = 2
             OnClick = btnProdutoExcluirClick
+            ExplicitTop = 49
           end
           object btnProdutoSalvar: TBitBtn
-            Left = 6
-            Top = 74
+            Left = 0
+            Top = 75
             Width = 70
             Height = 25
             Hint = 'Salvar Produto'
+            Align = alTop
             Caption = 'Salvar'
             Enabled = False
             Glyph.Data = {
@@ -1543,6 +1552,7 @@ inherited frmGeVenda: TfrmGeVenda
             ShowHint = True
             TabOrder = 3
             OnClick = btnProdutoSalvarClick
+            ExplicitTop = 74
           end
         end
         object dbPercRedBC: TDBEdit
@@ -3228,9 +3238,9 @@ inherited frmGeVenda: TfrmGeVenda
       end
       object dbgProdutos: TDBGrid
         Left = 0
-        Top = 237
+        Top = 238
         Width = 1108
-        Height = 186
+        Height = 185
         TabStop = False
         Align = alClient
         DataSource = DtSrcTabelaItens
@@ -4248,7 +4258,7 @@ inherited frmGeVenda: TfrmGeVenda
     Left = 1192
     Top = 376
     Bitmap = {
-      494C01012B002C004C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00500010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

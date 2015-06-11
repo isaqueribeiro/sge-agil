@@ -136,7 +136,8 @@ uses
   UGeVendaDevolucaoNF in '..\Sys\UGeVendaDevolucaoNF.pas' {frmGeVendaDevolucaoNF},
   UGrConfigurarBackup in '..\Sys\lib\UGrConfigurarBackup.pas' {frmGrConfigurarBackup},
   UGeFuncionario in '..\Sys\UGeFuncionario.pas' {frmGeFuncionario},
-  UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF};
+  UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF},
+  UGeContasAReceberQuitar in '..\System_SGE\UGeContasAReceberQuitar.pas' {frmGeContasAReceberQuitar};
 
 {$R *.res}
 

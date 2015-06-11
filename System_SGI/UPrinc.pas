@@ -300,6 +300,7 @@ type
       var AHandled: Boolean);
     procedure RbnBackstageGalleryBackupItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
+    procedure BrBtnQuitarAReceberLoteClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -352,6 +353,12 @@ begin
     ShowInformation('Usuário sem permissão de acesso para esta rotina.' + #13 + 'Favor entrar em contato com suporte.')
   else
     FormFunction.ShowModalForm(Self, 'frmGeEmpresa');
+end;
+
+procedure TfrmPrinc.BrBtnQuitarAReceberLoteClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_FIN_QUITAR_ARECEBER_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeContasAReceberQuitar');
 end;
 
 procedure TfrmPrinc.BrBtnRelatorioEstoqueReqClick(Sender: TObject);

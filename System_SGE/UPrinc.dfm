@@ -4686,7 +4686,6 @@ object frmPrinc: TfrmPrinc
       Index = 3
     end
     object RbnTabNota: TdxRibbonTab
-      Active = True
       Caption = 'Notas Fiscais (NF-e)'
       Groups = <
         item
@@ -4706,6 +4705,7 @@ object frmPrinc: TfrmPrinc
       Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
+      Active = True
       Caption = 'Financeiro'
       Groups = <
         item
@@ -5375,6 +5375,7 @@ object frmPrinc: TfrmPrinc
       Hint = 'Efetuar Logoff'
       Visible = ivAlways
       LargeImageIndex = 25
+      ShortCut = 49228
       OnClick = nmEfetuarLogoffClick
       HotImageIndex = 25
       SyncImageIndex = False
@@ -6109,9 +6110,9 @@ object frmPrinc: TfrmPrinc
     object BrBtnQuitarAReceberLote: TdxBarLargeButton
       Caption = 'Quitar Contas A Receber (Por Lote)'
       Category = 14
-      Enabled = False
       Hint = 'Quitar Contas A Receber (Por Lote)'
       Visible = ivAlways
+      OnClick = BrBtnQuitarAReceberLoteClick
     end
     object BrBtnRelatorioCliente: TdxBarLargeButton
       Caption = 'Clientes'
