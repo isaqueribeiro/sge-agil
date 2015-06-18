@@ -377,6 +377,12 @@ type
     procedure GravarConfiguracao(const sCNPJEmitente : String);
     procedure ConfigurarEmail(const sCNPJEmitente, sDestinatario, sAssunto, sMensagem : String);
     procedure GerarArquivoQRCODE(const FileNameQRCODE, StringQRCODE : String; const tamanhoQrCode : TTamanhoQrCode);
+    procedure CarregarArquivoNFe(const sCNPJEmitente, sArquivo : String;
+      var aNomeArquivoXML, aEmitente, aDestinatario, aRecibo, aProtocolo, aChave : String;
+      var aDataHoraEmissao : TDateTime; var NotaValida : Boolean;
+      var aSerie : String; var aNumero, aModelo, aVersao : Integer;
+      var aTipoNota : TTipoNF;
+      var aValorNF  : Currency);
 
     procedure AbrirEmitente(sCNPJ : String);
     procedure AbrirDestinatario(iCodigo : Integer);
@@ -4260,6 +4266,73 @@ begin
   end;
 
   sLOG.Free;
+end;
+
+procedure TDMNFe.CarregarArquivoNFe(const sCNPJEmitente, sArquivo : String;
+  var aNomeArquivoXML, aEmitente, aDestinatario, aRecibo, aProtocolo, aChave : String;
+  var aDataHoraEmissao : TDateTime; var NotaValida : Boolean;
+  var aSerie : String; var aNumero, aModelo, aVersao : Integer;
+  var aTipoNota : TTipoNF;
+  var aValorNF  : Currency);
+var
+  sVersao : String;
+begin
+  NotaValida := False;
+
+  if Trim(sCNPJEmitente) = EmptyStr then
+    LerConfiguracao(gUsuarioLogado.Empresa, tipoDANFEFast)
+  else
+    LerConfiguracao(sCNPJEmitente, tipoDANFEFast);
+
+  try
+    with ACBrNFe do
+    begin
+      NotasFiscais.Clear;
+      NotasFiscais.LoadFromFile( sArquivo, False );
+
+      with NotasFiscais.Items[0].NFe do
+      begin
+        aEmitente     := Emit.CNPJCPF;
+        aDestinatario := Dest.CNPJCPF;
+        aSerie    := FormatFloat('#00', Ide.serie);
+        aNumero   := Ide.nNF;
+
+        Case Ide.modelo of
+          MODELO_NFE  : aModelo := Ord(moNFe);
+          MODELO_NFCE : aModelo := Ord(moNFCe);
+        end;
+
+        aDataHoraEmissao := Ide.dEmi;
+        aTipoNota        := TTipoNF(Ord( Ide.tpNF ));
+
+        sVersao := NotasFiscais.Items[0].NFe.infNFe.VersaoStr;
+
+        if ( Trim(sVersao) = 'versao="2.00"' ) then
+          aVersao := Ord(ve200)
+        else
+        if ( Trim(sVersao) = 'versao="3.00"' ) then
+          aVersao := Ord(ve300)
+        else
+        if ( Trim(sVersao) = 'versao="3.10"' ) then
+          aVersao := Ord(ve310);
+      end;
+
+      NotaValida := True;
+
+      if NotaValida then
+      begin
+        aChave     := StringReplace(AnsiUpperCase(NotasFiscais.Items[0].NFe.infNFe.ID), 'NFE', '', [rfReplaceAll]);
+        aProtocolo := NotasFiscais.Items[0].NFe.procNFe.nProt;
+        aRecibo    := aProtocolo;
+        aValorNF   := NotasFiscais.Items[0].NFe.Total.ICMSTot.vNF;
+
+        aNomeArquivoXML := aChave + '-NFe_import.xml';
+      end;
+    end;
+  except
+    On E : Exception do
+      ShowError('Erro ao tentar validar/carregar XML da NF-e.' + #13#13 + 'CarregarArquivoNFe() --> ' + e.Message);
+  end;
 end;
 
 function TDMNFe.GetValidadeCertificado(const sCNPJEmitente : String; const Informe : Boolean = FALSE): Boolean;
