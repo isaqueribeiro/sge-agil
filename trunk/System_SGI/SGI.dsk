@@ -1,7 +1,7 @@
 ﻿[Closed Files]
-File_0=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeProduto.pas',0,1,1493,75,1523,0,0,,
-File_1=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeCliente.pas',0,1,1417,9,1422,0,0,,
-File_2=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\lib\UGrPadraoCadastro.pas',0,1,115,1,23,0,0,,
+File_0=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGI\UGeRequisicaoAlmoxMonitor.pas',0,1,279,1,1,0,0,,
+File_1=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGE\UGeProduto.pas',0,1,1493,75,1523,0,0,,
+File_2=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeCliente.pas',0,1,1417,9,1422,0,0,,
 File_3=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeVenda.pas',0,1,643,1,1,0,0,,
 File_4=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeFornecedor.pas',0,1,787,68,784,0,0,,
 File_5=TSourceModule,'D:\Projetos\ASS\SGE\trunk\System_SGI\UGeApropriacaoEstoque.pas',0,1,1535,73,1556,0,0,,
@@ -16,14 +16,14 @@ File_13=TSourceModule,'c:\program files (x86)\embarcadero\studio\15.0\SOURCE\IBX
 File_14=TSourceModule,'D:\Projetos\ASS\SGE\trunk\Sys\UGeEntradaEstoqueDevolucaoNF.pas',0,1,1,1,1,0,0,,
 
 [Modules]
-Module0=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
-Module1=D:\Projetos\ASS\SGE\trunk\Sys\UGeFuncionario.pas
-Module2=D:\Projetos\ASS\SGE\trunk\Sys\lib\UFuncoes.pas
-Module3=D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas
-Module4=D:\Projetos\ASS\SGE\trunk\Sys\UDMNFe.pas
-Module5=default.htm
-Module6=D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj
-Module7=D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas
+Module0=D:\Projetos\ASS\SGE\trunk\Sys\UGeFuncionario.pas
+Module1=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
+Module2=default.htm
+Module3=D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj
+Module4=D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas
+Module5=D:\Projetos\ASS\SGE\trunk\Sys\lib\UFuncoes.pas
+Module6=D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas
+Module7=D:\Projetos\ASS\SGE\trunk\Sys\UDMNFe.pas
 Module8=C:\Program Files (x86)\Embarcadero\Studio\15.0\source\vcl\Vcl.Consts.pas
 Module9=D:\Projetos\ASS\SGE\trunk\Sys\UConstantesDGE.pas
 Module10=D:\Projetos\ASS\SGE\trunk\Sys\UGeExportarNFeGerada.pas
@@ -33,12 +33,23 @@ Module13=C:\Delphi\ACBr\Fontes\ACBrBoleto\ACBrBoletoFCFR.pas
 Count=14
 EditWindowCount=1
 
+[D:\Projetos\ASS\SGE\trunk\Sys\UGeFuncionario.pas]
+ModuleType=TSourceModule
+FormState=1
+FormOnTop=0
+
 [D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=1
 
-[D:\Projetos\ASS\SGE\trunk\Sys\UGeFuncionario.pas]
+[default.htm]
+ModuleType=TURLModule
+
+[D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj]
+ModuleType=TBaseProject
+
+[D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=0
@@ -51,20 +62,9 @@ FormOnTop=0
 [D:\Projetos\ASS\SGE\trunk\System_SGI\UPrinc.pas]
 ModuleType=TSourceModule
 FormState=1
-FormOnTop=1
+FormOnTop=0
 
 [D:\Projetos\ASS\SGE\trunk\Sys\UDMNFe.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=1
-
-[default.htm]
-ModuleType=TURLModule
-
-[D:\Projetos\ASS\SGE\trunk\System_SGI\SGI.dproj]
-ModuleType=TBaseProject
-
-[D:\Projetos\ASS\SGE\trunk\Sys\UDMRecursos.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=0
@@ -109,7 +109,7 @@ FormOnTop=0
 
 [EditWindow0]
 ViewCount=14
-CurrentEditView=D:\Projetos\ASS\SGE\trunk\Sys\UDMBusiness.pas
+CurrentEditView=D:\Projetos\ASS\SGE\trunk\Sys\UGeFuncionario.pas
 View0=0
 View1=1
 View2=2
@@ -294,7 +294,7 @@ CustomEditViewType=TEditView
 Module=D:\Projetos\ASS\SGE\trunk\Sys\UGeFuncionario.pas
 CursorX=66
 CursorY=268
-TopLine=244
+TopLine=196
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -355,14 +355,14 @@ Create=1
 Visible=1
 Docked=0
 State=2
-Left=143
-Top=278
-Width=8932
-Height=8523
+Left=7
+Top=12
+Width=9987
+Height=9976
 MaxLeft=-7
 MaxTop=-12
-MaxWidth=8932
-MaxHeight=8523
+MaxWidth=9987
+MaxHeight=9976
 ClientWidth=10000
 ClientHeight=9722
 BottomPanelSize=8669
@@ -445,11 +445,6 @@ LRDockWidth=1341
 Dockable=1
 StayOnTop=0
 SplitPos=79
-
-[PropInspDesignerSelection]
-ArrangeBy=Name
-SelectedItem=AllowStreamedConnected,LookupDataSet
-ExpandedItems=Anchors=0,Constraints=0,FocusControl=0,Font=0,LiveBindings=0,"LiveBindings Designer=0",Margins=0,ProviderFlags=1,DataSource=0,ClipboardCommands=0,BevelEdges=0,FieldOptions=0,TableTypes=0,Transaction=0,Database=0,ActiveControl=0,BorderIcons=0,ListSource=0,StyleElements=0,Touch=0,Padding=0,HorzScrollBar=0,Title=1,Title.Font=0,UpdateObject=0,Images=0,DefaultTransaction=0,TraceFlags=0
 
 [ModelViewTool]
 PercentageSizes=1

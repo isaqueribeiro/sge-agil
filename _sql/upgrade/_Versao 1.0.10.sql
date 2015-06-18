@@ -11093,3 +11093,1256 @@ Select 'F' as Codigo , 'Feminino'  as Descricao from RDB$DATABASE
 ;
 
 GRANT ALL ON VW_SEXO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 18/06/2015 10:38:14 --------*/
+
+COMMENT ON COLUMN TBVENDAS.VERIFICADOR_NFE IS
+'Chave da NF-e';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:38:22 --------*/
+
+COMMENT ON COLUMN TBVENDAS.XML_NFE IS
+'Arquivo XML da NF-e';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:38:41 --------*/
+
+COMMENT ON COLUMN TBVENDAS.XML_NFE_FILENAME IS
+'Nome do arquivo XML da NF-e';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column ANO position 1;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CODCONTROL position 2;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CODEMP position 3;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CODCLIENTE position 4;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CODCLI position 5;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DTVENDA position 6;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column COMPETENCIA position 7;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column STATUS position 8;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column TOTALVENDA_BRUTA position 9;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DESCONTO position 10;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DESCONTO_CUPOM position 11;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column TOTALVENDA position 12;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column TOTALCUSTO position 13;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DTFINALIZACAO_VENDA position 14;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column OBS position 15;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column FORMAPAG position 16;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column FATDIAS position 17;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column SERIE position 18;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE position 19;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DATAEMISSAO position 20;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column HORAEMISSAO position 21;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CFOP position 22;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column VERIFICADOR_NFE position 23;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column XML_NFE_FILENAME position 24;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column XML_NFE position 25;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column VENDEDOR_COD position 26;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column USUARIO position 27;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column FORMAPAGTO_COD position 28;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CONDICAOPAGTO_COD position 29;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column VENDA_PRAZO position 30;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_01 position 31;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_02 position 32;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_03 position 33;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_04 position 34;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_05 position 35;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_06 position 36;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_07 position 37;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_08 position 38;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_09 position 39;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_10 position 40;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_11 position 41;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_12 position 42;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column LOTE_NFE_ANO position 43;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column LOTE_NFE_NUMERO position 44;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column LOTE_NFE_RECIBO position 45;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_ENVIADA position 46;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_DENEGADA position 47;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_DENEGADA_MOTIVO position 48;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CANCEL_USUARIO position 49;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CANCEL_DATAHORA position 50;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CANCEL_MOTIVO position 51;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_MODALIDADE_FRETE position 52;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_TRANSPORTADORA position 53;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_PLACA_VEICULO position 54;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_PLACA_UF position 55;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_PLACA_RNTC position 56;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_BASE_ICMS position 57;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_ICMS position 58;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_BASE_ICMS_SUBST position 59;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_ICMS_SUBST position 60;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_PRODUTO position 61;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_FRETE position 62;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_SEGURO position 63;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_DESCONTO position 64;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_II position 65;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_IPI position 66;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_PIS position 67;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_COFINS position 68;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_OUTROS position 69;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_NOTA position 70;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CUSTO_OPER_PERCENTUAL position 71;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CUSTO_OPER_FRETE position 72;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CUSTO_OPER_OUTROS position 73;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column GERAR_ESTOQUE_CLIENTE position 74;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CAIXA_ANO position 75;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CAIXA_NUM position 76;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column CAIXA_PDV position 77;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_COMPRA_ANO position 78;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_COMPRA_COD position 79;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_FORMA position 80;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_UF position 81;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_CNPJ_CPF position 82;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_IE position 83;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_COMPETENCIA position 84;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_SERIE position 85;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_NUMERO position 86;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_MODELO position 87;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DNFE_CHAVE position 88;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DECF_MODELO position 89;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DECF_NUMERO position 90;
+
+
+/*------ SYSDBA 18/06/2015 10:39:00 --------*/
+
+alter table TBVENDAS
+alter column DECF_COO position 91;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column ANO position 1;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CODCONTROL position 2;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CODEMP position 3;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CODCLIENTE position 4;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CODCLI position 5;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DTVENDA position 6;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column COMPETENCIA position 7;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column STATUS position 8;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column TOTALVENDA_BRUTA position 9;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DESCONTO position 10;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DESCONTO_CUPOM position 11;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column TOTALVENDA position 12;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column TOTALCUSTO position 13;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DTFINALIZACAO_VENDA position 14;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column OBS position 15;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column FORMAPAG position 16;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column FATDIAS position 17;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column SERIE position 18;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE position 19;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DATAEMISSAO position 20;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column HORAEMISSAO position 21;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CFOP position 22;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column VERIFICADOR_NFE position 23;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column XML_NFE position 24;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column XML_NFE_FILENAME position 25;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column VENDEDOR_COD position 26;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column USUARIO position 27;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column FORMAPAGTO_COD position 28;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CONDICAOPAGTO_COD position 29;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column VENDA_PRAZO position 30;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_01 position 31;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_02 position 32;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_03 position 33;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_04 position 34;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_05 position 35;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_06 position 36;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_07 position 37;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_08 position 38;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_09 position 39;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_10 position 40;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_11 position 41;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column PRAZO_12 position 42;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column LOTE_NFE_ANO position 43;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column LOTE_NFE_NUMERO position 44;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column LOTE_NFE_RECIBO position 45;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_ENVIADA position 46;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_DENEGADA position 47;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_DENEGADA_MOTIVO position 48;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CANCEL_USUARIO position 49;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CANCEL_DATAHORA position 50;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CANCEL_MOTIVO position 51;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_MODALIDADE_FRETE position 52;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_TRANSPORTADORA position 53;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_PLACA_VEICULO position 54;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_PLACA_UF position 55;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_PLACA_RNTC position 56;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_BASE_ICMS position 57;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_ICMS position 58;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_BASE_ICMS_SUBST position 59;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_ICMS_SUBST position 60;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_PRODUTO position 61;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_FRETE position 62;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_SEGURO position 63;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_DESCONTO position 64;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_II position 65;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_IPI position 66;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_PIS position 67;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_COFINS position 68;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_OUTROS position 69;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column NFE_VALOR_TOTAL_NOTA position 70;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CUSTO_OPER_PERCENTUAL position 71;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CUSTO_OPER_FRETE position 72;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CUSTO_OPER_OUTROS position 73;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column GERAR_ESTOQUE_CLIENTE position 74;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CAIXA_ANO position 75;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CAIXA_NUM position 76;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column CAIXA_PDV position 77;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_COMPRA_ANO position 78;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_COMPRA_COD position 79;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_FORMA position 80;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_UF position 81;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_CNPJ_CPF position 82;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_IE position 83;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_COMPETENCIA position 84;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_SERIE position 85;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_NUMERO position 86;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_MODELO position 87;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DNFE_CHAVE position 88;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DECF_MODELO position 89;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DECF_NUMERO position 90;
+
+
+/*------ SYSDBA 18/06/2015 10:39:27 --------*/
+
+alter table TBVENDAS
+alter column DECF_COO position 91;
+
+
+/*------ SYSDBA 18/06/2015 10:39:46 --------*/
+
+COMMENT ON COLUMN TBCOMPRAS.VERIFICADOR_NFE IS
+'Condigo de verificacao da NF-e gerada (Chave da NF-e).';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:39:57 --------*/
+
+COMMENT ON COLUMN TBCOMPRAS.XML_NFE IS
+'Arquivo XML da NF-e gerada ou recebida.';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:40:03 --------*/
+
+COMMENT ON COLUMN TBCOMPRAS.XML_NFE_FILENAME IS
+'Nome do arquivo XML da NF-e gerada ou recebida.';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:41:13 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_nfe_atualizar_compra for tbnfe_enviada
+active after insert position 1
+AS
+begin
+  if ( (new.anocompra > 0) and (new.numcompra > 0) ) then
+  begin
+    Update TBCOMPRAS c Set
+        c.nfserie = new.serie
+      , c.nf      = new.numero
+      , c.nfe_enviada      = 1
+      , c.tipo_documento   = 5 -- NF-e
+      , c.verificador_nfe  = new.chave
+      , c.xml_nfe_filename = new.xml_filename
+      , c.xml_nfe          = new.xml_file
+      , c.lote_nfe_ano     = new.lote_ano
+      , c.lote_nfe_numero  = new.lote_num
+      , c.lote_nfe_recibo  = new.recibo
+      , c.status  = 4 -- Nota Fiscal Gerada
+      , c.dtemiss = new.dataemissao
+      , c.hremiss = new.horaemissao
+    where c.ano        = new.anocompra
+      and c.codcontrol = new.numcompra;
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:43:20 --------*/
+
+COMMENT ON TRIGGER TG_NFE_ATUALIZAR_COMPRA IS 'Trigger Atualizar NFE na Compra (Entradas)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Trigger resposanvel por atualizar os dados referentes as notas ficais eletronicas
+geradas pelo sistema e enviadas a SEFA.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    18/06/2019 - IMR:
+        * Alteracao da atribuicao de valores do campo .';
+
+
+
+
+/*------ SYSDBA 18/06/2015 10:44:44 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_nfe_atualizar_compra for tbnfe_enviada
+active after insert position 1
+AS
+begin
+  if ( (new.anocompra > 0) and (new.numcompra > 0) ) then
+  begin
+    Update TBCOMPRAS c Set
+        c.nfserie = new.serie
+      , c.nf      = new.numero
+      , c.nfe_enviada      = 1
+      , c.tipo_documento   = 5 -- NF-e
+      , c.verificador_nfe  = new.chave
+      , c.xml_nfe_filename = new.xml_filename
+      , c.xml_nfe          = new.xml_file
+      , c.lote_nfe_ano     = new.lote_ano
+      , c.lote_nfe_numero  = new.lote_num
+      , c.lote_nfe_recibo  = new.recibo
+      , c.status  = 4 -- Nota Fiscal Gerada
+      , c.dtemiss = new.dataemissao
+      , c.hremiss = new.horaemissao
+    where c.ano        = new.anocompra
+      and c.codcontrol = new.numcompra;
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_NFE_ATUALIZAR_COMPRA IS 'Trigger Atualizar NFE na Compra (Entradas)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Trigger resposanvel por atualizar os dados referentes as notas ficais eletronicas
+geradas pelo sistema e enviadas a SEFA.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    18/06/2019 - IMR:
+        * Alteracao da atribuicao de valores do campo TIPO_DOCUMENTO de 1 (um)
+          para 5 (cinco). Onde 1 corresponte ao tipo "Nota Fiscal" e 5 coresponde
+          ao tipo "NF-e".';
+

@@ -1,17 +1,19 @@
 inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
   Left = 1029
   Top = 137
-  Width = 367
-  Height = 724
   BorderWidth = 4
   Caption = 'Monitor de Requisi'#231#245'es de Materiais'
+  ClientHeight = 677
+  ClientWidth = 343
   OnActivate = FormActivate
   OnClose = FormClose
+  ExplicitWidth = 367
+  ExplicitHeight = 724
   PixelsPerInch = 96
   TextHeight = 13
   object tlbBotoes: TToolBar
     Left = 0
-    Top = 643
+    Top = 642
     Width = 343
     Height = 35
     Align = alBottom
@@ -21,7 +23,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     TabOrder = 3
     object Bevel2: TBevel
       Left = 0
-      Top = 2
+      Top = 0
       Width = 4
       Height = 31
       Shape = bsSpacer
@@ -29,16 +31,14 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     object BtnImprimir: TcxButton
       Tag = 4
       Left = 4
-      Top = 2
+      Top = 0
       Width = 87
       Height = 31
       Hint = 'Imprimir Lista'
       Caption = 'Im&primir'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
       DropDownMenu = ppImprimir
-      Glyph.Data = {
+      Kind = cxbkDropDown
+      OptionsImage.Glyph.Data = {
         76010000424D7601000000000000760000002800000020000000100000000100
         04000000000000010000120B0000120B00001000000000000000000000000000
         800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
@@ -51,21 +51,21 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
         03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
         33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
         33333337FFFF7733333333300000033333333337777773333333}
-      Kind = cxbkDropDown
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
     end
     object BtnOpcoes: TcxButton
       Tag = 4
       Left = 91
-      Top = 2
+      Top = 0
       Width = 87
       Height = 31
       Caption = 'Op'#231#245'es'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
       DropDownMenu = ppOpcoes
-      Glyph.Data = {
+      Kind = cxbkDropDownButton
+      OptionsImage.Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
         18000000000000030000C40E0000C40E00000000000000000000FFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
@@ -92,7 +92,9 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF90A8B090A0B090A0A08098A08090A08088
         90B9B9BDA0B8A0B0C0A0FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-      Kind = cxbkDropDownButton
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
     end
   end
   object GrpBxFiltro: TcxGroupBox
@@ -140,7 +142,6 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       Height = 21
       Style = csDropDownList
       Anchors = [akLeft, akTop, akRight]
-      ItemHeight = 13
       TabOrder = 2
     end
     object edSituacao: TComboBox
@@ -150,7 +151,6 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       Height = 21
       Style = csDropDownList
       Anchors = [akLeft, akTop, akRight]
-      ItemHeight = 13
       ItemIndex = 0
       TabOrder = 3
       Text = '(Todos)'
@@ -170,11 +170,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       Hint = 'Executar Pesquisa'
       Anchors = [akTop, akRight]
       Caption = 'P&esquisar'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 4
-      OnClick = BtnPesquisarClick
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100
         20000000000000040000C30E0000C30E00000000000000000000000000000000
         00000000000000000000000000000000000000000000AC6B2CBAAC6B2CCC0000
@@ -209,6 +205,10 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
         6EFF707070FF707070FF6E6E6EFF6E6E6EFF6E6E6E7D00000000000000000000
         0000000000000000000000000000000000000000000000000000000000000000
         0000000000000000000000000000000000000000000000000000}
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 4
+      OnClick = BtnPesquisarClick
     end
     object e1Data: TJvDateEdit
       Left = 16
@@ -264,6 +264,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       ImageKind = ikCustom
       NumGlyphs = 2
       PopupColor = clBtnFace
+      ShowNullDate = False
       TabOrder = 0
     end
     object e2Data: TJvDateEdit
@@ -320,6 +321,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       ImageKind = ikCustom
       NumGlyphs = 2
       PopupColor = clBtnFace
+      ShowNullDate = False
       TabOrder = 1
     end
   end
@@ -327,7 +329,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     Left = 0
     Top = 226
     Width = 343
-    Height = 417
+    Height = 416
     Hint = 
       'Para carregar os produtos do grupo, basta'#13#10'executar "dois clique' +
       's" no registro.'
@@ -335,7 +337,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     TabOrder = 2
     object dbgReqTbl: TcxGridDBBandedTableView
       OnDblClick = dbgReqTblDblClick
-      NavigatorButtons.ConfirmDelete = False
+      Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = dtsRequisicaoAlmox
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <
@@ -505,6 +507,9 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
   object qryCentroCusto: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    c.codigo'
@@ -557,6 +562,9 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
   object qryRequisicaoAlmox: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    r.ano'
@@ -592,7 +600,11 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       'where r.empresa = :empresa'
       '  and r.data_emissao between :data_inicial and :data_final'
       '  and r.ccusto_destino = :centro_custo'
-      '  and ((r.status = :status) or (:todos = 1 and r.status > 1))')
+      '  and ((r.status = :status) or (:todos = 1 and r.status > 1))'
+      ''
+      'order by'
+      '    r.ano'
+      '  , r.controle DESC')
     Left = 128
     Top = 392
     ParamData = <

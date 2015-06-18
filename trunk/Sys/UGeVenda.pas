@@ -383,6 +383,9 @@ type
     qryNFEANOCOMPRA: TSmallintField;
     qryNFENUMCOMPRA: TIntegerField;
     nmImprimirNotaEntregaX: TMenuItem;
+    N4: TMenuItem;
+    nmPpCarregarArquivoNFe: TMenuItem;
+    opdNotas: TOpenDialog;
     procedure ImprimirOpcoesClick(Sender: TObject);
     procedure ImprimirOrcamentoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -449,6 +452,7 @@ type
     procedure nmPpCorrigirDadosNFeCFOPClick(Sender: TObject);
     procedure RdgStatusVendaClick(Sender: TObject);
     procedure nmImprimirNotaEntregaXClick(Sender: TObject);
+    procedure nmPpCarregarArquivoNFeClick(Sender: TObject);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -2799,6 +2803,109 @@ begin
 
     Clipboard.AsText := Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString);
     ShowInformation('Dados NF-e', 'Número de Recibo de Envio da NF-e:' + #13 + Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString));
+  end;
+end;
+
+procedure TfrmGeVenda.nmPpCarregarArquivoNFeClick(Sender: TObject);
+var
+  sNomeArquivoXML,
+  sEmitente      ,
+  sDestinatario  ,
+  sRecibo   ,
+  sProtocolo,
+  sChave    : String;
+  dDataHoraEmissao : TDateTime;
+  bNotaValida : Boolean;
+  sSerieNFe  : String;
+  iNumeroNFe ,
+  iModeloNFe ,
+  iVersaoNFe : Integer;
+  tTipoNota  : TTipoNF;
+  cValorProdutoNF : Currency;
+begin
+  if IbDtstTabela.IsEmpty then
+    Exit;
+
+  if ( IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE ) then
+    ShowWarning('Venda já possui Nota Fiscal Eletrônica.')
+  else
+  if opdNotas.Execute then
+  begin
+    DMNFe.CarregarArquivoNFe(IbDtstTabelaCODEMP.AsString, opdNotas.FileName
+      , sNomeArquivoXML
+      , sEmitente
+      , sDestinatario
+      , sRecibo
+      , sProtocolo
+      , sChave
+      , dDataHoraEmissao
+      , bNotaValida
+      , sSerieNFe
+      , iNumeroNFe
+      , iModeloNFe
+      , iVersaoNFe
+      , tTipoNota
+      , cValorProdutoNF
+    );
+
+    if bNotaValida then
+      if ( tTipoNota <> tnfSaida ) then
+        ShowWarning('NF-e selecionada não é uma nota de saída.')
+      else
+      if ( IbDtstTabelaCODEMP.AsString <> sEmitente ) then
+        ShowWarning('NF-e selecionada não pertence ao emitente ' + GetEmpresaNome(IbDtstTabelaCODEMP.AsString) + '.')
+      else
+      if ( IbDtstTabelaCODCLI.AsString <> sDestinatario ) then
+        ShowWarning('NF-e selecionada não pertence ao cliente ' + GetClienteNome(IbDtstTabelaCODCLIENTE.AsInteger) + '.')
+      else
+      if ( IbDtstTabelaTOTALVENDA_BRUTA.AsCurrency <> cValorProdutoNF ) then
+        ShowWarning('NF-e com Valor Total de Produtos diferente ao registrado na venda.')
+      else
+      if ShowConfirm('Confirma a importação do XML da NF-e para o registro de venda selecionado?') then
+      begin
+        with qryNFE do
+        begin
+          AbrirNotaFiscal( IbDtstTabelaCODEMP.AsString, IbDtstTabelaANO.AsInteger, IbDtstTabelaCODCONTROL.AsInteger );
+
+          Append;
+
+          qryNFEEMPRESA.Value     := IbDtstTabelaCODEMP.AsString;
+          qryNFEANOVENDA.Value    := IbDtstTabelaANO.Value;
+          qryNFENUMVENDA.Value    := IbDtstTabelaCODCONTROL.Value;
+          qryNFESERIE.Value       := sSerieNFe;
+          qryNFENUMERO.Value      := iNumeroNFe;
+          qryNFEMODELO.Value      := iModeloNFe;
+          qryNFEVERSAO.Value      := iVersaoNFe;
+          qryNFEDATAEMISSAO.Value := StrToDate(FormatDateTime('dd/mm/yyyy', dDataHoraEmissao));
+          qryNFEHORAEMISSAO.Value := StrToTime(FormatDateTime('hh:mm:ss',   dDataHoraEmissao));
+          qryNFECHAVE.Value       := sChave;
+          qryNFEPROTOCOLO.Value   := sProtocolo;
+          qryNFERECIBO.Value      := sRecibo;
+          qryNFELOTE_ANO.Value    := IbDtstTabelaANO.Value;
+          qryNFELOTE_NUM.Value    := iNumeroNFe;
+
+          if ( FileExists(opdNotas.FileName) ) then
+          begin
+            CorrigirXML_NFe(EmptyWideStr, opdNotas.FileName);
+
+            qryNFEXML_FILENAME.Value := sNomeArquivoXML;
+            qryNFEXML_FILE.LoadFromFile( opdNotas.FileName );
+          end;
+
+          qryNFEANOCOMPRA.Clear;
+          qryNFENUMCOMPRA.Clear;
+
+          Post;
+          ApplyUpdates;
+
+          CommitTransaction;
+        end;
+
+        RecarregarRegistro;
+        HabilitarDesabilitar_Btns;
+
+        ShowInformation('Arquivo XML de NF-e importando com sucesso.');
+      end;
   end;
 end;
 
