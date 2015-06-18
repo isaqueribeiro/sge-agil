@@ -382,6 +382,7 @@ type
     e2Data: TJvDateEdit;
     qryNFEANOCOMPRA: TSmallintField;
     qryNFENUMCOMPRA: TIntegerField;
+    nmImprimirNotaEntregaX: TMenuItem;
     procedure ImprimirOpcoesClick(Sender: TObject);
     procedure ImprimirOrcamentoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -447,6 +448,7 @@ type
     procedure BtnCorrigirDadosNFeClick(Sender: TObject);
     procedure nmPpCorrigirDadosNFeCFOPClick(Sender: TObject);
     procedure RdgStatusVendaClick(Sender: TObject);
+    procedure nmImprimirNotaEntregaXClick(Sender: TObject);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -961,11 +963,12 @@ begin
 
     nmGerarImprimirBoletos.Enabled := (not qryTitulos.IsEmpty) and (IbDtstTabelaSTATUS.AsInteger < STATUS_VND_CAN);
 
-    nmImprimirDANFE.Enabled        := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
-    nmImprimirNotaEntrega.Enabled  := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) );
-    nmImprimirCartaCredito.Enabled := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) ) and (IbDtstTabelaGERAR_ESTOQUE_CLIENTE.AsInteger = 1);
-    nmGerarDANFEXML.Enabled        := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
-    nmEnviarEmailCliente.Enabled   := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
+    nmImprimirDANFE.Enabled         := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
+    nmImprimirNotaEntrega.Enabled   := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) );
+    nmImprimirNotaEntregaX.Enabled  := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) );
+    nmImprimirCartaCredito.Enabled  := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) ) and (IbDtstTabelaGERAR_ESTOQUE_CLIENTE.AsInteger = 1);
+    nmGerarDANFEXML.Enabled         := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
+    nmEnviarEmailCliente.Enabled    := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
 
     TbsInformeNFe.TabVisible    := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr);
     nmPpLimparDadosNFe.Enabled  := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr) and (IbDtstTabelaNFE.AsCurrency = 0);
@@ -982,11 +985,12 @@ begin
 
     nmGerarImprimirBoletos.Enabled := (not qryTitulos.IsEmpty) and (IbDtstTabelaSTATUS.AsInteger < STATUS_VND_CAN);
 
-    nmImprimirDANFE.Enabled        := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
-    nmImprimirNotaEntrega.Enabled  := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) );
-    nmImprimirCartaCredito.Enabled := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) ) and (IbDtstTabelaGERAR_ESTOQUE_CLIENTE.AsInteger = 1);
-    nmGerarDANFEXML.Enabled        := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
-    nmEnviarEmailCliente.Enabled   := False;
+    nmImprimirDANFE.Enabled         := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
+    nmImprimirNotaEntrega.Enabled   := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) );
+    nmImprimirNotaEntregaX.Enabled  := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) );
+    nmImprimirCartaCredito.Enabled  := ( (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) or (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE) ) and (IbDtstTabelaGERAR_ESTOQUE_CLIENTE.AsInteger = 1);
+    nmGerarDANFEXML.Enabled         := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_NFE);
+    nmEnviarEmailCliente.Enabled    := False;
 
     TbsInformeNFe.TabVisible    := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr);
     nmPpLimparDadosNFe.Enabled  := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr) and (IbDtstTabelaNFE.AsCurrency = 0);
@@ -2971,13 +2975,26 @@ begin
 
   with DMNFe do
   begin
-
     AbrirEmitente( IbDtstTabelaCODEMP.AsString );
     AbrirDestinatario( IbDtstTabelaCODCLIENTE.AsInteger );
     AbrirVenda( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODCONTROL.AsInteger );
 
     frrNotaEntrega.ShowReport;
+  end;
+end;
 
+procedure TfrmGeVenda.nmImprimirNotaEntregaXClick(Sender: TObject);
+begin
+  if ( IbDtstTabela.IsEmpty ) then
+    Exit;
+
+  with DMNFe do
+  begin
+    AbrirEmitente( IbDtstTabelaCODEMP.AsString );
+    AbrirDestinatario( IbDtstTabelaCODCLIENTE.AsInteger );
+    AbrirVenda( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODCONTROL.AsInteger );
+
+    frrNotaEntregaX.ShowReport;
   end;
 end;
 

@@ -325,6 +325,7 @@ type
     qryNFCCalculoImposto: TIBDataSet;
     qryNFCDadosProduto: TIBQuery;
     frdNFCDadosProduto: TfrxDBDataset;
+    frrNotaEntregaX: TfrxReport;
     procedure SelecionarCertificado(Sender : TObject);
     procedure TestarServico(Sender : TObject);
     procedure DataModuleCreate(Sender: TObject);

@@ -10890,3 +10890,206 @@ end;
 /*------ SYSDBA 11/06/2015 09:50:13 --------*/
 
 ROLLBACK WORK;
+
+
+/*------ SYSDBA 16/06/2015 11:06:23 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contpag_quitar for tbcontpag_baixa
+active after insert or update position 1
+AS
+  declare variable Quitado Smallint;
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago  DMN_MONEY;
+  declare variable valor_pagar DMN_MONEY;
+  declare variable Valor_saldo DMN_MONEY;
+  declare variable valor_multa DMN_MONEY;
+begin
+  /* Quitar contas a pagar */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTPAG_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(p.Valorpag, 0)
+  from TBCONTPAG p
+  where p.Anolanc = new.Anolanc
+    and p.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+  Valor_saldo = :Valor_pagar - :Total_pago;
+  if ( :Valor_saldo < 0 ) then
+    Valor_saldo = 0;
+
+  -- Sinalizar a Quitacao ou Nao da Despesa
+  if ( :Total_pago >= :Valor_pagar ) then
+    Quitado = 1;
+  else
+    Quitado = 0;
+
+  -- Informar valores de pagamentos parciais
+
+  if ( :Quitado = 0 ) then
+  begin
+
+    Update TBCONTPAG p Set
+        p.Historic = coalesce(p.Historic, '') || ' --> HISTORICO DE PGTO : ' || new.Historico
+      , p.valorpagtot = :Total_pago
+      , p.valorsaldo  = :Valor_saldo
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+
+  end
+    
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  else
+
+  if ( :Quitado = 1 ) then
+  begin
+    valor_multa = :Total_pago - :Valor_pagar;
+
+    if ( :valor_multa < 0 ) then
+      valor_multa = 0.0;
+
+    Update TBCONTPAG p Set
+        p.Quitado  = 1
+      , p.Historic = p.Historic || ' --> HISTORICO DE PAGAMENTO : ' || new.Historico
+      , p.Dtpag    = new.Data_pagto
+      , p.Docbaix  = new.Documento_baixa
+      , p.Tippag   = :Forma_pagto
+      , p.Numchq   = new.Numero_cheque
+      , p.Banco    = new.Banco
+      , p.valormulta  = :Valor_multa
+      , p.valorpagtot = :Total_pago
+      , p.valorsaldo  = :Valor_saldo
+    where p.Anolanc = new.Anolanc
+      and p.Numlanc = new.Numlanc;
+  end
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 16/06/2015 11:06:39 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_contrec_quitar for tbcontrec_baixa
+active after insert or update position 1
+AS
+  declare variable forma_pagto varchar(30);
+  declare variable total_pago numeric(15,2);
+  declare variable valor_pagar numeric(15,2);
+  declare variable valor_saldo numeric(15,2);
+  declare variable quitado Smallint;
+begin
+  /* Quitar contas a receber */
+
+  -- Buscar descricao da Forma de Pagamento
+  Select
+    f.Descri
+  from TBFORMPAGTO f
+  where f.Cod = new.Forma_pagto
+  into
+    Forma_pagto;
+
+  -- Totalizar os Valores pagos
+  Select
+    sum( coalesce(b.Valor_baixa, 0) )
+  from TBCONTREC_BAIXA b
+  where b.Anolanc = new.Anolanc
+    and b.Numlanc = new.Numlanc
+  into
+    Total_pago;
+
+  -- Buscar o Valor da divida
+  Select
+    coalesce(r.Valorrec, 0) + coalesce(r.Valormulta, 0) - ( coalesce(r.Valorrec, 0) * coalesce(r.Percentdesconto, 0) / 100 )
+  from TBCONTREC r
+  where r.Anolanc = new.Anolanc
+    and r.Numlanc = new.Numlanc
+  Into
+    Valor_pagar;
+
+  -- Quitar divida caso o Total Pago seja maior ou igual ao Total da divida
+  if ( :Total_pago >= :Valor_pagar ) then
+    quitado = 1;
+  else
+    quitado = 0;
+
+  Valor_saldo = :Valor_pagar - :Total_pago;
+  if ( :Valor_saldo < 0 ) then
+    Valor_saldo = 0;
+
+  Update TBCONTREC r Set
+      r.Baixado  = :Quitado
+    , r.Historic = coalesce(r.Historic, '') || ' --> HISTORICO DA BAIXA : ' || new.Historico
+    , r.Dtrec    = new.Data_pagto
+    , r.Docbaix  = new.Documento_baixa
+    , r.Tippag   = :Forma_pagto
+    , r.Codbanco = new.Banco
+    , r.Valorsaldo  = :Valor_saldo
+    , r.Valorrectot = :Total_pago
+  where r.Anolanc = new.Anolanc
+    and r.Numlanc = new.Numlanc;
+end^
+
+SET TERM ; ^
+
+
+
+/*------ SYSDBA 17/06/2015 20:42:06 --------*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+F.CODFORN.
+At line 2, column 7.
+
+*/
+
+/*------ SYSDBA 17/06/2015 20:44:07 --------*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+F.CNPJ.
+At line 3, column 7.
+
+*/
+
+
+/*------ SYSDBA 17/06/2015 20:55:39 --------*/
+
+CREATE OR ALTER VIEW VW_SEXO(
+    CODIGO,
+    DESCRICAO)
+AS
+Select 'M' as Codigo , 'Masculino' as Descricao from RDB$DATABASE Union
+Select 'F' as Codigo , 'Feminino'  as Descricao from RDB$DATABASE
+;
+
+GRANT ALL ON VW_SEXO TO "PUBLIC";
