@@ -301,6 +301,7 @@ type
     procedure RbnBackstageGalleryBackupItemClick(Sender: TObject;
       AItem: TdxRibbonBackstageViewGalleryItem);
     procedure BrBtnQuitarAReceberLoteClick(Sender: TObject);
+    procedure BrBtnFuncionarioClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -353,6 +354,12 @@ begin
     ShowInformation('Usuário sem permissão de acesso para esta rotina.' + #13 + 'Favor entrar em contato com suporte.')
   else
     FormFunction.ShowModalForm(Self, 'frmGeEmpresa');
+end;
+
+procedure TfrmPrinc.BrBtnFuncionarioClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_CAD_FUNCIONARIO_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeFuncionario');
 end;
 
 procedure TfrmPrinc.BrBtnQuitarAReceberLoteClick(Sender: TObject);

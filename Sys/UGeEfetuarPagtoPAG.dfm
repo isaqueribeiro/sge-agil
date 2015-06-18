@@ -6,8 +6,6 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
   Caption = 'Contas A Pagar - Efetuar Pagamento'
   ClientHeight = 359
   ClientWidth = 551
-  Font.Charset = ANSI_CHARSET
-  Font.Name = 'Tahoma'
   OldCreateOrder = True
   DesignSize = (
     551
@@ -324,6 +322,7 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
       NumGlyphs = 2
       ParentFont = False
       PopupColor = clBtnFace
+      ShowNullDate = False
       TabOrder = 0
       OnEnter = ControlEditEnter
       OnExit = ControlEditExit
@@ -435,9 +434,7 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
     Height = 33
     Anchors = [akRight, akBottom]
     Caption = 'Confirmar'
-    TabOrder = 2
-    OnClick = btnConfirmarClick
-    Glyph.Data = {
+    OptionsImage.Glyph.Data = {
       36060000424D3606000000000000360000002800000020000000100000000100
       18000000000000060000000000000000000000000000000000000000FF0000FF
       0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -488,7 +485,9 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
       0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
       FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-    NumGlyphs = 2
+    OptionsImage.NumGlyphs = 2
+    TabOrder = 2
+    OnClick = btnConfirmarClick
   end
   object btnCancelar: TcxButton
     Left = 468
@@ -498,9 +497,7 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
     Anchors = [akRight, akBottom]
     Cancel = True
     Caption = 'Cancelar'
-    TabOrder = 3
-    OnClick = btnCancelarClick
-    Glyph.Data = {
+    OptionsImage.Glyph.Data = {
       36060000424D3606000000000000360000002800000020000000100000000100
       180000000000000600000000000000000000000000000000000000FF0000FF00
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -551,12 +548,15 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
       00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
       0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
       BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
-    NumGlyphs = 2
+    OptionsImage.NumGlyphs = 2
+    TabOrder = 3
+    OnClick = btnCancelarClick
   end
   object cdsPagamentos: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     OnNewRecord = cdsPagamentosNewRecord
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -580,6 +580,8 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
       '  left join TBBANCO_BOLETO b on (b.Bco_cod = p.Banco)')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updPagamentos
     Left = 304
     Top = 16
@@ -728,7 +730,10 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
   object tblBanco: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'TBBANCO_BOLETO'
+    UniDirectional = False
     Left = 400
     Top = 16
   end
@@ -740,7 +745,10 @@ inherited frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG
   object tblFormaPagto: TIBTable
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
     TableName = 'TBFORMPAGTO'
+    UniDirectional = False
     Left = 400
     Top = 48
   end

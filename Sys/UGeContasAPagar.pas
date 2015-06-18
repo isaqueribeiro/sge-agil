@@ -331,6 +331,7 @@ var
   CxNumero ,
   CxContaCorrente : Integer;
   DataPagto : TDateTime;
+  cAPagar   : Currency;
 begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
@@ -369,7 +370,9 @@ begin
     Exit;
   end;
  }
-  if PagamentoConfirmado(Self, IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger, IbDtstTabelaFORMA_PAGTO.AsInteger, IbDtstTabelaNOMEFORN.AsString, DataPagto) then
+  cAPagar := IbDtstTabelaVALORSALDO.AsCurrency;
+
+  if PagamentoConfirmado(Self, IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger, IbDtstTabelaFORMA_PAGTO.AsInteger, IbDtstTabelaNOMEFORN.AsString, DataPagto, cAPagar) then
   begin
     if ( CxContaCorrente > 0 ) then
       GerarSaldoContaCorrente(CxContaCorrente, DataPagto);

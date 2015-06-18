@@ -4,8 +4,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
   Caption = 'Controle de Apropria'#231#245'es de Estoque'
   ClientHeight = 685
   ClientWidth = 1116
-  ExplicitLeft = -50
-  ExplicitTop = -57
   ExplicitWidth = 1132
   ExplicitHeight = 724
   PixelsPerInch = 96
@@ -29,6 +27,8 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     ExplicitWidth = 1116
     ExplicitHeight = 642
     inherited tbsTabela: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 1108
       ExplicitHeight = 613
       inherited Bevel4: TBevel
@@ -588,6 +588,10 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           object TbsApropriacaoCancelado: TTabSheet
             Caption = 'Motivo do cancelamento'
             ImageIndex = 2
+            ExplicitLeft = 0
+            ExplicitTop = 0
+            ExplicitWidth = 0
+            ExplicitHeight = 0
             object dbMovitoCancelamento: TDBMemo
               Left = 0
               Top = 0
@@ -2274,7 +2278,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4142,6 +4146,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       
         '  , coalesce(nullif(p.customedio, 0), i.valor_unitario) as custo' +
         '_medio'
+      '  , i.valor_unitario'
       '  , p.descri'
       '  , p.apresentacao'
       '  , p.descri_apresentacao'

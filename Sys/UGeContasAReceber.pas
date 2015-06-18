@@ -313,6 +313,7 @@ var
   CxNumero ,
   CxContaCorrente : Integer;
   DataPagto : TDateTime;
+  cReceber  : Currency;
 begin
   if ( IbDtstTabela.IsEmpty ) then
     Exit;
@@ -348,7 +349,9 @@ begin
 //    Exit;
 //  end;
 
-  if PagamentoConfirmado(Self, IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger, IbDtstTabelaFORMA_PAGTO.AsInteger, IbDtstTabelaNOMECLIENTE.AsString, DataPagto) then
+  cReceber := IbDtstTabelaVALORSALDO.AsCurrency;
+
+  if PagamentoConfirmado(Self, IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger, IbDtstTabelaFORMA_PAGTO.AsInteger, IbDtstTabelaNOMECLIENTE.AsString, DataPagto, cReceber) then
   begin
     if ( CxContaCorrente > 0 ) then
       GerarSaldoContaCorrente(CxContaCorrente, DataPagto);

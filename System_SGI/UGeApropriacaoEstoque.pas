@@ -1553,7 +1553,7 @@ begin
         cdsTabelaItensFRACIONADOR.Assign   ( FieldByName('fracionador') );
         cdsTabelaItensUNIDADE.Assign       ( FieldByName('unidade') );
         cdsTabelaItensUNIDADE_FRACAO.Assign( FieldByName('unidade_fracao') );
-        cdsTabelaItensCUSTO_UNITARIO.Assign( FieldByName('custo_medio') );
+        cdsTabelaItensCUSTO_UNITARIO.Assign( FieldByName('valor_unitario') );
 
         cdsTabelaItensDESCRI.Assign             ( FieldByName('DESCRI') );
         cdsTabelaItensAPRESENTACAO.Assign       ( FieldByName('apresentacao') );

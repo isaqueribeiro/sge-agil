@@ -7,7 +7,9 @@ uses
   Dialogs, UGrPadrao, StdCtrls, Mask, DBCtrls, ExtCtrls, DB,
   IBCustomDataSet, IBUpdateSQL, IBTable, Buttons, IBStoredProc, cxGraphics,
   cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
-  JvExMask, JvToolEdit, JvDBControls;
+  JvExMask, JvToolEdit, JvDBControls, dxSkinsCore, dxSkinMcSkin,
+  dxSkinOffice2007Green, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White;
 
 type
   TfrmGeEfetuarPagtoREC = class(TfrmGrPadrao)
@@ -76,7 +78,8 @@ type
 var
   frmGeEfetuarPagtoREC: TfrmGeEfetuarPagtoREC;
 
-  function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Cliente : String; var DataPagto : TDateTime) : Boolean;
+  function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Cliente : String;
+    var DataPagto : TDateTime; var AReceber : Currency) : Boolean;
   function RegistrarPagamento(LancAno, LanNumero : Integer; DataPagto : TDateTime; FormaPagto : Integer; ValorPago : Currency; VendaAno, VendaNumero : Integer) : Boolean;
 
 implementation
@@ -85,7 +88,8 @@ uses UDMBusiness;
 
 {$R *.dfm}
 
-function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Cliente : String; var DataPagto : TDateTime) : Boolean;
+function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Cliente : String;
+  var DataPagto : TDateTime; var AReceber : Currency) : Boolean;
 var
   frm : TfrmGeEfetuarPagtoREC;
 begin
@@ -109,6 +113,7 @@ begin
       cdsPagamentos.Open;
       cdsPagamentos.Append;
       cdsPagamentosFORMA_PAGTO.AsInteger  := FormaPagto;
+      cdsPagamentosVALOR_BAIXA.AsCurrency := AReceber;
 
       Result := (ShowModal = mrOk);
 

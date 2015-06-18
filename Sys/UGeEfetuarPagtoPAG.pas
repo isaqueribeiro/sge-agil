@@ -6,7 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, StdCtrls, Mask, DBCtrls, ExtCtrls, DB, IBCustomDataSet, IBUpdateSQL,
   IBTable, Buttons, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
-  JvExMask, JvToolEdit, JvDBControls;
+  JvExMask, JvToolEdit, JvDBControls, dxSkinsCore, dxSkinMcSkin,
+  dxSkinOffice2007Green, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
+  dxSkinOffice2013White;
 
 type
   TfrmGeEfetuarPagtoPAG = class(TfrmGrPadrao)
@@ -75,7 +77,8 @@ type
 var
   frmGeEfetuarPagtoPAG: TfrmGeEfetuarPagtoPAG;
 
-  function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Fornecedor : String; var DataPagto : TDateTime) : Boolean;
+  function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Fornecedor : String;
+    var DataPagto : TDateTime; var APagar : Currency) : Boolean;
 
 implementation
 
@@ -83,7 +86,8 @@ uses UDMBusiness;
 
 {$R *.dfm}
 
-function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Fornecedor : String; var DataPagto : TDateTime) : Boolean;
+function PagamentoConfirmado(const AOwner : TComponent; const Ano, Lancamento, FormaPagto : Integer; const Fornecedor : String;
+  var DataPagto : TDateTime; var APagar : Currency) : Boolean;
 var
   frm : TfrmGeEfetuarPagtoPAG;
 begin
@@ -106,7 +110,8 @@ begin
 
       cdsPagamentos.Open;
       cdsPagamentos.Append;
-      cdsPagamentosFORMA_PAGTO.AsInteger := FormaPagto;
+      cdsPagamentosFORMA_PAGTO.AsInteger  := FormaPagto;
+      cdsPagamentosVALOR_BAIXA.AsCurrency := APagar;
 
       Result := (ShowModal = mrOk);
 
