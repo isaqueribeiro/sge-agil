@@ -96,32 +96,32 @@ type
     dbgParcelasTblValorParcela: TcxGridDBColumn;
     dbgParcelasTblObservacao: TcxGridDBColumn;
     cdsContaAPagar: TIBDataSet;
+    IbUpdTabela: TIBUpdateSQL;
+    cdsDadosNominaisPrimeiroVencimento: TDateTimeField;
+    RdGrpVencimentoFimSemana: TRadioGroup;
+    dbPrimeiroVencimento: TJvDBDateEdit;
+    lblPrimeiroVencimentoX: TLabel;
     cdsContaAPagarANOLANC: TSmallintField;
     cdsContaAPagarNUMLANC: TIntegerField;
     cdsContaAPagarEMPRESA: TIBStringField;
-    cdsContaAPagarNOMEEMP: TIBStringField;
-    cdsContaAPagarPARCELA: TSmallintField;
     cdsContaAPagarCODFORN: TSmallintField;
-    cdsContaAPagarNOMEFORN: TIBStringField;
-    cdsContaAPagarCNPJ: TIBStringField;
-    cdsContaAPagarNOTFISC: TIBStringField;
+    cdsContaAPagarPARCELA: TSmallintField;
     cdsContaAPagarTIPPAG: TIBStringField;
+    cdsContaAPagarHISTORIC: TWideMemoField;
+    cdsContaAPagarNOTFISC: TIBStringField;
     cdsContaAPagarDTEMISS: TDateField;
     cdsContaAPagarDTVENC: TDateField;
-    cdsContaAPagarDTPAG: TDateField;
     cdsContaAPagarVALORPAG: TIBBCDField;
+    cdsContaAPagarVALORPAGTOT: TIBBCDField;
     cdsContaAPagarVALORSALDO: TIBBCDField;
-    cdsContaAPagarCODTPDESP: TSmallintField;
-    cdsContaAPagarBANCO: TSmallintField;
-    cdsContaAPagarBCO_NOME: TIBStringField;
-    cdsContaAPagarNUMCHQ: TIBStringField;
-    cdsContaAPagarPAGO_: TIBStringField;
-    cdsContaAPagarDOCBAIX: TIBStringField;
-    cdsContaAPagarHISTORIC: TMemoField;
+    cdsContaAPagarNOMEEMP: TIBStringField;
+    cdsContaAPagarTIPOCATEG: TSmallintField;
     cdsContaAPagarFORMA_PAGTO: TSmallintField;
     cdsContaAPagarCONDICAO_PAGTO: TSmallintField;
     cdsContaAPagarQUITADO: TSmallintField;
-    IbUpdTabela: TIBUpdateSQL;
+    cdsContaAPagarCODTPDESP: TSmallintField;
+    cdsContaAPagarSITUACAO: TSmallintField;
+    cdsContaAPagarLOTE: TIBStringField;
     procedure tmrAlertaTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cdsDadosNominaisNewRecord(DataSet: TDataSet);
@@ -143,7 +143,7 @@ type
   end;
 
   function GerarLoteParcelas(const AOnwer : TComponent;
-    var aEmpresa : String;
+    var aEmpresa, aLote : String;
     var aFornecedor : Integer;
     var aDataEmissao, aVencimentoFirst, aVencimentoLast : TDateTime) : Boolean;
 
@@ -156,7 +156,7 @@ uses
   UGeFornecedor, DateUtils;
 
 function GerarLoteParcelas(const AOnwer : TComponent;
-  var aEmpresa : String;
+  var aEmpresa, aLote : String;
   var aFornecedor : Integer;
   var aDataEmissao, aVencimentoFirst, aVencimentoLast : TDateTime) : Boolean;
 var
@@ -250,12 +250,10 @@ begin
     sValorParc  := FormatFloat('#############0.000', cValorParc);
     cValorParc  := StrToCurr(Copy(sValorParc, 1, Length(sValorParc) - 1));
     cValorTotal := 0.0;
-    dDataTemp   := cdsDadosNominaisEmissao.AsDateTime;
+    dDataTemp   := cdsDadosNominaisPrimeiroVencimento.AsDateTime;
 
     for I := 1 to cdsDadosNominaisNumeroParcelas.AsInteger do
     begin
-      dDataTemp := dDataTemp + cdsDadosNominaisNumeroDias.AsInteger;
-
       if ( cdsDadosNominaisDiaVencimento.AsInteger > 0 ) then
         sVencimento := FormatFloat('00"/"', cdsDadosNominaisDiaVencimento.AsInteger) +
           FormatDateTime('mm/yyyy', dDataTemp)
@@ -285,19 +283,28 @@ begin
           end;
       end;
 
-      Case DayOfWeek(dVencimento) of
-        1: dVencimento := dVencimento + 1; // Movendo de Domingo para Segunda
-        7: dVencimento := dVencimento + 2; // Movendo de Sábado para Segunda
-      end;
+      Case RdGrpVencimentoFimSemana.ItemIndex of
+        1:
+          Case DayOfWeek(dVencimento) of
+            1: dVencimento := dVencimento - 2; // Movendo de Domingo para Sexta
+            7: dVencimento := dVencimento - 1; // Movendo de Sábado para Sexta
+          end;
 
-      dDataTemp   := dVencimento;
-      cValorTotal := cValorTotal + cValorParc;
+        2:
+          Case DayOfWeek(dVencimento) of
+            1: dVencimento := dVencimento + 1; // Movendo de Domingo para Segunda
+            7: dVencimento := dVencimento + 2; // Movendo de Sábado para Segunda
+          end;
+      end;
 
       cdsParcelas.Append;
       cdsParcelasParcela.AsInteger       := I;
       cdsParcelasVencimento.AsDateTime   := dVencimento;
       cdsParcelasValorParcela.AsCurrency := cValorParc;
       cdsParcelas.Post;
+
+      dDataTemp   := dDataTemp + cdsDadosNominaisNumeroDias.AsInteger;
+      cValorTotal := cValorTotal + cValorParc;
     end;
 
     cdsParcelas.First;
@@ -327,6 +334,7 @@ begin
   cdsDadosNominaisNumeroParcelas.AsInteger := 2;
   cdsDadosNominaisValorTotal.AsCurrency    := 0.0;
   cdsDadosNominaisEmissao.AsDateTime       := GetDateDB;
+  cdsDadosNominaisPrimeiroVencimento.AsDateTime := cdsDadosNominaisEmissao.AsDateTime;
   cdsDadosNominaisDiaVencimento.AsInteger  := 5;
   cdsDadosNominaisNumeroDias.AsInteger     := 30;
   cdsDadosNominaisFornecedor.Clear;
