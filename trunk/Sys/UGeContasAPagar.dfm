@@ -313,6 +313,8 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel8: TBevel
@@ -976,6 +978,15 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     Width = 934
     ExplicitTop = 522
     ExplicitWidth = 934
+    inherited Bevel2: TBevel
+      Left = 84
+    end
+    inherited bvlTool1: TBevel
+      Left = 313
+    end
+    inherited bvlTool2: TBevel
+      Left = 467
+    end
     inherited bvlTool3: TBevel
       Left = 851
       ExplicitLeft = 851
@@ -992,26 +1003,47 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       Shape = bsSpacer
     end
     object Bevel9: TBevel [6]
-      Left = 462
+      Left = 0
       Top = 0
       Width = 4
       Height = 35
       Align = alLeft
       Shape = bsSpacer
-      ExplicitLeft = 499
-      ExplicitTop = -6
+      ExplicitTop = 2
+    end
+    inherited btbtnIncluir: TcxButton
+      Left = 88
+      TabOrder = 1
+    end
+    inherited btbtnAlterar: TcxButton
+      Left = 163
+      TabOrder = 2
+    end
+    inherited btbtnExcluir: TcxButton
+      Left = 238
+      TabOrder = 3
+    end
+    inherited btbtnCancelar: TcxButton
+      Left = 317
+      TabOrder = 5
+    end
+    inherited btbtnSalvar: TcxButton
+      Left = 392
+      TabOrder = 4
     end
     inherited btbtnLista: TcxButton
+      Left = 471
+      TabOrder = 6
       Visible = True
     end
     inherited btbtnFechar: TcxButton
       Left = 855
-      TabOrder = 8
+      TabOrder = 9
       ExplicitLeft = 855
     end
     inherited btbtnSelecionar: TcxButton
       Left = 731
-      TabOrder = 7
+      TabOrder = 8
       ExplicitLeft = 731
     end
     object btbtnEfetuarPagto: TcxButton
@@ -1078,24 +1110,24 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       OptionsImage.NumGlyphs = 2
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 6
+      TabOrder = 7
       OnClick = btbtnEfetuarPagtoClick
     end
-    object btnIncluirLote: TcxButton
+    object btbtnIncluirLote: TcxButton
       Tag = 1
-      Left = 466
+      Left = 4
       Top = 0
-      Width = 120
+      Width = 80
       Height = 35
       Hint = 'Incluir Lote de Parcelas'
       Align = alLeft
-      Caption = 'Incluir &Lotes'
+      Caption = 'Incluir &Lote'
       OptionsImage.ImageIndex = 8
       OptionsImage.Images = DMRecursos.ImgBotoes16x16
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 9
-      OnClick = btnIncluirLoteClick
+      TabOrder = 0
+      OnClick = btbtnIncluirLoteClick
     end
   end
   inherited IbDtstTabela: TIBDataSet
@@ -1128,6 +1160,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       '  , p.Docbaix'
       '  , p.Quitado'
       '  , p.Codtpdesp'
+      '  , p.Lote'
       'from TBCONTPAG p'
       '  left join TBFORNECEDOR f on (f.Codforn = p.Codforn)'
       '  left join TBBANCO_BOLETO b on (b.Bco_cod = p.Banco)')
@@ -1299,6 +1332,12 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       Required = True
       OnGetText = IbDtstTabelaQUITADOGetText
     end
+    object IbDtstTabelaLOTE: TIBStringField
+      FieldName = 'LOTE'
+      Origin = '"TBCONTPAG"."LOTE"'
+      ProviderFlags = [pfInUpdate]
+      Size = 14
+    end
   end
   inherited DtSrcTabela: TDataSource
     Top = 72
@@ -1332,7 +1371,8 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       '  CONDICAO_PAGTO,'
       '  QUITADO,'
       '  CODTPDESP,'
-      '  SITUACAO'
+      '  SITUACAO,'
+      '  LOTE'
       'from TBCONTPAG '
       'where'
       '  ANOLANC = :ANOLANC and'
@@ -1352,6 +1392,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       '  EMPRESA = :EMPRESA,'
       '  FORMA_PAGTO = :FORMA_PAGTO,'
       '  HISTORIC = :HISTORIC,'
+      '  LOTE = :LOTE,'
       '  NOMEEMP = :NOMEEMP,'
       '  NOTFISC = :NOTFISC,'
       '  NUMCHQ = :NUMCHQ,'
@@ -1370,19 +1411,22 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
         '  (ANOLANC, BANCO, CODFORN, CODTPDESP, CONDICAO_PAGTO, DOCBAIX, ' +
         'DTEMISS, '
       
-        '   DTPAG, DTVENC, EMPRESA, FORMA_PAGTO, HISTORIC, NOMEEMP, NOTFI' +
-        'SC, NUMCHQ, '
-      '   NUMLANC, PARCELA, QUITADO, TIPPAG, VALORPAG, VALORSALDO)'
+        '   DTPAG, DTVENC, EMPRESA, FORMA_PAGTO, HISTORIC, LOTE, NOMEEMP,' +
+        ' NOTFISC, '
+      
+        '   NUMCHQ, NUMLANC, PARCELA, QUITADO, TIPPAG, VALORPAG, VALORSAL' +
+        'DO)'
       'values'
       
         '  (:ANOLANC, :BANCO, :CODFORN, :CODTPDESP, :CONDICAO_PAGTO, :DOC' +
         'BAIX, :DTEMISS, '
       
-        '   :DTPAG, :DTVENC, :EMPRESA, :FORMA_PAGTO, :HISTORIC, :NOMEEMP,' +
-        ' :NOTFISC, '
+        '   :DTPAG, :DTVENC, :EMPRESA, :FORMA_PAGTO, :HISTORIC, :LOTE, :N' +
+        'OMEEMP, '
       
-        '   :NUMCHQ, :NUMLANC, :PARCELA, :QUITADO, :TIPPAG, :VALORPAG, :V' +
-        'ALORSALDO)')
+        '   :NOTFISC, :NUMCHQ, :NUMLANC, :PARCELA, :QUITADO, :TIPPAG, :VA' +
+        'LORPAG, '
+      '   :VALORSALDO)')
     DeleteSQL.Strings = (
       'delete from TBCONTPAG'
       'where'
@@ -1393,7 +1437,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   inherited ImgList: TImageList
     Top = 72
     Bitmap = {
-      494C01012B002C00340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

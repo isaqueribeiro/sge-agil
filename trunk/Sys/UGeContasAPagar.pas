@@ -143,7 +143,8 @@ type
     CdsReciboVALOR_BAIXA: TBCDField;
     IbDtstTabelaNOMEEMP: TIBStringField;
     Bevel9: TBevel;
-    btnIncluirLote: TcxButton;
+    btbtnIncluirLote: TcxButton;
+    IbDtstTabelaLOTE: TIBStringField;
     procedure FormCreate(Sender: TObject);
     procedure dbFornecedorButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -168,7 +169,7 @@ type
     procedure DtSrcTabelaStateChange(Sender: TObject);
     procedure btbtnCancelarClick(Sender: TObject);
     procedure btbtnIncluirClick(Sender: TObject);
-    procedure btnIncluirLoteClick(Sender: TObject);
+    procedure btbtnIncluirLoteClick(Sender: TObject);
   private
     { Private declarations }
     FDataAtual : TDateTime;
@@ -300,9 +301,10 @@ begin
   inherited;
 end;
 
-procedure TfrmGeContasAPagar.btnIncluirLoteClick(Sender: TObject);
+procedure TfrmGeContasAPagar.btbtnIncluirLoteClick(Sender: TObject);
 var
-  sEmpresa : String;
+  sEmpresa,
+  sLote   : String;
   iFornecedor : Integer;
   dDataEmissao    ,
   dVencimentoFirst,
@@ -311,12 +313,13 @@ begin
   if btbtnIncluir.Enabled then
   begin
     sEmpresa     := gUsuarioLogado.Empresa;
+    sLote        := EmptyStr;
     iFornecedor  := 0;
     dDataEmissao := GetDateDB;
     dVencimentoFirst := dDataEmissao + 30;
     dVencimentoLast  := dDataEmissao + 60;
 
-    if GerarLoteParcelas(Self, sEmpresa, iFornecedor, dDataEmissao, dVencimentoFirst, dVencimentoLast)  then
+    if GerarLoteParcelas(Self, sEmpresa, sLote, iFornecedor, dDataEmissao, dVencimentoFirst, dVencimentoLast)  then
       ;
   end;
 end;
@@ -344,6 +347,7 @@ begin
   IbDtstTabelaPARCELA.Value := 0;
   IbDtstTabelaDTEMISS.Value := Date;
   IbDtstTabelaQUITADO.Value := STATUS_APAGAR_PENDENTE;
+  IbDtstTabelaLOTE.AsString := EmptyStr;
   IbDtstTabelaFORMA_PAGTO.Value    := GetFormaPagtoIDDefault;
   IbDtstTabelaCONDICAO_PAGTO.Value := GetCondicaoPagtoIDDefault;
 end;
@@ -748,8 +752,8 @@ end;
 procedure TfrmGeContasAPagar.DtSrcTabelaStateChange(Sender: TObject);
 begin
   inherited;
-  dbValorAPagar.ReadOnly := (not cdsPagamentos.IsEmpty);
-  btnIncluirLote.Enabled := btbtnIncluir.Enabled;
+  dbValorAPagar.ReadOnly   := (not cdsPagamentos.IsEmpty);
+  btbtnIncluirLote.Enabled := btbtnIncluir.Enabled;
   HabilitarDesabilitar_Btns;
 end;
 

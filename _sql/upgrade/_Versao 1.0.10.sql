@@ -12760,3 +12760,52 @@ alter DECF_NUMERO position 91;
 alter table TBVENDAS
 alter DECF_COO position 92;
 
+
+
+
+/*------ SYSDBA 25/06/2015 11:10:18 --------*/
+
+CREATE DOMAIN DMN_VCHAR_14 AS
+VARCHAR(14);
+
+
+/*------ SYSDBA 25/06/2015 11:10:34 --------*/
+
+ALTER TABLE TBCONTPAG
+    ADD LOTE DMN_VCHAR_14;
+
+
+
+
+/*------ SYSDBA 25/06/2015 11:10:59 --------*/
+
+CREATE INDEX IDX_TBCONTPAG_LOTE
+ON TBCONTPAG (LOTE);
+
+
+
+
+/*------ SYSDBA 25/06/2015 11:11:33 --------*/
+
+COMMENT ON COLUMN TBCONTPAG.LOTE IS
+'Lote de parcelas geradas manualmente.';
+
+
+
+
+/*------ SYSDBA 25/06/2015 11:12:12 --------*/
+
+ALTER TABLE TBCONTREC
+    ADD LOTE DMN_VCHAR_14;
+
+COMMENT ON COLUMN TBCONTREC.LOTE IS
+'Lote de parcelas geradas manualmente.';
+
+
+
+
+/*------ SYSDBA 25/06/2015 11:12:37 --------*/
+
+CREATE INDEX IDX_TBCONTREC_LOTE
+ON TBCONTREC (LOTE);
+

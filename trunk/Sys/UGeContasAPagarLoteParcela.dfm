@@ -108,7 +108,6 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     OptionsImage.NumGlyphs = 2
     TabOrder = 0
     OnClick = btnConfirmarClick
-    ExplicitTop = 444
   end
   object btnCancelar: TcxButton
     Left = 619
@@ -172,7 +171,6 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     OptionsImage.NumGlyphs = 2
     TabOrder = 1
     OnClick = btnCancelarClick
-    ExplicitTop = 444
   end
   object GrpBxLancamento: TGroupBox
     Left = 0
@@ -223,7 +221,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     object lblCondicaoPagto: TLabel
       Left = 168
       Top = 64
-      Width = 120
+      Width = 126
       Height = 13
       Caption = 'Condi'#231#227'o de Pagamento:'
       Enabled = False
@@ -274,6 +272,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       ListField = 'RZSOC'
       ListSource = dtsEmpresa
       ParentFont = False
+      ReadOnly = True
       TabOrder = 0
     end
     object dbFornecedor: TJvDBComboEdit
@@ -522,13 +521,12 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       Font.Style = []
       ParentFont = False
       TabOrder = 0
-      ExplicitHeight = 266
       DesignSize = (
         305
         317)
       object lblNumeroParcelasX: TLabel
         Left = 16
-        Top = 34
+        Top = 31
         Width = 161
         Height = 11
         Caption = 'N'#250'mero de parcelas....:'
@@ -542,7 +540,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       end
       object lblValorTotalX: TLabel
         Left = 16
-        Top = 59
+        Top = 56
         Width = 161
         Height = 11
         Caption = 'Valor Total (R$)......:'
@@ -556,7 +554,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       end
       object lblDiaVencimentoX: TLabel
         Left = 16
-        Top = 84
+        Top = 108
         Width = 161
         Height = 11
         Caption = 'Dia de vencimento.....:'
@@ -570,7 +568,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       end
       object lblNumeroDiasX: TLabel
         Left = 16
-        Top = 109
+        Top = 133
         Width = 161
         Height = 11
         Caption = 'Gerar vencimento a cada'
@@ -583,8 +581,8 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         ParentFont = False
       end
       object Label4: TLabel
-        Left = 240
-        Top = 109
+        Left = 232
+        Top = 133
         Width = 42
         Height = 11
         Caption = 'dia(s)'
@@ -596,9 +594,23 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         Font.Style = []
         ParentFont = False
       end
+      object lblPrimeiroVencimentoX: TLabel
+        Left = 16
+        Top = 82
+        Width = 161
+        Height = 11
+        Caption = 'Primeiro vencimento...:'
+        FocusControl = dbPrimeiroVencimento
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Lucida Console'
+        Font.Style = []
+        ParentFont = False
+      end
       object dbNumeroParcelas: TDBEdit
-        Left = 191
-        Top = 30
+        Left = 183
+        Top = 28
         Width = 43
         Height = 19
         DataField = 'NumeroParcelas'
@@ -612,9 +624,9 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         TabOrder = 0
       end
       object dbValorTotal: TDBEdit
-        Left = 191
-        Top = 55
-        Width = 103
+        Left = 183
+        Top = 53
+        Width = 111
         Height = 19
         DataField = 'ValorTotal'
         DataSource = dtsDadosNominais
@@ -627,8 +639,8 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         TabOrder = 1
       end
       object dbDiaVencimento: TDBEdit
-        Left = 191
-        Top = 80
+        Left = 183
+        Top = 105
         Width = 43
         Height = 19
         DataField = 'DiaVencimento'
@@ -639,11 +651,11 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         Font.Name = 'Lucida Console'
         Font.Style = []
         ParentFont = False
-        TabOrder = 2
+        TabOrder = 3
       end
       object dbNumeroDias: TDBEdit
-        Left = 191
-        Top = 105
+        Left = 183
+        Top = 130
         Width = 43
         Height = 19
         DataField = 'NumeroDias'
@@ -654,20 +666,97 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         Font.Name = 'Lucida Console'
         Font.Style = []
         ParentFont = False
-        TabOrder = 3
+        TabOrder = 4
       end
       object BtnGerar: TcxButton
-        Left = 191
-        Top = 130
-        Width = 103
+        Left = 16
+        Top = 250
+        Width = 278
         Height = 33
         Hint = 'Gerar Parcelas'
         Anchors = [akRight, akBottom]
-        Caption = 'Gerar'
+        Caption = 'Gerar Parcelas'
         OptionsImage.ImageIndex = 10
         OptionsImage.Images = DMRecursos.ImgBotoes16x16
-        TabOrder = 4
+        TabOrder = 6
         OnClick = BtnGerarClick
+      end
+      object RdGrpVencimentoFimSemana: TRadioGroup
+        Left = 16
+        Top = 154
+        Width = 278
+        Height = 90
+        Caption = 'Vencimentos nos finais de Semana'
+        ItemIndex = 2
+        Items.Strings = (
+          'Permanecer inalterado'
+          'Antecipar data de vencimento'
+          'Prorrogar data de vencimento')
+        TabOrder = 5
+      end
+      object dbPrimeiroVencimento: TJvDBDateEdit
+        Left = 183
+        Top = 78
+        Width = 111
+        Height = 21
+        DataField = 'PrimeiroVencimento'
+        DataSource = dtsDadosNominais
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        Glyph.Data = {
+          76050000424D760500000000000036000000280000001C0000000C0000000100
+          2000000000004005000000000000000000000000000000000000FF00FF00FF00
+          FF00FF00FF008080800080808000808080008080800080808000808080008080
+          800080808000808080008080800080808000FF00FF00FF00FF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FF00FF00FF00FF000000000000000000800000000000
+          0000800000008000000000000000800000000000000000000000800000008080
+          8000FF00FF008080800080808000808080008080800080808000808080008080
+          80008080800080808000808080008080800080808000FFFFFF00FF00FF00FF00
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF008000000080808000FF00FF0080808000FFFFFF00FF00
+          FF00FFFFFF00FFFFFF00FFFFFF00FF00FF00FFFFFF00FFFFFF00FFFFFF00FF00
+          FF0080808000FFFFFF00FF00FF00FF00FF00FFFFFF0000000000000000000000
+          0000FFFFFF00000000000000000000000000C0C0C000FFFFFF00800000008080
+          8000FF00FF0080808000FFFFFF00808080008080800080808000FF00FF008080
+          80008080800080808000FF00FF00FFFFFF0080808000FFFFFF00FF00FF00FF00
+          FF00FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF00C0C0C000FFFFFF00C0C0
+          C00000000000FFFFFF008000000080808000FF00FF0080808000FFFFFF00FF00
+          FF0080808000FFFFFF00FF00FF00FF00FF00FF00FF00FF00FF0080808000FFFF
+          FF0080808000FFFFFF00FF00FF00FF00FF00FFFFFF00FFFFFF0000000000FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF0000000000FFFFFF00800000008080
+          8000FF00FF0080808000FFFFFF00FF00FF0080808000FFFFFF00FF00FF00FF00
+          FF00FFFFFF00FFFFFF0080808000FF00FF0080808000FFFFFF00FF00FF00FF00
+          FF00FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF0000000000000000000000
+          0000C0C0C000FFFFFF008000000080808000FF00FF0080808000FFFFFF00FF00
+          FF0080808000FFFFFF00FF00FF00808080008080800080808000FF00FF00FF00
+          FF0080808000FFFFFF00FF00FF00FF00FF00FFFFFF000000000000000000FFFF
+          FF00FFFFFF0000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00800000008080
+          8000FF00FF0080808000FFFFFF008080800080808000FFFFFF00FF00FF008080
+          8000FFFFFF00FFFFFF00FFFFFF00FFFFFF0080808000FFFFFF00FF00FF00FF00
+          FF00FFFFFF00FFFFFF0000000000FFFFFF00FFFFFF0000000000000000000000
+          000000000000FFFFFF008000000080808000FF00FF0080808000FFFFFF00FF00
+          FF0080808000FF00FF00FF00FF0080808000808080008080800080808000FF00
+          FF0080808000FFFFFF00FF00FF00FF00FF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00800000008080
+          8000FF00FF0080808000FFFFFF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+          FF00FF00FF00FF00FF00FF00FF00FF00FF0080808000FFFFFF00FF00FF00FF00
+          FF00FFFFFF00C0C0C000C0C0C000C0C0C000C0C0C000C0C0C000C0C0C000C0C0
+          C000C0C0C000FFFFFF008000000080808000FF00FF0080808000FFFFFF00FFFF
+          FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+          FF0080808000FFFFFF00FF00FF00FF00FF000000000000000000000000000000
+          0000000000000000000000000000000000000000000000000000FF00FF00FF00
+          FF00FF00FF008080800080808000808080008080800080808000808080008080
+          80008080800080808000808080008080800080808000FF00FF00}
+        ImageKind = ikCustom
+        NumGlyphs = 2
+        ParentFont = False
+        PopupColor = clBtnFace
+        ShowNullDate = False
+        TabOrder = 2
       end
     end
     object GrpBxParcelas: TGroupBox
@@ -684,9 +773,6 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 1
-      ExplicitLeft = 584
-      ExplicitTop = -6
-      ExplicitWidth = 241
       object dbgParcelas: TcxGrid
         Left = 2
         Top = 15
@@ -696,10 +782,6 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         TabOrder = 0
         OnEnter = dbgParcelasEnter
         OnExit = dbgParcelasExit
-        ExplicitLeft = 48
-        ExplicitTop = 168
-        ExplicitWidth = 250
-        ExplicitHeight = 200
         object dbgParcelasTbl: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = dtsParcelas
@@ -845,6 +927,10 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         DataType = ftCurrency
       end
       item
+        Name = 'PrimeiroVencimento'
+        DataType = ftDateTime
+      end
+      item
         Name = 'DiaVencimento'
         DataType = ftSmallint
       end
@@ -896,6 +982,9 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       FieldName = 'NumeroParcelas'
       Required = True
     end
+    object cdsDadosNominaisPrimeiroVencimento: TDateTimeField
+      FieldName = 'PrimeiroVencimento'
+    end
     object cdsDadosNominaisValorTotal: TCurrencyField
       DisplayLabel = 'Valor Total (R$)'
       FieldName = 'ValorTotal'
@@ -921,13 +1010,13 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     CachedUpdates = False
     TableName = 'TBEMPRESA'
     UniDirectional = False
-    Left = 24
-    Top = 272
+    Left = 336
+    Top = 256
   end
   object dtsEmpresa: TDataSource
     DataSet = tblEmpresa
-    Left = 56
-    Top = 272
+    Left = 368
+    Top = 256
   end
   object dtsDadosNominais: TDataSource
     DataSet = cdsDadosNominais
@@ -941,13 +1030,13 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     CachedUpdates = False
     TableName = 'TBFORMPAGTO'
     UniDirectional = False
-    Left = 24
-    Top = 304
+    Left = 336
+    Top = 288
   end
   object dtsFormaPagto: TDataSource
     DataSet = tblFormaPagto
-    Left = 56
-    Top = 304
+    Left = 368
+    Top = 288
   end
   object tblCondicaoPagto: TIBTable
     Database = DMBusiness.ibdtbsBusiness
@@ -1026,13 +1115,13 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     TableName = 'VW_CONDICAOPAGTO'
     TableTypes = [ttView]
     UniDirectional = False
-    Left = 24
-    Top = 336
+    Left = 336
+    Top = 320
   end
   object dtsCondicaoPagto: TDataSource
     DataSet = tblCondicaoPagto
-    Left = 56
-    Top = 336
+    Left = 368
+    Top = 320
   end
   object qryTpDespesa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
@@ -1043,13 +1132,13 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     SQL.Strings = (
       'select * from TBTPDESPESA'
       'order by tipodesp')
-    Left = 24
-    Top = 368
+    Left = 336
+    Top = 352
   end
   object dtsTpDespesa: TDataSource
     DataSet = qryTpDespesa
-    Left = 56
-    Top = 368
+    Left = 368
+    Top = 352
   end
   object cdsParcelas: TClientDataSet
     Aggregates = <>
@@ -1120,27 +1209,27 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       '')
     SelectSQL.Strings = (
       'Select'
-      '    p.Anolanc'
-      '  , p.Numlanc'
-      '  , p.Empresa'
-      '  , p.Parcela'
-      '  , p.Codforn'
-      '  , p.Nomeemp'
-      '  , p.Notfisc'
-      '  , p.Tippag'
-      '  , p.Dtemiss'
-      '  , p.Dtvenc'
-      '  , p.Dtpag'
-      '  , p.Valorpag'
-      '  , p.ValorSaldo'
-      '  , p.Banco'
-      '  , p.Numchq'
-      '  , p.Historic'
-      '  , p.Forma_pagto'
-      '  , p.Condicao_pagto'
-      '  , p.Docbaix'
-      '  , p.Quitado'
-      '  , p.Codtpdesp'
+      '    p.anolanc'
+      '  , p.numlanc'
+      '  , p.empresa'
+      '  , p.codforn'
+      '  , p.parcela'
+      '  , p.tippag'
+      '  , p.historic'
+      '  , p.notfisc'
+      '  , p.dtemiss'
+      '  , p.dtvenc'
+      '  , p.valorpag'
+      '  , p.valorpagtot'
+      '  , p.valorsaldo'
+      '  , p.nomeemp'
+      '  , p.tipocateg'
+      '  , p.forma_pagto'
+      '  , p.condicao_pagto'
+      '  , p.quitado'
+      '  , p.codtpdesp'
+      '  , p.situacao'
+      '  , p.lote'
       'from TBCONTPAG p'
       'where 1 = 0')
     ModifySQL.Strings = (
@@ -1154,167 +1243,123 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     Top = 288
     object cdsContaAPagarANOLANC: TSmallintField
       FieldName = 'ANOLANC'
-      Origin = 'TBCONTPAG.ANOLANC'
+      Origin = '"TBCONTPAG"."ANOLANC"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
     object cdsContaAPagarNUMLANC: TIntegerField
-      DisplayLabel = 'No. Lan'#231'amento'
       FieldName = 'NUMLANC'
-      Origin = 'TBCONTPAG.NUMLANC'
+      Origin = '"TBCONTPAG"."NUMLANC"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
     end
     object cdsContaAPagarEMPRESA: TIBStringField
-      DisplayLabel = 'Empresa'
       FieldName = 'EMPRESA'
       Origin = '"TBCONTPAG"."EMPRESA"'
       ProviderFlags = [pfInUpdate]
-      Required = True
       Size = 18
-    end
-    object cdsContaAPagarNOMEEMP: TIBStringField
-      DisplayLabel = 'Empresa'
-      FieldName = 'NOMEEMP'
-      Origin = '"TBCONTPAG"."NOMEEMP"'
-      ProviderFlags = [pfInUpdate]
-      Required = True
-      Size = 60
-    end
-    object cdsContaAPagarPARCELA: TSmallintField
-      Alignment = taCenter
-      DisplayLabel = 'Parcela'
-      FieldName = 'PARCELA'
-      Origin = 'TBCONTPAG.PARCELA'
-      DisplayFormat = '00'
     end
     object cdsContaAPagarCODFORN: TSmallintField
-      DisplayLabel = 'Fornecedor'
       FieldName = 'CODFORN'
-      Origin = 'TBCONTPAG.CODFORN'
-      Required = True
+      Origin = '"TBCONTPAG"."CODFORN"'
+      ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarNOMEFORN: TIBStringField
-      DisplayLabel = 'Fornecedor'
-      FieldName = 'NOMEFORN'
-      Origin = 'TBFORNECEDOR.NOMEFORN'
-      Size = 60
-    end
-    object cdsContaAPagarCNPJ: TIBStringField
-      FieldName = 'CNPJ'
-      Origin = 'TBFORNECEDOR.CNPJ'
-      Size = 18
-    end
-    object cdsContaAPagarNOTFISC: TIBStringField
-      DisplayLabel = 'Nota Fiscal'
-      FieldName = 'NOTFISC'
-      Origin = 'TBCONTPAG.NOTFISC'
-      Size = 15
+    object cdsContaAPagarPARCELA: TSmallintField
+      FieldName = 'PARCELA'
+      Origin = '"TBCONTPAG"."PARCELA"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsContaAPagarTIPPAG: TIBStringField
-      DisplayLabel = 'Tipo de Pagamento'
       FieldName = 'TIPPAG'
-      Origin = 'TBCONTPAG.TIPPAG'
+      Origin = '"TBCONTPAG"."TIPPAG"'
+      ProviderFlags = [pfInUpdate]
       Size = 35
     end
+    object cdsContaAPagarHISTORIC: TWideMemoField
+      FieldName = 'HISTORIC'
+      Origin = '"TBCONTPAG"."HISTORIC"'
+      ProviderFlags = [pfInUpdate]
+      BlobType = ftWideMemo
+      Size = 8
+    end
+    object cdsContaAPagarNOTFISC: TIBStringField
+      FieldName = 'NOTFISC'
+      Origin = '"TBCONTPAG"."NOTFISC"'
+      ProviderFlags = [pfInUpdate]
+      Size = 15
+    end
     object cdsContaAPagarDTEMISS: TDateField
-      Alignment = taCenter
-      DisplayLabel = 'Emiss'#227'o'
       FieldName = 'DTEMISS'
-      Origin = 'TBCONTPAG.DTEMISS'
-      Required = True
-      DisplayFormat = 'dd/mm/yyyy'
-      EditMask = '!99/99/0000;1; '
+      Origin = '"TBCONTPAG"."DTEMISS"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsContaAPagarDTVENC: TDateField
-      Alignment = taCenter
-      DisplayLabel = 'Vencimento'
       FieldName = 'DTVENC'
-      Origin = 'TBCONTPAG.DTVENC'
-      Required = True
-      DisplayFormat = 'dd/mm/yyyy'
-      EditMask = '!99/99/0000;1; '
-    end
-    object cdsContaAPagarDTPAG: TDateField
-      Alignment = taCenter
-      DisplayLabel = 'Data Pagto.'
-      FieldName = 'DTPAG'
-      Origin = 'TBCONTPAG.DTPAG'
-      DisplayFormat = 'dd/mm/yyyy'
+      Origin = '"TBCONTPAG"."DTVENC"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsContaAPagarVALORPAG: TIBBCDField
-      DisplayLabel = 'Valor A Pagar (R$)'
       FieldName = 'VALORPAG'
-      Origin = 'TBCONTPAG.VALORPAG'
-      Required = True
-      DisplayFormat = ',0.00'
+      Origin = '"TBCONTPAG"."VALORPAG"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object cdsContaAPagarVALORPAGTOT: TIBBCDField
+      FieldName = 'VALORPAGTOT'
+      Origin = '"TBCONTPAG"."VALORPAGTOT"'
+      ProviderFlags = [pfInUpdate]
       Precision = 18
       Size = 2
     end
     object cdsContaAPagarVALORSALDO: TIBBCDField
-      DisplayLabel = 'Saldo A Pagar (R$)'
       FieldName = 'VALORSALDO'
       Origin = '"TBCONTPAG"."VALORSALDO"'
       ProviderFlags = [pfInUpdate]
-      DisplayFormat = ',0.00'
       Precision = 18
       Size = 2
     end
-    object cdsContaAPagarCODTPDESP: TSmallintField
-      DisplayLabel = 'Tipo de Despesa'
-      FieldName = 'CODTPDESP'
-      Origin = 'TBCONTPAG.CODTPDESP'
-      Required = True
+    object cdsContaAPagarNOMEEMP: TIBStringField
+      FieldName = 'NOMEEMP'
+      Origin = '"TBCONTPAG"."NOMEEMP"'
+      ProviderFlags = [pfInUpdate]
+      Size = 60
     end
-    object cdsContaAPagarBANCO: TSmallintField
-      DisplayLabel = 'Banco'
-      FieldName = 'BANCO'
-      Origin = 'TBCONTPAG.BANCO'
-    end
-    object cdsContaAPagarBCO_NOME: TIBStringField
-      DisplayLabel = 'Banco'
-      FieldName = 'BCO_NOME'
-      Origin = 'TBBANCO_BOLETO.BCO_NOME'
-      Size = 50
-    end
-    object cdsContaAPagarNUMCHQ: TIBStringField
-      DisplayLabel = 'No. Cheque'
-      FieldName = 'NUMCHQ'
-      Origin = 'TBCONTPAG.NUMCHQ'
-      Size = 10
-    end
-    object cdsContaAPagarPAGO_: TIBStringField
-      Alignment = taCenter
-      DisplayLabel = 'Pago?'
-      FieldName = 'PAGO_'
-      FixedChar = True
-      Size = 1
-    end
-    object cdsContaAPagarDOCBAIX: TIBStringField
-      DisplayLabel = 'Doc. Baixa'
-      FieldName = 'DOCBAIX'
-      Origin = 'TBCONTPAG.DOCBAIX'
-      Size = 15
-    end
-    object cdsContaAPagarHISTORIC: TMemoField
-      DisplayLabel = 'Hist'#243'rico'
-      FieldName = 'HISTORIC'
-      Origin = 'TBCONTPAG.HISTORIC'
-      BlobType = ftMemo
-      Size = 8
+    object cdsContaAPagarTIPOCATEG: TSmallintField
+      FieldName = 'TIPOCATEG'
+      Origin = '"TBCONTPAG"."TIPOCATEG"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsContaAPagarFORMA_PAGTO: TSmallintField
-      DisplayLabel = 'Forma de Pagamento'
       FieldName = 'FORMA_PAGTO'
-      Origin = 'TBCONTPAG.FORMA_PAGTO'
+      Origin = '"TBCONTPAG"."FORMA_PAGTO"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsContaAPagarCONDICAO_PAGTO: TSmallintField
-      DisplayLabel = 'Condi'#231#227'o de Pagamento'
       FieldName = 'CONDICAO_PAGTO'
-      Origin = 'TBCONTPAG.CONDICAO_PAGTO'
+      Origin = '"TBCONTPAG"."CONDICAO_PAGTO"'
+      ProviderFlags = [pfInUpdate]
     end
     object cdsContaAPagarQUITADO: TSmallintField
-      Alignment = taLeftJustify
       FieldName = 'QUITADO'
-      Origin = 'TBCONTPAG.QUITADO'
-      Required = True
+      Origin = '"TBCONTPAG"."QUITADO"'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cdsContaAPagarCODTPDESP: TSmallintField
+      FieldName = 'CODTPDESP'
+      Origin = '"TBCONTPAG"."CODTPDESP"'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cdsContaAPagarSITUACAO: TSmallintField
+      FieldName = 'SITUACAO'
+      Origin = '"TBCONTPAG"."SITUACAO"'
+      ProviderFlags = [pfInUpdate]
+    end
+    object cdsContaAPagarLOTE: TIBStringField
+      FieldName = 'LOTE'
+      Origin = '"TBCONTPAG"."LOTE"'
+      ProviderFlags = [pfInUpdate]
+      Size = 14
     end
   end
   object IbUpdTabela: TIBUpdateSQL
@@ -1346,7 +1391,8 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       '  CONDICAO_PAGTO,'
       '  QUITADO,'
       '  CODTPDESP,'
-      '  SITUACAO'
+      '  SITUACAO,'
+      '  LOTE'
       'from TBCONTPAG '
       'where'
       '  ANOLANC = :ANOLANC and'
@@ -1355,25 +1401,25 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       'update TBCONTPAG'
       'set'
       '  ANOLANC = :ANOLANC,'
-      '  BANCO = :BANCO,'
       '  CODFORN = :CODFORN,'
       '  CODTPDESP = :CODTPDESP,'
       '  CONDICAO_PAGTO = :CONDICAO_PAGTO,'
-      '  DOCBAIX = :DOCBAIX,'
       '  DTEMISS = :DTEMISS,'
-      '  DTPAG = :DTPAG,'
       '  DTVENC = :DTVENC,'
       '  EMPRESA = :EMPRESA,'
       '  FORMA_PAGTO = :FORMA_PAGTO,'
       '  HISTORIC = :HISTORIC,'
+      '  LOTE = :LOTE,'
       '  NOMEEMP = :NOMEEMP,'
       '  NOTFISC = :NOTFISC,'
-      '  NUMCHQ = :NUMCHQ,'
       '  NUMLANC = :NUMLANC,'
       '  PARCELA = :PARCELA,'
       '  QUITADO = :QUITADO,'
+      '  SITUACAO = :SITUACAO,'
+      '  TIPOCATEG = :TIPOCATEG,'
       '  TIPPAG = :TIPPAG,'
       '  VALORPAG = :VALORPAG,'
+      '  VALORPAGTOT = :VALORPAGTOT,'
       '  VALORSALDO = :VALORSALDO'
       'where'
       '  ANOLANC = :OLD_ANOLANC and'
@@ -1381,22 +1427,25 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     InsertSQL.Strings = (
       'insert into TBCONTPAG'
       
-        '  (ANOLANC, BANCO, CODFORN, CODTPDESP, CONDICAO_PAGTO, DOCBAIX, ' +
-        'DTEMISS, '
+        '  (ANOLANC, CODFORN, CODTPDESP, CONDICAO_PAGTO, DTEMISS, DTVENC,' +
+        ' EMPRESA, '
       
-        '   DTPAG, DTVENC, EMPRESA, FORMA_PAGTO, HISTORIC, NOMEEMP, NOTFI' +
-        'SC, NUMCHQ, '
-      '   NUMLANC, PARCELA, QUITADO, TIPPAG, VALORPAG, VALORSALDO)'
+        '   FORMA_PAGTO, HISTORIC, LOTE, NOMEEMP, NOTFISC, NUMLANC, PARCE' +
+        'LA, QUITADO, '
+      
+        '   SITUACAO, TIPOCATEG, TIPPAG, VALORPAG, VALORPAGTOT, VALORSALD' +
+        'O)'
       'values'
       
-        '  (:ANOLANC, :BANCO, :CODFORN, :CODTPDESP, :CONDICAO_PAGTO, :DOC' +
-        'BAIX, :DTEMISS, '
+        '  (:ANOLANC, :CODFORN, :CODTPDESP, :CONDICAO_PAGTO, :DTEMISS, :D' +
+        'TVENC, '
       
-        '   :DTPAG, :DTVENC, :EMPRESA, :FORMA_PAGTO, :HISTORIC, :NOMEEMP,' +
-        ' :NOTFISC, '
+        '   :EMPRESA, :FORMA_PAGTO, :HISTORIC, :LOTE, :NOMEEMP, :NOTFISC,' +
+        ' :NUMLANC, '
       
-        '   :NUMCHQ, :NUMLANC, :PARCELA, :QUITADO, :TIPPAG, :VALORPAG, :V' +
-        'ALORSALDO)')
+        '   :PARCELA, :QUITADO, :SITUACAO, :TIPOCATEG, :TIPPAG, :VALORPAG' +
+        ', :VALORPAGTOT, '
+      '   :VALORSALDO)')
     DeleteSQL.Strings = (
       'delete from TBCONTPAG'
       'where'
