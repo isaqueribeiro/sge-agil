@@ -120,60 +120,6 @@ type
     frdEntradaItens: TfrxDBDataset;
     qryEntradaDuplicatas: TIBQuery;
     frdEntradaDuplicata: TfrxDBDataset;
-    qryDadosProdutoANO: TSmallintField;
-    qryDadosProdutoCODCONTROL: TIntegerField;
-    qryDadosProdutoSEQ: TSmallintField;
-    qryDadosProdutoCODPROD: TIBStringField;
-    qryDadosProdutoCODBARRA_EAN: TIBStringField;
-    qryDadosProdutoDESCRI: TIBStringField;
-    qryDadosProdutoAPRESENTACAO: TIBStringField;
-    qryDadosProdutoDESCRI_APRESENTACAO: TIBStringField;
-    qryDadosProdutoMODELO: TIBStringField;
-    qryDadosProdutoREFERENCIA: TIBStringField;
-    qryDadosProdutoNCM_SH: TIBStringField;
-    qryDadosProdutoCODORIGEM: TIBStringField;
-    qryDadosProdutoCODTRIBUTACAO: TIBStringField;
-    qryDadosProdutoCST: TIBStringField;
-    qryDadosProdutoCSOSN: TIBStringField;
-    qryDadosProdutoCST_PIS: TIBStringField;
-    qryDadosProdutoCST_COFINS: TIBStringField;
-    qryDadosProdutoCST_PIS_INDICE_ACBR: TIntegerField;
-    qryDadosProdutoCST_COFINS_INDICE_ACBR: TIntegerField;
-    qryDadosProdutoCODEMP: TIBStringField;
-    qryDadosProdutoCODCLI: TIBStringField;
-    qryDadosProdutoDTVENDA: TDateTimeField;
-    qryDadosProdutoPUNIT: TIBBCDField;
-    qryDadosProdutoPUNIT_PROMOCAO: TIBBCDField;
-    qryDadosProdutoDESCONTO: TIBBCDField;
-    qryDadosProdutoDESCONTO_VALOR: TIBBCDField;
-    qryDadosProdutoPFINAL: TIBBCDField;
-    qryDadosProdutoUNID_COD: TSmallintField;
-    qryDadosProdutoUNP_DESCRICAO: TIBStringField;
-    qryDadosProdutoUNP_SIGLA: TIBStringField;
-    qryDadosProdutoCFOP_COD: TIntegerField;
-    qryDadosProdutoALIQUOTA: TIBBCDField;
-    qryDadosProdutoALIQUOTA_CSOSN: TIBBCDField;
-    qryDadosProdutoALIQUOTA_PIS: TIBBCDField;
-    qryDadosProdutoALIQUOTA_COFINS: TIBBCDField;
-    qryDadosProdutoVALOR_IPI: TIBBCDField;
-    qryDadosProdutoPERCENTUAL_REDUCAO_BC: TIBBCDField;
-    qryDadosProdutoVALOR_REDUCAO_BC: TIBBCDField;
-    qryDadosProdutoTOTAL_BRUTO: TIBBCDField;
-    qryDadosProdutoTOTAL_DESCONTO: TIBBCDField;
-    qryDadosProdutoTOTAL_LIQUIDO: TIBBCDField;
-    qryDadosProdutoPRODUTO_NOVO: TSmallintField;
-    qryDadosProdutoCOR_VEICULO: TIBStringField;
-    qryDadosProdutoCOR_VEICULO_DESCRICAO: TIBStringField;
-    qryDadosProdutoCOMBUSTIVEL_VEICULO: TIBStringField;
-    qryDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO: TIBStringField;
-    qryDadosProdutoANO_FABRICACAO_VEICULO: TSmallintField;
-    qryDadosProdutoANO_MODELO_VEICULO: TSmallintField;
-    qryDadosProdutoANO_FAB_MODELO_VEICULO: TIBStringField;
-    qryDadosProdutoTIPO_VEICULO: TIBStringField;
-    qryDadosProdutoTIPO_VEICULO_DESCRICAO: TIBStringField;
-    qryDadosProdutoRENAVAM_VEICULO: TIBStringField;
-    qryDadosProdutoCHASSI_VEICULO: TIBStringField;
-    qryDadosProdutoKILOMETRAGEM_VEICULO: TIntegerField;
     qryNFeEmitida: TIBQuery;
     qryNFeEmitidaANOVENDA: TSmallintField;
     qryNFeEmitidaNUMVENDA: TIntegerField;
@@ -229,11 +175,6 @@ type
     qryNFeEmitidaEntradaXML_FILE: TMemoField;
     qryNFeEmitidaEntradaLOTE_ANO: TSmallintField;
     qryNFeEmitidaEntradaLOTE_NUM: TIntegerField;
-    qryDadosProdutoQTDE: TIBBCDField;
-    qryDadosProdutoESTOQUE: TIBBCDField;
-    qryDadosProdutoRESERVA: TIBBCDField;
-    qryDadosProdutoDISPONIVEL: TIBBCDField;
-    qryDadosProdutoQTDEFINAL: TIBBCDField;
     qryAutorizacaoCompra: TIBQuery;
     frdAutorizacaoCompra: TfrxDBDataset;
     frrAutorizacaoCompra: TfrxReport;
@@ -256,8 +197,6 @@ type
     qryNFeEmitidaEntradaEMPRESA: TIBStringField;
     qryNFeEmitidaEntradaMODELO: TSmallintField;
     qryNFeEmitidaEntradaVERSAO: TSmallintField;
-    qryDadosProdutoNCM_ALIQUOTA_NAC: TIBBCDField;
-    qryDadosProdutoNCM_ALIQUOTA_IMP: TIBBCDField;
     qryRequisicaoCompra: TIBQuery;
     frdRequisicaoCompra: TfrxDBDataset;
     frrRequisicaoCompra: TfrxReport;
@@ -2100,44 +2039,44 @@ begin
         with Det.Add do
         begin
           Prod.nItem    := qryDadosProduto.RecNo; // qryDadosProdutoSEQ.AsInteger;              // Número sequencial, para cada item deve ser incrementado
-          Prod.cProd    := qryDadosProdutoCODPROD.AsString;
+          Prod.cProd    := qryDadosProduto.FieldByName('CODPROD').AsString;
 
           if ( GetSegmentoID(qryEmitenteCNPJ.AsString) <> SEGMENTO_MERCADO_CARRO_ID ) then
-            Prod.xProd  := qryDadosProdutoDESCRI_APRESENTACAO.AsString
+            Prod.xProd  := qryDadosProduto.FieldByName('DESCRI_APRESENTACAO').AsString
           else
-            Prod.xProd  := qryDadosProdutoDESCRI.AsString + ' ' + qryDadosProdutoANO_FAB_MODELO_VEICULO.AsString;
+            Prod.xProd  := qryDadosProduto.FieldByName('DESCRI').AsString + ' ' + qryDadosProduto.FieldByName('ANO_FAB_MODELO_VEICULO').AsString;
 
-          Prod.NCM      := qryDadosProdutoNCM_SH.AsString;            // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+          Prod.NCM      := qryDadosProduto.FieldByName('NCM_SH').AsString;            // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
           Prod.EXTIPI   := '';
-          Prod.CFOP     := qryDadosProdutoCFOP_COD.AsString;
+          Prod.CFOP     := qryDadosProduto.FieldByName('CFOP_COD').AsString;
 
-          if EAN13Valido(qryDadosProdutoCODBARRA_EAN.AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
-            Prod.cEAN   := qryDadosProdutoCODBARRA_EAN.AsString
+          if EAN13Valido(qryDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+            Prod.cEAN   := qryDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEAN   := EmptyStr;
 
-          Prod.uCom     := qryDadosProdutoUNP_SIGLA.AsString;
-          Prod.qCom     := qryDadosProdutoQTDE.AsCurrency;
+          Prod.uCom     := qryDadosProduto.FieldByName('UNP_SIGLA').AsString;
+          Prod.qCom     := qryDadosProduto.FieldByName('QTDE').AsCurrency;
 
-          if ( qryDadosProdutoPUNIT_PROMOCAO.AsCurrency > 0 ) then
-            Prod.vUnCom := qryDadosProdutoPUNIT_PROMOCAO.AsCurrency   // I10a  Valor Unitário de comercialização
+          if ( qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency > 0 ) then
+            Prod.vUnCom := qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency   // I10a  Valor Unitário de comercialização
           else
-            Prod.vUnCom := qryDadosProdutoPUNIT.AsCurrency;           // I10a  Valor Unitário de comercialização
+            Prod.vUnCom := qryDadosProduto.FieldByName('PUNIT').AsCurrency;           // I10a  Valor Unitário de comercialização
 
-          Prod.vProd    := qryDadosProdutoTOTAL_BRUTO.AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
+          Prod.vProd    := qryDadosProduto.FieldByName('TOTAL_BRUTO').AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
 
-          if EAN13Valido(qryDadosProdutoCODBARRA_EAN.AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
-            Prod.cEANTrib := qryDadosProdutoCODBARRA_EAN.AsString
+          if EAN13Valido(qryDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+            Prod.cEANTrib := qryDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEANTrib := EmptyStr;
 
-          Prod.uTrib     := qryDadosProdutoUNP_SIGLA.AsString;
-          Prod.qTrib     := qryDadosProdutoQTDE.AsCurrency;
+          Prod.uTrib     := qryDadosProduto.FieldByName('UNP_SIGLA').AsString;
+          Prod.qTrib     := qryDadosProduto.FieldByName('QTDE').AsCurrency;
 
-          if ( qryDadosProdutoPUNIT_PROMOCAO.AsCurrency > 0 ) then
-            Prod.vUnTrib := qryDadosProdutoPUNIT_PROMOCAO.AsCurrency  // I14a  Valor Unitário de tributação
+          if ( qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency > 0 ) then
+            Prod.vUnTrib := qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency  // I14a  Valor Unitário de tributação
           else
-            Prod.vUnTrib := qryDadosProdutoPUNIT.AsCurrency;          // I14a  Valor Unitário de tributação
+            Prod.vUnTrib := qryDadosProduto.FieldByName('PUNIT').AsCurrency;          // I14a  Valor Unitário de tributação
 
 (* EXEMPLO *)
           // NFe.Det[i].Prod.uCom    := 'CX';                                                   = 'UN'
@@ -2150,21 +2089,21 @@ begin
 
           Prod.vFrete    := 0;                                        // I15 - Valor Total do Frete
           Prod.vSeg      := 0;                                        // I16 - Valor Total do Seguro
-          Prod.vDesc     := qryDadosProdutoTOTAL_DESCONTO.AsCurrency; // I17 - Valor do Desconto
+          Prod.vDesc     := qryDadosProduto.FieldByName('TOTAL_DESCONTO').AsCurrency; // I17 - Valor do Desconto
 
           // Informação Adicional do Produto
 
           if ( GetSegmentoID(qryEmitenteCNPJ.AsString) <> SEGMENTO_MERCADO_CARRO_ID ) then
-            if ( Trim(qryDadosProdutoREFERENCIA.AsString) <> EmptyStr ) then
-              infAdProd    := 'Ref.: ' + qryDadosProdutoREFERENCIA.AsString
+            if ( Trim(qryDadosProduto.FieldByName('REFERENCIA').AsString) <> EmptyStr ) then
+              infAdProd    := 'Ref.: ' + qryDadosProduto.FieldByName('REFERENCIA').AsString
             else
               infAdProd    := EmptyStr
           else
-            infAdProd      := 'Cor: '         + qryDadosProdutoCOR_VEICULO_DESCRICAO.AsString + #13 +
-                              'Placa: '       + qryDadosProdutoREFERENCIA.AsString      + #13 +
-                              'Renavam: '     + qryDadosProdutoRENAVAM_VEICULO.AsString + #13 +
-                              'Chassi: '      + qryDadosProdutoCHASSI_VEICULO.AsString  + #13 + 
-                              'Combustivel: ' + qryDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO.AsString;
+            infAdProd      := 'Cor: '         + qryDadosProduto.FieldByName('COR_VEICULO_DESCRICAO').AsString + #13 +
+                              'Placa: '       + qryDadosProduto.FieldByName('REFERENCIA').AsString      + #13 +
+                              'Renavam: '     + qryDadosProduto.FieldByName('RENAVAM_VEICULO').AsString + #13 +
+                              'Chassi: '      + qryDadosProduto.FieldByName('CHASSI_VEICULO').AsString  + #13 +
+                              'Combustivel: ' + qryDadosProduto.FieldByName('COMBUSTIVEL_VEICULO_DESCRICAO').AsString;
 
   //Declaração de Importação. Pode ser adicionada várias através do comando Prod.DI.Add
 
@@ -2189,7 +2128,7 @@ begin
 
   //Campos para venda de veículos novos
 
-          if ( (GetSegmentoID(qryEmitenteCNPJ.AsString) = SEGMENTO_MERCADO_CARRO_ID) and (qryDadosProdutoPRODUTO_NOVO.AsInteger = 1) ) then
+          if ( (GetSegmentoID(qryEmitenteCNPJ.AsString) = SEGMENTO_MERCADO_CARRO_ID) and (qryDadosProduto.FieldByName('PRODUTO_NOVO').AsInteger = 1) ) then
           begin
 
             with Prod.veicProd do
@@ -2199,23 +2138,23 @@ begin
                                                    //    (2) = toFaturamentoDireto
                                                    //    (3) = toVendaDireta
                                                    //    (0) = toOutros
-                chassi   := qryDadosProdutoCHASSI_VEICULO.AsString;        // J03 - Chassi do veículo
-                cCor     := qryDadosProdutoCOR_VEICULO.AsString;           // J04 - Cor
-                xCor     := qryDadosProdutoCOR_VEICULO_DESCRICAO.AsString; // J05 - Descrição da Cor
+                chassi   := qryDadosProduto.FieldByName('CHASSI_VEICULO').AsString;        // J03 - Chassi do veículo
+                cCor     := qryDadosProduto.FieldByName('COR_VEICULO').AsString;           // J04 - Cor
+                xCor     := qryDadosProduto.FieldByName('COR_VEICULO_DESCRICAO').AsString; // J05 - Descrição da Cor
                 pot      := ''; // J06 - Potência Motor
                 Cilin    := '';
                 pesoL    := ''; // J08 - Peso Líquido
                 pesoB    := ''; // J09 - Peso Bruto
                 nSerie   := ''; // J10 - Serial (série)
-                tpComb   := qryDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO.AsString; // J11 - Tipo de combustível
+                tpComb   := qryDadosProduto.FieldByName('COMBUSTIVEL_VEICULO_DESCRICAO').AsString; // J11 - Tipo de combustível
                 nMotor   := ''; // J12 - Número de Motor
                 CMT      := '';
                 dist     := '';        // J14 - Distância entre eixos
 //                RENAVAM  := '';        // J15 - RENAVAM            (Não informar a TAG na exportação)
-                anoMod   := qryDadosProdutoANO_MODELO_VEICULO.AsInteger;         // J16 - Ano Modelo de Fabricação
-                anoFab   := qryDadosProdutoANO_FABRICACAO_VEICULO.AsInteger;     // J17 - Ano de Fabricação
+                anoMod   := qryDadosProduto.FieldByName('ANO_MODELO_VEICULO').AsInteger;         // J16 - Ano Modelo de Fabricação
+                anoFab   := qryDadosProduto.FieldByName('ANO_FABRICACAO_VEICULO').AsInteger;     // J17 - Ano de Fabricação
                 tpPint   := '';        // J18 - Tipo de Pintura
-                tpVeic   := StrToIntDef(qryDadosProdutoTIPO_VEICULO.AsString, 0); // J19 - Tipo de Veículo    (Utilizar Tabela RENAVAM)
+                tpVeic   := StrToIntDef(qryDadosProduto.FieldByName('TIPO_VEICULO').AsString, 0); // J19 - Tipo de Veículo    (Utilizar Tabela RENAVAM)
                 espVeic  := 0;         // J20 - Espécie de Veículo (Utilizar Tabela RENAVAM)
                 VIN      := '';        // J21 - Condição do VIN
                 condVeic := cvAcabado; // J22 - Condição do Veículo (1 - Acabado; 2 - Inacabado; 3 - Semi-acabado)
@@ -2306,7 +2245,7 @@ begin
 
                 // csosnVazio, csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500, csosn900
 
-                Case qryDadosProdutoCSOSN.AsInteger of
+                Case qryDadosProduto.FieldByName('CSOSN').AsInteger of
                   101 : CSOSN := csosn101;
                   102 : CSOSN := csosn102;
                   103 : CSOSN := csosn103;
@@ -2320,14 +2259,14 @@ begin
                     CSOSN := csosn900;
                 end;
 
-                pCredSN     := qryDadosProdutoALIQUOTA_CSOSN.AsCurrency;
-                vCredICMSSN := qryDadosProdutoPFINAL.AsCurrency * pCredSN / 100;
+                pCredSN     := qryDadosProduto.FieldByName('ALIQUOTA_CSOSN').AsCurrency;
+                vCredICMSSN := qryDadosProduto.FieldByName('PFINAL').AsCurrency * pCredSN / 100;
 
               end
               else
               begin
 
-                Case StrToInt(Copy(qryDadosProdutoCST.AsString, 2, 2)) of
+                Case StrToInt(Copy(qryDadosProduto.FieldByName('CST').AsString, 2, 2)) of
                    0 : CST := cst00;
                   10 : CST := cst10;
                   20 : CST := cst20;
@@ -2342,20 +2281,27 @@ begin
                     CST := cst90;
                 end;
 
-                ICMS.modBC   := dbiValorOperacao;
-                ICMS.pRedBC  := qryDadosProdutoPERCENTUAL_REDUCAO_BC.AsCurrency;
+                ICMS.modBC := dbiValorOperacao;
 
-                if ( ICMS.pRedBC > 0 ) then
-                  ICMS.vBC   := qryDadosProdutoVALOR_REDUCAO_BC.AsCurrency
+                if (qryCalculoImposto.FieldByName('CFOP_DEVOLUCAO').AsInteger = 1) then
+                  ICMS.pRedBC := 0.0
                 else
-                  ICMS.vBC   := qryDadosProdutoPFINAL.AsCurrency;
+                if (qryDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency <= 0) then
+                  ICMS.pRedBC := 0.0
+                else
+                  ICMS.pRedBC := (100.0 - qryDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency); // qryDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency;
 
-                ICMS.pICMS   := qryDadosProdutoALIQUOTA.AsCurrency;
-                ICMS.vICMS   := ICMS.vBC * ICMS.pICMS / 100;
+                if (ICMS.pRedBC > 0) or (qryDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency > 0) then
+                  ICMS.vBC := qryDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency
+                else
+                  ICMS.vBC := qryDadosProduto.FieldByName('PFINAL').AsCurrency;
+
+                ICMS.pICMS := qryDadosProduto.FieldByName('ALIQUOTA').AsCurrency;
+                ICMS.vICMS := ICMS.vBC * ICMS.pICMS / 100.0;
 
               end;
 
-              ICMS.orig    := TpcnOrigemMercadoria( StrToInt(Copy(qryDadosProdutoCST.AsString, 1, 1)) );
+              ICMS.orig    := TpcnOrigemMercadoria( StrToInt(Copy(qryDadosProduto.FieldByName('CST').AsString, 1, 1)) );
               ICMS.modBCST := dbisMargemValorAgregado;
               ICMS.pMVAST  := 0;
               ICMS.pRedBCST:= 0;
@@ -2382,7 +2328,7 @@ begin
               else
               begin
 
-                CST := TpcnCstPis(qryDadosProdutoCST_PIS_INDICE_ACBR.AsInteger);
+                CST := TpcnCstPis(qryDadosProduto.FieldByName('CST_PIS_INDICE_ACBR').AsInteger);
 
                 if ( CST = pis99 ) then
                 begin
@@ -2392,8 +2338,8 @@ begin
                 end
                 else
                 begin
-                  PIS.vBC  := qryDadosProdutoPFINAL.AsCurrency;
-                  PIS.pPIS := qryDadosProdutoALIQUOTA_PIS.AsCurrency;
+                  PIS.vBC  := qryDadosProduto.FieldByName('PFINAL').AsCurrency;
+                  PIS.pPIS := qryDadosProduto.FieldByName('ALIQUOTA_PIS').AsCurrency;
                   PIS.vPIS := PIS.vBC * PIS.pPIS / 100;
                 end;
 
@@ -2420,7 +2366,7 @@ begin
               else
               begin
 
-                CST := TpcnCstCofins(qryDadosProdutoCST_COFINS_INDICE_ACBR.AsInteger);
+                CST := TpcnCstCofins(qryDadosProduto.FieldByName('CST_COFINS_INDICE_ACBR').AsInteger);
 
                 if ( CST = cof99 ) then
                 begin
@@ -2430,8 +2376,8 @@ begin
                 end
                 else
                 begin
-                  COFINS.vBC     := qryDadosProdutoPFINAL.AsCurrency;
-                  COFINS.pCOFINS := qryDadosProdutoALIQUOTA_COFINS.AsCurrency;
+                  COFINS.vBC     := qryDadosProduto.FieldByName('PFINAL').AsCurrency;
+                  COFINS.pCOFINS := qryDadosProduto.FieldByName('ALIQUOTA_COFINS').AsCurrency;
                   COFINS.vCOFINS := COFINS.vBC * COFINS.pCOFINS / 100;
                 end;
 
@@ -2499,7 +2445,7 @@ begin
 
             if ( Trim(Prod.NCM) <> EmptyStr ) then
             begin
-              cPercentualTributoAprox := qryDadosProdutoNCM_ALIQUOTA_NAC.AsCurrency;
+              cPercentualTributoAprox := qryDadosProduto.FieldByName('NCM_ALIQUOTA_NAC').AsCurrency;
 
               if ( cPercentualTributoAprox > 0.0 ) then
               begin
@@ -3638,16 +3584,24 @@ begin
                     CST := cst90;
                 end;
 
-                ICMS.modBC   := dbiValorOperacao;
-                ICMS.pRedBC  := qryEntradaDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency;
+                ICMS.modBC := dbiValorOperacao;
 
-                if ( ICMS.pRedBC > 0 ) then
-                  ICMS.vBC   := qryEntradaDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency
+                if (qryEntradaCalculoImposto.FieldByName('CFOP_DEVOLUCAO').AsInteger = 1) then
+                  ICMS.pRedBC := 0.0
                 else
-                  ICMS.vBC   := qryEntradaDadosProduto.FieldByName('PFINAL').AsCurrency;
+                if (qryEntradaDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency <= 0) then
+                  ICMS.pRedBC := 0.0
+                else
+                  ICMS.pRedBC := (100.0 - qryEntradaDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency); // qryEntradaDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency;
 
-                ICMS.pICMS   := qryEntradaDadosProduto.FieldByName('ALIQUOTA').AsCurrency;
-                ICMS.vICMS   := ICMS.vBC * ICMS.pICMS / 100;
+
+                if (ICMS.pRedBC > 0) or (qryEntradaDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency > 0) then
+                  ICMS.vBC := qryEntradaDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency
+                else
+                  ICMS.vBC := qryEntradaDadosProduto.FieldByName('PFINAL').AsCurrency;
+
+                ICMS.pICMS := qryEntradaDadosProduto.FieldByName('ALIQUOTA').AsCurrency;
+                ICMS.vICMS := ICMS.vBC * ICMS.pICMS / 100.0;
 
               end;
 
@@ -4882,13 +4836,13 @@ begin
 
       while not qryDadosProduto.Eof do
       begin
-        Ecf.Incluir_Item(FormatFloat('00', qryDadosProdutoSEQ.AsInteger)
-          , qryDadosProdutoCODPROD.AsString
-          , RemoveAcentos( AnsiUpperCase(qryDadosProdutoDESCRI_APRESENTACAO.AsString) )
-          , Trim(FormatFloat(',0.###', qryDadosProdutoQTDE.AsCurrency) + ' ' + Copy(Trim(qryDadosProdutoUNP_SIGLA.AsString), 1, 2))
-          , FormatFloat(',0.00',  qryDadosProdutoPFINAL.AsCurrency)
+        Ecf.Incluir_Item(FormatFloat('00', qryDadosProduto.FieldByName('SEQ').AsInteger)
+          , qryDadosProduto.FieldByName('CODPROD').AsString
+          , RemoveAcentos( AnsiUpperCase(qryDadosProduto.FieldByName('DESCRI_APRESENTACAO').AsString) )
+          , Trim(FormatFloat(',0.###', qryDadosProduto.FieldByName('QTDE').AsCurrency) + ' ' + Copy(Trim(qryDadosProduto.FieldByName('UNP_SIGLA').AsString), 1, 2))
+          , FormatFloat(',0.00',  qryDadosProduto.FieldByName('PFINAL').AsCurrency)
           , 'T0'
-          , FormatFloat(',0.00',  (qryDadosProdutoQTDE.AsCurrency * qryDadosProdutoPFINAL.AsCurrency))
+          , FormatFloat(',0.00',  (qryDadosProduto.FieldByName('QTDE').AsCurrency * qryDadosProduto.FieldByName('PFINAL').AsCurrency))
         );
 
         qryDadosProduto.Next;
@@ -5440,44 +5394,44 @@ begin
         with Det.Add do
         begin
           Prod.nItem    := qryDadosProduto.RecNo; // qryDadosProdutoSEQ.AsInteger;              // Número sequencial, para cada item deve ser incrementado
-          Prod.cProd    := qryDadosProdutoCODPROD.AsString;
+          Prod.cProd    := qryDadosProduto.FieldByName('CODPROD').AsString;
 
           if ( GetSegmentoID(qryEmitenteCNPJ.AsString) <> SEGMENTO_MERCADO_CARRO_ID ) then
-            Prod.xProd  := qryDadosProdutoDESCRI_APRESENTACAO.AsString
+            Prod.xProd  := qryDadosProduto.FieldByName('DESCRI_APRESENTACAO').AsString
           else
-            Prod.xProd  := qryDadosProdutoDESCRI.AsString + ' ' + qryDadosProdutoANO_FAB_MODELO_VEICULO.AsString;
+            Prod.xProd  := qryDadosProduto.FieldByName('DESCRI').AsString + ' ' + qryDadosProduto.FieldByName('ANO_FAB_MODELO_VEICULO').AsString;
 
-          Prod.NCM      := qryDadosProdutoNCM_SH.AsString;            // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
+          Prod.NCM      := qryDadosProduto.FieldByName('NCM_SH').AsString;            // Tabela NCM disponível em  http://www.receita.fazenda.gov.br/Aliquotas/DownloadArqTIPI.htm
           Prod.EXTIPI   := EmptyStr;
           Prod.CFOP     := '5101'; // qryDadosProdutoCFOP_COD.AsString;
 
-          if EAN13Valido(qryDadosProdutoCODBARRA_EAN.AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
-            Prod.cEAN   := qryDadosProdutoCODBARRA_EAN.AsString
+          if EAN13Valido(qryDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+            Prod.cEAN   := qryDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEAN   := EmptyStr;
 
-          Prod.uCom     := qryDadosProdutoUNP_SIGLA.AsString;
-          Prod.qCom     := qryDadosProdutoQTDE.AsCurrency;
+          Prod.uCom     := qryDadosProduto.FieldByName('UNP_SIGLA').AsString;
+          Prod.qCom     := qryDadosProduto.FieldByName('QTDE').AsCurrency;
 
-          if ( qryDadosProdutoPUNIT_PROMOCAO.AsCurrency > 0 ) then
-            Prod.vUnCom := qryDadosProdutoPUNIT_PROMOCAO.AsCurrency   // I10a  Valor Unitário de comercialização
+          if ( qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency > 0 ) then
+            Prod.vUnCom := qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency   // I10a  Valor Unitário de comercialização
           else
-            Prod.vUnCom := qryDadosProdutoPUNIT.AsCurrency;           // I10a  Valor Unitário de comercialização
+            Prod.vUnCom := qryDadosProduto.FieldByName('PUNIT').AsCurrency;           // I10a  Valor Unitário de comercialização
 
-          Prod.vProd    := qryDadosProdutoTOTAL_BRUTO.AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
+          Prod.vProd    := qryDadosProduto.FieldByName('TOTAL_BRUTO').AsCurrency;     // I11 - Valor Total Bruto dos Produtos ou Serviços
 
-          if EAN13Valido(qryDadosProdutoCODBARRA_EAN.AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
-            Prod.cEANTrib := qryDadosProdutoCODBARRA_EAN.AsString
+          if EAN13Valido(qryDadosProduto.FieldByName('CODBARRA_EAN').AsString) then   // Futuramento implementar a função "ACBrValidadorValidarGTIN" em lugar da "EAN13Valido"
+            Prod.cEANTrib := qryDadosProduto.FieldByName('CODBARRA_EAN').AsString
           else
             Prod.cEANTrib := EmptyStr;
 
-          Prod.uTrib     := qryDadosProdutoUNP_SIGLA.AsString;
-          Prod.qTrib     := qryDadosProdutoQTDE.AsCurrency;
+          Prod.uTrib     := qryDadosProduto.FieldByName('UNP_SIGLA').AsString;
+          Prod.qTrib     := qryDadosProduto.FieldByName('QTDE').AsCurrency;
 
-          if ( qryDadosProdutoPUNIT_PROMOCAO.AsCurrency > 0 ) then
-            Prod.vUnTrib := qryDadosProdutoPUNIT_PROMOCAO.AsCurrency  // I14a  Valor Unitário de tributação
+          if ( qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency > 0 ) then
+            Prod.vUnTrib := qryDadosProduto.FieldByName('PUNIT_PROMOCAO').AsCurrency  // I14a  Valor Unitário de tributação
           else
-            Prod.vUnTrib := qryDadosProdutoPUNIT.AsCurrency;          // I14a  Valor Unitário de tributação
+            Prod.vUnTrib := qryDadosProduto.FieldByName('PUNIT').AsCurrency;          // I14a  Valor Unitário de tributação
 
 (* EXEMPLO *)
           // NFe.Det[i].Prod.uCom    := 'CX';                                                   = 'UN'
@@ -5490,12 +5444,12 @@ begin
 
           Prod.vFrete    := 0;                                        // I15 - Valor Total do Frete
           Prod.vSeg      := 0;                                        // I16 - Valor Total do Seguro
-          Prod.vDesc     := qryDadosProdutoTOTAL_DESCONTO.AsCurrency; // I17 - Valor do Desconto
+          Prod.vDesc     := qryDadosProduto.FieldByName('TOTAL_DESCONTO').AsCurrency; // I17 - Valor do Desconto
 
           // Informação Adicional do Produto
 
-          if ( Trim(qryDadosProdutoREFERENCIA.AsString) <> EmptyStr ) then
-            infAdProd    := 'Ref.: ' + qryDadosProdutoREFERENCIA.AsString
+          if ( Trim(qryDadosProduto.FieldByName('REFERENCIA').AsString) <> EmptyStr ) then
+            infAdProd    := 'Ref.: ' + qryDadosProduto.FieldByName('REFERENCIA').AsString
           else
             infAdProd    := EmptyStr;
 
@@ -5602,7 +5556,7 @@ begin
 
                 // csosnVazio, csosn101, csosn102, csosn103, csosn201, csosn202, csosn203, csosn300, csosn400, csosn500, csosn900
 
-                Case qryDadosProdutoCSOSN.AsInteger of
+                Case qryDadosProduto.FieldByName('CSOSN').AsInteger of
                   101 : CSOSN := csosn101;
                   102 : CSOSN := csosn102;
                   103 : CSOSN := csosn103;
@@ -5616,14 +5570,14 @@ begin
                     CSOSN := csosn900;
                 end;
 
-                pCredSN     := qryDadosProdutoALIQUOTA_CSOSN.AsCurrency;
-                vCredICMSSN := qryDadosProdutoPFINAL.AsCurrency * pCredSN / 100;
+                pCredSN     := qryDadosProduto.FieldByName('ALIQUOTA_CSOSN').AsCurrency;
+                vCredICMSSN := qryDadosProduto.FieldByName('PFINAL').AsCurrency * pCredSN / 100;
 
               end
               else
               begin
 
-                Case StrToInt(Copy(qryDadosProdutoCST.AsString, 2, 2)) of
+                Case StrToInt(Copy(qryDadosProduto.FieldByName('CST').AsString, 2, 2)) of
                    0 : CST := cst00;
                   10 : CST := cst10;
                   20 : CST := cst20;
@@ -5638,20 +5592,28 @@ begin
                     CST := cst90;
                 end;
 
-                ICMS.modBC   := dbiValorOperacao;
-                ICMS.pRedBC  := qryDadosProdutoPERCENTUAL_REDUCAO_BC.AsCurrency;
+                ICMS.modBC := dbiValorOperacao;
 
-                if ( ICMS.pRedBC > 0 ) then
-                  ICMS.vBC   := qryDadosProdutoVALOR_REDUCAO_BC.AsCurrency
+                if (qryCalculoImposto.FieldByName('CFOP_DEVOLUCAO').AsInteger = 1) then
+                  ICMS.pRedBC := 0.0
                 else
-                  ICMS.vBC   := qryDadosProdutoPFINAL.AsCurrency;
+                if (qryDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency <= 0) then
+                  ICMS.pRedBC := 0.0
+                else
+                  ICMS.pRedBC := (100.0 - qryDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency); // qryDadosProduto.FieldByName('PERCENTUAL_REDUCAO_BC').AsCurrency;
 
-                ICMS.pICMS   := qryDadosProdutoALIQUOTA.AsCurrency;
-                ICMS.vICMS   := ICMS.vBC * ICMS.pICMS / 100;
+
+                if (ICMS.pRedBC > 0) or (qryDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency > 0) then
+                  ICMS.vBC := qryDadosProduto.FieldByName('VALOR_REDUCAO_BC').AsCurrency
+                else
+                  ICMS.vBC := qryDadosProduto.FieldByName('PFINAL').AsCurrency;
+
+                ICMS.pICMS := qryDadosProduto.FieldByName('ALIQUOTA').AsCurrency;
+                ICMS.vICMS := ICMS.vBC * ICMS.pICMS / 100.0;
 
               end;
 
-              ICMS.orig    := TpcnOrigemMercadoria( StrToInt(Copy(qryDadosProdutoCST.AsString, 1, 1)) );
+              ICMS.orig    := TpcnOrigemMercadoria( StrToInt(Copy(qryDadosProduto.FieldByName('CST').AsString, 1, 1)) );
               ICMS.modBCST := dbisMargemValorAgregado;
               ICMS.pMVAST  := 0;
               ICMS.pRedBCST:= 0;
@@ -5678,7 +5640,7 @@ begin
               else
               begin
 
-                CST := TpcnCstPis(qryDadosProdutoCST_PIS_INDICE_ACBR.AsInteger);
+                CST := TpcnCstPis(qryDadosProduto.FieldByName('CST_PIS_INDICE_ACBR').AsInteger);
 
                 if ( CST = pis99 ) then
                 begin
@@ -5688,8 +5650,8 @@ begin
                 end
                 else
                 begin
-                  PIS.vBC  := qryDadosProdutoPFINAL.AsCurrency;
-                  PIS.pPIS := qryDadosProdutoALIQUOTA_PIS.AsCurrency;
+                  PIS.vBC  := qryDadosProduto.FieldByName('PFINAL').AsCurrency;
+                  PIS.pPIS := qryDadosProduto.FieldByName('ALIQUOTA_PIS').AsCurrency;
                   PIS.vPIS := PIS.vBC * PIS.pPIS / 100;
                 end;
 
@@ -5716,7 +5678,7 @@ begin
               else
               begin
 
-                CST := TpcnCstCofins(qryDadosProdutoCST_COFINS_INDICE_ACBR.AsInteger);
+                CST := TpcnCstCofins(qryDadosProduto.FieldByName('CST_COFINS_INDICE_ACBR').AsInteger);
 
                 if ( CST = cof99 ) then
                 begin
@@ -5726,8 +5688,8 @@ begin
                 end
                 else
                 begin
-                  COFINS.vBC     := qryDadosProdutoPFINAL.AsCurrency;
-                  COFINS.pCOFINS := qryDadosProdutoALIQUOTA_COFINS.AsCurrency;
+                  COFINS.vBC     := qryDadosProduto.FieldByName('PFINAL').AsCurrency;
+                  COFINS.pCOFINS := qryDadosProduto.FieldByName('ALIQUOTA_COFINS').AsCurrency;
                   COFINS.vCOFINS := COFINS.vBC * COFINS.pCOFINS / 100;
                 end;
 
@@ -5795,7 +5757,7 @@ begin
 
             if ( Trim(Prod.NCM) <> EmptyStr ) then
             begin
-              cPercentualTributoAprox := qryDadosProdutoNCM_ALIQUOTA_NAC.AsCurrency;
+              cPercentualTributoAprox := qryDadosProduto.FieldByName('NCM_ALIQUOTA_NAC').AsCurrency;
 
               if ( cPercentualTributoAprox > 0.0 ) then
               begin
@@ -6138,19 +6100,19 @@ begin
 
       while not qryDadosProduto.Eof do
       begin
-        cPercentualTributoAprox := qryDadosProdutoNCM_ALIQUOTA_NAC.AsCurrency;
+        cPercentualTributoAprox := qryDadosProduto.FieldByName('NCM_ALIQUOTA_NAC').AsCurrency;
         if (cPercentualTributoAprox > 0.0) then
-          cValorTributoAprox := qryDadosProdutoTOTAL_BRUTO.AsCurrency * cPercentualTributoAprox / 100
+          cValorTributoAprox := qryDadosProduto.FieldByName('TOTAL_BRUTO').AsCurrency * cPercentualTributoAprox / 100
         else
           cValorTributoAprox := 0.0;
 
-        Ecf.Incluir_Item(FormatFloat('00', qryDadosProdutoSEQ.AsInteger)
-          , qryDadosProdutoCODPROD.AsString
-          , RemoveAcentos( Copy(AnsiUpperCase(qryDadosProdutoDESCRI_APRESENTACAO.AsString), 1, 45) )
-          , Trim(FormatFloat(',0.###', qryDadosProdutoQTDE.AsCurrency) + ' ' + Copy(Trim(qryDadosProdutoUNP_SIGLA.AsString), 1, 2))
-          , FormatFloat(',0.00',  qryDadosProdutoPFINAL.AsCurrency)
+        Ecf.Incluir_Item(FormatFloat('00', qryDadosProduto.FieldByName('SEQ').AsInteger)
+          , qryDadosProduto.FieldByName('CODPROD').AsString
+          , RemoveAcentos( Copy(AnsiUpperCase(qryDadosProduto.FieldByName('DESCRI_APRESENTACAO').AsString), 1, 45) )
+          , Trim(FormatFloat(',0.###', qryDadosProduto.FieldByName('QTDE').AsCurrency) + ' ' + Copy(Trim(qryDadosProduto.FieldByName('UNP_SIGLA').AsString), 1, 2))
+          , FormatFloat(',0.00',  qryDadosProduto.FieldByName('PFINAL').AsCurrency)
           , 'T0'
-          , FormatFloat(',0.00',  (qryDadosProdutoQTDE.AsCurrency * qryDadosProdutoPFINAL.AsCurrency))
+          , FormatFloat(',0.00',  (qryDadosProduto.FieldByName('QTDE').AsCurrency * qryDadosProduto.FieldByName('PFINAL').AsCurrency))
         );
 
         cValorTotalTributoAprox := cValorTotalTributoAprox + cValorTributoAprox;

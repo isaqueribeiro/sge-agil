@@ -23,6 +23,8 @@ type
     Codigo      : Integer;
     RazaoSocial : String;
     CpfCnpj     : String;
+    InsEstadual : String;
+    UF          : String;
     Tipo        : TDestinatarioTipo;
   end;
 
@@ -53,6 +55,8 @@ type
     IbDtstTabelaNFE_DESTINATARIO_CODIGO: TIntegerField;
     IbDtstTabelaCANCELADA: TSmallintField;
     lblNotaCancelada: TLabel;
+    IbDtstTabelaNFE_DESTINATARIO_INSCEST: TIBStringField;
+    IbDtstTabelaNFE_DESTINATARIO_UF: TIBStringField;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNFE_DESTINATARIO_CNPJGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
@@ -72,7 +76,9 @@ var
 
   function SelecionarNFe(const AOnwer : TComponent; var pEmpresa, pSerie, pChave : String;
     var pNumero, pModelo : Integer;
-    var pDestinatario : TDestinatarioNF) : Boolean;
+    var pDataEmissao : TDateTime;
+    var pDestinatario : TDestinatarioNF;
+    var MovimentoAno, MovimentoCodigo : Integer) : Boolean;
 
 implementation
 
@@ -83,7 +89,9 @@ uses
 
 function SelecionarNFe(const AOnwer : TComponent; var pEmpresa, pSerie, pChave : String;
   var pNumero, pModelo : Integer;
-  var pDestinatario : TDestinatarioNF) : Boolean;
+  var pDataEmissao  : TDateTime;
+  var pDestinatario : TDestinatarioNF;
+  var MovimentoAno, MovimentoCodigo : Integer) : Boolean;
 var
   AForm : TfrmGeNFEmitida;
   iCodigo    : Integer;
@@ -113,16 +121,27 @@ begin
       pChave  := AForm.IbDtstTabelaCHAVE.AsString;
       pNumero := AForm.IbDtstTabelaNUMERO.Value;
       pModelo := AForm.IbDtstTabelaMODELO.Value;
+      pDataEmissao := AForm.IbDtstTabelaDATAEMISSAO.AsDateTime;
 
       pDestinatario.Codigo      := AForm.IbDtstTabelaNFE_DESTINATARIO_CODIGO.Value;
       pDestinatario.RazaoSocial := AForm.IbDtstTabelaNFE_DESTINATARIO_RAZAO.Value;
       pDestinatario.CpfCnpj     := AForm.IbDtstTabelaNFE_DESTINATARIO_CNPJ.Value;
+      pDestinatario.InsEstadual := AForm.IbDtstTabelaNFE_DESTINATARIO_INSCEST.Value;
+      pDestinatario.UF          := AForm.IbDtstTabelaNFE_DESTINATARIO_UF.Value;
 
       if (AForm.IbDtstTabelaANOVENDA.AsInteger > 0) then
-        pDestinatario.Tipo := dtCliente
+      begin
+        pDestinatario.Tipo := dtCliente;
+        MovimentoAno       := AForm.IbDtstTabelaANOVENDA.Value;
+        MovimentoCodigo    := AForm.IbDtstTabelaNUMVENDA.Value;
+      end
       else
       if (AForm.IbDtstTabelaANOCOMPRA.AsInteger > 0) then
-        pDestinatario.Tipo := dtFornecedor
+      begin
+        pDestinatario.Tipo := dtFornecedor;
+        MovimentoAno       := AForm.IbDtstTabelaANOCOMPRA.Value;
+        MovimentoCodigo    := AForm.IbDtstTabelaNUMCOMPRA.Value;
+      end
       else
         pDestinatario.Tipo := dtNull;
     end;

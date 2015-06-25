@@ -142,6 +142,8 @@ type
     CdsReciboHISTORICO: TWideMemoField;
     CdsReciboVALOR_BAIXA: TBCDField;
     IbDtstTabelaNOMEEMP: TIBStringField;
+    Bevel9: TBevel;
+    btnIncluirLote: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure dbFornecedorButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -166,6 +168,7 @@ type
     procedure DtSrcTabelaStateChange(Sender: TObject);
     procedure btbtnCancelarClick(Sender: TObject);
     procedure btbtnIncluirClick(Sender: TObject);
+    procedure btnIncluirLoteClick(Sender: TObject);
   private
     { Private declarations }
     FDataAtual : TDateTime;
@@ -200,7 +203,7 @@ implementation
 
 uses
   UConstantesDGE, UDMBusiness, UGeFornecedor, DateUtils, UGeEfetuarPagtoPAG,
-  UGrPadrao;
+  UGrPadrao, UGeContasAPagarLoteParcela;
 
 {$R *.dfm}
 
@@ -295,6 +298,27 @@ begin
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
 
   inherited;
+end;
+
+procedure TfrmGeContasAPagar.btnIncluirLoteClick(Sender: TObject);
+var
+  sEmpresa : String;
+  iFornecedor : Integer;
+  dDataEmissao    ,
+  dVencimentoFirst,
+  dVencimentoLast : TDateTime;
+begin
+  if btbtnIncluir.Enabled then
+  begin
+    sEmpresa     := gUsuarioLogado.Empresa;
+    iFornecedor  := 0;
+    dDataEmissao := GetDateDB;
+    dVencimentoFirst := dDataEmissao + 30;
+    dVencimentoLast  := dDataEmissao + 60;
+
+    if GerarLoteParcelas(Self, sEmpresa, iFornecedor, dDataEmissao, dVencimentoFirst, dVencimentoLast)  then
+      ;
+  end;
 end;
 
 procedure TfrmGeContasAPagar.IbDtstTabelaQUITADOGetText(Sender: TField;
@@ -725,6 +749,7 @@ procedure TfrmGeContasAPagar.DtSrcTabelaStateChange(Sender: TObject);
 begin
   inherited;
   dbValorAPagar.ReadOnly := (not cdsPagamentos.IsEmpty);
+  btnIncluirLote.Enabled := btbtnIncluir.Enabled;
   HabilitarDesabilitar_Btns;
 end;
 

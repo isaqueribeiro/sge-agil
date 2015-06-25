@@ -27,8 +27,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     ExplicitWidth = 1116
     ExplicitHeight = 642
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 1108
       ExplicitHeight = 613
       inherited Bevel4: TBevel
@@ -588,10 +586,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           object TbsApropriacaoCancelado: TTabSheet
             Caption = 'Motivo do cancelamento'
             ImageIndex = 2
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object dbMovitoCancelamento: TDBMemo
               Left = 0
               Top = 0
@@ -1210,10 +1204,11 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           TabOrder = 0
           object btnProdutoInserir: TBitBtn
             Left = 0
-            Top = 1
+            Top = 0
             Width = 70
             Height = 25
             Hint = 'Inserir Produto'
+            Align = alTop
             Caption = 'Inserir'
             Enabled = False
             Glyph.Data = {
@@ -1272,6 +1267,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             ShowHint = True
             TabOrder = 0
             OnClick = btnProdutoInserirClick
+            ExplicitTop = 1
           end
           object btnProdutoEditar: TBitBtn
             Left = 0
@@ -1279,6 +1275,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             Width = 70
             Height = 25
             Hint = 'Editar Produto'
+            Align = alTop
             Caption = 'Editar'
             Enabled = False
             Glyph.Data = {
@@ -1344,6 +1341,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             Width = 70
             Height = 25
             Hint = 'Excluir Produto'
+            Align = alBottom
             Caption = 'Excluir'
             Enabled = False
             Glyph.Data = {
@@ -1405,10 +1403,11 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           end
           object btnProdutoSalvar: TBitBtn
             Left = 0
-            Top = 73
+            Top = 74
             Width = 70
             Height = 25
             Hint = 'Salvar Produto'
+            Align = alBottom
             Caption = 'Salvar'
             Enabled = False
             Glyph.Data = {
@@ -1467,6 +1466,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             ShowHint = True
             TabOrder = 3
             OnClick = btnProdutoSalvarClick
+            ExplicitTop = 73
           end
         end
         object dbCustoTotal: TDBEdit
@@ -2278,7 +2278,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4027,6 +4027,8 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  , uc.unp_descricao'
       '  , uc.unp_sigla'
       '  , uf.unp_descricao as unidade_fracionada'
+      '  , coalesce(p.fracionador, 1.0) as fracionador'
+      '  , p.movimenta_estoque'
       'from TBPRODUTO p'
       '  left join TBUNIDADEPROD uc on (uc.unp_cod = p.codunidade)'
       
@@ -4069,6 +4071,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  , i.unid_cod   as unidade'
       '  , p.codunidade_fracionada as unidade_fracao'
       '  , p.customedio as custo_medio'
+      '  , i.customedio as valor_unitario'
       '  , p.descri'
       '  , p.apresentacao'
       '  , p.descri_apresentacao'
@@ -4111,6 +4114,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
       '  , i.unid_cod'
       '  , p.codunidade_fracionada'
       '  , p.customedio'
+      '  , i.customedio'
       '  , p.descri'
       '  , p.apresentacao'
       '  , p.descri_apresentacao'

@@ -163,8 +163,8 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     end
     object BtnPesquisar: TcxButton
       Tag = 4
-      Left = 240
-      Top = 146
+      Left = 242
+      Top = 147
       Width = 87
       Height = 31
       Hint = 'Executar Pesquisa'

@@ -83,7 +83,8 @@ uses
   UGrRegistroEstacao in '..\Sys\lib\UGrRegistroEstacao.pas' {FrmGrRegistroEstacao},
   UGeVendaPDVFinalizar in 'UGeVendaPDVFinalizar.pas' {frmGeVendaPDVFinalizar},
   UGeVendaPDVItem in 'UGeVendaPDVItem.pas' {frmGeVendaPDVItem},
-  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule};
+  UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule},
+  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo};
 
 {$R *.res}
 

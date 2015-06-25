@@ -903,12 +903,15 @@ var
   sSerie  ,
   sChave  : String;
   iNumero ,
-  iModelo : Integer;
+  iModelo ,
+  iMovAno ,
+  iMovCod : Integer;
+  dDataEmissao  : TDateTime;
   aDestinatario : TDestinatarioNF;
 begin
   sEmpresa := IbDtstTabelaNFC_EMPRESA.AsString;
   if ( IbDtstTabela.State in [dsInsert] ) then
-    if ( SelecionarNFe(Self, sEmpresa, sSerie, sChave, iNumero, iModelo, aDestinatario) ) then
+    if ( SelecionarNFe(Self, sEmpresa, sSerie, sChave, iNumero, iModelo, dDataEmissao, aDestinatario, iMovAno, iMovCod) ) then
     begin
       IbDtstTabelaNFE_SERIE.Value  := sSerie;
       IbDtstTabelaNFE_NUMERO.Value := iNumero;

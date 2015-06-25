@@ -2536,7 +2536,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
         end
         object lblUnidade: TLabel
-          Left = 624
+          Left = 592
           Top = 24
           Width = 27
           Height = 13
@@ -2656,7 +2656,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
         end
         object lblNCM_SH: TLabel
-          Left = 736
+          Left = 704
           Top = 24
           Width = 43
           Height = 13
@@ -2670,7 +2670,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
         end
         object lblCST: TLabel
-          Left = 832
+          Left = 800
           Top = 24
           Width = 23
           Height = 13
@@ -2684,7 +2684,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
         end
         object lblCFOPItem: TLabel
-          Left = 672
+          Left = 640
           Top = 24
           Width = 31
           Height = 13
@@ -2699,7 +2699,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
         end
         object lblAliquota: TLabel
-          Left = 896
+          Left = 904
           Top = 24
           Width = 57
           Height = 13
@@ -2713,7 +2713,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
         end
         object lblPercRedBC: TLabel
-          Left = 976
+          Left = 983
           Top = 24
           Width = 76
           Height = 13
@@ -2726,10 +2726,24 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
         end
+        object lblCSOSN: TLabel
+          Left = 848
+          Top = 24
+          Width = 38
+          Height = 13
+          Caption = 'CSOSN:'
+          FocusControl = dbCSOSN
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+        end
         object dbProdutoNome: TDBEdit
           Left = 184
           Top = 40
-          Width = 433
+          Width = 402
           Height = 21
           TabStop = False
           Color = clMoneyGreen
@@ -2758,7 +2772,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 9
+          TabOrder = 10
           OnExit = ControlEditExit
         end
         object dbValorUnit: TDBEdit
@@ -2775,11 +2789,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 10
+          TabOrder = 11
           OnExit = ControlEditExit
         end
         object dbUnidade: TDBEdit
-          Left = 624
+          Left = 592
           Top = 40
           Width = 41
           Height = 21
@@ -2812,7 +2826,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 13
+          TabOrder = 14
         end
         object dbTotalBruto: TDBEdit
           Left = 408
@@ -2829,7 +2843,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 12
+          TabOrder = 13
           OnExit = ControlEditExit
         end
         object dbValorIPIProduto: TDBEdit
@@ -2846,7 +2860,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
-          TabOrder = 11
+          TabOrder = 12
           OnExit = ControlEditExit
         end
         object pnlBotoesProduto: TPanel
@@ -3141,7 +3155,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 14
+          TabOrder = 15
         end
         object dbDesconto: TDBEdit
           Left = 696
@@ -3159,7 +3173,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 15
+          TabOrder = 16
         end
         object dbOutros: TDBEdit
           Left = 800
@@ -3177,7 +3191,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 16
+          TabOrder = 17
         end
         object dbCustoMedio: TDBEdit
           Left = 904
@@ -3195,10 +3209,10 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 17
+          TabOrder = 18
         end
         object dbNCM_SH: TDBEdit
-          Left = 736
+          Left = 704
           Top = 40
           Width = 89
           Height = 21
@@ -3215,9 +3229,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           OnExit = ControlEditExit
         end
         object dbCST: TDBEdit
-          Left = 832
+          Left = 800
           Top = 40
-          Width = 57
+          Width = 41
           Height = 21
           Color = clWhite
           DataField = 'CST'
@@ -3232,7 +3246,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           OnExit = ControlEditExit
         end
         object dbCFOPItem: TDBEdit
-          Left = 672
+          Left = 640
           Top = 40
           Width = 57
           Height = 21
@@ -3250,7 +3264,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           OnExit = ControlEditExit
         end
         object dbAliquota: TDBEdit
-          Left = 896
+          Left = 904
           Top = 40
           Width = 73
           Height = 21
@@ -3265,12 +3279,12 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 7
+          TabOrder = 8
         end
         object dbPercRedBC: TDBEdit
-          Left = 976
+          Left = 983
           Top = 40
-          Width = 99
+          Width = 93
           Height = 21
           Color = clMoneyGreen
           DataField = 'PERCENTUAL_REDUCAO_BC'
@@ -3282,7 +3296,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = []
           ParentFont = False
           ReadOnly = True
-          TabOrder = 8
+          TabOrder = 9
         end
         object dbProduto: TJvDBComboEdit
           Left = 88
@@ -3357,6 +3371,23 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ShowHint = True
           TabOrder = 1
           OnButtonClick = dbProdutoButtonClick
+          OnExit = ControlEditExit
+        end
+        object dbCSOSN: TDBEdit
+          Left = 848
+          Top = 40
+          Width = 49
+          Height = 21
+          Color = clWhite
+          DataField = 'CSOSN'
+          DataSource = DtSrcTabelaItens
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 7
           OnExit = ControlEditExit
         end
       end
@@ -4312,7 +4343,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5812,6 +5843,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  , p.Codorigem'
       '  , p.Codtributacao'
       '  , p.Cst'
+      '  , p.Csosn'
       '  , p.Codcfop'
       '  , p.Codbarra_ean'
       '  , p.Codunidade'
@@ -5931,6 +5963,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  , i.Unid_cod'
       '  , i.Ncm_sh'
       '  , i.Cst'
+      '  , i.Csosn'
       '  , i.Cfop'
       '  , i.aliquota'
       '  , i.aliquota_csosn'
@@ -6088,6 +6121,12 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       Origin = 'TBCOMPRASITENS.CST'
       Size = 3
     end
+    object cdsTabelaItensCSOSN: TIBStringField
+      FieldName = 'CSOSN'
+      Origin = '"TBCOMPRASITENS"."CSOSN"'
+      ProviderFlags = [pfInUpdate]
+      Size = 3
+    end
     object cdsTabelaItensCFOP: TIntegerField
       FieldName = 'CFOP'
       Origin = 'TBCOMPRASITENS.CFOP'
@@ -6186,6 +6225,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  UNID_COD,'
       '  NCM_SH,'
       '  CST,'
+      '  CSOSN,'
       '  CFOP,'
       '  ALIQUOTA,'
       '  ALIQUOTA_CSOSN,'
@@ -6213,6 +6253,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  CODEMP = :CODEMP,'
       '  CODFORN = :CODFORN,'
       '  CODPROD = :CODPROD,'
+      '  CSOSN = :CSOSN,'
       '  CST = :CST,'
       '  CUSTOMEDIO = :CUSTOMEDIO,'
       '  DTENT = :DTENT,'
@@ -6243,25 +6284,25 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         '  (ALIQUOTA, ALIQUOTA_COFINS, ALIQUOTA_CSOSN, ALIQUOTA_PIS, ANO,' +
         ' CFOP, '
       
-        '   CODCONTROL, CODEMP, CODFORN, CODPROD, CST, CUSTOMEDIO, DTENT,' +
-        ' NCM_SH, '
+        '   CODCONTROL, CODEMP, CODFORN, CODPROD, CSOSN, CST, CUSTOMEDIO,' +
+        ' DTENT, '
       
-        '   NF, PERC_PARTICIPACAO, PERCENTUAL_REDUCAO_BC, PRECOUNIT, QTDE' +
-        ', QTDEANTES, '
+        '   NCM_SH, NF, PERC_PARTICIPACAO, PERCENTUAL_REDUCAO_BC, PRECOUN' +
+        'IT, QTDE, '
       
-        '   QTDEFINAL, SEQ, TOTAL_BRUTO, TOTAL_LIQUIDO, UNID_COD, VALOR_D' +
-        'ESCONTO, '
+        '   QTDEANTES, QTDEFINAL, SEQ, TOTAL_BRUTO, TOTAL_LIQUIDO, UNID_C' +
+        'OD, VALOR_DESCONTO, '
       '   VALOR_FRETE, VALOR_IPI, VALOR_OUTROS)'
       'values'
       
         '  (:ALIQUOTA, :ALIQUOTA_COFINS, :ALIQUOTA_CSOSN, :ALIQUOTA_PIS, ' +
         ':ANO, :CFOP, '
       
-        '   :CODCONTROL, :CODEMP, :CODFORN, :CODPROD, :CST, :CUSTOMEDIO, ' +
-        ':DTENT, '
+        '   :CODCONTROL, :CODEMP, :CODFORN, :CODPROD, :CSOSN, :CST, :CUST' +
+        'OMEDIO, '
       
-        '   :NCM_SH, :NF, :PERC_PARTICIPACAO, :PERCENTUAL_REDUCAO_BC, :PR' +
-        'ECOUNIT, '
+        '   :DTENT, :NCM_SH, :NF, :PERC_PARTICIPACAO, :PERCENTUAL_REDUCAO' +
+        '_BC, :PRECOUNIT, '
       
         '   :QTDE, :QTDEANTES, :QTDEFINAL, :SEQ, :TOTAL_BRUTO, :TOTAL_LIQ' +
         'UIDO, :UNID_COD, '

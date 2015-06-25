@@ -309,6 +309,7 @@ var
   function GetClienteNome(const iCodigo : Integer) : String;
   function GetClienteEmail(const iCodigo : Integer) : String;
   function GetClienteUF(const iCodigo : Integer) : String;
+  function GetClienteEndereco(const aCodigo : Integer; const aQuebrarLinha : Boolean = FALSE) : String;
   function GetFornecedorEmail(const iCodigo : Integer) : String;
   function GetFornecedorRazao(const iCodigo : Integer) : String;
   function GetFornecedorContato(const iCodigo : Integer) : String;
@@ -346,7 +347,7 @@ var
   function GetExisteNumeroRequisicaoAlmox(iAno, iCodigo : Integer; sNumero : String; var sControleInterno : String) : Boolean;
   function GetMenorVencimentoAPagar : TDateTime;
   function GetMenorVencimentoAReceber : TDateTime;
-  function GetMenorDataEmissaoReqAlmoxEnviada : TDateTime;
+  function GetMenorDataEmissaoReqAlmoxEnviada(const aEmpresa : String; const aCentroCusto : Integer) : TDateTime;
   function GetCarregarProdutoCodigoBarra(const sCNPJEmitente : String) : Boolean;
   function GetCarregarProdutoCodigoBarraLocal : Boolean;
   function GetCarregarPapelDeParedeLocal : Boolean;
@@ -2470,6 +2471,36 @@ begin
   end;
 end;
 
+function GetClienteEndereco(const aCodigo : Integer; const aQuebrarLinha : Boolean = FALSE) : String;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select');
+    SQL.Add('    c.ender');
+    SQL.Add('  , c.numero_end');
+    SQL.Add('  , c.complemento');
+    SQL.Add('  , c.bairro');
+    SQL.Add('  , c.cidade');
+    SQL.Add('  , c.uf');
+    SQL.Add('  , c.cep');
+    SQL.Add('from TBCLIENTE c');
+    SQL.Add('where c.codigo = ' + IntToStr(aCodigo));
+    Open;
+
+    Result := Trim(FieldByName('ender').AsString) + ', No. ' + Trim(FieldByName('numero_end').AsString) +
+      IfThen(Trim(FieldByName('complemento').AsString) = EmptyStr, '', ' (' + Trim(FieldByName('complemento').AsString) + ')') +
+      IfThen(aQuebrarLinha, #13, ', ') +
+      'BAIRRO: ' + Trim(FieldByName('bairro').AsString) + ' - ' + Trim(FieldByName('cidade').AsString) +
+      IfThen(aQuebrarLinha, #13, ' ') +
+      'CEP: ' + StrFormatarCEP(Trim(FieldByName('cep').AsString));
+
+    Close;
+  end;
+end;
+
+
 function GetFornecedorEmail(const iCodigo : Integer) : String;
 begin
   with DMBusiness, qryBusca do
@@ -3048,17 +3079,22 @@ begin
   end;
 end;
 
-function GetMenorDataEmissaoReqAlmoxEnviada : TDateTime;
+function GetMenorDataEmissaoReqAlmoxEnviada(const aEmpresa : String; const aCentroCusto : Integer) : TDateTime;
 begin
   with DMBusiness, qryBusca do
   begin
     Close;
+
     SQL.Clear;
     SQL.Add('Select');
     SQL.Add('  min(r.data_emissao) as data_emissao');
     SQL.Add('from TBREQUISICAO_ALMOX r');
-    SQL.Add('where r.empresa = ' + QuotedStr(gUsuarioLogado.Empresa));
+    SQL.Add('where r.empresa = ' + QuotedStr(aEmpresa));
     SQL.Add('  and r.status in (' + IntToStr(STATUS_REQUISICAO_ALMOX_ENV) + ', ' + IntToStr(STATUS_REQUISICAO_ALMOX_REC) + ')');
+
+    if ( aCentroCusto > 0 ) then
+      SQL.Add('  and r.ccusto_destino = ' + IntToStr(aCentroCusto));
+
     Open;
 
     if not FieldByName('data_emissao').IsNull then

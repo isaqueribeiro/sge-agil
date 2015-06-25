@@ -113,14 +113,16 @@ type
     ppmLimparImagem: TMenuItem;
     opnDialogImage: TOpenPictureDialog;
     dbFoto3x4: TDBImage;
-    dbFlagFornecedor: TDBCheckBox;
-    dbFlagVendedor: TDBCheckBox;
     IbDtstTabelaRG: TIBStringField;
-    lblUsuario: TLabel;
-    dbUsuario: TJvDBComboEdit;
-    dbAtivo: TDBCheckBox;
     setUsuarioFuncionario: TIBStoredProc;
     setVendedorFuncionario: TIBStoredProc;
+    GrpBxParametro: TGroupBox;
+    dbFlagFornecedor: TDBCheckBox;
+    dbFlagVendedor: TDBCheckBox;
+    dbAtivo: TDBCheckBox;
+    GrpBxAcessos: TGroupBox;
+    lblUsuario: TLabel;
+    dbUsuario: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbEstadoButtonClick(Sender: TObject);
@@ -333,6 +335,7 @@ begin
   UpdateGenerator;
 
   pgcMaisDados.ActivePageIndex := 0;
+  dbFlagVendedor.Enabled       := gLicencaSistema.UsarSGE;
 end;
 
 function TfrmGeFuncionario.GravarUsuarioFuncinario: Boolean;
@@ -413,6 +416,7 @@ begin
   IbDtstTabelaCOMPLEMENTO.AsString      := EmptyStr;
   IbDtstTabelaFLAG_VENDEDOR.AsInteger   := 0;
   IbDtstTabelaFLAG_FORNECEDOR.AsInteger := 0;
+  IbDtstTabelaATIVO.AsInteger           := 1;
   IbDtstTabelaDATA_CADASTRO.AsDateTime  := GetDateTimeDB;
   IbDtstTabelaCPF.Clear;
   IbDtstTabelaVENDEDOR.Clear;
