@@ -142,6 +142,9 @@ begin
   begin
     CarregarCentroCusto;
 
+    e1Data.Date := GetMenorDataEmissaoReqAlmoxEnviada(gUsuarioLogado.Empresa, 0);
+    e2Data.Date := GetDateDB;
+
     if Assigned(PanelDock) then
     begin
       PanelDock.Width := Width;
@@ -224,9 +227,6 @@ begin
   inherited;
   RotinaID        := ROTINA_MOV_MONITOR_REQ_ALMOX_ID;
   fPreferenciaINI := TIniFile.Create(ExtractFilePath(Application.ExeName) + 'Preferencia.MonitorReqAlmox.ini');
-
-  e1Data.Date := GetMenorDataEmissaoReqAlmoxEnviada;
-  e2Data.Date := GetDateDB;
 end;
 
 function TfrmGeRequisicaoAlmoxMonitor.GetSituacao: Smallint;

@@ -861,7 +861,7 @@ begin
           cdsTabelaItensUNIDADE.AsInteger := FieldByName('Codunidade').AsInteger;
 
         if ( FieldByName('Codunidade_fracionada').AsInteger > 0 ) then
-          cdsTabelaItensUNIDADE_FRACIONADA.AsInteger := FieldByName('Codunidade_fracionada').AsInteger;
+          cdsTabelaItensUNIDADE_FRACAO.AsInteger := FieldByName('Codunidade_fracionada').AsInteger;
       end
       else
       begin
@@ -1459,7 +1459,7 @@ begin
         cdsTabelaItensFRACIONADOR.Assign   ( FieldByName('fracionador') );
         cdsTabelaItensUNIDADE.Assign       ( FieldByName('unidade') );
         cdsTabelaItensUNIDADE_FRACAO.Assign( FieldByName('unidade_fracao') );
-        cdsTabelaItensCUSTO_UNITARIO.Assign( FieldByName('custo_medio') );
+        cdsTabelaItensCUSTO_UNITARIO.Assign( FieldByName('valor_unitario') );
 
         cdsTabelaItensDESCRI.Assign             ( FieldByName('DESCRI') );
         cdsTabelaItensAPRESENTACAO.Assign       ( FieldByName('apresentacao') );

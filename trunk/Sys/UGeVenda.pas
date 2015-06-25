@@ -386,6 +386,14 @@ type
     N4: TMenuItem;
     nmPpCarregarArquivoNFe: TMenuItem;
     opdNotas: TOpenDialog;
+    IbDtstTabelaDADOS_ENTREGA: TWideMemoField;
+    tbsDadosEntrega: TTabSheet;
+    pnlDadosEntrega: TPanel;
+    lblDadosEntrega: TLabel;
+    Bevel11: TBevel;
+    Bevel13: TBevel;
+    dbDadosEntrega: TDBMemo;
+    nmPpCorrigirDadosEntrega: TMenuItem;
     procedure ImprimirOpcoesClick(Sender: TObject);
     procedure ImprimirOrcamentoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -453,6 +461,7 @@ type
     procedure RdgStatusVendaClick(Sender: TObject);
     procedure nmImprimirNotaEntregaXClick(Sender: TObject);
     procedure nmPpCarregarArquivoNFeClick(Sender: TObject);
+    procedure nmPpCorrigirDadosEntregaClick(Sender: TObject);
   private
     { Private declarations }
     sGeneratorName : String;
@@ -511,7 +520,7 @@ uses
   UConstantesDGE, DateUtils, SysConst, UDMNFe, UGeGerarBoletos, UGeEfetuarPagtoREC,
   UGeVendaGerarNFe, UGeVendaCancelar, UGeVendaFormaPagto, UGeVendaTransporte,
   UGeVendaConfirmaTitulos, {$IFNDEF PDV}UGeVendaDevolucaoNF, UGeConsultarLoteNFe_v2, {$ENDIF}
-  UDMRecursos;
+  UDMRecursos, UGrMemo;
 
 {$R *.dfm}
 
@@ -687,6 +696,9 @@ begin
     IbDtstTabelaNOME.Clear;
   end;
 
+  IbDtstTabelaOBS.Clear;
+  IbDtstTabelaDADOS_ENTREGA.Clear;
+
   IbDtstTabelaFORMAPAGTO_COD.Clear;
   IbDtstTabelaCONDICAOPAGTO_COD.Clear;
 
@@ -731,6 +743,11 @@ begin
       IbDtstTabelaCODCLIENTE.AsInteger := iCodigo;
       IbDtstTabelaCODCLI.AsString := sCNPJ;
       IbDtstTabelaNOME.AsString   := sNome;
+
+      IbDtstTabelaDADOS_ENTREGA.AsString :=
+        '* Responsável pela entrega..............: ' + #13 +
+        '* Entregar a(o) Sr(a)...................: ' + #13#13 +
+        '* Endereço para entrega do(s) produto(s): ' + #13 + GetClienteEndereco(iCodigo, True);
     end;
 end;
 
@@ -978,6 +995,9 @@ begin
     nmPpLimparDadosNFe.Enabled  := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr) and (IbDtstTabelaNFE.AsCurrency = 0);
     BtnLimparDadosNFe.Enabled   := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr) and (IbDtstTabelaNFE.AsCurrency = 0);
     BtnCorrigirDadosNFe.Enabled := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) and (IbDtstTabelaNFE.AsCurrency = 0);
+
+    nmPpCorrigirDadosNFeCFOP.Enabled := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) and (IbDtstTabelaNFE.AsCurrency = 0);
+    nmPpCorrigirDadosEntrega.Enabled := (IbDtstTabelaSTATUS.AsInteger in [STATUS_VND_FIN, STATUS_VND_NFE]);
   end
   else
   begin
@@ -1000,6 +1020,9 @@ begin
     nmPpLimparDadosNFe.Enabled  := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr) and (IbDtstTabelaNFE.AsCurrency = 0);
     BtnLimparDadosNFe.Enabled   := (Trim(IbDtstTabelaLOTE_NFE_RECIBO.AsString) <> EmptyStr) and (IbDtstTabelaNFE.AsCurrency = 0);
     BtnCorrigirDadosNFe.Enabled := (IbDtstTabelaSTATUS.AsInteger = STATUS_VND_FIN) and (IbDtstTabelaNFE.AsCurrency = 0);
+
+    nmPpCorrigirDadosNFeCFOP.Enabled := False;
+    nmPpCorrigirDadosEntrega.Enabled := False;
   end;
 end;
 
@@ -1163,39 +1186,51 @@ end;
 
 procedure TfrmGeVenda.btnProdutoSalvarClick(Sender: TObject);
 
-  procedure GetToTais(var Total_Bruto, Total_Desconto, Total_Liquido: Currency);
+  procedure GetToTais(var Total_Bruto, Total_Desconto, Total_Liquido, vBC_ICMS, vICMS: Currency);
   var
     Item : Integer;
   begin
-    try
-      Item         := cdsTabelaItensSEQ.AsInteger;
-      Total_Bruto    := 0.0;
-      Total_desconto := 0.0;
-      Total_Liquido  := 0.0;
+    Item         := cdsTabelaItensSEQ.AsInteger;
+    Total_Bruto    := 0.0;
+    Total_desconto := 0.0;
+    Total_Liquido  := 0.0;
+    vBC_ICMS       := 0.0;
+    vICMS          := 0.0;
 
-      cdsTabelaItens.DisableControls;
-      cdsTabelaItens.First;
+    cdsTabelaItens.First;
 
-      while not cdsTabelaItens.Eof do
+    while not cdsTabelaItens.Eof do
+    begin
+      Total_Bruto    := Total_Bruto    + cdsTabelaItensTOTAL_BRUTO.AsCurrency;
+      Total_desconto := Total_desconto + cdsTabelaItensTOTAL_DESCONTO.AsCurrency;
+
+      if ( cdsTabelaItensPERCENTUAL_REDUCAO_BC.AsCurrency > 0 ) then
       begin
-        Total_Bruto    := Total_Bruto    + cdsTabelaItensTOTAL_BRUTO.AsCurrency;
-        Total_desconto := Total_desconto + cdsTabelaItensTOTAL_DESCONTO.AsCurrency;
-
-        cdsTabelaItens.Next;
+        vBC_ICMS := vBC_ICMS + (cdsTabelaItensTOTAL_BRUTO.AsCurrency * cdsTabelaItensPERCENTUAL_REDUCAO_BC.AsCurrency / 100);
+        vICMS    := vICMS    + (((cdsTabelaItensTOTAL_BRUTO.AsCurrency * cdsTabelaItensPERCENTUAL_REDUCAO_BC.AsCurrency / 100)) * cdsTabelaItensALIQUOTA.AsCurrency / 100);
+      end
+      else
+      begin
+        vBC_ICMS := vBC_ICMS + cdsTabelaItensTOTAL_BRUTO.AsCurrency;
+        vICMS    := vICMS    + (cdsTabelaItensTOTAL_BRUTO.AsCurrency * cdsTabelaItensALIQUOTA.AsCurrency / 100);
       end;
 
-      Total_Liquido  := Total_Bruto - Total_desconto;
-    finally
-      cdsTabelaItens.Locate('SEQ', Item, []);
-      cdsTabelaItens.EnableControls;
+
+      cdsTabelaItens.Next;
     end;
+
+    Total_Liquido  := Total_Bruto - Total_desconto;
+
+    cdsTabelaItens.Locate('SEQ', Item, []);
   end;
 
 var
   cDescontos    ,
   cTotalBruto   ,
   cTotalDesconto,
-  cTotalLiquido : Currency;
+  cTotalLiquido ,
+  cValorBaseIcms,
+  cValorIcms    : Currency;
 begin
   if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
   begin
@@ -1242,7 +1277,7 @@ begin
         
       cdsTabelaItens.Post;
 
-      GetToTais(cTotalBruto, cTotalDesconto, cTotalLiquido);
+      GetToTais(cTotalBruto, cTotalDesconto, cTotalLiquido, cValorBaseIcms, cValorIcms);
 
       IbDtstTabelaTOTALVENDA_BRUTA.AsCurrency := cTotalBruto;
       IbDtstTabelaDESCONTO.AsCurrency         := cTotalDesconto;
@@ -1252,7 +1287,7 @@ begin
       begin
         if ( not (cdsVendaFormaPagto.State in [dsEdit, dsInsert]) ) then
           cdsVendaFormaPagto.Edit;
-          
+
         cdsVendaFormaPagtoVALOR_FPAGTO.Value := cTotalLiquido;
       end;
 
@@ -1811,7 +1846,9 @@ var
   sReciboNFE    ,
   sMensagem     : String;
   iNumeroLote   : Int64;
+  {$IFNDEF PDV}
   TipoMovimento : TTipoMovimento;
+  {$ENDIF}
   bNFeGerada    : Boolean;
 begin
 (*
@@ -3181,6 +3218,45 @@ procedure TfrmGeVenda.BtnCorrigirDadosNFeClick(Sender: TObject);
 begin
   if not BtnLimparDadosNFe.Enabled then
     ppCorrigirDadosNFe.Popup(BtnCorrigirDadosNFe.ClientOrigin.X, BtnCorrigirDadosNFe.ClientOrigin.Y + BtnCorrigirDadosNFe.Height);
+end;
+
+procedure TfrmGeVenda.nmPpCorrigirDadosEntregaClick(Sender: TObject);
+var
+  sDadosEntrega : TStringList;
+begin
+  if not (IbDtstTabelaSTATUS.AsInteger in [STATUS_VND_FIN, STATUS_VND_NFE]) then
+    Exit;
+
+  sDadosEntrega := TStringList.Create;
+  try
+    if Trim(IbDtstTabelaDADOS_ENTREGA.AsString) <> EmptyStr then
+      sDadosEntrega.Text := IbDtstTabelaDADOS_ENTREGA.AsString
+    else
+      sDadosEntrega.Text :=
+        '* Responsável pela entrega..............: ' + #13 +
+        '* Entregar a(o) Sr(a)...................: ' + #13#13 +
+        '* Endereço para entrega do(s) produto(s): ' + #13 + GetClienteEndereco(IbDtstTabelaCODCLIENTE.AsInteger, True);
+
+    if SetDadosEntrega(Self, sDadosEntrega) then
+      with DMBusiness, qryBusca do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('Update TBVENDAS Set ');
+        SQL.Add('  DADOS_ENTREGA = ' + QuotedStr(sDadosEntrega.Text));
+        SQL.Add('where ANO        = ' + IbDtstTabelaANO.AsString);
+        SQL.Add('  and CODCONTROL = ' + IbDtstTabelaCODCONTROL.AsString);
+        SQL.Add('  and CODEMP     = ' + QuotedStr(IbDtstTabelaCODEMP.AsString));
+        ExecSQL;
+
+        CommitTransaction;
+
+        RecarregarRegistro;
+        pgcMaisDados.ActivePage := tbsDadosEntrega;
+      end;
+  finally
+    sDadosEntrega.Free;
+  end;
 end;
 
 procedure TfrmGeVenda.nmPpCorrigirDadosNFeCFOPClick(Sender: TObject);

@@ -304,8 +304,8 @@ object DMNFe: TDMNFe
       '  , u.Unp_descricao'
       '  , u.Unp_sigla'
       '  , i.Cfop_cod'
-      '  , coalesce(i.Cst, p.Cst) as Cst'
-      '  , coalesce(i.Csosn, p.Csosn) as Csosn'
+      '  , coalesce(nullif(trim(i.cst), '#39#39'), p.Cst) as Cst'
+      '  , coalesce(nullif(trim(i.Csosn), '#39#39'), p.Csosn) as Csosn'
       '  , i.Aliquota'
       '  , i.Aliquota_csosn'
       '  , coalesce(i.Aliquota_pis, 0.0) as Aliquota_pis'
@@ -376,328 +376,6 @@ object DMNFe: TDMNFe
         ParamType = ptInput
         Value = 0
       end>
-    object qryDadosProdutoANO: TSmallintField
-      FieldName = 'ANO'
-      Origin = '"TVENDASITENS"."ANO"'
-      Required = True
-    end
-    object qryDadosProdutoCODCONTROL: TIntegerField
-      FieldName = 'CODCONTROL'
-      Origin = '"TVENDASITENS"."CODCONTROL"'
-      Required = True
-    end
-    object qryDadosProdutoSEQ: TSmallintField
-      FieldName = 'SEQ'
-      Origin = '"TVENDASITENS"."SEQ"'
-      Required = True
-    end
-    object qryDadosProdutoCODPROD: TIBStringField
-      FieldName = 'CODPROD'
-      Origin = '"TVENDASITENS"."CODPROD"'
-      Required = True
-      Size = 10
-    end
-    object qryDadosProdutoCODBARRA_EAN: TIBStringField
-      FieldName = 'CODBARRA_EAN'
-      Origin = '"TBPRODUTO"."CODBARRA_EAN"'
-      Size = 15
-    end
-    object qryDadosProdutoDESCRI: TIBStringField
-      FieldName = 'DESCRI'
-      Origin = '"TBPRODUTO"."DESCRI"'
-      Size = 50
-    end
-    object qryDadosProdutoAPRESENTACAO: TIBStringField
-      FieldName = 'APRESENTACAO'
-      Origin = '"TBPRODUTO"."APRESENTACAO"'
-      Size = 50
-    end
-    object qryDadosProdutoDESCRI_APRESENTACAO: TIBStringField
-      FieldName = 'DESCRI_APRESENTACAO'
-      ProviderFlags = []
-      Size = 100
-    end
-    object qryDadosProdutoMODELO: TIBStringField
-      FieldName = 'MODELO'
-      Origin = '"TBPRODUTO"."MODELO"'
-      Size = 40
-    end
-    object qryDadosProdutoREFERENCIA: TIBStringField
-      FieldName = 'REFERENCIA'
-      Origin = '"TBPRODUTO"."REFERENCIA"'
-      Size = 15
-    end
-    object qryDadosProdutoNCM_SH: TIBStringField
-      FieldName = 'NCM_SH'
-      Origin = '"TBPRODUTO"."NCM_SH"'
-      Size = 10
-    end
-    object qryDadosProdutoNCM_ALIQUOTA_NAC: TIBBCDField
-      FieldName = 'NCM_ALIQUOTA_NAC'
-      Origin = '"SYS_IBPT"."ALIQNACIONAL_IBPT"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoNCM_ALIQUOTA_IMP: TIBBCDField
-      FieldName = 'NCM_ALIQUOTA_IMP'
-      Origin = '"SYS_IBPT"."ALIQINTERNACIONAL_IBPT"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoCODORIGEM: TIBStringField
-      FieldName = 'CODORIGEM'
-      Origin = '"TBPRODUTO"."CODORIGEM"'
-      Size = 1
-    end
-    object qryDadosProdutoCODTRIBUTACAO: TIBStringField
-      FieldName = 'CODTRIBUTACAO'
-      Origin = '"TBPRODUTO"."CODTRIBUTACAO"'
-      Size = 2
-    end
-    object qryDadosProdutoCST: TIBStringField
-      FieldName = 'CST'
-      Origin = '"TBPRODUTO"."CST"'
-      Size = 3
-    end
-    object qryDadosProdutoCSOSN: TIBStringField
-      FieldName = 'CSOSN'
-      Origin = '"TBPRODUTO"."CSOSN"'
-      Size = 3
-    end
-    object qryDadosProdutoCST_PIS: TIBStringField
-      FieldName = 'CST_PIS'
-      Origin = '"TBPRODUTO"."CST_PIS"'
-      Size = 3
-    end
-    object qryDadosProdutoCST_COFINS: TIBStringField
-      FieldName = 'CST_COFINS'
-      Origin = '"TBPRODUTO"."CST_COFINS"'
-      Size = 3
-    end
-    object qryDadosProdutoCST_PIS_INDICE_ACBR: TIntegerField
-      FieldName = 'CST_PIS_INDICE_ACBR'
-      ProviderFlags = []
-    end
-    object qryDadosProdutoCST_COFINS_INDICE_ACBR: TIntegerField
-      FieldName = 'CST_COFINS_INDICE_ACBR'
-      ProviderFlags = []
-    end
-    object qryDadosProdutoCODEMP: TIBStringField
-      FieldName = 'CODEMP'
-      Origin = '"TVENDASITENS"."CODEMP"'
-      Size = 18
-    end
-    object qryDadosProdutoCODCLI: TIBStringField
-      FieldName = 'CODCLI'
-      Origin = '"TVENDASITENS"."CODCLI"'
-      Size = 18
-    end
-    object qryDadosProdutoDTVENDA: TDateTimeField
-      FieldName = 'DTVENDA'
-      Origin = '"TVENDASITENS"."DTVENDA"'
-    end
-    object qryDadosProdutoQTDE: TIBBCDField
-      FieldName = 'QTDE'
-      Origin = '"TVENDASITENS"."QTDE"'
-      ProviderFlags = [pfInUpdate]
-      Precision = 18
-      Size = 3
-    end
-    object qryDadosProdutoPUNIT: TIBBCDField
-      FieldName = 'PUNIT'
-      Origin = '"TVENDASITENS"."PUNIT"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoPUNIT_PROMOCAO: TIBBCDField
-      FieldName = 'PUNIT_PROMOCAO'
-      Origin = '"TVENDASITENS"."PUNIT_PROMOCAO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoDESCONTO: TIBBCDField
-      FieldName = 'DESCONTO'
-      Origin = '"TVENDASITENS"."DESCONTO"'
-      Precision = 18
-      Size = 3
-    end
-    object qryDadosProdutoDESCONTO_VALOR: TIBBCDField
-      FieldName = 'DESCONTO_VALOR'
-      Origin = '"TVENDASITENS"."DESCONTO_VALOR"'
-      Precision = 18
-      Size = 4
-    end
-    object qryDadosProdutoPFINAL: TIBBCDField
-      FieldName = 'PFINAL'
-      Origin = '"TVENDASITENS"."PFINAL"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoQTDEFINAL: TIBBCDField
-      FieldName = 'QTDEFINAL'
-      Origin = '"TVENDASITENS"."QTDEFINAL"'
-      Precision = 18
-      Size = 3
-    end
-    object qryDadosProdutoUNID_COD: TSmallintField
-      FieldName = 'UNID_COD'
-      Origin = '"TVENDASITENS"."UNID_COD"'
-    end
-    object qryDadosProdutoUNP_DESCRICAO: TIBStringField
-      FieldName = 'UNP_DESCRICAO'
-      Origin = '"TBUNIDADEPROD"."UNP_DESCRICAO"'
-      Size = 50
-    end
-    object qryDadosProdutoUNP_SIGLA: TIBStringField
-      FieldName = 'UNP_SIGLA'
-      Origin = '"TBUNIDADEPROD"."UNP_SIGLA"'
-      Size = 5
-    end
-    object qryDadosProdutoCFOP_COD: TIntegerField
-      FieldName = 'CFOP_COD'
-      Origin = '"TVENDASITENS"."CFOP_COD"'
-    end
-    object qryDadosProdutoALIQUOTA: TIBBCDField
-      FieldName = 'ALIQUOTA'
-      Origin = '"TVENDASITENS"."ALIQUOTA"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoALIQUOTA_CSOSN: TIBBCDField
-      FieldName = 'ALIQUOTA_CSOSN'
-      Origin = '"TVENDASITENS"."ALIQUOTA_CSOSN"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoALIQUOTA_PIS: TIBBCDField
-      FieldName = 'ALIQUOTA_PIS'
-      ProviderFlags = []
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoALIQUOTA_COFINS: TIBBCDField
-      FieldName = 'ALIQUOTA_COFINS'
-      ProviderFlags = []
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoVALOR_IPI: TIBBCDField
-      FieldName = 'VALOR_IPI'
-      Origin = '"TVENDASITENS"."VALOR_IPI"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoPERCENTUAL_REDUCAO_BC: TIBBCDField
-      FieldName = 'PERCENTUAL_REDUCAO_BC'
-      ProviderFlags = []
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoVALOR_REDUCAO_BC: TIBBCDField
-      FieldName = 'VALOR_REDUCAO_BC'
-      ProviderFlags = []
-      Precision = 18
-      Size = 4
-    end
-    object qryDadosProdutoTOTAL_BRUTO: TIBBCDField
-      FieldName = 'TOTAL_BRUTO'
-      Origin = '"TVENDASITENS"."TOTAL_BRUTO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoTOTAL_DESCONTO: TIBBCDField
-      FieldName = 'TOTAL_DESCONTO'
-      Origin = '"TVENDASITENS"."TOTAL_DESCONTO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoTOTAL_LIQUIDO: TIBBCDField
-      FieldName = 'TOTAL_LIQUIDO'
-      Origin = '"TVENDASITENS"."TOTAL_LIQUIDO"'
-      Precision = 18
-      Size = 2
-    end
-    object qryDadosProdutoPRODUTO_NOVO: TSmallintField
-      FieldName = 'PRODUTO_NOVO'
-      Origin = '"TBPRODUTO"."PRODUTO_NOVO"'
-    end
-    object qryDadosProdutoCOR_VEICULO: TIBStringField
-      FieldName = 'COR_VEICULO'
-      Origin = '"TBPRODUTO"."COR_VEICULO"'
-      Size = 3
-    end
-    object qryDadosProdutoCOR_VEICULO_DESCRICAO: TIBStringField
-      FieldName = 'COR_VEICULO_DESCRICAO'
-      Origin = '"RENAVAM_COR"."DESCRICAO"'
-      Size = 50
-    end
-    object qryDadosProdutoCOMBUSTIVEL_VEICULO: TIBStringField
-      FieldName = 'COMBUSTIVEL_VEICULO'
-      Origin = '"TBPRODUTO"."COMBUSTIVEL_VEICULO"'
-      Size = 3
-    end
-    object qryDadosProdutoCOMBUSTIVEL_VEICULO_DESCRICAO: TIBStringField
-      FieldName = 'COMBUSTIVEL_VEICULO_DESCRICAO'
-      Origin = '"RENAVAM_COBUSTIVEL"."DESCRICAO"'
-      Size = 100
-    end
-    object qryDadosProdutoANO_FABRICACAO_VEICULO: TSmallintField
-      FieldName = 'ANO_FABRICACAO_VEICULO'
-      Origin = '"TBPRODUTO"."ANO_FABRICACAO_VEICULO"'
-    end
-    object qryDadosProdutoANO_MODELO_VEICULO: TSmallintField
-      FieldName = 'ANO_MODELO_VEICULO'
-      Origin = '"TBPRODUTO"."ANO_MODELO_VEICULO"'
-    end
-    object qryDadosProdutoANO_FAB_MODELO_VEICULO: TIBStringField
-      FieldName = 'ANO_FAB_MODELO_VEICULO'
-      ProviderFlags = []
-      Size = 13
-    end
-    object qryDadosProdutoTIPO_VEICULO: TIBStringField
-      FieldName = 'TIPO_VEICULO'
-      Origin = '"TBPRODUTO"."TIPO_VEICULO"'
-      Size = 3
-    end
-    object qryDadosProdutoTIPO_VEICULO_DESCRICAO: TIBStringField
-      FieldName = 'TIPO_VEICULO_DESCRICAO'
-      Origin = '"RENAVAM_TIPOVEICULO"."DESCRICAO"'
-      Size = 100
-    end
-    object qryDadosProdutoRENAVAM_VEICULO: TIBStringField
-      FieldName = 'RENAVAM_VEICULO'
-      Origin = '"TBPRODUTO"."RENAVAM_VEICULO"'
-      Size = 50
-    end
-    object qryDadosProdutoCHASSI_VEICULO: TIBStringField
-      FieldName = 'CHASSI_VEICULO'
-      Origin = '"TBPRODUTO"."CHASSI_VEICULO"'
-      Size = 50
-    end
-    object qryDadosProdutoKILOMETRAGEM_VEICULO: TIntegerField
-      FieldName = 'KILOMETRAGEM_VEICULO'
-      Origin = '"TBPRODUTO"."KILOMETRAGEM_VEICULO"'
-    end
-    object qryDadosProdutoESTOQUE: TIBBCDField
-      FieldName = 'ESTOQUE'
-      Origin = '"TBPRODUTO"."QTDE"'
-      ProviderFlags = []
-      Precision = 18
-      Size = 3
-    end
-    object qryDadosProdutoRESERVA: TIBBCDField
-      FieldName = 'RESERVA'
-      Origin = '"TBPRODUTO"."RESERVA"'
-      ProviderFlags = []
-      Precision = 18
-      Size = 3
-    end
-    object qryDadosProdutoDISPONIVEL: TIBBCDField
-      FieldName = 'DISPONIVEL'
-      ProviderFlags = []
-      Precision = 18
-      Size = 3
-    end
   end
   object frdEmpresa: TfrxDBDataset
     UserName = 'frdEmpresa'
@@ -979,7 +657,7 @@ object DMNFe: TDMNFe
         end
         object frdFone: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 34.015770000000000000
+          Top = 34.015770000000010000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -997,7 +675,7 @@ object DMNFe: TDMNFe
         end
         object Memo11: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 49.133890000000000000
+          Top = 49.133889999999990000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -1099,10 +777,17 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8W = (
-            ' [frdItens."DESCRI"] (Ref.: [frdItens."REFERENCIA"])')
+            
+              ' [frdItens."DESCRI"] [IIF(Trim(<frdItens."REFERENCIA">)='#39#39','#39#39','#39'(' +
+              'Ref.: '#39' + <frdItens."REFERENCIA"> + '#39')'#39')]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo4: TfrxMemoView
           Left = 366.614410000000000000
@@ -1246,7 +931,7 @@ object DMNFe: TDMNFe
         Top = 170.078850000000000000
         Width = 718.110700000000000000
         object frdVendaNOME: TfrxMemoView
-          Top = 11.338590000000000000
+          Top = 11.338590000000010000
           Width = 415.748300000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1295,7 +980,7 @@ object DMNFe: TDMNFe
         end
         object Memo9: TfrxMemoView
           Left = 415.748300000000000000
-          Top = 11.338590000000000000
+          Top = 11.338590000000010000
           Width = 207.874150000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1332,7 +1017,7 @@ object DMNFe: TDMNFe
         end
         object Memo13: TfrxMemoView
           Left = 623.622450000000000000
-          Top = 11.338590000000000000
+          Top = 11.338590000000010000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1350,13 +1035,13 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Line2: TfrxLineView
-          Top = 79.370130000000000000
+          Top = 79.370129999999990000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo23: TfrxMemoView
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 22.677180000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1374,7 +1059,7 @@ object DMNFe: TDMNFe
         end
         object Memo24: TfrxMemoView
           Left = 22.677180000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 52.913420000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1391,7 +1076,7 @@ object DMNFe: TDMNFe
         end
         object Memo25: TfrxMemoView
           Left = 75.590600000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 291.023639130000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1407,7 +1092,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo26: TfrxMemoView
-          Top = 41.574830000000000000
+          Top = 41.574829999999990000
           Width = 718.110700000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1427,7 +1112,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo27: TfrxMemoView
-          Top = 30.236240000000000000
+          Top = 30.236240000000010000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1443,7 +1128,7 @@ object DMNFe: TDMNFe
         end
         object Memo21: TfrxMemoView
           Left = 411.968770000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 37.795300000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1460,7 +1145,7 @@ object DMNFe: TDMNFe
         end
         object Memo20: TfrxMemoView
           Left = 449.764070000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1478,7 +1163,7 @@ object DMNFe: TDMNFe
         end
         object Memo19: TfrxMemoView
           Left = 514.016080000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1496,7 +1181,7 @@ object DMNFe: TDMNFe
         end
         object Memo16: TfrxMemoView
           Left = 578.268090000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 64.252010000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1514,7 +1199,7 @@ object DMNFe: TDMNFe
         end
         object Memo17: TfrxMemoView
           Left = 642.520100000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 75.590600000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1532,7 +1217,7 @@ object DMNFe: TDMNFe
         end
         object Memo22: TfrxMemoView
           Left = 366.614410000000000000
-          Top = 64.252010000000000000
+          Top = 64.252010000000010000
           Width = 45.354323390000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1592,7 +1277,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo28: TfrxMemoView
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 366.614410000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1622,7 +1307,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Line3: TfrxLineView
-          Top = 22.677180000000000000
+          Top = 22.677180000000020000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
@@ -1644,7 +1329,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo31: TfrxMemoView
-          Top = 26.456710000000000000
+          Top = 26.456709999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1658,7 +1343,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo32: TfrxMemoView
-          Top = 68.031540000000000000
+          Top = 68.031540000000010000
           Width = 718.110700000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1674,7 +1359,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo33: TfrxMemoView
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 718.110700000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1689,7 +1374,7 @@ object DMNFe: TDMNFe
         end
         object Memo34: TfrxMemoView
           Left = 366.614410000000000000
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 128.504020000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1724,7 +1409,7 @@ object DMNFe: TDMNFe
         end
         object Memo36: TfrxMemoView
           Left = 495.118430000000000000
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1759,7 +1444,7 @@ object DMNFe: TDMNFe
         end
         object Memo38: TfrxMemoView
           Left = 589.606680000000000000
-          Top = 98.267780000000000000
+          Top = 98.267780000000010000
           Width = 128.504020000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -1827,7 +1512,7 @@ object DMNFe: TDMNFe
         end
         object Memo42: TfrxMemoView
           Left = 234.330860000000000000
-          Top = 324.039580000000000000
+          Top = 324.039579999999900000
           Width = 249.448980000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -1844,7 +1529,7 @@ object DMNFe: TDMNFe
         end
         object mmTextoAutorizacao: TfrxMemoView
           Left = 37.795300000000000000
-          Top = 211.653680000000000000
+          Top = 211.653679999999900000
           Width = 623.622450000000000000
           Height = 45.354360000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -2090,6 +1775,7 @@ object DMNFe: TDMNFe
       'TOTALVENDA=TOTALVENDA'
       'DTFINALIZACAO_VENDA=DTFINALIZACAO_VENDA'
       'OBS=OBS'
+      'DADOS_ENTREGA=DADOS_ENTREGA'
       'SERIE=SERIE'
       'NFE=NFE'
       'LOTE_NFE_ANO=LOTE_NFE_ANO'
@@ -2103,6 +1789,7 @@ object DMNFe: TDMNFe
       'CFOP=CFOP'
       'CFOP_DESCRICAO=CFOP_DESCRICAO'
       'CFOP_INFORMACAO_FISCO=CFOP_INFORMACAO_FISCO'
+      'CFOP_DEVOLUCAO=CFOP_DEVOLUCAO'
       'VERIFICADOR_NFE=VERIFICADOR_NFE'
       'XML_NFE_FILENAME=XML_NFE_FILENAME'
       'XML_NFE=XML_NFE'
@@ -2138,7 +1825,21 @@ object DMNFe: TDMNFe
       'NFE_TRANSPORTADORA_UF=NFE_TRANSPORTADORA_UF'
       'NFE_PLACA_VEICULO=NFE_PLACA_VEICULO'
       'NFE_PLACA_UF=NFE_PLACA_UF'
-      'NFE_PLACA_RNTC=NFE_PLACA_RNTC')
+      'NFE_PLACA_RNTC=NFE_PLACA_RNTC'
+      'DNFE_COMPRA_ANO=DNFE_COMPRA_ANO'
+      'DNFE_COMPRA_COD=DNFE_COMPRA_COD'
+      'DNFE_FORMA=DNFE_FORMA'
+      'DNFE_CHAVE=DNFE_CHAVE'
+      'DNFE_UF=DNFE_UF'
+      'DNFE_CNPJ_CPF=DNFE_CNPJ_CPF'
+      'DNFE_IE=DNFE_IE'
+      'DNFE_COMPETENCIA=DNFE_COMPETENCIA'
+      'DNFE_SERIE=DNFE_SERIE'
+      'DNFE_NUMERO=DNFE_NUMERO'
+      'DNFE_MODELO=DNFE_MODELO'
+      'DECF_MODELO=DECF_MODELO'
+      'DECF_NUMERO=DECF_NUMERO'
+      'DECF_COO=DECF_COO')
     DataSet = qryCalculoImposto
     BCDToCurrency = False
     Left = 184
@@ -2521,6 +2222,7 @@ object DMNFe: TDMNFe
       '  , v.Totalvenda'
       '  , v.Dtfinalizacao_venda'
       '  , v.Obs'
+      '  , v.Dados_entrega'
       '  , v.Serie'
       '  , v.Nfe'
       '  , v.Lote_nfe_ano'
@@ -3735,8 +3437,8 @@ object DMNFe: TDMNFe
       '  , ib.ncm_aliquota_imp as Ncm_aliquota_imp'
       '  , p.Codorigem'
       '  , p.Codtributacao'
-      '  , p.Cst'
-      '  , p.Csosn'
+      '  , coalesce(nullif(trim(i.cst), '#39#39'), p.Cst) as Cst'
+      '  , coalesce(nullif(trim(i.Csosn), '#39#39'), p.Csosn) as Csosn'
       '  , p.Cst_pis'
       '  , p.Cst_cofins'
       '  , coalesce(ps.Indice_acbr, 32) as Cst_pis_indice_ACBr'
@@ -13095,10 +12797,17 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = []
           Memo.UTF8W = (
-            ' [frdItens."DESCRI"] (Ref.: [frdItens."REFERENCIA"])')
+            
+              ' [frdItens."DESCRI"] [IIF(Trim(<frdItens."REFERENCIA">)='#39#39','#39#39','#39'(' +
+              'Ref.: '#39' + <frdItens."REFERENCIA"> + '#39')'#39')]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo4: TfrxMemoView
           Left = 366.614410000000000000
@@ -31413,7 +31122,7 @@ object DMNFe: TDMNFe
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40928.407150601900000000
-    ReportOptions.LastChange = 42110.787176539350000000
+    ReportOptions.LastChange = 42110.787176539300000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -31533,7 +31242,7 @@ object DMNFe: TDMNFe
             
               '[IIF(<frdVenda."STATUS">=1,'#39'Or'#231'amento'#39',IIF(<frdVenda."STATUS">=2' +
               ','#39'Or'#231'amento'#39',IIF(<frdVenda."STATUS">=3,'#39'Finalizada'#39',IIF(<frdVend' +
-              'a."STATUS">=4,'#39'Gerada NF-e'#39','#39'Cancelada'#39'))))]')
+              'a."STATUS">=4,'#39'NF-e autorizada'#39','#39'Cancelada'#39'))))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -31656,14 +31365,14 @@ object DMNFe: TDMNFe
       object bndMasterData: TfrxMasterData
         FillType = ftBrush
         Height = 18.897650000000000000
-        Top = 302.362400000000000000
+        Top = 468.661720000000000000
         Width = 718.110700000000000000
         DataSet = frdItens
         DataSetName = 'frdItens'
         RowCount = 0
         object frdItensCODPROD: TfrxMemoView
           Left = 22.677180000000000000
-          Width = 52.913420000000000000
+          Width = 71.811070000000000000
           Height = 18.897650000000000000
           DataSet = frdItens
           DataSetName = 'frdItens'
@@ -31696,8 +31405,8 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object frdItensDESCRI: TfrxMemoView
-          Left = 75.590600000000000000
-          Width = 291.023639130000000000
+          Left = 94.488250000000000000
+          Width = 445.984369130000000000
           Height = 18.897650000000000000
           DataSet = frdItens
           DataSetName = 'frdItens'
@@ -31707,14 +31416,21 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = []
           Memo.UTF8W = (
-            ' [frdItens."DESCRI"] (Ref.: [frdItens."REFERENCIA"])')
+            
+              ' [frdItens."DESCRI"] [IIF(Trim(<frdItens."REFERENCIA">)='#39#39','#39#39','#39'(' +
+              'Ref.: '#39' + <frdItens."REFERENCIA"> + '#39')'#39')]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
         end
         object Memo4: TfrxMemoView
-          Left = 366.614410000000000000
-          Width = 45.354360000000000000
+          Left = 540.472790000000000000
+          Width = 64.252010000000000000
           Height = 18.897650000000000000
           DataSet = frdItens
           DataSetName = 'frdItens'
@@ -31730,91 +31446,19 @@ object DMNFe: TDMNFe
           WordWrap = False
           VAlign = vaCenter
         end
-        object Memo7: TfrxMemoView
-          Left = 642.520100000000000000
-          Width = 75.590600000000000000
-          Height = 18.897650000000000000
-          DataSet = frdItens
-          DataSetName = 'frdItens'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdItens."TOTAL_LIQUIDO">)] ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
         object Memo5: TfrxMemoView
-          Left = 411.968770000000000000
-          Width = 37.795300000000000000
+          Left = 604.724800000000000000
+          Width = 113.385900000000000000
           Height = 18.897650000000000000
           DataSet = frdItens
           DataSetName = 'frdItens'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -11
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = []
           Memo.UTF8W = (
-            ' [frdItens."UNP_SIGLA"]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo6: TfrxMemoView
-          Left = 449.764070000000000000
-          Width = 64.252010000000000000
-          Height = 18.897650000000000000
-          DataSet = frdItens
-          DataSetName = 'frdItens'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdItens."PUNIT">)] ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo15: TfrxMemoView
-          Left = 514.016080000000000000
-          Width = 64.252010000000000000
-          Height = 18.897650000000000000
-          DataSet = frdItens
-          DataSetName = 'frdItens'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdItens."DESCONTO_VALOR">)] ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo18: TfrxMemoView
-          Left = 578.268090000000000000
-          Width = 64.252010000000000000
-          Height = 18.897650000000000000
-          DataSet = frdItens
-          DataSetName = 'frdItens'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = []
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdItens."PFINAL">)] ')
+            ' [frdItens."UNP_DESCRICAO"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -31823,7 +31467,7 @@ object DMNFe: TDMNFe
       object bndPageFooter: TfrxPageFooter
         FillType = ftBrush
         Height = 22.677180000000000000
-        Top = 737.008350000000000000
+        Top = 805.039890000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
           Left = 566.929500000000000000
@@ -31836,7 +31480,7 @@ object DMNFe: TDMNFe
           Font.Style = []
           HAlign = haRight
           Memo.UTF8W = (
-            'P '#225' g i n a :  [Page#]')
+            'P '#225' g i n a :  [Page#] / [TotalPages#]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -31849,12 +31493,21 @@ object DMNFe: TDMNFe
         Font.Height = -11
         Font.Name = 'Lucida Console'
         Font.Style = []
-        Height = 109.606370000000000000
+        Height = 275.905690000000000000
         ParentFont = False
         Top = 170.078850000000000000
         Width = 718.110700000000000000
+        object Shape1: TfrxShapeView
+          Top = 22.677179999999990000
+          Width = 718.110700000000000000
+          Height = 86.929190000000000000
+          Curve = 1
+          Frame.Width = 0.100000000000000000
+          Shape = skRoundRectangle
+        end
         object frdVendaNOME: TfrxMemoView
-          Top = 37.795300000000000000
+          Left = 3.779530000000000000
+          Top = 56.692949999999990000
           Width = 415.748300000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -31865,12 +31518,13 @@ object DMNFe: TDMNFe
           Font.Name = 'Calibri'
           Font.Style = []
           Memo.UTF8W = (
-            ' [frdCliente."NOME"]')
+            '[frdCliente."NOME"]')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo2: TfrxMemoView
-          Top = 26.456709999999990000
+          Left = 3.779530000000000000
+          Top = 45.354360000000010000
           Width = 415.748300000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -31879,14 +31533,14 @@ object DMNFe: TDMNFe
           Font.Name = 'Calibri'
           Font.Style = [fsBold]
           Memo.UTF8W = (
-            ' Cliente:')
+            'Nome:')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo8: TfrxMemoView
-          Left = 415.748300000000000000
-          Top = 26.456709999999990000
-          Width = 207.874150000000000000
+          Left = 419.527830000000000000
+          Top = 45.354360000000010000
+          Width = 200.315090000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -31899,9 +31553,9 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo9: TfrxMemoView
-          Left = 415.748300000000000000
-          Top = 37.795300000000000000
-          Width = 207.874150000000000000
+          Left = 419.527830000000000000
+          Top = 56.692949999999990000
+          Width = 200.315090000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
@@ -31920,8 +31574,8 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo12: TfrxMemoView
-          Left = 623.622450000000000000
-          Top = 26.456709999999990000
+          Left = 619.842920000000000000
+          Top = 45.354359999999990000
           Width = 94.488250000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -31931,14 +31585,14 @@ object DMNFe: TDMNFe
           Font.Style = [fsBold]
           HAlign = haRight
           Memo.UTF8W = (
-            'Data: ')
+            'Data:')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
         object Memo13: TfrxMemoView
-          Left = 623.622450000000000000
-          Top = 37.795300000000000000
+          Left = 619.842920000000000000
+          Top = 56.692949999999990000
           Width = 94.488250000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -31950,24 +31604,24 @@ object DMNFe: TDMNFe
           Font.Style = []
           HAlign = haRight
           Memo.UTF8W = (
-            ' [FormatDateTime('#39'dd/mm/yyyy'#39',<frdVenda."DTVENDA">)] ')
+            ' [FormatDateTime('#39'dd/mm/yyyy'#39',<frdVenda."DTVENDA">)]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
         object Line2: TfrxLineView
-          Top = 105.826840000000000000
+          Top = 275.905690000000000000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
         object Memo23: TfrxMemoView
-          Top = 90.708720000000030000
+          Top = 260.787570000000000000
           Width = 22.677180000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = [fsBold]
           Fill.BackColor = 14211288
@@ -31980,12 +31634,12 @@ object DMNFe: TDMNFe
         end
         object Memo24: TfrxMemoView
           Left = 22.677180000000000000
-          Top = 90.708720000000030000
-          Width = 52.913420000000000000
+          Top = 260.787570000000000000
+          Width = 71.811070000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = [fsBold]
           Fill.BackColor = 14211288
@@ -31996,13 +31650,13 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo25: TfrxMemoView
-          Left = 75.590600000000000000
-          Top = 90.708720000000030000
-          Width = 291.023639130000000000
+          Left = 94.488250000000000000
+          Top = 260.787570000000000000
+          Width = 445.984369130000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = [fsBold]
           Fill.BackColor = 14211288
@@ -32013,8 +31667,9 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo26: TfrxMemoView
-          Top = 68.031540000000010000
-          Width = 718.110700000000000000
+          Left = 3.779530000000000000
+          Top = 86.929190000000000000
+          Width = 710.551640000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
@@ -32025,16 +31680,28 @@ object DMNFe: TDMNFe
           Font.Style = []
           Memo.UTF8W = (
             
-              ' [Trim(<frdCliente."TLG_SIGLA"> + '#39' '#39' + <frdCliente."LOG_NOME">)' +
-              '], [frdCliente."NUMERO_END"], [frdCliente."BAI_NOME"] - [frdClie' +
-              'nte."CID_NOME"]/[frdCliente."EST_SIGLA"]')
+              '[Trim(<frdCliente."TLG_SIGLA"> + '#39' '#39' + <frdCliente."LOG_NOME">)]' +
+              ', [frdCliente."NUMERO_END"], [frdCliente."BAI_NOME"] - [frdClien' +
+              'te."CID_NOME"]/[frdCliente."EST_SIGLA"]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end
+            item
+            end>
         end
         object Memo27: TfrxMemoView
-          Top = 56.692949999999990000
-          Width = 718.110700000000000000
+          Left = 3.779530000000000000
+          Top = 75.590600000000000000
+          Width = 710.551640000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -32042,77 +31709,23 @@ object DMNFe: TDMNFe
           Font.Name = 'Calibri'
           Font.Style = [fsBold]
           Memo.UTF8W = (
-            ' Endere'#231'o:')
+            'Endere'#231'o:')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo21: TfrxMemoView
-          Left = 411.968770000000000000
-          Top = 90.708720000000030000
-          Width = 37.795300000000000000
+          Left = 604.724800000000000000
+          Top = 260.787570000000000000
+          Width = 113.385900000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = [fsBold]
           Fill.BackColor = 14211288
           Memo.UTF8W = (
-            ' Und.')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo20: TfrxMemoView
-          Left = 449.764070000000000000
-          Top = 90.708720000000030000
-          Width = 64.252010000000000000
-          Height = 15.118120000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          Fill.BackColor = 14211288
-          HAlign = haRight
-          Memo.UTF8W = (
-            'V. Bruto ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo19: TfrxMemoView
-          Left = 514.016080000000000000
-          Top = 90.708720000000030000
-          Width = 64.252010000000000000
-          Height = 15.118120000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          Fill.BackColor = 14211288
-          HAlign = haRight
-          Memo.UTF8W = (
-            'V. Desc. ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo16: TfrxMemoView
-          Left = 578.268090000000000000
-          Top = 90.708720000000030000
-          Width = 64.252010000000000000
-          Height = 15.118120000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          Fill.BackColor = 14211288
-          HAlign = haRight
-          Memo.UTF8W = (
-            'V. L'#237'quido ')
+            ' Unidade')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
@@ -32130,74 +31743,95 @@ object DMNFe: TDMNFe
           Font.Style = [fsBold]
           HAlign = haCenter
           Memo.UTF8W = (
-            'TERMO DE RECEBIMENTO DE MERCADORIAS/PRODUTOS')
+            'NOTA DE ENTREGA '#192' DOMIC'#205'LIO')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo22: TfrxMemoView
-          Left = 366.614410000000000000
-          Top = 90.708720000000030000
-          Width = 45.354323390000000000
+          Left = 540.472790000000000000
+          Top = 260.787570000000000000
+          Width = 64.251973390000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
+          Font.Height = -9
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = [fsBold]
           Fill.BackColor = 14211288
           HAlign = haRight
           Memo.UTF8W = (
-            'Qtde.')
+            'Quant. ')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
         end
-        object Memo17: TfrxMemoView
-          Left = 642.520100000000000000
-          Top = 90.708720000000030000
-          Width = 75.590600000000000000
+        object Memo6: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 26.456709999999990000
+          Width = 710.551640000000000000
           Height = 15.118120000000000000
+          CharSpacing = 4.000000000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -8
-          Font.Name = 'Lucida Sans Typewriter'
+          Font.Height = -11
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
-          Fill.BackColor = 14211288
-          HAlign = haRight
           Memo.UTF8W = (
-            'T O T A L ')
+            'DADOS CLIENTE')
           ParentFont = False
-          WordWrap = False
           VAlign = vaCenter
+        end
+        object Shape2: TfrxShapeView
+          Top = 113.385900000000000000
+          Width = 718.110700000000000000
+          Height = 143.622140000000000000
+          Curve = 1
+          Fill.BackColor = clBtnFace
+          Frame.Width = 0.100000000000000000
+          Shape = skRoundRectangle
+        end
+        object Memo7: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 117.165430000000000000
+          Width = 710.551640000000000000
+          Height = 15.118120000000000000
+          CharSpacing = 4.000000000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            'DADOS DE ENTREGA')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frdVendaDADOS_ENTREGA: TfrxMemoView
+          Left = 3.779530000000000000
+          Top = 132.283550000000000000
+          Width = 710.551640000000000000
+          Height = 120.944960000000000000
+          DataSet = frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          HAlign = haBlock
+          Memo.UTF8W = (
+            '[frdVenda."DADOS_ENTREGA"]')
+          ParentFont = False
         end
       end
       object bndReportSummary: TfrxReportSummary
         FillType = ftBrush
-        Height = 332.598640000000000000
-        Top = 381.732530000000000000
+        Height = 234.330860000000000000
+        Top = 548.031849999999900000
         Width = 718.110700000000000000
-        object SysMemo1: TfrxSysMemoView
-          Left = 623.622450000000000000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          Frame.Typ = [ftTop]
-          HAlign = haRight
-          Memo.UTF8W = (
-            
-              '[FormatFloat('#39',0.00'#39',SUM(<frdItens."TOTAL_LIQUIDO">,bndMasterDat' +
-              'a,2))] ')
-          ParentFont = False
-          VAlign = vaCenter
-          WordWrap = False
-        end
         object Memo14: TfrxMemoView
-          Left = 480.000310000000000000
-          Width = 143.622140000000000000
+          Left = 540.472790000000000000
+          Width = 177.637910000000000000
           Height = 18.897650000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -32206,15 +31840,15 @@ object DMNFe: TDMNFe
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
           Fill.BackColor = 14211288
-          HAlign = haRight
           Memo.UTF8W = (
-            'T O T A L    G E R A L :')
+            'Total de itens: [FormatFloat('#39',0.##'#39',COUNT(bndMasterData,2))] ')
           ParentFont = False
+          WordWrap = False
           VAlign = vaCenter
         end
         object Memo28: TfrxMemoView
-          Top = 98.267780000000010000
-          Width = 366.614410000000000000
+          Top = 37.795300000000110000
+          Width = 370.393940000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
@@ -32229,8 +31863,8 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo29: TfrxMemoView
-          Top = 86.929190000000000000
-          Width = 366.614410000000000000
+          Top = 26.456710000000040000
+          Width = 370.393940000000000000
           Height = 11.338590000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -32243,187 +31877,22 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Line3: TfrxLineView
-          Top = 22.677180000000020000
+          Top = 22.677180000000250000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
-        object Memo30: TfrxMemoView
-          Top = 37.795300000000000000
-          Width = 718.110700000000000000
-          Height = 18.897650000000000000
-          DataSet = frdVenda
-          DataSetName = 'frdVenda'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = []
-          Memo.UTF8W = (
-            ' [frdVenda."LISTA_FORMA_PAGO"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo31: TfrxMemoView
-          Top = 26.456709999999990000
-          Width = 718.110700000000000000
-          Height = 11.338590000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          Memo.UTF8W = (
-            ' Forma de Pagamento:')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo32: TfrxMemoView
-          Top = 68.031540000000010000
-          Width = 718.110700000000000000
-          Height = 18.897650000000000000
-          DataSet = frdVenda
-          DataSetName = 'frdVenda'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = []
-          Memo.UTF8W = (
-            ' [frdVenda."LISTA_COND_PAGO"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo33: TfrxMemoView
-          Top = 56.692949999999990000
-          Width = 718.110700000000000000
-          Height = 11.338590000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          Memo.UTF8W = (
-            ' Condi'#231#227'o de Pagamento:')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo34: TfrxMemoView
-          Left = 366.614410000000000000
-          Top = 98.267780000000010000
-          Width = 128.504020000000000000
-          Height = 18.897650000000000000
-          DataSet = frdVenda
-          DataSetName = 'frdVenda'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdVenda."TOTALVENDABRUTA">)] ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo35: TfrxMemoView
-          Left = 366.614410000000000000
-          Top = 86.929190000000000000
-          Width = 128.504020000000000000
-          Height = 11.338590000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8W = (
-            ' Total Venda: ')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo36: TfrxMemoView
-          Left = 495.118430000000000000
-          Top = 98.267780000000010000
-          Width = 94.488250000000000000
-          Height = 18.897650000000000000
-          DataSet = frdVenda
-          DataSetName = 'frdVenda'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdVenda."DESCONTO">)] ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo37: TfrxMemoView
-          Left = 495.118430000000000000
-          Top = 86.929190000000000000
-          Width = 94.488250000000000000
-          Height = 11.338590000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8W = (
-            ' Desconto: ')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object Memo38: TfrxMemoView
-          Left = 589.606680000000000000
-          Top = 98.267780000000010000
-          Width = 128.504020000000000000
-          Height = 18.897650000000000000
-          DataSet = frdVenda
-          DataSetName = 'frdVenda'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8W = (
-            '[FormatFloat('#39',0.00'#39',<frdVenda."TOTALVENDA">)] ')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo39: TfrxMemoView
-          Left = 589.606680000000000000
-          Top = 86.929190000000000000
-          Width = 128.504020000000000000
-          Height = 11.338590000000000000
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
-          HAlign = haRight
-          Memo.UTF8W = (
-            ' Total L'#237'quido: ')
-          ParentFont = False
-          VAlign = vaCenter
-        end
         object Memo40: TfrxMemoView
-          Top = 132.283550000000000000
+          Top = 71.811069999999970000
           Width = 718.110700000000000000
-          Height = 45.354360000000000000
+          Height = 34.015770000000010000
           DataSet = frdVenda
           DataSetName = 'frdVenda'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Lucida Sans Typewriter'
-          Font.Style = [fsBold]
+          Font.Style = []
           Frame.Typ = [ftLeft, ftRight, ftBottom]
           HAlign = haCenter
           Memo.UTF8W = (
@@ -32432,7 +31901,7 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo41: TfrxMemoView
-          Top = 117.165430000000000000
+          Top = 56.692949999999990000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -32447,39 +31916,100 @@ object DMNFe: TDMNFe
           VAlign = vaCenter
         end
         object Memo42: TfrxMemoView
-          Left = 234.330860000000000000
-          Top = 301.362400000000000000
-          Width = 249.448980000000000000
-          Height = 26.456710000000000000
+          Left = 41.574830000000000000
+          Top = 214.433210000000000000
+          Width = 185.196970000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Console'
+          Font.Height = -16
+          Font.Name = 'Calibri'
           Font.Style = [fsBold]
           Frame.Typ = [ftTop]
-          HAlign = haCenter
           Memo.UTF8W = (
-            'Assinatura do Recebedor'
-            'CPF/RG')
+            'Local')
           ParentFont = False
           VAlign = vaCenter
         end
         object Memo43: TfrxMemoView
-          Left = 37.795300000000000000
-          Top = 192.756030000000000000
+          Left = 41.574830000000000000
+          Top = 109.606370000000000000
           Width = 623.622450000000000000
           Height = 45.354360000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -16
-          Font.Name = 'Arial Narrow'
+          Font.Name = 'Calibri'
           Font.Style = []
           HAlign = haBlock
           Memo.UTF8W = (
             
-              '                 Declaro, sob penas da lei, que recebi os produt' +
-              'os e/ou mercadorias, constante da nota fiscal acima.')
+              'Afirmo ter recebido a(s) mercadoria(s), em perfeito estado, que ' +
+              'consta(m) neste documento.')
           ParentFont = False
+        end
+        object Memo15: TfrxMemoView
+          Left = 230.551330000000000000
+          Top = 214.433210000000000000
+          Width = 90.708720000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop]
+          Memo.UTF8W = (
+            'Data')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo16: TfrxMemoView
+          Left = 325.039580000000000000
+          Top = 214.433210000000000000
+          Width = 340.157700000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftTop]
+          Memo.UTF8W = (
+            'Assinatura')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo17: TfrxMemoView
+          Left = 41.574830000000000000
+          Top = 158.740260000000000000
+          Width = 185.196970000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            'Recebido por:')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          Left = 230.551330000000000000
+          Top = 196.535560000000000000
+          Width = 90.708720000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '/   /')
+          ParentFont = False
+          VAlign = vaCenter
         end
       end
     end

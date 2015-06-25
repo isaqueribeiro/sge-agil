@@ -4,29 +4,35 @@ inherited frmGrMemo: TfrmGrMemo
   ActiveControl = edObservacao
   BorderStyle = bsToolWindow
   Caption = 'Observa'#231#227'o'
+  ClientHeight = 303
+  ClientWidth = 549
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 0
-    Top = 290
-    Width = 539
+    Top = 299
+    Width = 549
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 290
+    ExplicitWidth = 539
   end
   object Bevel3: TBevel
     Left = 0
-    Top = 251
-    Width = 539
+    Top = 260
+    Width = 549
     Height = 4
     Align = alBottom
     Shape = bsSpacer
+    ExplicitTop = 251
+    ExplicitWidth = 539
   end
   object edObservacao: TMemo
     Left = 0
     Top = 0
-    Width = 539
-    Height = 251
+    Width = 549
+    Height = 260
     Align = alClient
     Color = clWhite
     Font.Charset = ANSI_CHARSET
@@ -41,8 +47,8 @@ inherited frmGrMemo: TfrmGrMemo
   end
   object tlbBotoes: TPanel
     Left = 0
-    Top = 255
-    Width = 539
+    Top = 264
+    Width = 549
     Height = 35
     Align = alBottom
     BevelOuter = bvNone
@@ -50,33 +56,31 @@ inherited frmGrMemo: TfrmGrMemo
     ParentColor = True
     TabOrder = 1
     object Bevel2: TBevel
-      Left = 438
+      Left = 448
       Top = 0
       Width = 4
       Height = 35
       Align = alRight
       Shape = bsSpacer
+      ExplicitLeft = 438
     end
     object bvlTool4: TBevel
-      Left = 535
+      Left = 545
       Top = 0
       Width = 4
       Height = 35
       Align = alRight
       Shape = bsSpacer
+      ExplicitLeft = 535
     end
     object BtnConfirmar: TcxButton
-      Left = 345
+      Left = 355
       Top = 0
       Width = 93
       Height = 35
-      Caption = '&Confirma'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 0
-      OnClick = BtnConfirmarClick
       Align = alRight
-      Glyph.Data = {
+      Caption = '&Confirma'
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         18000000000000060000000000000000000000000000000000000000FF0000FF
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -127,21 +131,21 @@ inherited frmGrMemo: TfrmGrMemo
         0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
         FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = BtnConfirmarClick
     end
     object BtnCancelar: TcxButton
-      Left = 442
+      Left = 452
       Top = 0
       Width = 93
       Height = 35
+      Align = alRight
       Cancel = True
       Caption = 'Cancelar'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 1
-      OnClick = BtnCancelarClick
-      Align = alRight
-      Glyph.Data = {
+      OptionsImage.Glyph.Data = {
         36060000424D3606000000000000360000002800000020000000100000000100
         180000000000000600000000000000000000000000000000000000FF0000FF00
         00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -192,7 +196,11 @@ inherited frmGrMemo: TfrmGrMemo
         00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
         0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
         BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
-      NumGlyphs = 2
+      OptionsImage.NumGlyphs = 2
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      OnClick = BtnCancelarClick
     end
   end
 end

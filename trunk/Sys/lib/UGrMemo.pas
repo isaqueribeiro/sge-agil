@@ -5,7 +5,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, UGrPadrao, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters,
-  Menus, StdCtrls, cxButtons, ExtCtrls, ToolWin, ComCtrls;
+  Menus, StdCtrls, cxButtons, ExtCtrls, ToolWin, ComCtrls, dxSkinsCore,
+  dxSkinMcSkin, dxSkinOffice2007Green, dxSkinOffice2013DarkGray,
+  dxSkinOffice2013LightGray, dxSkinOffice2013White;
 
 type
   TfrmGrMemo = class(TfrmGrPadrao)
@@ -28,6 +30,7 @@ type
 
   function SetMemoObservacao(const AOnwer : TComponent; var sObservacao : TStringList) : Boolean;
   function SetMemoMotivo(const AOnwer : TComponent; var sMotivo : TStringList) : Boolean;
+  function SetDadosEntrega(const AOnwer : TComponent; var sDadosEntrega : TStringList) : Boolean;
 
 implementation
 
@@ -72,6 +75,29 @@ begin
     begin
       sMotivo.Clear;
       sMotivo.AddStrings( AForm.edObservacao.Lines );
+    end;
+  finally
+    AForm.Free;
+  end;
+end;
+
+function SetDadosEntrega(const AOnwer : TComponent; var sDadosEntrega : TStringList) : Boolean;
+var
+  AForm : TfrmGrMemo;
+begin
+  AForm := TfrmGrMemo.Create(AOnwer);
+  try
+    AForm.Caption := 'Dados de Entrega:';
+    AForm.edObservacao.Clear;
+    AForm.edObservacao.MaxLength := 1024;
+    AForm.edObservacao.Lines.AddStrings( sDadosEntrega );
+    AForm.edObservacao.Font.Name := 'Lucida Console';
+
+    Result := (AForm.ShowModal = mrOk);
+    if Result then
+    begin
+      sDadosEntrega.Clear;
+      sDadosEntrega.AddStrings( AForm.edObservacao.Lines );
     end;
   finally
     AForm.Free;

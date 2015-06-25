@@ -353,6 +353,9 @@ type
     IbDtstTabelaCANCEL_MOTIVO: TMemoField;
     cdsTabelaItensTOTAL_BRUTO: TIBBCDField;
     cdsTabelaItensTOTAL_LIQUIDO: TIBBCDField;
+    cdsTabelaItensCSOSN: TIBStringField;
+    lblCSOSN: TLabel;
+    dbCSOSN: TDBEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);
@@ -871,6 +874,9 @@ begin
         if ( Trim(FieldByName('Cst').AsString) <> EmptyStr ) then
           cdsTabelaItensCST.AsString       := FieldByName('Cst').AsString;
 
+        if ( Trim(FieldByName('Csosn').AsString) <> EmptyStr ) then
+          cdsTabelaItensCSOSN.AsString     := FieldByName('Csosn').AsString;
+
         if ( (qryCFOP.FieldByName('Cfop_cst_padrao_entrada').AsString) <> EmptyStr ) then
           cdsTabelaItensCST.AsString := Trim(qryCFOP.FieldByName('Cfop_cst_padrao_entrada').AsString);
 
@@ -1013,6 +1019,52 @@ begin
 end;
 
 procedure TfrmGeEntradaEstoque.btnProdutoSalvarClick(Sender: TObject);
+
+  procedure GetToTais(var Total_Bruto, Total_Desconto, Total_Liquido, vBC_ICMS, vICMS: Currency);
+  var
+    Item : Integer;
+  begin
+    Item         := cdsTabelaItensSEQ.AsInteger;
+    Total_Bruto    := 0.0;
+    Total_desconto := 0.0;
+    Total_Liquido  := 0.0;
+    vBC_ICMS       := 0.0;
+    vICMS          := 0.0;
+
+    cdsTabelaItens.First;
+
+    while not cdsTabelaItens.Eof do
+    begin
+      Total_Bruto    := Total_Bruto + cdsTabelaItensTOTAL_BRUTO.AsCurrency;
+
+      if ( cdsTabelaItensPERCENTUAL_REDUCAO_BC.AsCurrency > 0 ) then
+      begin
+        vBC_ICMS := vBC_ICMS + (cdsTabelaItensTOTAL_BRUTO.AsCurrency * cdsTabelaItensPERCENTUAL_REDUCAO_BC.AsCurrency / 100);
+        vICMS    := vICMS    + (((cdsTabelaItensTOTAL_BRUTO.AsCurrency * cdsTabelaItensPERCENTUAL_REDUCAO_BC.AsCurrency / 100)) * cdsTabelaItensALIQUOTA.AsCurrency / 100);
+      end
+      else
+      begin
+        vBC_ICMS := vBC_ICMS + cdsTabelaItensTOTAL_BRUTO.AsCurrency;
+        vICMS    := vICMS    + (cdsTabelaItensTOTAL_BRUTO.AsCurrency * cdsTabelaItensALIQUOTA.AsCurrency / 100);
+      end;
+
+
+      cdsTabelaItens.Next;
+    end;
+
+    Total_desconto := IbDtstTabelaDESCONTO.AsCurrency;
+    Total_Liquido  := Total_Bruto - Total_desconto;
+
+    cdsTabelaItens.Locate('SEQ', Item, []);
+  end;
+
+var
+  cDescontos    ,
+  cTotalBruto   ,
+  cTotalDesconto,
+  cTotalLiquido ,
+  cValorBaseIcms,
+  cValorIcms    : Currency;
 begin
   if ( cdsTabelaItens.State in [dsEdit, dsInsert] ) then
   begin
@@ -1043,6 +1095,14 @@ begin
     begin
 
       cdsTabelaItens.Post;
+
+      GetToTais(cTotalBruto, cTotalDesconto, cTotalLiquido, cValorBaseIcms, cValorIcms);
+
+      IbDtstTabelaICMSBASE.AsCurrency  := cValorBaseIcms;
+      IbDtstTabelaICMSVALOR.AsCurrency := cValorIcms;
+      IbDtstTabelaTOTALPROD.AsCurrency := cTotalBruto;
+      IbDtstTabelaDESCONTO.AsCurrency  := cTotalDesconto;
+      IbDtstTabelaTOTALNF.AsCurrency   := cTotalLiquido + IbDtstTabelaIPI.AsCurrency;
 
       if ( btnProdutoInserir.Visible and btnProdutoInserir.Enabled ) then
         btnProdutoInserir.SetFocus;
@@ -1949,7 +2009,7 @@ begin
     begin
       Close;
       SQL.Clear;
-      SQL.Add('Update TBCOMPRASITENS Set ');
+      SQL.Add('Update TBCOMPRAS Set ');
       SQL.Add('    LOTE_NFE_ANO    = null');
       SQL.Add('  , LOTE_NFE_NUMERO = null');
       SQL.Add('  , LOTE_NFE_RECIBO = null');

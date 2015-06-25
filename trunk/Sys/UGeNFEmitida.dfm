@@ -21,9 +21,6 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
     ActivePage = tbsTabela
     ExplicitHeight = 428
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
       ExplicitHeight = 399
       inherited Bevel4: TBevel
         Top = 333
@@ -292,6 +289,8 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       '  , coalesce(cl.codigo, fn.codforn) as nfe_destinatario_codigo'
       '  , coalesce(cl.nome, fn.nomeforn)  as nfe_destinatario_razao'
       '  , coalesce(cl.cnpj, fn.cnpj) as nfe_destinatario_cnpj'
+      '  , coalesce(cl.inscest, fn.inscest) as nfe_destinatario_inscest'
+      '  , coalesce(cl.uf, fn.uf) as nfe_destinatario_uf'
       
         '  , coalesce(vn.nfe_valor_total_nota, cp.totalnf) as nfe_valor_t' +
         'otal'
@@ -344,6 +343,16 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
       ProviderFlags = []
       OnGetText = IbDtstTabelaNFE_DESTINATARIO_CNPJGetText
       Size = 18
+    end
+    object IbDtstTabelaNFE_DESTINATARIO_INSCEST: TIBStringField
+      FieldName = 'NFE_DESTINATARIO_INSCEST'
+      ProviderFlags = []
+    end
+    object IbDtstTabelaNFE_DESTINATARIO_UF: TIBStringField
+      FieldName = 'NFE_DESTINATARIO_UF'
+      ProviderFlags = []
+      FixedChar = True
+      Size = 2
     end
     object IbDtstTabelaNFE_VALOR_TOTAL: TIBBCDField
       FieldName = 'NFE_VALOR_TOTAL'
@@ -454,7 +463,7 @@ inherited frmGeNFEmitida: TfrmGeNFEmitida
     Left = 288
     Top = 208
     Bitmap = {
-      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

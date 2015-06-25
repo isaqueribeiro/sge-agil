@@ -12346,3 +12346,417 @@ Historico:
           para 5 (cinco). Onde 1 corresponte ao tipo "Nota Fiscal" e 5 coresponde
           ao tipo "NF-e".';
 
+
+
+
+/*------ SYSDBA 23/06/2015 17:14:35 --------*/
+
+ALTER TABLE TBFUNCIONARIO DROP CONSTRAINT FK_TBFUNCIONARIO_USUARIO;
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_USUARIO
+FOREIGN KEY (USUARIO)
+REFERENCES TBUSERS(NOME)
+ON DELETE SET NULL
+ON UPDATE CASCADE
+USING INDEX FK_TBFUNCIONARIO_USUARIO;
+
+
+
+
+/*------ SYSDBA 23/06/2015 17:17:54 --------*/
+
+ALTER TABLE TBFUNCIONARIO DROP CONSTRAINT FK_TBFUNCIONARIO_USUARIO;
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_USUARIO
+FOREIGN KEY (USUARIO)
+REFERENCES TBUSERS(NOME)
+ON DELETE SET NULL
+USING INDEX FK_TBFUNCIONARIO_USUARIO;
+
+
+
+
+/*------ SYSDBA 24/06/2015 14:00:50 --------*/
+
+ALTER TABLE TBCOMPRASITENS
+    ADD CSOSN DMN_VCHAR_03;
+
+alter table TBCOMPRASITENS
+alter ANO position 1;
+
+alter table TBCOMPRASITENS
+alter CODCONTROL position 2;
+
+alter table TBCOMPRASITENS
+alter CODEMP position 3;
+
+alter table TBCOMPRASITENS
+alter SEQ position 4;
+
+alter table TBCOMPRASITENS
+alter CODFORN position 5;
+
+alter table TBCOMPRASITENS
+alter CODPROD position 6;
+
+alter table TBCOMPRASITENS
+alter QTDE position 7;
+
+alter table TBCOMPRASITENS
+alter PRECOUNIT position 8;
+
+alter table TBCOMPRASITENS
+alter CUSTOMEDIO position 9;
+
+alter table TBCOMPRASITENS
+alter DTENT position 10;
+
+alter table TBCOMPRASITENS
+alter NF position 11;
+
+alter table TBCOMPRASITENS
+alter QTDEANTES position 12;
+
+alter table TBCOMPRASITENS
+alter QTDEFINAL position 13;
+
+alter table TBCOMPRASITENS
+alter PERC_PARTICIPACAO position 14;
+
+alter table TBCOMPRASITENS
+alter VALOR_FRETE position 15;
+
+alter table TBCOMPRASITENS
+alter VALOR_DESCONTO position 16;
+
+alter table TBCOMPRASITENS
+alter VALOR_OUTROS position 17;
+
+alter table TBCOMPRASITENS
+alter VALOR_IPI position 18;
+
+alter table TBCOMPRASITENS
+alter UNID_COD position 19;
+
+alter table TBCOMPRASITENS
+alter NCM_SH position 20;
+
+alter table TBCOMPRASITENS
+alter CST position 21;
+
+alter table TBCOMPRASITENS
+alter CSOSN position 22;
+
+alter table TBCOMPRASITENS
+alter CFOP position 23;
+
+alter table TBCOMPRASITENS
+alter ALIQUOTA position 24;
+
+alter table TBCOMPRASITENS
+alter ALIQUOTA_CSOSN position 25;
+
+alter table TBCOMPRASITENS
+alter ALIQUOTA_PIS position 26;
+
+alter table TBCOMPRASITENS
+alter ALIQUOTA_COFINS position 27;
+
+alter table TBCOMPRASITENS
+alter PERCENTUAL_REDUCAO_BC position 28;
+
+alter table TBCOMPRASITENS
+alter TOTAL_BRUTO position 29;
+
+alter table TBCOMPRASITENS
+alter TOTAL_LIQUIDO position 30;
+
+
+
+
+/*------ SYSDBA 24/06/2015 15:24:26 --------*/
+
+ALTER TABLE TBVENDAS
+    ADD DADOS_ENTREGA DMN_TEXTO;
+
+COMMENT ON COLUMN TBVENDAS.DADOS_ENTREGA IS
+'Dados de entrega da mercadoria.';
+
+alter table TBVENDAS
+alter ANO position 1;
+
+alter table TBVENDAS
+alter CODCONTROL position 2;
+
+alter table TBVENDAS
+alter CODEMP position 3;
+
+alter table TBVENDAS
+alter CODCLIENTE position 4;
+
+alter table TBVENDAS
+alter CODCLI position 5;
+
+alter table TBVENDAS
+alter DTVENDA position 6;
+
+alter table TBVENDAS
+alter COMPETENCIA position 7;
+
+alter table TBVENDAS
+alter STATUS position 8;
+
+alter table TBVENDAS
+alter TOTALVENDA_BRUTA position 9;
+
+alter table TBVENDAS
+alter DESCONTO position 10;
+
+alter table TBVENDAS
+alter DESCONTO_CUPOM position 11;
+
+alter table TBVENDAS
+alter TOTALVENDA position 12;
+
+alter table TBVENDAS
+alter TOTALCUSTO position 13;
+
+alter table TBVENDAS
+alter DTFINALIZACAO_VENDA position 14;
+
+alter table TBVENDAS
+alter OBS position 15;
+
+alter table TBVENDAS
+alter DADOS_ENTREGA position 16;
+
+alter table TBVENDAS
+alter FORMAPAG position 17;
+
+alter table TBVENDAS
+alter FATDIAS position 18;
+
+alter table TBVENDAS
+alter SERIE position 19;
+
+alter table TBVENDAS
+alter NFE position 20;
+
+alter table TBVENDAS
+alter DATAEMISSAO position 21;
+
+alter table TBVENDAS
+alter HORAEMISSAO position 22;
+
+alter table TBVENDAS
+alter CFOP position 23;
+
+alter table TBVENDAS
+alter VERIFICADOR_NFE position 24;
+
+alter table TBVENDAS
+alter XML_NFE position 25;
+
+alter table TBVENDAS
+alter XML_NFE_FILENAME position 26;
+
+alter table TBVENDAS
+alter VENDEDOR_COD position 27;
+
+alter table TBVENDAS
+alter USUARIO position 28;
+
+alter table TBVENDAS
+alter FORMAPAGTO_COD position 29;
+
+alter table TBVENDAS
+alter CONDICAOPAGTO_COD position 30;
+
+alter table TBVENDAS
+alter VENDA_PRAZO position 31;
+
+alter table TBVENDAS
+alter PRAZO_01 position 32;
+
+alter table TBVENDAS
+alter PRAZO_02 position 33;
+
+alter table TBVENDAS
+alter PRAZO_03 position 34;
+
+alter table TBVENDAS
+alter PRAZO_04 position 35;
+
+alter table TBVENDAS
+alter PRAZO_05 position 36;
+
+alter table TBVENDAS
+alter PRAZO_06 position 37;
+
+alter table TBVENDAS
+alter PRAZO_07 position 38;
+
+alter table TBVENDAS
+alter PRAZO_08 position 39;
+
+alter table TBVENDAS
+alter PRAZO_09 position 40;
+
+alter table TBVENDAS
+alter PRAZO_10 position 41;
+
+alter table TBVENDAS
+alter PRAZO_11 position 42;
+
+alter table TBVENDAS
+alter PRAZO_12 position 43;
+
+alter table TBVENDAS
+alter LOTE_NFE_ANO position 44;
+
+alter table TBVENDAS
+alter LOTE_NFE_NUMERO position 45;
+
+alter table TBVENDAS
+alter LOTE_NFE_RECIBO position 46;
+
+alter table TBVENDAS
+alter NFE_ENVIADA position 47;
+
+alter table TBVENDAS
+alter NFE_DENEGADA position 48;
+
+alter table TBVENDAS
+alter NFE_DENEGADA_MOTIVO position 49;
+
+alter table TBVENDAS
+alter CANCEL_USUARIO position 50;
+
+alter table TBVENDAS
+alter CANCEL_DATAHORA position 51;
+
+alter table TBVENDAS
+alter CANCEL_MOTIVO position 52;
+
+alter table TBVENDAS
+alter NFE_MODALIDADE_FRETE position 53;
+
+alter table TBVENDAS
+alter NFE_TRANSPORTADORA position 54;
+
+alter table TBVENDAS
+alter NFE_PLACA_VEICULO position 55;
+
+alter table TBVENDAS
+alter NFE_PLACA_UF position 56;
+
+alter table TBVENDAS
+alter NFE_PLACA_RNTC position 57;
+
+alter table TBVENDAS
+alter NFE_VALOR_BASE_ICMS position 58;
+
+alter table TBVENDAS
+alter NFE_VALOR_ICMS position 59;
+
+alter table TBVENDAS
+alter NFE_VALOR_BASE_ICMS_SUBST position 60;
+
+alter table TBVENDAS
+alter NFE_VALOR_ICMS_SUBST position 61;
+
+alter table TBVENDAS
+alter NFE_VALOR_TOTAL_PRODUTO position 62;
+
+alter table TBVENDAS
+alter NFE_VALOR_FRETE position 63;
+
+alter table TBVENDAS
+alter NFE_VALOR_SEGURO position 64;
+
+alter table TBVENDAS
+alter NFE_VALOR_DESCONTO position 65;
+
+alter table TBVENDAS
+alter NFE_VALOR_TOTAL_II position 66;
+
+alter table TBVENDAS
+alter NFE_VALOR_TOTAL_IPI position 67;
+
+alter table TBVENDAS
+alter NFE_VALOR_PIS position 68;
+
+alter table TBVENDAS
+alter NFE_VALOR_COFINS position 69;
+
+alter table TBVENDAS
+alter NFE_VALOR_OUTROS position 70;
+
+alter table TBVENDAS
+alter NFE_VALOR_TOTAL_NOTA position 71;
+
+alter table TBVENDAS
+alter CUSTO_OPER_PERCENTUAL position 72;
+
+alter table TBVENDAS
+alter CUSTO_OPER_FRETE position 73;
+
+alter table TBVENDAS
+alter CUSTO_OPER_OUTROS position 74;
+
+alter table TBVENDAS
+alter GERAR_ESTOQUE_CLIENTE position 75;
+
+alter table TBVENDAS
+alter CAIXA_ANO position 76;
+
+alter table TBVENDAS
+alter CAIXA_NUM position 77;
+
+alter table TBVENDAS
+alter CAIXA_PDV position 78;
+
+alter table TBVENDAS
+alter DNFE_COMPRA_ANO position 79;
+
+alter table TBVENDAS
+alter DNFE_COMPRA_COD position 80;
+
+alter table TBVENDAS
+alter DNFE_FORMA position 81;
+
+alter table TBVENDAS
+alter DNFE_UF position 82;
+
+alter table TBVENDAS
+alter DNFE_CNPJ_CPF position 83;
+
+alter table TBVENDAS
+alter DNFE_IE position 84;
+
+alter table TBVENDAS
+alter DNFE_COMPETENCIA position 85;
+
+alter table TBVENDAS
+alter DNFE_SERIE position 86;
+
+alter table TBVENDAS
+alter DNFE_NUMERO position 87;
+
+alter table TBVENDAS
+alter DNFE_MODELO position 88;
+
+alter table TBVENDAS
+alter DNFE_CHAVE position 89;
+
+alter table TBVENDAS
+alter DECF_MODELO position 90;
+
+alter table TBVENDAS
+alter DECF_NUMERO position 91;
+
+alter table TBVENDAS
+alter DECF_COO position 92;
+
