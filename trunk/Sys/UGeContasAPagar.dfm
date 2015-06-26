@@ -313,8 +313,6 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       end
     end
     inherited tbsCadastro: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 25
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel8: TBevel
@@ -980,12 +978,15 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     ExplicitWidth = 934
     inherited Bevel2: TBevel
       Left = 84
+      ExplicitLeft = 84
     end
     inherited bvlTool1: TBevel
       Left = 313
+      ExplicitLeft = 313
     end
     inherited bvlTool2: TBevel
       Left = 467
+      ExplicitLeft = 467
     end
     inherited bvlTool3: TBevel
       Left = 851
@@ -1014,27 +1015,33 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     inherited btbtnIncluir: TcxButton
       Left = 88
       TabOrder = 1
+      ExplicitLeft = 88
     end
     inherited btbtnAlterar: TcxButton
       Left = 163
       TabOrder = 2
+      ExplicitLeft = 163
     end
     inherited btbtnExcluir: TcxButton
       Left = 238
       TabOrder = 3
+      ExplicitLeft = 238
     end
     inherited btbtnCancelar: TcxButton
       Left = 317
       TabOrder = 5
+      ExplicitLeft = 317
     end
     inherited btbtnSalvar: TcxButton
       Left = 392
       TabOrder = 4
+      ExplicitLeft = 392
     end
     inherited btbtnLista: TcxButton
       Left = 471
       TabOrder = 6
       Visible = True
+      ExplicitLeft = 471
     end
     inherited btbtnFechar: TcxButton
       Left = 855
@@ -1437,7 +1444,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   inherited ImgList: TImageList
     Top = 72
     Bitmap = {
-      494C01012B002C00380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

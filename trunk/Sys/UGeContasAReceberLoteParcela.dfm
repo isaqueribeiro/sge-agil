@@ -1,8 +1,8 @@
-inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
+inherited frmGeContasAReceberLoteParcela: TfrmGeContasAReceberLoteParcela
   ActiveControl = dbEmpresa
   BorderStyle = bsDialog
   BorderWidth = 4
-  Caption = 'Contas A Pagar - Incluir Lote (Parcelas)'
+  Caption = 'Contas A Receber - Incluir Lote (Parcelas)'
   ClientHeight = 481
   ClientWidth = 702
   ExplicitWidth = 716
@@ -189,13 +189,13 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       Caption = 'Empresa:'
       FocusControl = dbEmpresa
     end
-    object lblFornecedor: TLabel
+    object lblCliente: TLabel
       Left = 279
       Top = 24
-      Width = 59
+      Width = 37
       Height = 13
-      Caption = 'Fornecedor:'
-      FocusControl = dbFornecedor
+      Caption = 'Cliente:'
+      FocusControl = dbCliente
     end
     object lblEmissao: TLabel
       Left = 489
@@ -219,22 +219,13 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       Caption = '&Forma de Pagamento:'
       FocusControl = dbFormaPagto
     end
-    object lblCondicaoPagto: TLabel
-      Left = 168
-      Top = 64
-      Width = 120
-      Height = 13
-      Caption = 'Condi'#231#227'o de Pagamento:'
-      Enabled = False
-      FocusControl = dbCondicaoPagto
-      Visible = False
-    end
-    object lblTipoDespesa: TLabel
+    object lblBanco: TLabel
       Left = 167
       Top = 64
-      Width = 83
+      Width = 33
       Height = 13
-      Caption = 'Tipo de Despesa:'
+      Caption = 'Banco:'
+      Enabled = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -248,6 +239,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       Width = 56
       Height = 13
       Caption = 'Nota Fiscal:'
+      Enabled = False
       FocusControl = dbNotaFiscal
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
@@ -276,16 +268,16 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       ReadOnly = True
       TabOrder = 0
     end
-    object dbFornecedor: TJvDBComboEdit
+    object dbCliente: TJvDBComboEdit
       Left = 279
       Top = 40
       Width = 410
       Height = 21
-      ButtonHint = 'Pesquisar Fornecedor (Ctrl+P)'
+      ButtonHint = 'Pesquisar Cliente (Ctrl+P)'
       CharCase = ecUpperCase
       ClickKey = 16464
       Color = clMoneyGreen
-      DataField = 'FornecedorNome'
+      DataField = 'ClienteNome'
       DataSource = dtsDadosNominais
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
@@ -349,7 +341,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       ReadOnly = True
       ShowHint = True
       TabOrder = 1
-      OnButtonClick = dbFornecedorButtonClick
+      OnButtonClick = dbClienteButtonClick
     end
     object dbEmissao: TJvDBDateEdit
       Left = 489
@@ -413,7 +405,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       ParentFont = False
       PopupColor = clBtnFace
       ShowNullDate = False
-      TabOrder = 5
+      TabOrder = 4
     end
     object dbFormaPagto: TDBLookupComboBox
       Left = 16
@@ -434,45 +426,25 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       ParentFont = False
       TabOrder = 2
     end
-    object dbCondicaoPagto: TDBLookupComboBox
-      Left = 168
-      Top = 80
-      Width = 170
-      Height = 21
-      DataField = 'CondicaoPagto'
-      DataSource = dtsDadosNominais
-      DropDownRows = 10
-      Enabled = False
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -11
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      KeyField = 'COND_COD'
-      ListField = 'COND_DESCRICAO_FULL'
-      ListSource = dtsCondicaoPagto
-      ParentFont = False
-      TabOrder = 3
-      Visible = False
-    end
-    object dbTipoDespesa: TDBLookupComboBox
+    object dbBanco: TDBLookupComboBox
       Left = 167
       Top = 80
       Width = 316
       Height = 21
-      DataField = 'TipoDespesa'
+      DataField = 'Banco'
       DataSource = dtsDadosNominais
       DropDownRows = 10
+      Enabled = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
-      KeyField = 'COD'
-      ListField = 'TIPODESP'
-      ListSource = dtsTpDespesa
+      KeyField = 'BCO_COD'
+      ListField = 'BCO_NOME'
+      ListSource = dtsBanco
       ParentFont = False
-      TabOrder = 4
+      TabOrder = 3
     end
     object dbNotaFiscal: TDBEdit
       Left = 600
@@ -481,13 +453,14 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       Height = 21
       DataField = 'NotaFiscal'
       DataSource = dtsDadosNominais
+      Enabled = False
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      TabOrder = 6
+      TabOrder = 5
     end
   end
   object pnlParcelas: TPanel
@@ -890,24 +863,25 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
         Size = 20
       end
       item
-        Name = 'Fornecedor'
+        Name = 'Cliente'
         DataType = ftInteger
       end
       item
-        Name = 'FornecedorNome'
+        Name = 'ClienteNome'
         DataType = ftString
         Size = 150
+      end
+      item
+        Name = 'ClienteCNPJ'
+        DataType = ftString
+        Size = 20
       end
       item
         Name = 'FormaPagto'
         DataType = ftSmallint
       end
       item
-        Name = 'CondicaoPagto'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'TipoDespesa'
+        Name = 'Banco'
         DataType = ftInteger
       end
       item
@@ -948,26 +922,24 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     object cdsDadosNominaisEmpresa: TStringField
       FieldName = 'Empresa'
     end
-    object cdsDadosNominaisFornecedor: TIntegerField
-      FieldName = 'Fornecedor'
+    object cdsDadosNominaisCliente: TIntegerField
+      FieldName = 'Cliente'
       Required = True
     end
-    object cdsDadosNominaisFornecedorNome: TStringField
-      FieldName = 'FornecedorNome'
+    object cdsDadosNominaisClienteNome: TStringField
+      FieldName = 'ClienteNome'
       Size = 150
+    end
+    object cdsDadosNominaisClienteCNPJ: TStringField
+      FieldName = 'ClienteCNPJ'
     end
     object cdsDadosNominaisFormaPagto: TSmallintField
       DisplayLabel = 'Forma de Pagamento'
       FieldName = 'FormaPagto'
       Required = True
     end
-    object cdsDadosNominaisCondicaoPagto: TSmallintField
-      FieldName = 'CondicaoPagto'
-    end
-    object cdsDadosNominaisTipoDespesa: TIntegerField
-      DisplayLabel = 'Tipo de Despesa'
-      FieldName = 'TipoDespesa'
-      Required = True
+    object cdsDadosNominaisBanco: TIntegerField
+      FieldName = 'Banco'
     end
     object cdsDadosNominaisEmissao: TDateTimeField
       DisplayLabel = 'Emiss'#227'o'
@@ -1039,108 +1011,6 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     Left = 368
     Top = 288
   end
-  object tblCondicaoPagto: TIBTable
-    Database = DMBusiness.ibdtbsBusiness
-    Transaction = DMBusiness.ibtrnsctnBusiness
-    BufferChunks = 1000
-    CachedUpdates = False
-    FieldDefs = <
-      item
-        Name = 'COND_COD'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_DESCRICAO'
-        DataType = ftString
-        Size = 80
-      end
-      item
-        Name = 'COND_PRAZO'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_01'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_02'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_03'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_04'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_05'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_06'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_07'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_08'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_09'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_10'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_11'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_PRAZO_12'
-        DataType = ftSmallint
-      end
-      item
-        Name = 'COND_DESCRICAO_FULL'
-        Attributes = [faReadonly]
-        DataType = ftString
-        Size = 177
-      end>
-    StoreDefs = True
-    TableName = 'VW_CONDICAOPAGTO'
-    TableTypes = [ttView]
-    UniDirectional = False
-    Left = 336
-    Top = 320
-  end
-  object dtsCondicaoPagto: TDataSource
-    DataSet = tblCondicaoPagto
-    Left = 368
-    Top = 320
-  end
-  object qryTpDespesa: TIBQuery
-    Database = DMBusiness.ibdtbsBusiness
-    Transaction = DMBusiness.ibtrnsctnBusiness
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from TBTPDESPESA'
-      'order by tipodesp')
-    Left = 336
-    Top = 352
-  end
-  object dtsTpDespesa: TDataSource
-    DataSet = qryTpDespesa
-    Left = 368
-    Top = 352
-  end
   object cdsParcelas: TClientDataSet
     Aggregates = <>
     FieldDefs = <
@@ -1201,7 +1071,7 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     Left = 469
     Top = 223
   end
-  object cdsContaAPagar: TIBDataSet
+  object cdsContaAReceber: TIBDataSet
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
@@ -1211,28 +1081,24 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       '')
     SelectSQL.Strings = (
       'Select'
-      '    p.anolanc'
-      '  , p.numlanc'
-      '  , p.empresa'
-      '  , p.codforn'
-      '  , p.parcela'
-      '  , p.tippag'
-      '  , p.historic'
-      '  , p.notfisc'
-      '  , p.dtemiss'
-      '  , p.dtvenc'
-      '  , p.valorpag'
-      '  , p.valorpagtot'
-      '  , p.valorsaldo'
-      '  , p.nomeemp'
-      '  , p.tipocateg'
-      '  , p.forma_pagto'
-      '  , p.condicao_pagto'
-      '  , p.quitado'
-      '  , p.codtpdesp'
-      '  , p.situacao'
-      '  , p.lote'
-      'from TBCONTPAG p'
+      '    r.anolanc'
+      '  , r.numlanc'
+      '  , r.empresa'
+      '  , r.cliente'
+      '  , r.cnpj'
+      '  , r.forma_pagto'
+      '  , r.historic'
+      '  , r.dtemiss'
+      '  , r.dtvenc'
+      '  , r.valorrec'
+      '  , r.valorrectot'
+      '  , r.valorsaldo'
+      '  , r.parcela'
+      '  , r.baixado'
+      '  , r.enviado'
+      '  , r.situacao'
+      '  , r.lote'
+      'from TBCONTREC r'
       'where 1 = 0')
     ModifySQL.Strings = (
       '')
@@ -1243,123 +1109,101 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     UpdateObject = IbUpdTabela
     Left = 600
     Top = 288
-    object cdsContaAPagarANOLANC: TSmallintField
+    object cdsContaAReceberANOLANC: TSmallintField
       FieldName = 'ANOLANC'
-      Origin = '"TBCONTPAG"."ANOLANC"'
+      Origin = '"TBCONTREC"."ANOLANC"'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object cdsContaAPagarNUMLANC: TIntegerField
+    object cdsContaAReceberNUMLANC: TIntegerField
       FieldName = 'NUMLANC'
-      Origin = '"TBCONTPAG"."NUMLANC"'
+      Origin = '"TBCONTREC"."NUMLANC"'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
     end
-    object cdsContaAPagarEMPRESA: TIBStringField
+    object cdsContaAReceberEMPRESA: TIBStringField
       FieldName = 'EMPRESA'
-      Origin = '"TBCONTPAG"."EMPRESA"'
+      Origin = '"TBCONTREC"."EMPRESA"'
       ProviderFlags = [pfInUpdate]
       Size = 18
     end
-    object cdsContaAPagarCODFORN: TSmallintField
-      FieldName = 'CODFORN'
-      Origin = '"TBCONTPAG"."CODFORN"'
+    object cdsContaAReceberCLIENTE: TIntegerField
+      FieldName = 'CLIENTE'
+      Origin = '"TBCONTREC"."CLIENTE"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarPARCELA: TSmallintField
-      FieldName = 'PARCELA'
-      Origin = '"TBCONTPAG"."PARCELA"'
+    object cdsContaAReceberCNPJ: TIBStringField
+      FieldName = 'CNPJ'
+      Origin = '"TBCONTREC"."CNPJ"'
+      ProviderFlags = [pfInUpdate]
+      Size = 18
+    end
+    object cdsContaAReceberFORMA_PAGTO: TSmallintField
+      FieldName = 'FORMA_PAGTO'
+      Origin = '"TBCONTREC"."FORMA_PAGTO"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarTIPPAG: TIBStringField
-      FieldName = 'TIPPAG'
-      Origin = '"TBCONTPAG"."TIPPAG"'
-      ProviderFlags = [pfInUpdate]
-      Size = 35
-    end
-    object cdsContaAPagarHISTORIC: TWideMemoField
+    object cdsContaAReceberHISTORIC: TWideMemoField
       FieldName = 'HISTORIC'
-      Origin = '"TBCONTPAG"."HISTORIC"'
+      Origin = '"TBCONTREC"."HISTORIC"'
       ProviderFlags = [pfInUpdate]
       BlobType = ftWideMemo
       Size = 8
     end
-    object cdsContaAPagarNOTFISC: TIBStringField
-      FieldName = 'NOTFISC'
-      Origin = '"TBCONTPAG"."NOTFISC"'
-      ProviderFlags = [pfInUpdate]
-      Size = 15
-    end
-    object cdsContaAPagarDTEMISS: TDateField
+    object cdsContaAReceberDTEMISS: TDateField
       FieldName = 'DTEMISS'
-      Origin = '"TBCONTPAG"."DTEMISS"'
+      Origin = '"TBCONTREC"."DTEMISS"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarDTVENC: TDateField
+    object cdsContaAReceberDTVENC: TDateField
       FieldName = 'DTVENC'
-      Origin = '"TBCONTPAG"."DTVENC"'
+      Origin = '"TBCONTREC"."DTVENC"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarVALORPAG: TIBBCDField
-      FieldName = 'VALORPAG'
-      Origin = '"TBCONTPAG"."VALORPAG"'
-      ProviderFlags = [pfInUpdate]
-      Precision = 18
-      Size = 2
-    end
-    object cdsContaAPagarVALORPAGTOT: TIBBCDField
-      FieldName = 'VALORPAGTOT'
-      Origin = '"TBCONTPAG"."VALORPAGTOT"'
+    object cdsContaAReceberVALORREC: TIBBCDField
+      FieldName = 'VALORREC'
+      Origin = '"TBCONTREC"."VALORREC"'
       ProviderFlags = [pfInUpdate]
       Precision = 18
       Size = 2
     end
-    object cdsContaAPagarVALORSALDO: TIBBCDField
+    object cdsContaAReceberVALORRECTOT: TIBBCDField
+      FieldName = 'VALORRECTOT'
+      Origin = '"TBCONTREC"."VALORRECTOT"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object cdsContaAReceberVALORSALDO: TIBBCDField
       FieldName = 'VALORSALDO'
-      Origin = '"TBCONTPAG"."VALORSALDO"'
+      Origin = '"TBCONTREC"."VALORSALDO"'
       ProviderFlags = [pfInUpdate]
       Precision = 18
       Size = 2
     end
-    object cdsContaAPagarNOMEEMP: TIBStringField
-      FieldName = 'NOMEEMP'
-      Origin = '"TBCONTPAG"."NOMEEMP"'
-      ProviderFlags = [pfInUpdate]
-      Size = 60
-    end
-    object cdsContaAPagarTIPOCATEG: TSmallintField
-      FieldName = 'TIPOCATEG'
-      Origin = '"TBCONTPAG"."TIPOCATEG"'
+    object cdsContaAReceberPARCELA: TSmallintField
+      FieldName = 'PARCELA'
+      Origin = '"TBCONTREC"."PARCELA"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarFORMA_PAGTO: TSmallintField
-      FieldName = 'FORMA_PAGTO'
-      Origin = '"TBCONTPAG"."FORMA_PAGTO"'
+    object cdsContaAReceberBAIXADO: TSmallintField
+      FieldName = 'BAIXADO'
+      Origin = '"TBCONTREC"."BAIXADO"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarCONDICAO_PAGTO: TSmallintField
-      FieldName = 'CONDICAO_PAGTO'
-      Origin = '"TBCONTPAG"."CONDICAO_PAGTO"'
+    object cdsContaAReceberENVIADO: TSmallintField
+      FieldName = 'ENVIADO'
+      Origin = '"TBCONTREC"."ENVIADO"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarQUITADO: TSmallintField
-      FieldName = 'QUITADO'
-      Origin = '"TBCONTPAG"."QUITADO"'
-      ProviderFlags = [pfInUpdate]
-    end
-    object cdsContaAPagarCODTPDESP: TSmallintField
-      FieldName = 'CODTPDESP'
-      Origin = '"TBCONTPAG"."CODTPDESP"'
-      ProviderFlags = [pfInUpdate]
-    end
-    object cdsContaAPagarSITUACAO: TSmallintField
+    object cdsContaAReceberSITUACAO: TSmallintField
       FieldName = 'SITUACAO'
-      Origin = '"TBCONTPAG"."SITUACAO"'
+      Origin = '"TBCONTREC"."SITUACAO"'
       ProviderFlags = [pfInUpdate]
     end
-    object cdsContaAPagarLOTE: TIBStringField
+    object cdsContaAReceberLOTE: TIBStringField
       FieldName = 'LOTE'
-      Origin = '"TBCONTPAG"."LOTE"'
+      Origin = '"TBCONTREC"."LOTE"'
       ProviderFlags = [pfInUpdate]
       Size = 14
     end
@@ -1370,90 +1214,101 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
       '  ANOLANC,'
       '  NUMLANC,'
       '  EMPRESA,'
-      '  CODFORN,'
-      '  PARCELA,'
+      '  CLIENTE,'
+      '  CNPJ,'
+      '  FORMA_PAGTO,'
       '  TIPPAG,'
       '  HISTORIC,'
-      '  NOTFISC,'
+      '  NUMREC,'
       '  DTEMISS,'
       '  DTVENC,'
-      '  DTPAG,'
+      '  DTREC,'
       '  DOCBAIX,'
-      '  VALORPAG,'
+      '  VALORREC,'
       '  VALORMULTA,'
-      '  VALORPAGTOT,'
+      '  VALORRECTOT,'
       '  VALORSALDO,'
-      '  NOMEEMP,'
-      '  TIPOCATEG,'
-      '  BANCO,'
-      '  NUMCHQ,'
-      '  ANOCOMPRA,'
-      '  NUMCOMPRA,'
-      '  FORMA_PAGTO,'
-      '  CONDICAO_PAGTO,'
-      '  QUITADO,'
-      '  CODTPDESP,'
+      '  NUMCONTRATO,'
+      '  PARCELA,'
+      '  CODBANCO,'
+      '  NOSSONUMERO,'
+      '  REMESSA,'
+      '  PERCENTJUROS,'
+      '  PERCENTMULTA,'
+      '  PERCENTDESCONTO,'
+      '  DATAPROCESSOBOLETO,'
+      '  BAIXADO,'
+      '  ENVIADO,'
+      '  ANOVENDA,'
+      '  NUMVENDA,'
       '  SITUACAO,'
       '  LOTE'
-      'from TBCONTPAG '
+      'from TBCONTREC '
       'where'
       '  ANOLANC = :ANOLANC and'
       '  NUMLANC = :NUMLANC')
     ModifySQL.Strings = (
-      'update TBCONTPAG'
+      'update TBCONTREC'
       'set'
       '  ANOLANC = :ANOLANC,'
-      '  CODFORN = :CODFORN,'
-      '  CODTPDESP = :CODTPDESP,'
-      '  CONDICAO_PAGTO = :CONDICAO_PAGTO,'
+      '  BAIXADO = :BAIXADO,'
+      '  CLIENTE = :CLIENTE,'
+      '  CNPJ = :CNPJ,'
       '  DTEMISS = :DTEMISS,'
       '  DTVENC = :DTVENC,'
       '  EMPRESA = :EMPRESA,'
+      '  ENVIADO = :ENVIADO,'
       '  FORMA_PAGTO = :FORMA_PAGTO,'
       '  HISTORIC = :HISTORIC,'
       '  LOTE = :LOTE,'
-      '  NOMEEMP = :NOMEEMP,'
-      '  NOTFISC = :NOTFISC,'
       '  NUMLANC = :NUMLANC,'
       '  PARCELA = :PARCELA,'
-      '  QUITADO = :QUITADO,'
       '  SITUACAO = :SITUACAO,'
-      '  TIPOCATEG = :TIPOCATEG,'
-      '  TIPPAG = :TIPPAG,'
-      '  VALORPAG = :VALORPAG,'
-      '  VALORPAGTOT = :VALORPAGTOT,'
+      '  VALORREC = :VALORREC,'
+      '  VALORRECTOT = :VALORRECTOT,'
       '  VALORSALDO = :VALORSALDO'
       'where'
       '  ANOLANC = :OLD_ANOLANC and'
       '  NUMLANC = :OLD_NUMLANC')
     InsertSQL.Strings = (
-      'insert into TBCONTPAG'
+      'insert into TBCONTREC'
       
-        '  (ANOLANC, CODFORN, CODTPDESP, CONDICAO_PAGTO, DTEMISS, DTVENC,' +
-        ' EMPRESA, '
+        '  (ANOLANC, BAIXADO, CLIENTE, CNPJ, DTEMISS, DTVENC, EMPRESA, EN' +
+        'VIADO, '
       
-        '   FORMA_PAGTO, HISTORIC, LOTE, NOMEEMP, NOTFISC, NUMLANC, PARCE' +
-        'LA, QUITADO, '
-      
-        '   SITUACAO, TIPOCATEG, TIPPAG, VALORPAG, VALORPAGTOT, VALORSALD' +
-        'O)'
+        '   FORMA_PAGTO, HISTORIC, LOTE, NUMLANC, PARCELA, SITUACAO, VALO' +
+        'RREC, '
+      '   VALORRECTOT, VALORSALDO)'
       'values'
       
-        '  (:ANOLANC, :CODFORN, :CODTPDESP, :CONDICAO_PAGTO, :DTEMISS, :D' +
-        'TVENC, '
+        '  (:ANOLANC, :BAIXADO, :CLIENTE, :CNPJ, :DTEMISS, :DTVENC, :EMPR' +
+        'ESA, :ENVIADO, '
       
-        '   :EMPRESA, :FORMA_PAGTO, :HISTORIC, :LOTE, :NOMEEMP, :NOTFISC,' +
-        ' :NUMLANC, '
-      
-        '   :PARCELA, :QUITADO, :SITUACAO, :TIPOCATEG, :TIPPAG, :VALORPAG' +
-        ', :VALORPAGTOT, '
-      '   :VALORSALDO)')
+        '   :FORMA_PAGTO, :HISTORIC, :LOTE, :NUMLANC, :PARCELA, :SITUACAO' +
+        ',  '
+      '   :VALORREC, :VALORRECTOT, :VALORSALDO)')
     DeleteSQL.Strings = (
-      'delete from TBCONTPAG'
+      'delete from TBCONTREC'
       'where'
       '  ANOLANC = :OLD_ANOLANC and'
       '  NUMLANC = :OLD_NUMLANC')
     Left = 632
     Top = 288
+  end
+  object tblBanco: TIBTable
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    TableName = 'TBBANCO_BOLETO'
+    TableTypes = [ttView]
+    UniDirectional = False
+    Left = 336
+    Top = 320
+  end
+  object dtsBanco: TDataSource
+    DataSet = tblBanco
+    Left = 368
+    Top = 320
   end
 end

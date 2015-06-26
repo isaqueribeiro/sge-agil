@@ -133,6 +133,8 @@ type
     e2Data: TJvDateEdit;
     lblLancamentoAberto: TLabel;
     lblLancamentoVencido: TLabel;
+    Bevel10: TBevel;
+    btbtnIncluirLote: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure dbClienteButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -155,9 +157,11 @@ type
     procedure FormShow(Sender: TObject);
     procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btbtnIncluirLoteClick(Sender: TObject);
   private
     { Private declarations }
-    FDataAtual : TDateTime;
+    FDataAtual     : TDateTime;
+    FLoteParcelas  : String;
     SQL_Pagamentos : TStringList;
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
@@ -187,7 +191,8 @@ const
 implementation
 
 uses
-  UConstantesDGE, UDMBusiness, UGeCliente, DateUtils, UGeEfetuarPagtoREC;
+  UConstantesDGE, UDMBusiness, UGeCliente, DateUtils, UGeEfetuarPagtoREC,
+  UGeContasAReceberLoteParcela;
 
 {$R *.dfm}
 
@@ -282,6 +287,9 @@ begin
     'cast(r.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) +
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
     
+  if Trim(FLoteParcelas) <> EmptyStr then
+    WhereAdditional := '(' + WhereAdditional + ' and (r.lote = ' + QuotedStr(FLoteParcelas) + '))';
+
   inherited;
 end;
 
@@ -634,6 +642,7 @@ procedure TfrmGeContasAReceber.DtSrcTabelaStateChange(Sender: TObject);
 begin
   inherited;
   dbValorAReceber.ReadOnly := (not cdsPagamentos.IsEmpty);
+  btbtnIncluirLote.Enabled := btbtnIncluir.Enabled;
   HabilitarDesabilitar_Btns;
 end;
 
@@ -651,6 +660,38 @@ begin
   begin
     AbrirPagamentos( IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger );
     DtSrcTabelaStateChange( DtSrcTabela );
+  end;
+end;
+
+procedure TfrmGeContasAReceber.btbtnIncluirLoteClick(Sender: TObject);
+var
+  sEmpresa ,
+  sLote    : String;
+  iCliente : Integer;
+  dDataEmissao    ,
+  dVencimentoFirst,
+  dVencimentoLast : TDateTime;
+begin
+  if btbtnIncluir.Enabled then
+  begin
+    sEmpresa     := gUsuarioLogado.Empresa;
+    sLote        := EmptyStr;
+    iCliente     := 0;
+    dDataEmissao := GetDateDB;
+    dVencimentoFirst := dDataEmissao + 30;
+    dVencimentoLast  := dDataEmissao + 60;
+
+    if GerarLoteParcelas(Self, sEmpresa, sLote, iCliente, dDataEmissao, dVencimentoFirst, dVencimentoLast)  then
+    begin
+      pgcGuias.ActivePage := tbsTabela;
+      e1Data.Date     := dVencimentoFirst;
+      e2Data.Date     := dVencimentoLast;
+      edtFiltrar.Text := GetClienteNome(iCliente);
+      FLoteParcelas   := sLote;
+      btnFiltrar.Click;
+
+      FLoteParcelas := EmptyStr;
+    end;
   end;
 end;
 
