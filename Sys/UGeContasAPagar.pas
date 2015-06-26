@@ -172,7 +172,8 @@ type
     procedure btbtnIncluirLoteClick(Sender: TObject);
   private
     { Private declarations }
-    FDataAtual : TDateTime;
+    FDataAtual     : TDateTime;
+    FLoteParcelas  : String;
     SQL_Pagamentos : TStringList;
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
@@ -265,6 +266,7 @@ begin
   CampoCodigo    := 'numlanc';
   CampoDescricao := 'NomeForn';
   CampoOrdenacao := 'p.dtvenc, f.NomeForn';
+  FLoteParcelas  := EmptyStr;
 
   WhereAdditional :=
     '(p.empresa = ' + QuotedStr(gUsuarioLogado.Empresa) + ')' +
@@ -298,6 +300,9 @@ begin
     ' and (cast(p.dtvenc as date) between ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e1Data.Date) ) +
     ' and ' + QuotedStr( FormatDateTime('yyyy-mm-dd', e2Data.Date) ) + ')';
 
+  if Trim(FLoteParcelas) <> EmptyStr then
+    WhereAdditional := '(' + WhereAdditional + ' and (p.lote = ' + QuotedStr(FLoteParcelas) + '))';
+
   inherited;
 end;
 
@@ -320,7 +325,16 @@ begin
     dVencimentoLast  := dDataEmissao + 60;
 
     if GerarLoteParcelas(Self, sEmpresa, sLote, iFornecedor, dDataEmissao, dVencimentoFirst, dVencimentoLast)  then
-      ;
+    begin
+      pgcGuias.ActivePage := tbsTabela;
+      e1Data.Date     := dVencimentoFirst;
+      e2Data.Date     := dVencimentoLast;
+      edtFiltrar.Text := GetFornecedorRazao(iFornecedor);
+      FLoteParcelas   := sLote;
+      btnFiltrar.Click;
+
+      FLoteParcelas := EmptyStr;
+    end;
   end;
 end;
 

@@ -1,4 +1,4 @@
-unit UGeContasAPagarLoteParcela;
+unit UGeContasAReceberLoteParcela;
 
 interface
 
@@ -22,7 +22,7 @@ uses
   IBX.IBUpdateSQL, cxTextEdit;
 
 type
-  TfrmGeContasAPagarLoteParcela = class(TfrmGrPadrao)
+  TfrmGeContasAReceberLoteParcela = class(TfrmGrPadrao)
     tmrAlerta: TTimer;
     lblInforme: TLabel;
     btnConfirmar: TcxButton;
@@ -30,7 +30,6 @@ type
     GrpBxLancamento: TGroupBox;
     cdsDadosNominais: TClientDataSet;
     cdsDadosNominaisEmpresa: TStringField;
-    cdsDadosNominaisFornecedor: TIntegerField;
     cdsDadosNominaisNumeroParcelas: TIntegerField;
     cdsDadosNominaisValorTotal: TCurrencyField;
     cdsDadosNominaisEmissao: TDateTimeField;
@@ -42,26 +41,17 @@ type
     dtsDadosNominais: TDataSource;
     lblEmpresa: TLabel;
     dbEmpresa: TDBLookupComboBox;
-    lblFornecedor: TLabel;
-    dbFornecedor: TJvDBComboEdit;
+    lblCliente: TLabel;
+    dbCliente: TJvDBComboEdit;
     lblEmissao: TLabel;
     dbEmissao: TJvDBDateEdit;
-    cdsDadosNominaisFornecedorNome: TStringField;
     tblFormaPagto: TIBTable;
     dtsFormaPagto: TDataSource;
     cdsDadosNominaisFormaPagto: TSmallintField;
-    cdsDadosNominaisCondicaoPagto: TSmallintField;
-    cdsDadosNominaisTipoDespesa: TIntegerField;
-    tblCondicaoPagto: TIBTable;
-    dtsCondicaoPagto: TDataSource;
-    qryTpDespesa: TIBQuery;
-    dtsTpDespesa: TDataSource;
     lblFormaPagto: TLabel;
     dbFormaPagto: TDBLookupComboBox;
-    lblCondicaoPagto: TLabel;
-    dbCondicaoPagto: TDBLookupComboBox;
-    lblTipoDespesa: TLabel;
-    dbTipoDespesa: TDBLookupComboBox;
+    lblBanco: TLabel;
+    dbBanco: TDBLookupComboBox;
     pnlParcelas: TPanel;
     GrpBxParametros: TGroupBox;
     lblNumeroParcelasX: TLabel;
@@ -95,38 +85,40 @@ type
     dbgParcelasTblDiaSemana: TcxGridDBColumn;
     dbgParcelasTblValorParcela: TcxGridDBColumn;
     dbgParcelasTblObservacao: TcxGridDBColumn;
-    cdsContaAPagar: TIBDataSet;
+    cdsContaAReceber: TIBDataSet;
     IbUpdTabela: TIBUpdateSQL;
     cdsDadosNominaisPrimeiroVencimento: TDateTimeField;
     RdGrpVencimentoFimSemana: TRadioGroup;
     dbPrimeiroVencimento: TJvDBDateEdit;
     lblPrimeiroVencimentoX: TLabel;
-    cdsContaAPagarANOLANC: TSmallintField;
-    cdsContaAPagarNUMLANC: TIntegerField;
-    cdsContaAPagarEMPRESA: TIBStringField;
-    cdsContaAPagarCODFORN: TSmallintField;
-    cdsContaAPagarPARCELA: TSmallintField;
-    cdsContaAPagarTIPPAG: TIBStringField;
-    cdsContaAPagarHISTORIC: TWideMemoField;
-    cdsContaAPagarNOTFISC: TIBStringField;
-    cdsContaAPagarDTEMISS: TDateField;
-    cdsContaAPagarDTVENC: TDateField;
-    cdsContaAPagarVALORPAG: TIBBCDField;
-    cdsContaAPagarVALORPAGTOT: TIBBCDField;
-    cdsContaAPagarVALORSALDO: TIBBCDField;
-    cdsContaAPagarNOMEEMP: TIBStringField;
-    cdsContaAPagarTIPOCATEG: TSmallintField;
-    cdsContaAPagarFORMA_PAGTO: TSmallintField;
-    cdsContaAPagarCONDICAO_PAGTO: TSmallintField;
-    cdsContaAPagarQUITADO: TSmallintField;
-    cdsContaAPagarCODTPDESP: TSmallintField;
-    cdsContaAPagarSITUACAO: TSmallintField;
-    cdsContaAPagarLOTE: TIBStringField;
+    cdsContaAReceberANOLANC: TSmallintField;
+    cdsContaAReceberNUMLANC: TIntegerField;
+    cdsContaAReceberEMPRESA: TIBStringField;
+    cdsContaAReceberCLIENTE: TIntegerField;
+    cdsContaAReceberCNPJ: TIBStringField;
+    cdsContaAReceberFORMA_PAGTO: TSmallintField;
+    cdsContaAReceberHISTORIC: TWideMemoField;
+    cdsContaAReceberDTEMISS: TDateField;
+    cdsContaAReceberDTVENC: TDateField;
+    cdsContaAReceberVALORREC: TIBBCDField;
+    cdsContaAReceberVALORRECTOT: TIBBCDField;
+    cdsContaAReceberVALORSALDO: TIBBCDField;
+    cdsContaAReceberPARCELA: TSmallintField;
+    cdsContaAReceberBAIXADO: TSmallintField;
+    cdsContaAReceberENVIADO: TSmallintField;
+    cdsContaAReceberSITUACAO: TSmallintField;
+    cdsContaAReceberLOTE: TIBStringField;
+    cdsDadosNominaisCliente: TIntegerField;
+    cdsDadosNominaisClienteNome: TStringField;
+    cdsDadosNominaisClienteCNPJ: TStringField;
+    tblBanco: TIBTable;
+    dtsBanco: TDataSource;
+    cdsDadosNominaisBanco: TIntegerField;
     procedure tmrAlertaTimer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cdsDadosNominaisNewRecord(DataSet: TDataSet);
     procedure BtnGerarClick(Sender: TObject);
-    procedure dbFornecedorButtonClick(Sender: TObject);
+    procedure dbClienteButtonClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure cdsParcelasDiaSemanaGetText(Sender: TField; var Text: string;
       DisplayText: Boolean);
@@ -148,7 +140,7 @@ type
 
   function GerarLoteParcelas(const AOnwer : TComponent;
     var aEmpresa, aLote : String;
-    var aFornecedor : Integer;
+    var aCliente : Integer;
     var aDataEmissao, aVencimentoFirst, aVencimentoLast : TDateTime) : Boolean;
 
 implementation
@@ -157,16 +149,16 @@ implementation
 
 uses
   UConstantesDGE, UDMRecursos, UDMBusiness, UGrCampoRequisitado,
-  UGeFornecedor, DateUtils;
+  UGeCliente, DateUtils;
 
 function GerarLoteParcelas(const AOnwer : TComponent;
   var aEmpresa, aLote : String;
-  var aFornecedor : Integer;
+  var aCliente : Integer;
   var aDataEmissao, aVencimentoFirst, aVencimentoLast : TDateTime) : Boolean;
 var
-  AForm : TfrmGeContasAPagarLoteParcela;
+  AForm : TfrmGeContasAReceberLoteParcela;
 begin
-  AForm := TfrmGeContasAPagarLoteParcela.Create(AOnwer);
+  AForm := TfrmGeContasAReceberLoteParcela.Create(AOnwer);
   try
     AForm.cdsDadosNominais.Append;
     Result := (AForm.ShowModal = mrOk);
@@ -175,7 +167,7 @@ begin
     begin
       aEmpresa     := AForm.cdsDadosNominaisEmpresa.AsString;
       aLote        := AForm.Lote;
-      aFornecedor  := AForm.cdsDadosNominaisFornecedor.AsInteger;
+      aCliente     := AForm.cdsDadosNominaisCliente.AsInteger;
       aDataEmissao := AForm.cdsDadosNominaisEmissao.AsDateTime;
 
       AForm.cdsParcelas.First;
@@ -189,20 +181,20 @@ begin
   end;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.btnCancelarClick(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.btnCancelarClick(Sender: TObject);
 begin
   inherited;
   Self.Close;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.btnConfirmarClick(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.btnConfirmarClick(Sender: TObject);
 begin
-  if ShowConfirmation('Confirma que o lote de parcelas seja gravada na programação de Contas A Pagar?') then
+  if ShowConfirmation('Confirma que o lote de parcelas seja gravada na programação de Contas A Receber?') then
     if GerarLancamentos then
       ModalResult := mrOk;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.BtnGerarClick(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.BtnGerarClick(Sender: TObject);
 var
   I : Integer;
   sValorParc  ,
@@ -331,24 +323,24 @@ begin
   end;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.cdsDadosNominaisNewRecord(
+procedure TfrmGeContasAReceberLoteParcela.cdsDadosNominaisNewRecord(
   DataSet: TDataSet);
 begin
   cdsDadosNominaisEmpresa.AsString         := gUsuarioLogado.Empresa;
   cdsDadosNominaisFormaPagto.AsInteger     := GetFormaPagtoIDDefault;
-  cdsDadosNominaisCondicaoPagto.AsInteger  := GetCondicaoPagtoIDDefault;
   cdsDadosNominaisNumeroParcelas.AsInteger := 2;
   cdsDadosNominaisValorTotal.AsCurrency    := 0.0;
   cdsDadosNominaisEmissao.AsDateTime       := GetDateDB;
   cdsDadosNominaisPrimeiroVencimento.AsDateTime := cdsDadosNominaisEmissao.AsDateTime;
   cdsDadosNominaisDiaVencimento.AsInteger  := 5;
   cdsDadosNominaisNumeroDias.AsInteger     := 30;
-  cdsDadosNominaisFornecedor.Clear;
-  cdsDadosNominaisFornecedorNome.Clear;
-  cdsDadosNominaisTipoDespesa.Clear;
+  cdsDadosNominaisCliente.Clear;
+  cdsDadosNominaisClienteNome.Clear;
+  cdsDadosNominaisClienteCNPJ.Clear;
+  cdsDadosNominaisBanco.Clear;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.cdsParcelasDiaSemanaGetText(
+procedure TfrmGeContasAReceberLoteParcela.cdsParcelasDiaSemanaGetText(
   Sender: TField; var Text: string; DisplayText: Boolean);
 begin
   if not Sender.IsNull then
@@ -363,7 +355,7 @@ begin
     end;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.dbFornecedorButtonClick(
+procedure TfrmGeContasAReceberLoteParcela.dbClienteButtonClick(
   Sender: TObject);
 var
   iCodigo : Integer;
@@ -373,26 +365,27 @@ begin
   if not (cdsDadosNominais.State in [dsEdit, dsInsert]) then
     cdsDadosNominais.Edit;
 
-  if ( SelecionarFornecedor(Self, iCodigo, sCNPJ, sNome) ) then
+  if ( SelecionarCliente(Self, iCodigo, sCNPJ, sNome) ) then
   begin
-    cdsDadosNominaisFornecedor.AsInteger    := iCodigo;
-    cdsDadosNominaisFornecedorNome.AsString := sNome;
+    cdsDadosNominaisCliente.AsInteger    := iCodigo;
+    cdsDadosNominaisClienteNome.AsString := sNome;
+    cdsDadosNominaisClienteCNPJ.AsString := sCNPJ;
   end;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.dbgParcelasEnter(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.dbgParcelasEnter(Sender: TObject);
 begin
   Self.OnKeyDown := nil;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.dbgParcelasExit(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.dbgParcelasExit(Sender: TObject);
 begin
   Self.OnKeyDown := FormKeyDown;
   if (cdsParcelas.State in [dsEdit, dsInsert]) then
     cdsParcelas.Post;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.dtsParcelasDataChange(Sender: TObject;
+procedure TfrmGeContasAReceberLoteParcela.dtsParcelasDataChange(Sender: TObject;
   Field: TField);
 begin
   if Field = cdsParcelasVencimento then
@@ -400,32 +393,31 @@ begin
       cdsParcelasDiaSemana.AsInteger := DayOfWeek(Field.AsDateTime);
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.dtsParcelasStateChange(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.dtsParcelasStateChange(Sender: TObject);
 begin
   btnConfirmar.Enabled := (not (cdsParcelas.State in [dsEdit, dsInsert]))
     and (cdsParcelas.RecordCount > 0);
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.FormCreate(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.FormCreate(Sender: TObject);
 begin
   inherited;
-  cdsContaAPagar.GeneratorField.Generator := 'GEN_CONTAPAG_NUM_' + FormatFloat('0000', YearOf(Date));
+  cdsContaAReceber.GeneratorField.Generator := 'GEN_CONTAREC_NUM_' + FormatFloat('0000', YearOf(Date));
 
   tblEmpresa.Open;
   tblFormaPagto.Open;
-  tblCondicaoPagto.Open;
-  qryTpDespesa.Open;
+  tblBanco.Open;
 
   cdsDadosNominais.CreateDataSet;
 end;
 
-function TfrmGeContasAPagarLoteParcela.GerarLancamentos: Boolean;
+function TfrmGeContasAReceberLoteParcela.GerarLancamentos: Boolean;
 var
   bRetorno : Boolean;
 begin
   bRetorno := False;
   try
-    with cdsContaAPagar do
+    with cdsContaAReceber do
     begin
       Open;
 
@@ -436,26 +428,22 @@ begin
       while not cdsParcelas.Eof do
       begin
         Append;
-        cdsContaAPagarANOLANC.Value  := YearOf(cdsDadosNominaisEmissao.AsDateTime);
-        cdsContaAPagarEMPRESA.Value  := cdsDadosNominaisEmpresa.AsString;
-        cdsContaAPagarCODFORN.Value  := cdsDadosNominaisFornecedor.AsInteger;
-        cdsContaAPagarPARCELA.Value  := cdsParcelasParcela.AsInteger;
-        cdsContaAPagarTIPPAG.Value   := dbFormaPagto.Text;
-        cdsContaAPagarHISTORIC.Value := cdsParcelasObservacao.AsString;
-        cdsContaAPagarNOTFISC.Value  := cdsDadosNominaisNotaFiscal.AsString;
-        cdsContaAPagarDTEMISS.Value  := cdsDadosNominaisEmissao.AsDateTime;
-        cdsContaAPagarDTVENC.Value   := cdsParcelasVencimento.AsDateTime;
-        cdsContaAPagarVALORPAG.Value := cdsParcelasValorParcela.AsCurrency;
-        cdsContaAPagarVALORPAGTOT.Value := 0.0;
-        cdsContaAPagarVALORSALDO.Value  := cdsParcelasValorParcela.AsCurrency;
-        cdsContaAPagarNOMEEMP.Value     := dbEmpresa.Text;
-        cdsContaAPagarTIPOCATEG.Clear;
-        cdsContaAPagarFORMA_PAGTO.Value    := cdsDadosNominaisFormaPagto.AsInteger;
-        cdsContaAPagarCONDICAO_PAGTO.Value := cdsDadosNominaisCondicaoPagto.AsInteger;
-        cdsContaAPagarQUITADO.Value        := 0;
-        cdsContaAPagarCODTPDESP.Value      := cdsDadosNominaisTipoDespesa.AsInteger;
-        cdsContaAPagarSITUACAO.Value       := 1;
-        cdsContaAPagarLOTE.Value           := Lote;
+        cdsContaAReceberANOLANC.Value  := YearOf(cdsDadosNominaisEmissao.AsDateTime);
+        cdsContaAReceberEMPRESA.Value  := cdsDadosNominaisEmpresa.AsString;
+        cdsContaAReceberCLIENTE.Value  := cdsDadosNominaisCliente.AsInteger;
+        cdsContaAReceberCNPJ.Value     := cdsDadosNominaisClienteCNPJ.AsString;
+        cdsContaAReceberFORMA_PAGTO.Value := cdsDadosNominaisFormaPagto.AsInteger;
+        cdsContaAReceberHISTORIC.Value    := cdsParcelasObservacao.AsString;
+        cdsContaAReceberDTEMISS.Value  := cdsDadosNominaisEmissao.AsDateTime;
+        cdsContaAReceberDTVENC.Value   := cdsParcelasVencimento.AsDateTime;
+        cdsContaAReceberVALORREC.Value := cdsParcelasValorParcela.AsCurrency;
+        cdsContaAReceberVALORRECTOT.Value := 0.0;
+        cdsContaAReceberVALORSALDO.Value  := cdsParcelasValorParcela.AsCurrency;
+        cdsContaAReceberPARCELA.Value  := cdsParcelasParcela.AsInteger;
+        cdsContaAReceberBAIXADO.Value  := 0;
+        cdsContaAReceberENVIADO.Value  := 0;
+        cdsContaAReceberSITUACAO.Value := 1;
+        cdsContaAReceberLOTE.Value     := Lote;
         Post;
         ApplyUpdates;
 
@@ -471,12 +459,12 @@ begin
   end;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.RegistrarRotinaSistema;
+procedure TfrmGeContasAReceberLoteParcela.RegistrarRotinaSistema;
 begin
   ;
 end;
 
-procedure TfrmGeContasAPagarLoteParcela.tmrAlertaTimer(Sender: TObject);
+procedure TfrmGeContasAReceberLoteParcela.tmrAlertaTimer(Sender: TObject);
 begin
   if (lblInforme.Font.Color = clRed) then
     lblInforme.Font.Color := clBlue

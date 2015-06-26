@@ -298,8 +298,6 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
       end
     end
     inherited tbsCadastro: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 25
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel8: TBevel
@@ -1145,6 +1143,14 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
     Width = 934
     ExplicitTop = 522
     ExplicitWidth = 934
+    inherited bvlTool1: TBevel
+      Left = 313
+      ExplicitLeft = 313
+    end
+    inherited bvlTool2: TBevel
+      Left = 467
+      ExplicitLeft = 467
+    end
     inherited bvlTool3: TBevel
       Left = 851
       ExplicitLeft = 851
@@ -1160,14 +1166,54 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
       Height = 31
       Shape = bsSpacer
     end
+    object Bevel10: TBevel [6]
+      Left = 84
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+      ExplicitLeft = 81
+      ExplicitTop = 2
+    end
+    inherited btbtnIncluir: TcxButton
+      Left = 88
+      TabOrder = 1
+      ExplicitLeft = 88
+    end
+    inherited btbtnAlterar: TcxButton
+      Left = 163
+      TabOrder = 2
+      ExplicitLeft = 163
+    end
+    inherited btbtnExcluir: TcxButton
+      Left = 238
+      TabOrder = 3
+      ExplicitLeft = 238
+    end
+    inherited btbtnCancelar: TcxButton
+      Left = 317
+      TabOrder = 5
+      ExplicitLeft = 317
+    end
+    inherited btbtnSalvar: TcxButton
+      Left = 392
+      TabOrder = 4
+      ExplicitLeft = 392
+    end
+    inherited btbtnLista: TcxButton
+      Left = 471
+      TabOrder = 6
+      ExplicitLeft = 471
+    end
     inherited btbtnFechar: TcxButton
       Left = 855
-      TabOrder = 8
+      TabOrder = 9
       ExplicitLeft = 855
     end
     inherited btbtnSelecionar: TcxButton
       Left = 731
-      TabOrder = 7
+      TabOrder = 8
       ExplicitLeft = 731
     end
     object btbtnEfetuarPagto: TcxButton
@@ -1234,8 +1280,24 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
       OptionsImage.NumGlyphs = 2
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 6
+      TabOrder = 7
       OnClick = btbtnEfetuarPagtoClick
+    end
+    object btbtnIncluirLote: TcxButton
+      Tag = 1
+      Left = 4
+      Top = 0
+      Width = 80
+      Height = 35
+      Hint = 'Incluir Lote de Parcelas'
+      Align = alLeft
+      Caption = 'Incluir &Lote'
+      OptionsImage.ImageIndex = 8
+      OptionsImage.Images = DMRecursos.ImgBotoes16x16
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = btbtnIncluirLoteClick
     end
   end
   inherited IbDtstTabela: TIBDataSet
@@ -1305,6 +1367,7 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
       DisplayLabel = 'Parcela'
       FieldName = 'PARCELA'
       Origin = 'TBCONTREC.PARCELA'
+      DisplayFormat = '#00'
     end
     object IbDtstTabelaEMPRESA: TIBStringField
       DisplayLabel = 'Empresa'
@@ -1634,7 +1697,7 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
   inherited ImgList: TImageList
     Left = 736
     Bitmap = {
-      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

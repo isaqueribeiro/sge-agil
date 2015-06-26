@@ -138,7 +138,8 @@ uses
   UGeFuncionario in '..\Sys\UGeFuncionario.pas' {frmGeFuncionario},
   UGeEntradaEstoqueDevolucaoNF in '..\Sys\UGeEntradaEstoqueDevolucaoNF.pas' {frmGeEntradaEstoqueDevolucaoNF},
   UGeContasAReceberQuitar in '..\System_SGE\UGeContasAReceberQuitar.pas' {frmGeContasAReceberQuitar},
-  UGeContasAPagarLoteParcela in '..\Sys\UGeContasAPagarLoteParcela.pas' {frmGeContasAPagarLoteParcela};
+  UGeContasAPagarLoteParcela in '..\Sys\UGeContasAPagarLoteParcela.pas' {frmGeContasAPagarLoteParcela},
+  UGeContasAReceberLoteParcela in '..\Sys\UGeContasAReceberLoteParcela.pas' {frmGeContasAReceberLoteParcela};
 
 {$R *.res}
 
