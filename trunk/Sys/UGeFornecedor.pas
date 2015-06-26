@@ -224,7 +224,7 @@ var
 begin
   frm := TfrmGeFornecedor.Create(AOwner);
   try
-    frm.WhereAdditional := 'f.cliente_origem is null';
+    frm.WhereAdditional := '(f.cliente_origem is null) and (f.fornecedor_funcionario = 0)';
     frm.tbsDuplicatas.TabVisible := False; // Temporário
     frm.ShowModal;
   finally
@@ -300,7 +300,7 @@ begin
   NomeTabela      := 'TBFORNECEDOR';
   CampoCodigo     := 'Codforn';
   CampoDescricao  := 'Nomeforn';
-  WhereAdditional := 'f.cliente_origem is null';
+  WhereAdditional := '(f.cliente_origem is null) and (f.fornecedor_funcionario = 0)';
 
   UpdateGenerator;
 

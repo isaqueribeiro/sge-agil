@@ -160,6 +160,7 @@ type
     dbDataEmissao: TJvDBDateEdit;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    IbDtstTabelaUSUARIO_REQUISITANTE: TIBStringField;
     procedure dbCentroCustoSelecionar(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
@@ -422,8 +423,9 @@ begin
   IbDtstTabelaDATA_EMISSAO.Value  := GetDateDB;
   IbDtstTabelaREQUISITANTE.Value  := gUsuarioLogado.Login; 
   IbDtstTabelaSTATUS.AsInteger    := STATUS_REQUISICAO_ALMOX_EDC;
-  IbDtstTabelaINSERCAO_DATA.Value    := GetDateTimeDB;
-  IbDtstTabelaINSERCAO_USUARIO.Value := gUsuarioLogado.Login;
+  IbDtstTabelaINSERCAO_DATA.Value        := GetDateTimeDB;
+  IbDtstTabelaINSERCAO_USUARIO.Value     := gUsuarioLogado.Login;
+  IbDtstTabelaUSUARIO_REQUISITANTE.Value := gUsuarioLogado.Nome;
 
   IbDtstTabelaVALOR_TOTAL.AsCurrency := 0.0;
 
@@ -1386,7 +1388,10 @@ var
 begin
   if ( dbUsuarioRequisitante.Button.Enabled and (IbDtstTabela.State in [dsEdit, dsInsert]) ) then
     if SelecionarUsuarioRequisitante(Self, sLogin, sNome) then
-      IbDtstTabelaREQUISITANTE.Value := sLogin;
+    begin
+      IbDtstTabelaREQUISITANTE.Value         := sLogin;
+      IbDtstTabelaUSUARIO_REQUISITANTE.Value := sNome;
+    end;
 end;
 
 procedure TfrmGeRequisicaoAlmox.pgcGuiasOnChange;

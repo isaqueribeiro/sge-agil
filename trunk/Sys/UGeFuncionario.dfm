@@ -1,4 +1,5 @@
 inherited frmGeFuncionario: TfrmGeFuncionario
+  ActiveControl = dbgDados
   Caption = 'Cadastro de Funcion'#225'rios'
   ClientHeight = 500
   ClientWidth = 844
@@ -22,6 +23,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
   inherited pgcGuias: TPageControl
     Width = 844
     Height = 457
+    ActivePage = tbsTabela
     ExplicitWidth = 844
     ExplicitHeight = 457
     inherited tbsTabela: TTabSheet
@@ -36,6 +38,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       inherited dbgDados: TDBGrid
         Width = 836
         Height = 362
+        PopupMenu = popFerramentas
         Columns = <
           item
             Expanded = False
@@ -58,7 +61,6 @@ inherited frmGeFuncionario: TfrmGeFuncionario
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'SEXO'
             Title.Alignment = taCenter
@@ -79,8 +81,26 @@ inherited frmGeFuncionario: TfrmGeFuncionario
         ExplicitTop = 366
         ExplicitWidth = 836
         inherited grpBxFiltro: TGroupBox
-          Left = 580
-          ExplicitLeft = 580
+          Left = 472
+          Width = 360
+          ExplicitLeft = 472
+          ExplicitWidth = 360
+          inherited lbltFiltrar: TLabel
+            Left = 14
+            Width = 68
+            Caption = 'Funcion'#225'rio:'
+            ExplicitLeft = 14
+            ExplicitWidth = 68
+          end
+          inherited edtFiltrar: TEdit
+            Left = 88
+            Width = 221
+            ExplicitLeft = 88
+            ExplicitWidth = 221
+          end
+          inherited btnFiltrar: TcxButton
+            Left = 315
+          end
         end
       end
     end
@@ -205,7 +225,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
           Top = 40
           Width = 105
           Height = 21
-          DataField = 'DATA_CADASTRO'
+          DataField = 'DATA_NASCIMENTO'
           DataSource = DtSrcTabela
           Font.Charset = ANSI_CHARSET
           Font.Color = clBlack
@@ -485,6 +505,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
           Font.Style = []
           ParentFont = False
           TabOrder = 6
+          OnKeyPress = ProximoCampoKeyPress
         end
         object dbEstado: TJvDBComboEdit
           Left = 16
@@ -867,7 +888,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
         Top = 269
         Width = 836
         Height = 159
-        ActivePage = tbsDadosAdcionais
+        ActivePage = tbsContato
         Align = alClient
         TabOrder = 3
         object tbsContato: TTabSheet
@@ -935,6 +956,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
             Font.Style = []
             ParentFont = False
             TabOrder = 3
+            OnKeyPress = ProximoCampoKeyPress
           end
           object dbFoneCelular: TDBEdit
             Left = 172
@@ -985,6 +1007,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
             PopupMenu = ppmLogo
             Stretch = True
             TabOrder = 2
+            OnKeyPress = ProximoCampoKeyPress
           end
           object GrpBxParametro: TGroupBox
             AlignWithMargins = True
@@ -1057,7 +1080,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
               CharCase = ecUpperCase
               ClickKey = 16464
               Color = clMoneyGreen
-              DataField = 'USUARIO'
+              DataField = 'LOGIN'
               DataSource = DtSrcTabela
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
@@ -1171,6 +1194,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       'Select'
       '    f.codigo'
       '  , f.nome_completo'
+      '  , f.nome_limpo'
       '  , f.metafonema'
       '  , f.sexo'
       '  , f.foto_3x4'
@@ -1181,7 +1205,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       '  , f.flag_vendedor'
       '  , f.flag_fornecedor'
       '  , f.ativo'
-      '  , f.usuario'
+      '  , f.login'
       '  , f.vendedor'
       '  , f.fornecedor'
       '  , f.ender'
@@ -1241,6 +1265,12 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       Required = True
       Size = 60
     end
+    object IbDtstTabelaNOME_LIMPO: TIBStringField
+      FieldName = 'NOME_LIMPO'
+      Origin = '"TBFUNCIONARIO"."NOME_LIMPO"'
+      ProviderFlags = [pfInUpdate]
+      Size = 60
+    end
     object IbDtstTabelaMETAFONEMA: TIBStringField
       FieldName = 'METAFONEMA'
       Origin = '"TBFUNCIONARIO"."METAFONEMA"'
@@ -1255,6 +1285,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       Required = True
     end
     object IbDtstTabelaSEXO: TIBStringField
+      Alignment = taCenter
       DisplayLabel = 'Sexo'
       FieldName = 'SEXO'
       Origin = '"TBFUNCIONARIO"."SEXO"'
@@ -1304,16 +1335,16 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       Origin = '"TBFUNCIONARIO"."ATIVO"'
       ProviderFlags = [pfInUpdate]
     end
-    object IbDtstTabelaUSUARIO: TIBStringField
-      FieldName = 'USUARIO'
-      Origin = '"TBFUNCIONARIO"."USUARIO"'
-      ProviderFlags = [pfInUpdate]
-      Size = 12
-    end
     object IbDtstTabelaVENDEDOR: TIntegerField
       FieldName = 'VENDEDOR'
       Origin = '"TBFUNCIONARIO"."VENDEDOR"'
       ProviderFlags = [pfInUpdate]
+    end
+    object IbDtstTabelaLOGIN: TIBStringField
+      FieldName = 'LOGIN'
+      Origin = '"TBFUNCIONARIO"."LOGIN"'
+      ProviderFlags = [pfInUpdate]
+      Size = 12
     end
     object IbDtstTabelaFORNECEDOR: TIntegerField
       FieldName = 'FORNECEDOR'
@@ -1479,6 +1510,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       'Select '
       '  CODIGO,'
       '  NOME_COMPLETO,'
+      '  NOME_LIMPO,'
       '  METAFONEMA,'
       '  SEXO,'
       '  FOTO_3X4,'
@@ -1489,7 +1521,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       '  FLAG_VENDEDOR,'
       '  FLAG_FORNECEDOR,'
       '  ATIVO,'
-      '  USUARIO,'
+      '  LOGIN,'
       '  VENDEDOR,'
       '  FORNECEDOR,'
       '  ENDER,'
@@ -1539,8 +1571,10 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       '  FORNECEDOR = :FORNECEDOR,'
       '  FOTO_3X4 = :FOTO_3X4,'
       '  LOG_COD = :LOG_COD,'
+      '  LOGIN = :LOGIN,'
       '  METAFONEMA = :METAFONEMA,'
       '  NOME_COMPLETO = :NOME_COMPLETO,'
+      '  NOME_LIMPO = :NOME_LIMPO,'
       '  NUMERO_END = :NUMERO_END,'
       '  OBSERVACAO = :OBSERVACAO,'
       '  PAIS_ID = :PAIS_ID,'
@@ -1549,7 +1583,6 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       '  SEXO = :SEXO,'
       '  TLG_TIPO = :TLG_TIPO,'
       '  UF = :UF,'
-      '  USUARIO = :USUARIO,'
       '  VENDEDOR = :VENDEDOR'
       'where'
       '  CODIGO = :OLD_CODIGO')
@@ -1565,11 +1598,12 @@ inherited frmGeFuncionario: TfrmGeFuncionario
         '   FLAG_VENDEDOR, FONE_CELULAR, FONE_COMERCIAL, FONE_FIXO, FORNE' +
         'CEDOR, '
       
-        '   FOTO_3X4, LOG_COD, METAFONEMA, NOME_COMPLETO, NUMERO_END, OBS' +
-        'ERVACAO, '
+        '   FOTO_3X4, LOG_COD, LOGIN, METAFONEMA, NOME_COMPLETO, NOME_LIM' +
+        'PO, NUMERO_END, '
       
-        '   PAIS_ID, RG_NUMERO, RG_ORGAO_EMISSOR, SEXO, TLG_TIPO, UF, USU' +
-        'ARIO, VENDEDOR)'
+        '   OBSERVACAO, PAIS_ID, RG_NUMERO, RG_ORGAO_EMISSOR, SEXO, TLG_T' +
+        'IPO, UF, '
+      '   VENDEDOR)'
       'values'
       
         '  (:ATIVO, :BAI_COD, :BAIRRO, :CEP, :CID_COD, :CIDADE, :CODIGO, ' +
@@ -1581,12 +1615,12 @@ inherited frmGeFuncionario: TfrmGeFuncionario
         '   :FLAG_VENDEDOR, :FONE_CELULAR, :FONE_COMERCIAL, :FONE_FIXO, :' +
         'FORNECEDOR, '
       
-        '   :FOTO_3X4, :LOG_COD, :METAFONEMA, :NOME_COMPLETO, :NUMERO_END' +
-        ', :OBSERVACAO, '
+        '   :FOTO_3X4, :LOG_COD, :LOGIN, :METAFONEMA, :NOME_COMPLETO, :NO' +
+        'ME_LIMPO, '
       
-        '   :PAIS_ID, :RG_NUMERO, :RG_ORGAO_EMISSOR, :SEXO, :TLG_TIPO, :U' +
-        'F, :USUARIO, '
-      '   :VENDEDOR)')
+        '   :NUMERO_END, :OBSERVACAO, :PAIS_ID, :RG_NUMERO, :RG_ORGAO_EMI' +
+        'SSOR, :SEXO, '
+      '   :TLG_TIPO, :UF, :VENDEDOR)')
     DeleteSQL.Strings = (
       'delete from TBFUNCIONARIO'
       'where'
@@ -1596,7 +1630,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3103,5 +3137,13 @@ inherited frmGeFuncionario: TfrmGeFuncionario
     StoredProcName = 'SET_VENDEDOR_FUNCIONARIO'
     Left = 744
     Top = 72
+  end
+  object popFerramentas: TPopupMenu
+    Left = 664
+    Top = 287
+    object ppMnAtualizarMetafonema: TMenuItem
+      Caption = 'Atualizar C'#243'digo Metaf'#244'nico'
+      OnClick = ppMnAtualizarMetafonemaClick
+    end
   end
 end

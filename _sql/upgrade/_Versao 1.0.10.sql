@@ -12809,3 +12809,228 @@ COMMENT ON COLUMN TBCONTREC.LOTE IS
 CREATE INDEX IDX_TBCONTREC_LOTE
 ON TBCONTREC (LOTE);
 
+
+
+
+/*------ SYSDBA 26/06/2015 00:00:16 --------*/
+
+ALTER TABLE TBFUNCIONARIO DROP CONSTRAINT FK_TBFUNCIONARIO_USUARIO;
+
+
+
+
+/*------ SYSDBA 26/06/2015 00:00:25 --------*/
+
+ALTER TABLE TBFUNCIONARIO ALTER USUARIO TO LOGIN;
+
+
+
+
+/*------ SYSDBA 26/06/2015 00:00:55 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+ADD CONSTRAINT FK_TBFUNCIONARIO_LOGIN
+FOREIGN KEY (LOGIN)
+REFERENCES TBUSERS(NOME)
+ON DELETE SET NULL;
+
+
+
+
+/*------ SYSDBA 26/06/2015 00:07:13 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure SET_USUARIO_FUNCIONARIO (
+    NOME_COMPLETO DMN_NOME,
+    ATIVO DMN_LOGICO)
+returns (
+    USUARIO_LOGIN DMN_USUARIO)
+as
+declare variable LOGIN DMN_NOME;
+declare variable COMMON_USER DMN_SMALLINT_N;
+begin
+  common_user = 13;
+
+  -- Limpar Nome Completo para montar Login
+  login = coalesce(trim(:nome_completo), '');
+  login = replace(:login, ' E ',   '');
+  login = replace(:login, ' DA ',  '');
+  login = replace(:login, ' DE ',  '');
+  login = replace(:login, ' DI ',  '');
+  login = replace(:login, ' DO ',  '');
+  login = replace(:login, ' DAS ', '');
+  login = replace(:login, ' DOS ', '');
+  login = replace(:login, ' ',     '');
+  login = trim(substring(trim(:login) from 1 for 12));
+
+  if (not exists(
+    Select
+      u.nomecompleto
+    from TBUSERS u
+    where u.nome = :login
+  )) then
+  begin
+    -- Padronizador perfil de usuario comum
+    if (exists(
+      Select
+        f.cod
+      from TBFUNCAO f
+      where f.cod = :common_user
+    )) then
+      Update TBFUNCAO f Set
+        f.funcao = 'USUARIO COMUM'
+      where f.cod = :common_user;
+    else
+      Insert Into TBFUNCAO (
+          cod
+        , funcao
+      ) values (
+          :common_user
+        , 'USUARIO COMUM'
+      );
+
+    Insert Into TBUSERS (
+        nome
+      , senha
+      , nomecompleto
+      , codfuncao
+      , ativo
+    ) values (
+        :login
+      , 'x|QUJDMTIz'
+      , :nome_completo
+      , :common_user
+      , :ativo
+    );
+  end
+  else
+  begin
+    Update TBUSERS u Set
+        u.ativo        = :ativo
+      , u.nomecompleto = :nome_completo
+    where u.nome = :login;
+  end 
+
+  usuario_login = :login;
+  suspend;
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 26/06/2015 00:23:02 --------*/
+
+ALTER TABLE TBFUNCIONARIO
+    ADD NOME_LIMPO DMN_NOME;
+
+COMMENT ON COLUMN TBFUNCIONARIO.NOME_LIMPO IS
+'Nome completo sem caracteres especiais';
+
+alter table TBFUNCIONARIO
+alter CODIGO position 1;
+
+alter table TBFUNCIONARIO
+alter NOME_COMPLETO position 2;
+
+alter table TBFUNCIONARIO
+alter NOME_LIMPO position 3;
+
+alter table TBFUNCIONARIO
+alter METAFONEMA position 4;
+
+alter table TBFUNCIONARIO
+alter SEXO position 5;
+
+alter table TBFUNCIONARIO
+alter FOTO_3X4 position 6;
+
+alter table TBFUNCIONARIO
+alter CPF position 7;
+
+alter table TBFUNCIONARIO
+alter RG_NUMERO position 8;
+
+alter table TBFUNCIONARIO
+alter RG_ORGAO_EMISSOR position 9;
+
+alter table TBFUNCIONARIO
+alter DATA_NASCIMENTO position 10;
+
+alter table TBFUNCIONARIO
+alter FLAG_VENDEDOR position 11;
+
+alter table TBFUNCIONARIO
+alter FLAG_FORNECEDOR position 12;
+
+alter table TBFUNCIONARIO
+alter ATIVO position 13;
+
+alter table TBFUNCIONARIO
+alter LOGIN position 14;
+
+alter table TBFUNCIONARIO
+alter VENDEDOR position 15;
+
+alter table TBFUNCIONARIO
+alter FORNECEDOR position 16;
+
+alter table TBFUNCIONARIO
+alter ENDER position 17;
+
+alter table TBFUNCIONARIO
+alter NUMERO_END position 18;
+
+alter table TBFUNCIONARIO
+alter COMPLEMENTO position 19;
+
+alter table TBFUNCIONARIO
+alter BAIRRO position 20;
+
+alter table TBFUNCIONARIO
+alter CEP position 21;
+
+alter table TBFUNCIONARIO
+alter CIDADE position 22;
+
+alter table TBFUNCIONARIO
+alter UF position 23;
+
+alter table TBFUNCIONARIO
+alter TLG_TIPO position 24;
+
+alter table TBFUNCIONARIO
+alter LOG_COD position 25;
+
+alter table TBFUNCIONARIO
+alter BAI_COD position 26;
+
+alter table TBFUNCIONARIO
+alter CID_COD position 27;
+
+alter table TBFUNCIONARIO
+alter EST_COD position 28;
+
+alter table TBFUNCIONARIO
+alter PAIS_ID position 29;
+
+alter table TBFUNCIONARIO
+alter FONE_FIXO position 30;
+
+alter table TBFUNCIONARIO
+alter FONE_CELULAR position 31;
+
+alter table TBFUNCIONARIO
+alter FONE_COMERCIAL position 32;
+
+alter table TBFUNCIONARIO
+alter EMAIL position 33;
+
+alter table TBFUNCIONARIO
+alter OBSERVACAO position 34;
+
+alter table TBFUNCIONARIO
+alter DATA_CADASTRO position 35;
+

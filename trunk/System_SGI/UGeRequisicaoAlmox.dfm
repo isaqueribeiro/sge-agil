@@ -871,7 +871,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
           CharCase = ecUpperCase
           ClickKey = 16464
           Color = clMoneyGreen
-          DataField = 'REQUISITANTE'
+          DataField = 'USUARIO_REQUISITANTE'
           DataSource = DtSrcTabela
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
@@ -1954,10 +1954,6 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Height = 31
       Shape = bsSpacer
     end
-    inherited btbtnExcluir: TcxButton
-      ExplicitLeft = 154
-      ExplicitTop = 0
-    end
     inherited btbtnLista: TcxButton
       DropDownMenu = ppImprimir
       Kind = cxbkDropDown
@@ -2277,12 +2273,13 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       '  , co.descricao  as cc_origem_desc'
       '  , co.codcliente as cc_origem_codcliente'
       '  , cd.descricao  as cc_destino_desc'
+      '  , us.nomecompleto as usuario_requisitante'
       ''
       'from TBREQUISICAO_ALMOX r'
       '  left join TBEMPRESA e on (e.cnpj = r.empresa)'
       '  left join TBCENTRO_CUSTO co on (co.codigo = r.ccusto_origem)'
       '  left join TBCENTRO_CUSTO cd on (cd.codigo = r.ccusto_destino)'
-      '')
+      '  left join TBUSERS us on (us.nome = r.requisitante)')
     GeneratorField.Field = 'CONTROLE'
     GeneratorField.Generator = 'GEN_REQUISICAO_ALMOX_2015'
     Top = 512
@@ -2457,6 +2454,12 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Origin = '"TBCENTRO_CUSTO"."DESCRICAO"'
       Size = 100
     end
+    object IbDtstTabelaUSUARIO_REQUISITANTE: TIBStringField
+      FieldName = 'USUARIO_REQUISITANTE'
+      Origin = '"TBUSERS"."NOMECOMPLETO"'
+      ProviderFlags = []
+      Size = 60
+    end
   end
   inherited DtSrcTabela: TDataSource
     Top = 512
@@ -2550,7 +2553,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
