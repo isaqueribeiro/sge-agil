@@ -44,7 +44,6 @@ type
     IbDtstTabelaFLAG_VENDEDOR: TSmallintField;
     IbDtstTabelaFLAG_FORNECEDOR: TSmallintField;
     IbDtstTabelaATIVO: TSmallintField;
-    IbDtstTabelaUSUARIO: TIBStringField;
     IbDtstTabelaVENDEDOR: TIntegerField;
     IbDtstTabelaFORNECEDOR: TIntegerField;
     IbDtstTabelaENDER: TIBStringField;
@@ -123,6 +122,11 @@ type
     GrpBxAcessos: TGroupBox;
     lblUsuario: TLabel;
     dbUsuario: TJvDBComboEdit;
+    popFerramentas: TPopupMenu;
+    ppMnAtualizarMetafonema: TMenuItem;
+    IbDtstTabelaLOGIN: TIBStringField;
+    IbDtstTabelaNOME_LIMPO: TIBStringField;
+    procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure dbEstadoButtonClick(Sender: TObject);
@@ -134,6 +138,8 @@ type
     procedure ppmLimparImagemClick(Sender: TObject);
     procedure dbUsuarioButtonClick(Sender: TObject);
     procedure IbDtstTabelaBeforePost(DataSet: TDataSet);
+    procedure ppMnAtualizarMetafonemaClick(Sender: TObject);
+    procedure btnFiltrarClick(Sender: TObject);
   private
     { Private declarations }
     function GravarVendedorFuncinario : Boolean;
@@ -154,6 +160,12 @@ uses
   UGeBairro, UGeCidade, UGeDistrito, UGeEstado, UGeLogradouro, UGrUsuario;
 
 {$R *.dfm}
+
+procedure TfrmGeFuncionario.btnFiltrarClick(Sender: TObject);
+begin
+  //inherited;
+  FiltarDados;
+end;
 
 procedure TfrmGeFuncionario.dbBairroButtonClick(Sender: TObject);
 var
@@ -240,7 +252,7 @@ var
 begin
   if ( dbUsuario.Button.Enabled and (IbDtstTabela.State in [dsEdit, dsInsert]) ) then
     if SelecionarUsuarioRequisitante(Self, sLogin, sNome) then
-      IbDtstTabelaUSUARIO.Value := sLogin;
+      IbDtstTabelaLOGIN.Value := sLogin;
 end;
 
 procedure TfrmGeFuncionario.FiltarDados;
@@ -345,7 +357,7 @@ begin
     with setUsuarioFuncionario do
     begin
       Close;
-      ParamByName('nome_completo').AsString := Trim(IbDtstTabelaNOME_COMPLETO.AsString);
+      ParamByName('nome_completo').AsString := Trim(IbDtstTabelaNOME_LIMPO.AsString);
       ParamByName('ativo').AsInteger        := IbDtstTabelaATIVO.AsInteger;
       ExecProc;
 
@@ -354,8 +366,8 @@ begin
       Result := True;
 
       if (IbDtstTabela.State in [dsEdit, dsInsert]) then
-        if (IbDtstTabelaUSUARIO.AsString <> ParamByName('usuario_login').AsString) then
-          IbDtstTabelaUSUARIO.AsString := ParamByName('usuario_login').AsString;
+        if (IbDtstTabelaLOGIN.AsString <> ParamByName('usuario_login').AsString) then
+          IbDtstTabelaLOGIN.AsString := ParamByName('usuario_login').AsString;
     end;
   except
     On E : Exception do
@@ -391,7 +403,10 @@ end;
 
 procedure TfrmGeFuncionario.IbDtstTabelaBeforePost(DataSet: TDataSet);
 begin
-  if ( Trim(IbDtstTabelaUSUARIO.AsString) = EmptyStr ) then
+  IbDtstTabelaNOME_LIMPO.AsString := FuncoesString.StrRemoveAllAccents(IbDtstTabelaNOME_COMPLETO.AsString);
+  IbDtstTabelaMETAFONEMA.AsString := Metafonema(IbDtstTabelaNOME_COMPLETO.AsString);
+
+  if ( Trim(IbDtstTabelaLOGIN.AsString) = EmptyStr ) then
     if not GravarUsuarioFuncinario then
       Abort;
 
@@ -419,9 +434,10 @@ begin
   IbDtstTabelaATIVO.AsInteger           := 1;
   IbDtstTabelaDATA_CADASTRO.AsDateTime  := GetDateTimeDB;
   IbDtstTabelaCPF.Clear;
+  IbDtstTabelaDATA_NASCIMENTO.Clear;
   IbDtstTabelaVENDEDOR.Clear;
   IbDtstTabelaFORNECEDOR.Clear;
-  IbDtstTabelaUSUARIO.Clear;
+  IbDtstTabelaLOGIN.Clear;
   IbDtstTabelaOBSERVACAO.Clear;
   IbDtstTabelaFOTO_3X4.Clear;
 end;
@@ -437,6 +453,56 @@ procedure TfrmGeFuncionario.ppmLimparImagemClick(Sender: TObject);
 begin
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
     IbDtstTabelaFOTO_3X4.Clear;
+end;
+
+procedure TfrmGeFuncionario.ppMnAtualizarMetafonemaClick(Sender: TObject);
+var
+  sUpdate : String;
+begin
+  if IbDtstTabela.IsEmpty then
+    Exit;
+
+  IbDtstTabela.First;
+  IbDtstTabela.DisableControls;
+  Screen.Cursor := crSQLWait;
+  try
+    while not IbDtstTabela.Eof do
+    begin
+      sUpdate := 'Update TBFUNCIONARIO Set metafonema = %s where cod = %s';
+      sUpdate := Format(sUpdate, [
+        QuotedStr(Metafonema(IbDtstTabelaNOME_COMPLETO.AsString)),
+        QuotedStr(IbDtstTabelaCODIGO.AsString)]);
+      ExecuteScriptSQL( sUpdate );
+
+      IbDtstTabela.Next;
+    end;
+  finally
+    IbDtstTabela.First;
+    IbDtstTabela.EnableControls;
+    Screen.Cursor := crDefault;
+
+    ShowInformation('Atualização', 'Código metafônico dos registros atualizados com sucesso!');
+  end;
+end;
+
+procedure TfrmGeFuncionario.ProximoCampoKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if ( Key = #13 ) then
+  begin
+    Key := #0;
+    if ( Sender = dbComplemento ) then
+    begin
+      pgcMaisDados.ActivePage := tbsContato;
+      dbFone.SetFocus;
+    end
+    else
+    if ( Sender = dbEmail ) then
+      pgcMaisDados.ActivePage := tbsDadosAdcionais
+    else
+    if ( Sender = dbFoto3x4 ) then
+      pgcMaisDados.ActivePage := tbsObservacao;
+  end;
 end;
 
 initialization
