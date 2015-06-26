@@ -781,7 +781,13 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           Top = 80
           Width = 145
           Height = 21
-          ButtonHint = 'Pesquisar Autoriza'#231#227'o de Compras (Ctrl+P)'#13#10'Limpar Campo (Ctrl+L)'
+          ButtonHint = 
+            'Pesquisar Autoriza'#231#227'o de Compras (Ctrl+P)'#13#10'Limpar Campo (Ctrl+L)' +
+            #13#10#13#10'Observa'#231#245'es: '#13#10#13#10'1. Apenas as Autoriza'#231#245'es de Compras que ai' +
+            'nda n'#227'o foram '#13#10'faturadas podem ser utilizadas neste processo.'#13#10 +
+            #13#10'2. Para as Autoriza'#231#245'es j'#225' faturadas, utilizar o tipo "Apropri' +
+            'a'#231#227'o por Entrada"'#13#10'e fazer uso da Entrada de Nota correspondente' +
+            ' a autoriza'#231#227'o desejada.'
           CharCase = ecUpperCase
           ClickKey = 16464
           Color = clMoneyGreen
@@ -1267,7 +1273,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             ShowHint = True
             TabOrder = 0
             OnClick = btnProdutoInserirClick
-            ExplicitTop = 1
           end
           object btnProdutoEditar: TBitBtn
             Left = 0
@@ -1466,7 +1471,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             ShowHint = True
             TabOrder = 3
             OnClick = btnProdutoSalvarClick
-            ExplicitTop = 73
           end
         end
         object dbCustoTotal: TDBEdit
@@ -2278,7 +2282,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
