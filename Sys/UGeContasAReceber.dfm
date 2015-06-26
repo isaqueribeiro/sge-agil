@@ -298,6 +298,8 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel8: TBevel
@@ -1126,7 +1128,7 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
         end
         object dbEnviado: TDBCheckBox
           Left = 720
-          Top = 40
+          Top = 42
           Width = 105
           Height = 17
           Caption = 'Boleto Enviado'
@@ -1134,6 +1136,8 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
           DataSource = DtSrcTabela
           ReadOnly = True
           TabOrder = 6
+          ValueChecked = '1'
+          ValueUnchecked = '0'
         end
       end
     end
@@ -1697,7 +1701,7 @@ inherited frmGeContasAReceber: TfrmGeContasAReceber
   inherited ImgList: TImageList
     Left = 736
     Bitmap = {
-      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
