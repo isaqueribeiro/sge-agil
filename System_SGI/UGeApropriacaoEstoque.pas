@@ -14,7 +14,8 @@ uses
   dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinOffice2010Black,
   dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
-  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint,
+  IBX.IBStoredProc;
 
 type
   TfrmGeApropriacaoEstoque = class(TfrmGrPadraoCadastro)
@@ -149,6 +150,7 @@ type
     cdsTabelaItensUNIDADE_FRACAO: TSmallintField;
     cdsTabelaItensUNIDADE_FRACIONADA: TIBStringField;
     cdsTabelaItensQTDE_FRACIONADA: TCurrencyField;
+    stpAjusteEstoqueVenda: TIBStoredProc;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaINSERCAO_DATAGetText(Sender: TField;
       var Text: String; DisplayText: Boolean);
@@ -718,6 +720,46 @@ procedure TfrmGeApropriacaoEstoque.btnEncerrarApropriacaoClick(
     end;
   end;
 
+  procedure AjustarEstoqueAutomatico;
+  var
+    bAjustar : Boolean;
+  begin
+    try
+
+      cdsTabelaItens.First;
+      cdsTabelaItens.DisableControls;
+      while not cdsTabelaItens.Eof do
+      begin
+        if ( (cdsTabelaItensMOVIMENTA_ESTOQUE.AsInteger = 0) or (IbDtstTabelaAUTORIZACAO_ANO.AsInteger > 0) ) then // Produto não movimenta estoque ou autorização informada
+          bAjustar := False
+        else
+          bAjustar := ( (cdsTabelaItensQTDE.AsCurrency > (cdsTabelaItensESTOQUE.AsCurrency - cdsTabelaItensRESERVA.AsCurrency)) or (cdsTabelaItensESTOQUE.AsCurrency <= 0) );
+
+        if ( bAjustar ) then
+          with stpAjusteEstoqueVenda do
+          begin
+            ParamByName('empresa').AsString      := IbDtstTabelaEMPRESA.AsString;
+            ParamByName('produto').AsString      := cdsTabelaItensPRODUTO.AsString;
+            ParamByName('qtde_atual').AsCurrency := cdsTabelaItensESTOQUE.AsCurrency + cdsTabelaItensRESERVA.AsCurrency;
+            ParamByName('qtde_nova').AsCurrency  := cdsTabelaItensQTDE.AsCurrency    + cdsTabelaItensRESERVA.AsCurrency;
+            ParamByName('motivo').AsString       := 'APROPRIAÇÃO DE ESTOQUE PARA O CENTRO DE CUSTO ' + dbCentroCusto.Text;
+            ParamByName('data_hora').AsDateTime  := GetDateTimeDB;
+            ParamByName('usuario').AsString      := gUsuarioLogado.Login;
+            ParamByName('documento').AsString    := 'AE' + Copy(IbDtstTabelaANO.AsString, 3, 2) + FormatFloat('000000', IbDtstTabelaCONTROLE.AsInteger);
+
+            ExecProc;
+            CommitTransaction;
+          end;
+
+        cdsTabelaItens.Next;
+      end;
+
+    finally
+      cdsTabelaItens.First;
+      cdsTabelaItens.EnableControls;
+    end;
+  end;
+
 var
   cTotalCusto : Currency;
 begin
@@ -753,6 +795,17 @@ begin
     Abort;
   end;
 
+  if QuantidadeInvalida then
+  begin
+    AjustarEstoqueAutomatico;
+    AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCONTROLE.AsInteger);
+  end;
+
+  (*
+   * IMR: 29/06/2015
+   * Rotina descontinuada, pois acima tem uma novo procedimento da criar um ajustes
+   * automático no estoque e para que este possa ser apropriado pelo Centro de Custo.
+
   if ( QuantidadeInvalida ) then
   begin
     ShowWarning('Quantidade informada para o ítem ' + FormatFloat('#00', cdsTabelaItensITEM.AsInteger) + ' está acima da quantidade disponível no estoque.');
@@ -760,6 +813,7 @@ begin
       btnProdutoEditar.SetFocus;
   end
   else
+  *)
   if ( ShowConfirm('Confirma o encerramento da apropriação selecionada?') ) then
   begin
     IbDtstTabela.Edit;

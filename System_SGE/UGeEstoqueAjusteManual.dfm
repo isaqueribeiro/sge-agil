@@ -548,9 +548,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
     Height = 33
     Anchors = [akLeft, akBottom]
     Caption = '&Novo Ajuste'
-    TabOrder = 2
-    OnClick = btnNovoAjusteClick
-    Glyph.Data = {
+    OptionsImage.Glyph.Data = {
       36060000424D3606000000000000360000002800000020000000100000000100
       18000000000000060000000000000000000000000000000000000000FF0000FF
       0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -601,7 +599,9 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
       FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-    NumGlyphs = 2
+    OptionsImage.NumGlyphs = 2
+    TabOrder = 2
+    OnClick = btnNovoAjusteClick
   end
   object btnConfirmar: TcxButton
     Left = 407
@@ -611,9 +611,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
     Anchors = [akRight, akBottom]
     Caption = '&Confirmar'
     Enabled = False
-    TabOrder = 3
-    OnClick = btnConfirmarClick
-    Glyph.Data = {
+    OptionsImage.Glyph.Data = {
       36060000424D3606000000000000360000002800000020000000100000000100
       18000000000000060000000000000000000000000000000000000000FF0000FF
       0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
@@ -664,7 +662,9 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000
       FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF00
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF}
-    NumGlyphs = 2
+    OptionsImage.NumGlyphs = 2
+    TabOrder = 3
+    OnClick = btnConfirmarClick
   end
   object btnCancelar: TcxButton
     Left = 501
@@ -675,9 +675,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
     Cancel = True
     Caption = 'C&ancelar'
     Enabled = False
-    TabOrder = 4
-    OnClick = btnCancelarClick
-    Glyph.Data = {
+    OptionsImage.Glyph.Data = {
       36060000424D3606000000000000360000002800000020000000100000000100
       180000000000000600000000000000000000000000000000000000FF0000FF00
       00FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF0000FF
@@ -728,11 +726,16 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       00FF00E0C0B0E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0BEAA00FF
       0000FF0000FF0000FF0000FF0000FF0000FF00BEBEBEBEBEBEBEBEBEBEBEBEBE
       BEBEBCBCBCB8B8B8AEAEAEBBBBBB00FF0000FF0000FF0000FF00}
-    NumGlyphs = 2
+    OptionsImage.NumGlyphs = 2
+    TabOrder = 4
+    OnClick = btnCancelarClick
   end
   object qryEmpresa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
     SQL.Strings = (
       'Select'
       '    e.cnpj'
@@ -765,6 +768,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     OnNewRecord = qryAjusteNewRecord
+    BufferChunks = 1000
     CachedUpdates = True
     SelectSQL.Strings = (
       'Select'
@@ -783,6 +787,8 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       'from TBAJUSTESTOQ a'
       '  left join TBFORNECEDOR f on (f.codforn = a.codforn)'
       'where 1 = 0')
+    ParamCheck = True
+    UniDirectional = False
     UpdateObject = updAjuste
     Left = 240
     Top = 240
@@ -922,6 +928,7 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     ForcedRefresh = True
+    BufferChunks = 1000
     CachedUpdates = True
     RefreshSQL.Strings = (
       '')
@@ -938,6 +945,8 @@ inherited frmGeEstoqueAjusteManual: TfrmGeEstoqueAjusteManual
       '  left join TBUNIDADEPROD u on (u.unp_cod = p.codunidade)')
     ModifySQL.Strings = (
       '')
+    ParamCheck = True
+    UniDirectional = False
     GeneratorField.Field = 'CODCONTROL'
     UpdateObject = updProduto
     Left = 240
