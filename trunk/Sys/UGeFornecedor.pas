@@ -786,27 +786,26 @@ begin
       Clear;
       AddStrings( SQLTabela );
 
+      if ( WhereAdditional <> EmptyStr ) then
+        Add( 'where (' + WhereAdditional + ')' )
+      else
+        Add( 'where (1 = 1)' );
+
       if ( Trim(edtFiltrar.Text) <> EmptyStr ) then
       begin
 
         if ( StrToIntDef(Trim(edtFiltrar.Text), 0) > 0 ) then
-          Add( 'where ' + CampoCodigo +  ' = ' + Trim(edtFiltrar.Text) )
+          Add( '  and ' + CampoCodigo +  ' = ' + Trim(edtFiltrar.Text) )
         else
         begin
-          Add( 'where ((upper(f.Nomeforn) like ' + QuotedStr(UpperCase(Trim(edtFiltrar.Text)) + '%') +
-               '     or upper(f.Nomeforn) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edtFiltrar.Text))) + '%') + '))');
+          Add( '  and (((upper(f.Nomeforn) like ' + QuotedStr(UpperCase(Trim(edtFiltrar.Text)) + '%') +
+               '      or upper(f.Nomeforn) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edtFiltrar.Text))) + '%') + '))');
           Add( '   or ((upper(f.Nomefant) like ' + QuotedStr(UpperCase(Trim(edtFiltrar.Text)) + '%') +
-               '     or upper(f.Nomefant) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edtFiltrar.Text))) + '%') + '))');
+               '      or upper(f.Nomefant) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edtFiltrar.Text))) + '%') + ')))');
         end;
       end;
 
-      if ( WhereAdditional <> EmptyStr ) then
-        if ( Pos('where', SelectSQL.Text) > 0 ) then
-          Add( '  and (' + WhereAdditional + ')' )
-        else
-          Add( 'where (' + WhereAdditional + ')' );
-
-      Add( 'order by ' + CampoOrdenacao );  
+      Add( 'order by ' + CampoOrdenacao );
 
       Open;
 

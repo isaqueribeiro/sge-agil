@@ -2282,7 +2282,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4222,5 +4222,53 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     UniDirectional = False
     Left = 1008
     Top = 240
+  end
+  object stpAjusteEstoqueVenda: TIBStoredProc
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    StoredProcName = 'SET_AJUSTE_ESTOQUE_VENDA'
+    Left = 720
+    Top = 544
+    ParamData = <
+      item
+        DataType = ftWideString
+        Name = 'EMPRESA'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftWideString
+        Name = 'PRODUTO'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftBCD
+        Name = 'QTDE_ATUAL'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftBCD
+        Name = 'QTDE_NOVA'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftWideString
+        Name = 'MOTIVO'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftDateTime
+        Name = 'DATA_HORA'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftWideString
+        Name = 'USUARIO'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftWideString
+        Name = 'DOCUMENTO'
+        ParamType = ptInput
+      end>
   end
 end

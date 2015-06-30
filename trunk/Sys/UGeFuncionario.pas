@@ -147,7 +147,7 @@ type
   public
     { Public declarations }
 
-    procedure FiltarDados; overload;
+    procedure FiltarDados(const iTipoPesquisa: Integer); overload;
   end;
 
 var
@@ -164,7 +164,8 @@ uses
 procedure TfrmGeFuncionario.btnFiltrarClick(Sender: TObject);
 begin
   //inherited;
-  FiltarDados;
+  FiltarDados(0);
+  CentralizarCodigo;
 end;
 
 procedure TfrmGeFuncionario.dbBairroButtonClick(Sender: TObject);
@@ -255,7 +256,7 @@ begin
       IbDtstTabelaLOGIN.Value := sLogin;
 end;
 
-procedure TfrmGeFuncionario.FiltarDados;
+procedure TfrmGeFuncionario.FiltarDados(const iTipoPesquisa: Integer);
 begin
   try
 
@@ -468,10 +469,11 @@ begin
   try
     while not IbDtstTabela.Eof do
     begin
-      sUpdate := 'Update TBFUNCIONARIO Set metafonema = %s where cod = %s';
+      sUpdate := 'Update TBFUNCIONARIO Set nome_limpo = %s, metafonema = %s where codigo = %s';
       sUpdate := Format(sUpdate, [
+        QuotedStr(FuncoesString.StrRemoveAllAccents(IbDtstTabelaNOME_COMPLETO.AsString)),
         QuotedStr(Metafonema(IbDtstTabelaNOME_COMPLETO.AsString)),
-        QuotedStr(IbDtstTabelaCODIGO.AsString)]);
+        IbDtstTabelaCODIGO.AsString]);
       ExecuteScriptSQL( sUpdate );
 
       IbDtstTabela.Next;
