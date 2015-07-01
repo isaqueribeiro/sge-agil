@@ -4,7 +4,6 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
   ClientHeight = 651
   ClientWidth = 1132
   OldCreateOrder = True
-  ExplicitTop = -243
   ExplicitWidth = 1148
   ExplicitHeight = 690
   PixelsPerInch = 96
@@ -1050,7 +1049,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
           1124
           236)
         object lblHistorico: TLabel
-          Left = 304
+          Left = 336
           Top = 144
           Width = 53
           Height = 13
@@ -1154,9 +1153,9 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
           FocusControl = dbTipoDespesa
         end
         object dbHistorico: TDBEdit
-          Left = 304
+          Left = 336
           Top = 160
-          Width = 505
+          Width = 473
           Height = 21
           CharCase = ecUpperCase
           DataField = 'HISTORICO'
@@ -1337,7 +1336,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
         object dbTipoDespesa: TDBLookupComboBox
           Left = 16
           Top = 160
-          Width = 281
+          Width = 314
           Height = 21
           DataField = 'TIPO_DESPESA'
           DataSource = DtSrcTabela
@@ -1518,10 +1517,6 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
     inherited bvlTool4: TBevel
       Left = 1128
       ExplicitLeft = 1128
-    end
-    inherited btbtnExcluir: TcxButton
-      ExplicitLeft = 154
-      ExplicitTop = 0
     end
     inherited btbtnLista: TcxButton
       Visible = True
@@ -1887,7 +1882,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
   inherited ImgList: TImageList
     Left = 832
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3741,7 +3736,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
     PrintOptions.Printer = 'Padr'#227'o'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 40928.407150601900000000
-    ReportOptions.LastChange = 41039.011192847200000000
+    ReportOptions.LastChange = 41039.011192847210000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
@@ -4835,20 +4830,35 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
     Left = 856
     Top = 280
   end
-  object qryTpDespesa: TIBQuery
+  object qryTipoDespesa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'select * from TBTPDESPESA'
-      'order by tipodesp')
+      'Select *'
+      'from TBTPDESPESA t'
+      'where (t.ativo = :ativo) or (:todos = 1)'
+      'order by t.tipodesp')
     Left = 824
     Top = 312
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'ativo'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'todos'
+        ParamType = ptInput
+        Value = 0
+      end>
   end
   object dtsTpDespesa: TDataSource
-    DataSet = qryTpDespesa
+    DataSet = qryTipoDespesa
     Left = 856
     Top = 312
   end

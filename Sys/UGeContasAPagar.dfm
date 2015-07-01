@@ -313,6 +313,8 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel8: TBevel
@@ -1444,7 +1446,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   inherited ImgList: TImageList
     Top = 72
     Bitmap = {
-      494C01012B002C003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3127,20 +3129,8 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     Top = 104
   end
   object dtsTpDespesa: TDataSource
-    DataSet = qryTpDespesa
+    DataSet = qryTipoDespesa
     Left = 880
-    Top = 224
-  end
-  object qryTpDespesa: TIBQuery
-    Database = DMBusiness.ibdtbsBusiness
-    Transaction = DMBusiness.ibtrnsctnBusiness
-    BufferChunks = 1000
-    CachedUpdates = False
-    ParamCheck = True
-    SQL.Strings = (
-      'select * from TBTPDESPESA'
-      'order by tipodesp')
-    Left = 848
     Top = 224
   end
   object FrdRecibo: TfrxDBDataset
@@ -3855,5 +3845,32 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     StrCentavos = 'Centavos'
     Left = 620
     Top = 289
+  end
+  object qryTipoDespesa: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select *'
+      'from TBTPDESPESA t'
+      'where (t.ativo = :ativo) or (:todos = 1)'
+      'order by t.tipodesp')
+    Left = 848
+    Top = 224
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'ativo'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'todos'
+        ParamType = ptInput
+        Value = 0
+      end>
   end
 end

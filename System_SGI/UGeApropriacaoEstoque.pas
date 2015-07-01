@@ -795,12 +795,6 @@ begin
     Abort;
   end;
 
-  if QuantidadeInvalida then
-  begin
-    AjustarEstoqueAutomatico;
-    AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCONTROLE.AsInteger);
-  end;
-
   (*
    * IMR: 29/06/2015
    * Rotina descontinuada, pois acima tem uma novo procedimento da criar um ajustes
@@ -816,6 +810,12 @@ begin
   *)
   if ( ShowConfirm('Confirma o encerramento da apropriação selecionada?') ) then
   begin
+    if QuantidadeInvalida then
+    begin
+      AjustarEstoqueAutomatico;
+      AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCONTROLE.AsInteger);
+    end;
+
     IbDtstTabela.Edit;
 
     IbDtstTabelaSTATUS.Value  := STATUS_APROPRIACAO_ESTOQUE_ENC;

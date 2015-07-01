@@ -90,7 +90,6 @@ type
     dbTipoDespesa: TDBLookupComboBox;
     IbDtstTabelaCODTPDESP: TSmallintField;
     dtsTpDespesa: TDataSource;
-    qryTpDespesa: TIBQuery;
     lblLancamentoAberto: TLabel;
     lblLancamentoVencido: TLabel;
     Label1: TLabel;
@@ -145,6 +144,7 @@ type
     Bevel9: TBevel;
     btbtnIncluirLote: TcxButton;
     IbDtstTabelaLOTE: TIBStringField;
+    qryTipoDespesa: TIBQuery;
     procedure FormCreate(Sender: TObject);
     procedure dbFornecedorButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -178,6 +178,7 @@ type
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
     procedure RecarregarRegistro;
+    procedure CarregarTipoDespesa(const ApenasAtivos : Boolean);
 
     function GetRotinaEfetuarPagtoID : String;
     function GetRotinaCancelarPagtosID : String;
@@ -257,7 +258,7 @@ begin
   tblEmpresa.Open;
   tblFormaPagto.Open;
   tblCondicaoPagto.Open;
-  qryTpDespesa.Open;
+  CarregarTipoDespesa(False);
 
   RotinaID            := ROTINA_FIN_CONTA_APAGAR_ID;
   DisplayFormatCodigo := '###0000000';
@@ -529,9 +530,6 @@ end;
 procedure TfrmGeContasAPagar.FormShow(Sender: TObject);
 begin
   inherited;
-  qryTpDespesa.Prior;
-  qryTpDespesa.Last;
-  
   RegistrarNovaRotinaSistema;
 end;
 
@@ -706,6 +704,20 @@ begin
   popImprimir.Popup(btbtnLista.ClientOrigin.X, btbtnLista.ClientOrigin.Y + btbtnLista.Height);
 end;
 
+procedure TfrmGeContasAPagar.CarregarTipoDespesa(const ApenasAtivos: Boolean);
+begin
+  with qryTipoDespesa, Params do
+  begin
+    Close;
+    ParamByName('ativo').AsInteger := IfThen(ApenasAtivos, 1, 0);
+    ParamByName('todos').AsInteger := IfThen(ApenasAtivos, 0, 1);
+    Open;
+
+    Prior;
+    Last;
+  end;
+end;
+
 procedure TfrmGeContasAPagar.CdsReciboCalcFields(DataSet: TDataSet);
 begin
   CdsReciboVALOR_BAIXA_EXTENSO.AsString := AnsiUpperCase(ACBrExtenso.ValorToTexto(CdsReciboVALOR_BAIXA.AsCurrency, ACBrExtenso.Formato));
@@ -769,6 +781,8 @@ begin
   dbValorAPagar.ReadOnly   := (not cdsPagamentos.IsEmpty);
   btbtnIncluirLote.Enabled := btbtnIncluir.Enabled;
   HabilitarDesabilitar_Btns;
+
+  CarregarTipoDespesa( (IbDtstTabela.State in [dsEdit, dsInsert]) );
 end;
 
 procedure TfrmGeContasAPagar.btbtnCancelarClick(Sender: TObject);

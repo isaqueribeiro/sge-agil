@@ -5790,6 +5790,13 @@ object frmPrinc: TfrmPrinc
       Hint = 'Tabela de Tributa'#231#245'es IBPT'
       Visible = ivAlways
     end
+    object BrBtnFuncaoCBO: TdxBarLargeButton
+      Caption = 'Tabela de Fun'#231#245'es CBO'
+      Category = 5
+      Enabled = False
+      Hint = 'Tabela de Fun'#231#245'es CBO'
+      Visible = ivAlways
+    end
     object BrBtnContaCorrente: TdxBarLargeButton
       Caption = 'Contas Correntes'
       Category = 5
@@ -6576,6 +6583,10 @@ object frmPrinc: TfrmPrinc
       item
         Visible = True
         ItemName = 'BrBtnTabelaIBPT'
+      end
+      item
+        Visible = True
+        ItemName = 'BrBtnFuncaoCBO'
       end
       item
         BeginGroup = True

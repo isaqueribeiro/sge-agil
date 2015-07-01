@@ -25,11 +25,10 @@ inherited frmGrUsuario: TfrmGrUsuario
   inherited pgcGuias: TPageControl
     Width = 751
     Height = 413
+    ActivePage = tbsTabela
     ExplicitWidth = 751
     ExplicitHeight = 413
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 743
       ExplicitHeight = 384
       inherited Bevel4: TBevel
@@ -44,7 +43,11 @@ inherited frmGrUsuario: TfrmGrUsuario
         Columns = <
           item
             Expanded = False
-            Visible = False
+            FieldName = 'ATV'
+            Title.Alignment = taCenter
+            Title.Caption = 'A'
+            Width = 25
+            Visible = True
           end
           item
             Expanded = False
@@ -55,14 +58,14 @@ inherited frmGrUsuario: TfrmGrUsuario
           item
             Expanded = False
             FieldName = 'NOMECOMPLETO'
-            Width = 250
+            Width = 300
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'PERFIL'
-            Title.Caption = 'Fun'#231#227'o / Perfil'
-            Width = 200
+            Title.Caption = 'Perfil de acesso'
+            Width = 250
             Visible = True
           end>
       end
@@ -100,6 +103,10 @@ inherited frmGrUsuario: TfrmGrUsuario
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 743
+      ExplicitHeight = 384
       inherited Bevel8: TBevel
         Top = 81
         Width = 743
@@ -214,9 +221,9 @@ inherited frmGrUsuario: TfrmGrUsuario
         object lblFuncao: TLabel
           Left = 296
           Top = 24
-          Width = 73
+          Width = 79
           Height = 13
-          Caption = 'Fun'#231#227'o / Perfil:'
+          Caption = 'Perfil de acesso:'
           FocusControl = dbFuncao
         end
         object dbNomeCompleto: TDBEdit
@@ -280,7 +287,6 @@ inherited frmGrUsuario: TfrmGrUsuario
         Align = alClient
         Caption = 'Par'#226'metros'
         TabOrder = 2
-        ExplicitHeight = 215
         object lblPercentualDesc: TLabel
           Left = 16
           Top = 24
@@ -355,7 +361,7 @@ inherited frmGrUsuario: TfrmGrUsuario
   inherited tlbBotoes: TPanel
     Top = 417
     Width = 751
-    ExplicitTop = 418
+    ExplicitTop = 417
     ExplicitWidth = 751
     inherited bvlTool3: TBevel
       Left = 668
@@ -376,6 +382,7 @@ inherited frmGrUsuario: TfrmGrUsuario
   end
   inherited IbDtstTabela: TIBDataSet
     BeforePost = IbDtstTabelaBeforePost
+    OnCalcFields = IbDtstTabelaCalcFields
     OnNewRecord = IbDtstTabelaNewRecord
     SelectSQL.Strings = (
       'Select'
@@ -416,7 +423,7 @@ inherited frmGrUsuario: TfrmGrUsuario
       Size = 60
     end
     object IbDtstTabelaCODFUNCAO: TSmallintField
-      DisplayLabel = 'Fun'#231#227'o / Perfil'
+      DisplayLabel = 'Perfil de acesso'
       FieldName = 'CODFUNCAO'
       Origin = '"TBUSERS"."CODFUNCAO"'
       ProviderFlags = [pfInUpdate]
@@ -460,6 +467,13 @@ inherited frmGrUsuario: TfrmGrUsuario
       Origin = '"TBFUNCAO"."FUNCAO"'
       ProviderFlags = []
       Size = 25
+    end
+    object IbDtstTabelaATV: TStringField
+      Alignment = taCenter
+      FieldKind = fkCalculated
+      FieldName = 'ATV'
+      Size = 1
+      Calculated = True
     end
   end
   inherited IbUpdTabela: TIBUpdateSQL
@@ -509,7 +523,7 @@ inherited frmGrUsuario: TfrmGrUsuario
   end
   inherited ImgList: TImageList
     Bitmap = {
-      494C01012B002C00180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
