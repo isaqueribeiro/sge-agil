@@ -13,7 +13,9 @@ uses
   dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2010Black,
   dxSkinOffice2010Blue, dxSkinOffice2010Silver, dxSkinOffice2013DarkGray,
   dxSkinOffice2013LightGray, dxSkinOffice2013White, dxSkinSevenClassic,
-  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
+  dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver;
 
 type
   TfrmGrUsuario = class(TfrmGrPadraoCadastro)
@@ -49,6 +51,7 @@ type
     dbVendedor: TDBLookupComboBox;
     QryVendedor: TIBQuery;
     DtsVendedor: TDataSource;
+    IbDtstTabelaATV: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure DtSrcTabelaStateChange(Sender: TObject);
     procedure btbtnSalvarClick(Sender: TObject);
@@ -56,6 +59,7 @@ type
     procedure IbDtstTabelaBeforePost(DataSet: TDataSet);
     procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure IbDtstTabelaCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     function GetLoginExiste(const Login : String) : Boolean;
@@ -91,6 +95,8 @@ begin
   try
     with AForm do
     begin
+      dbgDados.Columns[1].Visible := False; // Login
+
       btbtnIncluir.Visible  := False;
       btbtnAlterar.Visible  := False;
       btbtnExcluir.Visible  := False;
@@ -283,6 +289,11 @@ begin
     end;
 
   inherited;
+end;
+
+procedure TfrmGrUsuario.IbDtstTabelaCalcFields(DataSet: TDataSet);
+begin
+  IbDtstTabelaATV.AsString := IfThen(IbDtstTabelaATIVO.AsInteger = 1, 'X', '');
 end;
 
 procedure TfrmGrUsuario.dbgDadosDrawColumnCell(Sender: TObject;

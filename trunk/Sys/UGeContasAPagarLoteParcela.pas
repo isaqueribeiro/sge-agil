@@ -54,7 +54,7 @@ type
     cdsDadosNominaisTipoDespesa: TIntegerField;
     tblCondicaoPagto: TIBTable;
     dtsCondicaoPagto: TDataSource;
-    qryTpDespesa: TIBQuery;
+    qryTipoDespesa: TIBQuery;
     dtsTpDespesa: TDataSource;
     lblFormaPagto: TLabel;
     dbFormaPagto: TDBLookupComboBox;
@@ -138,6 +138,8 @@ type
   private
     { Private declarations }
     FLote : String;
+    procedure CarregarTipoDespesa(const ApenasAtivos : Boolean);
+
     function GerarLancamentos : Boolean;
   public
     { Public declarations }
@@ -331,6 +333,18 @@ begin
   end;
 end;
 
+procedure TfrmGeContasAPagarLoteParcela.CarregarTipoDespesa(
+  const ApenasAtivos: Boolean);
+begin
+  with qryTipoDespesa, Params do
+  begin
+    Close;
+    ParamByName('ativo').AsInteger := IfThen(ApenasAtivos, 1, 0);
+    ParamByName('todos').AsInteger := IfThen(ApenasAtivos, 0, 1);
+    Open;
+  end;
+end;
+
 procedure TfrmGeContasAPagarLoteParcela.cdsDadosNominaisNewRecord(
   DataSet: TDataSet);
 begin
@@ -414,7 +428,7 @@ begin
   tblEmpresa.Open;
   tblFormaPagto.Open;
   tblCondicaoPagto.Open;
-  qryTpDespesa.Open;
+  CarregarTipoDespesa(True);
 
   cdsDadosNominais.CreateDataSet;
 end;

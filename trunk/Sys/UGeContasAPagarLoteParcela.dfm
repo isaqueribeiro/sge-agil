@@ -1124,20 +1124,35 @@ inherited frmGeContasAPagarLoteParcela: TfrmGeContasAPagarLoteParcela
     Left = 368
     Top = 320
   end
-  object qryTpDespesa: TIBQuery
+  object qryTipoDespesa: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
     Transaction = DMBusiness.ibtrnsctnBusiness
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'select * from TBTPDESPESA'
-      'order by tipodesp')
+      'Select *'
+      'from TBTPDESPESA t'
+      'where (t.ativo = :ativo) or (:todos = 1)'
+      'order by t.tipodesp')
     Left = 336
     Top = 352
+    ParamData = <
+      item
+        DataType = ftInteger
+        Name = 'ativo'
+        ParamType = ptInput
+        Value = 0
+      end
+      item
+        DataType = ftInteger
+        Name = 'todos'
+        ParamType = ptInput
+        Value = 0
+      end>
   end
   object dtsTpDespesa: TDataSource
-    DataSet = qryTpDespesa
+    DataSet = qryTipoDespesa
     Left = 368
     Top = 352
   end

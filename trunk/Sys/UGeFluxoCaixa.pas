@@ -156,7 +156,7 @@ type
     dtsEmpresa: TDataSource;
     lblEmpresa: TLabel;
     dbEmpresa: TDBLookupComboBox;
-    qryTpDespesa: TIBQuery;
+    qryTipoDespesa: TIBQuery;
     dtsTpDespesa: TDataSource;
     lblTipoDespesa: TLabel;
     dbTipoDespesa: TDBLookupComboBox;
@@ -241,6 +241,7 @@ type
     procedure CarregarContaCorrente;
     procedure CarregarSaldos;
     procedure DefinirControle;
+    procedure CarregarTipoDespesa(const ApenasAtivos : Boolean);
 
     function BloquearAlteracaoExclusao : Boolean;
   public
@@ -324,7 +325,7 @@ begin
   tblEmpresa.Open;
   tblFormaPagto.Open;
   tblTipoMovimento.Open;
-  qryTpDespesa.Open;
+  CarregarTipoDespesa(False);
 
   CarregarContaCorrente;
 
@@ -424,6 +425,20 @@ begin
     ParamByName('Data_Inicial').AsDate := e1Data.Date;
     ParamByName('Data_Final').AsDate   := e2Data.Date;
     Open;
+  end;
+end;
+
+procedure TfrmGeFluxoCaixa.CarregarTipoDespesa(const ApenasAtivos: Boolean);
+begin
+  with qryTipoDespesa, Params do
+  begin
+    Close;
+    ParamByName('ativo').AsInteger := IfThen(ApenasAtivos, 1, 0);
+    ParamByName('todos').AsInteger := IfThen(ApenasAtivos, 0, 1);
+    Open;
+
+    Prior;
+    Last;
   end;
 end;
 
@@ -537,6 +552,8 @@ begin
   inherited;
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
     DefinirControle;
+
+  CarregarTipoDespesa( (IbDtstTabela.State in [dsEdit, dsInsert]) );
 end;
 
 procedure TfrmGeFluxoCaixa.DtSrcTabelaDataChange(Sender: TObject;

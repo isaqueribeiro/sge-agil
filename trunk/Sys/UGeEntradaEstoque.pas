@@ -263,7 +263,7 @@ type
     IbDtstTabelaAUTORIZACAO_ANO: TSmallintField;
     IbDtstTabelaAUTORIZACAO_CODIGO: TIntegerField;
     IbDtstTabelaAUTORIZACAO_EMPRESA: TIBStringField;
-    qryTpDespesa: TIBQuery;
+    qryTipoDespesa: TIBQuery;
     dtsTpDespesa: TDataSource;
     IbDtstTabelaTIPO_DESPESA: TSmallintField;
     Bevel13: TBevel;
@@ -424,6 +424,7 @@ type
     function GetRotinaCancelarEntradaID : String;
 
     procedure RegistrarNovaRotinaSistema;
+    procedure CarregarTipoDespesa(const ApenasAtivos : Boolean);
   public
     { Public declarations }
     procedure pgcGuiasOnChange; override;
@@ -663,9 +664,9 @@ begin
   tblEmpresa.Open;
   tblFormaPagto.Open;
   tblCondicaoPagto.Open;
-  qryTpDespesa.Open;
   tblTipoDocumento.Open;
   tblTipoEntrada.Open;
+  CarregarTipoDespesa(False);
 
   DisplayFormatCodigo := '###0000000';
   
@@ -891,6 +892,20 @@ begin
           dbProduto.SetFocus;
       end;
     end;
+  end;
+end;
+
+procedure TfrmGeEntradaEstoque.CarregarTipoDespesa(const ApenasAtivos: Boolean);
+begin
+  with qryTipoDespesa, Params do
+  begin
+    Close;
+    ParamByName('ativo').AsInteger := IfThen(ApenasAtivos, 1, 0);
+    ParamByName('todos').AsInteger := IfThen(ApenasAtivos, 0, 1);
+    Open;
+
+    Prior;
+    Last;
   end;
 end;
 
@@ -1507,6 +1522,8 @@ begin
 
   DtSrcTabelaItens.AutoEdit := DtSrcTabela.AutoEdit and (IbDtstTabelaSTATUS.AsInteger < STATUS_CMP_FIN );
   DtSrcTabelaItensStateChange( DtSrcTabelaItens );
+
+  CarregarTipoDespesa( (IbDtstTabela.State in [dsEdit, dsInsert]) );
 end;
 
 procedure TfrmGeEntradaEstoque.btbtnCancelarENTClick(Sender: TObject);

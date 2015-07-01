@@ -13357,3 +13357,209 @@ end^
 
 SET TERM ; ^
 
+
+
+
+/*------ SYSDBA 30/06/2015 14:50:32 --------*/
+
+ALTER TABLE TBTPDESPESA
+    ADD TIPO_ATIVO DMN_LOGICO DEFAULT 1;
+
+COMMENT ON COLUMN TBTPDESPESA.TIPO_ATIVO IS
+'Tipo ativo:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 30/06/2015 18:41:13 --------*/
+
+ALTER TABLE TBTPDESPESA ALTER TIPO_ATIVO TO ATIVO;
+
+
+
+
+/*------ SYSDBA 30/06/2015 18:41:33 --------*/
+
+CREATE INDEX IDX_TBTPDESPESA_TIPO
+ON TBTPDESPESA (ATIVO);
+
+
+
+
+/*------ SYSDBA 30/06/2015 20:34:56 --------*/
+
+CREATE TABLE TBFUNCAO_CBO (
+    CODIGO DMN_INTEGER_NN NOT NULL,
+    DESCRICAO_RESUMO DMN_NOME,
+    DESCRICAO_COMPLETA DMN_VCHAR_250,
+    CODIGO_CBO DMN_VCHAR_10,
+    ATIVO DMN_LOGICO);
+
+ALTER TABLE TBFUNCAO_CBO
+ADD CONSTRAINT PK_TBFUNCAO_CBO
+PRIMARY KEY (CODIGO);
+
+COMMENT ON COLUMN TBFUNCAO_CBO.CODIGO IS
+'Codigo';
+
+COMMENT ON COLUMN TBFUNCAO_CBO.DESCRICAO_RESUMO IS
+'Descricao resumo';
+
+COMMENT ON COLUMN TBFUNCAO_CBO.DESCRICAO_COMPLETA IS
+'Descricao completa (Modelo CBO)';
+
+COMMENT ON COLUMN TBFUNCAO_CBO.CODIGO_CBO IS
+'Codigo CBO (Codigo Brasileiro de Ocupacao)';
+
+COMMENT ON COLUMN TBFUNCAO_CBO.ATIVO IS
+'Ativo:
+0 - Nao
+1 - Sim';
+
+
+
+
+/*------ SYSDBA 30/06/2015 20:34:58 --------*/
+
+COMMENT ON TABLE TBFUNCAO_CBO IS 'Tabela de Funcoes CBO.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   30/06/2015
+
+Tabela responsavel por armazenar todas as descricoes de funcoes ocupacionais de
+acordo com o Codigo Brasileiro Ocupecional (CBO).
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/06/2015 - IMR :
+        * Documentacao da tabela.';
+
+GRANT ALL ON TBFUNCAO_CBO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 30/06/2015 20:35:39 --------*/
+
+CREATE INDEX IDX_TBFUNCAO_CBO_ATIVO
+ON TBFUNCAO_CBO (ATIVO);
+
+CREATE INDEX IDX_TBFUNCAO_CBO
+ON TBFUNCAO_CBO (CODIGO_CBO);
+
+
+
+
+/*------ SYSDBA 30/06/2015 21:01:48 --------*/
+
+CREATE TABLE TBFUNCIONARIO_MOVIMENTO (
+    CONTROLE DMN_BIGINT_NN NOT NULL,
+    FUNCIONARIO DMN_INTEGER_NN,
+    FUNCAO_CBO DMN_INTEGER_NN,
+    EMPRESA DMN_CNPJ,
+    DATA_ADMISSAO DMN_DATE);
+
+ALTER TABLE TBFUNCIONARIO_MOVIMENTO
+ADD CONSTRAINT PK_TBFUNCIONARIO_MOVIMENTO
+PRIMARY KEY (CONTROLE);
+
+COMMENT ON COLUMN TBFUNCIONARIO_MOVIMENTO.CONTROLE IS
+'Controle';
+
+COMMENT ON COLUMN TBFUNCIONARIO_MOVIMENTO.FUNCIONARIO IS
+'Funcionario';
+
+COMMENT ON COLUMN TBFUNCIONARIO_MOVIMENTO.FUNCAO_CBO IS
+'Funcao CBO';
+
+COMMENT ON COLUMN TBFUNCIONARIO_MOVIMENTO.EMPRESA IS
+'Empresa';
+
+COMMENT ON COLUMN TBFUNCIONARIO_MOVIMENTO.DATA_ADMISSAO IS
+'Data admissao';
+
+
+
+
+/*------ SYSDBA 30/06/2015 21:01:54 --------*/
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter column CONTROLE position 1;
+
+
+/*------ SYSDBA 30/06/2015 21:01:54 --------*/
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter column EMPRESA position 2;
+
+
+/*------ SYSDBA 30/06/2015 21:01:54 --------*/
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter column FUNCIONARIO position 3;
+
+
+/*------ SYSDBA 30/06/2015 21:01:54 --------*/
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter column FUNCAO_CBO position 4;
+
+
+/*------ SYSDBA 30/06/2015 21:01:54 --------*/
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter column DATA_ADMISSAO position 5;
+
+
+/*------ SYSDBA 30/06/2015 21:03:03 --------*/
+
+ALTER TABLE TBFUNCIONARIO_MOVIMENTO
+ADD CONSTRAINT FK_TBFUNCIONARIO_MOVIMENTO_FCN
+FOREIGN KEY (FUNCIONARIO)
+REFERENCES TBFUNCIONARIO(CODIGO);
+
+ALTER TABLE TBFUNCIONARIO_MOVIMENTO
+ADD CONSTRAINT FK_TBFUNCIONARIO_MOVIMENTO_CBO
+FOREIGN KEY (FUNCAO_CBO)
+REFERENCES TBFUNCAO_CBO(CODIGO);
+
+
+
+
+/*------ SYSDBA 30/06/2015 21:03:35 --------*/
+
+CREATE INDEX IDX_TBFUNCIONARIO_MOVIMENTO_ADM
+ON TBFUNCIONARIO_MOVIMENTO (DATA_ADMISSAO);
+
+
+
+
+/*------ SYSDBA 30/06/2015 21:05:29 --------*/
+
+COMMENT ON TABLE TBFUNCIONARIO_MOVIMENTO IS 'Tabela de Movimentacao de Funcionario (Vinculo Empregaticio)
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   30/06/2015
+
+Tabela responsavel por armazenar os vinculos empregaticios dos funcionarios
+cadastrados nos sistemas SGI e SGF.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    30/06/2015 - IMR :
+        * Documentacao da procedure.';
+
+GRANT ALL ON TBFUNCIONARIO_MOVIMENTO TO "PUBLIC";

@@ -206,6 +206,7 @@ type
     dxRibbonBackstageViewGalleryGroup3: TdxRibbonBackstageViewGalleryGroup;
     dxRibbonBackstageViewGalleryItem4: TdxRibbonBackstageViewGalleryItem;
     BrBtnFuncionario: TdxBarLargeButton;
+    BrBtnFuncaoCBO: TdxBarLargeButton;
     procedure btnEmpresaClick(Sender: TObject);
     procedure btnClienteClick(Sender: TObject);
     procedure btnContaAReceberClick(Sender: TObject);
