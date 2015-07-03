@@ -265,6 +265,9 @@ type
     qryNFCDadosProduto: TIBQuery;
     frdNFCDadosProduto: TfrxDBDataset;
     frrNotaEntregaX: TfrxReport;
+    qryListaFuncionario: TIBQuery;
+    frdListaFuncionario: TfrxDBDataset;
+    frrListaFuncionario: TfrxReport;
     procedure SelecionarCertificado(Sender : TObject);
     procedure TestarServico(Sender : TObject);
     procedure DataModuleCreate(Sender: TObject);
@@ -310,6 +313,7 @@ type
   public
     { Public declarations }
     property ConfigACBr : TfrmGeConfigurarNFeACBr read frmACBr write frmACBr;
+
     procedure LoadXML(MyMemo: TStringList; MyWebBrowser: TWebBrowser);
 
     procedure LerConfiguracao(const sCNPJEmitente : String; const tipoDANFE : TTipoDANFE = tipoDANFEFast);

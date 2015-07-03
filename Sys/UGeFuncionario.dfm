@@ -25,6 +25,8 @@ inherited frmGeFuncionario: TfrmGeFuncionario
     ExplicitWidth = 844
     ExplicitHeight = 457
     inherited tbsTabela: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 836
       ExplicitHeight = 428
       inherited Bevel4: TBevel
@@ -104,8 +106,6 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       end
     end
     inherited tbsCadastro: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 25
       ExplicitWidth = 836
       ExplicitHeight = 428
       inherited Bevel8: TBevel
@@ -1185,6 +1185,9 @@ inherited frmGeFuncionario: TfrmGeFuncionario
       Left = 840
       ExplicitLeft = 840
     end
+    inherited btbtnLista: TcxButton
+      Visible = True
+    end
     inherited btbtnFechar: TcxButton
       Left = 765
       ExplicitLeft = 765
@@ -1637,7 +1640,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C00340010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

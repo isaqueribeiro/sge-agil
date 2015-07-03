@@ -140,6 +140,8 @@ type
     procedure IbDtstTabelaBeforePost(DataSet: TDataSet);
     procedure ppMnAtualizarMetafonemaClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
+    procedure btbtnListaClick(Sender: TObject);
+    procedure btbtnSalvarClick(Sender: TObject);
   private
     { Private declarations }
     function GravarVendedorFuncinario : Boolean;
@@ -156,10 +158,28 @@ var
 implementation
 
 uses
-  UConstantesDGE, UDMBusiness, UGrPadrao, UFuncoes,
+  UConstantesDGE, UDMBusiness, UGrPadrao, UFuncoes, UDMNFe,
   UGeBairro, UGeCidade, UGeDistrito, UGeEstado, UGeLogradouro, UGrUsuario;
 
 {$R *.dfm}
+
+procedure TfrmGeFuncionario.btbtnListaClick(Sender: TObject);
+begin
+  inherited;
+  DMNFe.frrListaFuncionario.ShowReport;
+end;
+
+procedure TfrmGeFuncionario.btbtnSalvarClick(Sender: TObject);
+begin
+  if ( Trim(IbDtstTabelaCPF.AsString) <> EmptyStr ) then
+    if ( not FuncoesString.StrIsCPF(IbDtstTabelaCPF.AsString) ) then
+    begin
+      ShowWarning('Favor informar um CPF válido.');
+      Abort;
+    end;
+
+  inherited;
+end;
 
 procedure TfrmGeFuncionario.btnFiltrarClick(Sender: TObject);
 begin
