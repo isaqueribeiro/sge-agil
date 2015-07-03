@@ -13563,3 +13563,170 @@ Historico:
         * Documentacao da procedure.';
 
 GRANT ALL ON TBFUNCIONARIO_MOVIMENTO TO "PUBLIC";
+
+
+
+/*------ SYSDBA 01/07/2015 09:55:03 --------*/
+
+ALTER TABLE TBFUNCIONARIO_MOVIMENTO
+    ADD MATRICULA DMN_VCHAR_10;
+
+COMMENT ON COLUMN TBFUNCIONARIO_MOVIMENTO.MATRICULA IS
+'Matricula';
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter CONTROLE position 1;
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter EMPRESA position 2;
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter FUNCIONARIO position 3;
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter FUNCAO_CBO position 4;
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter MATRICULA position 5;
+
+alter table TBFUNCIONARIO_MOVIMENTO
+alter DATA_ADMISSAO position 6;
+
+
+
+
+/*------ SYSDBA 01/07/2015 09:55:24 --------*/
+
+CREATE INDEX IDX_TBFUNCIONARIO_MOVIMENTO_MAT
+ON TBFUNCIONARIO_MOVIMENTO (MATRICULA);
+
+
+
+
+/*------ SYSDBA 01/07/2015 12:55:17 --------*/
+
+CREATE OR ALTER VIEW VW_CONDICAOPAGTO(
+    COND_COD,
+    COND_DESCRICAO,
+    COND_PRAZO,
+    COND_QTDE_PARCELAS,
+    COND_PRAZO_01,
+    COND_PRAZO_02,
+    COND_PRAZO_03,
+    COND_PRAZO_04,
+    COND_PRAZO_05,
+    COND_PRAZO_06,
+    COND_PRAZO_07,
+    COND_PRAZO_08,
+    COND_PRAZO_09,
+    COND_PRAZO_10,
+    COND_PRAZO_11,
+    COND_PRAZO_12,
+    COND_DESCRICAO_FULL,
+    COND_DESCRICAO_PDV,
+    COND_PDV)
+AS
+Select
+    c.Cond_cod
+  , c.Cond_descricao
+  , c.Cond_prazo
+  , c.Cond_qtde_parcelas
+  , c.Cond_prazo_01
+  , c.Cond_prazo_02
+  , c.Cond_prazo_03
+  , c.Cond_prazo_04
+  , c.Cond_prazo_05
+  , c.Cond_prazo_06
+  , c.Cond_prazo_07
+  , c.Cond_prazo_08
+  , c.Cond_prazo_09
+  , c.Cond_prazo_10
+  , c.Cond_prazo_11
+  , c.Cond_prazo_12
+  , c.Cond_descricao || ' [' ||
+      case when c.Cond_prazo_01 is not Null then right('00' || c.Cond_prazo_01, 2) else '' end ||
+      case when c.Cond_prazo_02 is not Null then ', ' || c.Cond_prazo_02 else '' end ||
+      case when c.Cond_prazo_03 is not Null then ', ' || c.Cond_prazo_03 else '' end ||
+      case when c.Cond_prazo_04 is not Null then ', ' || c.Cond_prazo_04 else '' end ||
+      case when c.Cond_prazo_05 is not Null then ', ' || c.Cond_prazo_05 else '' end ||
+      case when c.Cond_prazo_06 is not Null then ', ' || c.Cond_prazo_06 else '' end ||
+      case when c.Cond_prazo_07 is not Null then ', ' || c.Cond_prazo_07 else '' end ||
+      case when c.Cond_prazo_08 is not Null then ', ' || c.Cond_prazo_08 else '' end ||
+      case when c.Cond_prazo_09 is not Null then ', ' || c.Cond_prazo_09 else '' end ||
+      case when c.Cond_prazo_10 is not Null then ', ' || c.Cond_prazo_10 else '' end ||
+      case when c.Cond_prazo_11 is not Null then ', ' || c.Cond_prazo_11 else '' end ||
+      case when c.Cond_prazo_12 is not Null then ', ' || c.Cond_prazo_12 else '' end || ']'
+    as Cond_descricao_full
+  , Case when c.Cond_prazo = 0
+      then '* A VISTA'
+      else coalesce(c.Cond_qtde_parcelas, 1) || 'x'
+    end as Cond_descricao_PDV
+  , coalesce(c.Cond_pdv, 0)
+from TBCONDICAOPAGTO c
+;
+
+
+
+
+/*------ SYSDBA 01/07/2015 12:55:30 --------*/
+
+CREATE OR ALTER VIEW VW_CONDICAOPAGTO(
+    COND_COD,
+    COND_DESCRICAO,
+    COND_PRAZO,
+    COND_QTDE_PARCELAS,
+    COND_PRAZO_01,
+    COND_PRAZO_02,
+    COND_PRAZO_03,
+    COND_PRAZO_04,
+    COND_PRAZO_05,
+    COND_PRAZO_06,
+    COND_PRAZO_07,
+    COND_PRAZO_08,
+    COND_PRAZO_09,
+    COND_PRAZO_10,
+    COND_PRAZO_11,
+    COND_PRAZO_12,
+    COND_DESCRICAO_FULL,
+    COND_DESCRICAO_PDV,
+    COND_PDV)
+AS
+Select
+    c.Cond_cod
+  , c.Cond_descricao
+  , c.Cond_prazo
+  , c.Cond_qtde_parcelas
+  , c.Cond_prazo_01
+  , c.Cond_prazo_02
+  , c.Cond_prazo_03
+  , c.Cond_prazo_04
+  , c.Cond_prazo_05
+  , c.Cond_prazo_06
+  , c.Cond_prazo_07
+  , c.Cond_prazo_08
+  , c.Cond_prazo_09
+  , c.Cond_prazo_10
+  , c.Cond_prazo_11
+  , c.Cond_prazo_12
+  , c.Cond_descricao || ' [' ||
+      case when c.Cond_prazo_01 is not Null then right('00' || c.Cond_prazo_01, 2) else '' end ||
+      case when c.Cond_prazo_02 is not Null then ', ' || c.Cond_prazo_02 else '' end ||
+      case when c.Cond_prazo_03 is not Null then ', ' || c.Cond_prazo_03 else '' end ||
+      case when c.Cond_prazo_04 is not Null then ', ' || c.Cond_prazo_04 else '' end ||
+      case when c.Cond_prazo_05 is not Null then ', ' || c.Cond_prazo_05 else '' end ||
+      case when c.Cond_prazo_06 is not Null then ', ' || c.Cond_prazo_06 else '' end ||
+      case when c.Cond_prazo_07 is not Null then ', ' || c.Cond_prazo_07 else '' end ||
+      case when c.Cond_prazo_08 is not Null then ', ' || c.Cond_prazo_08 else '' end ||
+      case when c.Cond_prazo_09 is not Null then ', ' || c.Cond_prazo_09 else '' end ||
+      case when c.Cond_prazo_10 is not Null then ', ' || c.Cond_prazo_10 else '' end ||
+      case when c.Cond_prazo_11 is not Null then ', ' || c.Cond_prazo_11 else '' end ||
+      case when c.Cond_prazo_12 is not Null then ', ' || c.Cond_prazo_12 else '' end || ']'
+    as Cond_descricao_full
+  , Case when c.Cond_prazo = 0
+      then '* A VISTA'
+      else coalesce(c.Cond_qtde_parcelas, 1) || 'x'
+    end as Cond_descricao_PDV
+  , coalesce(c.Cond_pdv, 0)
+from TBCONDICAOPAGTO c
+;
+

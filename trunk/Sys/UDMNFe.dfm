@@ -32014,4 +32014,748 @@ object DMNFe: TDMNFe
       end
     end
   end
+  object qryListaFuncionario: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select'
+      '    f.codigo'
+      '  , f.nome_completo'
+      '  , f.sexo'
+      '  , f.data_nascimento'
+      '  , f.cpf'
+      
+        '  , trim(coalesce(f.rg_numero, '#39#39') || '#39' '#39' || coalesce(f.rg_orgao' +
+        '_emissor, '#39#39')) as rg'
+      '  , f.ender as endereco'
+      '  , f.numero_end as endereco_num'
+      '  , f.bairro'
+      '  , f.cidade'
+      '  , f.uf'
+      '  , f.cep'
+      '  , f.ativo'
+      'from TBFUNCIONARIO f'
+      ''
+      'order by'
+      '    f.nome_completo')
+    Left = 760
+    Top = 248
+  end
+  object frdListaFuncionario: TfrxDBDataset
+    UserName = 'frdListaFuncionario'
+    CloseDataSource = True
+    FieldAliases.Strings = (
+      'CODIGO=CODIGO'
+      'NOME_COMPLETO=NOME_COMPLETO'
+      'SEXO=SEXO'
+      'DATA_NASCIMENTO=DATA_NASCIMENTO'
+      'CPF=CPF'
+      'RG=RG'
+      'ENDERECO=ENDERECO'
+      'ENDERECO_NUM=ENDERECO_NUM'
+      'BAIRRO=BAIRRO'
+      'CIDADE=CIDADE'
+      'UF=UF'
+      'CEP=CEP'
+      'ATIVO=ATIVO')
+    DataSet = qryListaFuncionario
+    BCDToCurrency = False
+    Left = 792
+    Top = 248
+  end
+  object frrListaFuncionario: TfrxReport
+    Version = '5.1.9'
+    DotMatrixReport = False
+    IniFile = '\Software\Fast Reports'
+    PreviewOptions.Buttons = [pbPrint, pbLoad, pbSave, pbExport, pbZoom, pbFind, pbOutline, pbPageSetup, pbTools, pbEdit, pbNavigator, pbExportQuick]
+    PreviewOptions.Zoom = 1.000000000000000000
+    PrintOptions.Printer = 'Padr'#227'o'
+    PrintOptions.PrintOnSheet = 0
+    ReportOptions.CreateDate = 40928.407150601900000000
+    ReportOptions.LastChange = 41863.913688182870000000
+    ScriptLanguage = 'PascalScript'
+    ScriptText.Strings = (
+      ''
+      'begin'
+      ''
+      'end.')
+    OnGetValue = frrAutorizacaoCompraGetValue
+    Left = 824
+    Top = 248
+    Datasets = <
+      item
+        DataSet = frdEmpresa
+        DataSetName = 'frdEmpresa'
+      end
+      item
+        DataSet = frdListaFuncionario
+        DataSetName = 'frdListaFuncionario'
+      end>
+    Variables = <>
+    Style = <>
+    object Data: TfrxDataPage
+      Height = 1000.000000000000000000
+      Width = 1000.000000000000000000
+    end
+    object Page1: TfrxReportPage
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'Lucida Console'
+      Font.Style = []
+      PaperWidth = 210.000000000000000000
+      PaperHeight = 297.000000000000000000
+      PaperSize = 9
+      LeftMargin = 10.000000000000000000
+      RightMargin = 10.000000000000000000
+      TopMargin = 10.000000000000000000
+      BottomMargin = 10.000000000000000000
+      object bndReportTitle: TfrxReportTitle
+        FillType = ftBrush
+        Height = 116.858380000000000000
+        Top = 18.897650000000000000
+        Width = 718.110700000000000000
+        object frdVendaCODCONTROL: TfrxMemoView
+          Left = 559.370440000000000000
+          Top = 18.897650000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          Visible = False
+          DataSet = frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight]
+          HAlign = haCenter
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo3: TfrxMemoView
+          Left = 559.370440000000000000
+          Width = 158.740260000000000000
+          Height = 18.897650000000000000
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -8
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'N '#250' m e r o   C o n t r o l e :')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo10: TfrxMemoView
+          Left = 559.370440000000000000
+          Top = 37.795300000000000000
+          Width = 158.740260000000000000
+          Height = 15.118120000000000000
+          Visible = False
+          DataSet = frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Frame.Typ = [ftLeft, ftRight, ftBottom]
+          HAlign = haCenter
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Picture1: TfrxPictureView
+          Left = 3.779530000000000000
+          Width = 139.842610000000000000
+          Height = 79.370130000000000000
+          DataField = 'LOGO'
+          DataSet = frdEmpresa
+          DataSetName = 'frdEmpresa'
+          HightQuality = False
+          Transparent = False
+          TransparentColor = clWhite
+        end
+        object frdEmpresaRZSOC: TfrxMemoView
+          Left = 143.622140000000000000
+          Width = 411.968770000000000000
+          Height = 18.897650000000000000
+          DataSet = frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            '[frdEmpresa."RZSOC"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frdEmpresaNMFANT: TfrxMemoView
+          Left = 143.622140000000000000
+          Top = 18.897650000000000000
+          Width = 411.968770000000000000
+          Height = 15.118120000000000000
+          DataSet = frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            
+              'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
+              '">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdFone: TfrxMemoView
+          Left = 143.622140000000000000
+          Top = 34.015770000000010000
+          Width = 411.968770000000000000
+          Height = 15.118120000000000000
+          DataSet = frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo11: TfrxMemoView
+          Left = 143.622140000000000000
+          Top = 49.133889999999990000
+          Width = 411.968770000000000000
+          Height = 15.118120000000000000
+          DataSet = frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            
+              '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
+              'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
+              'frdEmpresa."EST_SIGLA"] CEP.: [FormatMaskText('#39'##.###-###;0;'#39',<f' +
+              'rdEmpresa."CEP">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Line1: TfrxLineView
+          Top = 83.149660000000000000
+          Width = 718.110700000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Memo44: TfrxMemoView
+          Left = 143.622140000000000000
+          Top = 64.252010000000000000
+          Width = 574.488560000000000000
+          Height = 15.118120000000000000
+          DataSet = frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo45: TfrxMemoView
+          Top = 90.708720000000000000
+          Width = 721.890230000000000000
+          Height = 18.897650000000000000
+          CharSpacing = 4.000000000000000000
+          DataSet = frdVenda
+          DataSetName = 'frdVenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'LISTA DE FUNCION'#193'RIOS CADASTRADOS')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+      object bndMasterData: TfrxMasterData
+        FillType = ftBrush
+        Height = 18.897650000000000000
+        Top = 238.110390000000000000
+        Width = 718.110700000000000000
+        DataSet = frdListaFuncionario
+        DataSetName = 'frdListaFuncionario'
+        RowCount = 0
+        object frdItensCODPROD: TfrxMemoView
+          Left = 22.677180000000000000
+          Width = 52.913420000000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            ' [FormatFloat('#39'###000000'#39',<frdListaFuncionario."CODIGO">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdItensSEQ: TfrxMemoView
+          Width = 22.677180000000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            '[Line]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdItensDESCRI: TfrxMemoView
+          Left = 75.590600000000000000
+          Width = 340.157529130000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            ' [frdListaFuncionario."NOME_COMPLETO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo4: TfrxMemoView
+          Left = 415.748300000000000000
+          Width = 30.236240000000000000
+          Height = 18.897650000000000000
+          DataSet = frdListaFuncionario
+          DataSetName = 'frdListaFuncionario'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            '[frdListaFuncionario."SEXO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo7: TfrxMemoView
+          Left = 604.724800000000000000
+          Width = 113.385900000000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            ' [frdListaFuncionario."RG"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo5: TfrxMemoView
+          Left = 445.984540000000000000
+          Width = 75.590600000000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          DisplayFormat.FormatStr = 'dd/mm/yyyy'
+          DisplayFormat.Kind = fkDateTime
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          HAlign = haCenter
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            '[frdListaFuncionario."DATA_NASCIMENTO"]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo6: TfrxMemoView
+          Left = 521.575140000000000000
+          Width = 83.149660000000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = []
+          Frame.Typ = [ftLeft, ftRight, ftTop, ftBottom]
+          Frame.Width = 0.100000000000000000
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            
+              ' [FormatMaskText('#39'###.###.###-##;0;'#39',<frdListaFuncionario."CPF">' +
+              ')]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+      object bndPageFooter: TfrxPageFooter
+        FillType = ftBrush
+        Height = 30.236240000000000000
+        Top = 359.055350000000000000
+        Width = 718.110700000000000000
+        object Memo1: TfrxMemoView
+          Left = 589.606680000000000000
+          Width = 128.504020000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          HAlign = haRight
+          Memo.UTF8W = (
+            'P'#225'gina :  [Page#]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo18: TfrxMemoView
+          Width = 589.606680000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8W = (
+            ' [Sistema]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaBottom
+        end
+        object Memo19: TfrxMemoView
+          Top = 15.118119999999980000
+          Width = 589.606680000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8W = (
+            ' Impresso em [Date] '#224's [Time] por [Usuario]')
+          ParentFont = False
+          WordWrap = False
+        end
+      end
+      object bndHeader: TfrxHeader
+        FillType = ftBrush
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Lucida Console'
+        Font.Style = []
+        Height = 18.897650000000000000
+        ParentFont = False
+        Top = 196.535560000000000000
+        Width = 718.110700000000000000
+        object Line2: TfrxLineView
+          Top = 15.118120000000000000
+          Width = 718.110700000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object Memo23: TfrxMemoView
+          Width = 22.677180000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          HAlign = haCenter
+          Memo.UTF8W = (
+            '#')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo24: TfrxMemoView
+          Left = 22.677180000000000000
+          Width = 52.913420000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          Memo.UTF8W = (
+            ' C'#243'digo')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo25: TfrxMemoView
+          Left = 75.590600000000000000
+          Width = 340.157529130000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          Memo.UTF8W = (
+            ' Descri'#231#227'o')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo21: TfrxMemoView
+          Left = 445.984540000000000000
+          Width = 75.590600000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Data de Nasc.')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo20: TfrxMemoView
+          Left = 521.575140000000000000
+          Width = 83.149660000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          Memo.UTF8W = (
+            ' CPF')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo17: TfrxMemoView
+          Left = 604.724800000000000000
+          Width = 113.385846300000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          Memo.UTF8W = (
+            ' RG')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo22: TfrxMemoView
+          Left = 415.748300000000000000
+          Width = 30.236203390000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          Fill.BackColor = 14211288
+          HAlign = haCenter
+          Memo.UTF8W = (
+            'Sexo')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+      object bndFooter: TfrxFooter
+        FillType = ftBrush
+        Height = 18.897650000000000000
+        Top = 279.685220000000000000
+        Width = 718.110700000000000000
+        object Memo2: TfrxMemoView
+          Width = 415.748129130000000000
+          Height = 18.897650000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsItalic]
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            ' * Cadastros inativos')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object Memo8: TfrxMemoView
+          Left = 415.748300000000000000
+          Width = 302.362229130000000000
+          Height = 18.897650000000000000
+          CharSpacing = 1.000000000000000000
+          DataSet = frdItens
+          DataSetName = 'frdItens'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold, fsItalic]
+          HAlign = haRight
+          Highlight.ApplyFill = False
+          Highlight.Font.Charset = ANSI_CHARSET
+          Highlight.Font.Color = clRed
+          Highlight.Font.Height = -11
+          Highlight.Font.Name = 'Calibri'
+          Highlight.Font.Style = []
+          Highlight.Condition = '<frdListaFuncionario."ATIVO"> = 0'
+          Highlight.FillType = ftBrush
+          Memo.UTF8W = (
+            '[COUNT(bndMasterData,2)] funcion'#225'rio(s) cadastrado(s).')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+      end
+    end
+  end
 end
