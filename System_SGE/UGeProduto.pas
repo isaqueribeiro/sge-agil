@@ -142,7 +142,6 @@ type
     dbAliquota: TDBEdit;
     dbIPI: TDBEdit;
     dbAliquotaTipo: TDBLookupComboBox;
-    dbNCM_SH: TDBEdit;
     dbTipoTributacaoSN: TDBLookupComboBox;
     dbAliquotaSN: TDBEdit;
     dbPercentualReducaoBC: TDBEdit;
@@ -294,6 +293,9 @@ type
     dbProdutoEhImobilizado: TDBCheckBox;
     dbProdutoPorLote: TDBCheckBox;
     IbDtstTabelaESTOQUE_APROP_LOTE: TSmallintField;
+    ppMnAtualizarTabelaIBPT: TMenuItem;
+    IbDtstTabelaTABELA_IBPT: TIntegerField;
+    dbNCM_SH: TJvDBComboEdit;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
@@ -320,6 +322,7 @@ type
     procedure btbtnAlterarClick(Sender: TObject);
     procedure btbtnExcluirClick(Sender: TObject);
     procedure btbtnCancelarClick(Sender: TObject);
+    procedure dbNCM_SHButtonClick(Sender: TObject);
   private
     { Private declarations }
     fOrdenado : Boolean;
@@ -400,7 +403,8 @@ implementation
 
 uses
   UDMBusiness, UGeSecaoProduto, UGeGrupoProduto, UGeUnidade,
-  UGeTabelaCFOP, UGeFabricante, UConstantesDGE, UFuncoes, UGrPadrao;
+  UGeTabelaCFOP, UGeFabricante, UConstantesDGE, UFuncoes, UGrPadrao,
+  UGeTabelaIBPT;
 
 {$R *.dfm}
 
@@ -1010,6 +1014,20 @@ begin
     end;
 end;
 
+procedure TfrmGeProduto.dbNCM_SHButtonClick(Sender: TObject);
+var
+  iCodigo    : Integer;
+  sCodigo    ,
+  sDescricao : String;
+begin
+  if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
+    if ( SelecionarCodigoIBPT(Self, iCodigo, sCodigo, sDescricao) ) then
+    begin
+      IbDtstTabelaTABELA_IBPT.AsInteger := iCodigo;
+      IbDtstTabelaNCM_SH.AsString       := sCodigo;
+    end;
+end;
+
 procedure TfrmGeProduto.dbProdutoMovEstoqueClick(Sender: TObject);
 begin
   if (IbDtstTabela.State in [dsEdit, dsInsert]) then
@@ -1186,7 +1204,8 @@ begin
   IbDtstTabelaANO_MODELO_VEICULO.Clear;
   IbDtstTabelaANO_FABRICACAO_VEICULO.Clear;
 
-  IbDtstTabelaNCM_SH.AsString     := TRIBUTO_NCM_SH_PADRAO;
+  IbDtstTabelaNCM_SH.AsString       := TRIBUTO_NCM_SH_PADRAO;
+  IbDtstTabelaTABELA_IBPT.AsInteger := GetTabelaIBPT_Codigo(TRIBUTO_NCM_SH_PADRAO);
   IbDtstTabelaCST_PIS.AsString    := '99';
   IbDtstTabelaCST_COFINS.AsString := '99';
   IbDtstTabelaALIQUOTA_PIS.AsCurrency      := 0.0;
@@ -1593,15 +1612,18 @@ end;
 procedure TfrmGeProduto.btbtnSalvarClick(Sender: TObject);
 begin
   // Validações de Dados
-  
+
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
   begin
-    if ( Length(Trim(IbDtstTabelaNCM_SH.AsString)) < STR_TAMANHO_NCMSH ) then
-    begin
-      ShowWarning('Favor informar um código válido para o campo "NCM/SH"!');
-      Exit;
-    end
-    else
+    if (IbDtstTabelaTABELA_IBPT.AsInteger = 0) then
+      IbDtstTabelaTABELA_IBPT.Clear;
+
+    //if ( Length(Trim(IbDtstTabelaNCM_SH.AsString)) < STR_TAMANHO_NCMSH ) then
+    //begin
+    //  ShowWarning('Favor informar um código válido para o campo "NCM/SH"!');
+    //  Exit;
+    //end
+    //else
     if ( IbDtstTabelaFRACIONADOR.AsInteger = 1 ) then
     begin
       if ( IbDtstTabelaCODUNIDADE.AsInteger <> IbDtstTabelaCODUNIDADE_FRACIONADA.AsInteger ) then

@@ -280,6 +280,7 @@ type
       var AHandled: Boolean);
     procedure BrBtnNotaFiscalComplementarClick(Sender: TObject);
     procedure BrBtnQuitarAReceberLoteClick(Sender: TObject);
+    procedure BrBtnTabelaIBPTClick(Sender: TObject);
   private
     { Private declarations }
     FAcesso : Boolean;
@@ -348,6 +349,12 @@ procedure TfrmPrinc.BrBtnRelatorioEstoqueReqClick(Sender: TObject);
 begin
   if GetPermissaoRotinaSistema(ROTINA_REL_ESTOQUE_REQ_ID, True) then
     FormFunction.ShowModalForm(Self, 'frmGeRequisicaoAlmoxImpressao');
+end;
+
+procedure TfrmPrinc.BrBtnTabelaIBPTClick(Sender: TObject);
+begin
+  if GetPermissaoRotinaSistema(ROTINA_CAD_TABELA_IBPT_ID, True) then
+    FormFunction.ShowModalForm(Self, 'frmGeTabelaIBPT');
 end;
 
 procedure TfrmPrinc.btnClienteClick(Sender: TObject);

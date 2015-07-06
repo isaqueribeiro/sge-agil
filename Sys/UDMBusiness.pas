@@ -321,6 +321,7 @@ var
   function GetFormaPagtoCondicaoPagto(const iFormaPagto, iCondicaoPagto : Integer) : Boolean;
   function GetCondicaoPagtoNomeDefault : String;
   function GetCondicaoPagtoNome(const iCodigo : Integer) : String;
+  function GetTabelaIBPT_Codigo(const aCodigoNCM : String) : Integer;
   function GetSenhaAutorizacao : String;
   function GetDateTimeDB : TDateTime;
   function GetDateDB : TDateTime;
@@ -2633,6 +2634,24 @@ begin
     Open;
 
     Result := FieldByName('cond_descricao_full').AsString;
+
+    Close;
+  end;
+end;
+
+function GetTabelaIBPT_Codigo(const aCodigoNCM : String) : Integer;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select first 1');
+    SQL.Add('  t.id_ibpt');
+    SQL.Add('from SYS_IBPT t');
+    SQL.Add('where t.ncm_ibpt = ' + QuotedStr(aCodigoNCM));
+    Open;
+
+    Result := FieldByName('id_ibpt').AsInteger;
 
     Close;
   end;

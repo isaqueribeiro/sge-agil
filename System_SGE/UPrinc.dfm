@@ -35,6 +35,8 @@ object frmPrinc: TfrmPrinc
     BevelOuter = bvLowered
     Color = clBlack
     TabOrder = 0
+    ExplicitTop = 122
+    ExplicitHeight = 519
     DesignSize = (
       1044
       486)
@@ -4657,6 +4659,7 @@ object frmPrinc: TfrmPrinc
       Index = 0
     end
     object RbnTabCadastro: TdxRibbonTab
+      Active = True
       Caption = 'Cadastro'
       Groups = <
         item
@@ -4703,7 +4706,6 @@ object frmPrinc: TfrmPrinc
       Index = 5
     end
     object RbnTabFinanceiro: TdxRibbonTab
-      Active = True
       Caption = 'Financeiro'
       Groups = <
         item
@@ -5647,9 +5649,9 @@ object frmPrinc: TfrmPrinc
     object BrBtnTabelaIBPT: TdxBarLargeButton
       Caption = 'Tabela de Tributa'#231#245'es IBPT'
       Category = 5
-      Enabled = False
       Hint = 'Tabela de Tributa'#231#245'es IBPT'
       Visible = ivAlways
+      OnClick = BrBtnTabelaIBPTClick
     end
     object BrBtnContaCorrente: TdxBarLargeButton
       Caption = 'Contas Correntes'
