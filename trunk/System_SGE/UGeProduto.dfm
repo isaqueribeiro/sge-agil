@@ -722,7 +722,7 @@ inherited frmGeProduto: TfrmGeProduto
         Top = 197
         Width = 953
         Height = 340
-        ActivePage = tbsValores
+        ActivePage = tbsTributacao
         Align = alClient
         TabOrder = 2
         object tbsValores: TTabSheet
@@ -1535,7 +1535,7 @@ inherited frmGeProduto: TfrmGeProduto
               ParentFont = False
             end
             object lblNVE: TLabel
-              Left = 248
+              Left = 261
               Top = 24
               Width = 23
               Height = 13
@@ -1632,22 +1632,6 @@ inherited frmGeProduto: TfrmGeProduto
               ParentFont = False
               TabOrder = 6
             end
-            object dbNCM_SH: TDBEdit
-              Left = 152
-              Top = 40
-              Width = 89
-              Height = 21
-              CharCase = ecUpperCase
-              DataField = 'NCM_SH'
-              DataSource = DtSrcTabela
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Height = -11
-              Font.Name = 'MS Sans Serif'
-              Font.Style = []
-              ParentFont = False
-              TabOrder = 1
-            end
             object dbTipoTributacaoSN: TDBLookupComboBox
               Left = 584
               Top = 40
@@ -1700,9 +1684,9 @@ inherited frmGeProduto: TfrmGeProduto
               TabOrder = 9
             end
             object dbNVE: TDBEdit
-              Left = 248
+              Left = 261
               Top = 40
-              Width = 89
+              Width = 77
               Height = 21
               CharCase = ecUpperCase
               DataField = 'CODIGO_NVE'
@@ -1789,6 +1773,81 @@ inherited frmGeProduto: TfrmGeProduto
               ShowHint = True
               TabOrder = 5
               OnButtonClick = dbCFOPButtonClick
+            end
+            object dbNCM_SH: TJvDBComboEdit
+              Left = 152
+              Top = 40
+              Width = 103
+              Height = 21
+              ButtonHint = 'Pesquisar Tabela IBPT (Ctrl+P)'
+              CharCase = ecUpperCase
+              ClickKey = 16464
+              Color = clMoneyGreen
+              DataField = 'NCM_SH'
+              DataSource = DtSrcTabela
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              Glyph.Data = {
+                36060000424D3606000000000000360000002800000020000000100000000100
+                18000000000000060000000000000000000000000000000000001DE6B51DE6B5
+                1DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B5B1AD
+                AC203040ACA5A21DE6B5C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3
+                C3C3C3C3C3C3C3C3C3C3C3C3C3C37F7F7F7F7F7FACA5A2C3C3C31DE6B5B0A090
+                6048306048306048306048306048306048306048306048306048305048403050
+                604078C0304860B1ACA6C3C3C37F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+                7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7FC3C3C3C3C3C3B1ACA61DE6B5B0A090
+                FFFFFFB0A090B0A090B0A090B0A090B0A090B0A090B0A0909088803050703080
+                D04098E050B0F0506870C3C3C37F7F7FFFFFFFC3C3C3C3C3C3C3C3C3C3C3C3C3
+                C3C3C3C3C3C3C3C39088807F7F7FC3C3C3C3C3C3C3C3C37F7F7F1DE6B5B0A090
+                FFFFFFFFFFFFFFF8FFF0F0F0D0D8D090989070686060686050586040709040A0
+                E060C8FF7090A0C5BEB5C3C3C37F7F7FFFFFFFFFFFFFFFF8FFF0F0F0D0D8D07F
+                7F7F7F7F7F7F7F7F505860C3C3C3C3C3C3C3C3C37090A0C5BEB51DE6B5B0A090
+                FFFFFFFFFFFFFFFFFFE0E0E0909090B0A8A0D0C0B0D0B0A08078705058506090
+                B07098B0AEAEAA1DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFFE0E0E07F7F7F7F
+                7F7FD0C0B0D0B0A0807870505850C3C3C37098B0AEAEAAC3C3C31DE6B5B0A090
+                FFFFFFFFFFFFFFFFFFB0B0B0C0B8B0FFF0E0FFE8E0F0D8C0F0D0B08078709D8F
+                8CAEAFAA1DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FFF
+                F0E0FFE8E0F0D8C0F0D0B08078709D8F8CAEAFAAC3C3C3C3C3C31DE6B5C0A890
+                FFFFFFFFFFFFFFFFFFA09890F0E8E0FFF8F0FFF0F0FFE8E0F0D8D0D0B0A06367
+                5E1DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FFF
+                F8F0FFF0F0FFE8E0F0D8D0D0B0A063675EC3C3C3C3C3C3C3C3C31DE6B5C0A8A0
+                FFFFFFFFFFFFFFFFFFA0A090F0E8E0FFFFFFFFF8F0FFF0F0FFE8E0E0C0B0716E
+                6C1DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FFF
+                FFFFFFF8F0FFF0F0FFE8E0E0C0B0716E6CC3C3C3C3C3C3C3C3C31DE6B5C0B0A0
+                FFFFFFFFFFFFFFFFFFC0C8C0C0C0C0FFFFFFFFFFFFFFF8F0FFF0E0B0A090A69C
+                951DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFF7F7F7F7F7F7FFF
+                FFFFFFFFFFFFF8F0FFF0E0B0A090A69C95C3C3C3C3C3C3C3C3C31DE6B5D0B0A0
+                FFFFFFFFFFFFFFFFFFF0F8FFC0B8B0C0C0C0F0E8E0F0E8E0B0B0A07070601DE6
+                B51DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFFF0F8FF7F7F7F7F
+                7F7FF0E8E0F0E8E0B0B0A0707060C3C3C3C3C3C3C3C3C3C3C3C31DE6B5D0B8A0
+                FFFFFFFFFFFFFFFFFFFFFFFFF0F8FFC0C8C0A0A0909090809090906050401DE6
+                B51DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFFFFFFFFF0F8FF7F
+                7F7FA0A0907F7F7F909090605040C3C3C3C3C3C3C3C3C3C3C3C31DE6B5D0B8B0
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0A0906048306048306048301DE6
+                B51DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFF7F7F7F604830604830604830C3C3C3C3C3C3C3C3C3C3C3C31DE6B5D0C0B0
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A890D0C8C06048301DE6B51DE6
+                B51DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFF7F7F7FC3C3C3604830C3C3C3C3C3C3C3C3C3C3C3C3C3C3C31DE6B5E0C0B0
+                FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC0A8A0604830E0C6B71DE6B51DE6
+                B51DE6B51DE6B51DE6B5C3C3C37F7F7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+                FFFF7F7F7F7F7F7F7F7F7FC3C3C3C3C3C3C3C3C3C3C3C3C3C3C31DE6B5E0C0B0
+                E0C0B0E0C0B0E0C0B0E0C0B0D0C0B0D0B8B0D0B0A0E0C7B91DE6B51DE6B51DE6
+                B51DE6B51DE6B51DE6B5C3C3C37F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F7F
+                7F7F7F7F7F7F7F7FC3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C31DE6B51DE6B5
+                1DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6B51DE6
+                B51DE6B51DE6B51DE6B5C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3
+                C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3C3}
+              NumGlyphs = 2
+              ParentFont = False
+              ParentShowHint = False
+              ReadOnly = True
+              ShowHint = True
+              TabOrder = 1
+              OnButtonClick = dbNCM_SHButtonClick
             end
           end
           object GrpBxDadosTributoPIS: TGroupBox
@@ -2688,6 +2747,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  , p.Csosn'
       '  , p.Cst_pis'
       '  , p.Cst_cofins'
+      '  , p.Tabela_IBPT'
       '  , p.NCM_SH'
       '  , p.Codigo_NVE'
       '  , p.Codcfop'
@@ -2983,11 +3043,16 @@ inherited frmGeProduto: TfrmGeProduto
       Origin = 'TBPRODUTO.CST_COFINS'
       Size = 3
     end
+    object IbDtstTabelaTABELA_IBPT: TIntegerField
+      DisplayLabel = 'Tabela IBPT (NCM/SH)'
+      FieldName = 'TABELA_IBPT'
+      Origin = '"TBPRODUTO"."TABELA_IBPT"'
+      Required = True
+    end
     object IbDtstTabelaNCM_SH: TIBStringField
       DisplayLabel = 'NCM/SH'
       FieldName = 'NCM_SH'
       Origin = 'TBPRODUTO.NCM_SH'
-      Required = True
       Size = 10
     end
     object IbDtstTabelaCODIGO_NVE: TIBStringField
@@ -3340,7 +3405,6 @@ inherited frmGeProduto: TfrmGeProduto
       '  PESO_LIQUIDO,'
       '  CUBAGEM,'
       '  VENDA_FRACIONADA,'
-      '  CODUNIDADE_FRACIONADA,'
       '  UNIDADE,'
       '  ESTOQMIN,'
       '  CODGRUPO,'
@@ -3357,17 +3421,20 @@ inherited frmGeProduto: TfrmGeProduto
       '  CSOSN,'
       '  CST_PIS,'
       '  CST_COFINS,'
+      '  TABELA_IBPT,'
       '  NCM_SH,'
       '  CODIGO_NVE,'
       '  CODCFOP,'
       '  CODBARRA_EAN,'
       '  CODUNIDADE,'
+      '  CODUNIDADE_FRACIONADA,'
       '  ALIQUOTA_TIPO,'
       '  ALIQUOTA,'
       '  ALIQUOTA_CSOSN,'
       '  ALIQUOTA_PIS,'
       '  ALIQUOTA_COFINS,'
       '  VALOR_IPI,'
+      '  PERCENTUAL_REDUCAO_BC,'
       '  RESERVA,'
       '  PRODUTO_NOVO,'
       '  COR_VEICULO,'
@@ -3380,7 +3447,6 @@ inherited frmGeProduto: TfrmGeProduto
       '  KILOMETRAGEM_VEICULO,'
       '  SITUACAO_ATUAL_VEICULO,'
       '  SITUACAO_HISTORICO_VEICULO,'
-      '  PERCENTUAL_REDUCAO_BC,'
       '  USUARIO,'
       '  CADASTRO_ATIVO,'
       '  MOVIMENTA_ESTOQUE,'
@@ -3460,6 +3526,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  SECAO = :SECAO,'
       '  SITUACAO_ATUAL_VEICULO = :SITUACAO_ATUAL_VEICULO,'
       '  SITUACAO_HISTORICO_VEICULO = :SITUACAO_HISTORICO_VEICULO,'
+      '  TABELA_IBPT = :TABELA_IBPT,'
       '  TIPO_VEICULO = :TIPO_VEICULO,'
       '  UNIDADE = :UNIDADE,'
       '  USUARIO = :USUARIO,'
@@ -3502,7 +3569,9 @@ inherited frmGeProduto: TfrmGeProduto
       
         '   RENAVAM_VEICULO, RESERVA, SECAO, SITUACAO_ATUAL_VEICULO, SITU' +
         'ACAO_HISTORICO_VEICULO, '
-      '   TIPO_VEICULO, UNIDADE, USUARIO, VALOR_IPI, VENDA_FRACIONADA)'
+      
+        '   TABELA_IBPT, TIPO_VEICULO, UNIDADE, USUARIO, VALOR_IPI, VENDA' +
+        '_FRACIONADA)'
       'values'
       
         '  (:ALIQUOTA, :ALIQUOTA_COFINS, :ALIQUOTA_CSOSN, :ALIQUOTA_PIS, ' +
@@ -3541,8 +3610,8 @@ inherited frmGeProduto: TfrmGeProduto
         '   :RESERVA, :SECAO, :SITUACAO_ATUAL_VEICULO, :SITUACAO_HISTORIC' +
         'O_VEICULO, '
       
-        '   :TIPO_VEICULO, :UNIDADE, :USUARIO, :VALOR_IPI, :VENDA_FRACION' +
-        'ADA)')
+        '   :TABELA_IBPT, :TIPO_VEICULO, :UNIDADE, :USUARIO, :VALOR_IPI, ' +
+        ':VENDA_FRACIONADA)')
     DeleteSQL.Strings = (
       'delete from TBPRODUTO'
       'where'
@@ -3552,7 +3621,7 @@ inherited frmGeProduto: TfrmGeProduto
   inherited ImgList: TImageList
     Left = 720
     Bitmap = {
-      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5325,6 +5394,9 @@ inherited frmGeProduto: TfrmGeProduto
     object ppMnAtualizarMetafonema: TMenuItem
       Caption = 'Atualizar C'#243'digo Metaf'#244'nico'
       OnClick = ppMnAtualizarMetafonemaClick
+    end
+    object ppMnAtualizarTabelaIBPT: TMenuItem
+      Caption = 'Atualizar Tabela IBPT (NCM/SH)'
     end
   end
   object ppImprimir: TPopupMenu

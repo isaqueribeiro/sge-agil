@@ -132,7 +132,9 @@ uses
   UGeNFComplementar in '..\Sys\UGeNFComplementar.pas' {frmGeNFComplementar},
   UGeContasAReceberQuitar in 'UGeContasAReceberQuitar.pas' {frmGeContasAReceberQuitar},
   UGeContasAPagarLoteParcela in '..\Sys\UGeContasAPagarLoteParcela.pas' {frmGeContasAPagarLoteParcela},
-  UGeContasAReceberLoteParcela in '..\Sys\UGeContasAReceberLoteParcela.pas' {frmGeContasAReceberLoteParcela};
+  UGeContasAReceberLoteParcela in '..\Sys\UGeContasAReceberLoteParcela.pas' {frmGeContasAReceberLoteParcela},
+  UGeTabelaIBPT in '..\Sys\UGeTabelaIBPT.pas' {frmGeTabelaIBPT},
+  UGeTabelaIBPTImportar in '..\Sys\UGeTabelaIBPTImportar.pas' {frmGeTabelaIBPTImportar};
 
 {$R *.res}
 

@@ -26,8 +26,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     ExplicitWidth = 1036
     ExplicitHeight = 574
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 1028
       ExplicitHeight = 545
       inherited Bevel4: TBevel
@@ -1558,7 +1556,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         Top = 392
         Width = 1028
         Height = 153
-        ActivePage = tbsValores
+        ActivePage = tbsObservacoes
         Align = alBottom
         TabOrder = 2
         object tbsValores: TTabSheet
@@ -1907,10 +1905,6 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         object tbsObservacoes: TTabSheet
           Caption = 'Informa'#231#245'es adicionais'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object pnlObservacao: TPanel
             Left = 0
             Top = 0
@@ -1922,10 +1916,11 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
             object lblObservacao: TLabel
               Left = 0
               Top = 0
-              Width = 67
+              Width = 1020
               Height = 13
               Align = alTop
               Caption = '&Observa'#231#245'es:'
+              ExplicitWidth = 67
             end
             object Bevel14: TBevel
               Left = 1016
@@ -1962,18 +1957,10 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
         object tbsTransporte: TTabSheet
           Caption = 'Dados Transporte'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TbsInformeNFe: TTabSheet
           Caption = 'Informa'#231#245'es de Envio NF-e'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object lblLogNFeLote: TLabel
             Left = 8
             Top = 0
@@ -3217,7 +3204,7 @@ inherited frmGeNFComplementar: TfrmGeNFComplementar
     Left = 424
     Top = 64
     Bitmap = {
-      494C01012B002C00400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
