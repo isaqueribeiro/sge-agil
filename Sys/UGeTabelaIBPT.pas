@@ -12,6 +12,7 @@ uses
   dxSkinOffice2013White;
 
 type
+  TTipoTabelaIBPT = (tIbptGeral, tIbptProdutos, tIbptServicos);
   TfrmGeTabelaIBPT = class(TfrmGrPadraoCadastro)
     IbDtstTabelaID_IBPT: TIntegerField;
     IbDtstTabelaNCM_IBPT: TIBStringField;
@@ -44,13 +45,16 @@ type
     dbAliquotaMUN: TDBEdit;
     lblAliquotaMUN: TLabel;
     btnImportar: TcxButton;
+    IbDtstTabelaDESCRICAO: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);
     procedure btnFiltrarClick(Sender: TObject);
     procedure DtSrcTabelaStateChange(Sender: TObject);
+    procedure IbDtstTabelaCalcFields(DataSet: TDataSet);
+    procedure btnImportarClick(Sender: TObject);
   private
     { Private declarations }
-    FApenasServicos : Boolean;
+    FTipoTabela : TTipoTabelaIBPT;
   public
     { Public declarations }
     procedure FiltarDados(const aTipo : Integer = 0); overload;
@@ -59,7 +63,7 @@ type
 var
   frmGeTabelaIBPT: TfrmGeTabelaIBPT;
 
-  function SelecionarCodigoIBPT(const AOwner : TComponent; const ApenasServicos : Boolean;
+  function SelecionarCodigoIBPT(const AOwner : TComponent; const aTipoTabela : TTipoTabelaIBPT;
     var aIndice : Integer; var aCodigo : String; var aDescricao : String) : Boolean;
 
 implementation
@@ -69,14 +73,14 @@ uses
 
 {$R *.dfm}
 
-function SelecionarCodigoIBPT(const AOwner : TComponent; const ApenasServicos : Boolean;
+function SelecionarCodigoIBPT(const AOwner : TComponent; const aTipoTabela : TTipoTabelaIBPT;
   var aIndice : Integer; var aCodigo : String; var aDescricao : String) : Boolean;
 var
   frm : TfrmGeTabelaIBPT;
 begin
   frm := TfrmGeTabelaIBPT.Create(AOwner);
   try
-    frm.FApenasServicos := ApenasServicos;
+    frm.FTipoTabela := aTipoTabela;
 
     Result := frm.SelecionarRegistro(aIndice, aDescricao);
 
@@ -89,11 +93,19 @@ end;
 
 procedure TfrmGeTabelaIBPT.btnFiltrarClick(Sender: TObject);
 begin
-  if FApenasServicos then
-    WhereAdditional := 't.tabela_ibpt in (''1'', ''2'')';
+  Case FTipoTabela of
+    tIbptProdutos: WhereAdditional := 't.tabela_ibpt in (''0'')';
+    tIbptServicos: WhereAdditional := 't.tabela_ibpt in (''1'', ''2'')';
+  end;
 
   //inherited;
   FiltarDados(0);
+end;
+
+procedure TfrmGeTabelaIBPT.btnImportarClick(Sender: TObject);
+begin
+  if ImportarTabelaIBPT(Self) then
+    btnFiltrar.Click;
 end;
 
 procedure TfrmGeTabelaIBPT.DtSrcTabelaStateChange(Sender: TObject);
@@ -130,7 +142,7 @@ begin
             if ( StrToIntDef(Trim(edtFiltrar.Text), 0) > 0 ) then
             begin
               Add( 'where ((' + CampoCodigo +  ' = ' + Trim(edtFiltrar.Text) );
-              Add( '  or (t.ncm_ibpt like ' + QuotedStr(Trim(edtFiltrar.Text) + '%') + '))' );
+              Add( '  ) or (t.ncm_ibpt like ' + QuotedStr(Trim(edtFiltrar.Text) + '%') + '))' );
             end
             else
             begin
@@ -178,19 +190,25 @@ begin
   inherited;
   RotinaID         := ROTINA_CAD_TABELA_IBPT_ID;
   ControlFirstEdit := dbCodigoNCM;
+  FTipoTabela      := tIbptGeral;
 
   DisplayFormatCodigo := '0000000';
 
   NomeTabela      := 'SYS_IBPT';
   CampoCodigo     := 't.id_ibpt';
   CampoDescricao  := 't.descricao_ibpt';
-  CampoOrdenacao  := 't.tabela_ibpt, t.ex_ibpt, t.ncm_ibpt, t.descricao_ibpt';
+  CampoOrdenacao  := 't.ex_ibpt, t.ncm_ibpt, t.descricao_ibpt';
   AbrirTabelaAuto := True;
 
   UpdateGenerator;
 
   qryNivelIBPT.Open;
   qryTabelaIBPT.Open;
+end;
+
+procedure TfrmGeTabelaIBPT.IbDtstTabelaCalcFields(DataSet: TDataSet);
+begin
+  IbDtstTabelaDESCRICAO.AsString := Copy(IbDtstTabelaDESCRICAO_IBPT.AsString, 1, IbDtstTabelaDESCRICAO.Size);
 end;
 
 procedure TfrmGeTabelaIBPT.IbDtstTabelaNewRecord(DataSet: TDataSet);

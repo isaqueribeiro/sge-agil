@@ -24,11 +24,11 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
   inherited pgcGuias: TPageControl
     Width = 809
     Height = 429
-    ExplicitWidth = 743
-    ExplicitHeight = 396
+    ExplicitWidth = 809
+    ExplicitHeight = 429
     inherited tbsTabela: TTabSheet
-      ExplicitWidth = 735
-      ExplicitHeight = 367
+      ExplicitWidth = 801
+      ExplicitHeight = 400
       inherited Bevel4: TBevel
         Top = 334
         Width = 801
@@ -52,7 +52,6 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'EX_IBPT'
             Title.Alignment = taCenter
@@ -60,7 +59,6 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
             Visible = True
           end
           item
-            Alignment = taCenter
             Expanded = False
             FieldName = 'TABELA_IBPT'
             Title.Alignment = taCenter
@@ -70,7 +68,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
           end
           item
             Expanded = False
-            FieldName = 'DESCRICAO_IBPT'
+            FieldName = 'DESCRICAO'
             Width = 350
             Visible = True
           end
@@ -85,7 +83,6 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
             Expanded = False
             FieldName = 'ALIQINTERNACIONAL_IBPT'
             Title.Caption = 'Tax. Int.'
-            Width = -1
             Visible = False
           end
           item
@@ -106,12 +103,12 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       inherited pnlFiltros: TPanel
         Top = 338
         Width = 801
-        ExplicitTop = 305
-        ExplicitWidth = 735
+        ExplicitTop = 338
+        ExplicitWidth = 801
         inherited grpBxFiltro: TGroupBox
           Left = 475
           Width = 322
-          ExplicitLeft = 409
+          ExplicitLeft = 475
           ExplicitWidth = 322
           DesignSize = (
             322
@@ -139,8 +136,8 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     inherited tbsCadastro: TTabSheet
       ExplicitLeft = 4
       ExplicitTop = 25
-      ExplicitWidth = 735
-      ExplicitHeight = 367
+      ExplicitWidth = 801
+      ExplicitHeight = 400
       inherited Bevel8: TBevel
         Top = 201
         Width = 801
@@ -150,7 +147,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       inherited GrpBxDadosNominais: TGroupBox
         Width = 801
         Height = 201
-        ExplicitWidth = 735
+        ExplicitWidth = 801
         ExplicitHeight = 201
         object lblCodigoNCM: TLabel [1]
           Left = 88
@@ -212,9 +209,8 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
           Anchors = [akLeft, akTop, akRight]
           DataField = 'DESCRICAO_IBPT'
           DataSource = DtSrcTabela
-          ScrollBars = ssBoth
+          ScrollBars = ssVertical
           TabOrder = 4
-          ExplicitWidth = 713
         end
         object dbNivel: TDBLookupComboBox
           Left = 231
@@ -265,7 +261,6 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
           'Percentuais de tributa'#231#245'es IBPT (Instituto Brasileiro de Planeja' +
           'mento e Tributa'#231#227'o)'
         TabOrder = 1
-        ExplicitWidth = 735
         object lblAliquotaNAC: TLabel
           Left = 16
           Top = 24
@@ -368,8 +363,8 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
   inherited tlbBotoes: TPanel
     Top = 433
     Width = 809
-    ExplicitTop = 402
-    ExplicitWidth = 743
+    ExplicitTop = 433
+    ExplicitWidth = 809
     inherited Bevel2: TBevel
       Left = 75
       ExplicitLeft = 75
@@ -377,9 +372,11 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     end
     inherited bvlTool1: TBevel
       Left = 304
+      ExplicitLeft = 304
     end
     inherited bvlTool2: TBevel
       Left = 458
+      ExplicitLeft = 458
     end
     inherited bvlTool3: TBevel
       Left = 726
@@ -391,29 +388,35 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     end
     inherited btbtnIncluir: TcxButton
       Left = 79
+      ExplicitLeft = 79
     end
     inherited btbtnAlterar: TcxButton
       Left = 154
+      ExplicitLeft = 154
     end
     inherited btbtnExcluir: TcxButton
       Left = 229
+      ExplicitLeft = 229
     end
     inherited btbtnCancelar: TcxButton
       Left = 308
+      ExplicitLeft = 308
     end
     inherited btbtnSalvar: TcxButton
       Left = 383
+      ExplicitLeft = 383
     end
     inherited btbtnLista: TcxButton
       Left = 462
+      ExplicitLeft = 462
     end
     inherited btbtnFechar: TcxButton
       Left = 730
-      ExplicitLeft = 664
+      ExplicitLeft = 730
     end
     inherited btbtnSelecionar: TcxButton
       Left = 606
-      ExplicitLeft = 540
+      ExplicitLeft = 606
     end
     object btnImportar: TcxButton
       Tag = 1
@@ -429,10 +432,11 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       ParentShowHint = False
       ShowHint = True
       TabOrder = 8
-      ExplicitLeft = 4
+      OnClick = btnImportarClick
     end
   end
   inherited IbDtstTabela: TIBDataSet
+    OnCalcFields = IbDtstTabelaCalcFields
     OnNewRecord = IbDtstTabelaNewRecord
     SelectSQL.Strings = (
       'Select'
@@ -469,6 +473,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Size = 10
     end
     object IbDtstTabelaEX_IBPT: TIBStringField
+      Alignment = taCenter
       DisplayLabel = '#'
       FieldName = 'EX_IBPT'
       Origin = '"SYS_IBPT"."EX_IBPT"'
@@ -476,6 +481,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Size = 3
     end
     object IbDtstTabelaTABELA_IBPT: TIBStringField
+      Alignment = taCenter
       DisplayLabel = 'Tabela'
       FieldName = 'TABELA_IBPT'
       Origin = '"SYS_IBPT"."TABELA_IBPT"'
@@ -498,7 +504,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Origin = '"SYS_IBPT"."ALIQNACIONAL_IBPT"'
       ProviderFlags = [pfInUpdate]
       Required = True
-      DisplayFormat = '0,00#'
+      DisplayFormat = '0.00#'
       Precision = 18
       Size = 2
     end
@@ -508,7 +514,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Origin = '"SYS_IBPT"."ALIQINTERNACIONAL_IBPT"'
       ProviderFlags = [pfInUpdate]
       Required = True
-      DisplayFormat = '0,00#'
+      DisplayFormat = '0.00#'
       Precision = 18
       Size = 2
     end
@@ -518,7 +524,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Origin = '"SYS_IBPT"."ALIQESTADUAL_IBPT"'
       ProviderFlags = [pfInUpdate]
       Required = True
-      DisplayFormat = '0,00#'
+      DisplayFormat = '0.00#'
       Precision = 18
       Size = 2
     end
@@ -528,9 +534,17 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Origin = '"SYS_IBPT"."ALIQMUNICIPAL_IBPT"'
       ProviderFlags = [pfInUpdate]
       Required = True
-      DisplayFormat = '0,00#'
+      DisplayFormat = '0.00#'
       Precision = 18
       Size = 2
+    end
+    object IbDtstTabelaDESCRICAO: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldKind = fkCalculated
+      FieldName = 'DESCRICAO'
+      ProviderFlags = []
+      Size = 250
+      Calculated = True
     end
   end
   inherited DtSrcTabela: TDataSource
@@ -588,7 +602,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     Left = 168
     Top = 128
     Bitmap = {
-      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

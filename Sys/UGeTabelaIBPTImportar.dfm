@@ -44,8 +44,6 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 0
-    ExplicitWidth = 549
     object bvlConfirmacao: TBevel
       Left = 454
       Top = 0
@@ -66,7 +64,7 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
       OptionsImage.ImageIndex = 10
       OptionsImage.Images = DMRecursos.ImgBotoes16x16
       TabOrder = 0
-      ExplicitLeft = 214
+      OnClick = btnConfirmarClick
     end
     object btnCancelar: TcxButton
       Left = 458
@@ -79,7 +77,7 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
       OptionsImage.ImageIndex = 16
       OptionsImage.Images = DMRecursos.ImgBotoes16x16
       TabOrder = 1
-      ExplicitLeft = 274
+      OnClick = btnCancelarClick
     end
   end
   object GrpBxDownload: TGroupBox
@@ -90,8 +88,6 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
     Align = alTop
     Caption = 'Download'
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 262
     DesignSize = (
       541
       113)
@@ -128,6 +124,9 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
+      Text = 
+        'https://drive.google.com/uc?export=download&id=0B-sA8UJ9iK-QUS1P' +
+        'V0RSa2hvbWM'
     end
     object btnDownload: TcxButton
       Left = 444
@@ -149,8 +148,6 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
     Align = alTop
     Caption = 'Importa'#231#227'o'
     TabOrder = 1
-    ExplicitLeft = 32
-    ExplicitTop = 236
     DesignSize = (
       541
       113)
@@ -208,8 +205,6 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
     Align = alClient
     Caption = 'Dados da tabela'
     TabOrder = 3
-    ExplicitTop = 232
-    ExplicitHeight = 229
     object lblVigencia: TLabel
       Left = 122
       Top = 68
@@ -315,6 +310,19 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
       Height = 13
       Caption = 'Fonte:'
     end
+    object WebBrowser: TWebBrowser
+      Left = 512
+      Top = 128
+      Width = 15
+      Height = 15
+      TabOrder = 1
+      ControlData = {
+        4C0000008D0100008D0100000000000000000000000000000000000000000000
+        000000004C000000000000000000000001000000E0D057007335CF11AE690800
+        2B2E126208000000000000004C0000000114020000000000C000000000000046
+        8000000000000000000000000000000000000000000000000000000000000000
+        00000000000000000100000000000000000000000000000000000000}
+    end
     object prgImportacao: TProgressBar
       Left = 122
       Top = 125
@@ -393,5 +401,144 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
     Options = [ofHideReadOnly, ofNoChangeDir, ofEnableSizing]
     Title = 'Abrir arquivo'
     Left = 448
+  end
+  object qryTabelaIBPT: TIBDataSet
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    ForcedRefresh = True
+    BufferChunks = 1000
+    CachedUpdates = True
+    RefreshSQL.Strings = (
+      '')
+    SelectSQL.Strings = (
+      'Select'
+      '    t.id_ibpt'
+      '  , t.ncm_ibpt'
+      '  , t.ex_ibpt'
+      '  , t.tabela_ibpt'
+      '  , t.descricao_ibpt'
+      '  , t.aliqnacional_ibpt'
+      '  , t.aliqinternacional_ibpt'
+      '  , t.aliqestadual_ibpt'
+      '  , t.aliqmunicipal_ibpt'
+      'from SYS_IBPT t'
+      'where t.ncm_ibpt = :ncm_ibpt'
+      '  and t.ex_ibpt = :ex_ibpt'
+      '')
+    ModifySQL.Strings = (
+      '')
+    ParamCheck = True
+    UniDirectional = False
+    GeneratorField.Field = 'ID_IBPT'
+    GeneratorField.Generator = 'GEN_IBPT_ID'
+    UpdateObject = updTabelaIBPT
+    Left = 400
+    Top = 280
+    object qryTabelaIBPTID_IBPT: TIntegerField
+      FieldName = 'ID_IBPT'
+      Origin = '"SYS_IBPT"."ID_IBPT"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qryTabelaIBPTNCM_IBPT: TIBStringField
+      FieldName = 'NCM_IBPT'
+      Origin = '"SYS_IBPT"."NCM_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Size = 10
+    end
+    object qryTabelaIBPTEX_IBPT: TIBStringField
+      FieldName = 'EX_IBPT'
+      Origin = '"SYS_IBPT"."EX_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Size = 3
+    end
+    object qryTabelaIBPTTABELA_IBPT: TIBStringField
+      FieldName = 'TABELA_IBPT'
+      Origin = '"SYS_IBPT"."TABELA_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Size = 3
+    end
+    object qryTabelaIBPTDESCRICAO_IBPT: TWideMemoField
+      FieldName = 'DESCRICAO_IBPT'
+      Origin = '"SYS_IBPT"."DESCRICAO_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      BlobType = ftWideMemo
+      Size = 8
+    end
+    object qryTabelaIBPTALIQNACIONAL_IBPT: TIBBCDField
+      FieldName = 'ALIQNACIONAL_IBPT'
+      Origin = '"SYS_IBPT"."ALIQNACIONAL_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object qryTabelaIBPTALIQINTERNACIONAL_IBPT: TIBBCDField
+      FieldName = 'ALIQINTERNACIONAL_IBPT'
+      Origin = '"SYS_IBPT"."ALIQINTERNACIONAL_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object qryTabelaIBPTALIQESTADUAL_IBPT: TIBBCDField
+      FieldName = 'ALIQESTADUAL_IBPT'
+      Origin = '"SYS_IBPT"."ALIQESTADUAL_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+    object qryTabelaIBPTALIQMUNICIPAL_IBPT: TIBBCDField
+      FieldName = 'ALIQMUNICIPAL_IBPT'
+      Origin = '"SYS_IBPT"."ALIQMUNICIPAL_IBPT"'
+      ProviderFlags = [pfInUpdate]
+      Precision = 18
+      Size = 2
+    end
+  end
+  object updTabelaIBPT: TIBUpdateSQL
+    RefreshSQL.Strings = (
+      'Select '
+      '  ID_IBPT,'
+      '  NCM_IBPT,'
+      '  EX_IBPT,'
+      '  TABELA_IBPT,'
+      '  DESCRICAO_IBPT,'
+      '  ALIQNACIONAL_IBPT,'
+      '  ALIQINTERNACIONAL_IBPT,'
+      '  ALIQESTADUAL_IBPT,'
+      '  ALIQMUNICIPAL_IBPT'
+      'from SYS_IBPT '
+      'where'
+      '  ID_IBPT = :ID_IBPT')
+    ModifySQL.Strings = (
+      'update SYS_IBPT'
+      'set'
+      '  ALIQESTADUAL_IBPT = :ALIQESTADUAL_IBPT,'
+      '  ALIQINTERNACIONAL_IBPT = :ALIQINTERNACIONAL_IBPT,'
+      '  ALIQMUNICIPAL_IBPT = :ALIQMUNICIPAL_IBPT,'
+      '  ALIQNACIONAL_IBPT = :ALIQNACIONAL_IBPT,'
+      '  DESCRICAO_IBPT = :DESCRICAO_IBPT,'
+      '  EX_IBPT = :EX_IBPT,'
+      '  ID_IBPT = :ID_IBPT,'
+      '  NCM_IBPT = :NCM_IBPT,'
+      '  TABELA_IBPT = :TABELA_IBPT'
+      'where'
+      '  ID_IBPT = :OLD_ID_IBPT')
+    InsertSQL.Strings = (
+      'insert into SYS_IBPT'
+      
+        '  (ALIQESTADUAL_IBPT, ALIQINTERNACIONAL_IBPT, ALIQMUNICIPAL_IBPT' +
+        ', ALIQNACIONAL_IBPT, '
+      '   DESCRICAO_IBPT, EX_IBPT, ID_IBPT, NCM_IBPT, TABELA_IBPT)'
+      'values'
+      
+        '  (:ALIQESTADUAL_IBPT, :ALIQINTERNACIONAL_IBPT, :ALIQMUNICIPAL_I' +
+        'BPT, :ALIQNACIONAL_IBPT, '
+      '   :DESCRICAO_IBPT, :EX_IBPT, :ID_IBPT, :NCM_IBPT, :TABELA_IBPT)')
+    DeleteSQL.Strings = (
+      'delete from SYS_IBPT'
+      'where'
+      '  ID_IBPT = :OLD_ID_IBPT')
+    Left = 432
+    Top = 280
   end
 end
