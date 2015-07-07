@@ -2645,10 +2645,12 @@ begin
   begin
     Close;
     SQL.Clear;
-    SQL.Add('Select first 1');
+    SQL.Add('Select');
     SQL.Add('  t.id_ibpt');
     SQL.Add('from SYS_IBPT t');
     SQL.Add('where t.ncm_ibpt = ' + QuotedStr(aCodigoNCM));
+    SQL.Add('order by');
+    SQL.Add('  t.ex_ibpt, t.ncm_ibpt');
     Open;
 
     Result := FieldByName('id_ibpt').AsInteger;

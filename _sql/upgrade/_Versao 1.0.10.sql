@@ -13992,3 +13992,40 @@ FOREIGN KEY (TABELA_IBPT)
 REFERENCES SYS_IBPT(ID_IBPT)
 USING INDEX FK_TBPRODUTO_IBPT;
 
+
+
+/*------ SYSDBA 07/07/2015 14:54:06 --------*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+IB.NCM_ALIQUOTA_NAC.
+At line 13, column 17.
+
+*/
+
+/*------ SYSDBA 07/07/2015 14:56:16 --------*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+IB.NCM_ALIQUOTA_NAC.
+At line 13, column 8.
+
+*/
+
+/*------ SYSDBA 07/07/2015 14:59:32 --------*/
+
+/*!!! Error occured !!!
+Column does not belong to referenced table.
+Dynamic SQL Error.
+SQL error code = -206.
+Column unknown.
+IB.NCM_ALIQUOTA_NAC.
+At line 13, column 8.
+
+*/

@@ -323,6 +323,7 @@ type
     procedure btbtnExcluirClick(Sender: TObject);
     procedure btbtnCancelarClick(Sender: TObject);
     procedure dbNCM_SHButtonClick(Sender: TObject);
+    procedure ppMnAtualizarTabelaIBPTClick(Sender: TObject);
   private
     { Private declarations }
     fOrdenado : Boolean;
@@ -1019,9 +1020,15 @@ var
   iCodigo    : Integer;
   sCodigo    ,
   sDescricao : String;
+  TipoTabela : TTipoTabelaIBPT;
 begin
+  if TAliquota(IbDtstTabelaALIQUOTA_TIPO.AsInteger) = taICMS then
+    TipoTabela := tIbptProdutos
+  else
+    TipoTabela := tIbptServicos;
+
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
-    if ( SelecionarCodigoIBPT(Self, iCodigo, sCodigo, sDescricao) ) then
+    if ( SelecionarCodigoIBPT(Self, TipoTabela, iCodigo, sCodigo, sDescricao) ) then
     begin
       IbDtstTabelaTABELA_IBPT.AsInteger := iCodigo;
       IbDtstTabelaNCM_SH.AsString       := sCodigo;
@@ -1674,6 +1681,43 @@ begin
       sUpdate := Format(sUpdate, [
         QuotedStr(Metafonema(IbDtstTabelaDESCRI_APRESENTACAO.AsString)),
         QuotedStr(IbDtstTabelaCOD.AsString)]);
+      ExecuteScriptSQL( sUpdate );
+
+      IbDtstTabela.Next;
+    end;
+  finally
+    IbDtstTabela.First;
+    IbDtstTabela.EnableControls;
+    Screen.Cursor := crDefault;
+
+    ShowInformation('Atualização', 'Código metafônico dos registros atualizados com sucesso!');
+  end;
+end;
+
+procedure TfrmGeProduto.ppMnAtualizarTabelaIBPTClick(Sender: TObject);
+var
+  iCodigoNCM : Integer;
+  sCodigoNCM ,
+  sUpdate    : String;
+begin
+  if IbDtstTabela.IsEmpty then
+    Exit;
+
+  IbDtstTabela.First;
+  IbDtstTabela.DisableControls;
+  Screen.Cursor := crSQLWait;
+  try
+    while not IbDtstTabela.Eof do
+    begin
+      sUpdate    := 'Update TBPRODUTO Set tabela_ibpt = %s, ncm_sh = %s where cod = %s';
+      sCodigoNCM := IfThen(StrToInt64Def(Trim(IbDtstTabelaNCM_SH.AsString), 0) = 0, TRIBUTO_NCM_SH_PADRAO, IbDtstTabelaNCM_SH.AsString);
+      iCodigoNCM := GetTabelaIBPT_Codigo(sCodigoNCM);
+
+      sUpdate := Format(sUpdate, [
+        IfThen(iCodigoNCM = 0, 'null', IntToStr(iCodigoNCM)),
+        QuotedStr(sCodigoNCM),
+        QuotedStr(IbDtstTabelaCOD.AsString)]);
+
       ExecuteScriptSQL( sUpdate );
 
       IbDtstTabela.Next;
