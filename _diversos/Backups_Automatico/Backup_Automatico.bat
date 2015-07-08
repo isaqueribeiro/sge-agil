@@ -18,12 +18,12 @@ set googledrivesys=C:\Users\Isaque\Google Drive\_Masterdados
 
 "%pastafirebird%\gbak.exe" -b -z -v "%stringbancosys%" "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.fbk" -Y "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.log" -user SYSDBA -password masterkey
 
-"%pastazip7%\7z.exe" a -t7z -mx9 "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7z" "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.*"
+"%pastazip7%\7z.exe" a -t7z -mx9 "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7zAgil" "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.*"
 
-copy "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7z" "%pastabackupfinalsys%"
+copy "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7zAgil" "%pastabackupfinalsys%"
 copy "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.log" "%pastarelatoriossys%"
 
 copy "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7z" "%googledrivesys%"
 
 del "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.log"
-del "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7z"
+del "%pastabackuptmpsys%\%nomearquivosys%_%ymd%.7zAgil"
