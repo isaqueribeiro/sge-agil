@@ -164,9 +164,9 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
     TabOrder = 1
     Properties.ActivePage = TbsConfigurar
     Properties.CustomButtons.Buttons = <>
-    ClientRectBottom = 247
-    ClientRectLeft = 2
-    ClientRectRight = 539
+    ClientRectBottom = 243
+    ClientRectLeft = 3
+    ClientRectRight = 535
     ClientRectTop = 26
     object TbsConfigurar: TcxTabSheet
       Caption = 'Configurar'
@@ -256,6 +256,10 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
     object TbsVerbose: TcxTabSheet
       Caption = 'Verbose'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object mmVerbose: TcxMemo
         AlignWithMargins = True
         Left = 3
@@ -276,8 +280,8 @@ inherited frmGrConfigurarBackup: TfrmGrConfigurarBackup
         Style.TransparentBorder = True
         Style.IsFontAssigned = True
         TabOrder = 0
-        Height = 215
-        Width = 531
+        Height = 211
+        Width = 526
       end
     end
   end

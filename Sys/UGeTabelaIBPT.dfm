@@ -27,6 +27,8 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     ExplicitWidth = 809
     ExplicitHeight = 429
     inherited tbsTabela: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 801
       ExplicitHeight = 400
       inherited Bevel4: TBevel
@@ -42,13 +44,13 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
           item
             Expanded = False
             FieldName = 'ID_IBPT'
-            Width = 50
+            Width = 55
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'NCM_IBPT'
-            Width = 100
+            Width = 110
             Visible = True
           end
           item
@@ -165,13 +167,13 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
           Caption = 'Descri'#231#227'o:'
           FocusControl = dbDescricao
         end
-        object lblNivel: TLabel [3]
+        object lblExcecao: TLabel [3]
           Left = 231
           Top = 24
-          Width = 27
+          Width = 44
           Height = 13
-          Caption = 'N'#237'vel:'
-          FocusControl = dbNivel
+          Caption = 'Exce'#231#227'o:'
+          FocusControl = dbExcecao
         end
         object lblTabela: TLabel [4]
           Left = 359
@@ -212,7 +214,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
           ScrollBars = ssVertical
           TabOrder = 4
         end
-        object dbNivel: TDBLookupComboBox
+        object dbExcecao: TDBLookupComboBox
           Left = 231
           Top = 40
           Width = 122
@@ -366,16 +368,16 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     ExplicitTop = 433
     ExplicitWidth = 809
     inherited Bevel2: TBevel
-      Left = 75
+      Left = 79
       ExplicitLeft = 75
       ExplicitTop = -2
     end
     inherited bvlTool1: TBevel
-      Left = 304
+      Left = 308
       ExplicitLeft = 304
     end
     inherited bvlTool2: TBevel
-      Left = 458
+      Left = 462
       ExplicitLeft = 458
     end
     inherited bvlTool3: TBevel
@@ -386,29 +388,39 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
       Left = 805
       ExplicitLeft = 739
     end
+    object Bevel5: TBevel [5]
+      Left = 0
+      Top = 0
+      Width = 4
+      Height = 35
+      Align = alLeft
+      Shape = bsSpacer
+      ExplicitLeft = -6
+      ExplicitTop = -6
+    end
     inherited btbtnIncluir: TcxButton
-      Left = 79
-      ExplicitLeft = 79
+      Left = 83
+      ExplicitLeft = 83
     end
     inherited btbtnAlterar: TcxButton
-      Left = 154
-      ExplicitLeft = 154
+      Left = 158
+      ExplicitLeft = 158
     end
     inherited btbtnExcluir: TcxButton
-      Left = 229
-      ExplicitLeft = 229
+      Left = 233
+      ExplicitLeft = 233
     end
     inherited btbtnCancelar: TcxButton
-      Left = 308
-      ExplicitLeft = 308
+      Left = 312
+      ExplicitLeft = 312
     end
     inherited btbtnSalvar: TcxButton
-      Left = 383
-      ExplicitLeft = 383
+      Left = 387
+      ExplicitLeft = 387
     end
     inherited btbtnLista: TcxButton
-      Left = 462
-      ExplicitLeft = 462
+      Left = 466
+      ExplicitLeft = 466
     end
     inherited btbtnFechar: TcxButton
       Left = 730
@@ -420,7 +432,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     end
     object btnImportar: TcxButton
       Tag = 1
-      Left = 0
+      Left = 4
       Top = 0
       Width = 75
       Height = 35
@@ -602,7 +614,7 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     Left = 168
     Top = 128
     Bitmap = {
-      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C002C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -2069,21 +2081,35 @@ inherited frmGeTabelaIBPT: TfrmGeTabelaIBPT
     ParamCheck = True
     SQL.Strings = (
       
-        'Select '#39'0'#39' as Codigo , '#39'Nivel 0'#39' as Descricao from RDB$DATABASE ' +
-        'Union'
+        'Select '#39'0'#39' as Codigo , '#39'Exce'#231#227'o 0'#39' as Descricao from RDB$DATABAS' +
+        'E Union'
       
-        'Select '#39'1'#39' as Codigo , '#39'Nivel 1'#39' as Descricao from RDB$DATABASE ' +
-        'Union'
+        'Select '#39'1'#39' as Codigo , '#39'Exce'#231#227'o 1'#39' as Descricao from RDB$DATABAS' +
+        'E Union'
       
-        'Select '#39'2'#39' as Codigo , '#39'Nivel 2'#39' as Descricao from RDB$DATABASE ' +
-        'Union'
+        'Select '#39'2'#39' as Codigo , '#39'Exce'#231#227'o 2'#39' as Descricao from RDB$DATABAS' +
+        'E Union'
       
-        'Select '#39'3'#39' as Codigo , '#39'Nivel 3'#39' as Descricao from RDB$DATABASE ' +
-        'Union'
+        'Select '#39'3'#39' as Codigo , '#39'Exce'#231#227'o 3'#39' as Descricao from RDB$DATABAS' +
+        'E Union'
       
-        'Select '#39'4'#39' as Codigo , '#39'Nivel 4'#39' as Descricao from RDB$DATABASE ' +
-        'Union'
-      'Select '#39'5'#39' as Codigo , '#39'Nivel 5'#39'  as Descricao from RDB$DATABASE')
+        'Select '#39'4'#39' as Codigo , '#39'Exce'#231#227'o 4'#39' as Descricao from RDB$DATABAS' +
+        'E Union'
+      
+        'Select '#39'5'#39' as Codigo , '#39'Exce'#231#227'o 5'#39'  as Descricao from RDB$DATABA' +
+        'SE Union'
+      
+        'Select '#39'6'#39' as Codigo , '#39'Exce'#231#227'o 6'#39'  as Descricao from RDB$DATABA' +
+        'SE Union'
+      
+        'Select '#39'7'#39' as Codigo , '#39'Exce'#231#227'o 7'#39'  as Descricao from RDB$DATABA' +
+        'SE Union'
+      
+        'Select '#39'8'#39' as Codigo , '#39'Exce'#231#227'o 8'#39'  as Descricao from RDB$DATABA' +
+        'SE Union'
+      
+        'Select '#39'9'#39' as Codigo , '#39'Exce'#231#227'o 9'#39'  as Descricao from RDB$DATABA' +
+        'SE')
     Left = 20
     Top = 305
   end

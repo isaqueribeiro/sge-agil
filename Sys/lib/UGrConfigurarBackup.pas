@@ -145,7 +145,7 @@ begin
     sCmd.Clear;
     sCmd.BeginUpdate;
 
-    sFileZip := ChangeFileExt(edLocalBackup.Hint, '.7z');
+    sFileZip := ChangeFileExt(edLocalBackup.Hint, '.7zAgil');
     sFIleIn  := ChangeFileExt(edLocalBackup.Hint, '.*');
     sPathBkp := StringReplace(edLocalBackup.Text + '\_Bkp', '\\', '\', [rfReplaceAll]);
 

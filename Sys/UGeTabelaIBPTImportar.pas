@@ -9,7 +9,13 @@ uses
   dxSkinOffice2007Green, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, Vcl.ExtCtrls, Vcl.StdCtrls, cxButtons, ACBrBase,
   ACBrSocket, ACBrIBPTax, Data.DB, Datasnap.DBClient, ACBrNCMs, Vcl.ComCtrls,
-  Vcl.OleCtrls, SHDocVw, IBX.IBCustomDataSet, IBX.IBUpdateSQL;
+  Vcl.OleCtrls, SHDocVw, IBX.IBCustomDataSet, IBX.IBUpdateSQL, dxSkinBlueprint,
+  dxSkinDevExpressDarkStyle, dxSkinDevExpressStyle, dxSkinHighContrast,
+  dxSkinMetropolis, dxSkinMetropolisDark, dxSkinMoneyTwins,
+  dxSkinOffice2007Black, dxSkinOffice2007Blue, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
+  dxSkinOffice2010Silver, dxSkinSevenClassic, dxSkinSharpPlus,
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
 
 type
   TfrmGeTabelaIBPTImportar = class(TfrmGrPadrao)
@@ -20,7 +26,6 @@ type
     GrpBxDownload: TGroupBox;
     ACBrIBPT: TACBrIBPTax;
     lblURL: TLabel;
-    edURL: TEdit;
     tmpCadastro: TClientDataSet;
     tmpCadastroNCM: TStringField;
     tmpCadastroEx: TIntegerField;
@@ -67,11 +72,13 @@ type
     qryTabelaIBPTALIQINTERNACIONAL_IBPT: TIBBCDField;
     qryTabelaIBPTALIQESTADUAL_IBPT: TIBBCDField;
     qryTabelaIBPTALIQMUNICIPAL_IBPT: TIBBCDField;
+    edURL: TComboBox;
     procedure btnDownloadClick(Sender: TObject);
     procedure btnImportarClick(Sender: TObject);
     procedure ACBrIBPTErroImportacao(const ALinha, AErro: string);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     function GravarRegistros : Boolean;
@@ -132,23 +139,27 @@ begin
 
   Screen.Cursor := crHourGlass;
   try
-    ACBrIBPT.Arquivo.Clear;
-
-    WebBrowser.Height := 1;
-    WebBrowser.Width  := 1;
-    WebBrowser.Navigate(Trim(edURL.Text));
-
-    (*
     lblInformacaoDownload.Font.Color := clNavy;
     lblInformacaoDownload.Caption := 'Download em execução.... Aguarde!';
     lblInformacaoDownload.Visible := True;
-    btnDownload.Enabled := False;
-    Application.ProcessMessages;
 
-    ACBrIBPT.URLDownload := Trim(edURL.Text);
-    if ACBrIBPT.DownloadTabela then
-      btnImportar.Click;
-    *)
+    ACBrIBPT.Arquivo.Clear;
+
+    if Pos('drive.google', edURL.Text) > 0 then
+    begin
+      WebBrowser.Height := 1;
+      WebBrowser.Width  := 1;
+      WebBrowser.Navigate(Trim(edURL.Text));
+    end
+    else
+    begin
+      btnDownload.Enabled := False;
+      Application.ProcessMessages;
+
+      ACBrIBPT.URLDownload := Trim(edURL.Text);
+      if ACBrIBPT.DownloadTabela then
+        btnImportar.Click;
+    end;
   finally
     Screen.Cursor := crDefault;
     lblInformacaoDownload.Visible := False;
@@ -178,6 +189,10 @@ begin
       edArquivo.Text := s;
       if AbrirTabela(edArquivo.Text) then
       begin
+        lblInformacaoImportacao.Font.Color := clNavy;
+        lblInformacaoImportacao.Caption    := 'Importação em execução.... Aguarde!';
+        lblInformacaoImportacao.Visible    := True;
+
         lblVersao.Visible   := True;
         lblVigencia.Visible := True;
         lblChave.Visible    := True;
@@ -204,6 +219,8 @@ begin
 
           for I := 0 to ACBrIBPT.Itens.Count - 1 do
           begin
+            lblInformacaoImportacao.Caption := 'Importando ' + QuotedStr(Itens[I].NCM) + '.... Aguarde!';
+
             tmpCadastro.Append;
             tmpCadastroNCM.AsString             := Itens[I].NCM;
             tmpCadastroDescricao.AsString       := Itens[I].Descricao;
@@ -221,6 +238,7 @@ begin
         finally
           tmpCadastro.First;
           tmpCadastro.EnableControls;
+          lblInformacaoImportacao.Visible := False;
 
           lblQtdeItem.Caption    := FormatFloat(',0', tmpCadastro.RecordCount);
           btnConfirmar.Enabled   := (tmpCadastro.RecordCount > 0);
@@ -230,6 +248,19 @@ begin
         end;
       end;
     end;
+end;
+
+procedure TfrmGeTabelaIBPTImportar.FormCreate(Sender: TObject);
+begin
+  inherited;
+  with edURL do
+  begin
+    Items.Clear;
+    Items.Add(Format(DOWNLOAD_URL_GOOGLE_DRIVE,  [DOWNLOAD_IDFILE_TABELA_IBPT]));
+    Items.Add(Format(DOWNLOAD_URL_COMPANY,       [DOWNLOAD_NMFILE_TABELA_IBPT]));
+
+    ItemIndex := Items.Count - 1;
+  end;
 end;
 
 function TfrmGeTabelaIBPTImportar.GravarRegistros: Boolean;

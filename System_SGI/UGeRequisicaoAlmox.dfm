@@ -1886,20 +1886,61 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
             Expanded = False
             FieldName = 'QTDE'
             Title.Caption = 'Solicitado'
-            Width = 80
+            Width = 70
             Visible = True
           end
           item
             Expanded = False
             FieldName = 'QTDE_ATENDIDA'
             Title.Caption = 'Atendido'
-            Width = 80
+            Width = 70
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'DISPONIVEL_TMP'
-            Title.Caption = 'Dispon'#237'vel'
+            FieldName = 'ESTOQUE'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clGreen
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clGreen
+            Title.Font.Height = -11
+            Title.Font.Name = 'Tahoma'
+            Title.Font.Style = [fsBold]
+            Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'RESERVA'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clPurple
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clPurple
+            Title.Font.Height = -11
+            Title.Font.Name = 'Tahoma'
+            Title.Font.Style = [fsBold]
+            Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'DISPONIVEL'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clBlue
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = [fsBold]
+            Title.Font.Charset = ANSI_CHARSET
+            Title.Font.Color = clBlue
+            Title.Font.Height = -11
+            Title.Font.Name = 'Tahoma'
+            Title.Font.Style = [fsBold]
             Width = 80
             Visible = True
           end
@@ -2553,7 +2594,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4206,6 +4247,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Size = 50
     end
     object cdsTabelaItensESTOQUE: TIBBCDField
+      DisplayLabel = 'Estoque'
       FieldName = 'ESTOQUE'
       Origin = '"GET_ESTOQUE_ALMOX_DISPONIVEL"."ESTOQUE"'
       ProviderFlags = []
@@ -4214,6 +4256,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Size = 3
     end
     object cdsTabelaItensRESERVA: TIBBCDField
+      DisplayLabel = 'Reservado'
       FieldName = 'RESERVA'
       Origin = '"GET_ESTOQUE_ALMOX_DISPONIVEL"."RESERVA"'
       ProviderFlags = []
@@ -4222,6 +4265,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Size = 3
     end
     object cdsTabelaItensDISPONIVEL: TIBBCDField
+      DisplayLabel = 'Dispon'#237'vel'
       FieldName = 'DISPONIVEL'
       Origin = '"GET_ESTOQUE_ALMOX_DISPONIVEL"."DISPONIVEL"'
       ProviderFlags = []
@@ -4230,6 +4274,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       Size = 3
     end
     object cdsTabelaItensDISPONIVEL_TMP: TCurrencyField
+      DisplayLabel = 'Dispon'#237'vel'
       FieldKind = fkCalculated
       FieldName = 'DISPONIVEL_TMP'
       ProviderFlags = []

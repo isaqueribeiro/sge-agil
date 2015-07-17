@@ -496,16 +496,18 @@ type
     function GetRotinaCancelarVendaID : String;
     function GetRotinaGerarBoletoID : String;
     function GetRotinaEnviarEmailID : String;
+    function GetRotinaCancelarPagtosID : String;
 
     procedure RegistrarNovaRotinaSistema;
     procedure pgcGuiasOnChange; override;
   public
     { Public declarations }
-    property RotinaFinalizarID     : String read GetRotinaFinalizarID;
-    property RotinaGerarNFeID      : String read GetRotinaGerarNFeID;
-    property RotinaCancelarVendaID : String read GetRotinaCancelarVendaID;
-    property RotinaGerarBoletoID   : String read GetRotinaGerarBoletoID;
-    property RotinaEnviarEmailID   : String read GetRotinaEnviarEmailID;
+    property RotinaFinalizarID      : String read GetRotinaFinalizarID;
+    property RotinaGerarNFeID       : String read GetRotinaGerarNFeID;
+    property RotinaCancelarVendaID  : String read GetRotinaCancelarVendaID;
+    property RotinaGerarBoletoID    : String read GetRotinaGerarBoletoID;
+    property RotinaEnviarEmailID    : String read GetRotinaEnviarEmailID;
+    property RotinaCancelarPagtosID : String read GetRotinaCancelarPagtosID;
   end;
 
 var
@@ -2273,13 +2275,8 @@ begin
     if ( UpperCase(Trim(qryTitulosBAIXADO_.AsString)) <> 'X' ) then
       Exit;
       
-    // Diretoria, Gerente Financeiro, Gerente ADM, Masterdados
-
-    if (not (DMBusiness.ibdtstUsersCODFUNCAO.AsInteger in [
-        FUNCTION_USER_ID_DIRETORIA
-      , FUNCTION_USER_ID_GERENTE_ADM
-      , FUNCTION_USER_ID_GERENTE_FIN
-      , FUNCTION_USER_ID_SYSTEM_ADM])) then Exit;
+    if not GetPermissaoRotinaInterna(Sender, True) then
+      Abort;
 
     if ( not qryTitulos.IsEmpty ) then
     begin
@@ -3084,7 +3081,15 @@ begin
 
     if nmEnviarEmailCliente.Visible then
       SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaEnviarEmailID, nmEnviarEmailCliente.Caption, RotinaID);
+
+    if dbgTitulos.Visible then
+      SetRotinaSistema(ROTINA_TIPO_FUNCAO, RotinaCancelarPagtosID, 'Cancelar Pagamentos', RotinaID);
   end;
+end;
+
+function TfrmGeVenda.GetRotinaCancelarPagtosID: String;
+begin
+  Result := GetRotinaInternaID(dbgTitulos);
 end;
 
 function TfrmGeVenda.GetRotinaCancelarVendaID: String;

@@ -5786,9 +5786,9 @@ object frmPrinc: TfrmPrinc
     object BrBtnTabelaIBPT: TdxBarLargeButton
       Caption = 'Tabela de Tributa'#231#245'es IBPT'
       Category = 5
-      Enabled = False
       Hint = 'Tabela de Tributa'#231#245'es IBPT'
       Visible = ivAlways
+      OnClick = BrBtnTabelaIBPTClick
     end
     object BrBtnFuncaoCBO: TdxBarLargeButton
       Caption = 'Tabela de Fun'#231#245'es CBO'
