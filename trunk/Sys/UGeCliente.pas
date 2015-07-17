@@ -951,12 +951,6 @@ var
   iCodigo : Integer;
   sMotivo : String;
 begin
-  if not (GetUserFunctionID in [FUNCTION_USER_ID_DIRETORIA, FUNCTION_USER_ID_GERENTE_FIN, FUNCTION_USER_ID_AUX_FINANC1]) then
-  begin
-    ShowWarning('Usuário sem permisssão para execução desta rotina!');
-    Exit;
-  end;
-
   if ( IbDtstTabelaBLOQUEADO.AsInteger = 1 ) then
     if InputQuery('Desbloquear cliente:', 'Informe o motivo do desbloqueio:', sMotivo) then
       if Trim(sMotivo) <> EmptyStr then
@@ -975,12 +969,6 @@ var
   iCodigo : Integer;
   sMotivo : String;
 begin
-  if not (GetUserFunctionID in [FUNCTION_USER_ID_DIRETORIA, FUNCTION_USER_ID_GERENTE_FIN, FUNCTION_USER_ID_AUX_FINANC1]) then
-  begin
-    ShowWarning('Usuário sem permisssão para execução desta rotina!');
-    Exit;
-  end;
-
   if ( IbDtstTabelaBLOQUEADO.AsInteger = 0 ) then
     if InputQuery('Bloquear cliente:', 'Informe o motivo do bloqueio:', sMotivo) then
       if Trim(sMotivo) <> EmptyStr then

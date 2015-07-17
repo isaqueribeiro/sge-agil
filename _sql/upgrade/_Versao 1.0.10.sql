@@ -14029,3 +14029,94 @@ IB.NCM_ALIQUOTA_NAC.
 At line 13, column 8.
 
 */
+
+
+/*------ SYSDBA 14/07/2015 10:28:11 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER procedure GET_ESTOQUE_ALMOX_DISPONIVEL (
+    OUT_EMPRESA DMN_CNPJ,
+    OUT_CENTRO_CUSTO DMN_INTEGER_N,
+    OUT_PRODUTO DMN_VCHAR_10,
+    OUT_LOTE DMN_INTEGER_N,
+    OUT_LOTE_GUID DMN_GUID_38,
+    OUT_REQALMOX_ANO DMN_SMALLINT_N,
+    OUT_REQALMOX_COD DMN_SMALLINT_N)
+returns (
+    LOTE_ID DMN_GUID_38,
+    PRODUTO DMN_VCHAR_10,
+    FRACIONADOR DMN_PERCENTUAL_3,
+    UNIDADE DMN_SMALLINT_N,
+    ESTOQUE DMN_QUANTIDADE_D3,
+    RESERVA DMN_QUANTIDADE_D3,
+    DISPONIVEL DMN_QUANTIDADE_D3,
+    CUSTO_TOTAL DMN_MONEY,
+    CUSTO_RESERVA DMN_MONEY,
+    CUSTO_DISPONIVEL DMN_MONEY)
+as
+begin
+  for
+    Select
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , ea.unidade
+      , sum(ea.qtde)
+      , sum(ea.qtde * Case when ea.custo_medio > 0.0 then ea.custo_medio else p.customedio / coalesce(p.fracionador, 1.0) end)
+    from TBESTOQUE_ALMOX ea
+      inner join TBPRODUTO p on (p.cod = ea.produto)
+    where (ea.id = :out_lote_guid)
+      or (( ea.empresa        = :out_empresa
+        and ((ea.centro_custo = :out_centro_custo) or (:out_centro_custo = 0))
+        and ((ea.produto    = :out_produto) or (:out_produto is null))
+        and ((ea.lote       = :out_lote) or (:out_lote is null))
+      ))
+    group by
+        ea.id
+      , ea.produto
+      , ea.fracionador
+      , ea.unidade
+    Into
+        lote_id
+      , produto
+      , fracionador
+      , unidade
+      , estoque
+      , custo_total
+  do
+  begin
+
+    Select
+      coalesce(sum(
+        Case ri.status
+          when 0 then ri.qtde          -- Pendente
+          when 1 then ri.qtde          -- Aguardando
+        end
+      ), 0.0)
+    from TBREQUISICAO_ALMOX r
+      inner join TBREQUISICAO_ALMOX_ITEM ri on (ri.ano = r.ano and ri.controle = r.controle)
+    where (r.status  < 4) -- 4. Atendida, 5. Cancelada
+      and (ri.status < 2) -- 2. Produto atendido, 3. Produto entregue
+      and (ri.lote_atendimento = :lote_id)
+      or (( r.empresa        = :out_empresa
+        and r.ccusto_destino = :out_centro_custo
+        and ri.produto       = :out_produto
+      ))
+      and (not (ri.ano = :out_reqalmox_ano and ri.controle = :out_reqalmox_cod))
+    Into
+      reserva;
+
+    reserva    = coalesce(:reserva, 0.0);
+    disponivel = coalesce(:estoque, 0.0) - :reserva;
+
+    custo_reserva    = :custo_total * (:reserva    / Case when :estoque > 0.0 then :estoque else 1 end);
+    custo_disponivel = :custo_total * (:disponivel / Case when :estoque > 0.0 then :estoque else 1 end);
+
+    suspend;
+
+  end 
+end^
+
+SET TERM ; ^
+

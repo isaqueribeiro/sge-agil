@@ -84,7 +84,9 @@ uses
   UGeVendaPDVFinalizar in 'UGeVendaPDVFinalizar.pas' {frmGeVendaPDVFinalizar},
   UGeVendaPDVItem in 'UGeVendaPDVItem.pas' {frmGeVendaPDVItem},
   UDMRecursos in '..\Sys\UDMRecursos.pas' {DMRecursos: TDataModule},
-  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo};
+  UGrMemo in '..\Sys\lib\UGrMemo.pas' {frmGrMemo},
+  UGeTabelaIBPT in '..\Sys\UGeTabelaIBPT.pas' {frmGeTabelaIBPT},
+  UGeTabelaIBPTImportar in '..\Sys\UGeTabelaIBPTImportar.pas' {frmGeTabelaIBPTImportar};
 
 {$R *.res}
 

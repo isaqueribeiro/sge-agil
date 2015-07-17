@@ -414,6 +414,11 @@ const
   FILE_COMPANY_LOGO = 'LogotipoEmpresa.png';
   FILE_AUTOBACKUP   = 'AutoBackupGA.exe';
 
+  DOWNLOAD_URL_COMPANY        = {$IFDEF DGE}'www.masterdados.com.br/downloads/%s'{$ELSE}'www.agilsoftwares.com.br/downloads/%s'{$ENDIF};
+  DOWNLOAD_URL_GOOGLE_DRIVE   = 'https://drive.google.com/uc?export=download&id=%s';
+  DOWNLOAD_IDFILE_TABELA_IBPT = '0B-sA8UJ9iK-QUS1PV0RSa2hvbWM';
+  DOWNLOAD_NMFILE_TABELA_IBPT = 'TabelaIBPT_PA2015.02.csv';
+
   COND_PARCELA_MIN = 1;
   COND_PARCELA_MAX = 12;
 

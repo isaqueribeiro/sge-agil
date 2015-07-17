@@ -29,8 +29,8 @@ type
     lblDescricao: TLabel;
     qryNivelIBPT: TIBQuery;
     dtsNivelIBPT: TDataSource;
-    lblNivel: TLabel;
-    dbNivel: TDBLookupComboBox;
+    lblExcecao: TLabel;
+    dbExcecao: TDBLookupComboBox;
     lblTabela: TLabel;
     dbTabela: TDBLookupComboBox;
     qryTabelaIBPT: TIBQuery;
@@ -46,6 +46,7 @@ type
     lblAliquotaMUN: TLabel;
     btnImportar: TcxButton;
     IbDtstTabelaDESCRICAO: TStringField;
+    Bevel5: TBevel;
     procedure FormCreate(Sender: TObject);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);
     procedure btnFiltrarClick(Sender: TObject);

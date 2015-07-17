@@ -105,12 +105,12 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     TabOrder = 1
     DesignSize = (
       343
-      194)
-    Height = 201
+      233)
+    Height = 240
     Width = 343
     object lblCentroCusto: TLabel
       Left = 16
-      Top = 64
+      Top = 104
       Width = 107
       Height = 13
       Caption = '&Centro de Custo local:'
@@ -128,31 +128,40 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     end
     object lblSituacao: TLabel
       Left = 16
-      Top = 104
+      Top = 144
       Width = 45
       Height = 13
       Caption = '&Situa'#231#227'o:'
       FocusControl = edSituacao
       Transparent = True
     end
-    object edCentroCusto: TComboBox
+    object lblEmpresa: TLabel
       Left = 16
-      Top = 80
-      Width = 313
-      Height = 21
-      Style = csDropDownList
-      Anchors = [akLeft, akTop, akRight]
-      TabOrder = 2
+      Top = 64
+      Width = 45
+      Height = 13
+      Caption = '&Empresa:'
+      FocusControl = edEmpresa
+      Transparent = True
     end
-    object edSituacao: TComboBox
+    object edCentroCusto: TComboBox
       Left = 16
       Top = 120
       Width = 313
       Height = 21
       Style = csDropDownList
       Anchors = [akLeft, akTop, akRight]
-      ItemIndex = 0
       TabOrder = 3
+    end
+    object edSituacao: TComboBox
+      Left = 16
+      Top = 160
+      Width = 313
+      Height = 21
+      Style = csDropDownList
+      Anchors = [akLeft, akTop, akRight]
+      ItemIndex = 0
+      TabOrder = 4
       Text = '(Todos)'
       Items.Strings = (
         '(Todos)'
@@ -164,7 +173,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
     object BtnPesquisar: TcxButton
       Tag = 4
       Left = 242
-      Top = 147
+      Top = 187
       Width = 87
       Height = 31
       Hint = 'Executar Pesquisa'
@@ -207,7 +216,7 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
         0000000000000000000000000000000000000000000000000000}
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 4
+      TabOrder = 5
       OnClick = BtnPesquisarClick
     end
     object e1Data: TJvDateEdit
@@ -324,12 +333,22 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       ShowNullDate = False
       TabOrder = 1
     end
+    object edEmpresa: TComboBox
+      Left = 16
+      Top = 80
+      Width = 313
+      Height = 21
+      Style = csDropDownList
+      Anchors = [akLeft, akTop, akRight]
+      TabOrder = 2
+      OnChange = edEmpresaChange
+    end
   end
   object dbgReq: TcxGrid
     Left = 0
-    Top = 226
+    Top = 265
     Width = 343
-    Height = 416
+    Height = 377
     Hint = 
       'Para carregar os produtos do grupo, basta'#13#10'executar "dois clique' +
       's" no registro.'

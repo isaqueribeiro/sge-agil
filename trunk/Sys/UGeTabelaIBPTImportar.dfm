@@ -88,9 +88,6 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
     Align = alTop
     Caption = 'Download'
     TabOrder = 0
-    DesignSize = (
-      541
-      113)
     object lblURL: TLabel
       Left = 12
       Top = 24
@@ -117,17 +114,6 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
       Visible = False
       WordWrap = True
     end
-    object edURL: TEdit
-      Left = 12
-      Top = 43
-      Width = 515
-      Height = 21
-      Anchors = [akLeft, akTop, akRight]
-      TabOrder = 0
-      Text = 
-        'https://drive.google.com/uc?export=download&id=0B-sA8UJ9iK-QUS1P' +
-        'V0RSa2hvbWM'
-    end
     object btnDownload: TcxButton
       Left = 444
       Top = 70
@@ -138,6 +124,14 @@ inherited frmGeTabelaIBPTImportar: TfrmGeTabelaIBPTImportar
       OptionsImage.Images = DMRecursos.ImgBotoes16x16
       TabOrder = 1
       OnClick = btnDownloadClick
+    end
+    object edURL: TComboBox
+      Left = 12
+      Top = 43
+      Width = 515
+      Height = 21
+      TabOrder = 0
+      Text = 'edURL'
     end
   end
   object GrpBxImportacao: TGroupBox

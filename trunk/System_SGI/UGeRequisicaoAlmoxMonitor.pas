@@ -70,6 +70,8 @@ type
     ImgLogo: TImage;
     e1Data: TJvDateEdit;
     e2Data: TJvDateEdit;
+    lblEmpresa: TLabel;
+    edEmpresa: TComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure BtnPesquisarClick(Sender: TObject);
@@ -80,12 +82,16 @@ type
     procedure nmRequisicaoCancelarClick(Sender: TObject);
     procedure nmImprimirManifestoClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure edEmpresaChange(Sender: TObject);
   private
     { Private declarations }
-    fPreferenciaINI : TIniFile;  
+    fPreferenciaINI : TIniFile;
+    SEmpresa     : Array of String;
     ICentroCusto : Array of Integer;
-    procedure CarregarCentroCusto;
+    procedure CarregarEmpresa;
+    procedure CarregarCentroCusto(const aEmpresa : String);
 
+    function GetEmpresa     : String;
     function GetCentroCusto : Integer;
     function GetSituacao : Smallint;
     function CarregarRequisicaoAlmox : Boolean;
@@ -95,6 +101,7 @@ type
     function GetRotinaCancelarID : String;
   public
     { Public declarations }
+    property Empresa     : String read GetEmpresa;
     property CentroCusto : Integer read GetCentroCusto;
     property Situacao : Smallint read GetSituacao;
     property RotinaReceberID : String read GetRotinaReceberID;
@@ -140,7 +147,8 @@ begin
 
   with AForm do
   begin
-    CarregarCentroCusto;
+    CarregarEmpresa;
+    CarregarCentroCusto(Empresa);
 
     e1Data.Date := GetMenorDataEmissaoReqAlmoxEnviada(gUsuarioLogado.Empresa, 0);
     e2Data.Date := GetDateDB;
@@ -187,7 +195,7 @@ begin
   Action := caFree;
 end;
 
-procedure TfrmGeRequisicaoAlmoxMonitor.CarregarCentroCusto;
+procedure TfrmGeRequisicaoAlmoxMonitor.CarregarCentroCusto(const aEmpresa : String);
 var
   S ,
   I : Integer;
@@ -195,7 +203,7 @@ begin
   with cdsCentroCusto, Params, fPreferenciaINI do
   begin
     Close;
-    ParamByName('empresa').AsString := gUsuarioLogado.Empresa;
+    ParamByName('empresa').AsString := aEmpresa;
     Open;
 
     edCentroCusto.Clear;
@@ -242,6 +250,11 @@ begin
   Result := ICentroCusto[edCentroCusto.ItemIndex];
 end;
 
+function TfrmGeRequisicaoAlmoxMonitor.GetEmpresa: String;
+begin
+  Result := SEmpresa[edEmpresa.ItemIndex];
+end;
+
 function TfrmGeRequisicaoAlmoxMonitor.CarregarRequisicaoAlmox : Boolean;
 var
   bRetorno : Boolean;
@@ -253,7 +266,7 @@ begin
     with cdsRequisicaoAlmox, Params do
     begin
       Close;
-      ParamByName('empresa').AsString        := gUsuarioLogado.Empresa;
+      ParamByName('empresa').AsString        := Empresa;
       ParamByName('data_inicial').AsDateTime := StrToDateDef(e1Data.Text, GetDateDB);
       ParamByName('data_final').AsDateTime   := StrToDateDef(e2Data.Text, GetDateDB);
       ParamByName('centro_custo').AsInteger  := CentroCusto;
@@ -379,6 +392,12 @@ begin
 
     CarregarRequisicaoAlmoxMonitor(Self, FieldByName('ano').AsInteger, FieldByName('controle').AsInteger);
   end;
+end;
+
+procedure TfrmGeRequisicaoAlmoxMonitor.edEmpresaChange(Sender: TObject);
+begin
+  if edEmpresa.Focused then
+    CarregarCentroCusto(Empresa);
 end;
 
 procedure TfrmGeRequisicaoAlmoxMonitor.nmRequisicaoAtenderClick(
