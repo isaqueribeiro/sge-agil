@@ -1727,7 +1727,7 @@ begin
     IbDtstTabela.EnableControls;
     Screen.Cursor := crDefault;
 
-    ShowInformation('Atualização', 'Código metafônico dos registros atualizados com sucesso!');
+    ShowInformation('Atualização', 'Código da Tabela IBPT dos registros atualizados com sucesso!');
   end;
 end;
 

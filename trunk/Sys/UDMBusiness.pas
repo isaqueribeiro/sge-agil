@@ -349,6 +349,7 @@ var
   function GetMenorVencimentoAPagar : TDateTime;
   function GetMenorVencimentoAReceber : TDateTime;
   function GetMenorDataEmissaoReqAlmoxEnviada(const aEmpresa : String; const aCentroCusto : Integer) : TDateTime;
+  function GetMenorDataApropriacaoAberta(const aEmpresa : String; const aCentroCusto : Integer) : TDateTime;
   function GetCarregarProdutoCodigoBarra(const sCNPJEmitente : String) : Boolean;
   function GetCarregarProdutoCodigoBarraLocal : Boolean;
   function GetCarregarPapelDeParedeLocal : Boolean;
@@ -3120,6 +3121,35 @@ begin
 
     if not FieldByName('data_emissao').IsNull then
       Result := FieldByName('data_emissao').AsDateTime
+    else
+      Result := GetDateDB;
+
+    Close;
+  end;
+end;
+
+function GetMenorDataApropriacaoAberta(const aEmpresa : String; const aCentroCusto : Integer) : TDateTime;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+
+    SQL.Clear;
+    SQL.Add('Select');
+    SQL.Add('  min(cast(a.data_apropriacao as date)) as data_apropriacao');
+    SQL.Add('from TBAPROPRIACAO_ALMOX a');
+    SQL.Add('where a.status in (' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_EDC) + ', ' + IntToStr(STATUS_APROPRIACAO_ESTOQUE_ABR) + ')');
+
+    if (Trim(aEmpresa) <> EmptyStr) then
+      SQL.Add('  and a.empresa = ' + QuotedStr(aEmpresa));
+
+    if ( aCentroCusto > 0 ) then
+      SQL.Add('  and a.centro_custo = ' + IntToStr(aCentroCusto));
+
+    Open;
+
+    if not FieldByName('data_apropriacao').IsNull then
+      Result := FieldByName('data_apropriacao').AsDateTime
     else
       Result := GetDateDB;
 
