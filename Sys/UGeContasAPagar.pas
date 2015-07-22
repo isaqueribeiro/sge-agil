@@ -388,6 +388,9 @@ begin
 
   RecarregarRegistro;
 
+  if ( not IbDtstTabela.Active ) then
+    Exit;
+
   if ( IbDtstTabelaQUITADO.AsInteger = 1 ) then
   begin
     ShowWarning('Registro de despesa selecionada já se encontra quitado!' + #13 + 'Favor pesquisar novamente.');
@@ -511,6 +514,24 @@ begin
         Close;
         SQL.Clear;
         SQL.Add('Delete from TBCAIXA_MOVIMENTO');
+        SQL.Add('where APAGAR_ANO = ' + IbDtstTabelaANOLANC.AsString);
+        SQL.Add('  and APAGAR_NUM = ' + IbDtstTabelaNUMLANC.AsString);
+        ExecSQL;
+
+        CommitTransaction;
+      end;
+
+    end
+    else
+    begin
+
+      with DMBusiness, qryBusca do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('Update TBCAIXA_MOVIMENTO Set');
+        SQL.Add('    APAGAR_ANO = null');
+        SQL.Add('  , APAGAR_NUM = null');
         SQL.Add('where APAGAR_ANO = ' + IbDtstTabelaANOLANC.AsString);
         SQL.Add('  and APAGAR_NUM = ' + IbDtstTabelaNUMLANC.AsString);
         ExecSQL;

@@ -1063,4 +1063,40 @@ inherited frmGeRequisicaoAlmoxMonitor: TfrmGeRequisicaoAlmoxMonitor
       OnClick = nmRequisicaoCancelarClick
     end
   end
+  object qryEmpresa: TIBQuery
+    Database = DMBusiness.ibdtbsBusiness
+    Transaction = DMBusiness.ibtrnsctnBusiness
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'Select'
+      '    c.empresa'
+      '  , e.rzsoc'
+      '  , e.nmfant'
+      'from TBCONFIGURACAO c'
+      '  inner join TBEMPRESA e on (e.cnpj = c.empresa)'
+      ''
+      'order by'
+      '    e.rzsoc')
+    Left = 128
+    Top = 304
+  end
+  object dspEmpresa: TDataSetProvider
+    DataSet = qryEmpresa
+    Left = 160
+    Top = 304
+  end
+  object cdsEmpresa: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspEmpresa'
+    Left = 192
+    Top = 304
+  end
+  object dtsEmpresa: TDataSource
+    DataSet = cdsEmpresa
+    Left = 224
+    Top = 304
+  end
 end

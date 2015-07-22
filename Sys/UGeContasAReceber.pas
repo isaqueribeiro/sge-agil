@@ -457,6 +457,24 @@ begin
         CommitTransaction;
       end;
 
+    end
+    else
+    begin
+
+      with DMBusiness, qryBusca do
+      begin
+        Close;
+        SQL.Clear;
+        SQL.Add('Update TBCAIXA_MOVIMENTO Set');
+        SQL.Add('    ARECEBER_ANO = null');
+        SQL.Add('  , ARECEBER_NUM = null');
+        SQL.Add('where ARECEBER_ANO = ' + IbDtstTabelaANOLANC.AsString);
+        SQL.Add('  and ARECEBER_NUM = ' + IbDtstTabelaNUMLANC.AsString);
+        ExecSQL;
+
+        CommitTransaction;
+      end;
+
     end;
 
     inherited;

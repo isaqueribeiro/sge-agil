@@ -72,6 +72,10 @@ type
     e2Data: TJvDateEdit;
     lblEmpresa: TLabel;
     edEmpresa: TComboBox;
+    qryEmpresa: TIBQuery;
+    dspEmpresa: TDataSetProvider;
+    cdsEmpresa: TClientDataSet;
+    dtsEmpresa: TDataSource;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure BtnPesquisarClick(Sender: TObject);
@@ -148,7 +152,7 @@ begin
   with AForm do
   begin
     CarregarEmpresa;
-    CarregarCentroCusto(Empresa);
+    CarregarCentroCusto(gUsuarioLogado.Empresa);
 
     e1Data.Date := GetMenorDataEmissaoReqAlmoxEnviada(gUsuarioLogado.Empresa, 0);
     e2Data.Date := GetDateDB;
@@ -218,7 +222,7 @@ begin
       ICentroCusto[I] := FieldByName('codigo').AsInteger;
 
       if (ReadInteger(gUsuarioLogado.Login, 'CentroCusto', 0) = FieldByName('codigo').AsInteger) then
-        S := FieldByName('codigo').AsInteger;
+        S := I;
 
       Inc(I);
       Next;
@@ -227,6 +231,39 @@ begin
     Close;
 
     edCentroCusto.ItemIndex := S;
+  end;
+end;
+
+procedure TfrmGeRequisicaoAlmoxMonitor.CarregarEmpresa;
+var
+  S ,
+  I : Integer;
+begin
+  with cdsEmpresa do
+  begin
+    Open;
+
+    edEmpresa.Clear;
+    SetLength(SEmpresa, RecordCount);
+
+    S := 0;
+    I := 0;
+
+    while not Eof do
+    begin
+      edEmpresa.Items.Add( FieldByName('rzsoc').AsString );
+      SEmpresa[I] := FieldByName('empresa').AsString;
+
+      if (FieldByName('empresa').AsString = gUsuarioLogado.Empresa) then
+        S := I;
+
+      Inc(I);
+      Next;
+    end;
+
+    Close;
+
+    edEmpresa.ItemIndex := S;
   end;
 end;
 

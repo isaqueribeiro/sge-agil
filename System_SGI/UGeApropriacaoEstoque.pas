@@ -328,8 +328,12 @@ begin
   SQL_Itens.Clear;
   SQL_Itens.AddStrings( cdsTabelaItens.SelectSQL );
 
-  e1Data.Date      := GetDateDB - 30;
-  e2Data.Date      := GetDateDB;
+  e1Data.Date := GetMenorDataApropriacaoAberta(EmptyStr, 0);
+  e2Data.Date := GetDateDB;
+
+  if (e1Data.Date >= GetDateDB) then
+    e1Data.Date := e2Data.Date - 30;
+
   AbrirTabelaAuto  := True;
   ControlFirstEdit := dbEmpresa;
   iCentroCusto     := 0;
@@ -477,7 +481,16 @@ begin
 
     IbDtstTabela.Close;
     IbDtstTabela.Open;
-    IbDtstTabela.Locate('NUMERO', sID, []);
+
+    if not IbDtstTabela.Locate('NUMERO', sID, []) then
+    begin
+      IbDtstTabela.Close;
+
+      ShowInformation('Favor pesquisar novamente o registro de apropriação!');
+      pgcGuias.ActivePage := tbsTabela;
+      edtFiltrar.SetFocus;
+    end;
+
   end;
 end;
 
@@ -770,6 +783,9 @@ begin
     Exit;
 
   RecarregarRegistro;
+
+  if ( not IbDtstTabela.Active ) then
+    Exit;
 
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCONTROLE.AsInteger);
 
@@ -1188,6 +1204,10 @@ begin
     Exit;
 
   RecarregarRegistro;
+
+  if ( not IbDtstTabela.Active ) then
+    Exit;
+
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCONTROLE.AsInteger);
 
   pgcGuias.ActivePage := tbsCadastro;
@@ -1238,6 +1258,9 @@ begin
     Exit;
 
   RecarregarRegistro;
+
+  if ( not IbDtstTabela.Active ) then
+    Exit;
 
   AbrirTabelaItens(IbDtstTabelaANO.AsInteger, IbDtstTabelaCONTROLE.AsInteger);
 
