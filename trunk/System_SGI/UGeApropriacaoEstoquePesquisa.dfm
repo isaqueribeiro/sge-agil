@@ -5,8 +5,6 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
   Caption = 'Consultar Apropria'#231#227'o de Estoque Atual'
   ClientHeight = 648
   ClientWidth = 1116
-  ExplicitLeft = -50
-  ExplicitTop = -20
   ExplicitWidth = 1132
   ExplicitHeight = 687
   PixelsPerInch = 96
@@ -717,7 +715,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
             Position.RowIndex = 0
           end
           object dbgProdutoTblDESCRI_APRESENTACAO: TcxGridDBBandedColumn
-            Caption = 'Descri'#231#227'o + Apresenta'#231#227'o'
+            Caption = 'Nome Amigo ou Descri'#231#227'o + Apresenta'#231#227'o'
             DataBinding.FieldName = 'DESCRI_APRESENTACAO'
             Options.Filtering = False
             Options.Moving = False
@@ -1102,7 +1100,10 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       '    e.produto'
       '  , p.descri'
       '  , p.apresentacao'
-      '  , p.descri_apresentacao'
+      
+        '  , coalesce(nullif(trim(p.nome_amigo), '#39#39'), p.descri_apresentac' +
+        'ao) as descri_apresentacao'
+      '  , p.nome_amigo'
       '  , p.codgrupo as grupo_cod'
       '  , g.descri   as grupo_des'
       '  , p.codfabricante as fabricante_cod'
@@ -1156,6 +1157,7 @@ inherited frmGeApropriacaoEstoquePesquisa: TfrmGeApropriacaoEstoquePesquisa
       '  , p.descri'
       '  , p.apresentacao'
       '  , p.descri_apresentacao'
+      '  , p.nome_amigo'
       '  , p.codgrupo'
       '  , g.descri'
       '  , p.codfabricante'

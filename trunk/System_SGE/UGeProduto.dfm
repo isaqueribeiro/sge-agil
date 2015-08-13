@@ -2,42 +2,42 @@ inherited frmGeProduto: TfrmGeProduto
   Left = 383
   Top = 220
   Caption = 'Cadastro de Produtos/Servi'#231'os'
-  ClientHeight = 609
+  ClientHeight = 586
   ClientWidth = 961
   OldCreateOrder = True
   ExplicitWidth = 977
-  ExplicitHeight = 648
+  ExplicitHeight = 625
   PixelsPerInch = 96
   TextHeight = 13
   inherited Bevel1: TBevel
-    Top = 605
+    Top = 582
     Width = 961
     ExplicitTop = 606
     ExplicitWidth = 961
   end
   inherited Bevel3: TBevel
-    Top = 566
+    Top = 543
     Width = 961
     ExplicitTop = 567
     ExplicitWidth = 961
   end
   inherited pgcGuias: TPageControl
     Width = 961
-    Height = 566
+    Height = 543
     ExplicitWidth = 961
-    ExplicitHeight = 566
+    ExplicitHeight = 543
     inherited tbsTabela: TTabSheet
       ExplicitWidth = 953
-      ExplicitHeight = 537
+      ExplicitHeight = 514
       inherited Bevel4: TBevel
-        Top = 471
+        Top = 448
         Width = 953
         ExplicitTop = 472
         ExplicitWidth = 953
       end
       inherited dbgDados: TDBGrid
         Width = 953
-        Height = 471
+        Height = 448
         PopupMenu = popFerramentas
         Columns = <
           item
@@ -148,9 +148,9 @@ inherited frmGeProduto: TfrmGeProduto
           end>
       end
       inherited pnlFiltros: TPanel
-        Top = 475
+        Top = 452
         Width = 953
-        ExplicitTop = 475
+        ExplicitTop = 452
         ExplicitWidth = 953
         object lblProdutoPromocao: TLabel [0]
           Left = 2
@@ -297,32 +297,33 @@ inherited frmGeProduto: TfrmGeProduto
       ExplicitLeft = 4
       ExplicitTop = 25
       ExplicitWidth = 953
-      ExplicitHeight = 537
+      ExplicitHeight = 514
       inherited Bevel8: TBevel
-        Top = 113
+        Top = 153
         Width = 953
         ExplicitTop = 113
         ExplicitWidth = 953
       end
       object Bevel5: TBevel [1]
         Left = 0
-        Top = 193
+        Top = 233
         Width = 953
         Height = 4
         Align = alTop
         Shape = bsSpacer
+        ExplicitTop = 193
       end
       inherited GrpBxDadosNominais: TGroupBox
         Width = 953
-        Height = 113
+        Height = 153
         ExplicitWidth = 953
-        ExplicitHeight = 113
+        ExplicitHeight = 153
         object lblDescricao: TLabel [1]
           Left = 400
           Top = 24
-          Width = 50
+          Width = 97
           Height = 13
-          Caption = 'Descri'#231#227'o:'
+          Caption = 'Descri'#231#227'o comercial:'
           FocusControl = dbDescricao
         end
         object lblReferencia: TLabel [2]
@@ -342,16 +343,16 @@ inherited frmGeProduto: TfrmGeProduto
           FocusControl = dbModelo
         end
         object lblSecao: TLabel [4]
-          Left = 536
-          Top = 64
+          Left = 400
+          Top = 107
           Width = 33
           Height = 13
           Caption = 'Se'#231#227'o:'
           FocusControl = dbSecao
         end
         object lblGrupo: TLabel [5]
-          Left = 336
-          Top = 64
+          Left = 16
+          Top = 107
           Width = 33
           Height = 13
           Caption = 'Grupo:'
@@ -366,8 +367,8 @@ inherited frmGeProduto: TfrmGeProduto
           FocusControl = dbCodigoEAN
         end
         object lblFabricante: TLabel [7]
-          Left = 728
-          Top = 64
+          Left = 591
+          Top = 107
           Width = 55
           Height = 13
           Caption = 'Fabricante:'
@@ -376,9 +377,9 @@ inherited frmGeProduto: TfrmGeProduto
         object lblApresentacao: TLabel [8]
           Left = 728
           Top = 24
-          Width = 71
+          Width = 118
           Height = 13
-          Caption = 'Apresenta'#231#227'o:'
+          Caption = 'Apresenta'#231#227'o comercial:'
           FocusControl = dbApresentacao
         end
         object lblTipoCadastro: TLabel [9]
@@ -388,6 +389,14 @@ inherited frmGeProduto: TfrmGeProduto
           Height = 13
           Caption = 'Tipo Cadastro:'
           FocusControl = dbTipoCadastro
+        end
+        object lblNomeAmigo: TLabel [10]
+          Left = 400
+          Top = 64
+          Width = 232
+          Height = 13
+          Caption = 'Nome amigo (Descri'#231#227'o p/ identifica'#231#227'o interna):'
+          FocusControl = dbNomeAmigo
         end
         inherited dbCodigo: TDBEdit
           Color = clMoneyGreen
@@ -412,7 +421,7 @@ inherited frmGeProduto: TfrmGeProduto
         object dbReferencia: TDBEdit
           Left = 208
           Top = 80
-          Width = 121
+          Width = 186
           Height = 21
           CharCase = ecUpperCase
           DataField = 'REFERENCIA'
@@ -492,9 +501,9 @@ inherited frmGeProduto: TfrmGeProduto
           TabOrder = 2
         end
         object dbGrupo: TJvDBComboEdit
-          Left = 336
-          Top = 80
-          Width = 193
+          Left = 16
+          Top = 123
+          Width = 378
           Height = 21
           ButtonHint = 'Pesquisar Grupo (Ctrl+P)'
           CharCase = ecUpperCase
@@ -563,13 +572,13 @@ inherited frmGeProduto: TfrmGeProduto
           ParentShowHint = False
           ReadOnly = True
           ShowHint = True
-          TabOrder = 7
+          TabOrder = 8
           OnButtonClick = dbGrupoButtonClick
         end
         object dbFabricante: TJvDBComboEdit
-          Left = 728
-          Top = 80
-          Width = 209
+          Left = 591
+          Top = 123
+          Width = 346
           Height = 21
           ButtonHint = 'Pesquisar Fabricante (Ctrl+P)'
           CharCase = ecUpperCase
@@ -638,12 +647,12 @@ inherited frmGeProduto: TfrmGeProduto
           ParentShowHint = False
           ReadOnly = True
           ShowHint = True
-          TabOrder = 9
+          TabOrder = 10
           OnButtonClick = dbFabricanteButtonClick
         end
         object dbSecao: TJvDBComboEdit
-          Left = 536
-          Top = 80
+          Left = 400
+          Top = 123
           Width = 185
           Height = 21
           ButtonHint = 'Pesquisar Se'#231#227'o (Ctrl+P)'
@@ -713,16 +722,32 @@ inherited frmGeProduto: TfrmGeProduto
           ParentShowHint = False
           ReadOnly = True
           ShowHint = True
-          TabOrder = 8
+          TabOrder = 9
           OnButtonClick = dbSecaoButtonClick
+        end
+        object dbNomeAmigo: TDBEdit
+          Left = 400
+          Top = 80
+          Width = 537
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'NOME_AMIGO'
+          DataSource = DtSrcTabela
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 7
         end
       end
       object pgcMaisDados: TPageControl
         Left = 0
-        Top = 197
+        Top = 237
         Width = 953
-        Height = 340
-        ActivePage = tbsTributacao
+        Height = 277
+        ActivePage = tbsValores
         Align = alClient
         TabOrder = 2
         object tbsValores: TTabSheet
@@ -2275,7 +2300,7 @@ inherited frmGeProduto: TfrmGeProduto
             Left = 0
             Top = 177
             Width = 945
-            Height = 135
+            Height = 72
             Align = alClient
             BevelOuter = bvNone
             BorderWidth = 2
@@ -2303,7 +2328,7 @@ inherited frmGeProduto: TfrmGeProduto
               Left = 2
               Top = 19
               Width = 941
-              Height = 114
+              Height = 51
               Align = alClient
               DataField = 'ESPECIFICACAO'
               DataSource = DtSrcTabela
@@ -2316,7 +2341,7 @@ inherited frmGeProduto: TfrmGeProduto
           ImageIndex = 1
           DesignSize = (
             945
-            312)
+            249)
           object lblSituacaoVeiculo: TLabel
             Left = 16
             Top = 8
@@ -2352,7 +2377,7 @@ inherited frmGeProduto: TfrmGeProduto
             Left = 16
             Top = 64
             Width = 913
-            Height = 233
+            Height = 170
             TabStop = False
             Anchors = [akLeft, akTop, akRight, akBottom]
             DataField = 'SITUACAO_HISTORICO_VEICULO'
@@ -2371,7 +2396,7 @@ inherited frmGeProduto: TfrmGeProduto
       end
       object GrpBxDadosEstoque: TGroupBox
         Left = 0
-        Top = 117
+        Top = 157
         Width = 953
         Height = 76
         Align = alTop
@@ -2686,9 +2711,9 @@ inherited frmGeProduto: TfrmGeProduto
     end
   end
   inherited tlbBotoes: TPanel
-    Top = 570
+    Top = 547
     Width = 961
-    ExplicitTop = 570
+    ExplicitTop = 547
     ExplicitWidth = 961
     inherited bvlTool3: TBevel
       Left = 878
@@ -2719,11 +2744,12 @@ inherited frmGeProduto: TfrmGeProduto
       '  , p.Descri_apresentacao'
       '  , p.Metafonema'
       '  , p.Modelo'
+      '  , p.Referencia'
+      '  , p.Nome_amigo'
+      '  , p.Especificacao'
       '  , p.Preco'
       '  , p.Preco_Promocao'
       '  , p.Preco_Sugerido'
-      '  , p.Referencia'
-      '  , p.Especificacao'
       '  , p.Secao'
       '  , p.Qtde'
       '  , p.Unidade'
@@ -2898,10 +2924,13 @@ inherited frmGeProduto: TfrmGeProduto
       Origin = 'TBPRODUTO.REFERENCIA'
       Size = 15
     end
-    object IbDtstTabelaSECAO: TIBStringField
-      DisplayLabel = 'Se'#231#227'o'
-      FieldName = 'SECAO'
-      Origin = 'TBPRODUTO.SECAO'
+    object IbDtstTabelaNOME_AMIGO: TIBStringField
+      DisplayLabel = 'Nome Amigo'
+      FieldName = 'NOME_AMIGO'
+      Origin = '"TBPRODUTO"."NOME_AMIGO"'
+      ProviderFlags = [pfInUpdate]
+      Required = True
+      Size = 100
     end
     object IbDtstTabelaESPECIFICACAO: TBlobField
       FieldName = 'ESPECIFICACAO'
@@ -2969,6 +2998,11 @@ inherited frmGeProduto: TfrmGeProduto
       DisplayLabel = 'Se'#231#227'o'
       FieldName = 'CODSECAO'
       Origin = 'TBPRODUTO.CODSECAO'
+    end
+    object IbDtstTabelaSECAO: TIBStringField
+      DisplayLabel = 'Se'#231#227'o'
+      FieldName = 'SECAO'
+      Origin = 'TBPRODUTO.SECAO'
     end
     object IbDtstTabelaCODFABRICANTE: TIntegerField
       DisplayLabel = 'Fabricante'
@@ -3394,10 +3428,11 @@ inherited frmGeProduto: TfrmGeProduto
       '  DESCRI_APRESENTACAO,'
       '  METAFONEMA,'
       '  MODELO,'
+      '  REFERENCIA,'
+      '  NOME_AMIGO,'
+      '  ESPECIFICACAO,'
       '  PRECO,'
       '  PRECO_PROMOCAO,'
-      '  REFERENCIA,'
-      '  ESPECIFICACAO,'
       '  SECAO,'
       '  QTDE,'
       '  FRACIONADOR,'
@@ -3509,6 +3544,7 @@ inherited frmGeProduto: TfrmGeProduto
       '  MODELO = :MODELO,'
       '  MOVIMENTA_ESTOQUE = :MOVIMENTA_ESTOQUE,'
       '  NCM_SH = :NCM_SH,'
+      '  NOME_AMIGO = :NOME_AMIGO,'
       '  PERCENTUAL_MARCKUP = :PERCENTUAL_MARCKUP,'
       '  PERCENTUAL_MARGEM = :PERCENTUAL_MARGEM,'
       '  PERCENTUAL_REDUCAO_BC = :PERCENTUAL_REDUCAO_BC,'
@@ -3558,20 +3594,21 @@ inherited frmGeProduto: TfrmGeProduto
         '   ESPECIFICACAO, ESTOQMIN, ESTOQUE_APROP_LOTE, FRACIONADOR, KIL' +
         'OMETRAGEM_VEICULO, '
       
-        '   METAFONEMA, MODELO, MOVIMENTA_ESTOQUE, NCM_SH, PERCENTUAL_MAR' +
-        'CKUP, PERCENTUAL_MARGEM, '
+        '   METAFONEMA, MODELO, MOVIMENTA_ESTOQUE, NCM_SH, NOME_AMIGO, PE' +
+        'RCENTUAL_MARCKUP, '
       
-        '   PERCENTUAL_REDUCAO_BC, PESO_BRUTO, PESO_LIQUIDO, PRECO, PRECO' +
-        '_PROMOCAO, '
+        '   PERCENTUAL_MARGEM, PERCENTUAL_REDUCAO_BC, PESO_BRUTO, PESO_LI' +
+        'QUIDO, '
       
-        '   PRECO_SUGERIDO, PRODUTO_IMOBILIZADO, PRODUTO_NOVO, QTDE, REFE' +
-        'RENCIA, '
+        '   PRECO, PRECO_PROMOCAO, PRECO_SUGERIDO, PRODUTO_IMOBILIZADO, P' +
+        'RODUTO_NOVO, '
       
-        '   RENAVAM_VEICULO, RESERVA, SECAO, SITUACAO_ATUAL_VEICULO, SITU' +
-        'ACAO_HISTORICO_VEICULO, '
+        '   QTDE, REFERENCIA, RENAVAM_VEICULO, RESERVA, SECAO, SITUACAO_A' +
+        'TUAL_VEICULO, '
       
-        '   TABELA_IBPT, TIPO_VEICULO, UNIDADE, USUARIO, VALOR_IPI, VENDA' +
-        '_FRACIONADA)'
+        '   SITUACAO_HISTORICO_VEICULO, TABELA_IBPT, TIPO_VEICULO, UNIDAD' +
+        'E, USUARIO, '
+      '   VALOR_IPI, VENDA_FRACIONADA)'
       'values'
       
         '  (:ALIQUOTA, :ALIQUOTA_COFINS, :ALIQUOTA_CSOSN, :ALIQUOTA_PIS, ' +
@@ -3598,8 +3635,8 @@ inherited frmGeProduto: TfrmGeProduto
         '   :FRACIONADOR, :KILOMETRAGEM_VEICULO, :METAFONEMA, :MODELO, :M' +
         'OVIMENTA_ESTOQUE, '
       
-        '   :NCM_SH, :PERCENTUAL_MARCKUP, :PERCENTUAL_MARGEM, :PERCENTUAL' +
-        '_REDUCAO_BC, '
+        '   :NCM_SH, :NOME_AMIGO, :PERCENTUAL_MARCKUP, :PERCENTUAL_MARGEM' +
+        ', :PERCENTUAL_REDUCAO_BC, '
       
         '   :PESO_BRUTO, :PESO_LIQUIDO, :PRECO, :PRECO_PROMOCAO, :PRECO_S' +
         'UGERIDO, '
@@ -3621,7 +3658,7 @@ inherited frmGeProduto: TfrmGeProduto
   inherited ImgList: TImageList
     Left = 720
     Bitmap = {
-      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -5398,6 +5435,10 @@ inherited frmGeProduto: TfrmGeProduto
     object ppMnAtualizarTabelaIBPT: TMenuItem
       Caption = 'Atualizar Tabela IBPT (NCM/SH)'
       OnClick = ppMnAtualizarTabelaIBPTClick
+    end
+    object ppMnAtualizarNomeAmigo: TMenuItem
+      Caption = 'Atualizar Nome Amigo'
+      OnClick = ppMnAtualizarNomeAmigoClick
     end
   end
   object ppImprimir: TPopupMenu

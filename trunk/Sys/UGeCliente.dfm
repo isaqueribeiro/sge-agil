@@ -86,6 +86,21 @@ inherited frmGeCliente: TfrmGeCliente
           Align = alRight
           Shape = bsSpacer
         end
+        object lblClienteDesativado: TLabel [1]
+          Left = 2
+          Top = 41
+          Width = 127
+          Height = 13
+          Caption = '* Clientes desativados'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = 7303023
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+          Visible = False
+        end
         inherited grpBxFiltro: TGroupBox
           Left = 464
           Width = 368
@@ -175,8 +190,6 @@ inherited frmGeCliente: TfrmGeCliente
       end
     end
     inherited tbsCadastro: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 25
       ExplicitWidth = 836
       ExplicitHeight = 463
       inherited Bevel8: TBevel
@@ -1128,7 +1141,7 @@ inherited frmGeCliente: TfrmGeCliente
           Caption = '&2. Outras Informa'#231#245'es'
           ImageIndex = 2
           object dbNFeDevolucao: TDBCheckBox
-            Left = 5
+            Left = 12
             Top = 114
             Width = 321
             Height = 17
@@ -1221,7 +1234,7 @@ inherited frmGeCliente: TfrmGeCliente
             end
           end
           object dbEntregaFracionada: TDBCheckBox
-            Left = 5
+            Left = 12
             Top = 138
             Width = 260
             Height = 17
@@ -1235,6 +1248,19 @@ inherited frmGeCliente: TfrmGeCliente
             Font.Style = []
             ParentFont = False
             TabOrder = 2
+            ValueChecked = '1'
+            ValueUnchecked = '0'
+            OnKeyPress = ProximoCampoKeyPress
+          end
+          object dbCadastroAtivo: TDBCheckBox
+            Left = 12
+            Top = 161
+            Width = 121
+            Height = 17
+            Caption = 'Cadastro Ativo'
+            DataField = 'ATIVO'
+            DataSource = DtSrcTabela
+            TabOrder = 3
             ValueChecked = '1'
             ValueUnchecked = '0'
             OnKeyPress = ProximoCampoKeyPress
@@ -1650,7 +1676,7 @@ inherited frmGeCliente: TfrmGeCliente
         end
         object lblCaptchaX: TLabel
           Left = 9
-          Top = 238
+          Top = 309
           Width = 96
           Height = 16
           Caption = 'Digite o Captcha'
@@ -1664,7 +1690,7 @@ inherited frmGeCliente: TfrmGeCliente
         end
         object edCaptcha: TEdit
           Left = 9
-          Top = 257
+          Top = 328
           Width = 232
           Height = 41
           CharCase = ecUpperCase
@@ -1749,7 +1775,7 @@ inherited frmGeCliente: TfrmGeCliente
         end
         object btnConsultarCNPJ: TcxButton
           Left = 248
-          Top = 256
+          Top = 327
           Width = 115
           Height = 41
           Caption = 'Consultar'
@@ -2226,6 +2252,20 @@ inherited frmGeCliente: TfrmGeCliente
           Font.Style = []
           ParentFont = False
         end
+        object lblDataNasc: TLabel
+          Left = 9
+          Top = 237
+          Width = 122
+          Height = 16
+          Caption = 'Data de Nascimento:'
+          FocusControl = edDataNasc
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
         object edCPF: TMaskEdit
           Left = 9
           Top = 191
@@ -2245,11 +2285,11 @@ inherited frmGeCliente: TfrmGeCliente
         end
         object btnConsultarCPF: TcxButton
           Left = 248
-          Top = 256
+          Top = 327
           Width = 115
           Height = 41
           Caption = 'Consultar'
-          TabOrder = 1
+          TabOrder = 2
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -2257,6 +2297,23 @@ inherited frmGeCliente: TfrmGeCliente
           Font.Style = []
           ParentFont = False
           OnClick = btnConsultarCPFClick
+        end
+        object edDataNasc: TMaskEdit
+          Left = 9
+          Top = 256
+          Width = 216
+          Height = 41
+          EditMask = '!99/99/0000;1;_'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -27
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          MaxLength = 10
+          ParentFont = False
+          TabOrder = 1
+          Text = '  /  /    '
+          OnKeyPress = edCNPJKeyPress
         end
       end
     end
@@ -2716,6 +2773,7 @@ inherited frmGeCliente: TfrmGeCliente
       '  , cl.cc'
       '  , cl.praca'
       '  , cl.observacao'
+      '  , cl.ativo'
       
         '  , coalesce( cast(coalesce(coalesce(t.Tlg_sigla, t.Tlg_descrica' +
         'o) || '#39' '#39', '#39#39') || l.Log_nome as varchar(250)), cl.Ender ) as Log' +
@@ -2835,7 +2893,7 @@ inherited frmGeCliente: TfrmGeCliente
       DisplayLabel = 'Telefone Celular'
       FieldName = 'FONECEL'
       Origin = '"TBCLIENTE"."FONECEL"'
-      EditMask = '(99)9999.9999;0; '
+      EditMask = '(99)99999.9999;0; '
       Size = 11
     end
     object IbDtstTabelaFONECOMERC: TIBStringField
@@ -2929,6 +2987,11 @@ inherited frmGeCliente: TfrmGeCliente
       Origin = 'TBCLIENTE.DTCAD'
       ProviderFlags = [pfInUpdate]
       DisplayFormat = 'dd/mm/yyyy'
+    end
+    object IbDtstTabelaATIVO: TSmallintField
+      FieldName = 'ATIVO'
+      Origin = '"TBCLIENTE"."ATIVO"'
+      ProviderFlags = [pfInUpdate]
     end
     object IbDtstTabelaBLOQUEADO: TSmallintField
       FieldName = 'BLOQUEADO'
@@ -3081,7 +3144,8 @@ inherited frmGeCliente: TfrmGeCliente
       '  CC,'
       '  PRACA,'
       '  OBSERVACAO,'
-      '  DTCAD'
+      '  DTCAD,'
+      '  ATIVO'
       'from TBCLIENTE '
       'where'
       '  CODIGO = :CODIGO')
@@ -3089,6 +3153,7 @@ inherited frmGeCliente: TfrmGeCliente
       'update TBCLIENTE'
       'set'
       '  AGENCIA = :AGENCIA,'
+      '  ATIVO = :ATIVO,'
       '  BAI_COD = :BAI_COD,'
       '  BAIRRO = :BAIRRO,'
       '  BANCO = :BANCO,'
@@ -3138,8 +3203,8 @@ inherited frmGeCliente: TfrmGeCliente
     InsertSQL.Strings = (
       'insert into TBCLIENTE'
       
-        '  (AGENCIA, BAI_COD, BAIRRO, BANCO, BLOQUEADO, BLOQUEADO_DATA, B' +
-        'LOQUEADO_MOTIVO, '
+        '  (AGENCIA, ATIVO, BAI_COD, BAIRRO, BANCO, BLOQUEADO, BLOQUEADO_' +
+        'DATA, BLOQUEADO_MOTIVO, '
       
         '   BLOQUEADO_USUARIO, CC, CEP, CID_COD, CIDADE, CNPJ, CODIGO, CO' +
         'MPLEMENTO, '
@@ -3160,27 +3225,27 @@ inherited frmGeCliente: TfrmGeCliente
         'D)'
       'values'
       
-        '  (:AGENCIA, :BAI_COD, :BAIRRO, :BANCO, :BLOQUEADO, :BLOQUEADO_D' +
-        'ATA, :BLOQUEADO_MOTIVO, '
+        '  (:AGENCIA, :ATIVO, :BAI_COD, :BAIRRO, :BANCO, :BLOQUEADO, :BLO' +
+        'QUEADO_DATA, '
       
-        '   :BLOQUEADO_USUARIO, :CC, :CEP, :CID_COD, :CIDADE, :CNPJ, :COD' +
-        'IGO, :COMPLEMENTO, '
+        '   :BLOQUEADO_MOTIVO, :BLOQUEADO_USUARIO, :CC, :CEP, :CID_COD, :' +
+        'CIDADE, '
       
-        '   :CUSTO_OPER_FRETE, :CUSTO_OPER_OUTROS, :CUSTO_OPER_PERCENTUAL' +
-        ', :DESBLOQUEADO_DATA, '
+        '   :CNPJ, :CODIGO, :COMPLEMENTO, :CUSTO_OPER_FRETE, :CUSTO_OPER_' +
+        'OUTROS, '
       
-        '   :DTCAD, :EMAIL, :EMITIR_NFE_DEVOLUCAO, :ENDER, :ENTREGA_FRACI' +
-        'ONADA_VENDA, '
+        '   :CUSTO_OPER_PERCENTUAL, :DESBLOQUEADO_DATA, :DTCAD, :EMAIL, :' +
+        'EMITIR_NFE_DEVOLUCAO, '
       
-        '   :EST_COD, :FONE, :FONECEL, :FONECOMERC, :INSCEST, :INSCMUN, :' +
-        'LOG_COD, '
+        '   :ENDER, :ENTREGA_FRACIONADA_VENDA, :EST_COD, :FONE, :FONECEL,' +
+        ' :FONECOMERC, '
       
-        '   :NOME, :NOMEFANT, :NUMERO_END, :OBSERVACAO, :PAIS_ID, :PESSOA' +
-        '_FISICA, '
+        '   :INSCEST, :INSCMUN, :LOG_COD, :NOME, :NOMEFANT, :NUMERO_END, ' +
+        ':OBSERVACAO, '
       
-        '   :PRACA, :SITE, :TIPO, :TLG_TIPO, :UF, :USUARIO, :VALOR_LIMITE' +
-        '_COMPRA, '
-      '   :VENDEDOR_COD)')
+        '   :PAIS_ID, :PESSOA_FISICA, :PRACA, :SITE, :TIPO, :TLG_TIPO, :U' +
+        'F, :USUARIO, '
+      '   :VALOR_LIMITE_COMPRA, :VENDEDOR_COD)')
     DeleteSQL.Strings = (
       'delete from TBCLIENTE'
       'where'
@@ -3190,7 +3255,7 @@ inherited frmGeCliente: TfrmGeCliente
   inherited ImgList: TImageList
     Left = 552
     Bitmap = {
-      494C01012B002C00200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

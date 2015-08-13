@@ -9,7 +9,13 @@ uses
   cxLookAndFeels, cxLookAndFeelPainters, Menus, cxButtons,
   JvExMask, JvToolEdit, JvDBControls, dxSkinsCore, dxSkinMcSkin,
   dxSkinOffice2007Green, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
-  dxSkinOffice2013White;
+  dxSkinOffice2013White, dxSkinBlueprint, dxSkinDevExpressDarkStyle,
+  dxSkinDevExpressStyle, dxSkinHighContrast, dxSkinMetropolis,
+  dxSkinMetropolisDark, dxSkinMoneyTwins, dxSkinOffice2007Black,
+  dxSkinOffice2007Blue, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
+  dxSkinOffice2010Black, dxSkinOffice2010Blue, dxSkinOffice2010Silver,
+  dxSkinSevenClassic, dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010,
+  dxSkinWhiteprint;
 
 type
   TfrmGeEfetuarPagtoREC = class(TfrmGrPadrao)

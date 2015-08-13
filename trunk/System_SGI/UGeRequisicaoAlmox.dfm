@@ -1878,7 +1878,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
           item
             Expanded = False
             FieldName = 'DESCRI_APRESENTACAO'
-            Title.Caption = 'Descri'#231#227'o + Apresenta'#231#227'o'
+            Title.Caption = 'Nome Amigo ou Descri'#231#227'o + Apresenta'#231#227'o'
             Width = 380
             Visible = True
           end
@@ -2594,7 +2594,7 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00280010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4095,7 +4095,9 @@ inherited frmGeRequisicaoAlmox: TfrmGeRequisicaoAlmox
       ''
       '  , p.descri'
       '  , p.apresentacao'
-      '  , p.descri_apresentacao'
+      
+        '  , coalesce(nullif(trim(p.nome_amigo), '#39#39'), p.descri_apresentac' +
+        'ao) as descri_apresentacao'
       '  , u.unp_descricao'
       '  , u.unp_sigla'
       

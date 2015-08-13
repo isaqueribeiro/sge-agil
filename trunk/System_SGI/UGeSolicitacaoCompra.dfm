@@ -321,6 +321,10 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       end
     end
     inherited tbsCadastro: TTabSheet
+      ExplicitLeft = 4
+      ExplicitTop = 25
+      ExplicitWidth = 1108
+      ExplicitHeight = 613
       inherited Bevel8: TBevel
         Top = 341
         Width = 1108
@@ -2119,7 +2123,7 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
     Left = 896
     Top = 352
     Bitmap = {
-      494C01012F0031000C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012F003100100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000C0000000010020000000000000C0
       0000000000000000000000000000000000000000000000000000000000004A5B
       6F004A5B6F004A5B6F004354680043546800435468003A4B5F003A4B5F003A4B
@@ -3915,7 +3919,9 @@ inherited frmGeSolicitacaoCompra: TfrmGeSolicitacaoCompra
       'Select'
       '    p.cod'
       '  , p.descri'
-      '  , p.descri_apresentacao'
+      
+        '  , coalesce(nullif(trim(p.nome_amigo), '#39#39'), p.descri_apresentac' +
+        'ao) as descri_apresentacao'
       '  , p.codunidade'
       '  , u.unp_descricao'
       '  , u.unp_sigla'

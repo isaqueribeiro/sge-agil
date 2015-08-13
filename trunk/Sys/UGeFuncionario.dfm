@@ -80,6 +80,20 @@ inherited frmGeFuncionario: TfrmGeFuncionario
         Width = 836
         ExplicitTop = 366
         ExplicitWidth = 836
+        object lblFuncionarioDesativado: TLabel [0]
+          Left = 2
+          Top = 41
+          Width = 153
+          Height = 13
+          Caption = '* Funcionarios desativados'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = 7303023
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
         inherited grpBxFiltro: TGroupBox
           Left = 472
           Width = 360
@@ -1640,7 +1654,7 @@ inherited frmGeFuncionario: TfrmGeFuncionario
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -279,6 +279,11 @@ type
     dbBairro: TJvDBComboEdit;
     dbLogradouro: TJvDBComboEdit;
     dbPais: TJvDBComboEdit;
+    IbDtstTabelaATIVO: TSmallintField;
+    dbCadastroAtivo: TDBCheckBox;
+    lblClienteDesativado: TLabel;
+    lblDataNasc: TLabel;
+    edDataNasc: TMaskEdit;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);
@@ -513,10 +518,11 @@ begin
 
   DisplayFormatCodigo := '##0000';
 
-  NomeTabela     := 'TBCLIENTE';
-  CampoCodigo    := 'codigo';
-  CampoDescricao := 'nome';
-  CampoOrdenacao := CampoDescricao;
+  NomeTabela         := 'TBCLIENTE';
+  CampoCodigo        := 'codigo';
+  CampoDescricao     := 'nome';
+  CampoCadastroAtivo := 'ativo';
+  CampoOrdenacao     := CampoDescricao;
 
   UpdateGenerator;
 
@@ -671,6 +677,7 @@ begin
   IbDtstTabelaNUMERO_END.AsString        := 'S/N';
   IbDtstTabelaCOMPLEMENTO.AsString       := EmptyStr;
   IbDtstTabelaDTCAD.AsDateTime           := GetDateDB;
+  IbDtstTabelaATIVO.Value                := 1;
   IbDtstTabelaBLOQUEADO.AsInteger             := 0; // Ord(False);
   IbDtstTabelaEMITIR_NFE_DEVOLUCAO.AsInteger  := 0; // Ord(False);
   IbDtstTabelaCUSTO_OPER_PERCENTUAL.AsInteger := 0; // Ord(False);
@@ -878,6 +885,10 @@ begin
     if ( IbDtstTabelaBLOQUEADO.AsInteger = 1 ) then
       dbgDados.Canvas.Font.Color := GrpBxBloqueio.Font.Color;
 
+    // Destacar clientes desativados
+    if ( IbDtstTabelaATIVO.AsInteger = 0 ) then
+      dbgDados.Canvas.Font.Color := lblClienteDesativado.Font.Color;
+
     dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
   end
   else
@@ -1031,6 +1042,9 @@ procedure TfrmGeCliente.dbCNPJButtonClick(Sender: TObject);
   end;
 
 begin
+  tbsConsultarCPF.TabVisible  := False;
+  tbsConsultarCNPJ.TabVisible := False;
+
   if dbPessoaFisica.Checked then
   begin
     tbsConsultarCPF.TabVisible := True;
@@ -1045,7 +1059,10 @@ begin
     LabAtualizarCaptchaClick(LabAtualizarCaptcha);
 
     if ( Trim(StrOnlyNumbers(dbCNPJ.Text)) <> EmptyStr ) then
-      edCPF.Text := StrFormatarCpf( StrOnlyNumbers(dbCNPJ.Text) )
+    begin
+      edCPF.Text := StrFormatarCpf( StrOnlyNumbers(dbCNPJ.Text) );
+      edDataNasc.SetFocus;
+    end
     else
       edCPF.SetFocus;
   end
@@ -1151,6 +1168,7 @@ end;
 procedure TfrmGeCliente.btnVoltarClick(Sender: TObject);
 begin
   pgcGuias.ActivePage         := tbsCadastro;
+  tbsConsultarCPF.TabVisible  := False;
   tbsConsultarCNPJ.TabVisible := False;
   dbCNPJ.SetFocus;
 end;
@@ -1221,7 +1239,7 @@ procedure TfrmGeCliente.btnConsultarCPFClick(Sender: TObject);
 begin
   if Trim(edCaptcha.Text) <> EmptyStr then
   begin
-    if ACBrConsultaCPF.Consulta(edCPF.Text, Trim(edCaptcha.Text)) then
+    if ACBrConsultaCPF.Consulta(edCPF.Text, edDataNasc.Text, Trim(edCaptcha.Text)) then
     begin
       EditRazaoSocial.Text := ACBrConsultaCPF.Nome;
       EditSituacao.Text    := ACBrConsultaCPF.Situacao;

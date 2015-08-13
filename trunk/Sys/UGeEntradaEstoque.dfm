@@ -6,6 +6,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   ClientHeight = 677
   ClientWidth = 1114
   OldCreateOrder = True
+  ExplicitTop = -49
   ExplicitWidth = 1130
   ExplicitHeight = 716
   PixelsPerInch = 96
@@ -312,15 +313,16 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       end
       object Bevel5: TBevel [1]
         Left = 0
-        Top = 313
+        Top = 328
         Width = 1106
         Height = 4
         Align = alTop
         Shape = bsSpacer
+        ExplicitTop = 313
       end
       object Bevel9: TBevel [2]
         Left = 0
-        Top = 411
+        Top = 416
         Width = 1106
         Height = 4
         Align = alBottom
@@ -329,11 +331,12 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       end
       object Bevel11: TBevel [3]
         Left = 0
-        Top = 193
+        Top = 207
         Width = 1106
         Height = 4
         Align = alTop
         Shape = bsSpacer
+        ExplicitTop = 193
       end
       inherited GrpBxDadosNominais: TGroupBox
         Width = 1106
@@ -995,7 +998,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         Left = 0
         Top = 117
         Width = 1106
-        Height = 76
+        Height = 90
         Align = alTop
         Caption = 'Valores (R$)'
         TabOrder = 1
@@ -1290,21 +1293,34 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           ParentFont = False
           TabOrder = 1
         end
+        object dbCalcularTotais: TDBCheckBox
+          Left = 16
+          Top = 67
+          Width = 186
+          Height = 17
+          Caption = 'Calcular totais automaticamente'
+          DataField = 'CALCULAR_TOTAIS'
+          DataSource = DtSrcTabela
+          TabOrder = 10
+          ValueChecked = '1'
+          ValueUnchecked = '0'
+        end
       end
       object pgcMaisDados: TPageControl
         Left = 0
-        Top = 415
+        Top = 420
         Width = 1106
-        Height = 190
+        Height = 185
         ActivePage = TbsInformeNFe
         Align = alBottom
         HotTrack = True
         TabOrder = 4
         object tbsPagamento: TTabSheet
           Caption = 'Pagamento'
+          ExplicitHeight = 162
           DesignSize = (
             1098
-            162)
+            157)
           object lblObservacao: TLabel
             Left = 0
             Top = 0
@@ -1317,25 +1333,27 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           end
           object lblFormaPagto: TLabel
             Left = 0
-            Top = 119
+            Top = 114
             Width = 106
             Height = 13
             Anchors = [akLeft, akBottom]
             Caption = '&Forma de Pagamento:'
             FocusControl = dbFormaPagto
+            ExplicitTop = 119
           end
           object lblCondicaoPagto: TLabel
             Left = 152
-            Top = 119
+            Top = 114
             Width = 120
             Height = 13
             Anchors = [akLeft, akBottom]
             Caption = 'Condi'#231#227'o de Pagamento:'
             FocusControl = dbCondicaoPagto
+            ExplicitTop = 119
           end
           object lblPrazo01: TLabel
             Left = 600
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1347,10 +1365,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo02: TLabel
             Left = 640
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1362,10 +1381,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo03: TLabel
             Left = 680
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1377,10 +1397,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo04: TLabel
             Left = 720
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1392,10 +1413,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo05: TLabel
             Left = 760
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1407,10 +1429,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo06: TLabel
             Left = 800
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1422,10 +1445,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo07: TLabel
             Left = 840
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1437,10 +1461,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo08: TLabel
             Left = 880
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1452,10 +1477,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo09: TLabel
             Left = 920
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1467,10 +1493,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo10: TLabel
             Left = 960
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1482,10 +1509,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo11: TLabel
             Left = 1000
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1497,10 +1525,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object lblPrazo12: TLabel
             Left = 1040
-            Top = 119
+            Top = 114
             Width = 24
             Height = 13
             Anchors = [akLeft, akBottom]
@@ -1512,6 +1541,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Font.Name = 'Tahoma'
             Font.Style = [fsBold]
             ParentFont = False
+            ExplicitTop = 119
           end
           object Bevel13: TBevel
             Left = 0
@@ -1523,27 +1553,29 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           end
           object lblTipoDespesa: TLabel
             Left = 384
-            Top = 119
+            Top = 114
             Width = 83
             Height = 13
             Anchors = [akLeft, akBottom]
             Caption = 'Tipo de Despesa:'
             FocusControl = dbTipoDespesa
+            ExplicitTop = 119
           end
           object dbObservacao: TDBMemo
             Left = 0
             Top = 17
             Width = 1098
-            Height = 100
+            Height = 95
             Align = alTop
             Anchors = [akLeft, akTop, akRight, akBottom]
             DataField = 'OBS'
             DataSource = DtSrcTabela
             TabOrder = 0
+            ExplicitHeight = 100
           end
           object dbFormaPagto: TDBLookupComboBox
             Left = 0
-            Top = 135
+            Top = 130
             Width = 145
             Height = 21
             Anchors = [akLeft, akBottom]
@@ -1560,10 +1592,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ListSource = dtsFormaPagto
             ParentFont = False
             TabOrder = 1
+            ExplicitTop = 135
           end
           object dbCondicaoPagto: TDBLookupComboBox
             Left = 152
-            Top = 135
+            Top = 130
             Width = 225
             Height = 21
             Anchors = [akLeft, akBottom]
@@ -1581,10 +1614,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             TabOrder = 2
             OnClick = dbCondicaoPagtoClick
+            ExplicitTop = 135
           end
           object dbPrazo01: TDBEdit
             Left = 600
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1600,10 +1634,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 4
+            ExplicitTop = 135
           end
           object dbPrazo02: TDBEdit
             Left = 640
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1619,10 +1654,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 5
+            ExplicitTop = 135
           end
           object dbPrazo03: TDBEdit
             Left = 680
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1638,10 +1674,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 6
+            ExplicitTop = 135
           end
           object dbPrazo04: TDBEdit
             Left = 720
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1657,10 +1694,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 7
+            ExplicitTop = 135
           end
           object dbPrazo05: TDBEdit
             Left = 760
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1676,10 +1714,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 8
+            ExplicitTop = 135
           end
           object dbPrazo06: TDBEdit
             Left = 800
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1695,10 +1734,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 9
+            ExplicitTop = 135
           end
           object dbPrazo07: TDBEdit
             Left = 840
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1714,10 +1754,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 10
+            ExplicitTop = 135
           end
           object dbPrazo08: TDBEdit
             Left = 880
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1733,10 +1774,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 11
+            ExplicitTop = 135
           end
           object dbPrazo09: TDBEdit
             Left = 920
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1752,10 +1794,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 12
+            ExplicitTop = 135
           end
           object dbPrazo10: TDBEdit
             Left = 960
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1771,10 +1814,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 13
+            ExplicitTop = 135
           end
           object dbPrazo11: TDBEdit
             Left = 1000
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1790,10 +1834,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 14
+            ExplicitTop = 135
           end
           object dbPrazo12: TDBEdit
             Left = 1040
-            Top = 135
+            Top = 130
             Width = 33
             Height = 21
             TabStop = False
@@ -1809,10 +1854,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             ReadOnly = True
             TabOrder = 15
+            ExplicitTop = 135
           end
           object dbTipoDespesa: TDBLookupComboBox
             Left = 384
-            Top = 135
+            Top = 130
             Width = 209
             Height = 21
             Anchors = [akLeft, akBottom]
@@ -1830,34 +1876,38 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             TabOrder = 3
             OnClick = dbCondicaoPagtoClick
+            ExplicitTop = 135
           end
         end
         object tbsDuplicatas: TTabSheet
           Caption = 'Duplicata(s) Gerada(s)'
           ImageIndex = 1
+          ExplicitHeight = 162
           object Bevel6: TBevel
             Left = 89
             Top = 0
             Width = 4
-            Height = 162
+            Height = 157
             Align = alLeft
             Shape = bsSpacer
             Visible = False
+            ExplicitHeight = 162
           end
           object Bevel7: TBevel
             Left = 0
             Top = 0
             Width = 4
-            Height = 162
+            Height = 157
             Align = alLeft
             Shape = bsSpacer
             Visible = False
+            ExplicitHeight = 162
           end
           object pnlBotoesTitulo: TPanel
             Left = 4
             Top = 0
             Width = 85
-            Height = 162
+            Height = 157
             Align = alLeft
             AutoSize = True
             BevelOuter = bvNone
@@ -1869,18 +1919,21 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ParentFont = False
             TabOrder = 0
             Visible = False
+            ExplicitHeight = 162
             object btnRegerarDuplicata: TBitBtn
               Left = 0
-              Top = 1
+              Top = 0
               Width = 85
               Height = 25
               Hint = 'Regerar Duplicata(s)'
+              Align = alTop
               Caption = 'Duplicata(s)'
               NumGlyphs = 2
               ParentShowHint = False
               ShowHint = True
               TabOrder = 0
               OnClick = btnRegerarDuplicataClick
+              ExplicitTop = 1
             end
             object btnTituloEditar: TBitBtn
               Left = 0
@@ -1888,6 +1941,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
               Width = 85
               Height = 25
               Hint = 'Editar T'#237'tulo'
+              Align = alTop
               Caption = 'Editar'
               NumGlyphs = 2
               ParentShowHint = False
@@ -1897,23 +1951,25 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             end
             object btnTituloExcluir: TBitBtn
               Left = 0
-              Top = 49
+              Top = 50
               Width = 85
               Height = 25
               Hint = 'Excluir T'#237'tulo'
+              Align = alTop
               Caption = 'Excluir'
               NumGlyphs = 2
               ParentShowHint = False
               ShowHint = True
               TabOrder = 2
               Visible = False
+              ExplicitTop = 49
             end
           end
           object dbgTitulos: TDBGrid
             Left = 93
             Top = 0
             Width = 1005
-            Height = 162
+            Height = 157
             TabStop = False
             Align = alClient
             DataSource = dtsDuplicatas
@@ -1995,6 +2051,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
         object TbsInformeNFe: TTabSheet
           Caption = 'Informa'#231#245'es de Envio NF-e'
           ImageIndex = 2
+          ExplicitHeight = 162
           object lblLogNFeLote: TLabel
             Left = 8
             Top = 0
@@ -2493,9 +2550,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       end
       object GrpBxDadosProduto: TGroupBox
         Left = 0
-        Top = 197
+        Top = 211
         Width = 1106
-        Height = 116
+        Height = 117
         Align = alTop
         Caption = 'Dados do produto'
         TabOrder = 2
@@ -2595,9 +2652,10 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Left = 2
           Top = 15
           Width = 4
-          Height = 99
+          Height = 100
           Align = alLeft
           Shape = bsSpacer
+          ExplicitHeight = 99
         end
         object lblFrete: TLabel
           Left = 592
@@ -2867,7 +2925,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Left = 6
           Top = 15
           Width = 70
-          Height = 99
+          Height = 100
           Align = alLeft
           AutoSize = True
           BevelOuter = bvNone
@@ -2878,12 +2936,14 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 0
+          ExplicitHeight = 99
           object btnProdutoInserir: TBitBtn
             Left = 0
-            Top = 1
+            Top = 0
             Width = 70
             Height = 25
             Hint = 'Inserir Produto'
+            Align = alTop
             Caption = 'Inserir'
             Enabled = False
             Glyph.Data = {
@@ -2942,6 +3002,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ShowHint = True
             TabOrder = 0
             OnClick = btnProdutoInserirClick
+            ExplicitTop = 1
           end
           object btnProdutoEditar: TBitBtn
             Left = 0
@@ -2949,6 +3010,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             Width = 70
             Height = 25
             Hint = 'Editar Produto'
+            Align = alTop
             Caption = 'Editar'
             Enabled = False
             Glyph.Data = {
@@ -3010,10 +3072,11 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
           end
           object btnProdutoExcluir: TBitBtn
             Left = 0
-            Top = 49
+            Top = 50
             Width = 70
             Height = 25
             Hint = 'Excluir Produto'
+            Align = alBottom
             Caption = 'Excluir'
             Enabled = False
             Glyph.Data = {
@@ -3072,13 +3135,15 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ShowHint = True
             TabOrder = 2
             OnClick = btnProdutoExcluirClick
+            ExplicitTop = 49
           end
           object btnProdutoSalvar: TBitBtn
             Left = 0
-            Top = 73
+            Top = 75
             Width = 70
             Height = 25
             Hint = 'Salvar Produto'
+            Align = alBottom
             Caption = 'Salvar'
             Enabled = False
             Glyph.Data = {
@@ -3137,6 +3202,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
             ShowHint = True
             TabOrder = 3
             OnClick = btnProdutoSalvarClick
+            ExplicitTop = 73
           end
         end
         object dbFrete: TDBEdit
@@ -3393,9 +3459,9 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       end
       object dbgProdutos: TDBGrid
         Left = 0
-        Top = 317
+        Top = 332
         Width = 1106
-        Height = 94
+        Height = 84
         TabStop = False
         Align = alClient
         DataSource = DtSrcTabelaItens
@@ -3744,6 +3810,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  , c.NFCFOP'
       '  , c.NATUREZA'
       '  , c.STATUS'
+      '  , c.CALCULAR_TOTAIS'
       '  , c.IPI'
       '  , c.ICMSBASE'
       '  , c.ICMSVALOR'
@@ -3924,6 +3991,12 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       Origin = 'TBCOMPRAS.STATUS'
       Required = True
       OnGetText = IbDtstTabelaSTATUSGetText
+    end
+    object IbDtstTabelaCALCULAR_TOTAIS: TSmallintField
+      Alignment = taLeftJustify
+      FieldName = 'CALCULAR_TOTAIS'
+      Origin = '"TBCOMPRAS"."CALCULAR_TOTAIS"'
+      ProviderFlags = [pfInUpdate]
     end
     object IbDtstTabelaIPI: TIBBCDField
       FieldName = 'IPI'
@@ -4173,6 +4246,8 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  LOTE_NFE_NUMERO,'
       '  LOTE_NFE_RECIBO,'
       '  NFE_ENVIADA,'
+      '  NFE_DENEGADA,'
+      '  NFE_DENEGADA_MOTIVO,'
       '  VERIFICADOR_NFE,'
       '  XML_NFE,'
       '  XML_NFE_FILENAME,'
@@ -4183,6 +4258,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  NFCFOP,'
       '  NATUREZA,'
       '  STATUS,'
+      '  CALCULAR_TOTAIS,'
       '  IPI,'
       '  ICMSBASE,'
       '  ICMSVALOR,'
@@ -4222,7 +4298,21 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  CANCEL_MOTIVO,'
       '  AUTORIZACAO_ANO,'
       '  AUTORIZACAO_CODIGO,'
-      '  AUTORIZACAO_EMPRESA'
+      '  AUTORIZACAO_EMPRESA,'
+      '  DNFE_ENTRADA_ANO,'
+      '  DNFE_ENTRADA_COD,'
+      '  DNFE_FORMA,'
+      '  DNFE_UF,'
+      '  DNFE_CNPJ_CPF,'
+      '  DNFE_IE,'
+      '  DNFE_COMPETENCIA,'
+      '  DNFE_SERIE,'
+      '  DNFE_NUMERO,'
+      '  DNFE_MODELO,'
+      '  DNFE_CHAVE,'
+      '  DECF_MODELO,'
+      '  DECF_NUMERO,'
+      '  DECF_COO'
       'from TBCOMPRAS '
       'where'
       '  ANO = :ANO and'
@@ -4234,6 +4324,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       '  AUTORIZACAO_ANO = :AUTORIZACAO_ANO,'
       '  AUTORIZACAO_CODIGO = :AUTORIZACAO_CODIGO,'
       '  AUTORIZACAO_EMPRESA = :AUTORIZACAO_EMPRESA,'
+      '  CALCULAR_TOTAIS = :CALCULAR_TOTAIS,'
       '  CODCONTROL = :CODCONTROL,'
       '  CODEMP = :CODEMP,'
       '  CODFORN = :CODFORN,'
@@ -4287,51 +4378,54 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
       'insert into TBCOMPRAS'
       
         '  (ANO, AUTORIZACAO_ANO, AUTORIZACAO_CODIGO, AUTORIZACAO_EMPRESA' +
-        ', CODCONTROL, '
+        ', CALCULAR_TOTAIS, '
       
-        '   CODEMP, CODFORN, COMPRA_PRAZO, CONDICAOPAGTO_COD, DESCONTO, D' +
-        'TEMISS, '
+        '   CODCONTROL, CODEMP, CODFORN, COMPRA_PRAZO, CONDICAOPAGTO_COD,' +
+        ' DESCONTO, '
       
-        '   DTENT, DTFINALIZACAO_COMPRA, DTLANCAMENTO, FORMAPAGTO_COD, FR' +
-        'ETE, ICMSBASE, '
+        '   DTEMISS, DTENT, DTFINALIZACAO_COMPRA, DTLANCAMENTO, FORMAPAGT' +
+        'O_COD, '
       
-        '   ICMSSUBSTBASE, ICMSSUBSTVALOR, ICMSVALOR, IPI, LOTE_NFE_ANO, ' +
-        'LOTE_NFE_NUMERO, '
+        '   FRETE, ICMSBASE, ICMSSUBSTBASE, ICMSSUBSTVALOR, ICMSVALOR, IP' +
+        'I, LOTE_NFE_ANO, '
       
-        '   LOTE_NFE_RECIBO, NATUREZA, NF, NFCFOP, NFSERIE, OBS, OUTROSCU' +
-        'STOS, PRAZO_01, '
+        '   LOTE_NFE_NUMERO, LOTE_NFE_RECIBO, NATUREZA, NF, NFCFOP, NFSER' +
+        'IE, OBS, '
       
-        '   PRAZO_02, PRAZO_03, PRAZO_04, PRAZO_05, PRAZO_06, PRAZO_07, P' +
-        'RAZO_08, '
+        '   OUTROSCUSTOS, PRAZO_01, PRAZO_02, PRAZO_03, PRAZO_04, PRAZO_0' +
+        '5, PRAZO_06, '
       
-        '   PRAZO_09, PRAZO_10, PRAZO_11, PRAZO_12, STATUS, TIPO_DESPESA,' +
-        ' TIPO_DOCUMENTO, '
-      '   TIPO_ENTRADA, TIPO_MOVIMENTO, TOTALNF, TOTALPROD, USUARIO)'
+        '   PRAZO_07, PRAZO_08, PRAZO_09, PRAZO_10, PRAZO_11, PRAZO_12, S' +
+        'TATUS, '
+      
+        '   TIPO_DESPESA, TIPO_DOCUMENTO, TIPO_ENTRADA, TIPO_MOVIMENTO, T' +
+        'OTALNF, '
+      '   TOTALPROD, USUARIO)'
       'values'
       
         '  (:ANO, :AUTORIZACAO_ANO, :AUTORIZACAO_CODIGO, :AUTORIZACAO_EMP' +
-        'RESA, :CODCONTROL, '
+        'RESA, :CALCULAR_TOTAIS, '
       
-        '   :CODEMP, :CODFORN, :COMPRA_PRAZO, :CONDICAOPAGTO_COD, :DESCON' +
-        'TO, :DTEMISS, '
+        '   :CODCONTROL, :CODEMP, :CODFORN, :COMPRA_PRAZO, :CONDICAOPAGTO' +
+        '_COD, :DESCONTO, '
       
-        '   :DTENT, :DTFINALIZACAO_COMPRA, :DTLANCAMENTO, :FORMAPAGTO_COD' +
-        ', :FRETE, '
+        '   :DTEMISS, :DTENT, :DTFINALIZACAO_COMPRA, :DTLANCAMENTO, :FORM' +
+        'APAGTO_COD, '
       
-        '   :ICMSBASE, :ICMSSUBSTBASE, :ICMSSUBSTVALOR, :ICMSVALOR, :IPI,' +
-        ' :LOTE_NFE_ANO, '
+        '   :FRETE, :ICMSBASE, :ICMSSUBSTBASE, :ICMSSUBSTVALOR, :ICMSVALO' +
+        'R, :IPI, '
       
-        '   :LOTE_NFE_NUMERO, :LOTE_NFE_RECIBO, :NATUREZA, :NF, :NFCFOP, ' +
-        ':NFSERIE, '
+        '   :LOTE_NFE_ANO, :LOTE_NFE_NUMERO, :LOTE_NFE_RECIBO, :NATUREZA,' +
+        ' :NF, :NFCFOP, '
       
-        '   :OBS, :OUTROSCUSTOS, :PRAZO_01, :PRAZO_02, :PRAZO_03, :PRAZO_' +
-        '04, :PRAZO_05, '
+        '   :NFSERIE, :OBS, :OUTROSCUSTOS, :PRAZO_01, :PRAZO_02, :PRAZO_0' +
+        '3, :PRAZO_04, '
       
-        '   :PRAZO_06, :PRAZO_07, :PRAZO_08, :PRAZO_09, :PRAZO_10, :PRAZO' +
-        '_11, :PRAZO_12, '
+        '   :PRAZO_05, :PRAZO_06, :PRAZO_07, :PRAZO_08, :PRAZO_09, :PRAZO' +
+        '_10, :PRAZO_11, '
       
-        '   :STATUS, :TIPO_DESPESA, :TIPO_DOCUMENTO, :TIPO_ENTRADA, :TIPO' +
-        '_MOVIMENTO, '
+        '   :PRAZO_12, :STATUS, :TIPO_DESPESA, :TIPO_DOCUMENTO, :TIPO_ENT' +
+        'RADA, :TIPO_MOVIMENTO, '
       '   :TOTALNF, :TOTALPROD, :USUARIO)')
     DeleteSQL.Strings = (
       'delete from TBCOMPRAS'
@@ -4343,7 +4437,7 @@ inherited frmGeEntradaEstoque: TfrmGeEntradaEstoque
   inherited ImgList: TImageList
     Left = 712
     Bitmap = {
-      494C01012B002C00380010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C003C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -15,7 +15,8 @@ uses
   dxSkinOffice2007Silver, dxSkinOffice2010Black, dxSkinOffice2010Blue,
   dxSkinOffice2010Silver, dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray,
   dxSkinOffice2013White, dxSkinSevenClassic, dxSkinSharpPlus,
-  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint;
+  dxSkinTheAsphaltWorld, dxSkinVS2010, dxSkinWhiteprint, Datasnap.DBClient,
+  Datasnap.Provider, IBX.IBQuery, ACBrBase, ACBrExtenso, frxClass, frxDBSet;
 
 type
   TfrmGeContasAReceber = class(TfrmGrPadraoCadastro)
@@ -135,6 +136,41 @@ type
     lblLancamentoVencido: TLabel;
     Bevel10: TBevel;
     btbtnIncluirLote: TcxButton;
+    FrRecibo: TfrxReport;
+    FrdRecibo: TfrxDBDataset;
+    ACBrExtenso: TACBrExtenso;
+    QryRecibo: TIBQuery;
+    DspRecibo: TDataSetProvider;
+    CdsRecibo: TClientDataSet;
+    CdsReciboVALOR_BAIXA_EXTENSO: TStringField;
+    popImprimir: TPopupMenu;
+    popGerarRecibo: TMenuItem;
+    CdsReciboANOLANC: TSmallintField;
+    CdsReciboNUMLANC: TIntegerField;
+    CdsReciboPARCELA: TSmallintField;
+    CdsReciboCLIENTE: TIntegerField;
+    CdsReciboRZSOC: TWideStringField;
+    CdsReciboNOME: TWideStringField;
+    CdsReciboPESSOA_FISICA: TSmallintField;
+    CdsReciboCNPJ: TWideStringField;
+    CdsReciboTIPPAG: TWideStringField;
+    CdsReciboDTEMISS: TDateField;
+    CdsReciboDTVENC: TDateField;
+    CdsReciboDTREC: TDateField;
+    CdsReciboVALORREC: TBCDField;
+    CdsReciboBANCO: TSmallintField;
+    CdsReciboBCO_NOME: TWideStringField;
+    CdsReciboNUMERO_CHEQUE: TWideStringField;
+    CdsReciboPAGO_: TWideStringField;
+    CdsReciboDOCBAIX: TWideStringField;
+    CdsReciboBAIXADO: TSmallintField;
+    CdsReciboSEQ: TSmallintField;
+    CdsReciboDATA_PAGTO: TDateField;
+    CdsReciboFORMA_PAGTO: TSmallintField;
+    CdsReciboFORMA_PAGTO_DESC: TWideStringField;
+    CdsReciboHISTORICO: TWideMemoField;
+    CdsReciboVALOR_BAIXA: TBCDField;
+    CdsReciboEMPRESA_CNPJ: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure dbClienteButtonClick(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
@@ -158,13 +194,19 @@ type
     procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure btbtnIncluirLoteClick(Sender: TObject);
+    procedure FrReciboGetValue(const VarName: string; var Value: Variant);
+    procedure popGerarReciboClick(Sender: TObject);
+    procedure btbtnListaClick(Sender: TObject);
+    procedure CdsReciboCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
     FDataAtual     : TDateTime;
     FLoteParcelas  : String;
     SQL_Pagamentos : TStringList;
+    FImprimirCabecalho : Boolean;
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
+    procedure RecarregarRegistro;
 
     function GetRotinaEfetuarPagtoID : String;
     function GetRotinaCancelarPagtosID : String;
@@ -333,6 +375,11 @@ begin
   CxNumero := 0;
   CxContaCorrente := 0;
 
+  RecarregarRegistro;
+
+  if ( not IbDtstTabela.Active ) then
+    Exit;
+
   if ( IbDtstTabelaBAIXADO.AsInteger = 1 ) then
   begin
     ShowWarning('Registro de recebimento selecionado já se encontra baixado!' + #13 + 'Favor pesquisar novamente.');
@@ -380,9 +427,15 @@ end;
 procedure TfrmGeContasAReceber.HabilitarDesabilitar_Btns;
 begin
   if ( pgcGuias.ActivePage = tbsCadastro ) then
-    btbtnEfetuarPagto.Enabled := (IbDtstTabelaBAIXADO.AsInteger = 0) and (not IbDtstTabela.IsEmpty) and (IbDtstTabela.State = dsBrowse)
+  begin
+    btbtnEfetuarPagto.Enabled := (IbDtstTabelaBAIXADO.AsInteger = 0) and (not IbDtstTabela.IsEmpty) and (IbDtstTabela.State = dsBrowse);
+    popGerarRecibo.Enabled    := (not cdsPagamentos.IsEmpty);
+  end
   else
+  begin
     btbtnEfetuarPagto.Enabled := False;
+    popGerarRecibo.Enabled    := False;
+  end;
 end;
 
 procedure TfrmGeContasAReceber.btbtnSalvarClick(Sender: TObject);
@@ -395,6 +448,32 @@ procedure TfrmGeContasAReceber.pgcGuiasChange(Sender: TObject);
 begin
   inherited;
   AbrirPagamentos( IbDtstTabelaANOLANC.AsInteger, IbDtstTabelaNUMLANC.AsInteger );
+end;
+
+procedure TfrmGeContasAReceber.popGerarReciboClick(Sender: TObject);
+begin
+  if ( IbDtstTabela.IsEmpty ) then
+    Exit;
+
+  with CdsRecibo, Params do
+  begin
+    Close;
+    ParamByName('ano').AsInteger    := cdsPagamentosANOLANC.AsInteger;
+    ParamByName('numero').AsInteger := cdsPagamentosNUMLANC.AsInteger;
+    ParamByName('baixa').AsInteger  := cdsPagamentosSEQ.AsInteger;
+    Open;
+
+    if IsEmpty then
+      Exit;
+  end;
+
+  FImprimirCabecalho := ShowConfirmation('Recibo', 'Deseja imprimir no recibo o Cabeçalho com informações da empresa?');
+
+  frReport := FrRecibo;
+  SetVariablesDefault(frReport);
+
+  frReport.PrepareReport;
+  frReport.ShowReport;
 end;
 
 procedure TfrmGeContasAReceber.AbrirPagamentos(const Ano: Smallint;
@@ -493,6 +572,11 @@ begin
     else
       Text := Sender.AsString;
   end;
+end;
+
+procedure TfrmGeContasAReceber.CdsReciboCalcFields(DataSet: TDataSet);
+begin
+  CdsReciboVALOR_BAIXA_EXTENSO.AsString := AnsiUpperCase(ACBrExtenso.ValorToTexto(CdsReciboVALOR_BAIXA.AsCurrency, ACBrExtenso.Formato));
 end;
 
 procedure TfrmGeContasAReceber.ControlEditExit(Sender: TObject);
@@ -713,6 +797,11 @@ begin
   end;
 end;
 
+procedure TfrmGeContasAReceber.btbtnListaClick(Sender: TObject);
+begin
+  popImprimir.Popup(btbtnLista.ClientOrigin.X, btbtnLista.ClientOrigin.Y + btbtnLista.Height);
+end;
+
 function TfrmGeContasAReceber.GetRotinaCancelarPagtosID: String;
 begin
   Result := GetRotinaInternaID(dbgPagamentos);
@@ -721,6 +810,36 @@ end;
 function TfrmGeContasAReceber.GetRotinaEfetuarPagtoID: String;
 begin
   Result := GetRotinaInternaID(btbtnEfetuarPagto);
+end;
+
+procedure TfrmGeContasAReceber.RecarregarRegistro;
+var
+  MovAno    ,
+  MovNumero : Integer;
+begin
+  MovAno    := IbDtstTabelaANOLANC.AsInteger;
+  MovNumero := IbDtstTabelaNUMLANC.AsInteger;
+
+  if ( not IbDtstTabelaDTVENC.IsNull ) then
+  begin
+    if ( IbDtstTabelaDTVENC.AsDateTime < e1Data.Date ) then
+      e1Data.Date := IbDtstTabelaDTVENC.AsDateTime;
+
+    if ( IbDtstTabelaDTVENC.AsDateTime > e2Data.Date ) then
+      e2Data.Date := IbDtstTabelaDTVENC.AsDateTime;
+  end;
+
+  IbDtstTabela.Close;
+  IbDtstTabela.Open;
+
+  if not IbDtstTabela.Locate('ANOLANC;NUMLANC', VarArrayOf([MovAno, MovNumero]), []) then
+  begin
+    IbDtstTabela.Close;
+
+    ShowInformation('Favor pesquisar novamente o registro de despesa!');
+    pgcGuias.ActivePage := tbsTabela;
+    edtFiltrar.SetFocus;
+  end;
 end;
 
 procedure TfrmGeContasAReceber.RegistrarNovaRotinaSistema;
@@ -739,6 +858,25 @@ procedure TfrmGeContasAReceber.FormShow(Sender: TObject);
 begin
   inherited;
   RegistrarNovaRotinaSistema;
+end;
+
+procedure TfrmGeContasAReceber.FrReciboGetValue(const VarName: string;
+  var Value: Variant);
+begin
+  if ( VarName = VAR_TITLE ) then
+    Value := 'RECIBO';
+
+  if ( VarName = VAR_EMPRESA ) then
+    Value := GetEmpresaNomeDefault;
+
+  if ( VarName = VAR_USER ) then
+    Value := GetUserApp;
+
+  if ( VarName = VAR_SYSTEM ) then
+    Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = 'Imprimir_Cabecalho' ) then
+    Value := IfThen(FImprimirCabecalho, 1, 0);
 end;
 
 initialization

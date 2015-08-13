@@ -28,8 +28,6 @@ inherited frmGeFornecedor: TfrmGeFornecedor
     ExplicitWidth = 844
     ExplicitHeight = 457
     inherited tbsTabela: TTabSheet
-      ExplicitLeft = 0
-      ExplicitTop = 0
       ExplicitWidth = 836
       ExplicitHeight = 428
       inherited Bevel4: TBevel
@@ -85,6 +83,20 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         Width = 836
         ExplicitTop = 366
         ExplicitWidth = 836
+        object lblFornecedorDesativado: TLabel [0]
+          Left = 2
+          Top = 44
+          Width = 159
+          Height = 13
+          Caption = '* Fornecedores desativados'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = 7303023
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          Transparent = True
+        end
         inherited grpBxFiltro: TGroupBox
           Left = 561
           Width = 271
@@ -1036,12 +1048,8 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         object tbsDadosAdcionais: TTabSheet
           Caption = '&2. Outras Informa'#231#245'es'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object dbTransportadora: TDBCheckBox
-            Left = 8
+            Left = 13
             Top = 10
             Width = 121
             Height = 17
@@ -1053,14 +1061,23 @@ inherited frmGeFornecedor: TfrmGeFornecedor
             ValueUnchecked = '0'
             OnKeyPress = ProximoCampoKeyPress
           end
+          object dbCadastroAtivo: TDBCheckBox
+            Left = 13
+            Top = 33
+            Width = 121
+            Height = 17
+            Caption = 'Cadastro Ativo'
+            DataField = 'ATIVO'
+            DataSource = DtSrcTabela
+            TabOrder = 1
+            ValueChecked = '1'
+            ValueUnchecked = '0'
+            OnKeyPress = ProximoCampoKeyPress
+          end
         end
         object tbsDadoFinanceiro: TTabSheet
           Caption = '&3. Dados Financeiros'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object lblBanco: TLabel
             Left = 168
             Top = 0
@@ -1189,10 +1206,6 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         object tbsObservacao: TTabSheet
           Caption = '&4. Observa'#231#245'es'
           ImageIndex = 4
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object dbObservacao: TDBMemo
             Left = 0
             Top = 0
@@ -1207,20 +1220,12 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         object tbsDuplicatas: TTabSheet
           Caption = '&5. Duplicatas'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
       end
     end
     object tbsConsultarCNPJ: TTabSheet
       Caption = 'Consultar CNPJ'
       ImageIndex = 12
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object BvlConsultar: TBevel
         Left = 377
         Top = 0
@@ -1261,7 +1266,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         end
         object lblCaptchaX: TLabel
           Left = 9
-          Top = 238
+          Top = 309
           Width = 96
           Height = 16
           Caption = 'Digite o Captcha'
@@ -1275,7 +1280,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         end
         object edCaptcha: TEdit
           Left = 9
-          Top = 257
+          Top = 328
           Width = 232
           Height = 41
           CharCase = ecUpperCase
@@ -1360,7 +1365,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         end
         object btnConsultarCNPJ: TcxButton
           Left = 248
-          Top = 256
+          Top = 327
           Width = 115
           Height = 41
           Caption = 'Consultar'
@@ -1808,10 +1813,6 @@ inherited frmGeFornecedor: TfrmGeFornecedor
     object tbsConsultarCPF: TTabSheet
       Caption = 'Consultar CPF'
       ImageIndex = 12
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pnlConsultarCPF: TPanel
         Left = 0
         Top = 0
@@ -1841,6 +1842,20 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           Font.Style = []
           ParentFont = False
         end
+        object lblDataNasc: TLabel
+          Left = 9
+          Top = 237
+          Width = 122
+          Height = 16
+          Caption = 'Data de Nascimento:'
+          FocusControl = edDataNasc
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
         object edCPF: TMaskEdit
           Left = 9
           Top = 191
@@ -1860,11 +1875,11 @@ inherited frmGeFornecedor: TfrmGeFornecedor
         end
         object btnConsultarCPF: TcxButton
           Left = 248
-          Top = 256
+          Top = 327
           Width = 115
           Height = 41
           Caption = 'Consultar'
-          TabOrder = 1
+          TabOrder = 2
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -1872,6 +1887,23 @@ inherited frmGeFornecedor: TfrmGeFornecedor
           Font.Style = []
           ParentFont = False
           OnClick = btnConsultarCPFClick
+        end
+        object edDataNasc: TMaskEdit
+          Left = 9
+          Top = 256
+          Width = 216
+          Height = 41
+          EditMask = '!99/99/0000;1;_'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -27
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          MaxLength = 10
+          ParentFont = False
+          TabOrder = 1
+          Text = '  /  /    '
+          OnKeyPress = edCNPJKeyPress
         end
       end
     end
@@ -1936,6 +1968,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
       '  , f.observacao'
       '  , f.DtCad'
       '  , f.Faturamento_minimo'
+      '  , f.ativo'
       
         '  , coalesce( cast(coalesce(coalesce(t.Tlg_sigla, t.Tlg_descrica' +
         'o) || '#39' '#39', '#39#39') || l.Log_nome as varchar(250)), f.Ender ) as Logr' +
@@ -2051,7 +2084,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
       FieldName = 'FONECEL'
       Origin = '"TBFORNECEDOR"."FONECEL"'
       ProviderFlags = [pfInUpdate]
-      EditMask = '(99)9999.9999;0; '
+      EditMask = '(99)99999.9999;0; '
       Size = 11
     end
     object IbDtstTabelaFONEFAX: TIBStringField
@@ -2165,6 +2198,12 @@ inherited frmGeFornecedor: TfrmGeFornecedor
       Precision = 18
       Size = 2
     end
+    object IbDtstTabelaATIVO: TSmallintField
+      Alignment = taLeftJustify
+      FieldName = 'ATIVO'
+      Origin = '"TBFORNECEDOR"."ATIVO"'
+      ProviderFlags = [pfInUpdate]
+    end
     object IbDtstTabelaLOGRADOURO: TIBStringField
       DisplayLabel = 'Logradouro'
       FieldName = 'LOGRADOURO'
@@ -2235,9 +2274,11 @@ inherited frmGeFornecedor: TfrmGeFornecedor
       '  PRACA,'
       '  OBSERVACAO,'
       '  DTCAD,'
+      '  ATIVO,'
       '  CLIENTE_ORIGEM,'
       '  CLIENTE_ORIGEM_COD,'
-      '  FATURAMENTO_MINIMO'
+      '  FATURAMENTO_MINIMO,'
+      '  FORNECEDOR_FUNCIONARIO'
       'from TBFORNECEDOR '
       'where'
       '  CODFORN = :CODFORN')
@@ -2245,6 +2286,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
       'update TBFORNECEDOR'
       'set'
       '  AGENCIA = :AGENCIA,'
+      '  ATIVO = :ATIVO,'
       '  BAI_COD = :BAI_COD,'
       '  BANCO = :BANCO,'
       '  CC = :CC,'
@@ -2283,32 +2325,35 @@ inherited frmGeFornecedor: TfrmGeFornecedor
     InsertSQL.Strings = (
       'insert into TBFORNECEDOR'
       
-        '  (AGENCIA, BAI_COD, BANCO, CC, CEP, CID_COD, CIDADE, CNPJ, CODF' +
-        'ORN, COMPLEMENTO, '
+        '  (AGENCIA, ATIVO, BAI_COD, BANCO, CC, CEP, CID_COD, CIDADE, CNP' +
+        'J, CODFORN, '
       
-        '   CONTATO, DTCAD, EMAIL, ENDER, EST_COD, FATURAMENTO_MINIMO, FO' +
-        'NE, FONECEL, '
+        '   COMPLEMENTO, CONTATO, DTCAD, EMAIL, ENDER, EST_COD, FATURAMEN' +
+        'TO_MINIMO, '
       
-        '   FONEFAX, GRF_COD, INSCEST, INSCMUN, LOG_COD, NOMEFANT, NOMEFO' +
-        'RN, NUMERO_END, '
+        '   FONE, FONECEL, FONEFAX, GRF_COD, INSCEST, INSCMUN, LOG_COD, N' +
+        'OMEFANT, '
       
-        '   OBSERVACAO, PAIS_ID, PESSOA_FISICA, PRACA, SITE, TLG_TIPO, TR' +
-        'ANSPORTADORA, '
-      '   UF)'
+        '   NOMEFORN, NUMERO_END, OBSERVACAO, PAIS_ID, PESSOA_FISICA, PRA' +
+        'CA, SITE, '
+      '   TLG_TIPO, TRANSPORTADORA, UF)'
       'values'
       
-        '  (:AGENCIA, :BAI_COD, :BANCO, :CC, :CEP, :CID_COD, :CIDADE, :CN' +
-        'PJ, :CODFORN, '
+        '  (:AGENCIA, :ATIVO, :BAI_COD, :BANCO, :CC, :CEP, :CID_COD, :CID' +
+        'ADE, :CNPJ, '
       
-        '   :COMPLEMENTO, :CONTATO, :DTCAD, :EMAIL, :ENDER, :EST_COD, :FA' +
-        'TURAMENTO_MINIMO, '
+        '   :CODFORN, :COMPLEMENTO, :CONTATO, :DTCAD, :EMAIL, :ENDER, :ES' +
+        'T_COD, '
       
-        '   :FONE, :FONECEL, :FONEFAX, :GRF_COD, :INSCEST, :INSCMUN, :LOG' +
-        '_COD, :NOMEFANT, '
+        '   :FATURAMENTO_MINIMO, :FONE, :FONECEL, :FONEFAX, :GRF_COD, :IN' +
+        'SCEST, '
       
-        '   :NOMEFORN, :NUMERO_END, :OBSERVACAO, :PAIS_ID, :PESSOA_FISICA' +
-        ', :PRACA, '
-      '   :SITE, :TLG_TIPO, :TRANSPORTADORA, :UF)')
+        '   :INSCMUN, :LOG_COD, :NOMEFANT, :NOMEFORN, :NUMERO_END, :OBSER' +
+        'VACAO, '
+      
+        '   :PAIS_ID, :PESSOA_FISICA, :PRACA, :SITE, :TLG_TIPO, :TRANSPOR' +
+        'TADORA, '
+      '   :UF)')
     DeleteSQL.Strings = (
       'delete from TBFORNECEDOR'
       'where'
@@ -2320,7 +2365,7 @@ inherited frmGeFornecedor: TfrmGeFornecedor
     Left = 640
     Top = 120
     Bitmap = {
-      494C01012B002C00300010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00400010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

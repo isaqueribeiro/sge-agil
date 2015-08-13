@@ -126,6 +126,7 @@ type
     ppMnAtualizarMetafonema: TMenuItem;
     IbDtstTabelaLOGIN: TIBStringField;
     IbDtstTabelaNOME_LIMPO: TIBStringField;
+    lblFuncionarioDesativado: TLabel;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -142,6 +143,8 @@ type
     procedure btnFiltrarClick(Sender: TObject);
     procedure btbtnListaClick(Sender: TObject);
     procedure btbtnSalvarClick(Sender: TObject);
+    procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
     function GravarVendedorFuncinario : Boolean;
@@ -241,6 +244,17 @@ begin
       IbDtstTabelaEST_NOME.AsString := sEstado;
       IbDtstTabelaUF.AsString       := sUF;
     end;
+end;
+
+procedure TfrmGeFuncionario.dbgDadosDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  // Destacar funcionarios desativados
+  if ( IbDtstTabelaATIVO.AsInteger = 0 ) then
+    dbgDados.Canvas.Font.Color := lblFuncionarioDesativado.Font.Color;
+
+  dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
 end;
 
 procedure TfrmGeFuncionario.dbLogradouroButtonClick(Sender: TObject);
@@ -361,9 +375,10 @@ begin
 
   DisplayFormatCodigo := '##0000';
 
-  NomeTabela      := 'TBFUNCIONARIO';
-  CampoCodigo     := 'f.codigo';
-  CampoDescricao  := 'f.nome_completo';
+  NomeTabela         := 'TBFUNCIONARIO';
+  CampoCodigo        := 'f.codigo';
+  CampoDescricao     := 'f.nome_completo';
+  CampoCadastroAtivo := 'f.ativo';
 
   UpdateGenerator;
 

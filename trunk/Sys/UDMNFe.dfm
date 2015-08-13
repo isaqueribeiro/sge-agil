@@ -28,11 +28,16 @@ object DMNFe: TDMNFe
       '    c.Codigo'
       '  , c.Pessoa_fisica'
       '  , c.Cnpj'
-      '  , c.Nome'
+      '  , coalesce(nullif(trim(c.NomeFant), '#39#39'), c.Nome) as NomeFant'
       '  , c.Inscest'
       '  , c.Inscmun'
       ''
       '  , c.Fone'
+      '  , c.fonecel'
+      '  , c.fonecomerc'
+      
+        '  , coalesce(c.Fone || '#39' / '#39', '#39#39') || coalesce(c.fonecel || '#39' / '#39 +
+        ', '#39#39') || coalesce(c.fonecomerc || '#39#39', '#39#39') as fones'
       '  , c.Email'
       '  , c.Site'
       ''
@@ -77,146 +82,6 @@ object DMNFe: TDMNFe
         Name = 'Codigo'
         ParamType = ptUnknown
       end>
-    object qryDestinatarioCODIGO: TIntegerField
-      FieldName = 'CODIGO'
-      Origin = 'TBCLIENTE.CODIGO'
-      Required = True
-    end
-    object qryDestinatarioPESSOA_FISICA: TSmallintField
-      FieldName = 'PESSOA_FISICA'
-      Origin = 'TBCLIENTE.PESSOA_FISICA'
-      Required = True
-    end
-    object qryDestinatarioCNPJ: TIBStringField
-      FieldName = 'CNPJ'
-      Origin = 'TBCLIENTE.CNPJ'
-      Required = True
-      Size = 18
-    end
-    object qryDestinatarioNOME: TIBStringField
-      FieldName = 'NOME'
-      Origin = 'TBCLIENTE.NOME'
-      Size = 60
-    end
-    object qryDestinatarioINSCEST: TIBStringField
-      FieldName = 'INSCEST'
-      Origin = 'TBCLIENTE.INSCEST'
-    end
-    object qryDestinatarioINSCMUN: TIBStringField
-      FieldName = 'INSCMUN'
-      Origin = 'TBCLIENTE.INSCMUN'
-    end
-    object qryDestinatarioFONE: TIBStringField
-      FieldName = 'FONE'
-      Origin = 'TBCLIENTE.FONE'
-      Size = 11
-    end
-    object qryDestinatarioEMAIL: TIBStringField
-      FieldName = 'EMAIL'
-      Origin = 'TBCLIENTE.EMAIL'
-      Size = 60
-    end
-    object qryDestinatarioSITE: TIBStringField
-      FieldName = 'SITE'
-      Origin = 'TBCLIENTE.SITE'
-      Size = 40
-    end
-    object qryDestinatarioTLG_TIPO: TSmallintField
-      FieldName = 'TLG_TIPO'
-      Origin = 'TBCLIENTE.TLG_TIPO'
-    end
-    object qryDestinatarioTLG_DESCRICAO: TIBStringField
-      FieldName = 'TLG_DESCRICAO'
-      Origin = 'TBTIPO_LOGRADOURO.TLG_DESCRICAO'
-      Size = 50
-    end
-    object qryDestinatarioTLG_SIGLA: TIBStringField
-      FieldName = 'TLG_SIGLA'
-      Origin = 'TBTIPO_LOGRADOURO.TLG_SIGLA'
-      Size = 10
-    end
-    object qryDestinatarioLOG_COD: TIntegerField
-      FieldName = 'LOG_COD'
-      Origin = 'TBCLIENTE.LOG_COD'
-    end
-    object qryDestinatarioLOG_NOME: TIBStringField
-      FieldName = 'LOG_NOME'
-      Origin = 'TBLOGRADOURO.LOG_NOME'
-      Size = 250
-    end
-    object qryDestinatarioCOMPLEMENTO: TIBStringField
-      FieldName = 'COMPLEMENTO'
-      Origin = 'TBCLIENTE.COMPLEMENTO'
-      Size = 50
-    end
-    object qryDestinatarioNUMERO_END: TIBStringField
-      FieldName = 'NUMERO_END'
-      Origin = 'TBCLIENTE.NUMERO_END'
-      Size = 10
-    end
-    object qryDestinatarioCEP: TIBStringField
-      FieldName = 'CEP'
-      Origin = 'TBCLIENTE.CEP'
-      Size = 8
-    end
-    object qryDestinatarioBAI_COD: TIntegerField
-      FieldName = 'BAI_COD'
-      Origin = 'TBCLIENTE.BAI_COD'
-    end
-    object qryDestinatarioBAI_NOME: TIBStringField
-      FieldName = 'BAI_NOME'
-      Origin = 'TBBAIRRO.BAI_NOME'
-      Size = 100
-    end
-    object qryDestinatarioCID_COD: TIntegerField
-      FieldName = 'CID_COD'
-      Origin = 'TBCLIENTE.CID_COD'
-    end
-    object qryDestinatarioCID_NOME: TIBStringField
-      FieldName = 'CID_NOME'
-      Origin = 'TBCIDADE.CID_NOME'
-      Size = 100
-    end
-    object qryDestinatarioCID_SIAFI: TIntegerField
-      FieldName = 'CID_SIAFI'
-      Origin = 'TBCIDADE.CID_SIAFI'
-    end
-    object qryDestinatarioCID_IBGE: TIntegerField
-      FieldName = 'CID_IBGE'
-      Origin = 'TBCIDADE.CID_IBGE'
-    end
-    object qryDestinatarioCID_DDD: TSmallintField
-      FieldName = 'CID_DDD'
-      Origin = 'TBCIDADE.CID_DDD'
-    end
-    object qryDestinatarioEST_COD: TSmallintField
-      FieldName = 'EST_COD'
-      Origin = 'TBCLIENTE.EST_COD'
-    end
-    object qryDestinatarioEST_NOME: TIBStringField
-      FieldName = 'EST_NOME'
-      Origin = 'TBESTADO.EST_NOME'
-      Size = 100
-    end
-    object qryDestinatarioEST_SIGLA: TIBStringField
-      FieldName = 'EST_SIGLA'
-      Origin = 'TBESTADO.EST_SIGLA'
-      Size = 2
-    end
-    object qryDestinatarioEST_SIAFI: TIntegerField
-      FieldName = 'EST_SIAFI'
-      Origin = 'TBESTADO.EST_SIAFI'
-    end
-    object qryDestinatarioPAIS_ID: TIBStringField
-      FieldName = 'PAIS_ID'
-      Origin = 'TBCLIENTE.PAIS_ID'
-      Size = 5
-    end
-    object qryDestinatarioPAIS_NOME: TIBStringField
-      FieldName = 'PAIS_NOME'
-      Origin = 'TBPAIS.PAIS_NOME'
-      Size = 150
-    end
   end
   object qryDuplicatas: TIBQuery
     Database = DMBusiness.ibdtbsBusiness
@@ -17678,6 +17543,7 @@ object DMNFe: TDMNFe
     ConfigBarras.MostrarCodigo = True
     ConfigBarras.LarguraLinha = 3
     ConfigBarras.Altura = 10
+    ConfigBarras.Margem = 0
     InfoRodapeCupom.Imposto.ModoCompacto = False
     Left = 736
     Top = 104
@@ -17788,6 +17654,7 @@ object DMNFe: TDMNFe
     ConfigBarras.MostrarCodigo = False
     ConfigBarras.LarguraLinha = 0
     ConfigBarras.Altura = 0
+    ConfigBarras.Margem = 0
     LinhasEntreCupons = 10
     ImprimeEmUmaLinha = False
     ImprimeDescAcrescItem = False
@@ -17801,6 +17668,7 @@ object DMNFe: TDMNFe
     Mask_vUnCom = '0.000'
     MarcaImpressora = iBematech
     LinhasEntreCupons = 10
+    ImprimirLei12741 = False
     Left = 800
     Top = 152
   end
@@ -19053,7 +18921,9 @@ object DMNFe: TDMNFe
       '  , i.item'
       '  , i.produto'
       '  , p.descri'
-      '  , p.descri_apresentacao'
+      
+        '  , coalesce(nullif(trim(p.nome_amigo), '#39#39'), p.descri_apresentac' +
+        'ao) as descri_apresentacao'
       '  , p.referencia'
       '  , i.qtde'
       '  , i.qtde_atendida'
@@ -31147,9 +31017,51 @@ object DMNFe: TDMNFe
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       ''
+      
+        'procedure bndReportTitleOnAfterCalcHeight(Sender: TfrxComponent)' +
+        ';'
+      'begin'
+      
+        '  frdEmpresaLogo.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaRZSOC.Visible    := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaCNPJ.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaFone.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaEndereco.Visible := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaEmail.Visible    := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      '  frdEmpresaLinha.Visible    := (<Imprimir_Cabecalho> = 1);'
+      ''
+      
+        '  frdVendaVendedorLinha.Visible  := (<Imprimir_Cabecalho> = 1); ' +
+        '                                                          '
+      
+        '  frdVendaVendedorRotulo.Visible := (<Imprimir_Cabecalho> = 1); ' +
+        '       '
+      '  frdVendaVendedorNome.Visible   := (<Imprimir_Cabecalho> = 1);'
+      ''
+      '  if (not frdVendaVendedorLinha.Visible) then'
+      '  begin'
+      '    frdVendaObsRotulo.Top   := frdVendaVendedorLinha.Top;'
+      
+        '    frdVendaObsTexto.Top    := frdVendaVendedorLinha.Top + frdVe' +
+        'ndaObsRotulo.Height;'
+      '  end;'
+      'end;'
+      ''
       'begin'
       ''
       'end.')
+    OnGetValue = frrNotaEntregaXGetValue
     Left = 56
     Top = 168
     Datasets = <
@@ -31177,13 +31089,21 @@ object DMNFe: TDMNFe
         DataSet = frdVenda
         DataSetName = 'frdVenda'
       end>
-    Variables = <>
+    Variables = <
+      item
+        Name = ' Local'
+        Value = Null
+      end
+      item
+        Name = 'Imprimir_Cabecalho'
+        Value = '1'
+      end>
     Style = <>
     object Data: TfrxDataPage
       Height = 1000.000000000000000000
       Width = 1000.000000000000000000
     end
-    object Page1: TfrxReportPage
+    object PgNotaEntrega: TfrxReportPage
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
@@ -31201,6 +31121,7 @@ object DMNFe: TDMNFe
         Height = 90.401670000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
+        OnAfterCalcHeight = 'bndReportTitleOnAfterCalcHeight'
         object frdVendaCODCONTROL: TfrxMemoView
           Left = 559.370440000000000000
           Top = 18.897650000000000000
@@ -31268,7 +31189,7 @@ object DMNFe: TDMNFe
           WordWrap = False
           VAlign = vaCenter
         end
-        object Picture1: TfrxPictureView
+        object frdEmpresaLogo: TfrxPictureView
           Left = 3.779530000000000000
           Width = 139.842610000000000000
           Height = 79.370130000000000000
@@ -31295,7 +31216,7 @@ object DMNFe: TDMNFe
           ParentFont = False
           VAlign = vaCenter
         end
-        object frdEmpresaNMFANT: TfrxMemoView
+        object frdEmpresaCNPJ: TfrxMemoView
           Left = 143.622140000000000000
           Top = 18.897650000000000000
           Width = 411.968770000000000000
@@ -31315,7 +31236,7 @@ object DMNFe: TDMNFe
           WordWrap = False
           VAlign = vaCenter
         end
-        object frdFone: TfrxMemoView
+        object frdEmpresaFone: TfrxMemoView
           Left = 143.622140000000000000
           Top = 34.015770000000010000
           Width = 411.968770000000000000
@@ -31333,9 +31254,9 @@ object DMNFe: TDMNFe
           WordWrap = False
           VAlign = vaCenter
         end
-        object Memo11: TfrxMemoView
+        object frdEmpresaEndereco: TfrxMemoView
           Left = 143.622140000000000000
-          Top = 49.133889999999990000
+          Top = 49.133890000000010000
           Width = 411.968770000000000000
           Height = 15.118120000000000000
           DataSet = frdCliente
@@ -31355,13 +31276,13 @@ object DMNFe: TDMNFe
           WordWrap = False
           VAlign = vaCenter
         end
-        object Line1: TfrxLineView
+        object frdEmpresaLinha: TfrxLineView
           Top = 83.149660000000000000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
-        object Memo44: TfrxMemoView
+        object frdEmpresaEmail: TfrxMemoView
           Left = 143.622140000000000000
           Top = 64.252010000000000000
           Width = 574.488560000000000000
@@ -31487,24 +31408,62 @@ object DMNFe: TDMNFe
       end
       object bndPageFooter: TfrxPageFooter
         FillType = ftBrush
-        Height = 22.677180000000000000
+        Height = 30.236240000000000000
         Top = 805.039890000000000000
         Width = 718.110700000000000000
         object Memo1: TfrxMemoView
-          Left = 566.929500000000000000
-          Width = 151.181200000000000000
-          Height = 18.897650000000000000
+          Left = 589.606680000000000000
+          Width = 128.504020000000000000
+          Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Height = -9
           Font.Name = 'Lucida Console'
           Font.Style = []
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
           HAlign = haRight
           Memo.UTF8W = (
-            'P '#225' g i n a :  [Page#] / [TotalPages#]')
+            'P'#225'gina [Page#] / [TotalPages#]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
+        end
+        object Memo11: TfrxMemoView
+          Width = 589.606680000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Typ = [ftTop]
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8W = (
+            ' [Sistema]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaBottom
+        end
+        object Memo19: TfrxMemoView
+          Top = 15.118119999999980000
+          Width = 589.606680000000000000
+          Height = 15.118120000000000000
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Frame.Width = 0.100000000000000000
+          Memo.UTF8W = (
+            ' Impresso em [Date] '#224's [Time] por [Usuario]')
+          ParentFont = False
+          WordWrap = False
         end
       end
       object bndHeader: TfrxHeader
@@ -31764,7 +31723,7 @@ object DMNFe: TDMNFe
           Font.Style = [fsBold]
           HAlign = haCenter
           Memo.UTF8W = (
-            'NOTA DE ENTREGA '#192' DOMIC'#205'LIO')
+            'NOTA DE ENTREGA')
           ParentFont = False
           VAlign = vaCenter
         end
@@ -31867,8 +31826,8 @@ object DMNFe: TDMNFe
           WordWrap = False
           VAlign = vaCenter
         end
-        object Memo28: TfrxMemoView
-          Top = 37.795300000000110000
+        object frdVendaVendedorNome: TfrxMemoView
+          Top = 37.795300000000000000
           Width = 370.393940000000000000
           Height = 18.897650000000000000
           DataSet = frdVenda
@@ -31883,7 +31842,7 @@ object DMNFe: TDMNFe
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo29: TfrxMemoView
+        object frdVendaVendedorRotulo: TfrxMemoView
           Top = 26.456710000000040000
           Width = 370.393940000000000000
           Height = 11.338590000000000000
@@ -31893,17 +31852,17 @@ object DMNFe: TDMNFe
           Font.Name = 'Lucida Sans Typewriter'
           Font.Style = [fsBold]
           Memo.UTF8W = (
-            ' Vendedor:')
+            ' Atendente:')
           ParentFont = False
           VAlign = vaCenter
         end
-        object Line3: TfrxLineView
-          Top = 22.677180000000250000
+        object frdVendaVendedorLinha: TfrxLineView
+          Top = 22.677180000000020000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
-        object Memo40: TfrxMemoView
+        object frdVendaObsTexto: TfrxMemoView
           Top = 71.811069999999970000
           Width = 718.110700000000000000
           Height = 34.015770000000010000
@@ -31921,7 +31880,7 @@ object DMNFe: TDMNFe
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo41: TfrxMemoView
+        object frdVendaObsRotulo: TfrxMemoView
           Top = 56.692949999999990000
           Width = 718.110700000000000000
           Height = 15.118120000000000000
@@ -32600,7 +32559,7 @@ object DMNFe: TDMNFe
         Top = 196.535560000000000000
         Width = 718.110700000000000000
         object Line2: TfrxLineView
-          Top = 15.118120000000000000
+          Top = 15.118120000000010000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]

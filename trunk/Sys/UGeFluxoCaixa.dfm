@@ -737,8 +737,6 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
       end
     end
     inherited tbsCadastro: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 25
       ExplicitWidth = 1124
       ExplicitHeight = 579
       inherited Bevel8: TBevel
@@ -1882,7 +1880,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
   inherited ImgList: TImageList
     Left = 832
     Bitmap = {
-      494C01012B002C001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -4943,6 +4941,44 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
     ReportOptions.LastChange = 41787.989329155090000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      'procedure BndPageHeaderOnAfterCalcHeight(Sender: TfrxComponent);'
+      'begin'
+      
+        '  BndPageHeader.Visible      := (<Imprimir_Cabecalho> = 1);     ' +
+        '        '
+      
+        '  frdEmpresaLogo.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaRZSOC.Visible    := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaCNPJ.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaFone.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaEndereco.Visible := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaEmail.Visible    := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      '  frdEmpresaLinha.Visible    := (<Imprimir_Cabecalho> = 1);'
+      ''
+      
+        '  frdReciboNumeroRotulo.Visible := (<Imprimir_Cabecalho> = 1);  ' +
+        '      '
+      
+        '  frdReciboNumero.Visible       := (<Imprimir_Cabecalho> = 1);  ' +
+        '      '
+      '  '
+      '  if (<Imprimir_Cabecalho> = 0) then'
+      '    BndPageHeader.Height := 1;'
+      ''
+      '  BndPageFooter.Visible := (<Imprimir_Cabecalho> = 1);        '
+      'end;'
+      ''
       'begin'
       ''
       'end.')
@@ -4984,142 +5020,34 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
       item
         Name = 'UF'
         Value = 'Trim(Uppercase(<frdEmpresa."EST_SIGLA">))'
+      end
+      item
+        Name = 'Imprimir_Cabecalho'
+        Value = '1'
       end>
     Style = <>
     object Data: TfrxDataPage
       Height = 1000.000000000000000000
       Width = 1000.000000000000000000
     end
-    object Page1: TfrxReportPage
+    object PgRecibo: TfrxReportPage
       Orientation = poLandscape
       PaperWidth = 210.000000000000000000
       PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperSize = 256
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object BndPageHeader: TfrxPageHeader
         FillType = ftBrush
-        Height = 94.488250000000000000
+        Height = 98.267780000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
-        object Picture1: TfrxPictureView
-          Left = 3.779530000000000000
-          Top = 7.559060000000000000
-          Width = 109.606370000000000000
-          Height = 79.370130000000000000
-          DataField = 'LOGO'
-          DataSet = DMNFe.frdEmpresa
-          DataSetName = 'frdEmpresa'
-          HightQuality = False
-          Transparent = False
-          TransparentColor = clWhite
-        end
-        object frdEmpresaRZSOC: TfrxMemoView
-          Left = 113.385900000000000000
-          Top = 7.559060000000000000
-          Width = 457.323130000000000000
-          Height = 18.897650000000000000
-          DataSet = DMNFe.frdCliente
-          DataSetName = 'frdCliente'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -13
-          Font.Name = 'Lucida Console'
-          Font.Style = [fsBold]
-          Memo.UTF8W = (
-            '[frdEmpresa."RZSOC"]')
-          ParentFont = False
-          VAlign = vaCenter
-        end
-        object frdEmpresaNMFANT: TfrxMemoView
-          Left = 113.385900000000000000
-          Top = 26.456710000000000000
-          Width = 457.323130000000000000
-          Height = 15.118120000000000000
-          DataSet = DMNFe.frdCliente
-          DataSetName = 'frdCliente'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Console'
-          Font.Style = []
-          Memo.UTF8W = (
-            
-              'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
-              '">)]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object frdFone: TfrxMemoView
-          Left = 113.385900000000000000
-          Top = 41.574830000000000000
-          Width = 457.323130000000000000
-          Height = 15.118120000000000000
-          DataSet = DMNFe.frdCliente
-          DataSetName = 'frdCliente'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Console'
-          Font.Style = []
-          Memo.UTF8W = (
-            'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo11: TfrxMemoView
-          Left = 113.385900000000000000
-          Top = 56.692950000000000000
-          Width = 457.323130000000000000
-          Height = 15.118120000000000000
-          DataSet = DMNFe.frdCliente
-          DataSetName = 'frdCliente'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Console'
-          Font.Style = []
-          Memo.UTF8W = (
-            
-              '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
-              'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
-              'frdEmpresa."EST_SIGLA"] CEP.: [FormatMaskText('#39'##.###-###;0;'#39',<f' +
-              'rdEmpresa."CEP">)]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Line1: TfrxLineView
-          Top = 94.488250000000000000
-          Width = 718.110700000000000000
-          Color = clBlack
-          Frame.Typ = [ftTop]
-        end
-        object Memo44: TfrxMemoView
-          Left = 113.385900000000000000
-          Top = 71.811070000000000000
-          Width = 457.323130000000000000
-          Height = 15.118120000000000000
-          DataSet = DMNFe.frdCliente
-          DataSetName = 'frdCliente'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -9
-          Font.Name = 'Lucida Console'
-          Font.Style = []
-          Memo.UTF8W = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
-          ParentFont = False
-          WordWrap = False
-          VAlign = vaCenter
-        end
-        object Memo1: TfrxMemoView
+        OnAfterCalcHeight = 'BndPageHeaderOnAfterCalcHeight'
+        object frdReciboNumeroRotulo: TfrxMemoView
           Left = 570.709030000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 147.401670000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdCliente
@@ -5137,7 +5065,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo6: TfrxMemoView
+        object frdReciboNumero: TfrxMemoView
           Left = 570.709030000000000000
           Top = 26.456710000000000000
           Width = 147.401670000000000000
@@ -5158,11 +5086,132 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
           WordWrap = False
           VAlign = vaCenter
         end
+        object frdEmpresaLogo: TfrxPictureView
+          Left = 3.779530000000000000
+          Top = 7.559060000000003000
+          Width = 109.606370000000000000
+          Height = 79.370130000000000000
+          DataField = 'LOGO'
+          DataSet = DMNFe.frdEmpresa
+          DataSetName = 'frdEmpresa'
+          HightQuality = False
+          Transparent = False
+          TransparentColor = clWhite
+        end
+        object frdEmpresaRZSOC: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 7.559059999999999000
+          Width = 457.323130000000000000
+          Height = 18.897650000000000000
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Lucida Console'
+          Font.Style = [fsBold]
+          Memo.UTF8W = (
+            '[frdEmpresa."RZSOC"]')
+          ParentFont = False
+          VAlign = vaCenter
+        end
+        object frdEmpresaCNPJ: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 26.456710000000000000
+          Width = 457.323130000000000000
+          Height = 15.118120000000000000
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            
+              'CNPJ.: [FormatMaskText('#39'##.###.###/####-##;0;'#39',<frdEmpresa."CNPJ' +
+              '">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdEmpresaFone: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 41.574830000000000000
+          Width = 457.323130000000000000
+          Height = 15.118120000000000000
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            'FONE: [FormatMaskText('#39'(##)####.####;0;'#39',<frdEmpresa."FONE">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdEmpresaEndereco: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 56.692949999999990000
+          Width = 457.323130000000000000
+          Height = 15.118120000000000000
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            
+              '[frdEmpresa."TLG_SIGLA"] [frdEmpresa."LOG_NOME"], [frdEmpresa."N' +
+              'UMERO_END"], [frdEmpresa."BAI_NOME"] - [frdEmpresa."CID_NOME"]/[' +
+              'frdEmpresa."EST_SIGLA"] CEP.: [FormatMaskText('#39'##.###-###;0;'#39',<f' +
+              'rdEmpresa."CEP">)]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+        end
+        object frdEmpresaLinha: TfrxLineView
+          Top = 94.488250000000010000
+          Width = 718.110700000000000000
+          Color = clBlack
+          Frame.Typ = [ftTop]
+        end
+        object frdEmpresaEmail: TfrxMemoView
+          Left = 113.385900000000000000
+          Top = 71.811070000000000000
+          Width = 457.323130000000000000
+          Height = 15.118120000000000000
+          DataSet = DMNFe.frdCliente
+          DataSetName = 'frdCliente'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Lucida Console'
+          Font.Style = []
+          Memo.UTF8W = (
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
+          ParentFont = False
+          WordWrap = False
+          VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
+        end
       end
       object BndPageFooter: TfrxPageFooter
         FillType = ftBrush
         Height = 30.236240000000000000
-        Top = 525.354670000000000000
+        Top = 529.134199999999900000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
           Width = 582.047620000000000000
@@ -5181,7 +5230,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
           VAlign = vaBottom
         end
         object Memo3: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 582.047620000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -5217,7 +5266,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
       object BndMasterData: TfrxMasterData
         FillType = ftBrush
         Height = 162.519790000000000000
-        Top = 173.858380000000000000
+        Top = 177.637910000000000000
         Width = 718.110700000000000000
         Child = FrRecibo.BndChildAssinatura
         DataSet = FrdRecibo
@@ -5239,18 +5288,18 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
             776B696E64345C756331200D0A5C706172645C6669313030305C6C693134305C
             72693138305C73623132305C73613132305C736C3336305C736C6D756C74315C
             716A5C66305C66733230205265636562656D6F73205B494946283C4672645265
-            6369626F2E225449504F223E3D2744272C276461272C27646527295D205C6220
-            5B494946283C46726452656369626F2E225449504F223E3D2744272C3C667264
-            456D70726573612E22525A534F43223E2C3C46726452656369626F2E224E4F4D
-            45464F524E223E295D5C623020206120696D706F72745C2765326E6369612064
-            65205C62205B46726452656369626F2E2256414C4F525F42414958415F455854
-            454E534F225D5C623020207265666572656E7465205C276530205C62205B4672
-            6452656369626F2E22484953544F5249434F225D202D20284D6F76696D656E74
-            6F204361697861205B46726452656369626F2E22414E4F225D2F5B466F726D61
-            74466C6F617428273030303030272C3C46726452656369626F2E224E554D4552
-            4F223E295D202D205B494946283C46726452656369626F2E225449504F223E3D
-            2744272C2027445C2765396269746F272C202743725C2765396469746F27295D
-            295C6230202E5C7061720D0A7D0D0A00}
+            6369626F2E225449504F223E3D2744272C276461272C2764652F646127295D20
+            5C62205B494946283C46726452656369626F2E225449504F223E3D2744272C3C
+            667264456D70726573612E22525A534F43223E2C3C46726452656369626F2E22
+            4E4F4D45464F524E223E295D5C623020206120696D706F72745C2765326E6369
+            61206465205C62205B46726452656369626F2E2256414C4F525F42414958415F
+            455854454E534F225D5C623020207265666572656E7465205C276530205C6220
+            5B46726452656369626F2E22484953544F5249434F225D202D20284D6F76696D
+            656E746F204361697861205B46726452656369626F2E22414E4F225D2F5B466F
+            726D6174466C6F617428273030303030272C3C46726452656369626F2E224E55
+            4D45524F223E295D202D205B494946283C46726452656369626F2E225449504F
+            223E3D2744272C2027445C2765396269746F272C202743725C2765396469746F
+            27295D295C6230202E5C7061720D0A7D0D0A00}
         end
         object Rich2: TfrxRichView
           Width = 718.110700000000000000
@@ -5275,7 +5324,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
       object BndChildAssinatura: TfrxChild
         FillType = ftBrush
         Height = 105.826840000000000000
-        Top = 359.055350000000000000
+        Top = 362.834880000000000000
         Width = 718.110700000000000000
         object Memo9: TfrxMemoView
           Left = 79.370130000000000000
@@ -5303,7 +5352,7 @@ inherited frmGeFluxoCaixa: TfrmGeFluxoCaixa
         end
         object Memo5: TfrxMemoView
           Left = 79.370130000000000000
-          Top = 64.252010000000000000
+          Top = 64.252009999999990000
           Width = 377.953000000000000000
           Height = 22.677180000000000000
           DataSet = DMNFe.frdEmpresa
