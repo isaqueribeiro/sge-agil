@@ -4,7 +4,6 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
   Caption = 'Controle de Apropria'#231#245'es de Estoque'
   ClientHeight = 685
   ClientWidth = 1116
-  ExplicitTop = -57
   ExplicitWidth = 1132
   ExplicitHeight = 724
   PixelsPerInch = 96
@@ -71,7 +70,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
             Expanded = False
             FieldName = 'CC_DESCRICAO'
             Title.Caption = 'Centro de Custo'
-            Width = 330
+            Width = 300
             Visible = True
           end
           item
@@ -90,15 +89,21 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
           end
           item
             Expanded = False
-            FieldName = 'USUARIO'
-            Title.Caption = 'Respons'#225'vel'
-            Width = 100
+            FieldName = 'ENTRADA'
+            Width = 90
             Visible = True
           end
           item
             Expanded = False
-            FieldName = 'ENTRADA'
+            FieldName = 'AUTORIZACAO'
             Width = 90
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'USUARIO'
+            Title.Caption = 'Respons'#225'vel'
+            Width = 100
             Visible = True
           end>
       end
@@ -2283,7 +2288,7 @@ inherited frmGeApropriacaoEstoque: TfrmGeApropriacaoEstoque
     Left = 912
     Top = 176
     Bitmap = {
-      494C01012B002C00440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

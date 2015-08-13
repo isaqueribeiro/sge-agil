@@ -3143,6 +3143,8 @@ begin
     AbrirDestinatario( IbDtstTabelaCODCLIENTE.AsInteger );
     AbrirVenda( IbDtstTabelaANO.AsInteger, IbDtstTabelaCODCONTROL.AsInteger );
 
+    ImprimirCabecalho := ShowConfirmation('Nota de Entrega', 'Deseja imprimir na Nota de Entraga o Cabeçalho com informações da empresa?');
+
     frrNotaEntregaX.ShowReport;
   end;
 end;

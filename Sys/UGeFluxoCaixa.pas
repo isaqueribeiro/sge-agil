@@ -238,6 +238,7 @@ type
   private
     { Private declarations }
     sGeneratorName : String;
+    FImprimirCabecalho : Boolean;
     procedure CarregarContaCorrente;
     procedure CarregarSaldos;
     procedure DefinirControle;
@@ -840,6 +841,8 @@ begin
       Exit;
   end;
 
+  FImprimirCabecalho := ShowConfirmation('Recibo', 'Deseja imprimir no recibo o Cabeçalho com informações da empresa?');
+
   frReport := FrRecibo;
   SetVariablesDefault(frReport);
 
@@ -861,6 +864,9 @@ begin
 
   if ( VarName = VAR_SYSTEM ) then
     Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = 'Imprimir_Cabecalho' ) then
+    Value := IfThen(FImprimirCabecalho, 1, 0);
 end;
 
 procedure TfrmGeFluxoCaixa.CdsReciboCalcFields(DataSet: TDataSet);

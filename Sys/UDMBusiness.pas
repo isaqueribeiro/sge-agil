@@ -336,6 +336,7 @@ var
   function GetLimiteDescontoUser : Currency;
   function GetUserPermitirAlterarValorVenda : Boolean;
   function GetPermititEmissaoNFe(const sCNPJEmitente : String) : Boolean;
+  function GetPermititEmissaoNFeEntrada(const sCNPJEmitente : String) : Boolean;
   function GetPermititNFeDenegada(const sCNPJEmitente : String) : Boolean;
   function GetSolicitaDHSaidaNFe(const sCNPJEmitente : String) : Boolean;
   function GetImprimirCodClienteNFe(const sCNPJEmitente : String) : Boolean;
@@ -2811,6 +2812,21 @@ begin
     Open;
 
     Result := (FieldByName('nfe_emitir').AsInteger = 1);
+
+    Close;
+  end;
+end;
+
+function GetPermititEmissaoNFeEntrada(const sCNPJEmitente : String) : Boolean;
+begin
+  with DMBusiness, qryBusca do
+  begin
+    Close;
+    SQL.Clear;
+    SQL.Add('Select nfe_emitir_entrada from TBCONFIGURACAO where empresa = ' + QuotedStr(sCNPJEmitente));
+    Open;
+
+    Result := (FieldByName('nfe_emitir_entrada').AsInteger = 1);
 
     Close;
   end;

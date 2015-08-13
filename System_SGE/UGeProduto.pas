@@ -296,6 +296,10 @@ type
     ppMnAtualizarTabelaIBPT: TMenuItem;
     IbDtstTabelaTABELA_IBPT: TIntegerField;
     dbNCM_SH: TJvDBComboEdit;
+    lblNomeAmigo: TLabel;
+    dbNomeAmigo: TDBEdit;
+    IbDtstTabelaNOME_AMIGO: TIBStringField;
+    ppMnAtualizarNomeAmigo: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure dbGrupoButtonClick(Sender: TObject);
     procedure dbSecaoButtonClick(Sender: TObject);
@@ -324,6 +328,7 @@ type
     procedure btbtnCancelarClick(Sender: TObject);
     procedure dbNCM_SHButtonClick(Sender: TObject);
     procedure ppMnAtualizarTabelaIBPTClick(Sender: TObject);
+    procedure ppMnAtualizarNomeAmigoClick(Sender: TObject);
   private
     { Private declarations }
     fOrdenado : Boolean;
@@ -1120,6 +1125,9 @@ begin
 
   if ( IbDtstTabelaFRACIONADOR.AsCurrency <= 0 ) then
     IbDtstTabelaFRACIONADOR.AsCurrency := 1;
+
+  if ( Trim(IbDtstTabelaNOME_AMIGO.AsString) = EmptyStr ) then
+    IbDtstTabelaNOME_AMIGO.AsString := Copy(Trim(Trim(IbDtstTabelaDESCRI.AsString) + ' ' + Trim(IbDtstTabelaAPRESENTACAO.AsString)), 1, IbDtstTabelaNOME_AMIGO.Size);
 end;
 
 procedure TfrmGeProduto.dbUnidadeButtonClick(Sender: TObject);
@@ -1489,6 +1497,9 @@ procedure TfrmGeProduto.DtSrcTabelaDataChange(Sender: TObject;
 begin
   if ( IbDtstTabela.State in [dsEdit, dsInsert] ) then
   begin
+    if (IbDtstTabela.State = dsInsert) and ((Field = IbDtstTabelaDESCRI) or (Field = IbDtstTabelaAPRESENTACAO)) then
+      IbDtstTabelaNOME_AMIGO.AsString := Copy(Trim(Trim(IbDtstTabelaDESCRI.AsString) + ' ' + Trim(IbDtstTabelaAPRESENTACAO.AsString)), 1, IbDtstTabelaNOME_AMIGO.Size);
+
     if ( Field = IbDtstTabelaALIQUOTA_TIPO ) then
     begin
       if (TAliquota(IbDtstTabelaALIQUOTA_TIPO.AsInteger) = taISS) then
@@ -1546,7 +1557,9 @@ begin
             else
               Add( 'where (upper(' + CampoDescricao +  ') like ' + QuotedStr(UpperCase(Trim(edtFiltrar.Text)) + '%') +
                    '    or upper(' + CampoDescricao +  ') like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edtFiltrar.Text))) + '%') +
-                   '    or upper(p.metafonema) like ' + QuotedStr(Metafonema(edtFiltrar.Text) + '%') + ')');
+                   '    or upper(p.metafonema) like ' + QuotedStr(Metafonema(edtFiltrar.Text) + '%') +
+                   '    or upper(p.nome_amigo) like ' + QuotedStr(UpperCase(Trim(edtFiltrar.Text)) + '%') +
+                   '    or upper(p.nome_amigo) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edtFiltrar.Text))) + '%') + ')');
 
           // Por Referência
           1:
@@ -1691,6 +1704,42 @@ begin
     Screen.Cursor := crDefault;
 
     ShowInformation('Atualização', 'Código metafônico dos registros atualizados com sucesso!');
+  end;
+end;
+
+procedure TfrmGeProduto.ppMnAtualizarNomeAmigoClick(Sender: TObject);
+var
+  sUpdate    ,
+  sNomeAmigo : String;
+begin
+  if IbDtstTabela.IsEmpty then
+    Exit;
+
+  IbDtstTabela.First;
+  IbDtstTabela.DisableControls;
+  Screen.Cursor := crSQLWait;
+  try
+    while not IbDtstTabela.Eof do
+    begin
+      if ( Trim(IbDtstTabelaNOME_AMIGO.AsString) = EmptyStr ) then
+      begin
+        sNomeAmigo := Copy(Trim(Trim(IbDtstTabelaDESCRI.AsString) + ' ' + Trim(IbDtstTabelaAPRESENTACAO.AsString)), 1, IbDtstTabelaNOME_AMIGO.Size);
+
+        sUpdate := 'Update TBPRODUTO Set nome_amigo = %s where cod = %s';
+        sUpdate := Format(sUpdate, [
+          QuotedStr(sNomeAmigo),
+          QuotedStr(IbDtstTabelaCOD.AsString)]);
+        ExecuteScriptSQL( sUpdate );
+      end;
+
+      IbDtstTabela.Next;
+    end;
+  finally
+    IbDtstTabela.First;
+    IbDtstTabela.EnableControls;
+    Screen.Cursor := crDefault;
+
+    ShowInformation('Atualização', 'Nome Amigo dos registros atualizados com sucesso!');
   end;
 end;
 

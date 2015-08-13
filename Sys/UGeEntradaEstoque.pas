@@ -356,6 +356,8 @@ type
     cdsTabelaItensCSOSN: TIBStringField;
     lblCSOSN: TLabel;
     dbCSOSN: TDBEdit;
+    IbDtstTabelaCALCULAR_TOTAIS: TSmallintField;
+    dbCalcularTotais: TDBCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure btnFiltrarClick(Sender: TObject);
     procedure IbDtstTabelaNewRecord(DataSet: TDataSet);
@@ -677,10 +679,16 @@ begin
 
   UpdateGenerator( 'where Ano = ' + FormatFloat('0000', YearOf(Date)) );
 
-  btbtnGerarNFe.Visible := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa);
+  dbCalcularTotais.Visible := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and GetPermititEmissaoNFeEntrada(gUsuarioLogado.Empresa);
+  btbtnGerarNFe.Visible    := GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and GetPermititEmissaoNFeEntrada(gUsuarioLogado.Empresa);
 
   TipoMovimento     := tmeProduto;
   ApenasFinalizadas := False;
+
+  if not dbCalcularTotais.Visible then
+    GrpBxDadosValores.Height := 76
+  else
+    GrpBxDadosValores.Height := 90;
 end;
 
 procedure TfrmGeEntradaEstoque.btnFiltrarClick(Sender: TObject);
@@ -725,20 +733,25 @@ begin
     IbDtstTabelaNATUREZA.Clear;
   end;
 
-  IbDtstTabelaTIPO_MOVIMENTO.Value := Ord(FTipoMovimento);
-  IbDtstTabelaSTATUS.Value         := STATUS_CMP_ABR;
-  IbDtstTabelaCOMPRA_PRAZO.Value   := 0;
-  IbDtstTabelaICMSBASE.Value       := 0;
-  IbDtstTabelaICMSVALOR.Value      := 0;
-  IbDtstTabelaICMSSUBSTBASE.Value  := 0;
-  IbDtstTabelaICMSSUBSTVALOR.Value := 0;
-  IbDtstTabelaFRETE.Value          := 0;
-  IbDtstTabelaOUTROSCUSTOS.Value   := 0;
-  IbDtstTabelaIPI.Value            := 0;
-  IbDtstTabelaDESCONTO.Value       := 0;
-  IbDtstTabelaTOTALNF.Value        := 0;
-  IbDtstTabelaTOTALPROD.Value      := 0;
-  IbDtstTabelaUSUARIO.Value        := gUsuarioLogado.Login;
+  if GetEstacaoEmitiNFe(gUsuarioLogado.Empresa) and GetPermititEmissaoNFeEntrada(IbDtstTabelaCODEMP.AsString) then
+    IbDtstTabelaCALCULAR_TOTAIS.Value := 1
+  else
+    IbDtstTabelaCALCULAR_TOTAIS.Value := 0;
+
+  IbDtstTabelaTIPO_MOVIMENTO.Value  := Ord(FTipoMovimento);
+  IbDtstTabelaSTATUS.Value          := STATUS_CMP_ABR;
+  IbDtstTabelaCOMPRA_PRAZO.Value    := 0;
+  IbDtstTabelaICMSBASE.Value        := 0;
+  IbDtstTabelaICMSVALOR.Value       := 0;
+  IbDtstTabelaICMSSUBSTBASE.Value   := 0;
+  IbDtstTabelaICMSSUBSTVALOR.Value  := 0;
+  IbDtstTabelaFRETE.Value           := 0;
+  IbDtstTabelaOUTROSCUSTOS.Value    := 0;
+  IbDtstTabelaIPI.Value             := 0;
+  IbDtstTabelaDESCONTO.Value        := 0;
+  IbDtstTabelaTOTALNF.Value         := 0;
+  IbDtstTabelaTOTALPROD.Value       := 0;
+  IbDtstTabelaUSUARIO.Value         := gUsuarioLogado.Login;
   IbDtstTabelaVERIFICADOR_NFE.Clear;
   IbDtstTabelaXML_NFE_FILENAME.Clear;
   IbDtstTabelaCODFORN.Clear;
@@ -1111,13 +1124,16 @@ begin
 
       cdsTabelaItens.Post;
 
-      GetToTais(cTotalBruto, cTotalDesconto, cTotalLiquido, cValorBaseIcms, cValorIcms);
+      if ( dbCalcularTotais.Checked ) then
+      begin
+        GetToTais(cTotalBruto, cTotalDesconto, cTotalLiquido, cValorBaseIcms, cValorIcms);
 
-      IbDtstTabelaICMSBASE.AsCurrency  := cValorBaseIcms;
-      IbDtstTabelaICMSVALOR.AsCurrency := cValorIcms;
-      IbDtstTabelaTOTALPROD.AsCurrency := cTotalBruto;
-      IbDtstTabelaDESCONTO.AsCurrency  := cTotalDesconto;
-      IbDtstTabelaTOTALNF.AsCurrency   := cTotalLiquido + IbDtstTabelaIPI.AsCurrency;
+        IbDtstTabelaICMSBASE.AsCurrency  := cValorBaseIcms;
+        IbDtstTabelaICMSVALOR.AsCurrency := cValorIcms;
+        IbDtstTabelaTOTALPROD.AsCurrency := cTotalBruto;
+        IbDtstTabelaDESCONTO.AsCurrency  := cTotalDesconto;
+        IbDtstTabelaTOTALNF.AsCurrency   := cTotalLiquido + IbDtstTabelaIPI.AsCurrency;
+      end;
 
       if ( btnProdutoInserir.Visible and btnProdutoInserir.Enabled ) then
         btnProdutoInserir.SetFocus;
@@ -1618,9 +1634,9 @@ begin
     Abort;
   end;
 
-  if not GetPermititEmissaoNFe( IbDtstTabelaCODEMP.AsString ) then
+  if not GetPermititEmissaoNFeEntrada( IbDtstTabelaCODEMP.AsString ) then
   begin
-    ShowInformation('Empresa selecionada não habilitada para emissão de NF-e.' + #13 + 'Favor entrar em contato com suporte.');
+    ShowInformation('Empresa selecionada não habilitada para emissão de NF-e p/ Entradas.' + #13 + 'Favor entrar em contato com suporte.');
     Exit;
   end;
 

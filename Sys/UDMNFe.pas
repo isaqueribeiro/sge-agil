@@ -29,36 +29,6 @@ type
     ACBrNFe: TACBrNFe;
     frDANFE: TACBrNFeDANFEFR;
     qryDestinatario: TIBQuery;
-    qryDestinatarioCODIGO: TIntegerField;
-    qryDestinatarioPESSOA_FISICA: TSmallintField;
-    qryDestinatarioCNPJ: TIBStringField;
-    qryDestinatarioNOME: TIBStringField;
-    qryDestinatarioINSCEST: TIBStringField;
-    qryDestinatarioINSCMUN: TIBStringField;
-    qryDestinatarioFONE: TIBStringField;
-    qryDestinatarioEMAIL: TIBStringField;
-    qryDestinatarioSITE: TIBStringField;
-    qryDestinatarioTLG_TIPO: TSmallintField;
-    qryDestinatarioTLG_DESCRICAO: TIBStringField;
-    qryDestinatarioTLG_SIGLA: TIBStringField;
-    qryDestinatarioLOG_COD: TIntegerField;
-    qryDestinatarioLOG_NOME: TIBStringField;
-    qryDestinatarioCOMPLEMENTO: TIBStringField;
-    qryDestinatarioNUMERO_END: TIBStringField;
-    qryDestinatarioCEP: TIBStringField;
-    qryDestinatarioBAI_COD: TIntegerField;
-    qryDestinatarioBAI_NOME: TIBStringField;
-    qryDestinatarioCID_COD: TIntegerField;
-    qryDestinatarioCID_NOME: TIBStringField;
-    qryDestinatarioCID_SIAFI: TIntegerField;
-    qryDestinatarioCID_IBGE: TIntegerField;
-    qryDestinatarioCID_DDD: TSmallintField;
-    qryDestinatarioEST_COD: TSmallintField;
-    qryDestinatarioEST_NOME: TIBStringField;
-    qryDestinatarioEST_SIGLA: TIBStringField;
-    qryDestinatarioEST_SIAFI: TIntegerField;
-    qryDestinatarioPAIS_ID: TIBStringField;
-    qryDestinatarioPAIS_NOME: TIBStringField;
     qryDuplicatas: TIBQuery;
     qryDadosProduto: TIBQuery;
     frdEmpresa: TfrxDBDataset;
@@ -275,12 +245,16 @@ type
       var Value: Variant);
     procedure frrAutorizacaoCompraGetValue(const VarName: String;
       var Value: Variant);
+    procedure frrNotaEntregaXGetValue(const VarName: string;
+      var Value: Variant);
   private
     { Private declarations }
     ver : TInfoVersao;
 
     frmACBr : TfrmGeConfigurarNFeACBr;
     fr3Designer: TfrxDesigner;
+
+    FImprimirCabecalho : Boolean;
 
     procedure GerarTabela_CST_PIS;
     procedure GerarTabela_CST_COFINS;
@@ -313,6 +287,7 @@ type
   public
     { Public declarations }
     property ConfigACBr : TfrmGeConfigurarNFeACBr read frmACBr write frmACBr;
+    property ImprimirCabecalho : Boolean read FImprimirCabecalho write FImprimirCabecalho;
 
     procedure LoadXML(MyMemo: TStringList; MyWebBrowser: TWebBrowser);
 
@@ -749,6 +724,8 @@ begin
 
   GerarTabela_CST_PIS;
   GerarTabela_CST_COFINS;
+
+  FImprimirCabecalho := True;
 end;
 
 procedure TDMNFe.GravarConfiguracao(const sCNPJEmitente : String);
@@ -1843,7 +1820,7 @@ begin
     begin
       Ide.cNF       := iNumeroNFe; // Caso não seja preenchido será gerado um número aleatório pelo componente
       Ide.natOp     := qryCalculoImposto.FieldByName('CFOP_DESCRICAO').AsString;
-      Ide.idDest    := TpcnDestinoOperacao( IfThen(Trim(qryEmitenteEST_SIGLA.AsString) = Trim(qryDestinatarioEST_SIGLA.AsString), 0, 1) );
+      Ide.idDest    := TpcnDestinoOperacao( IfThen(Trim(qryEmitenteEST_SIGLA.AsString) = Trim(qryDestinatario.FieldByName('EST_SIGLA').AsString), 0, 1) );
 
       if ( qryCalculoImposto.FieldByName('VENDA_PRAZO').AsInteger = 0 ) then
         Ide.indPag  := ipVista
@@ -1978,18 +1955,18 @@ begin
         Avulsa.repEmi  := '';
         Avulsa.dPag    := now;             }
 
-      Dest.CNPJCPF := qryDestinatarioCNPJ.AsString; // FormatFloat('00000000000000', qryDestinatarioCNPJ.AsInteger);
-      Dest.xNome   := qryDestinatarioNOME.AsString; // + IfThen(GetImprimirCodClienteNFe(sCNPJEmitente), ' ' + FormatFloat('##00000', qryDestinatarioCODIGO.AsInteger));
-      Dest.Email   := Trim(AnsiLowerCase(qryDestinatarioEMAIL.AsString));
+      Dest.CNPJCPF := qryDestinatario.FieldByName('CNPJ').AsString; // FormatFloat('00000000000000', qryDestinatarioCNPJ.AsInteger);
+      Dest.xNome   := qryDestinatario.FieldByName('NOME').AsString; // + IfThen(GetImprimirCodClienteNFe(sCNPJEmitente), ' ' + FormatFloat('##00000', qryDestinatarioCODIGO.AsInteger));
+      Dest.Email   := Trim(AnsiLowerCase(qryDestinatario.FieldByName('EMAIL').AsString));
 
-      if ( qryDestinatarioPESSOA_FISICA.AsInteger = 0 ) then
+      if ( qryDestinatario.FieldByName('PESSOA_FISICA').AsInteger = 0 ) then
       begin
-        if (AnsiUpperCase(Trim(qryDestinatarioINSCEST.AsString)) = 'ISENTO') or (Trim(qryDestinatarioINSCEST.AsString) = EmptyStr) then
+        if (AnsiUpperCase(Trim(qryDestinatario.FieldByName('INSCEST').AsString)) = 'ISENTO') or (Trim(qryDestinatario.FieldByName('INSCEST').AsString) = EmptyStr) then
           Dest.indIEDest     := inIsento
         else
           Dest.indIEDest     := inContribuinte;
 
-        Dest.IE              := Trim(qryDestinatarioINSCEST.AsString);
+        Dest.IE              := Trim(qryDestinatario.FieldByName('INSCEST').AsString);
         Dest.ISUF            := EmptyStr;
       end
       else
@@ -1999,17 +1976,17 @@ begin
         Dest.ISUF            := EmptyStr;
       end;
 
-      Dest.EnderDest.Fone    := qryDestinatarioFONE.AsString;
-      Dest.EnderDest.CEP     := qryDestinatarioCEP.AsInteger;
-      Dest.EnderDest.xLgr    := Trim( qryDestinatarioTLG_SIGLA.AsString + ' ' + qryDestinatarioLOG_NOME.AsString );
-      Dest.EnderDest.nro     := qryDestinatarioNUMERO_END.AsString;
-      Dest.EnderDest.xCpl    := qryDestinatarioCOMPLEMENTO.AsString;
-      Dest.EnderDest.xBairro := qryDestinatarioBAI_NOME.AsString;
-      Dest.EnderDest.cMun    := qryDestinatarioCID_IBGE.AsInteger;
-      Dest.EnderDest.xMun    := qryDestinatarioCID_NOME.AsString;
-      Dest.EnderDest.UF      := qryDestinatarioEST_SIGLA.AsString;
-      Dest.EnderDest.cPais   := qryDestinatarioPAIS_ID.AsInteger;  // 1058;
-      Dest.EnderDest.xPais   := qryDestinatarioPAIS_NOME.AsString; // 'BRASIL';
+      Dest.EnderDest.Fone    := qryDestinatario.FieldByName('FONE').AsString;
+      Dest.EnderDest.CEP     := qryDestinatario.FieldByName('CEP').AsInteger;
+      Dest.EnderDest.xLgr    := Trim( qryDestinatario.FieldByName('TLG_SIGLA').AsString + ' ' + qryDestinatario.FieldByName('LOG_NOME').AsString );
+      Dest.EnderDest.nro     := qryDestinatario.FieldByName('NUMERO_END').AsString;
+      Dest.EnderDest.xCpl    := qryDestinatario.FieldByName('COMPLEMENTO').AsString;
+      Dest.EnderDest.xBairro := qryDestinatario.FieldByName('BAI_NOME').AsString;
+      Dest.EnderDest.cMun    := qryDestinatario.FieldByName('CID_IBGE').AsInteger;
+      Dest.EnderDest.xMun    := qryDestinatario.FieldByName('CID_NOME').AsString;
+      Dest.EnderDest.UF      := qryDestinatario.FieldByName('EST_SIGLA').AsString;
+      Dest.EnderDest.cPais   := qryDestinatario.FieldByName('PAIS_ID').AsInteger;  // 1058;
+      Dest.EnderDest.xPais   := qryDestinatario.FieldByName('PAIS_NOME').AsString; // 'BRASIL';
 
   //Use os campos abaixo para informar o endereço de retirada quando for diferente do Emitente
   {      Retirada.CNPJCPF := '';
@@ -2691,10 +2668,10 @@ begin
     Value := StrFormatarFONE(qryEmitenteFONE.AsString);
 
   if ( VarName = 'CNPJCliente' ) then
-    if ( qryDestinatarioPESSOA_FISICA.AsInteger = 0 ) then
-      Value := StrFormatarCnpj(qryDestinatarioCNPJ.AsString)
+    if ( qryDestinatario.FieldByName('PESSOA_FISICA').AsInteger = 0 ) then
+      Value := StrFormatarCnpj(qryDestinatario.FieldByName('CNPJ').AsString)
     else
-      Value := StrFormatarCpf(qryDestinatarioCNPJ.AsString);
+      Value := StrFormatarCpf(qryDestinatario.FieldByName('CNPJ').AsString);
 end;
 
 procedure TDMNFe.GerarTabela_CST_PIS;
@@ -4636,6 +4613,19 @@ begin
     Value := GetUserApp;
 end;
 
+procedure TDMNFe.frrNotaEntregaXGetValue(const VarName: string;
+  var Value: Variant);
+begin
+  if ( VarName = VAR_SYSTEM ) then
+    Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = VAR_USER ) then
+    Value := GetUserApp;
+
+  if ( VarName = 'Imprimir_Cabecalho' ) then
+    Value := IfThen(FImprimirCabecalho, 1, 0);
+end;
+
 function TDMNFe.EnviarEmail_Generico(const sCNPJEmitente, sNumeroDocumento, sEmailDestinatario : String;
   const sArquivo : String = '') : Boolean;
 var
@@ -4827,11 +4817,12 @@ begin
 
       Ecf.Identifica_Cupom(Now, FormatFloat('###0000000', iNumVenda), qryCalculoImposto.FieldByName('VENDEDOR_NOME').AsString);
 
-      if ( qryDestinatarioCODIGO.AsInteger <> CONSUMIDOR_FINAL_CODIGO ) then
-        Ecf.Identifica_Consumidor( IfThen(StrIsCPF(qryDestinatarioCNPJ.AsString), StrFormatarCpf(qryDestinatarioCNPJ.AsString), StrFormatarCnpj(qryDestinatarioCNPJ.AsString))
-          , AnsiUpperCase(qryDestinatarioNOME.AsString)
-          , Trim(qryDestinatarioTLG_SIGLA.AsString + ' ' + qryDestinatarioLOG_NOME.AsString + ', ' +
-            qryDestinatarioNUMERO_END.AsString + ' - ' + qryDestinatarioBAI_NOME.AsString) + ' (' + qryDestinatarioCID_NOME.AsString + ')'
+      if ( qryDestinatario.FieldByName('CODIGO').AsInteger <> CONSUMIDOR_FINAL_CODIGO ) then
+        Ecf.Identifica_Consumidor( IfThen(StrIsCPF(qryDestinatario.FieldByName('CNPJ').AsString), StrFormatarCpf(qryDestinatario.FieldByName('CNPJ').AsString), StrFormatarCnpj(qryDestinatario.FieldByName('CNPJ').AsString))
+          , AnsiUpperCase(qryDestinatario.FieldByName('NOMEFANT').AsString)
+          , Trim(qryDestinatario.FieldByName('TLG_SIGLA').AsString + ' ' + qryDestinatario.FieldByName('LOG_NOME').AsString + ', ' +
+            qryDestinatario.FieldByName('NUMERO_END').AsString + ' - ' + qryDestinatario.FieldByName('BAI_NOME').AsString) + ' (' + qryDestinatario.FieldByName('CID_NOME').AsString + ')'
+          , Trim(Copy(Trim(qryDestinatario.FieldByName('FONES').AsString), 1, Length(Trim(qryDestinatario.FieldByName('FONES').AsString)) - 1))
         );
 
       Ecf.Titulo_Cupom('*** ORCAMENTO ***');
@@ -5246,7 +5237,7 @@ begin
     begin
       Ide.cNF       := iNumeroNFCe;
       Ide.natOp     := 'VENDA'; // Da CFOP 5101 // qryCalculoImportoCFOP_DESCRICAO.AsString;
-      Ide.idDest    := TpcnDestinoOperacao( IfThen(Trim(qryEmitenteEST_SIGLA.AsString) = Trim(qryDestinatarioEST_SIGLA.AsString), 0, 1) );
+      Ide.idDest    := TpcnDestinoOperacao( IfThen(Trim(qryEmitenteEST_SIGLA.AsString) = Trim(qryDestinatario.FieldByName('EST_SIGLA').AsString), 0, 1) );
 
       if ( qryCalculoImposto.FieldByName('VENDA_PRAZO').AsInteger = 0 ) then
         Ide.indPag  := ipVista
@@ -5333,18 +5324,18 @@ begin
         Avulsa.repEmi  := '';
         Avulsa.dPag    := now;             }
 
-      Dest.CNPJCPF := qryDestinatarioCNPJ.AsString;
-      Dest.xNome   := qryDestinatarioNOME.AsString + IfThen(GetImprimirCodClienteNFe(sCNPJEmitente), ' ' + FormatFloat('##00000', qryDestinatarioCODIGO.AsInteger));
-      Dest.Email   := Trim(AnsiLowerCase(qryDestinatarioEMAIL.AsString));
+      Dest.CNPJCPF := qryDestinatario.FieldByName('CNPJ').AsString;
+      Dest.xNome   := qryDestinatario.FieldByName('NOME').AsString + IfThen(GetImprimirCodClienteNFe(sCNPJEmitente), ' ' + FormatFloat('##00000', qryDestinatario.FieldByName('CODIGO').AsInteger));
+      Dest.Email   := Trim(AnsiLowerCase(qryDestinatario.FieldByName('EMAIL').AsString));
 
-      if ( qryDestinatarioPESSOA_FISICA.AsInteger = 0 ) then
+      if ( qryDestinatario.FieldByName('PESSOA_FISICA').AsInteger = 0 ) then
       begin
-        if (AnsiUpperCase(Trim(qryDestinatarioINSCEST.AsString)) = 'ISENTO') or (Trim(qryDestinatarioINSCEST.AsString) = EmptyStr) then
+        if (AnsiUpperCase(Trim(qryDestinatario.FieldByName('INSCEST').AsString)) = 'ISENTO') or (Trim(qryDestinatario.FieldByName('INSCEST').AsString) = EmptyStr) then
           Dest.indIEDest     := inIsento
         else
           Dest.indIEDest     := inContribuinte;
 
-        Dest.IE              := Trim(qryDestinatarioINSCEST.AsString);
+        Dest.IE              := Trim(qryDestinatario.FieldByName('INSCEST').AsString);
         Dest.ISUF            := EmptyStr;
       end
       else
@@ -5354,17 +5345,17 @@ begin
         Dest.ISUF            := EmptyStr;
       end;
 
-      Dest.EnderDest.Fone    := qryDestinatarioFONE.AsString;
-      Dest.EnderDest.CEP     := qryDestinatarioCEP.AsInteger;
-      Dest.EnderDest.xLgr    := Trim( qryDestinatarioTLG_SIGLA.AsString + ' ' + qryDestinatarioLOG_NOME.AsString );
-      Dest.EnderDest.nro     := qryDestinatarioNUMERO_END.AsString;
-      Dest.EnderDest.xCpl    := qryDestinatarioCOMPLEMENTO.AsString;
-      Dest.EnderDest.xBairro := qryDestinatarioBAI_NOME.AsString;
-      Dest.EnderDest.cMun    := qryDestinatarioCID_IBGE.AsInteger;
-      Dest.EnderDest.xMun    := qryDestinatarioCID_NOME.AsString;
-      Dest.EnderDest.UF      := qryDestinatarioEST_SIGLA.AsString;
-      Dest.EnderDest.cPais   := qryDestinatarioPAIS_ID.AsInteger;  // 1058;
-      Dest.EnderDest.xPais   := qryDestinatarioPAIS_NOME.AsString; // 'BRASIL';
+      Dest.EnderDest.Fone    := qryDestinatario.FieldByName('FONE').AsString;
+      Dest.EnderDest.CEP     := qryDestinatario.FieldByName('CEP').AsInteger;
+      Dest.EnderDest.xLgr    := Trim( qryDestinatario.FieldByName('TLG_SIGLA').AsString + ' ' + qryDestinatario.FieldByName('LOG_NOME').AsString );
+      Dest.EnderDest.nro     := qryDestinatario.FieldByName('NUMERO_END').AsString;
+      Dest.EnderDest.xCpl    := qryDestinatario.FieldByName('COMPLEMENTO').AsString;
+      Dest.EnderDest.xBairro := qryDestinatario.FieldByName('BAI_NOME').AsString;
+      Dest.EnderDest.cMun    := qryDestinatario.FieldByName('CID_IBGE').AsInteger;
+      Dest.EnderDest.xMun    := qryDestinatario.FieldByName('CID_NOME').AsString;
+      Dest.EnderDest.UF      := qryDestinatario.FieldByName('EST_SIGLA').AsString;
+      Dest.EnderDest.cPais   := qryDestinatario.FieldByName('PAIS_ID').AsInteger;  // 1058;
+      Dest.EnderDest.xPais   := qryDestinatario.FieldByName('PAIS_NOME').AsString; // 'BRASIL';
 
   //Use os campos abaixo para informar o endereço de retirada quando for diferente do Emitente
   {      Retirada.CNPJCPF := '';
@@ -6085,11 +6076,12 @@ begin
 
       Ecf.Identifica_Cupom(Now, FormatFloat('###0000000', iNumVenda), qryCalculoImposto.FieldByName('VENDEDOR_NOME').AsString);
 
-      if ( qryDestinatarioCODIGO.AsInteger <> CONSUMIDOR_FINAL_CODIGO ) then
-        Ecf.Identifica_Consumidor( IfThen(StrIsCPF(qryDestinatarioCNPJ.AsString), StrFormatarCpf(qryDestinatarioCNPJ.AsString), StrFormatarCnpj(qryDestinatarioCNPJ.AsString))
-          , RemoveAcentos(AnsiUpperCase(qryDestinatarioNOME.AsString))
-          , Trim(qryDestinatarioTLG_SIGLA.AsString + ' ' + qryDestinatarioLOG_NOME.AsString + ', ' +
-            qryDestinatarioNUMERO_END.AsString + ' - ' + qryDestinatarioBAI_NOME.AsString) + ' (' + qryDestinatarioCID_NOME.AsString + ')'
+      if ( qryDestinatario.FieldByName('CODIGO').AsInteger <> CONSUMIDOR_FINAL_CODIGO ) then
+        Ecf.Identifica_Consumidor( IfThen(StrIsCPF(qryDestinatario.FieldByName('CNPJ').AsString), StrFormatarCpf(qryDestinatario.FieldByName('CNPJ').AsString), StrFormatarCnpj(qryDestinatario.FieldByName('CNPJ').AsString))
+          , RemoveAcentos(AnsiUpperCase(qryDestinatario.FieldByName('NOMEFANT').AsString))
+          , Trim(qryDestinatario.FieldByName('TLG_SIGLA').AsString + ' ' + qryDestinatario.FieldByName('LOG_NOME').AsString + ', ' +
+            qryDestinatario.FieldByName('NUMERO_END').AsString + ' - ' + qryDestinatario.FieldByName('BAI_NOME').AsString) + ' (' + qryDestinatario.FieldByName('CID_NOME').AsString + ')'
+          , Trim(Copy(Trim(qryDestinatario.FieldByName('FONES').AsString), 1, Length(Trim(qryDestinatario.FieldByName('FONES').AsString)) - 1))
         );
 
       if qryNFeEmitida.IsEmpty then
@@ -6222,7 +6214,7 @@ begin
               NotaUtil.UFtoCUF(qryEmitenteEST_SIGLA.AsString)    // Código UF
             , ACBrNFe.Configuracoes.WebServices.Ambiente         // Ambiente do WebService
             , 'NFe' + qryNFeEmitidaCHAVE.AsString                // ID da Nota Fiscal (NFe + Chave)
-            , qryDestinatarioCNPJ.AsString                       // CPJ/CNPJ do Consumidor
+            , qryDestinatario.FieldByName('CNPJ').AsString       // CPJ/CNPJ do Consumidor
             , qryCalculoImposto.FieldByName('DATAEMISSAO').AsDateTime            // Data de Emissão
             , qryCalculoImposto.FieldByName('NFE_VALOR_TOTAL_NOTA').AsCurrency   // Valor da Nota Fiscal
             , qryCalculoImposto.FieldByName('NFE_VALOR_ICMS').AsCurrency         // Valor do ICMS da Nota Fiscal
@@ -6352,11 +6344,11 @@ begin
         Ecf.Pular_Linha(PULAR_LINHA_FINAL);
 
         Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas, '----------------------------------------') );
-        Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas, RemoveAcentos(AnsiUpperCase(qryDestinatarioNOME.AsString))) );
+        Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas, RemoveAcentos(AnsiUpperCase(qryDestinatario.FieldByName('NOMEFANT').AsString))) );
         Ecf.Texto_Livre( Ecf.Centralizar(Ecf.Num_Colunas,
-          IfThen(StrIsCPF(qryDestinatarioCNPJ.AsString)
-            , StrFormatarCpf(qryDestinatarioCNPJ.AsString)
-            , StrFormatarCnpj(qryDestinatarioCNPJ.AsString))) );
+          IfThen(StrIsCPF(qryDestinatario.FieldByName('CNPJ').AsString)
+            , StrFormatarCpf(qryDestinatario.FieldByName('CNPJ').AsString)
+            , StrFormatarCnpj(qryDestinatario.FieldByName('CNPJ').AsString))) );
       end;
 
     finally

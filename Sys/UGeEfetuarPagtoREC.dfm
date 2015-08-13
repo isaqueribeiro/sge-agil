@@ -141,9 +141,9 @@ inherited frmGeEfetuarPagtoREC: TfrmGeEfetuarPagtoREC
     object lblHistorico: TLabel
       Left = 16
       Top = 104
-      Width = 53
+      Width = 133
       Height = 13
-      Caption = 'Hist'#243'rico:'
+      Caption = 'Hist'#243'rico (Referente '#224'):'
       FocusControl = dbHistorico
       Font.Charset = ANSI_CHARSET
       Font.Color = clBlack

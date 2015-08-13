@@ -313,8 +313,6 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       end
     end
     inherited tbsCadastro: TTabSheet
-      ExplicitLeft = 4
-      ExplicitTop = 25
       ExplicitWidth = 926
       ExplicitHeight = 489
       inherited Bevel8: TBevel
@@ -1446,7 +1444,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
   inherited ImgList: TImageList
     Top = 72
     Bitmap = {
-      494C01012B002C00440010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01012B002C00480010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000040000000B0000000010020000000000000B0
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -3181,9 +3179,47 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 41557.397184305600000000
     ReportOptions.Name = 'Visualizar Recibo (Contas A Pagar)'
-    ReportOptions.LastChange = 41787.989329155090000000
+    ReportOptions.LastChange = 42215.926201203710000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
+      'procedure BndPageHeaderOnAfterCalcHeight(Sender: TfrxComponent);'
+      'begin'
+      
+        '  BndPageHeader.Visible      := (<Imprimir_Cabecalho> = 1);     ' +
+        '      '
+      
+        '  frdEmpresaLogo.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaRZSOC.Visible    := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaCNPJ.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaFone.Visible     := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaEndereco.Visible := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      
+        '  frdEmpresaEmail.Visible    := (<Imprimir_Cabecalho> = 1);     ' +
+        '                                       '
+      '  frdEmpresaLinha.Visible    := (<Imprimir_Cabecalho> = 1);'
+      ''
+      
+        '  frdReciboNumeroRotulo.Visible := (<Imprimir_Cabecalho> = 1);  ' +
+        '      '
+      
+        '  frdReciboNumero.Visible       := (<Imprimir_Cabecalho> = 1);  ' +
+        '      '
+      '  '
+      '  if (<Imprimir_Cabecalho> = 0) then'
+      '    BndPageHeader.Height := 1;  '
+      ''
+      '  BndPageFooter.Visible := (<Imprimir_Cabecalho> = 1);'
+      'end;'
+      ''
       'begin'
       ''
       'end.')
@@ -3225,29 +3261,34 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       item
         Name = 'UF'
         Value = 'Trim(Uppercase(<frdEmpresa."EST_SIGLA">))'
+      end
+      item
+        Name = 'Imprimir_Cabecalho'
+        Value = '1'
       end>
     Style = <>
     object Data: TfrxDataPage
       Height = 1000.000000000000000000
       Width = 1000.000000000000000000
     end
-    object Page1: TfrxReportPage
+    object PgRecibo: TfrxReportPage
       Orientation = poLandscape
       PaperWidth = 210.000000000000000000
       PaperHeight = 148.000000000000000000
-      PaperSize = 11
+      PaperSize = 256
       LeftMargin = 10.000000000000000000
       RightMargin = 10.000000000000000000
       TopMargin = 10.000000000000000000
       BottomMargin = 10.000000000000000000
       object BndPageHeader: TfrxPageHeader
         FillType = ftBrush
-        Height = 94.488250000000000000
+        Height = 98.267780000000000000
         Top = 18.897650000000000000
         Width = 718.110700000000000000
-        object Picture1: TfrxPictureView
+        OnAfterCalcHeight = 'BndPageHeaderOnAfterCalcHeight'
+        object frdEmpresaLogo: TfrxPictureView
           Left = 3.779530000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 109.606370000000000000
           Height = 79.370130000000000000
           DataField = 'LOGO'
@@ -3259,7 +3300,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
         end
         object frdEmpresaRZSOC: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 464.882190000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdCliente
@@ -3274,7 +3315,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           ParentFont = False
           VAlign = vaCenter
         end
-        object frdEmpresaNMFANT: TfrxMemoView
+        object frdEmpresaCNPJ: TfrxMemoView
           Left = 113.385900000000000000
           Top = 26.456710000000000000
           Width = 464.882190000000000000
@@ -3294,7 +3335,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           WordWrap = False
           VAlign = vaCenter
         end
-        object frdFone: TfrxMemoView
+        object frdEmpresaFone: TfrxMemoView
           Left = 113.385900000000000000
           Top = 41.574830000000000000
           Width = 464.882190000000000000
@@ -3312,9 +3353,9 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           WordWrap = False
           VAlign = vaCenter
         end
-        object Memo11: TfrxMemoView
+        object frdEmpresaEndereco: TfrxMemoView
           Left = 113.385900000000000000
-          Top = 56.692950000000000000
+          Top = 56.692949999999990000
           Width = 464.882190000000000000
           Height = 15.118120000000000000
           DataSet = DMNFe.frdCliente
@@ -3334,13 +3375,13 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           WordWrap = False
           VAlign = vaCenter
         end
-        object Line1: TfrxLineView
+        object frdEmpresaLinha: TfrxLineView
           Top = 94.488250000000000000
           Width = 718.110700000000000000
           Color = clBlack
           Frame.Typ = [ftTop]
         end
-        object Memo44: TfrxMemoView
+        object frdEmpresaEmail: TfrxMemoView
           Left = 113.385900000000000000
           Top = 71.811070000000000000
           Width = 464.882190000000000000
@@ -3353,14 +3394,22 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           Font.Name = 'Lucida Console'
           Font.Style = []
           Memo.UTF8W = (
-            '[frdEmpresa."HOME_PAGE"] / [frdEmpresa."EMAIL"]')
+            
+              '[frdEmpresa."HOME_PAGE"][IIF(Trim(<frdEmpresa."HOME_PAGE">)='#39#39',<' +
+              'frdEmpresa."EMAIL">,IIF(Trim(<frdEmpresa."EMAIL">)='#39#39','#39#39','#39' / '#39'+<' +
+              'frdEmpresa."EMAIL">))]')
           ParentFont = False
           WordWrap = False
           VAlign = vaCenter
+          Formats = <
+            item
+            end
+            item
+            end>
         end
-        object Memo1: TfrxMemoView
+        object frdReciboNumeroRotulo: TfrxMemoView
           Left = 578.268090000000000000
-          Top = 7.559060000000000000
+          Top = 7.559059999999999000
           Width = 139.842610000000000000
           Height = 18.897650000000000000
           DataSet = DMNFe.frdCliente
@@ -3378,7 +3427,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           ParentFont = False
           VAlign = vaCenter
         end
-        object Memo6: TfrxMemoView
+        object frdReciboNumero: TfrxMemoView
           Left = 578.268090000000000000
           Top = 26.456710000000000000
           Width = 139.842610000000000000
@@ -3405,7 +3454,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       object BndPageFooter: TfrxPageFooter
         FillType = ftBrush
         Height = 30.236240000000000000
-        Top = 525.354670000000000000
+        Top = 529.134199999999900000
         Width = 718.110700000000000000
         object Memo2: TfrxMemoView
           Width = 582.047620000000000000
@@ -3424,7 +3473,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
           VAlign = vaBottom
         end
         object Memo3: TfrxMemoView
-          Top = 15.118120000000000000
+          Top = 15.118119999999980000
           Width = 582.047620000000000000
           Height = 15.118120000000000000
           Font.Charset = DEFAULT_CHARSET
@@ -3460,7 +3509,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       object BndMasterData: TfrxMasterData
         FillType = ftBrush
         Height = 162.519790000000000000
-        Top = 173.858380000000000000
+        Top = 177.637910000000000000
         Width = 718.110700000000000000
         Child = FrRecibo.BndChildAssinatura
         DataSet = FrdRecibo
@@ -3515,7 +3564,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
       object BndChildAssinatura: TfrxChild
         FillType = ftBrush
         Height = 105.826840000000000000
-        Top = 359.055350000000000000
+        Top = 362.834880000000000000
         Width = 718.110700000000000000
         object Memo9: TfrxMemoView
           Left = 79.370130000000000000
@@ -3542,7 +3591,7 @@ inherited frmGeContasAPagar: TfrmGeContasAPagar
         end
         object Memo5: TfrxMemoView
           Left = 79.370130000000000000
-          Top = 64.252010000000000000
+          Top = 64.252009999999990000
           Width = 377.953000000000000000
           Height = 22.677180000000000000
           DataSet = DMNFe.frdEmpresa

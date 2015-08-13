@@ -175,6 +175,7 @@ type
     FDataAtual     : TDateTime;
     FLoteParcelas  : String;
     SQL_Pagamentos : TStringList;
+    FImprimirCabecalho : Boolean;
     procedure AbrirPagamentos(const Ano : Smallint; const Numero : Integer);
     procedure HabilitarDesabilitar_Btns;
     procedure RecarregarRegistro;
@@ -713,6 +714,8 @@ begin
       Exit;
   end;
 
+  FImprimirCabecalho := ShowConfirmation('Recibo', 'Deseja imprimir no recibo o Cabeçalho com informações da empresa?');
+
   frReport := FrRecibo;
   SetVariablesDefault(frReport);
 
@@ -758,6 +761,9 @@ begin
 
   if ( VarName = VAR_SYSTEM ) then
     Value := Application.Title + ' - versão ' + ver.FileVersion;
+
+  if ( VarName = 'Imprimir_Cabecalho' ) then
+    Value := IfThen(FImprimirCabecalho, 1, 0);
 end;
 
 procedure TfrmGeContasAPagar.IbDtstTabelaBeforePost(DataSet: TDataSet);

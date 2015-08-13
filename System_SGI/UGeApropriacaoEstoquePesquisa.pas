@@ -149,7 +149,8 @@ var
 implementation
 
 uses
-  UDMBusiness, UConstantesDGE, cxGridExportLink, UGeCentroCusto, UDMRecursos;
+  UDMBusiness, UConstantesDGE, cxGridExportLink, UGeCentroCusto, UDMRecursos,
+  UFuncoes;
 
 {$R *.dfm}
 
@@ -386,7 +387,13 @@ begin
             if ( StrToIntDef(Trim(edPesquisar.Text), 0) > 0 ) then
               sWhr := sWhr + ' and (p.cod like ' + QuotedStr('%' + edPesquisar.Text + '%') + ')'
             else
-              sWhr := sWhr + ' and (upper(p.descri) like ' + QuotedStr(edPesquisar.Text + '%') + ')';
+            begin
+              sWhr := sWhr + ' and (upper(p.descri) like ' + QuotedStr(UpperCase(Trim(edPesquisar.Text)) + '%') +
+                   '    or upper(p.descri) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edPesquisar.Text))) + '%') +
+                   '    or upper(p.metafonema) like ' + QuotedStr(Metafonema(edPesquisar.Text) + '%') +
+                   '    or upper(p.nome_amigo) like ' + QuotedStr(UpperCase(Trim(edPesquisar.Text)) + '%') +
+                   '    or upper(p.nome_amigo) like ' + QuotedStr(UpperCase(FuncoesString.StrRemoveAllAccents(Trim(edPesquisar.Text))) + '%') + ')';
+            end;
 
           if chkProdutoComEstoque.Checked then
             sWhr := sWhr + ' and (e.estoque > 0.0)';

@@ -176,6 +176,11 @@ type
     dbBairro: TJvDBComboEdit;
     dbLogradouro: TJvDBComboEdit;
     dbPais: TJvDBComboEdit;
+    IbDtstTabelaATIVO: TSmallintField;
+    dbCadastroAtivo: TDBCheckBox;
+    lblFornecedorDesativado: TLabel;
+    lblDataNasc: TLabel;
+    edDataNasc: TMaskEdit;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);
@@ -196,6 +201,8 @@ type
     procedure edCNPJKeyPress(Sender: TObject; var Key: Char);
     procedure edCaptchaKeyPress(Sender: TObject; var Key: Char);
     procedure btnFiltrarClick(Sender: TObject);
+    procedure dbgDadosDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
   public
@@ -297,10 +304,11 @@ begin
 
   DisplayFormatCodigo := '##0000';
 
-  NomeTabela      := 'TBFORNECEDOR';
-  CampoCodigo     := 'Codforn';
-  CampoDescricao  := 'Nomeforn';
-  WhereAdditional := '(f.cliente_origem is null) and (f.fornecedor_funcionario = 0)';
+  NomeTabela         := 'TBFORNECEDOR';
+  CampoCodigo        := 'Codforn';
+  CampoDescricao     := 'Nomeforn';
+  CampoCadastroAtivo := 'f.ativo';
+  WhereAdditional    := '(f.cliente_origem is null) and (f.fornecedor_funcionario = 0)';
 
   UpdateGenerator;
 
@@ -341,6 +349,17 @@ begin
       IbDtstTabelaEST_NOME.AsString := sEstado;
       IbDtstTabelaUF.AsString       := sUF;
     end;
+end;
+
+procedure TfrmGeFornecedor.dbgDadosDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  // Destacar fornecedores desativados
+  if ( IbDtstTabelaATIVO.AsInteger = 0 ) then
+    dbgDados.Canvas.Font.Color := lblFornecedorDesativado.Font.Color;
+
+  dbgDados.DefaultDrawDataCell(Rect, dbgDados.Columns[DataCol].Field, State);
 end;
 
 procedure TfrmGeFornecedor.dbCidadeButtonClick(Sender: TObject);
@@ -424,6 +443,7 @@ begin
   IbDtstTabelaTRANSPORTADORA.AsInteger := 0;
   IbDtstTabelaDTCAD.AsDateTime         := GetDateTimeDB;
   IbDtstTabelaFATURAMENTO_MINIMO.Value := 0.0;
+  IbDtstTabelaATIVO.Value              := 1;
   IbDtstTabelaGRF_COD.Clear;
   IbDtstTabelaBANCO.Clear;
   IbDtstTabelaAGENCIA.Clear;
@@ -545,6 +565,9 @@ procedure TfrmGeFornecedor.dbCNPJButtonClick(Sender: TObject);
   end;
 
 begin
+  tbsConsultarCPF.TabVisible  := False;
+  tbsConsultarCNPJ.TabVisible := False;
+
   if dbPessoaFisica.Checked then
   begin
 
@@ -628,6 +651,7 @@ end;
 procedure TfrmGeFornecedor.btnVoltarClick(Sender: TObject);
 begin
   pgcGuias.ActivePage         := tbsCadastro;
+  tbsConsultarCPF.TabVisible  := False;
   tbsConsultarCNPJ.TabVisible := False;
   dbCNPJ.SetFocus;
 end;
@@ -730,7 +754,7 @@ procedure TfrmGeFornecedor.btnConsultarCPFClick(Sender: TObject);
 begin
   if Trim(edCaptcha.Text) <> EmptyStr then
   begin
-    if ACBrConsultaCPF.Consulta(edCPF.Text, Trim(edCaptcha.Text)) then
+    if ACBrConsultaCPF.Consulta(edCPF.Text, edDataNasc.Text, Trim(edCaptcha.Text)) then
     begin
       EditRazaoSocial.Text := ACBrConsultaCPF.Nome;
       EditSituacao.Text    := ACBrConsultaCPF.Situacao;
