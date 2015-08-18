@@ -16,7 +16,9 @@ uses
   dxSkinOffice2013DarkGray, dxSkinOffice2013LightGray, dxSkinOffice2013White,
   dxSkinSevenClassic, dxSkinSharpPlus, dxSkinTheAsphaltWorld, dxSkinVS2010,
   dxSkinWhiteprint, dxSkinOffice2007Black, dxSkinOffice2007Blue,
-  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver;
+  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
+  cxControls, cxStyles, cxEdit, cxDBLookupComboBox, cxVGrid, cxDBVGrid,
+  cxInplaceContainer;
 
 type
   TfrmGeCliente = class(TfrmGrPadraoCadastro, IObserver) // Observador
@@ -248,14 +250,6 @@ type
     IbDtstTabelaOBSERVACAO: TMemoField;
     dtsBancoFebraban: TDataSource;
     tbsDadoFinanceiro: TTabSheet;
-    lblBanco: TLabel;
-    dbBanco: TDBLookupComboBox;
-    lblAgencia: TLabel;
-    dbAgencia: TDBEdit;
-    lblContaCorrente: TLabel;
-    dbContaCorrente: TDBEdit;
-    lblPracaoCobranca: TLabel;
-    dbPracaoCobranca: TDBEdit;
     tbsObservacao: TTabSheet;
     dbObservacao: TDBMemo;
     qryBancoFebraban: TIBQuery;
@@ -284,6 +278,30 @@ type
     lblClienteDesativado: TLabel;
     lblDataNasc: TLabel;
     edDataNasc: TMaskEdit;
+    dbgContaCorrente: TcxDBVerticalGrid;
+    dbCtgrConta1: TcxCategoryRow;
+    dbBanco1: TcxDBEditorRow;
+    dbAgencia1: TcxDBEditorRow;
+    dbContaCorrente1: TcxDBEditorRow;
+    dbPracaCobranca1: TcxDBEditorRow;
+    dbCtgrConta2: TcxCategoryRow;
+    dbBanco2: TcxDBEditorRow;
+    dbAgencia2: TcxDBEditorRow;
+    dbContaCorrente2: TcxDBEditorRow;
+    dbPracaCobranca2: TcxDBEditorRow;
+    dbCtgrConta3: TcxCategoryRow;
+    dbBanco3: TcxDBEditorRow;
+    dbAgencia3: TcxDBEditorRow;
+    dbContaCorrente3: TcxDBEditorRow;
+    dbPracaCobranca3: TcxDBEditorRow;
+    IbDtstTabelaBANCO_2: TIBStringField;
+    IbDtstTabelaAGENCIA_2: TIBStringField;
+    IbDtstTabelaCC_2: TIBStringField;
+    IbDtstTabelaPRACA_2: TIBStringField;
+    IbDtstTabelaBANCO_3: TIBStringField;
+    IbDtstTabelaAGENCIA_3: TIBStringField;
+    IbDtstTabelaCC_3: TIBStringField;
+    IbDtstTabelaPRACA_3: TIBStringField;
     procedure ProximoCampoKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure dbEstadoButtonClick(Sender: TObject);
@@ -325,6 +343,8 @@ type
       Shift: TShiftState);
     procedure btbtnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure dbgContaCorrenteExit(Sender: TObject);
+    procedure dbgContaCorrenteEnter(Sender: TObject);
   private
     { Private declarations }
     bApenasPossuiEstoque : Boolean;
@@ -555,10 +575,7 @@ begin
       pgcMaisDados.ActivePage := tbsDadosAdcionais
     else
     if ( Sender = dbEntregaFracionada ) then
-      pgcMaisDados.ActivePage := tbsDadoFinanceiro
-    else
-    if ( Sender = dbPracaoCobranca ) then
-      pgcMaisDados.ActivePage := tbsObservacao;
+      pgcMaisDados.ActivePage := tbsDadoFinanceiro;
   end;
 end;
 
@@ -691,6 +708,14 @@ begin
   IbDtstTabelaAGENCIA.Clear;
   IbDtstTabelaCC.Clear;
   IbDtstTabelaPRACA.Clear;
+  IbDtstTabelaBANCO_2.Clear;
+  IbDtstTabelaAGENCIA_2.Clear;
+  IbDtstTabelaCC_2.Clear;
+  IbDtstTabelaPRACA_2.Clear;
+  IbDtstTabelaBANCO_3.Clear;
+  IbDtstTabelaAGENCIA_3.Clear;
+  IbDtstTabelaCC_3.Clear;
+  IbDtstTabelaPRACA_3.Clear;
   IbDtstTabelaOBSERVACAO.Clear;
 end;
 
@@ -872,6 +897,21 @@ begin
     
   if ( Sender.AsInteger = 0 ) then
     Text := 'Cancelado';
+end;
+
+procedure TfrmGeCliente.dbgContaCorrenteEnter(Sender: TObject);
+begin
+  Self.OnKeyDown := nil;
+end;
+
+procedure TfrmGeCliente.dbgContaCorrenteExit(Sender: TObject);
+begin
+  Self.OnKeyDown := FormKeyDown;
+  if ( IbDtstTabela.State = dsInsert ) then
+  begin
+    pgcMaisDados.ActivePage := tbsObservacao;
+    dbObservacao.SetFocus;
+  end;
 end;
 
 procedure TfrmGeCliente.dbgDadosDrawColumnCell(Sender: TObject;
