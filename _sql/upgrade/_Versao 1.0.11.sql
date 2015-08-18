@@ -1179,3 +1179,1070 @@ ON TBPRODUTO (METAFONEMA);
 CREATE INDEX IDX_TBPRODUTO_NOMEAMIGO
 ON TBPRODUTO (NOME_AMIGO);
 
+
+
+
+/*------ SYSDBA 17/08/2015 16:16:05 --------*/
+
+ALTER TABLE TBFORNECEDOR
+    ADD BANCO_2 DMN_VCHAR_10,
+    ADD AGENCIA_2 DMN_VCHAR_10,
+    ADD CC_2 DMN_VCHAR_10,
+    ADD PRACA_2 DMN_VCHAR_250,
+    ADD BANCO_3 DMN_VCHAR_10,
+    ADD AGENCIA_3 DMN_VCHAR_10,
+    ADD CC_3 DMN_VCHAR_10,
+    ADD PRACA_3 DMN_VCHAR_250;
+
+COMMENT ON COLUMN TBFORNECEDOR.BANCO IS
+'Dados Financeiros - Banco (1)';
+
+COMMENT ON COLUMN TBFORNECEDOR.AGENCIA IS
+'Dados Financeiros - Agencia (1)';
+
+COMMENT ON COLUMN TBFORNECEDOR.CC IS
+'Dados Financeiros - Conta (1)';
+
+COMMENT ON COLUMN TBFORNECEDOR.PRACA IS
+'Dados Financeiros - Endereco da Praca de Cobranca (1)';
+
+COMMENT ON COLUMN TBFORNECEDOR.BANCO_2 IS
+'Dados Financeiros - Banco (2)';
+
+COMMENT ON COLUMN TBFORNECEDOR.AGENCIA_2 IS
+'Dados Financeiros - Agencia (2)';
+
+COMMENT ON COLUMN TBFORNECEDOR.CC_2 IS
+'Dados Financeiros - Conta (2)';
+
+COMMENT ON COLUMN TBFORNECEDOR.PRACA_2 IS
+'Dados Financeiros - Endereco da Praca de Cobranca (2)';
+
+COMMENT ON COLUMN TBFORNECEDOR.BANCO_3 IS
+'Dados Financeiros - Banco (3)';
+
+COMMENT ON COLUMN TBFORNECEDOR.AGENCIA_3 IS
+'Dados Financeiros - Agencia (3)';
+
+COMMENT ON COLUMN TBFORNECEDOR.CC_3 IS
+'Dados Financeiros - Conta (3)';
+
+COMMENT ON COLUMN TBFORNECEDOR.PRACA_3 IS
+'Dados Financeiros - Endereco da Praca de Cobranca (3)';
+
+alter table TBFORNECEDOR
+alter CODFORN position 1;
+
+alter table TBFORNECEDOR
+alter TIPO position 2;
+
+alter table TBFORNECEDOR
+alter PESSOA_FISICA position 3;
+
+alter table TBFORNECEDOR
+alter NOMEFORN position 4;
+
+alter table TBFORNECEDOR
+alter NOMEFANT position 5;
+
+alter table TBFORNECEDOR
+alter CNPJ position 6;
+
+alter table TBFORNECEDOR
+alter INSCEST position 7;
+
+alter table TBFORNECEDOR
+alter INSCMUN position 8;
+
+alter table TBFORNECEDOR
+alter ENDER position 9;
+
+alter table TBFORNECEDOR
+alter COMPLEMENTO position 10;
+
+alter table TBFORNECEDOR
+alter NUMERO_END position 11;
+
+alter table TBFORNECEDOR
+alter CEP position 12;
+
+alter table TBFORNECEDOR
+alter CIDADE position 13;
+
+alter table TBFORNECEDOR
+alter UF position 14;
+
+alter table TBFORNECEDOR
+alter CONTATO position 15;
+
+alter table TBFORNECEDOR
+alter FONE position 16;
+
+alter table TBFORNECEDOR
+alter FONECEL position 17;
+
+alter table TBFORNECEDOR
+alter FONEFAX position 18;
+
+alter table TBFORNECEDOR
+alter EMAIL position 19;
+
+alter table TBFORNECEDOR
+alter SITE position 20;
+
+alter table TBFORNECEDOR
+alter TLG_TIPO position 21;
+
+alter table TBFORNECEDOR
+alter LOG_COD position 22;
+
+alter table TBFORNECEDOR
+alter BAI_COD position 23;
+
+alter table TBFORNECEDOR
+alter CID_COD position 24;
+
+alter table TBFORNECEDOR
+alter EST_COD position 25;
+
+alter table TBFORNECEDOR
+alter PAIS_ID position 26;
+
+alter table TBFORNECEDOR
+alter GRF_COD position 27;
+
+alter table TBFORNECEDOR
+alter TRANSPORTADORA position 28;
+
+alter table TBFORNECEDOR
+alter BANCO position 29;
+
+alter table TBFORNECEDOR
+alter AGENCIA position 30;
+
+alter table TBFORNECEDOR
+alter CC position 31;
+
+alter table TBFORNECEDOR
+alter PRACA position 32;
+
+alter table TBFORNECEDOR
+alter BANCO_2 position 33;
+
+alter table TBFORNECEDOR
+alter AGENCIA_2 position 34;
+
+alter table TBFORNECEDOR
+alter CC_2 position 35;
+
+alter table TBFORNECEDOR
+alter PRACA_2 position 36;
+
+alter table TBFORNECEDOR
+alter BANCO_3 position 37;
+
+alter table TBFORNECEDOR
+alter AGENCIA_3 position 38;
+
+alter table TBFORNECEDOR
+alter CC_3 position 39;
+
+alter table TBFORNECEDOR
+alter PRACA_3 position 40;
+
+alter table TBFORNECEDOR
+alter OBSERVACAO position 41;
+
+alter table TBFORNECEDOR
+alter DTCAD position 42;
+
+alter table TBFORNECEDOR
+alter ATIVO position 43;
+
+alter table TBFORNECEDOR
+alter CLIENTE_ORIGEM position 44;
+
+alter table TBFORNECEDOR
+alter CLIENTE_ORIGEM_COD position 45;
+
+alter table TBFORNECEDOR
+alter FATURAMENTO_MINIMO position 46;
+
+alter table TBFORNECEDOR
+alter FORNECEDOR_FUNCIONARIO position 47;
+
+
+
+
+/*------ SYSDBA 17/08/2015 16:17:37 --------*/
+
+ALTER TABLE TBFORNECEDOR DROP CONSTRAINT FK_TBFORNECEDOR_BANCO;
+
+ALTER TABLE TBFORNECEDOR
+ADD CONSTRAINT FK_TBFORNECEDOR_BANCO1
+FOREIGN KEY (BANCO)
+REFERENCES TBBANCO(COD)
+USING INDEX FK_TBFORNECEDOR_BANCO;
+
+ALTER TABLE TBFORNECEDOR
+ADD CONSTRAINT FK_TBFORNECEDOR_BANCO2
+FOREIGN KEY (BANCO_2)
+REFERENCES TBBANCO(COD);
+
+ALTER TABLE TBFORNECEDOR
+ADD CONSTRAINT FK_TBFORNECEDOR_BANCO3
+FOREIGN KEY (BANCO_3)
+REFERENCES TBBANCO(COD);
+
+
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+ALTER TABLE TBCLIENTE
+    ADD BANCO_2 DMN_VCHAR_10,
+    ADD AGENCIA_2 DMN_VCHAR_10,
+    ADD CC_2 DMN_VCHAR_10,
+    ADD PRACA_2 DMN_VCHAR_250,
+    ADD BANCO_3 DMN_VCHAR_10,
+    ADD AGENCIA_3 DMN_VCHAR_10,
+    ADD CC_3 DMN_VCHAR_10,
+    ADD PRACA_3 DMN_VCHAR_250;
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.BANCO IS
+'Dados Financeiros - Banco (1)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.AGENCIA IS
+'Dados Financeiros - Agencia (1)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.CC IS
+'Dados Financeiros - Conta (1)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.PRACA IS
+'Dados Financeiros - Endereco da Praca de Cobranca (1)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.BANCO_2 IS
+'Dados Financeiros - Banco (2)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.AGENCIA_2 IS
+'Dados Financeiros - Agencia (2)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.CC_2 IS
+'Dados Financeiros - Conta (2)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.PRACA_2 IS
+'Dados Financeiros - Endereco da Praca de Cobranca (2)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.BANCO_3 IS
+'Dados Financeiros - Banco (3)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.AGENCIA_3 IS
+'Dados Financeiros - Agencia (3)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.CC_3 IS
+'Dados Financeiros - Conta (3)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+COMMENT ON COLUMN TBCLIENTE.PRACA_3 IS
+'Dados Financeiros - Endereco da Praca de Cobranca (3)';
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+ALTER TABLE TBCLIENTE DROP CONSTRAINT FK_TBCLIENTE_BANCO;
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+ALTER TABLE TBCLIENTE
+ADD CONSTRAINT FK_TBCLIENTE_BANCO1
+FOREIGN KEY (BANCO)
+REFERENCES TBBANCO(COD)
+USING INDEX FK_TBCLIENTE_BANCO;
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+ALTER TABLE TBCLIENTE
+ADD CONSTRAINT FK_TBCLIENTE_BANCO2
+FOREIGN KEY (BANCO_2)
+REFERENCES TBBANCO(COD);
+
+/*------ 17/08/2015 16:19:27 --------*/
+
+ALTER TABLE TBCLIENTE
+ADD CONSTRAINT FK_TBCLIENTE_BANCO3
+FOREIGN KEY (BANCO_3)
+REFERENCES TBBANCO(COD);
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column CODIGO position 1;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column TIPO position 2;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column PESSOA_FISICA position 3;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column CNPJ position 4;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column NOME position 5;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column NOMEFANT position 6;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column INSCEST position 7;
+
+
+/*------ SYSDBA 17/08/2015 16:20:09 --------*/
+
+alter table TBCLIENTE
+alter column INSCMUN position 8;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column ENDER position 9;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column COMPLEMENTO position 10;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BAIRRO position 11;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CEP position 12;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CIDADE position 13;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column UF position 14;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column FONE position 15;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column FONECEL position 16;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column FONECOMERC position 17;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column EMAIL position 18;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column SITE position 19;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column TLG_TIPO position 20;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column LOG_COD position 21;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BAI_COD position 22;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CID_COD position 23;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column EST_COD position 24;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column NUMERO_END position 25;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column PAIS_ID position 26;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column VALOR_LIMITE_COMPRA position 27;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BLOQUEADO position 28;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BLOQUEADO_DATA position 29;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BLOQUEADO_MOTIVO position 30;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BLOQUEADO_USUARIO position 31;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column DESBLOQUEADO_DATA position 32;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column VENDEDOR_COD position 33;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column USUARIO position 34;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column EMITIR_NFE_DEVOLUCAO position 35;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CUSTO_OPER_PERCENTUAL position 36;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CUSTO_OPER_FRETE position 37;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CUSTO_OPER_OUTROS position 38;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column ENTREGA_FRACIONADA_VENDA position 39;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BANCO position 40;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column AGENCIA position 41;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CC position 42;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column PRACA position 43;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BANCO_2 position 44;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column AGENCIA_2 position 45;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CC_2 position 46;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column PRACA_2 position 47;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column BANCO_3 position 48;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column AGENCIA_3 position 49;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column CC_3 position 50;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column PRACA_3 position 51;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column OBSERVACAO position 52;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column DTCAD position 53;
+
+
+/*------ SYSDBA 17/08/2015 16:20:10 --------*/
+
+alter table TBCLIENTE
+alter column ATIVO position 54;
+
+
+/*------ SYSDBA 17/08/2015 16:22:53 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cliente_gerar_fornecedor for tbcliente
+active after insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.emitir_nfe_devolucao = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF/CNPJ */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cliente_origem_cod = new.codigo
+    Into
+      codigo_forn;
+
+    if ( :codigo_forn is null ) then
+    begin
+      /* Buscar Grupo de fornecedor */
+      Select first 1
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      Into
+        grupo_forn;
+
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , SITE
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , BANCO_2
+        , AGENCIA_2
+        , CC_2
+        , PRACA_2
+        , BANCO_3
+        , AGENCIA_3
+        , CC_3
+        , PRACA_3
+        , OBSERVACAO
+        , DTCAD
+        , ATIVO
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+        , FATURAMENTO_MINIMO
+      ) values (
+          :codigo_forn
+        , new.pessoa_fisica
+        , new.nome
+        , coalesce(new.nomefant, new.nome)
+        , new.cnpj
+        , new.inscest
+        , new.inscmun
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone
+        , new.fonecel
+        , substring(new.email from 1 for 40)
+        , substring(new.site from 1 for 35)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , new.banco
+        , new.agencia
+        , new.cc
+        , new.praca
+        , new.banco_2
+        , new.agencia_2
+        , new.cc_2
+        , new.praca_2
+        , new.banco_3
+        , new.agencia_3
+        , new.cc_3
+        , new.praca_3
+        , new.observacao
+        , current_date
+        , coalesce(new.ativo, 1)
+        , new.cnpj
+        , new.codigo
+        , 0.0
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = new.pessoa_fisica
+        , f.nomeforn = new.nome
+        , f.nomefant = coalesce(new.nomefant, new.nome)
+        , f.cnpj     = new.cnpj
+        , f.inscest = new.inscest
+        , f.inscmun = new.inscmun
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone    = new.fone
+        , f.fonecel = new.fonecel
+        , f.email   = substring(new.email from 1 for 40)
+        , f.site    = substring(new.site from 1 for 35)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.ativo   = coalesce(new.ativo, 1)
+        , f.banco   = new.banco
+        , f.agencia = new.agencia
+        , f.cc      = new.cc
+        , f.praca   = new.praca
+        , f.banco_2   = new.banco_2
+        , f.agencia_2 = new.agencia_2
+        , f.cc_2      = new.cc_2
+        , f.praca_2   = new.praca_2
+        , f.banco_3   = new.banco_3
+        , f.agencia_3 = new.agencia_3
+        , f.cc_3      = new.cc_3
+        , f.praca_3   = new.praca_3
+        , f.observacao = new.observacao
+        , f.cliente_origem     =  new.cnpj
+        , f.cliente_origem_cod = new.codigo
+      where f.codforn = :codigo_forn;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+
+
+
+/*------ SYSDBA 17/08/2015 16:24:41 --------*/
+
+COMMENT ON TABLE TBFORNECEDOR IS 'Tabela Fornecedores
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2013
+
+Tabela responsavel por armazenar os dados dos fornecedores cadastrados no sistema.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    26/05/2015 - IMR :
+        + Criacao dos campos ATIVO para controle dos cadastros ativos.
+
+    28/05/2014 - IMR :
+        + Criacao dos campos BANCO, AGENCIA, CC e OBSERVACAO para atender solicitacoes do novo cliente.
+
+    22/05/2014 - IMR :
+        + Criacao do campos NOMEFANT para que seja possivel pesquisar fornecedor tambem pelo NOME FANTASIA, uma vez que
+          o sistema esta permitindo apenas pela RAZAO SOCIAL.
+
+    17/08/2014 - IMR :
+        + Criacao de novos campos referentes a dados financeiros (Banco, Agencia, Conta e Praca)
+          para que o registro do fornecedor venha suportar ate 3 contas correntes diferentes.';
+
+
+
+
+/*------ SYSDBA 17/08/2015 16:25:04 --------*/
+
+COMMENT ON TABLE TBCLIENTE IS 'Tabela de Clientes
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   01/01/2011
+
+Tabela responsavel por armazenar os dados referentes aos clientes mantidos pelos sistemas de gestao.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    26/05/2015 - IMR :
+        + Criacao dos campos ATIVO para controle dos cadastros ativos.
+
+    29/05/2014 - IMR :
+        + Criacao do campos NOMEFANT para que seja possivel pesquisar clientes tambem pelo NOME FANTASIA, uma vez que
+          o sistema esta permitindo apenas pela RAZAO SOCIAL (NOME).
+
+    28/05/2014 - IMR :
+        + Criacao dos campos BANCO, AGENCIA, CC e OBSERVACAO para atender solicitacoes do novo cliente.
+
+    17/08/2014 - IMR :
+        + Criacao de novos campos referentes a dados financeiros (Banco, Agencia, Conta e Praca)
+          para que o registro do cliente venha suportar ate 3 contas correntes diferentes.';
+
+
+
+
+/*------ SYSDBA 17/08/2015 16:25:56 --------*/
+
+SET TERM ^ ;
+
+CREATE OR ALTER trigger tg_cliente_gerar_fornecedor for tbcliente
+active after insert or update position 1
+AS
+  declare variable codigo_forn Integer;
+  declare variable grupo_forn Smallint;
+begin
+  if ( new.emitir_nfe_devolucao = 1 ) then
+  begin
+    /* Buscar Fornecedor referenre ao CPF/CNPJ */
+    Select first 1
+      f.codforn
+    from TBFORNECEDOR f
+    where f.cliente_origem_cod = new.codigo
+    Into
+      codigo_forn;
+
+    if ( :codigo_forn is null ) then
+    begin
+      /* Buscar Grupo de fornecedor */
+      Select first 1
+        g.grf_cod
+      from TBFORNECEDOR_GRUPO g
+      Into
+        grupo_forn;
+
+      codigo_forn = Gen_id(GEN_FORNECEDOR_ID, 1);
+      Insert Into TBFORNECEDOR (
+          CODFORN
+        , PESSOA_FISICA
+        , NOMEFORN
+        , NOMEFANT
+        , CNPJ
+        , INSCEST
+        , INSCMUN
+        , ENDER
+        , COMPLEMENTO
+        , NUMERO_END
+        , CEP
+        , CIDADE
+        , UF
+        , FONE
+        , FONECEL
+        , EMAIL
+        , SITE
+        , TLG_TIPO
+        , LOG_COD
+        , BAI_COD
+        , CID_COD
+        , EST_COD
+        , PAIS_ID
+        , GRF_COD
+        , TRANSPORTADORA
+        , BANCO
+        , AGENCIA
+        , CC
+        , PRACA
+        , BANCO_2
+        , AGENCIA_2
+        , CC_2
+        , PRACA_2
+        , BANCO_3
+        , AGENCIA_3
+        , CC_3
+        , PRACA_3
+        , OBSERVACAO
+        , DTCAD
+        , ATIVO
+        , CLIENTE_ORIGEM
+        , CLIENTE_ORIGEM_COD
+        , FATURAMENTO_MINIMO
+      ) values (
+          :codigo_forn
+        , new.pessoa_fisica
+        , new.nome
+        , coalesce(new.nomefant, new.nome)
+        , new.cnpj
+        , new.inscest
+        , new.inscmun
+        , new.ender
+        , new.complemento
+        , new.numero_end
+        , new.cep
+        , new.cidade
+        , new.uf
+        , new.fone
+        , new.fonecel
+        , substring(new.email from 1 for 40)
+        , substring(new.site from 1 for 35)
+        , new.tlg_tipo
+        , new.log_cod
+        , new.bai_cod
+        , new.cid_cod
+        , new.est_cod
+        , new.pais_id
+        , :grupo_forn
+        , 0
+        , new.banco
+        , new.agencia
+        , new.cc
+        , new.praca
+        , new.banco_2
+        , new.agencia_2
+        , new.cc_2
+        , new.praca_2
+        , new.banco_3
+        , new.agencia_3
+        , new.cc_3
+        , new.praca_3
+        , new.observacao
+        , current_date
+        , coalesce(new.ativo, 1)
+        , new.cnpj
+        , new.codigo
+        , 0.0
+      );
+    end
+    else
+    begin
+      Update TBFORNECEDOR f Set
+          f.pessoa_fisica = new.pessoa_fisica
+        , f.nomeforn = new.nome
+        , f.nomefant = coalesce(new.nomefant, new.nome)
+        , f.cnpj     = new.cnpj
+        , f.inscest = new.inscest
+        , f.inscmun = new.inscmun
+        , f.ender   = new.ender
+        , f.complemento = new.complemento
+        , f.numero_end  = new.numero_end
+        , f.cep    = new.cep
+        , f.cidade = new.cidade
+        , f.uf     = new.uf
+        , f.fone    = new.fone
+        , f.fonecel = new.fonecel
+        , f.email   = substring(new.email from 1 for 40)
+        , f.site    = substring(new.site from 1 for 35)
+        , f.tlg_tipo = new.tlg_tipo
+        , f.log_cod = new.log_cod
+        , f.bai_cod = new.bai_cod
+        , f.cid_cod = new.cid_cod
+        , f.est_cod = new.est_cod
+        , f.pais_id = new.pais_id
+        , f.ativo   = coalesce(new.ativo, 1)
+        , f.banco   = new.banco
+        , f.agencia = new.agencia
+        , f.cc      = new.cc
+        , f.praca   = new.praca
+        , f.banco_2   = new.banco_2
+        , f.agencia_2 = new.agencia_2
+        , f.cc_2      = new.cc_2
+        , f.praca_2   = new.praca_2
+        , f.banco_3   = new.banco_3
+        , f.agencia_3 = new.agencia_3
+        , f.cc_3      = new.cc_3
+        , f.praca_3   = new.praca_3
+        , f.observacao = new.observacao
+        , f.cliente_origem     =  new.cnpj
+        , f.cliente_origem_cod = new.codigo
+      where f.codforn = :codigo_forn;
+    end 
+  end 
+end^
+
+SET TERM ; ^
+
+COMMENT ON TRIGGER TG_CLIENTE_GERAR_FORNECEDOR IS 'Trigger Gerar Fornecedor do Cliente.
+
+    Autor   :   Isaque Marinho Ribeiro
+    Data    :   15/10/2013
+
+Trigger responsavel por inserir/atualizar um registro de fornecedor corrrespondente ao registro do clientes quando for
+permitido para este gerar NF-e de devolucao.
+
+
+Historico:
+
+    Legendas:
+        + Novo objeto de banco (Campos, Triggers)
+        - Remocao de objeto de banco
+        * Modificacao no objeto de banco
+
+    17/08/2014 - IMR :
+        * Insercao na rotinas de novos campos referentes a dados financeiros (Banco, Agencia, Conta e Praca)
+          para que o registro do cliente/fornecedor venha suportar ate 3 contas correntes diferentes.';
+
