@@ -1,0 +1,1 @@
+Propriedade intelectual de Isaque Marinho Ribeiro, mantida pela empresa I M RIBEIRO SOLUÇÕES EM SOFTWARES (ÁGIL SOLUÇÕES EM SOFTWARES).
